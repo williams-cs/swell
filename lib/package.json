@@ -1,0 +1,32 @@
+{
+  "name": "summer-language",
+  "version": "1.0.0",
+  "description": "summer language implementation",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/chai": "^4.1.3",
+    "@types/mocha": "^5.2.2",
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0",
+    "ts-node": "^6.1.1",
+    "typescript": "^2.9.1"
+  },
+  "scripts": {
+    "test": "mocha -r ts-node/register test/*.spec.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/williams-cs/summer-language.git"
+  },
+  "keywords": [
+    "dmlanguage"
+  ],
+  "author": "Emmie Hine",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/williams-cs/summer-language/issues"
+  },
+  "homepage": "https://github.com/williams-cs/summer-language#readme"
+}
