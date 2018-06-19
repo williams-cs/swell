@@ -1,28 +1,32 @@
-import{Ellipse} from './Ellipse';
-import {Node} from './Node';
+//import {Ellipse} from './Ellipse';
+//import {Node} from './Node';
+import {Shape} from './Shape';
 import {Expression} from './Expression';
 import {PosNode} from './PosNode';
+import {ColorNode} from './ColorNode';
 
-export class EllipseNode extends Node implements Expression<Ellipse>{
+export class EllipseNode extends Shape implements Expression<Ellipse>{
     //private ellipse: Ellipse;
     //private parent: Node;
-    public xPos: Node;
-    public yPos: Node;
-    public width: Node;
-    public height: Node; 
+    //public xPos: PosNode;
+    //public yPos: PosNode;
+    public width: PosNode;
+    public height: PosNode; 
 
     constructor(//ellipse: Ellipse, 
-        parent: Node, xPos: PosNode, yPos: PosNode, width: PosNode, height: PosNode){
-    super(parent);
+        color: ColorNode, xPos: PosNode, yPos: PosNode, width: PosNode, height: PosNode){
     //this.ellipse = ellipse;
-    this.xPos = xPos;
-    this.yPos = yPos;
+    super(color, xPos, yPos);
     this.width = width;
     this.height = height;
     }
 
-    eval(): Ellipse {
+    // get methods? 
+
+    eval(): any {
         // how evaluate to an ellipse?
         return null;
     }
+
+    move(): void{}
 }

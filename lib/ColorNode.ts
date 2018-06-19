@@ -1,4 +1,4 @@
-export class Color{
+export class ColorNode{
     private _red: number;
     private _green: number;
     private _blue: number;

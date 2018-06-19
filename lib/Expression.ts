@@ -1,3 +1,4 @@
-export interface Expression <T> {
-    eval(): T;
+export interface Expression <T>{
+    //export abstract class Node{
+        eval(): T;
 }
