@@ -1,7 +1,18 @@
 // An abstract class for binary operations. 
-// Todo: generics? Issue that left and right could be any binop
 
-export abstract class BinaryOperation{
-    constructor(op: BinaryOperation, left: number | BinaryOperation, right: number | BinaryOperation){};
-    abstract eval(): any;
+import {Expression} from './Expression';
+
+export abstract class BinaryOperation<T> implements Expression<T> {
+    constructor(public left: Expression<T>, public right: Expression<T>){};
+    abstract eval(): T;
+}
+
+export class PlusOperation extends BinaryOperation<number>{
+    constructor(left: Expression<number>, right: Expression<number>){
+        super(left,right);
+    }
+
+    eval(): number{
+        return this.left.eval() + this.right.eval();
+    }
 }

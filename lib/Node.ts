@@ -1,3 +1,6 @@
+//USE EXPRESSION
+
+/*
 import {Expression} from './expression';
 
 export abstract class Node implements Expression <any>{
@@ -15,3 +18,4 @@ export abstract class Node implements Expression <any>{
         return this.eval();
     }
 }
+*/
