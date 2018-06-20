@@ -5,12 +5,20 @@ import {Expression} from './Expression';
 // Should abstract Node class implement Expression?
 
 export class StringNode implements Expression<string>{
-    public str: string;
+    private _str: string;
     constructor(str: string){
-        this.str = str;
+        this._str = str;
     };
 
     eval(): string {
-        return this.str;
+        return this._str;
+    }
+
+    set str(value: string){
+        this._str = value;
+    }
+
+    get str(): string{
+        return this._str;
     }
 }

@@ -3,8 +3,22 @@
 import {Expression} from '../Expression';
 
 export abstract class BinaryOperation<T> implements Expression<T> {
-    constructor(public left: Expression<T>, public right: Expression<T>){};
+    constructor(private _left: Expression<T>, private _right: Expression<T>){};
     abstract eval(): T;
+
+    get left(): Expression<T>{
+        return this._left;
+    }
+    set left(left: Expression<T>){
+        this._left = left;
+    }
+
+    get right(): Expression<T>{
+        return this._right;
+    }
+    set right(right: Expression<T>){
+        this._right = right;
+    }
 }
 
 /*

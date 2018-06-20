@@ -12,11 +12,22 @@ export class ColorNode{
     get red(): number{
         return this._red;
     }
+    set red(red: number){
+        this._red = red;
+    }
+
     get green(): number{
         return this._green;
     }
+    set green(green: number){
+        this._green = green;
+    }
+
     get blue(): number{
         return this._blue;
+    }
+    set blue(blue: number){
+        this._blue = blue;
     }
     
 }

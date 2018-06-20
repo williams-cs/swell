@@ -9,4 +9,13 @@ export class NegOp extends UnaryOperation<number>{
     eval(): number{
         return -this.val.eval();
     }
+
+    /*
+    get val(): number{
+        return this.val;
+    }
+    set val(value: number){
+        this.val = value;
+    }
+    */
 }

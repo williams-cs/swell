@@ -10,17 +10,31 @@ export class EllipseNode extends Shape implements Expression<Ellipse>{
     //private parent: Node;
     //public xPos: PosNode;
     //public yPos: PosNode;
-    public width: PosNode;
-    public height: PosNode; 
+    private _width: PosNode;
+    private _height: PosNode; 
 
     constructor(//ellipse: Ellipse, 
         color: ColorNode, xPos: PosNode, yPos: PosNode, width: PosNode, height: PosNode){
     //this.ellipse = ellipse;
+    // Make width and height NumNodes?
     super(color, xPos, yPos);
-    this.width = width;
-    this.height = height;
+    this._width = width;
+    this._height = height;
     }
 
+    get width(): PosNode{
+        return this._width;
+    }
+    set width(width: PosNode){
+        this._width = width;
+    }
+
+    get heigth(): PosNode{
+        return this._height;
+    }
+    set height(height: PosNode){
+        this._height = height;
+    }
     // get methods? 
 
     eval(): any {
