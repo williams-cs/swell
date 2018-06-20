@@ -1,20 +1,22 @@
 import {UnaryOperation} from './UnaryOperation';
 import {Expression} from '../Expression';
+import {Scope} from '../Scope';
 
 export class NegOp extends UnaryOperation<number>{
     constructor(val: Expression<number>){
         super(val);
     }
 
-    eval(): number{
-        return -this.val.eval();
+    eval(context: Scope): number{
+        return -this.val.eval(new Scope(new Map(),context));
     }
 
+    // put in UnaryOp class
     /*
-    get val(): number{
+    get value(): number{
         return this.val;
     }
-    set val(value: number){
+    set value(value: number){
         this.val = value;
     }
     */

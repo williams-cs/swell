@@ -1,4 +1,4 @@
-
+import {Scope} from '../lib/Scope'
 import{StringNode} from '../lib/StringNode';
 import { assert,expect } from 'chai';
 import 'mocha';
@@ -6,7 +6,7 @@ import 'mocha';
 describe('A string', () => {
     it('should evaluate to a string', () => {
         const teststring = new StringNode("hello world");
-        const output = teststring.eval();
+        const output = teststring.eval(new Scope(new Map(), null));
         expect(output).to.equal("hello world");
     });
 });

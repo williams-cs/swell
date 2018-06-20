@@ -1,10 +1,10 @@
 // An abstract class for binary operations. 
-
+import {Scope} from '../Scope';
 import {Expression} from '../Expression';
 
 export abstract class BinaryOperation<T> implements Expression<T> {
     constructor(private _left: Expression<T>, private _right: Expression<T>){};
-    abstract eval(): T;
+    abstract eval(context: Scope): T;
 
     get left(): Expression<T>{
         return this._left;

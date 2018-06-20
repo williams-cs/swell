@@ -4,6 +4,7 @@ import {Shape} from './Shape';
 import {Expression} from '../Expression';
 import {PosNode} from '../PosNode';
 import {ColorNode} from './ColorNode';
+import {Scope} from '../Scope';
 
 export class EllipseNode extends Shape implements Expression<Ellipse>{
     //private ellipse: Ellipse;
@@ -37,7 +38,7 @@ export class EllipseNode extends Shape implements Expression<Ellipse>{
     }
     // get methods? 
 
-    eval(): any {
+    eval(context: Scope): any {
         // how evaluate to an ellipse?
         return null;
     }

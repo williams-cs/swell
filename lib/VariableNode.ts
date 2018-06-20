@@ -1,4 +1,5 @@
 import {Expression} from './Expression';
+import {Scope} from './Scope';
 
 export class VariableNode implements Expression<any>{
     public name: string;
@@ -8,8 +9,8 @@ export class VariableNode implements Expression<any>{
         this.val = val;
     }
 
-    eval(): any {
-
+    eval(context: Scope): any {
+        return null;
     }
     /*
     set val(value: Expression<any>){

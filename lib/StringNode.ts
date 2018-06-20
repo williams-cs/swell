@@ -1,4 +1,5 @@
 import {Expression} from './Expression';
+import {Scope} from './Scope';
 //import{Node} from './Node';
 
 // Nodes representing strings
@@ -10,7 +11,7 @@ export class StringNode implements Expression<string>{
         this._str = str;
     };
 
-    eval(): string {
+    eval(context: Scope): string {
         return this._str;
     }
 

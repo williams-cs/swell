@@ -1,4 +1,7 @@
-export class ColorNode{
+import {Expression} from '../Expression';
+import {Scope} from '../Scope';
+
+export class ColorNode implements Expression<string>{
     private _red: number;
     private _green: number;
     private _blue: number;
@@ -30,4 +33,7 @@ export class ColorNode{
         this._blue = blue;
     }
     
+    eval(context: Scope){
+        return this._red + " " + this._green + " " + this._blue;
+    }
 }

@@ -1,4 +1,5 @@
 import {Expression} from './Expression';
+import {Scope} from './Scope';
 //import{Node} from './Node';
 
 // Nodes representing numbers
@@ -12,7 +13,7 @@ export class NumberNode implements Expression <number>{
         this._val = val;
     };
 
-    eval(): number {
+    eval(context: Scope): number {
         return this._val;
     }
 

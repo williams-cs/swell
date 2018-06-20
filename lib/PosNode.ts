@@ -1,5 +1,6 @@
 //import {Node} from './Node';
 import {Expression} from './Expression';
+import {Scope} from './Scope';
 
 // A Position Node
 
@@ -9,7 +10,7 @@ export class PosNode implements Expression<number>{
         this._val = val;
     }
 
-    eval(): number {
+    eval(context: Scope): number {
         return this._val;
     }
 
