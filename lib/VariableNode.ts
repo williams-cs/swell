@@ -12,6 +12,7 @@ export class VariableNode implements Expression<any>{
     eval(context: Scope): any {
         return null;
     }
+    // add get/set
     /*
     set val(value: Expression<any>){
         this._val = value;
