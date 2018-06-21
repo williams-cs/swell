@@ -12,7 +12,7 @@ describe('A SeqNode', () => {
         const node0 = new SequenceNode_1.SequenceNode(num0, plus0);
         const output = node0.eval(null);
         //deep or strict equal?
-        chai_1.expect(output).to.deep.equal([num0.eval(null), plus0.eval(null)]);
-        //expect(output).to.equal([1,4]);
+        //expect(output).to.deep.equal([num0.eval(null),plus0.eval(null)])
+        chai_1.expect(output).to.deep.equal([1, 4]);
     });
 });

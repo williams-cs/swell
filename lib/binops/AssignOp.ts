@@ -1,0 +1,34 @@
+import {BinaryOperation} from './BinaryOperation';
+import {Expression} from '../Expression';
+import {Scope} from '../Scope';
+import { VariableNode } from '../VariableNode';
+
+// left side is variable, right side is val
+export class AssignOp<T> extends BinaryOperation<T>{
+    constructor(left: Expression<T>, right: Expression<T>){
+        super(left,right);
+        if(!(left instanceof VariableNode)){
+            throw new Error("The left hand side of the assignment must be a variable.");
+        }
+    }
+
+    eval(context: Scope): T{
+        if(this.left instanceof VariableNode){
+            let left2: VariableNode = this.left as VariableNode;
+            context.declare(left2.name);
+
+            console.log("Name: " + left2.name);
+            //console.log("Map name: " + context.lookup(left2.name));
+
+            let r = this.right.eval(context);
+            console.log("r: " + r);
+            context.assign(left2.name,r);
+
+            console.log("What got assigned: " + left2.name + " " + r);
+            //console.log("Val " + r);
+
+            return r;
+        }
+        throw new Error("HALP (in AssignOp)");
+    }
+}

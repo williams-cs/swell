@@ -6,7 +6,7 @@ import 'mocha';
 describe('A string', () => {
     it('should evaluate to a string', () => {
         const teststring = new StringNode("hello world");
-        const output = teststring.eval(new Scope(new Map(), null));
+        const output = teststring.eval();
         expect(output).to.equal("hello world");
     });
 });

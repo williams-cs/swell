@@ -2,21 +2,28 @@ import {Expression} from './Expression';
 import {Scope} from './Scope';
 
 export class VariableNode implements Expression<any>{
-    public name: string;
-    public val: Expression<any>;
-    constructor(name: string, val: Expression<any>){
-        this.name = name;
-        this.val = val;
+    private _name: string;
+    //private _val: Expression<any>;
+    constructor(name: string){
+        this._name = name;
+        //this._val = val;
     }
 
     eval(context: Scope): any {
-        return null;
+        //todo: grab val from context
+        return context.lookup(this._name);
     }
     // add get/set
+    
+    get name(): string{
+        return this._name;
+    }
+
     /*
-    set val(value: Expression<any>){
-        this._val = value;
+    set name(str: string){
+        this._name = value;
     }
     */
+    
 
 }

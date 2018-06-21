@@ -7,12 +7,12 @@ import 'mocha';
 describe('A negop', () => {
     it('should evaluate to the negation', () => {
         const testval = new NegOp(new NumberNode(1));
-        const output = testval.eval(new Scope(new Map(), null));
+        const output = testval.eval(null);
         expect(output).to.equal(-1);
     });
     it('should evaluate to another negation', () => {
         const testval = new NegOp(new NumberNode(-1));
-        const output = testval.eval(new Scope(new Map(), null));
+        const output = testval.eval(null);
         expect(output).to.equal(1);
     });
 });

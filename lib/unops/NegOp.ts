@@ -8,7 +8,7 @@ export class NegOp extends UnaryOperation<number>{
     }
 
     eval(context: Scope): number{
-        return -this.val.eval(new Scope(new Map(),context));
+        return -this.val.eval(context);
     }
 
     // put in UnaryOp class

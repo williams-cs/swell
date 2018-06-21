@@ -6,7 +6,7 @@ import 'mocha';
 describe('A PositionNode', () => {
     it('should evaluate to a number', () => {
         const testnum = new PosNode(234);
-        const output = testnum.eval(new Scope(new Map(), null));
+        const output = testnum.eval(null);
         expect(output).to.equal(234);
     });
 

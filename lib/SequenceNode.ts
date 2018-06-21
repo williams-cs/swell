@@ -1,6 +1,7 @@
 import {Expression} from './Expression';
 import {Scope} from './Scope';
 
+
 export class SequenceNode<T,U> implements Expression<[T,U]>{
     private _left: Expression<T>;
     private _right: Expression<U>;
@@ -25,7 +26,7 @@ export class SequenceNode<T,U> implements Expression<[T,U]>{
     }
 
     eval(context: Scope): [T,U] {
-        let leftScope = new Scope(new Map(), context);
+        let leftScope = new Scope(context);
         return [this._left.eval(leftScope),
             this._right.eval(leftScope)]; // leftScope may be modified now
     }

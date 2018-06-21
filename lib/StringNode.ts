@@ -11,7 +11,7 @@ export class StringNode implements Expression<string>{
         this._str = str;
     };
 
-    eval(context: Scope): string {
+    eval(): string {
         return this._str;
     }
 

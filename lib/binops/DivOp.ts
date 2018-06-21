@@ -8,6 +8,6 @@ export class DivOp extends BinaryOperation<number>{
     }
 
     eval(context: Scope): number{
-        return this.left.eval(new Scope(new Map(), context)) / this.right.eval(new Scope(new Map(), context));
+        return this.left.eval(new Scope(context)) / this.right.eval(new Scope(context));
     }
 }
