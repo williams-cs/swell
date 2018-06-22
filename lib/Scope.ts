@@ -1,7 +1,7 @@
 import {Option, Some, None} from 'space-lift'
 
 export class Scope{
-    private _map: Map<string, Option<any>>;
+    private _map: Map<string, Option<any>>; // can maps store multiple things?
     private _parent: Scope;
 
     constructor(parent: Scope){
@@ -23,9 +23,7 @@ export class Scope{
         if(this._map.has(name)){
             throw new Error("Scope already has var with name " + name);
         }
-        console.log("Setting map with name: " + name);
         this._map.set(name,None);
-        //console.log("Should be None: " + this._map.get(name));
     }
 
     // Assign/reassign value
@@ -33,11 +31,8 @@ export class Scope{
         this._map.set(name,Some(val)); //Some(val)?
     }
 
+    // look up value in context
     lookup(name: string, context: Scope): any{
-        console.log("Scope received name: " + name);
-        console.log("Got i? " + this._map.get("i"));
-        // Receiving name correctly... is it ever getting added to map?
-        
         if(context.map.has(name)){
             if(context.map.get(name).isDefined()){
                 return (context.map.get(name).get()); //extra get to manage Some()
@@ -66,5 +61,4 @@ export class Scope{
         }
         */
     }
-    // add get, set, etc
 }
