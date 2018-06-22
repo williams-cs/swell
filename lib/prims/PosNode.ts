@@ -1,6 +1,6 @@
 //import {Node} from './Node';
-import {Expression} from './Expression';
-import {Scope} from './Scope';
+import {Expression} from '../Expression';
+import {Scope} from '../Scope';
 
 // A Position Node
 

@@ -1,5 +1,5 @@
-import {Expression} from './Expression';
-import {Scope} from './Scope';
+import {Expression} from '../Expression';
+import {Scope} from '../Scope';
 
 export class VariableNode implements Expression<any>{
     private _name: string;
@@ -11,7 +11,7 @@ export class VariableNode implements Expression<any>{
 
     eval(context: Scope): any {
         //todo: grab val from context
-        return context.lookup(this._name);
+        return context.lookup(this._name, context);
     }
     // add get/set
     

@@ -1,5 +1,5 @@
 import {ColorNode} from './ColorNode';
-import {PosNode} from '../PosNode';
+import {PosNode} from '../prims/PosNode';
 
 export abstract class Shape{
     constructor(private _color: ColorNode, private _xPos: PosNode, private _yPos: PosNode){}

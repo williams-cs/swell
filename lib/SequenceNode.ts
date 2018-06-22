@@ -27,6 +27,9 @@ export class SequenceNode<T,U> implements Expression<[T,U]>{
 
     eval(context: Scope): [T,U] {
         let leftScope = new Scope(context);
+        //issue may be that vars are stuck in parent, don't get passed down
+        //console.log("In parent? ");
+        //console.log("maybe: " + context.lookup("i"));
         return [this._left.eval(leftScope),
             this._right.eval(leftScope)]; // leftScope may be modified now
     }

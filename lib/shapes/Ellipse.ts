@@ -1,6 +1,6 @@
 import {ColorNode} from './ColorNode';
 import {Shape} from './Shape';
-import {PosNode} from '../PosNode';
+import {PosNode} from '../prims/PosNode';
 
 export class Ellipse extends Shape{
     private width: number;

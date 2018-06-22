@@ -1,7 +1,7 @@
 import {BinaryOperation} from './BinaryOperation';
 import {Expression} from '../Expression';
 import {Scope} from '../Scope';
-import { VariableNode } from '../VariableNode';
+import { VariableNode } from '../vars/VariableNode';
 
 // left side is variable, right side is val
 export class AssignOp<T> extends BinaryOperation<T>{
@@ -17,15 +17,20 @@ export class AssignOp<T> extends BinaryOperation<T>{
             let left2: VariableNode = this.left as VariableNode;
             context.declare(left2.name);
 
-            console.log("Name: " + left2.name);
+            //console.log("Name: " + left2.name);
             //console.log("Map name: " + context.lookup(left2.name));
 
             let r = this.right.eval(context);
-            console.log("r: " + r);
+            //console.log("r: " + r);
+
             context.assign(left2.name,r);
 
-            console.log("What got assigned: " + left2.name + " " + r);
+            //console.log("What got assigned: " + left2.name + " " + r);
+            //console.log("Getting value from what got assigned: " + context.map.get(left2.name));
             //console.log("Val " + r);
+
+            //test for if it's in local scope, parent scope, etc
+            // need to check if it's in local scope, if not, keep going up
 
             return r;
         }

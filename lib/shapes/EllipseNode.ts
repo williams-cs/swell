@@ -2,7 +2,7 @@ import {Ellipse} from './Ellipse';
 //import {Node} from './Node';
 import {Shape} from './Shape';
 import {Expression} from '../Expression';
-import {PosNode} from '../PosNode';
+import {PosNode} from '../prims/PosNode';
 import {ColorNode} from './ColorNode';
 import {Scope} from '../Scope';
 
