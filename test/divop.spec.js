@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const DivOp_1 = require("../lib/binops/DivOp");
 const chai_1 = require("chai");
 require("mocha");
-const NumberNode_1 = require("../lib/NumberNode");
+const NumberNode_1 = require("../lib/prims/NumberNode");
 describe('A DivOp', () => {
     it('should evaluate to a number', () => {
         const op = new DivOp_1.DivOp(new NumberNode_1.NumberNode(4), new NumberNode_1.NumberNode(2));

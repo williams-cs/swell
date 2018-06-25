@@ -3,7 +3,7 @@ import {Scope} from '../lib/Scope';
 import {MinusOp} from '../lib/binops/MinusOp';
 import { assert,expect } from 'chai';
 import 'mocha';
-import { NumberNode } from '../lib/NumberNode';
+import { NumberNode } from '../lib/prims/NumberNode';
 
 describe('A minusop', () => {
     it('should evaluate to a number', () => {

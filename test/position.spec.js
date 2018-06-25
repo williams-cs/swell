@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const PosNode_1 = require("../lib/PosNode");
+const PosNode_1 = require("../lib/prims/PosNode");
 const chai_1 = require("chai");
 require("mocha");
 describe('A PositionNode', () => {

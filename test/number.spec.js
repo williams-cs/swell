@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const NumberNode_1 = require("../lib/NumberNode");
+const NumberNode_1 = require("../lib/prims/NumberNode");
 const chai_1 = require("chai");
 require("mocha");
 describe('A number', () => {

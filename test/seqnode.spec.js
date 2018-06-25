@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const SequenceNode_1 = require("../lib/SequenceNode");
 const chai_1 = require("chai");
 require("mocha");
-const NumberNode_1 = require("../lib/NumberNode");
+const NumberNode_1 = require("../lib/prims/NumberNode");
 const PlusOp_1 = require("../lib/binops/PlusOp");
 describe('A SeqNode', () => {
     it('should evaluate to a tuple', () => {

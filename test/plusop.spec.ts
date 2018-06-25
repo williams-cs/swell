@@ -2,7 +2,7 @@ import {BinaryOperation} from '../lib/binops/BinaryOperation';
 import {PlusOp} from '../lib/binops/PlusOp';
 import { assert,expect } from 'chai';
 import 'mocha';
-import { NumberNode } from '../lib/NumberNode';
+import { NumberNode } from '../lib/prims/NumberNode';
 import {Scope} from '../lib/Scope';
 
 describe('A plusop', () => {

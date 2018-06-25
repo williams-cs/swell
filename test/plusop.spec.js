@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const PlusOp_1 = require("../lib/binops/PlusOp");
 const chai_1 = require("chai");
 require("mocha");
-const NumberNode_1 = require("../lib/NumberNode");
+const NumberNode_1 = require("../lib/prims/NumberNode");
 const Scope_1 = require("../lib/Scope");
 describe('A plusop', () => {
     it('should evaluate to a number', () => {

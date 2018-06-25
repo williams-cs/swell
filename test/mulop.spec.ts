@@ -3,7 +3,7 @@ import {MulOp} from '../lib/binops/MulOp';
 import {Scope} from '../lib/Scope';
 import { assert,expect } from 'chai';
 import 'mocha';
-import { NumberNode } from '../lib/NumberNode';
+import { NumberNode } from '../lib/prims/NumberNode';
 
 describe('A MulOp', () => {
     it('should evaluate to a number', () => {

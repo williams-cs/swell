@@ -1,12 +1,12 @@
 import {Scope} from '../lib/Scope'
-import{StringNode} from '../lib/StringNode';
+import{StringNode} from '../lib/prims/StringNode';
 import { assert,expect } from 'chai';
 import 'mocha';
 
 describe('A string', () => {
     it('should evaluate to a string', () => {
         const teststring = new StringNode("hello world");
-        const output = teststring.eval();
+        const output = teststring.eval(null);
         expect(output).to.equal("hello world");
     });
 });

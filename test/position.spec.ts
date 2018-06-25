@@ -1,5 +1,5 @@
 import {Scope} from '../lib/Scope';
-import{PosNode} from '../lib/PosNode';
+import{PosNode} from '../lib/prims/PosNode';
 import { assert,expect } from 'chai';
 import 'mocha';
 

@@ -1,4 +1,4 @@
-import{NumberNode} from '../lib/NumberNode';
+import{NumberNode} from '../lib/prims/NumberNode';
 import {Scope} from '../lib/Scope';
 import { assert,expect } from 'chai';
 import 'mocha';

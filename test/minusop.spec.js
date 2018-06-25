@@ -4,7 +4,7 @@ const Scope_1 = require("../lib/Scope");
 const MinusOp_1 = require("../lib/binops/MinusOp");
 const chai_1 = require("chai");
 require("mocha");
-const NumberNode_1 = require("../lib/NumberNode");
+const NumberNode_1 = require("../lib/prims/NumberNode");
 describe('A minusop', () => {
     it('should evaluate to a number', () => {
         const op = new MinusOp_1.MinusOp(new NumberNode_1.NumberNode(2), new NumberNode_1.NumberNode(1));
