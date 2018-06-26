@@ -1,3 +1,4 @@
+/*
 import {SequenceNode} from '../lib/SequenceNode';
 
 import { assert,expect } from 'chai';
@@ -17,3 +18,4 @@ describe('A SeqNode', () => {
         expect(output).to.deep.equal([1,4]);
     });
 });
+*/
