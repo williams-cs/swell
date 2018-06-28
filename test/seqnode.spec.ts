@@ -1,4 +1,3 @@
-/*
 import {SequenceNode} from '../lib/SequenceNode';
 
 import { assert,expect } from 'chai';
@@ -13,9 +12,9 @@ describe('A SeqNode', () => {
         const node0 = new SequenceNode(num0,plus0);
         
         const output = node0.eval(null);
+        const output1 = node0.rightVal;
         //deep or strict equal?
         //expect(output).to.deep.equal([num0.eval(null),plus0.eval(null)])
-        expect(output).to.deep.equal([1,4]);
+        expect(output1).to.equal(4);
     });
 });
-*/

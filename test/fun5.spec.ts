@@ -5,6 +5,7 @@ import { assert,expect } from 'chai';
 import 'mocha';
 import { FunApp } from '../lib/funhouse/FunApp';
 import { SequenceNode } from '../lib/SequenceNode';
+import { Return, VariableNode } from '../lib';
 
 //def identity(x){
 //  return x;
@@ -13,11 +14,12 @@ import { SequenceNode } from '../lib/SequenceNode';
 // is this one typechecked?
 describe('An identity function', () => {
     it('should evaluate to its parameters', () => {
-        const fundef = new FunDef("identity",null,["x"]);
-        const funapp = new FunApp(fundef,[1]);
+        const fundef = new FunDef("identity",new Return(new VariableNode("x")),["x"]);
+        const funapp = new FunApp(fundef,["hi"]);
         let context = new Scope(null);
         const seq = new SequenceNode(fundef,funapp);
         const output = seq.eval(context);
-        expect(output).to.equal(1);
+        const output1 = seq.rightVal;
+        expect(output1).to.equal("hi");
     });
 });

@@ -1,5 +1,3 @@
-
-/*
 import {BinaryOperation} from '../lib/binops/BinaryOperation';
 import {Scope} from '../lib/Scope';
 import {SequenceNode} from '../lib/SequenceNode';
@@ -21,7 +19,8 @@ describe('A sequence test with declaration', () => {
         const right = new PlusOp(v,new NumberNode(2));
         const seq = new SequenceNode(left, right);
         const output = seq.eval(context);
-        expect(output).to.deep.equal([1,3]);
+        const output1 = seq.rightVal;
+        expect(output1).to.equal(3);
     });
     
     it('should evaluate to a different tuple', () =>{
@@ -34,7 +33,7 @@ describe('A sequence test with declaration', () => {
         const seq2 = new SequenceNode(assignb,mul);
         const seq1 = new SequenceNode(assigna,seq2);
         const output = seq1.eval(context1);
-        expect(output).to.deep.equal([4,[5,20]]);
+        const output1 = seq2.rightVal;
+        expect(output1).to.equal(20);
     });
 });
-*/

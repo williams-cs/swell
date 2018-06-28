@@ -8,6 +8,7 @@ import { SequenceNode } from '../lib/SequenceNode';
 import { VariableNode } from '../lib/vars/VariableNode';
 import { AssignOp } from '../lib/binops/AssignOp';
 import { NumberNode } from '../lib/prims/NumberNode';
+import { PlusOp } from '../lib';
 
 //let i = 1
 //def bar(x){
@@ -19,7 +20,7 @@ describe('A bar function to test static/dynamic scoping', () => {
     it('should evaluate to 2 if statically scoped', () => {
         const i1 = new VariableNode("i");
         const i1def = new AssignOp(i1,new NumberNode(1));
-        const fundef = new FunDef("bar",null,["x"]);
+        const fundef = new FunDef("bar",new PlusOp(new VariableNode("x"), new VariableNode("i")),["x"]);
         
         const i2 = new VariableNode("i");
         const i2def = new AssignOp(i2,new NumberNode(2));
