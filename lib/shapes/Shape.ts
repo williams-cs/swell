@@ -1,8 +1,8 @@
 import {ColorNode} from './ColorNode';
-import {PosNode} from '../prims/PosNode';
+import { NumberNode } from '../prims/NumberNode';
 
 export abstract class Shape{
-    constructor(private _color: ColorNode, private _xPos: PosNode, private _yPos: PosNode){}
+    constructor(private _color: ColorNode, private _xPos: NumberNode, private _yPos: NumberNode){}
     get color(): ColorNode{
         return this._color;
     }
@@ -10,17 +10,17 @@ export abstract class Shape{
         this._color = color;
     }
     
-    get xPos(): PosNode{
+    get xPos(): NumberNode{
         return this._xPos;
     }
-    set xPos(xPos: PosNode){
+    set xPos(xPos: NumberNode){
         this._xPos = xPos;
     }
 
-    get yPos(): PosNode{
+    get yPos(): NumberNode{
         return this._yPos;
     }
-    set yPos(yPos: PosNode){
+    set yPos(yPos: NumberNode){
         this.yPos = yPos;
     }
 

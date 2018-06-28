@@ -8,7 +8,7 @@ import { SequenceNode } from '../lib/SequenceNode';
 import { VariableNode } from '../lib/vars/VariableNode';
 import { AssignOp } from '../lib/binops/AssignOp';
 import { NumberNode } from '../lib/prims/NumberNode';
-import { PlusOp } from '../lib';
+import { PlusOp, Return } from '../lib';
 
 //let i = 1
 //def bar(x){
@@ -17,18 +17,24 @@ import { PlusOp } from '../lib';
 //bar(1)
 
 describe('A bar function to test static/dynamic scoping', () => {
-    it('should evaluate to 2 if statically scoped', () => {
+    it('should evaluate to 2 if lexically scoped', () => {
         const i1 = new VariableNode("i");
         const i1def = new AssignOp(i1,new NumberNode(1));
-        const fundef = new FunDef("bar",new PlusOp(new VariableNode("x"), new VariableNode("i")),["x"]);
+        const fundef = new FunDef("bar",new Return(new PlusOp(new VariableNode("x"), new VariableNode("i"))),["x"]);
         
         const i2 = new VariableNode("i");
         const i2def = new AssignOp(i2,new NumberNode(2));
 
-        const funapp = new FunApp(fundef,[2]);
+        const funapp = new FunApp("bar",[1]);
         let context = new Scope(null);
-        const seq = new SequenceNode(fundef,funapp);
-        const output = seq.eval(context);
-        expect(output).to.equal(2);
+
+        const seq3 = new SequenceNode(i2def,funapp);
+        const seq2 = new SequenceNode(fundef,seq3);
+        const seq1 = new SequenceNode(i1def,seq2);
+
+        //const i2def = new AssignOp(new VariableNode("i"), new NumberNode(2));
+        const output = seq1.eval(context);
+        const output1 = seq3.rightVal;
+        expect(output1).to.equal(2);
     });
 });

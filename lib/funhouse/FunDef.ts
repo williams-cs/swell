@@ -30,6 +30,10 @@ export class FunDef<T> implements Expression<T>{
         return null;
     }
 
+    draw(context: Scope){
+        //NO
+    }
+
     // Get methods
     get name(): string{
         return this._name;

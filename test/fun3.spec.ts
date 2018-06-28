@@ -6,7 +6,6 @@ import 'mocha';
 import { FunApp } from '../lib/funhouse/FunApp';
 import { SequenceNode } from '../lib/SequenceNode';
 import { Return, VariableNode, PlusOp, NumberNode, AssignOp } from '../lib';
-import { ADDRGETNETWORKPARAMS } from 'dns';
 
 //let i = 1
 //def closure(x){
@@ -17,12 +16,15 @@ describe('A closure function', () => {
     it('should evaluate to 3', () => {
         const i1 = new AssignOp(new VariableNode("i"),new NumberNode(1));
         // i1?
-        const fundef = new FunDef("closure",new Return(new PlusOp(new VariableNode("x"),new VariableNode("i"))),["x"]);
-        const funapp = new FunApp(fundef,[2]);
+        const xvar = new VariableNode("x");
+        const ivar = new VariableNode("i");
+        const fundef = new FunDef("closure",new Return(new PlusOp(xvar,ivar)),["x"]);
+        const funapp = new FunApp("closure",[2]);
         let context = new Scope(null);
-        const seq = new SequenceNode(fundef,funapp);
-        const output = seq.eval(context);
-        const output1 = seq.rightVal;
+        const seq1 = new SequenceNode(fundef,funapp);
+        const seq2 = new SequenceNode(i1,seq1);
+        const output = seq2.eval(context);
+        const output1 = seq1.rightVal;
         expect(output1).to.equal(3);
     });
 });

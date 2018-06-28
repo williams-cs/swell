@@ -32,7 +32,7 @@ describe('A sequence test with declaration', () => {
         const seq2 = new SequenceNode_1.SequenceNode(assignb, mul);
         const seq1 = new SequenceNode_1.SequenceNode(assigna, seq2);
         const output = seq1.eval(context1);
-        const output1 = seq2.rightVal;
+        const output1 = seq2.rightVal; // should this be seq1?
         chai_1.expect(output1).to.equal(20);
     });
 });

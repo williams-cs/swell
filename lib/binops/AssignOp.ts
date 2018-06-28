@@ -12,6 +12,10 @@ export class AssignOp<T> extends BinaryOperation<T>{
         }
     }
 
+    draw(context: Scope): void {
+    
+    }
+    
     eval(context: Scope): T{
         if(this.left instanceof VariableNode){
             let left2: VariableNode = this.left as VariableNode;

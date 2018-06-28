@@ -9,8 +9,13 @@ export class VariableNode implements Expression<any>{
         //this._val = val;
     }
 
+    draw(context: Scope): void {
+    
+    }
+    
     eval(context: Scope): any {
         //todo: grab val from context
+        console.log("looking up: " + this._name);
         return context.lookup(this._name, context);
     }
     // add get/set

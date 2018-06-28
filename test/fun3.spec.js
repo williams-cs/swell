@@ -15,12 +15,15 @@ describe('A closure function', () => {
     it('should evaluate to 3', () => {
         const i1 = new lib_1.AssignOp(new lib_1.VariableNode("i"), new lib_1.NumberNode(1));
         // i1?
-        const fundef = new FunDef_1.FunDef("closure", new lib_1.Return(new lib_1.PlusOp(new lib_1.VariableNode("x"), new lib_1.VariableNode("i"))), ["x"]);
-        const funapp = new FunApp_1.FunApp(fundef, [2]);
+        const xvar = new lib_1.VariableNode("x");
+        const ivar = new lib_1.VariableNode("i");
+        const fundef = new FunDef_1.FunDef("closure", new lib_1.Return(new lib_1.PlusOp(xvar, ivar)), ["x"]);
+        const funapp = new FunApp_1.FunApp("closure", [2]);
         let context = new Scope_1.Scope(null);
-        const seq = new SequenceNode_1.SequenceNode(fundef, funapp);
-        const output = seq.eval(context);
-        const output1 = seq.rightVal;
+        const seq1 = new SequenceNode_1.SequenceNode(fundef, funapp);
+        const seq2 = new SequenceNode_1.SequenceNode(i1, seq1);
+        const output = seq2.eval(context);
+        const output1 = seq1.rightVal;
         chai_1.expect(output1).to.equal(3);
     });
 });

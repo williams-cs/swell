@@ -12,6 +12,14 @@ export class ColorNode implements Expression<string>{
         this._blue = blue;
     };
 
+    draw(context: Scope): void {
+    
+    }
+
+    eval(context: Scope){
+        return this._red + " " + this._green + " " + this._blue;
+    }
+
     get red(): number{
         return this._red;
     }
@@ -31,9 +39,5 @@ export class ColorNode implements Expression<string>{
     }
     set blue(blue: number){
         this._blue = blue;
-    }
-    
-    eval(context: Scope){
-        return this._red + " " + this._green + " " + this._blue;
     }
 }

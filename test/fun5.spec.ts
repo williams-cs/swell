@@ -15,7 +15,7 @@ import { Return, VariableNode } from '../lib';
 describe('An identity function', () => {
     it('should evaluate to its parameters', () => {
         const fundef = new FunDef("identity",new Return(new VariableNode("x")),["x"]);
-        const funapp = new FunApp(fundef,["hi"]);
+        const funapp = new FunApp("identity",["hi"]);
         let context = new Scope(null);
         const seq = new SequenceNode(fundef,funapp);
         const output = seq.eval(context);

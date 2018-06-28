@@ -15,6 +15,10 @@ export class StringNode implements Expression<string>{
         return this._str;
     }
 
+    draw(context: Scope): void {
+    
+    }
+
     set str(value: string){
         this._str = value;
     }

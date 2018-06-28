@@ -13,6 +13,10 @@ export class NumberNode implements Expression <number>{
         this._val = val;
     };
 
+    draw(context: Scope): void {
+    
+    }
+    
     eval(context: Scope): number {
         return this._val;
     }

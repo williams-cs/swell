@@ -2,20 +2,20 @@ import {Ellipse} from './Ellipse';
 //import {Node} from './Node';
 import {Shape} from './Shape';
 import {Expression} from '../Expression';
-import {PosNode} from '../prims/PosNode';
 import {ColorNode} from './ColorNode';
 import {Scope} from '../Scope';
+import { NumberNode } from '../prims/NumberNode';
 
 export class EllipseNode extends Shape implements Expression<Ellipse>{
     //private ellipse: Ellipse;
     //private parent: Node;
     //public xPos: PosNode;
     //public yPos: PosNode;
-    private _width: PosNode;
-    private _height: PosNode; 
+    private _width: NumberNode;
+    private _height: NumberNode; 
 
     constructor(//ellipse: Ellipse, 
-        color: ColorNode, xPos: PosNode, yPos: PosNode, width: PosNode, height: PosNode){
+        color: ColorNode, xPos: NumberNode, yPos: NumberNode, width: NumberNode, height: NumberNode){
     //this.ellipse = ellipse;
     // Make width and height NumNodes?
     super(color, xPos, yPos);
@@ -23,20 +23,9 @@ export class EllipseNode extends Shape implements Expression<Ellipse>{
     this._height = height;
     }
 
-    get width(): PosNode{
-        return this._width;
+    draw(context: Scope): void {
+    
     }
-    set width(width: PosNode){
-        this._width = width;
-    }
-
-    get heigth(): PosNode{
-        return this._height;
-    }
-    set height(height: PosNode){
-        this._height = height;
-    }
-    // get methods? 
 
     eval(context: Scope): any {
         // how evaluate to an ellipse?
@@ -44,4 +33,19 @@ export class EllipseNode extends Shape implements Expression<Ellipse>{
     }
 
     move(): void{}
+
+    get width(): NumberNode{
+        return this._width;
+    }
+    set width(width: NumberNode){
+        this._width = width;
+    }
+
+    get heigth(): NumberNode{
+        return this._height;
+    }
+    set height(height: NumberNode){
+        this._height = height;
+    }
+    // get methods? 
 }

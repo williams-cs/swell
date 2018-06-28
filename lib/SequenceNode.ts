@@ -2,35 +2,48 @@ import {Expression} from './Expression';
 import {Scope} from './Scope';
 
 
-export class SequenceNode<T,U> implements Expression<[T,U]>{
-    private _left: Expression<T>;
-    private _right: Expression<U>;
+export class SequenceNode implements Expression<void>{
+    private _left: Expression<any>;
+    private _right: Expression<any>;
+    private _leftVal: any;
+    private _rightVal: any;
 
-    constructor(left: Expression<T>, right: Expression<U>){
+    constructor(left: Expression<any>, right: Expression<any>){
         this._left = left;
         this._right = right;
     }
     
-    set left(left: Expression<T>){
+    draw(context: Scope): void {
+    
+    }
+
+    eval(context: Scope): void {
+        let leftScope = new Scope(context);
+        
+        //throwing away after evaling
+        this._leftVal = this._left.eval(leftScope);
+        this._rightVal = this._right.eval(leftScope); // leftScope may be modified now
+    }
+
+    set left(left: Expression<any>){
         this._left = left;
     }
-    get left(): Expression<T>{
+    get left(): Expression<any>{
         return this._left;
     }
 
-    set right(right: Expression<U>){
+    set right(right: Expression<any>){
         this._right = right;
     }
-    get right(): Expression<U>{
+    get right(): Expression<any>{
         return this._right;
     }
 
-    eval(context: Scope): [T,U] {
-        let leftScope = new Scope(context);
-        //issue may be that vars are stuck in parent, don't get passed down
-        //console.log("In parent? ");
-        //console.log("maybe: " + context.lookup("i"));
-        return [this._left.eval(leftScope),
-            this._right.eval(leftScope)]; // leftScope may be modified now
+    get leftVal(): any{
+        return this._leftVal;
+    }
+    
+    get rightVal(): any{
+        return this._rightVal;
     }
 }

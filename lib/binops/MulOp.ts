@@ -7,6 +7,10 @@ export class MulOp extends BinaryOperation<number>{
         super(left,right);
     }
 
+    draw(context: Scope): void {
+    
+    }
+    
     eval(context: Scope): number{
         return this.left.eval(new Scope(context)) * this.right.eval(new Scope(context));
     }
