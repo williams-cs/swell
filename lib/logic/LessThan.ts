@@ -1,6 +1,6 @@
 import { Expression, Scope } from "..";
 
-export class Or implements Expression<any>{
+export class LessThan implements Expression<any>{
     private _left: Expression<any>;
     private _right: Expression<any>;
 
@@ -10,7 +10,8 @@ export class Or implements Expression<any>{
     }
 
     eval(context: Scope): boolean{
-        return (this._left.eval(context) || this._right.eval(context));
+        console.log(this._left.eval(context) + " is less than " + this._right.eval(context));
+        return (this._left.eval(context) < this._right.eval(context));
     }
 
     draw(){

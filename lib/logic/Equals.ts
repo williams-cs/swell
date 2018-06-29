@@ -16,4 +16,11 @@ export class Equals implements Expression<any>{
     draw(){
 
     }
+
+    get left(): Expression<any>{
+        return this._left;
+    }
+    get right(): Expression<any>{
+        return this._right;
+    }
 }
