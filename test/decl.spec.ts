@@ -14,6 +14,7 @@ describe('A sequence test with declaration', () => {
         // var i = i
         // i + 2; 
         let context = new Scope(null);
+        //context.doc = null;
         const v = new VariableNode("i");
         const left = new AssignOp(v, new NumberNode(1));
         const right = new PlusOp(v,new NumberNode(2));
