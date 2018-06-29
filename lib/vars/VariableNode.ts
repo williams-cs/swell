@@ -15,7 +15,7 @@ export class VariableNode implements Expression<any>{
     
     eval(context: Scope): any {
         //todo: grab val from context
-        console.log("looking up: " + this._name);
+        //console.log("looking up: " + this._name);
         return context.lookup(this._name, context);
     }
     // add get/set

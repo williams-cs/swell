@@ -1,6 +1,6 @@
 import {ColorNode} from './ColorNode';
 import {Shape} from './Shape';
-import { Effect } from '../Effect';
+import { Effect } from '../Ignore for now/Effect';
 import { Expression } from '../Expression';
 import { NumberNode } from '../prims/NumberNode';
 

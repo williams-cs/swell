@@ -16,9 +16,9 @@ export class PlusOp extends BinaryOperation<number>{
         let l = this.left;
         let r = this.right;
         let le = l.eval(new Scope(context));
-        console.log("Add left: " + le);
+        //console.log("Add left: " + le);
         let re = r.eval(new Scope(context));
-        console.log("Add right: " + r);
+        //console.log("Add right: " + r);
         return le + re;
     }
 }
