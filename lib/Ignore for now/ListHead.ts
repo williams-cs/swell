@@ -1,3 +1,4 @@
+/*
 import { Expression } from '../Expression';
 import { ListNode } from './ListNode';
 import { Scope } from '../Scope';
@@ -37,3 +38,4 @@ export class ListHead implements Expression<any>{
         return this._id;
     }
 }
+*/

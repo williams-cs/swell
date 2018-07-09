@@ -27,9 +27,4 @@ export class NumberNode implements Expression <number>{
     set val(value: number){
         this._val = value;
     }
-    /*
-    get parent(): Node{
-        return this.parent;
-    }
-    */
 }

@@ -1,26 +1,32 @@
 import { Expression } from "../Expression";
 import { Scope } from "../Scope";
-import { ListHead } from "./ListHead";
+//import { ListHead } from "./ListHead";
 
 export class ListNode implements Expression<any>{
-    private _val: Expression<any>;
-    private _tail: ListNode;
-    private _head: ListHead;
-    private _id: string;
+    private _list: Expression<any>[];
+    private _evalList: any[];
+    //private _tail: ListNode;
+    //private _head: ListHead;
+    //private _id: string;
     //private _list: Expression<any>[];
     //private _headID: string;
 
     // TODO: List interface/class
 
-    constructor(val: Expression<any>, tail: ListNode, id: number){
+    constructor(list: Expression<any>[]){
         //this._head = head;
-        this._val = val;
-        this._tail = tail;
+        this._list = list;
+        this._evalList = [];
+        //this._tail = tail;
         //this._list = [];
         //this._headID = v4();
     }
 
     eval(context: Scope): any{
+        for(let expr of this._list){
+            this._evalList.push(expr.eval(context));
+        }
+        return this._evalList;
         // binds list to context if top of list
         /*
         if(!context.map.get("headID")){
@@ -38,6 +44,7 @@ export class ListNode implements Expression<any>{
         }
         */
 
+        /*
         // update list in context
         context.lookup(this._head.id,context).push(this._val.eval(context));
         context.assign(this._head.id,context.lookup(this._head.id,context));
@@ -47,12 +54,16 @@ export class ListNode implements Expression<any>{
             return this._tail.eval(context);
         }
         return context.lookup(this._head.id, context);
+        */
     }
 
     draw(){
 
     }
-
+    get list(): Expression<any>[]{
+        return this._list;
+    }
+    /*
     get head(): ListHead{
         return this._head;
     }
@@ -62,4 +73,5 @@ export class ListNode implements Expression<any>{
     get tail(): Expression<any>{
         return this._tail;
     }
+    */
 }

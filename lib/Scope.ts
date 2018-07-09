@@ -6,10 +6,12 @@ export class Scope{
     private _map: Map<string, Option<any>>; 
     private _parent: Scope;
     private _retValID: Option<string> = None;
+    //private _doc: Option<Document>;
 
     constructor(parent: Scope){
         this._map = new Map();
         this._parent = parent;
+        //this._doc = parent.doc;
     }
 
     copy(){
@@ -74,6 +76,14 @@ export class Scope{
     set retValID(val: Option<string>){
         this._retValID = val;
     }
+/*
+    get doc(): Option<Document>{
+        return this._doc;
+    }
+    set doc(doc: Option<Document>){
+        this._doc = doc;
+    }
+    */
     // Declares with val of None
 
 }
