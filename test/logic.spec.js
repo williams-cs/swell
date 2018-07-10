@@ -113,4 +113,13 @@ describe('Logic operations', () => {
         const output = var9.eval(new lib_1.Scope(null));
         chai_1.expect(output).to.equal(false);
     });
+    it('less than with var should evaluate to true', () => {
+        const x10 = new lib_1.VariableNode("x");
+        const decl10 = new lib_1.AssignOp(x10, new lib_1.NumberNode(1));
+        const var10 = new LessThan_1.LessThan(x10, new lib_1.NumberNode(4));
+        const seq10 = new lib_1.SequenceNode(decl10, var10);
+        const output = seq10.eval(new lib_1.Scope(null));
+        const output1 = seq10.rightVal;
+        chai_1.expect(output1).to.equal(true);
+    });
 });

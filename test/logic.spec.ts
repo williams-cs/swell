@@ -1,5 +1,5 @@
 import { Equals } from "../lib/logic/Equals";
-import { NumberNode, Scope } from "../lib";
+import { NumberNode, Scope, VariableNode, AssignOp, SequenceNode } from "../lib";
 import { assert,expect } from 'chai';
 import 'mocha';
 import { And } from "../lib/logic/And";
@@ -108,5 +108,14 @@ describe('Logic operations', () => {
         const var9 = new NotEqual(new NumberNode(1),new NumberNode(1));
         const output = var9.eval(new Scope(null));
         expect(output).to.equal(false);
+    });
+    it('less than with var should evaluate to true', () => {
+        const x10 = new VariableNode("x");
+        const decl10 = new AssignOp(x10,new NumberNode(1));
+        const var10 = new LessThan(x10,new NumberNode(4));
+        const seq10 = new SequenceNode(decl10,var10);
+        const output = seq10.eval(new Scope(null));
+        const output1 = seq10.rightVal;
+        expect(output1).to.equal(true);
     });
 });
