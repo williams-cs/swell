@@ -10,7 +10,7 @@ export class LessThan implements Expression<any>{
     }
 
     eval(context: Scope): boolean{
-        console.log(this._left.eval(context) + " is less than " + this._right.eval(context));
+        //console.log(this._left.eval(context) + " is less than " + this._right.eval(context));
         return (this._left.eval(context) < this._right.eval(context));
     }
 

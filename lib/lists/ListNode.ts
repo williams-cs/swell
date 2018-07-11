@@ -5,21 +5,12 @@ import { Scope } from "../Scope";
 export class ListNode implements Expression<any>{
     private _list: Expression<any>[];
     private _evalList: any[];
-    //private _tail: ListNode;
-    //private _head: ListHead;
-    //private _id: string;
-    //private _list: Expression<any>[];
-    //private _headID: string;
 
     // TODO: List interface/class
 
     constructor(list: Expression<any>[]){
-        //this._head = head;
         this._list = list;
         this._evalList = [];
-        //this._tail = tail;
-        //this._list = [];
-        //this._headID = v4();
     }
 
     eval(context: Scope): any{
@@ -63,15 +54,4 @@ export class ListNode implements Expression<any>{
     get list(): Expression<any>[]{
         return this._list;
     }
-    /*
-    get head(): ListHead{
-        return this._head;
-    }
-    get val(): Expression<any>{
-        return this._val;
-    }
-    get tail(): Expression<any>{
-        return this._tail;
-    }
-    */
 }

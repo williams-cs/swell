@@ -6,6 +6,7 @@ export class Scope{
     private _map: Map<string, Option<any>>; 
     private _parent: Scope;
     private _retValID: Option<string> = None;
+    public globalFunID = 100000000;
     //private _doc: Option<Document>;
 
     constructor(parent: Scope){

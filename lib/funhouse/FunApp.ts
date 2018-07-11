@@ -34,10 +34,11 @@ export class FunApp<T> implements Expression<T>{
         // the ID of the return value
         //let id = v5("warp-lab.williams.edu",v5.DNS); // generate a unique ID for this function application
         //let id2 = v5("warp-lab.williams.edu",v5.DNS);
-        let id = v4();
-        //let id2 = v4();
-        //console.log("ID1: " + id);
-        //console.log("ID2: " + id2);
+
+        //let id = v4();
+        let id = context.globalFunID;
+        context.globalFunID++;
+
 
         child.retValID = Some(id); // new method
         //console.log(child.retValID.get());
@@ -50,7 +51,7 @@ export class FunApp<T> implements Expression<T>{
             return this._defaultValue;
         } catch (e) {
             // make sure that we catch only the error intended for us
-            if (e instanceof ReturnError && e.ID == id) {
+            if (e instanceof ReturnError && parseInt(e.ID) == id) {
                 return e.retVal;
             }
             // error was not intended for us; rethrow
