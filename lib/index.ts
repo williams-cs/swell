@@ -1,3 +1,5 @@
+import { ListNode } from './lists/ListNode';
+
 export {AssignOp} from './binops/AssignOp';
 export {BinaryOperation} from './binops/BinaryOperation';
 export {DivOp} from './binops/DivOp';
@@ -5,11 +7,16 @@ export {MinusOp} from './binops/MinusOp';
 export {MulOp} from './binops/MulOp';
 export {PlusOp} from './binops/PlusOp';
 
+export {ListNode} from './lists/ListNode';
+
+export {Conditional} from './conditionals/Conditional';
+
 export {FunApp} from './funhouse/FunApp';
 export {FunDef} from './funhouse/FunDef';
 
 export {NumberNode} from './prims/NumberNode';
 export {StringNode} from './prims/StringNode';
+export {BooleanNode} from './prims/BooleanNode';
 
 export {ColorNode} from './shapes/ColorNode';
 export {Ellipse} from './shapes/Ellipse';

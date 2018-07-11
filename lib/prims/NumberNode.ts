@@ -12,13 +12,13 @@ export class NumberNode implements Expression <number>{
         //super(parent);
         this._val = val;
     };
-
-    draw(context: Scope): void {
-    
-    }
     
     eval(context: Scope): number {
         return this._val;
+    }
+
+    draw(context: Scope): void {
+    
     }
 
     get val(): number{

@@ -1,17 +1,38 @@
-import { IfOp } from "./IfOp";
-import { ElseIfOp } from "./ElseIfOp";
 import { Expression, Scope } from "..";
-import { ElseOp } from "./ElseOp";
 import { isNull, isUndefined, isNullOrUndefined } from "util";
 
 export class Conditional implements Expression<any>{
-    private _ifOp: IfOp;
-    private _elseOp: ElseOp;
-    private _elseIfOps: ElseIfOp[];
-    private _ifRes: any;
-    private _elseIfRes: any;
-    private _elseRes: any;
+    private _test: Expression<boolean>;
+    private _trueBranch: Expression<any>;
+    private _falseBranch: Expression<any>;
+    //private _ifOp: IfOp;
+    //private _elseOp: ElseOp;
+    //private _elseIfOps: ElseIfOp[];
+    //private _ifRes: any;
+    //private _elseIfRes: any;
+    //private _elseRes: any;
     
+    constructor(test: Expression<any>, trueBranch: Expression<any>, falseBranch?: Expression<any>){
+        this._test = test;
+        this._trueBranch = trueBranch;
+        this._falseBranch = falseBranch;
+    }
+
+    eval(context: Scope){
+        let childCtx = new Scope(context);
+
+        let res = this._test.eval(childCtx);
+        if(typeof res != 'boolean'){
+            throw new Error("The condition must be a boolean expression.");
+        } 
+        if(res){
+            return this._trueBranch.eval(childCtx);
+        } else if(this._falseBranch != null) { // check if else/else if is null or undefined
+            return this._falseBranch.eval(childCtx); // possibly a bad idea
+        }
+    }
+
+    /*
     constructor(ifOp: IfOp, elseOp?: ElseOp, ...elseIfOps: ElseIfOp[]){
         this._ifOp = ifOp;
         this._elseOp = elseOp;
@@ -19,6 +40,17 @@ export class Conditional implements Expression<any>{
     }
 
     eval(context: Scope){
+
+        if(this._ifOp.cond.eval(context)){
+            return this._ifOp.eval(context);
+        } else {
+            for(let entry of this._elseIfOps){
+                if(entry.cond.eval(context)) return entry.eval(context);
+            }
+        }
+        return this._elseOp.eval(context);
+
+        
         this._ifRes = this._ifOp.eval(context); // evaluate if
         console.log("ifres (in Conditional): " + this._ifRes);
         console.log("elseOp: " + this._elseOp);
@@ -34,8 +66,10 @@ export class Conditional implements Expression<any>{
             console.log("Evaluating the Else");
             return this._elseOp.eval(context);
         } 
+        
         //return null; // necessary?
     }
+    */
 
     draw(){
 

@@ -1,6 +1,5 @@
 import { Expression } from "./Expression";
 import { Scope } from "./Scope";
-import { VariableNode } from "./vars/VariableNode";
 import { ReturnError } from "./ReturnError";
 
 export class Return implements Expression<any>{

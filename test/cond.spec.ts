@@ -1,20 +1,69 @@
 import { assert,expect } from 'chai';
 import 'mocha';
 import { Scope, SequenceNode, NumberNode, AssignOp, VariableNode, Return } from '../lib';
-import { IfOp } from '../lib/conditionals/IfOp';
 import { LessThan } from '../lib/logic/LessThan';
 import { Conditional } from '../lib/conditionals/Conditional';
-import { ElseOp } from '../lib/conditionals/ElseOp';
+import { BooleanNode } from '../lib/prims/BooleanNode';
 
 // x = 2
 // if(x < 3) return 1
+
+// if(var x = true)...
+ 
+// if(x)... (x is boolean)
 
 // x = 2
 // if(x < 3) return 1
 // else return 2
 
+// if(...)
+// else if(...)
+// else(...)
+
+
 describe('A conditional statement', () => {
-    it('should evaluate to 1', () => {
+    it('basic if should evaluate to 1', () => {
+        const body1 = new NumberNode(1); // works with this, not with return
+        const x = new VariableNode("x");
+        const xnum = new NumberNode(2);
+        const decl1 = new AssignOp(x, xnum);
+        const log1 = new LessThan(x,new NumberNode(3));
+        const cond1 = new Conditional(log1,body1);
+        const seq1 = new SequenceNode(decl1,cond1);
+        const output = seq1.eval(new Scope(null));
+        const output1 = seq1.rightVal;
+        expect(output1).to.equal(1);
+    });
+
+    it('declaring a boolean in if statement should evaluate to 1', () => {
+        // if(var x = true) return 1
+        const body2 = new NumberNode(1); // works with this, not with return
+        const x = new VariableNode("x");
+        const xbool = new BooleanNode(true);
+        const decl2 = new AssignOp(x, xbool);
+        //const log1 = new Equals(x,new NumberNode(3));
+        const cond2 = new Conditional(decl2,body2);
+        //const seq1 = new SequenceNode(decl1,cond1);
+        const output = cond2.eval(new Scope(null));
+        //const output1 = seq1.rightVal;
+        expect(output).to.equal(1);
+    });
+
+    it('if(true) should evaluate to 1', () => {
+        const body3 = new NumberNode(1); // works with this, not with return
+        const x = new VariableNode("x");
+        const xbool = new BooleanNode(true);
+        const decl3 = new AssignOp(x, xbool);
+        //const log1 = new LessThan(x,new NumberNode(3));
+        const cond3 = new Conditional(x,body3);
+        const seq3 = new SequenceNode(decl3,cond3);
+        const output = seq3.eval(new Scope(null));
+        const output1 = seq3.rightVal;
+        expect(output1).to.equal(1);
+    });
+
+});
+        /*
         let context = new Scope(null);
         //const body1 = new Return(new NumberNode(1));
         const body1 = new NumberNode(1); // works with this, not with return
@@ -46,6 +95,7 @@ describe('A conditional statement', () => {
         const output2 = seq2.rightVal;
         expect(output2).to.equal(2);
     });
+    */
    /*
    describe('An else statement', () => {
     it('should evaluate to 1', () => {
@@ -60,4 +110,3 @@ describe('A conditional statement', () => {
     });
 });
 */
-});
