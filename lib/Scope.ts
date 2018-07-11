@@ -1,6 +1,4 @@
 import {Option, Some, None} from 'space-lift'
-import uuid = require('uuid');
-import v4 = require('uuid/v4');
 
 export class Scope{
     private _map: Map<string, Option<any>>; 

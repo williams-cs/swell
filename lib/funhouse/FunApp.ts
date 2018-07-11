@@ -1,8 +1,6 @@
 import { Expression } from "../Expression";
 import { Scope } from "../Scope";
 import { FunDef } from "./FunDef";
-import uuid = require('uuid');
-import v4 = require('uuid/v4');
 import { ReturnError } from "../ReturnError";
 import { Some } from "space-lift";
 

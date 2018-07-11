@@ -5,9 +5,7 @@
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "dependencies": {
-    "@types/uuid": "^3.4.3",
-    "space-lift": "^0.7.2",
-    "uuid": "^3.3.0"
+    "space-lift": "^0.7.2"
   },
   "devDependencies": {
     "@types/chai": "^4.1.3",
