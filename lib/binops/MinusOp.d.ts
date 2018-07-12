@@ -1,8 +1,9 @@
 import { BinaryOperation } from './BinaryOperation';
 import { Expression } from '../Expression';
 import { Scope } from '../structural/Scope';
-export declare class MinusOp extends BinaryOperation<number> {
-    constructor(left: Expression<number>, right: Expression<number>);
+import { NumberNode } from '../prims/NumberNode';
+export declare class MinusOp extends BinaryOperation<NumberNode> {
+    constructor(left: Expression<NumberNode>, right: Expression<NumberNode>);
     draw(context: Scope, x: number, y: number): void;
-    eval(context: Scope): number;
+    eval(context: Scope): NumberNode;
 }

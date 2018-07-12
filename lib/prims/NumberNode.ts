@@ -5,7 +5,7 @@ import {Scope} from '../structural/Scope';
 // Nodes representing numbers
 // Should abstract Node class implement Expression?
 
-export class NumberNode implements Expression <number>{
+export class NumberNode implements Expression <NumberNode>{
     private _val: number;
 
     constructor(val: number){
@@ -13,8 +13,8 @@ export class NumberNode implements Expression <number>{
         this._val = val;
     };
     
-    eval(context: Scope): number {
-        return this._val;
+    eval(context: Scope): NumberNode {
+        return this;
     }
 
     draw(context: Scope, x: number, y: number): void {

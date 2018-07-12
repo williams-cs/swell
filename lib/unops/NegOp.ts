@@ -1,9 +1,10 @@
 import {UnaryOperation} from './UnaryOperation';
 import {Expression} from '../Expression';
 import {Scope} from '../structural/Scope';
+import { NumberNode } from '../prims/NumberNode';
 
-export class NegOp extends UnaryOperation<number>{
-    constructor(val: Expression<number>){
+export class NegOp extends UnaryOperation<NumberNode>{
+    constructor(val: Expression<NumberNode>){
         super(val);
     }
 
@@ -11,8 +12,8 @@ export class NegOp extends UnaryOperation<number>{
     
     }
     
-    eval(context: Scope): number{
-        return -this.val.eval(context);
+    eval(context: Scope): NumberNode{
+        return new NumberNode(-this.val.eval(context));
     }
 
     // put in UnaryOp class
