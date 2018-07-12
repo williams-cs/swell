@@ -16,3 +16,4 @@ describe('A FunDef', () => {
         chai_1.expect(output).to.equal(testDef);
     });
 });
+//# sourceMappingURL=fundef.spec.js.map

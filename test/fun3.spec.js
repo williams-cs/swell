@@ -27,3 +27,4 @@ describe('A closure function', () => {
         chai_1.expect(output1).to.equal(3);
     });
 });
+//# sourceMappingURL=fun3.spec.js.map

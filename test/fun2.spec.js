@@ -20,3 +20,4 @@ describe('An constant function', () => {
         chai_1.expect(output1).to.equal(1);
     });
 });
+//# sourceMappingURL=fun2.spec.js.map

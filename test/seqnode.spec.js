@@ -14,6 +14,7 @@ describe('A SeqNode', () => {
         const output1 = node0.rightVal;
         //deep or strict equal?
         //expect(output).to.deep.equal([num0.eval(null),plus0.eval(null)])
-        chai_1.expect(output1).to.equal(4);
+        chai_1.expect(output1).to.eql(new NumberNode_1.NumberNode(4));
     });
 });
+//# sourceMappingURL=seqnode.spec.js.map

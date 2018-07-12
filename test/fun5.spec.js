@@ -22,3 +22,4 @@ describe('An identity function', () => {
         chai_1.expect(output1).to.equal("hi");
     });
 });
+//# sourceMappingURL=fun5.spec.js.map

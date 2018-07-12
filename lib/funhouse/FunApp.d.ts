@@ -8,4 +8,5 @@ export declare class FunApp<T> implements Expression<T> {
     eval(context: Scope): any;
     draw(context: Scope, x: number, y: number): void;
     readonly name: string;
+    readonly args: Expression<{}>[];
 }

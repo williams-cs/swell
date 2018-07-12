@@ -33,3 +33,4 @@ describe('A bar function to test static/dynamic scoping', () => {
         chai_1.expect(output1).to.equal(2);
     });
 });
+//# sourceMappingURL=fun4.spec.js.map

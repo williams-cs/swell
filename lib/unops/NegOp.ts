@@ -13,7 +13,8 @@ export class NegOp extends UnaryOperation<NumberNode>{
     }
     
     eval(context: Scope): NumberNode{
-        return new NumberNode(-this.val.eval(context));
+        let v = this.val.eval(context);
+        return new NumberNode(-v.val);
     }
 
     // put in UnaryOp class
