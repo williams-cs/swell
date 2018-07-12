@@ -1,5 +1,5 @@
 import { Expression } from "../Expression";
-import { Scope } from "../Scope";
+import { Scope } from "../structural/Scope";
 export declare class ListNode implements Expression<any> {
     private _list;
     private _evalList;

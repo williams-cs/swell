@@ -1,7 +1,7 @@
 import { Expression } from "../Expression";
-import { Scope } from "../Scope";
+import { Scope } from "../structural/Scope";
 import { FunDef } from "./FunDef";
-import { ReturnError } from "../ReturnError";
+import { ReturnError } from "../structural/ReturnError";
 import { Some } from "space-lift";
 
 // Application of a function. Assumes arg values passed in same order as FunDef args
@@ -45,6 +45,7 @@ export class FunApp<T> implements Expression<T>{
         // if it is explicitly returned using a return statement;
         // we abuse JS exceptions for this purpose
         try {
+            child.hadFunEval = true;
             fundef.body.eval(child);
             return this._defaultValue;
         } catch (e) {

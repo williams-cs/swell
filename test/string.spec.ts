@@ -1,4 +1,4 @@
-import {Scope} from '../lib/Scope'
+import {Scope} from '../lib/structural/Scope'
 import{StringNode} from '../lib/prims/StringNode';
 import { assert,expect } from 'chai';
 import 'mocha';

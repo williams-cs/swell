@@ -29,8 +29,10 @@ export {UnaryOperation} from './unops/UnaryOperation';
 export {VariableNode} from './vars/VariableNode';
 
 //export {Effect} from '../Ignore for now/Effect';
+export {PrintNode} from './structural/PrintNode';
+export {Return} from './structural/Return';
+export {ReturnError} from './structural/ReturnError';
+export {Scope} from './structural/Scope';
+
+export {SequenceNode} from './structural/SequenceNode';
 export {Expression} from './Expression';
-export {PrintNode} from './PrintNode';
-export {Return} from './Return';
-export {Scope} from './Scope';
-export {SequenceNode} from './SequenceNode';

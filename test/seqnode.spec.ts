@@ -1,4 +1,4 @@
-import {SequenceNode} from '../lib/SequenceNode';
+import {SequenceNode} from '../lib/structural/SequenceNode';
 
 import { assert,expect } from 'chai';
 import 'mocha';

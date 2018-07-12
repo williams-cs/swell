@@ -1,6 +1,4 @@
-import {Expression} from './Expression';
-import {Scope} from './Scope';
-
+import { Expression, Scope } from "..";
 
 export class SequenceNode implements Expression<void>{
     private _left: Expression<any>;

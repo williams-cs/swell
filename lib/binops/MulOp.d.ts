@@ -1,6 +1,6 @@
 import { BinaryOperation } from './BinaryOperation';
 import { Expression } from '../Expression';
-import { Scope } from '../Scope';
+import { Scope } from '../structural/Scope';
 export declare class MulOp extends BinaryOperation<number> {
     constructor(left: Expression<number>, right: Expression<number>);
     draw(context: Scope): void;

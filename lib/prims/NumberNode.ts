@@ -1,5 +1,5 @@
 import {Expression} from '../Expression';
-import {Scope} from '../Scope';
+import {Scope} from '../structural/Scope';
 //import{Node} from './Node';
 
 // Nodes representing numbers

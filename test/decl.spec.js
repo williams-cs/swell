@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Scope_1 = require("../lib/Scope");
-const SequenceNode_1 = require("../lib/SequenceNode");
+const Scope_1 = require("../lib/structural/Scope");
+const SequenceNode_1 = require("../lib/structural/SequenceNode");
 const AssignOp_1 = require("../lib/binops/AssignOp");
 const PlusOp_1 = require("../lib/binops/PlusOp");
 const VariableNode_1 = require("../lib/vars/VariableNode");

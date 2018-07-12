@@ -1,4 +1,4 @@
-import {Scope} from './Scope';
+import {Scope} from './structural/Scope';
 
 export interface Expression <T>{
     //export abstract class Node{

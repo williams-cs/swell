@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Scope_1 = require("../lib/Scope");
+const Scope_1 = require("../lib/structural/Scope");
 const MinusOp_1 = require("../lib/binops/MinusOp");
 const chai_1 = require("chai");
 require("mocha");

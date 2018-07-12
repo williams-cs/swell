@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const FunDef_1 = require("../lib/funhouse/FunDef");
-const Scope_1 = require("../lib/Scope");
+const Scope_1 = require("../lib/structural/Scope");
 const chai_1 = require("chai");
 require("mocha");
 const NumberNode_1 = require("../lib/prims/NumberNode");

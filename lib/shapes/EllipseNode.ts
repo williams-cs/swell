@@ -3,7 +3,7 @@ import {Ellipse} from './Ellipse';
 import {Shape} from './Shape';
 import {Expression} from '../Expression';
 import {ColorNode} from './ColorNode';
-import {Scope} from '../Scope';
+import {Scope} from '..';
 import { NumberNode } from '../prims/NumberNode';
 
 export class EllipseNode extends Shape implements Expression<Ellipse>{
