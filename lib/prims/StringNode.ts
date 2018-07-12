@@ -1,5 +1,6 @@
 import {Expression} from '../Expression';
 import {Scope} from '../Scope';
+import { StringEffect } from '../effects/StringEffect';
 //import{Node} from './Node';
 
 // Nodes representing strings
@@ -16,7 +17,8 @@ export class StringNode implements Expression<StringNode>{
     }
 
     draw(context: Scope): void {
-    
+        let e = new StringEffect();
+        e.draw(context);
     }
 
     set str(value: string){

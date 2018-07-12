@@ -4,6 +4,7 @@ export class Scope{
     private _map: Map<string, Option<any>>; 
     private _parent: Scope;
     private _retValID: Option<string> = None;
+    private _canvas: Option<HTMLCanvasElement> = None;
     public globalFunID = 100000000;
     //private _doc: Option<Document>;
 
@@ -74,6 +75,13 @@ export class Scope{
     }
     set retValID(val: Option<string>){
         this._retValID = val;
+    }
+
+    get canvas() : Option<HTMLCanvasElement> {
+        return this._canvas;
+    }
+    set canvas(val: Option<HTMLCanvasElement>) {
+        this._canvas = val;
     }
 /*
     get doc(): Option<Document>{
