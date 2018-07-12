@@ -1,9 +1,9 @@
-import {Scope} from './Scope';
+import {Scope} from './structural/Scope';
 
 export interface Expression <T>{
     //export abstract class Node{
         eval(parent: Scope): T;
-        draw(context: Scope): void;
+        draw(context: Scope, x: number, y: number): void;
         //get(): T;
         //set(value: T): void;
 }

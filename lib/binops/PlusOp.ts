@@ -1,6 +1,6 @@
 import {BinaryOperation} from './BinaryOperation';
 import {Expression} from '../Expression';
-import {Scope} from '../Scope';
+import {Scope} from '../structural/Scope';
 
 // left and right are both expressions
 export class PlusOp extends BinaryOperation<number>{

@@ -1,5 +1,5 @@
 import { Expression } from '../Expression';
-import { Scope } from '../Scope';
+import { Scope } from '../structural/Scope';
 export declare class StringNode implements Expression<StringNode> {
     private _str;
     constructor(str: string);

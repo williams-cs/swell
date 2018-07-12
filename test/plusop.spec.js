@@ -4,7 +4,7 @@ const PlusOp_1 = require("../lib/binops/PlusOp");
 const chai_1 = require("chai");
 require("mocha");
 const NumberNode_1 = require("../lib/prims/NumberNode");
-const Scope_1 = require("../lib/Scope");
+const Scope_1 = require("../lib/structural/Scope");
 describe('A plusop', () => {
     it('should evaluate to a number', () => {
         const op = new PlusOp_1.PlusOp(new NumberNode_1.NumberNode(1), new NumberNode_1.NumberNode(2));

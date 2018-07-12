@@ -1,4 +1,4 @@
-import { Expression, Scope } from "..";
+import { Expression, Scope} from "..";
 
 export class And implements Expression<any>{
     private _left: Expression<any>;

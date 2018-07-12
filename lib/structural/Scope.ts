@@ -5,12 +5,14 @@ export class Scope{
     private _parent: Scope;
     private _retValID: Option<string> = None;
     private _canvas: Option<HTMLCanvasElement> = None;
+    private _hadFunEval: boolean = false;
     public globalFunID = 100000000;
     //private _doc: Option<Document>;
 
     constructor(parent: Scope){
         this._map = new Map();
         this._parent = parent;
+        if(this._parent != null && this._parent._hadFunEval) this._hadFunEval = true; // copy function eval flag from parent
         //this._doc = parent.doc;
     }
 
@@ -83,6 +85,13 @@ export class Scope{
     set canvas(val: Option<HTMLCanvasElement>) {
         this._canvas = val;
     }
+    get hadFunEval(): boolean{
+        return this._hadFunEval;
+    }
+    set hadFunEval(val: boolean){
+        this._hadFunEval = val;
+    }
+
 /*
     get doc(): Option<Document>{
         return this._doc;

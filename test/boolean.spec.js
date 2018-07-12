@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const BooleanNode_1 = require("../lib/prims/BooleanNode");
-const Scope_1 = require("../lib/Scope");
+const Scope_1 = require("../lib/structural/Scope");
 const chai_1 = require("chai");
 require("mocha");
 describe('A boolean', () => {

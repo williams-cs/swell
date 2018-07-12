@@ -1,6 +1,6 @@
 import {UnaryOperation} from './UnaryOperation';
 import {Expression} from '../Expression';
-import {Scope} from '../Scope';
+import {Scope} from '../structural/Scope';
 
 export class NegOp extends UnaryOperation<number>{
     constructor(val: Expression<number>){

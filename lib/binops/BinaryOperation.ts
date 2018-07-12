@@ -1,5 +1,5 @@
 // An abstract class for binary operations. 
-import {Scope} from '../Scope';
+import {Scope} from '../structural/Scope';
 import {Expression} from '../Expression';
 
 export abstract class BinaryOperation<T> implements Expression<T> {

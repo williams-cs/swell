@@ -1,6 +1,6 @@
-import { Expression } from "./Expression";
-import { Scope } from "./Scope";
+import { Expression } from "../Expression";
 import { ReturnError } from "./ReturnError";
+import { Scope } from "..";
 
 export class Return implements Expression<any>{
     private _expr: Expression<any>;

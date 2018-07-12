@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const FunDef_1 = require("../lib/funhouse/FunDef");
-const Scope_1 = require("../lib/Scope");
+const Scope_1 = require("../lib/structural/Scope");
 const chai_1 = require("chai");
 require("mocha");
 const FunApp_1 = require("../lib/funhouse/FunApp");
-const SequenceNode_1 = require("../lib/SequenceNode");
+const SequenceNode_1 = require("../lib/structural/SequenceNode");
 const lib_1 = require("../lib");
 //def identity(x){
 //  return x;

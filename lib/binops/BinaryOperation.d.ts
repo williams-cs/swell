@@ -1,4 +1,4 @@
-import { Scope } from '../Scope';
+import { Scope } from '../structural/Scope';
 import { Expression } from '../Expression';
 export declare abstract class BinaryOperation<T> implements Expression<T> {
     private _left;

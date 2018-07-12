@@ -1,4 +1,4 @@
-import { Expression } from "./Expression";
+import { Expression } from "../Expression";
 import { Scope } from "./Scope";
 export declare class PrintNode implements Expression<void> {
     private _toPrint;
