@@ -31,7 +31,7 @@ export class EllipseNode extends Shape implements Expression<Ellipse>{
 
     eval(context: Scope): any {
         // how evaluate to an ellipse?
-        return null;
+        return this;
     }
 
     move(): void{}
