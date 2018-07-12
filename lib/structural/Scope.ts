@@ -11,7 +11,7 @@ export class Scope{
     constructor(parent: Scope){
         this._map = new Map();
         this._parent = parent;
-        if(this._parent._hadFunEval) this._hadFunEval = true; // copy function eval flag from parent
+        if(this._parent != null && this._parent._hadFunEval) this._hadFunEval = true; // copy function eval flag from parent
         //this._doc = parent.doc;
     }
 
