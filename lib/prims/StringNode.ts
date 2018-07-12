@@ -5,14 +5,14 @@ import {Scope} from '../Scope';
 // Nodes representing strings
 // Should abstract Node class implement Expression?
 
-export class StringNode implements Expression<string>{
+export class StringNode implements Expression<StringNode>{
     private _str: string;
     constructor(str: string){
         this._str = str;
     };
 
-    eval(context: Scope): string {
-        return this._str;
+    eval(context: Scope): StringNode {
+        return this;
     }
 
     draw(context: Scope): void {

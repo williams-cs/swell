@@ -1,16 +1,17 @@
 import {ColorNode} from './ColorNode';
 import {Shape} from './Shape';
-import { Effect } from '../Ignore for now/Effect';
+import { Effect } from '../effects/Effect';
 import { Expression } from '../Expression';
 import { NumberNode } from '../prims/NumberNode';
 
-export class Ellipse extends Shape implements Effect<any>{
+// export class Ellipse extends Shape implements Effect<any>{
+export class Ellipse {
     private _width: number;
     private _height: number;
     public value: any;
 
     constructor(color: ColorNode, xPos: NumberNode, yPos: NumberNode, width: number, height: number){
-        super (color, xPos, yPos);
+        // super (color, xPos, yPos);
         this._width = width;
         this._height = height;
     };

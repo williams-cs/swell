@@ -3,4 +3,5 @@ export interface Effect<T> {
     value: T;
     draw(): void;
     ast(): Expression<T>;
+    updateAST(): Expression<T>;
 }
