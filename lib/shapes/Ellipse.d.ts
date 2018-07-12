@@ -1,9 +1,7 @@
 import { ColorNode } from './ColorNode';
-import { Shape } from './Shape';
-import { Effect } from '../Ignore for now/Effect';
 import { Expression } from '../Expression';
 import { NumberNode } from '../prims/NumberNode';
-export declare class Ellipse extends Shape implements Effect<any> {
+export declare class Ellipse {
     private _width;
     private _height;
     value: any;

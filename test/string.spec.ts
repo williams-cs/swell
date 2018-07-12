@@ -7,7 +7,7 @@ describe('A string', () => {
     it('should evaluate to a string', () => {
         const teststring = new StringNode("hello world");
         const output = teststring.eval(null);
-        expect(output).to.equal("hello world");
+        expect(output.str).to.equal("hello world");
     });
 });
 
