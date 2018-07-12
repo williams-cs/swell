@@ -7,7 +7,7 @@ import {Scope} from '..';
 import { NumberNode } from '../prims/NumberNode';
 import { EllipseEffect } from '../effects/EllipseEffect';
 
-export class EllipseNode extends Shape implements Expression<Ellipse>{
+export class EllipseNode extends Shape implements Expression<EllipseNode>{
     //private ellipse: Ellipse;
     //private parent: Node;
     //public xPos: PosNode;
@@ -29,8 +29,7 @@ export class EllipseNode extends Shape implements Expression<Ellipse>{
         e.draw(context, x, y);
     }
 
-    eval(context: Scope): any {
-        // how evaluate to an ellipse?
+    eval(context: Scope): EllipseNode {
         return this;
     }
 
