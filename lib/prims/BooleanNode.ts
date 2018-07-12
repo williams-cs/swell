@@ -12,7 +12,7 @@ export class BooleanNode implements Expression<boolean>{
         return this._val;
     }
 
-    draw(context: Scope): void {
+    draw(context: Scope, x: number, y: number): void {
     
     }
 

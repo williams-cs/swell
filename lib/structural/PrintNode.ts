@@ -12,7 +12,7 @@ export class PrintNode implements Expression<any>{
         this._y = y || 0;
     }
 
-    draw(context: Scope): void {
+    draw(context: Scope, x: number, y: number): void {
         throw new Error("Cannot call draw() on printOp");
     }
 

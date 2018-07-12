@@ -6,7 +6,7 @@ export abstract class BinaryOperation<T> implements Expression<T> {
     constructor(private _left: Expression<T>, private _right: Expression<T>){};
     abstract eval(context: Scope): T;
 
-    draw(context: Scope): void {}
+    draw(context: Scope, x: number, y: number): void {}
 
     get left(): Expression<T>{
         return this._left;

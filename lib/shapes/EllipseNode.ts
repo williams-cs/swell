@@ -23,7 +23,7 @@ export class EllipseNode extends Shape implements Expression<Ellipse>{
     this._height = height;
     }
 
-    draw(context: Scope): void {
+    draw(context: Scope, x: number, y: number): void {
     
     }
 

@@ -9,7 +9,7 @@ export declare class EllipseNode extends Shape implements Expression<Ellipse> {
     private _height;
     constructor(//ellipse: Ellipse, 
     color: ColorNode, xPos: NumberNode, yPos: NumberNode, width: NumberNode, height: NumberNode);
-    draw(context: Scope): void;
+    draw(context: Scope, x: number, y: number): void;
     eval(context: Scope): any;
     move(): void;
     width: NumberNode;

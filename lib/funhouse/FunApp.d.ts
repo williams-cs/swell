@@ -6,6 +6,6 @@ export declare class FunApp<T> implements Expression<T> {
     private _defaultValue;
     constructor(name: string, args?: any[], defaultValue?: T);
     eval(context: Scope): any;
-    draw(context: Scope): void;
+    draw(context: Scope, x: number, y: number): void;
     readonly name: string;
 }

@@ -7,7 +7,7 @@ export class DivOp extends BinaryOperation<number>{
         super(left,right);
     }
 
-    draw(context: Scope): void {
+    draw(context: Scope, x: number, y: number): void {
     
     }
     

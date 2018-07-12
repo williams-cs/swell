@@ -15,5 +15,5 @@ export class Return implements Expression<any>{
         //return this._expr.eval(context); // will need typechecking at some point
     }
 
-    draw(context: Scope): void {}
+    draw(context: Scope, x: number, y: number): void {}
 }

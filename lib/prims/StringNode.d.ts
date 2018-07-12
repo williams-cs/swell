@@ -4,6 +4,6 @@ export declare class StringNode implements Expression<StringNode> {
     private _str;
     constructor(str: string);
     eval(context: Scope): StringNode;
-    draw(context: Scope): void;
+    draw(context: Scope, x: number, y: number): void;
     str: string;
 }

@@ -17,7 +17,7 @@ export class NumberNode implements Expression <number>{
         return this._val;
     }
 
-    draw(context: Scope): void {
+    draw(context: Scope, x: number, y: number): void {
     
     }
 

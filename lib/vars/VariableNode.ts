@@ -15,7 +15,7 @@ export class VariableNode implements Expression<any>{
         return context.lookup(this._name, context);
     }
 
-    draw(context: Scope): void {
+    draw(context: Scope, x: number, y: number): void {
     
     }
     // add get/set

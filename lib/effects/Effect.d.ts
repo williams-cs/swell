@@ -1,7 +1,7 @@
 import { Expression } from "../Expression";
+import { Scope } from "../structural/Scope";
 export interface Effect<T> {
-    value: T;
-    draw(): void;
+    draw(context: Scope, x: number, y: number): void;
     ast(): Expression<T>;
     updateAST(): Expression<T>;
 }

@@ -30,7 +30,7 @@ export class FunDef<T> implements Expression<T>{
         return null;
     }
 
-    draw(context: Scope){
+    draw(context: Scope, x: number, y: number): void {
         //NO
     }
 

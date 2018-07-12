@@ -12,7 +12,7 @@ export class ColorNode implements Expression<string>{
         this._blue = blue;
     };
 
-    draw(context: Scope): void {
+    draw(context: Scope, x: number, y: number): void {
     
     }
 

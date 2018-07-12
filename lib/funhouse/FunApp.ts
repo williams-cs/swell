@@ -60,7 +60,7 @@ export class FunApp<T> implements Expression<T>{
         return fundef.body.eval(child);
     }
 
-    draw(context: Scope){
+    draw(context: Scope, x: number, y: number): void {
         // this will have to do something
     }
 

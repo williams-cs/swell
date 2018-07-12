@@ -4,6 +4,6 @@ export declare class NumberNode implements Expression<number> {
     private _val;
     constructor(val: number);
     eval(context: Scope): number;
-    draw(context: Scope): void;
+    draw(context: Scope, x: number, y: number): void;
     val: number;
 }

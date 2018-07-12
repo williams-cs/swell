@@ -7,7 +7,7 @@ export class NegOp extends UnaryOperation<number>{
         super(val);
     }
 
-    draw(context: Scope): void {
+    draw(context: Scope, x: number, y: number): void {
     
     }
     

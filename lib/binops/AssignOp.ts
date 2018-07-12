@@ -12,7 +12,7 @@ export class AssignOp<T> extends BinaryOperation<T>{
         }
     }
 
-    draw(context: Scope): void {
+    draw(context: Scope, x: number, y: number): void {
     
     }
     

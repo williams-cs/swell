@@ -3,6 +3,6 @@ import { Expression } from '../Expression';
 import { Scope } from '../structural/Scope';
 export declare class MinusOp extends BinaryOperation<number> {
     constructor(left: Expression<number>, right: Expression<number>);
-    draw(context: Scope): void;
+    draw(context: Scope, x: number, y: number): void;
     eval(context: Scope): number;
 }

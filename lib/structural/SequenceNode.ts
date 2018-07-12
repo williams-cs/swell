@@ -11,7 +11,7 @@ export class SequenceNode implements Expression<void>{
         this._right = right;
     }
     
-    draw(context: Scope): void {
+    draw(context: Scope, x: number, y: number): void {
     
     }
 

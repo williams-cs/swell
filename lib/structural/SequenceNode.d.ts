@@ -5,7 +5,7 @@ export declare class SequenceNode implements Expression<void> {
     private _leftVal;
     private _rightVal;
     constructor(left: Expression<any>, right: Expression<any>);
-    draw(context: Scope): void;
+    draw(context: Scope, x: number, y: number): void;
     eval(context: Scope): void;
     left: Expression<any>;
     right: Expression<any>;

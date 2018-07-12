@@ -3,6 +3,7 @@ export declare class Scope {
     private _map;
     private _parent;
     private _retValID;
+    private _canvas;
     private _hadFunEval;
     globalFunID: number;
     constructor(parent: Scope);
@@ -14,5 +15,6 @@ export declare class Scope {
     map: Map<string, Option<any>>;
     readonly parent: Scope;
     retValID: Option<string>;
+    canvas: Option<HTMLCanvasElement>;
     hadFunEval: boolean;
 }
