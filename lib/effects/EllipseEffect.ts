@@ -3,7 +3,7 @@ import { EllipseNode } from "../shapes/EllipseNode";
 import { Expression } from "../Expression";
 import { Scope } from "../structural/Scope";
 
-export class CircleEffect implements Effect<EllipseNode> {
+export class EllipseEffect implements Effect<EllipseNode> {
 
     private _circle: EllipseNode;
     private _ctx: any;

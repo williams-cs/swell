@@ -5,6 +5,7 @@ import {Expression} from '../Expression';
 import {ColorNode} from './ColorNode';
 import {Scope} from '..';
 import { NumberNode } from '../prims/NumberNode';
+import { EllipseEffect } from '../effects/EllipseEffect';
 
 export class EllipseNode extends Shape implements Expression<Ellipse>{
     //private ellipse: Ellipse;
@@ -24,7 +25,8 @@ export class EllipseNode extends Shape implements Expression<Ellipse>{
     }
 
     draw(context: Scope, x: number, y: number): void {
-    
+        let e = new EllipseEffect(this);
+        e.draw(context, x, y);
     }
 
     eval(context: Scope): any {
