@@ -333,3 +333,4 @@ ASALocalRun/
 .nyc_output
 
 *.map
+*.d.ts
