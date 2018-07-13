@@ -10,3 +10,4 @@ describe('A string', () => {
         chai_1.expect(output.str).to.equal("hello world");
     });
 });
+//# sourceMappingURL=string.spec.js.map

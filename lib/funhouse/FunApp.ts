@@ -7,7 +7,7 @@ import { Some } from "space-lift";
 // Application of a function. Assumes arg values passed in same order as FunDef args
 export class FunApp<T> implements Expression<T>{
     private _name: string;
-    private _args: any[];
+    private _args: Expression<{}>[];
     private _defaultValue: T = undefined;
 
     constructor(name: string, args?: any[], defaultValue?: T){
@@ -37,7 +37,6 @@ export class FunApp<T> implements Expression<T>{
         let id = context.globalFunID;
         context.globalFunID++;
 
-
         child.retValID = Some(id); // new method
         //console.log(child.retValID.get());
 
@@ -65,7 +64,10 @@ export class FunApp<T> implements Expression<T>{
     }
 
 
-    get name(): string{
+    get name(): string {
         return this._name;
+    }
+    get args(): Expression<{}>[] {
+        return this._args;
     }
 }

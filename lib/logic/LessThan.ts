@@ -1,6 +1,8 @@
 import { Expression, Scope } from "..";
+import { BooleanNode } from "../prims/BooleanNode";
+import { NumberNode } from "../prims/NumberNode";
 
-export class LessThan implements Expression<any>{
+export class LessThan implements Expression<BooleanNode>{
     private _left: Expression<any>;
     private _right: Expression<any>;
 
@@ -9,9 +11,16 @@ export class LessThan implements Expression<any>{
         this._right = right;
     }
 
-    eval(context: Scope): boolean{
+    eval(context: Scope): BooleanNode { 
         //console.log(this._left.eval(context) + " is less than " + this._right.eval(context));
-        return (this._left.eval(context) < this._right.eval(context));
+        let lhs = this._left.eval(context);
+        let rhs = this._right.eval(context);
+        if (lhs instanceof NumberNode && rhs instanceof NumberNode) {
+            return (new BooleanNode(lhs.val < rhs.val));
+        } else {
+            throw new Error("Arguments to less than must produce numeric values.");
+        }
+        
     }
 
     draw(){

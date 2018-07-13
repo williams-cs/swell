@@ -1,8 +1,9 @@
 import { UnaryOperation } from './UnaryOperation';
 import { Expression } from '../Expression';
 import { Scope } from '../structural/Scope';
-export declare class NegOp extends UnaryOperation<number> {
-    constructor(val: Expression<number>);
+import { NumberNode } from '../prims/NumberNode';
+export declare class NegOp extends UnaryOperation<NumberNode> {
+    constructor(val: Expression<NumberNode>);
     draw(context: Scope, x: number, y: number): void;
-    eval(context: Scope): number;
+    eval(context: Scope): NumberNode;
 }

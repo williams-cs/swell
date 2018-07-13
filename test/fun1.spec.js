@@ -20,3 +20,4 @@ describe('An identity function', () => {
         chai_1.expect(output1).to.equal(1);
     });
 });
+//# sourceMappingURL=fun1.spec.js.map

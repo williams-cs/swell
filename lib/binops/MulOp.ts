@@ -1,9 +1,10 @@
 import {BinaryOperation} from './BinaryOperation';
 import {Expression} from '../Expression';
 import {Scope} from '../structural/Scope';
+import { NumberNode } from '../prims/NumberNode';
 
-export class MulOp extends BinaryOperation<number>{
-    constructor(left: Expression<number>, right: Expression<number>){
+export class MulOp extends BinaryOperation<NumberNode>{
+    constructor(left: Expression<NumberNode>, right: Expression<NumberNode>){
         super(left,right);
     }
 
@@ -11,7 +12,7 @@ export class MulOp extends BinaryOperation<number>{
     
     }
     
-    eval(context: Scope): number{
-        return this.left.eval(new Scope(context)) * this.right.eval(new Scope(context));
+    eval(context: Scope): NumberNode {
+        return new NumberNode(this.left.eval(new Scope(context)).eval(context).val * this.right.eval(new Scope(context)).eval(context).val);
     }
 }

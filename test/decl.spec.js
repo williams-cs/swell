@@ -37,3 +37,4 @@ describe('A sequence test with declaration', () => {
         chai_1.expect(output1).to.equal(20);
     });
 });
+//# sourceMappingURL=decl.spec.js.map

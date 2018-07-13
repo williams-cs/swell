@@ -27,3 +27,4 @@ describe('A list', () => {
         chai_1.expect(output1).to.equal(false);
     });
 });
+//# sourceMappingURL=list.spec.js.map

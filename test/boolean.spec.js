@@ -16,3 +16,4 @@ describe('A boolean', () => {
         chai_1.expect(output).to.equal(false);
     });
 });
+//# sourceMappingURL=boolean.spec.js.map

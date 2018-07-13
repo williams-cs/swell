@@ -7,7 +7,7 @@ describe('A number', () => {
     it('should evaluate to a number', () => {
         const testnum = new NumberNode_1.NumberNode(1);
         const output = testnum.eval(null);
-        chai_1.expect(output).to.equal(1);
+        chai_1.expect(output).to.eql(new NumberNode_1.NumberNode(1));
     });
     it('should evaluate to a number', () => {
         const testnum = new NumberNode_1.NumberNode(-1);
@@ -15,3 +15,4 @@ describe('A number', () => {
         chai_1.expect(output).to.equal(-1);
     });
 });
+//# sourceMappingURL=number.spec.js.map
