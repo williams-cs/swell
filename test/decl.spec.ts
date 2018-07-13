@@ -11,7 +11,7 @@ import { MulOp } from '../lib/binops/MulOp';
 import { DeclareOp } from '../lib/binops/DeclareOp';
 
 describe('A sequence test with declaration', () => {
-    it('should evaluate to a tuple', () => {
+    it('should evaluate to a number', () => {
         // var i = i
         // i + 2; 
         let context = new Scope(null);
@@ -22,10 +22,10 @@ describe('A sequence test with declaration', () => {
         const seq = new SequenceNode(left, right);
         const output = seq.eval(context);
         const output1 = seq.rightVal;
-        expect(output1).to.equal(3);
+        expect(output1).to.deep.equal(new NumberNode(3));
     });
     
-    it('should evaluate to a different tuple', () =>{
+    it('should evaluate to a different number', () =>{
         let context1 = new Scope(null);
         const a = new VariableNode("a")
         const b = new VariableNode("b")
@@ -36,6 +36,20 @@ describe('A sequence test with declaration', () => {
         const seq1 = new SequenceNode(assigna,seq2);
         const output = seq1.eval(context1);
         const output1 = seq2.rightVal; // should this be seq1?
-        expect(output1).to.equal(20);
+        expect(output1).to.deep.equal(new NumberNode(20));
+    });
+
+    it('should evaluate to a different number after reassignment', () =>{
+        // var i = 1
+        // i = 2; 
+        let context = new Scope(null);
+        //context.doc = null;
+        const v = new VariableNode("i");
+        const left = new DeclareOp(v,new NumberNode(1));
+        const right = new AssignOp(v,new NumberNode(2));
+        const seq = new SequenceNode(left, right);
+        const output = seq.eval(context);
+        const output1 = seq.rightVal;
+        expect(output1).to.deep.equal(new NumberNode(2));
     });
 });
