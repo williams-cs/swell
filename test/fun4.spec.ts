@@ -9,6 +9,7 @@ import { VariableNode } from '../lib/vars/VariableNode';
 import { AssignOp } from '../lib/binops/AssignOp';
 import { NumberNode } from '../lib/prims/NumberNode';
 import { PlusOp, Return } from '../lib';
+import { DeclareOp } from '../lib/binops/DeclareOp';
 
 //let i = 1
 //def bar(x){
@@ -19,11 +20,11 @@ import { PlusOp, Return } from '../lib';
 describe('A bar function to test static/dynamic scoping', () => {
     it('should evaluate to 2 if lexically scoped', () => {
         const i1 = new VariableNode("i");
-        const i1def = new AssignOp(i1,new NumberNode(1));
+        const i1def = new DeclareOp(i1,new NumberNode(1));
         const fundef = new FunDef("bar",new Return(new PlusOp(new VariableNode("x"), new VariableNode("i"))),["x"]);
         
         const i2 = new VariableNode("i");
-        const i2def = new AssignOp(i2,new NumberNode(2));
+        const i2def = new DeclareOp(i2,new NumberNode(2));
 
         const funapp = new FunApp("bar",[1]);
         let context = new Scope(null);

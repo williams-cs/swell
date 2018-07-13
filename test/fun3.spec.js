@@ -7,13 +7,14 @@ require("mocha");
 const FunApp_1 = require("../lib/funhouse/FunApp");
 const SequenceNode_1 = require("../lib/structural/SequenceNode");
 const lib_1 = require("../lib");
+const DeclareOp_1 = require("../lib/binops/DeclareOp");
 //let i = 1
 //def closure(x){
 //  return x+i;
 //closure(2)
 describe('A closure function', () => {
     it('should evaluate to 3', () => {
-        const i1 = new lib_1.AssignOp(new lib_1.VariableNode("i"), new lib_1.NumberNode(1));
+        const i1 = new DeclareOp_1.DeclareOp(new lib_1.VariableNode("i"), new lib_1.NumberNode(1));
         // i1?
         const xvar = new lib_1.VariableNode("x");
         const ivar = new lib_1.VariableNode("i");

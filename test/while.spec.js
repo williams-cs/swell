@@ -19,3 +19,4 @@ describe('A while loop', () => {
         chai_1.expect(output1).to.equal(9);
     });
 });
+//# sourceMappingURL=while.spec.js.map

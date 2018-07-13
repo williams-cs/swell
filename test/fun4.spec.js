@@ -7,9 +7,9 @@ require("mocha");
 const FunApp_1 = require("../lib/funhouse/FunApp");
 const SequenceNode_1 = require("../lib/structural/SequenceNode");
 const VariableNode_1 = require("../lib/vars/VariableNode");
-const AssignOp_1 = require("../lib/binops/AssignOp");
 const NumberNode_1 = require("../lib/prims/NumberNode");
 const lib_1 = require("../lib");
+const DeclareOp_1 = require("../lib/binops/DeclareOp");
 //let i = 1
 //def bar(x){
 //  return x+i;
@@ -18,10 +18,10 @@ const lib_1 = require("../lib");
 describe('A bar function to test static/dynamic scoping', () => {
     it('should evaluate to 2 if lexically scoped', () => {
         const i1 = new VariableNode_1.VariableNode("i");
-        const i1def = new AssignOp_1.AssignOp(i1, new NumberNode_1.NumberNode(1));
+        const i1def = new DeclareOp_1.DeclareOp(i1, new NumberNode_1.NumberNode(1));
         const fundef = new FunDef_1.FunDef("bar", new lib_1.Return(new lib_1.PlusOp(new VariableNode_1.VariableNode("x"), new VariableNode_1.VariableNode("i"))), ["x"]);
         const i2 = new VariableNode_1.VariableNode("i");
-        const i2def = new AssignOp_1.AssignOp(i2, new NumberNode_1.NumberNode(2));
+        const i2def = new DeclareOp_1.DeclareOp(i2, new NumberNode_1.NumberNode(2));
         const funapp = new FunApp_1.FunApp("bar", [1]);
         let context = new Scope_1.Scope(null);
         const seq3 = new SequenceNode_1.SequenceNode(i2def, funapp);

@@ -6,6 +6,7 @@ import 'mocha';
 import { FunApp } from '../lib/funhouse/FunApp';
 import { SequenceNode } from '../lib/structural/SequenceNode';
 import { Return, VariableNode, PlusOp, NumberNode, AssignOp } from '../lib';
+import { DeclareOp } from '../lib/binops/DeclareOp';
 
 //let i = 1
 //def closure(x){
@@ -14,7 +15,7 @@ import { Return, VariableNode, PlusOp, NumberNode, AssignOp } from '../lib';
 
 describe('A closure function', () => {
     it('should evaluate to 3', () => {
-        const i1 = new AssignOp(new VariableNode("i"),new NumberNode(1));
+        const i1 = new DeclareOp(new VariableNode("i"),new NumberNode(1));
         // i1?
         const xvar = new VariableNode("x");
         const ivar = new VariableNode("i");

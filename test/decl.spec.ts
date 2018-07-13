@@ -8,6 +8,7 @@ import { assert,expect } from 'chai';
 import 'mocha';
 import { NumberNode } from '../lib/prims/NumberNode';
 import { MulOp } from '../lib/binops/MulOp';
+import { DeclareOp } from '../lib/binops/DeclareOp';
 
 describe('A sequence test with declaration', () => {
     it('should evaluate to a tuple', () => {
@@ -16,7 +17,7 @@ describe('A sequence test with declaration', () => {
         let context = new Scope(null);
         //context.doc = null;
         const v = new VariableNode("i");
-        const left = new AssignOp(v, new NumberNode(1));
+        const left = new DeclareOp(v, new NumberNode(1));
         const right = new PlusOp(v,new NumberNode(2));
         const seq = new SequenceNode(left, right);
         const output = seq.eval(context);
@@ -28,8 +29,8 @@ describe('A sequence test with declaration', () => {
         let context1 = new Scope(null);
         const a = new VariableNode("a")
         const b = new VariableNode("b")
-        const assigna = new AssignOp(a,new NumberNode(4));
-        const assignb = new AssignOp(b,new NumberNode(5));
+        const assigna = new DeclareOp(a,new NumberNode(4));
+        const assignb = new DeclareOp(b,new NumberNode(5));
         const mul = new MulOp(a,b);
         const seq2 = new SequenceNode(assignb,mul);
         const seq1 = new SequenceNode(assigna,seq2);
