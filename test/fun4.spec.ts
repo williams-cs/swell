@@ -8,7 +8,7 @@ import { SequenceNode } from '../lib/structural/SequenceNode';
 import { VariableNode } from '../lib/vars/VariableNode';
 import { AssignOp } from '../lib/binops/AssignOp';
 import { NumberNode } from '../lib/prims/NumberNode';
-import { PlusOp, Return } from '../lib';
+import { PlusOp, Return } from '..';
 import { DeclareOp } from '../lib/binops/DeclareOp';
 
 //let i = 1

@@ -8,7 +8,7 @@ const FunApp_1 = require("../lib/funhouse/FunApp");
 const SequenceNode_1 = require("../lib/structural/SequenceNode");
 const VariableNode_1 = require("../lib/vars/VariableNode");
 const NumberNode_1 = require("../lib/prims/NumberNode");
-const lib_1 = require("../lib");
+const __1 = require("..");
 const DeclareOp_1 = require("../lib/binops/DeclareOp");
 //let i = 1
 //def bar(x){
@@ -19,7 +19,7 @@ describe('A bar function to test static/dynamic scoping', () => {
     it('should evaluate to 2 if lexically scoped', () => {
         const i1 = new VariableNode_1.VariableNode("i");
         const i1def = new DeclareOp_1.DeclareOp(i1, new NumberNode_1.NumberNode(1));
-        const fundef = new FunDef_1.FunDef("bar", new lib_1.Return(new lib_1.PlusOp(new VariableNode_1.VariableNode("x"), new VariableNode_1.VariableNode("i"))), ["x"]);
+        const fundef = new FunDef_1.FunDef("bar", new __1.Return(new __1.PlusOp(new VariableNode_1.VariableNode("x"), new VariableNode_1.VariableNode("i"))), ["x"]);
         const i2 = new VariableNode_1.VariableNode("i");
         const i2def = new DeclareOp_1.DeclareOp(i2, new NumberNode_1.NumberNode(2));
         const funapp = new FunApp_1.FunApp("bar", [1]);

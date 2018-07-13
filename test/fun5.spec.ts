@@ -5,7 +5,7 @@ import { assert,expect } from 'chai';
 import 'mocha';
 import { FunApp } from '../lib/funhouse/FunApp';
 import { SequenceNode } from '../lib/structural/SequenceNode';
-import { Return, VariableNode } from '../lib';
+import { Return, VariableNode } from '..';
 
 //def identity(x){
 //  return x;

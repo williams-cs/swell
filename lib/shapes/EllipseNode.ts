@@ -1,9 +1,7 @@
-import { Ellipse } from './Ellipse';
-//import {Node} from './Node';
 import { Shape } from './Shape';
 import { Expression } from '../Expression';
 import { ColorNode } from './ColorNode';
-import { Scope } from '..';
+import { Scope } from '../..';
 import { NumberNode } from '../prims/NumberNode';
 import { EllipseEffect } from '../effects/EllipseEffect';
 

@@ -5,7 +5,7 @@ import { assert,expect } from 'chai';
 import 'mocha';
 import { FunApp } from '../lib/funhouse/FunApp';
 import { SequenceNode } from '../lib/structural/SequenceNode';
-import { Return, VariableNode, PlusOp, NumberNode, AssignOp } from '../lib';
+import { Return, VariableNode, PlusOp, NumberNode, AssignOp } from '..';
 import { DeclareOp } from '../lib/binops/DeclareOp';
 
 //let i = 1

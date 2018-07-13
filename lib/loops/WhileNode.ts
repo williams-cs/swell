@@ -1,5 +1,4 @@
-import { Expression, Scope, BooleanNode } from '..';
-import { Conditional } from '../conditionals/Conditional';
+import { Expression, Scope, BooleanNode } from '../..';
 
 export class WhileNode implements Expression<any>{
     private _cond: Expression<any>;
