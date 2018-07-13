@@ -1,10 +1,7 @@
 
 import { assert,expect } from 'chai';
 import 'mocha';
-import { ListNode } from '../lib/lists/ListNode';
-import { Scope, SequenceNode, NumberNode, AssignOp, VariableNode } from '..';
-import { Equals } from '../lib/logic/Equals';
-//import { ListHead } from '../lib/lists/ListHead';
+import { Scope, SequenceNode, NumberNode, AssignOp, VariableNode, Equals, ListNode } from '..';
 
 //[0,1,2,3]
 

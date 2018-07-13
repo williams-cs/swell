@@ -11,6 +11,15 @@
     "strict": true,                           /* Enable all strict type-checking options. */
      "strictNullChecks": false,              /* Enable strict null checks. */
     "esModuleInterop": true,                   /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */
-    "skipLibCheck": true
-  }
+    "skipLibCheck": true,
+    "outDir": "dist/"
+  },
+  "include": [
+    "lib/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts",
+    "dist"
+  ]
 }

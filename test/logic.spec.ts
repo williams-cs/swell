@@ -1,16 +1,6 @@
-import { Equals } from "../lib/logic/Equals";
-import { NumberNode, Scope, VariableNode, AssignOp, SequenceNode } from "..";
+import { NumberNode, Scope, VariableNode, AssignOp, SequenceNode, And, Or, Not, LessThan, GreaterThan, LessThanEq, GreaterThanEq, NotEqual, BooleanNode, Equals } from "..";
 import { assert,expect } from 'chai';
 import 'mocha';
-import { And } from "../lib/logic/And";
-import { Or } from "../lib/logic/Or";
-import { Not } from "../lib/logic/Not";
-import { LessThan } from "../lib/logic/LessThan";
-import { GreaterThan } from "../lib/logic/GreaterThan";
-import { LessThanEq } from "../lib/logic/LessThanEq";
-import { GreaterThanEq } from "../lib/logic/GreaterThanEq";
-import { NotEqual } from "../lib/logic/NotEqual";
-import { BooleanNode } from "../lib/prims/BooleanNode";
 
 describe('Logic operations', () => {
     it('equals 1 should evaluate to true', () => {
