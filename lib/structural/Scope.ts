@@ -1,10 +1,27 @@
 import {Option, Some, None} from 'space-lift'
+import { Effect } from '../effects/Effect';
 
 export class Scope{
     private _map: Map<string, Option<any>>; 
     private _parent: Scope;
     private _retValID: Option<string> = None;
     private _canvas: Option<HTMLCanvasElement> = None;
+    private _effects: Effect<any>[];
+    private _myState: {
+        dragoffx: number,
+        dragoffy: number,
+        initDistance: number,
+        selection: any,
+        dragging: boolean,
+        resizing: boolean
+    } = {
+        dragoffx: 0,
+        dragoffy: 0,
+        initDistance: 0,
+        selection: null,
+        dragging: false,
+        resizing: false
+    };
     private _hadFunEval: boolean = false;
     public globalFunID = 100000000;
     //private _doc: Option<Document>;
@@ -85,6 +102,15 @@ export class Scope{
     set canvas(val: Option<HTMLCanvasElement>) {
         this._canvas = val;
     }
+
+    get effects() : Effect<any>[] {
+        return this._effects;
+    }
+
+    get myState() : any {
+        return this._myState;
+    }
+
     get hadFunEval(): boolean{
         return this._hadFunEval;
     }
