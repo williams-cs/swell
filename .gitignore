@@ -335,3 +335,4 @@ ASALocalRun/
 *.map
 *.d.ts
 lib/**/*.js
+.nyc_output
