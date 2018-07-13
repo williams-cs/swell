@@ -16,6 +16,10 @@ export class LessThan implements Expression<BooleanNode>{
         let lhs = this._left.eval(context);
         let rhs = this._right.eval(context);
         if (lhs instanceof NumberNode && rhs instanceof NumberNode) {
+            //console.log("They're both number nodes");
+            console.log(lhs.val + "<" + rhs.val); // goes forever
+            let bool: boolean = lhs.val < rhs.val;
+            console.log("bool: " + bool);
             return (new BooleanNode(lhs.val < rhs.val));
         } else {
             throw new Error("Arguments to less than must produce numeric values.");
