@@ -1,7 +1,8 @@
 import { Expression, Scope } from "..";
+import { BooleanNode } from "../prims/BooleanNode";
 
 export class Conditional implements Expression<any>{
-    private _test: Expression<boolean>;
+    private _test: Expression<any>;
     private _trueBranch: Expression<any>;
     private _falseBranch: Expression<any>;
     //private _ifOp: IfOp;
@@ -21,7 +22,8 @@ export class Conditional implements Expression<any>{
         let childCtx = new Scope(context);
 
         let res = this._test.eval(childCtx);
-        if(typeof res != 'boolean'){
+        //if(typeof res != 'boolean'){
+        if(!(res instanceof BooleanNode)){
             throw new Error("The condition must be a boolean expression.");
         } 
         if(res){

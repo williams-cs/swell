@@ -1,4 +1,4 @@
-import { Expression, Scope } from '..';
+import { Expression, Scope, BooleanNode } from '..';
 import { Conditional } from '../conditionals/Conditional';
 
 export class WhileNode implements Expression<any>{
@@ -14,14 +14,17 @@ export class WhileNode implements Expression<any>{
         let childCtx = new Scope(context);
 
         let res = this._cond.eval(childCtx);
-        if(typeof res != 'boolean'){
+        if(!(res instanceof BooleanNode)){
             throw new Error("The condition must be a boolean expression.");
         } 
 
         let ret;
-        while(res){
+        while(res.val){
+            console.log("Result.val: " + res.val);
+            //console.log("I'm infinitely looping");
             ret = this._body.eval(childCtx);
             res = this._cond.eval(childCtx);
+            //ret = this._body.eval(childCtx);
         } 
         return ret;
         //let test = this._cond.eval(context);

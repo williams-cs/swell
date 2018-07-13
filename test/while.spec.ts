@@ -6,11 +6,12 @@ import 'mocha';
 import { VariableNode, AssignOp, NumberNode, WhileNode, PlusOp, SequenceNode, Conditional } from '../lib';
 import { LessThan } from '../lib/logic/LessThan';
 import { Context } from 'mocha';
+import { DeclareOp } from '../lib/binops/DeclareOp';
 
 describe('A while loop', () => {
     it('should evaluate to 9', () => {
         const x = new VariableNode("x");
-        const xvar = new AssignOp(x,new NumberNode(0));
+        const xvar = new DeclareOp(x,new NumberNode(0));
         const body1 = new AssignOp(x, new PlusOp(x,new NumberNode(1)));
         //const cond1 = new Conditional(new LessThan(x,new NumberNode(10)), add1);
         const cond1 = new LessThan(x,new NumberNode(10));
@@ -18,6 +19,6 @@ describe('A while loop', () => {
         const seq1 = new SequenceNode(xvar,while1);
         const output = seq1.eval(new Scope(null));
         const output1 = seq1.rightVal;
-        expect(output1).to.equal(9);
+        expect(output1).to.deep.equal(new NumberNode(10));
     });
 });
