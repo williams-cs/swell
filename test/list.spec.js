@@ -14,7 +14,7 @@ describe('A list', () => {
         chai_1.expect(output).to.deep.equal(list1);
     });
     // I need to draw this out on paper to make it work
-    it('should evaluate to false', () => {
+    it('when compared against another, different list should evaluate to false', () => {
         const list1 = new ListNode_1.ListNode([new lib_1.NumberNode(0), new lib_1.NumberNode(1), new lib_1.NumberNode(2)]);
         const list2 = new ListNode_1.ListNode([new lib_1.NumberNode(1), new lib_1.NumberNode(1), new lib_1.NumberNode(2)]);
         const assign1 = new lib_1.AssignOp(new lib_1.VariableNode("list1"), list1);

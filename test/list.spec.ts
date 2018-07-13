@@ -17,7 +17,7 @@ describe('A list', () => {
 
     // I need to draw this out on paper to make it work
     
-    it('should evaluate to false',() => {
+    it('when compared against another, different list should evaluate to false',() => {
         const list1 = new ListNode([new NumberNode(0),new NumberNode(1),new NumberNode(2)]);
         const list2 = new ListNode([new NumberNode(1),new NumberNode(1),new NumberNode(2)]);
         const assign1 = new AssignOp(new VariableNode("list1"),list1);

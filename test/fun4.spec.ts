@@ -36,6 +36,6 @@ describe('A bar function to test static/dynamic scoping', () => {
         //const i2def = new AssignOp(new VariableNode("i"), new NumberNode(2));
         const output = seq1.eval(context);
         const output1 = seq3.rightVal;
-        expect(output1).to.equal(2);
+        expect(output1).to.equal(new NumberNode(2));
     });
 });
