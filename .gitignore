@@ -334,3 +334,4 @@ ASALocalRun/
 
 *.map
 *.d.ts
+lib/**/*.js
