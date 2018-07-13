@@ -9,5 +9,10 @@ describe('A number', () => {
         const output = testnum.eval(null);
         expect(output).to.equal(1);
     });
+    it('should evaluate to a number', () => {
+        const testnum = new NumberNode(-1);
+        const output = testnum.eval(null);
+        expect(output).to.equal(-1);
+    });
 
 });

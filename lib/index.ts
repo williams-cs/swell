@@ -33,6 +33,8 @@ export {PrintNode} from './structural/PrintNode';
 export {Return} from './structural/Return';
 export {ReturnError} from './structural/ReturnError';
 export {Scope} from './structural/Scope';
-
 export {SequenceNode} from './structural/SequenceNode';
+
+export {WhileNode} from './loops/WhileNode';
+
 export {Expression} from './Expression';

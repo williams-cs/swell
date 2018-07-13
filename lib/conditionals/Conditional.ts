@@ -31,6 +31,10 @@ export class Conditional implements Expression<any>{
         }
     }
 
+    get trueBranch(): Expression<any>{
+        return this._trueBranch;
+    }
+
     /*
     constructor(ifOp: IfOp, elseOp?: ElseOp, ...elseIfOps: ElseIfOp[]){
         this._ifOp = ifOp;
