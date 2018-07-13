@@ -19,6 +19,23 @@
   "scripts": {
     "test": "nyc --reporter=text mocha"
   },
+  "nyc": {
+    "extension": [
+      ".ts",
+      ".tsx"
+    ],
+    "exclude": [
+      "**/*.d.ts",
+      "test/",
+      "coverage/",
+      "lib/Ignore for now/",
+      "lib/*.js"
+    ],
+    "reporter": [
+      "html"
+    ],
+    "all": true  
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/williams-cs/swell.git"
