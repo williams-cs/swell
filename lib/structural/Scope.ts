@@ -106,6 +106,9 @@ export class Scope{
     get effects() : Effect<any>[] {
         return this._effects;
     }
+    set effects(arr: Effect<any>[]) {
+        this._effects = arr;
+    }
 
     get myState() : any {
         return this._myState;

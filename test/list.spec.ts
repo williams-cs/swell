@@ -2,7 +2,7 @@
 import { assert,expect } from 'chai';
 import 'mocha';
 import { ListNode } from '../lib/lists/ListNode';
-import { Scope, SequenceNode, NumberNode, AssignOp, VariableNode } from '../lib';
+import { Scope, SequenceNode, NumberNode, AssignOp, VariableNode } from '..';
 import { Equals } from '../lib/logic/Equals';
 //import { ListHead } from '../lib/lists/ListHead';
 
@@ -14,8 +14,6 @@ describe('A list', () => {
         const output = list1.eval(new Scope(null));
         expect(output).to.deep.equal(list1);
     });
-
-    // I need to draw this out on paper to make it work
     
     it('when compared against another, different list should evaluate to false',() => {
         const list1 = new ListNode([new NumberNode(0),new NumberNode(1),new NumberNode(2)]);

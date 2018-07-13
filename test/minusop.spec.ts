@@ -1,4 +1,3 @@
-import {BinaryOperation} from '../lib/binops/BinaryOperation';
 import {Scope} from '../lib/structural/Scope';
 import {MinusOp} from '../lib/binops/MinusOp';
 import { assert,expect } from 'chai';

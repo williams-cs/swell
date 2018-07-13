@@ -1,4 +1,4 @@
-import { Scope, Expression } from "..";
+import { Scope, Expression } from "../..";
 
 export class BooleanNode implements Expression<BooleanNode>{
     private _val: boolean;

@@ -1,4 +1,4 @@
-import { Expression, Scope, NumberNode} from "..";
+import { Expression, Scope, NumberNode} from "../..";
 import { BooleanNode } from "../prims/BooleanNode";
 
 export class And implements Expression<any>{
@@ -11,7 +11,14 @@ export class And implements Expression<any>{
     }
 
     eval(context: Scope): BooleanNode{
-        return new BooleanNode((this._left.eval(context) && this._right.eval(context)));
+        let lhs = this._left.eval(context);
+        let rhs = this._right.eval(context);
+
+        if (lhs instanceof BooleanNode && rhs instanceof BooleanNode) {
+            return new BooleanNode(lhs.val && rhs.val);
+        } else {
+            throw new Error("The arguments to the 'and' operator must be booleans.");
+        }
     }
 
     draw(){

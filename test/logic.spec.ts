@@ -1,5 +1,5 @@
 import { Equals } from "../lib/logic/Equals";
-import { NumberNode, Scope, VariableNode, AssignOp, SequenceNode } from "../lib";
+import { NumberNode, Scope, VariableNode, AssignOp, SequenceNode } from "..";
 import { assert,expect } from 'chai';
 import 'mocha';
 import { And } from "../lib/logic/And";

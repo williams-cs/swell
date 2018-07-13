@@ -1,6 +1,5 @@
 import { Expression } from "../Expression";
 import { Scope } from "../structural/Scope";
-import { FunDef } from "./FunDef";
 import { ReturnError } from "../structural/ReturnError";
 import { Some } from "space-lift";
 

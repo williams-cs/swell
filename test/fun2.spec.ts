@@ -5,7 +5,7 @@ import { assert,expect } from 'chai';
 import 'mocha';
 import { FunApp } from '../lib/funhouse/FunApp';
 import { SequenceNode } from '../lib/structural/SequenceNode';
-import { Return, NumberNode } from '../lib';
+import { Return, NumberNode } from '..';
 
 // def c(x){
 //  return 1;

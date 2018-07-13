@@ -1,4 +1,4 @@
-import { Expression, Scope } from "..";
+import { Expression, Scope } from "../..";
 import { BooleanNode } from "../prims/BooleanNode";
 
 export class Not implements Expression<BooleanNode>{

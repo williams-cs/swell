@@ -22,6 +22,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
             ctx.strokeStyle = "black";
             ctx.stroke();
         }
+        context.effects.push(this);
     }
 
     ast(): Expression<EllipseNode> {
