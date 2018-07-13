@@ -11,7 +11,7 @@ describe('A list', () => {
     it('should evaluate to [0,1,2,3]', () => {
         const list1 = new ListNode_1.ListNode([new lib_1.NumberNode(0), new lib_1.NumberNode(1), new lib_1.NumberNode(2), new lib_1.NumberNode(3)]);
         const output = list1.eval(new lib_1.Scope(null));
-        chai_1.expect(output).to.deep.equal([0, 1, 2, 3]);
+        chai_1.expect(output).to.deep.equal(list1);
     });
     // I need to draw this out on paper to make it work
     it('should evaluate to false', () => {

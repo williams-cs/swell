@@ -1,7 +1,7 @@
 {
-  "name": "summer-language",
+  "name": "swell",
   "version": "1.0.0",
-  "description": "summer language implementation",
+  "description": "swell williams entry-level language",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "dependencies": {
@@ -19,9 +19,26 @@
   "scripts": {
     "test": "nyc --reporter=text mocha"
   },
+  "nyc": {
+    "extension": [
+      ".ts",
+      ".tsx"
+    ],
+    "exclude": [
+      "**/*.d.ts",
+      "test/",
+      "coverage/",
+      "lib/Ignore for now/",
+      "lib/*.js"
+    ],
+    "reporter": [
+      "html"
+    ],
+    "all": true  
+  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/williams-cs/summer-language.git"
+    "url": "git+https://github.com/williams-cs/swell.git"
   },
   "keywords": [
     "dmlanguage"
@@ -29,7 +46,7 @@
   "author": "Emmie Hine",
   "license": "BSD-2-Clause",
   "bugs": {
-    "url": "https://github.com/williams-cs/summer-language/issues"
+    "url": "https://github.com/williams-cs/swell/issues"
   },
-  "homepage": "https://github.com/williams-cs/summer-language#readme"
+  "homepage": "https://github.com/williams-cs/swell#readme"
 }

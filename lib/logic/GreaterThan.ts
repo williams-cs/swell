@@ -1,6 +1,8 @@
 import { Expression, Scope } from "..";
+import { BooleanNode } from "../prims/BooleanNode";
+import { NumberNode } from "../prims/NumberNode";
 
-export class GreaterThan implements Expression<any>{
+export class GreaterThan implements Expression<BooleanNode>{
     private _left: Expression<any>;
     private _right: Expression<any>;
 
@@ -9,8 +11,14 @@ export class GreaterThan implements Expression<any>{
         this._right = right;
     }
 
-    eval(context: Scope): boolean{
-        return (this._left.eval(context) > this._right.eval(context));
+    eval(context: Scope): BooleanNode {
+        let lhs = this._left.eval(context);
+        let rhs = this._right.eval(context);
+        if (lhs instanceof NumberNode && rhs instanceof NumberNode) {
+            return (new BooleanNode(lhs.val > rhs.val));
+        } else {
+            throw new Error("The arguments to the > operator must be numeric.");
+        }
     }
 
     draw(){

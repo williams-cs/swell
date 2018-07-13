@@ -330,3 +330,9 @@ ASALocalRun/
 .mfractor/
 
 .DS_Store
+.nyc_output
+
+*.map
+*.d.ts
+lib/**/*.js
+.nyc_output

@@ -21,14 +21,14 @@ describe('Logic operations', () => {
     it('equals 2 should evaluate to false', () => {
         const var1 = new Equals(new NumberNode(2),new NumberNode(1));
         const output = var1.eval(new Scope(null));
-        expect(output).to.eql(false);
+        expect(output).to.eql(new BooleanNode(false));
     });
     it('and 1 should evaluate to false',() => {
         const true2 = new Equals(new NumberNode(1),new NumberNode(1));
         const false2 = new Equals(new NumberNode(1),new NumberNode(2));
         const var2 = new And(true2,false2);
         const output = var2.eval(new Scope(null));
-        expect(output).to.eql(false);
+        expect(output).to.eql(new BooleanNode(false));
     });
     it('and 2 should evaluate to true',() => {
         const true2 = new Equals(new NumberNode(1),new NumberNode(1));
@@ -75,7 +75,7 @@ describe('Logic operations', () => {
     it('greater than 1 should evaluate to true', () => {
         const var6 = new GreaterThan(new NumberNode(2),new NumberNode(1));
         const output = var6.eval(new Scope(null));
-        expect(output).to.eql(true);
+        expect(output).to.eql(new BooleanNode(true));
     });it('greater than 2 should evaluate to false', () => {
         const var6 = new GreaterThan(new NumberNode(1),new NumberNode(1));
         const output = var6.eval(new Scope(null));
