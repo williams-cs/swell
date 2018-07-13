@@ -1,4 +1,5 @@
 import { Expression, Scope } from "..";
+import { BooleanNode } from "../prims/BooleanNode";
 
 export class Or implements Expression<any>{
     private _left: Expression<any>;
@@ -9,8 +10,8 @@ export class Or implements Expression<any>{
         this._right = right;
     }
 
-    eval(context: Scope): boolean{
-        return (this._left.eval(context) || this._right.eval(context));
+    eval(context: Scope): BooleanNode{
+        return new BooleanNode(this._left.eval(context) || this._right.eval(context));
     }
 
     draw(){

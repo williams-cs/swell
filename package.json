@@ -34,7 +34,7 @@
     "reporter": [
       "html"
     ],
-    "all": true  
+    "all": true
   },
   "repository": {
     "type": "git",
