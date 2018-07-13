@@ -17,7 +17,8 @@
     "typescript": "^2.9.1"
   },
   "scripts": {
-    "test": "nyc --reporter=text mocha"
+    "test": "nyc --reporter=text mocha",
+    "install" : "tsc"
   },
   "nyc": {
     "extension": [
