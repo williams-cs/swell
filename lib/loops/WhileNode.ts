@@ -19,7 +19,7 @@ export class WhileNode implements Expression<any>{
 
         let ret;
         while(res.val){
-            console.log("Result.val: " + res.val);
+            //console.log("Result.val: " + res.val);
             //console.log("I'm infinitely looping");
             ret = this._body.eval(childCtx);
             res = this._cond.eval(childCtx);

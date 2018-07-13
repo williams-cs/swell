@@ -17,7 +17,7 @@ describe('An constant function', () => {
         const seq = new SequenceNode_1.SequenceNode(fundef, funapp);
         const output = seq.eval(context);
         const output1 = seq.rightVal;
-        chai_1.expect(output1).to.equal(1);
+        chai_1.expect(output1.val).to.equal(1);
     });
 });
 //# sourceMappingURL=fun2.spec.js.map

@@ -20,12 +20,13 @@ describe('A closure function', () => {
         const xvar = new VariableNode("x");
         const ivar = new VariableNode("i");
         const fundef = new FunDef("closure",new Return(new PlusOp(xvar,ivar)),["x"]);
-        const funapp = new FunApp("closure",[2]);
+        const funapp = new FunApp("closure",[new NumberNode(2)]);
         let context = new Scope(null);
         const seq1 = new SequenceNode(fundef,funapp);
         const seq2 = new SequenceNode(i1,seq1);
         const output = seq2.eval(context);
+        //console.log(output);
         const output1 = seq1.rightVal;
-        expect(output1).to.equal(3);
+        expect(output1.val).to.equal(3);
     });
 });

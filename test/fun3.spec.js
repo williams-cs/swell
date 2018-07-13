@@ -19,13 +19,14 @@ describe('A closure function', () => {
         const xvar = new __1.VariableNode("x");
         const ivar = new __1.VariableNode("i");
         const fundef = new FunDef_1.FunDef("closure", new __1.Return(new __1.PlusOp(xvar, ivar)), ["x"]);
-        const funapp = new FunApp_1.FunApp("closure", [2]);
+        const funapp = new FunApp_1.FunApp("closure", [new __1.NumberNode(2)]);
         let context = new Scope_1.Scope(null);
         const seq1 = new SequenceNode_1.SequenceNode(fundef, funapp);
         const seq2 = new SequenceNode_1.SequenceNode(i1, seq1);
         const output = seq2.eval(context);
+        //console.log(output);
         const output1 = seq1.rightVal;
-        chai_1.expect(output1).to.equal(3);
+        chai_1.expect(output1.val).to.equal(3);
     });
 });
 //# sourceMappingURL=fun3.spec.js.map

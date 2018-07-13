@@ -7,7 +7,7 @@ describe('A string', () => {
     it('should evaluate to a string', () => {
         const teststring = new StringNode_1.StringNode("hello world");
         const output = teststring.eval(null);
-        chai_1.expect(output.str).to.equal("hello world");
+        chai_1.expect(output.val).to.equal("hello world");
     });
 });
 //# sourceMappingURL=string.spec.js.map

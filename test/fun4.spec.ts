@@ -26,7 +26,7 @@ describe('A bar function to test static/dynamic scoping', () => {
         const i2 = new VariableNode("i");
         const i2def = new DeclareOp(i2,new NumberNode(2));
 
-        const funapp = new FunApp("bar",[1]);
+        const funapp = new FunApp("bar",[new NumberNode(1)]);
         let context = new Scope(null);
 
         const seq3 = new SequenceNode(i2def,funapp);
@@ -36,6 +36,6 @@ describe('A bar function to test static/dynamic scoping', () => {
         //const i2def = new AssignOp(new VariableNode("i"), new NumberNode(2));
         const output = seq1.eval(context);
         const output1 = seq3.rightVal;
-        expect(output1).to.equal(new NumberNode(2));
+        expect(output1).to.deep.equal(new NumberNode(2));
     });
 });

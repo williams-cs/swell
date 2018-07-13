@@ -25,7 +25,7 @@ export class StringNode implements Expression<StringNode>{
         this._str = value;
     }
 
-    get str(): string{
+    get val(): string{
         return this._str;
     }
 }

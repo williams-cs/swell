@@ -26,7 +26,7 @@ export class Conditional implements Expression<any>{
         if(!(res instanceof BooleanNode)){
             throw new Error("The condition must be a boolean expression.");
         } 
-        if(res){
+        if(res.val){
             return this._trueBranch.eval(childCtx);
         } else if(this._falseBranch != null) { // check if else/else if is null or undefined
             return this._falseBranch.eval(childCtx); // possibly a bad idea

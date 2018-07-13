@@ -22,7 +22,7 @@ describe('A bar function to test static/dynamic scoping', () => {
         const fundef = new FunDef_1.FunDef("bar", new __1.Return(new __1.PlusOp(new VariableNode_1.VariableNode("x"), new VariableNode_1.VariableNode("i"))), ["x"]);
         const i2 = new VariableNode_1.VariableNode("i");
         const i2def = new DeclareOp_1.DeclareOp(i2, new NumberNode_1.NumberNode(2));
-        const funapp = new FunApp_1.FunApp("bar", [1]);
+        const funapp = new FunApp_1.FunApp("bar", [new NumberNode_1.NumberNode(1)]);
         let context = new Scope_1.Scope(null);
         const seq3 = new SequenceNode_1.SequenceNode(i2def, funapp);
         const seq2 = new SequenceNode_1.SequenceNode(fundef, seq3);
@@ -30,7 +30,7 @@ describe('A bar function to test static/dynamic scoping', () => {
         //const i2def = new AssignOp(new VariableNode("i"), new NumberNode(2));
         const output = seq1.eval(context);
         const output1 = seq3.rightVal;
-        chai_1.expect(output1).to.equal(new NumberNode_1.NumberNode(2));
+        chai_1.expect(output1).to.deep.equal(new NumberNode_1.NumberNode(2));
     });
 });
 //# sourceMappingURL=fun4.spec.js.map

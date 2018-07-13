@@ -18,6 +18,6 @@ describe('An constant function', () => {
         const seq = new SequenceNode(fundef,funapp);
         const output = seq.eval(context);
         const output1 = seq.rightVal;
-        expect(output1).to.equal(1);
+        expect(output1.val).to.equal(1);
     });
 });
