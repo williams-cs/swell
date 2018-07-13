@@ -12,7 +12,7 @@ describe('A list', () => {
     it('should evaluate to [0,1,2,3]', () => {
         const list1 = new ListNode([new NumberNode(0),new NumberNode(1),new NumberNode(2),new NumberNode(3)]);
         const output = list1.eval(new Scope(null));
-        expect(output).to.deep.equal([0,1,2,3]);
+        expect(output).to.deep.equal(list1);
     });
 
     // I need to draw this out on paper to make it work
