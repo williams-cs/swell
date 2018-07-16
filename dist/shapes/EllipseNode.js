@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const __1 = require("../..");
-class EllipseNode extends __1.Shape {
+const Shape_1 = require("./Shape");
+const EllipseEffect_1 = require("../effects/EllipseEffect");
+class EllipseNode extends Shape_1.Shape {
     constructor(//ellipse: Ellipse, 
     color, xPos, yPos, width, height) {
         //this.ellipse = ellipse;
@@ -11,7 +12,7 @@ class EllipseNode extends __1.Shape {
         this._height = height;
     }
     draw(context, x, y) {
-        let e = new __1.EllipseEffect(this);
+        let e = new EllipseEffect_1.EllipseEffect(this);
         e.draw(context, x, y);
     }
     eval(context) {

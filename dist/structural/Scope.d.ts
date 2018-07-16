@@ -1,5 +1,5 @@
 import { Option } from 'space-lift';
-import { Effect } from '../..';
+import { Effect } from '../effects/Effect';
 export declare class Scope {
     private _map;
     private _parent;

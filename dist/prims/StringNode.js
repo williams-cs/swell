@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const __1 = require("../..");
+const StringEffect_1 = require("../effects/StringEffect");
+//import{Node} from './Node';
 // Nodes representing strings
 // Should abstract Node class implement Expression?
 class StringNode {
@@ -12,8 +13,7 @@ class StringNode {
         return this;
     }
     draw(context, x, y) {
-        //let e = new StringEffect(this);
-        let e = new __1.StringEffect(this);
+        let e = new StringEffect_1.StringEffect(this);
         e.draw(context, x, y);
     }
     set str(value) {

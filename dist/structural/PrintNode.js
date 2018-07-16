@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const __1 = require("../..");
+const NumberNode_1 = require("../prims/NumberNode");
 class PrintNode {
     constructor(toPrint, x, y) {
-        this._x = new __1.NumberNode(0);
-        this._y = new __1.NumberNode(0);
+        this._x = new NumberNode_1.NumberNode(0);
+        this._y = new NumberNode_1.NumberNode(0);
         this._toPrint = toPrint;
         //this._x = x || 0;
         //this._y = y || 0;
-        this._x = x || new __1.NumberNode(0);
-        this._y = y || new __1.NumberNode(0);
+        this._x = x || new NumberNode_1.NumberNode(0);
+        this._y = y || new NumberNode_1.NumberNode(0);
     }
     draw(context, x, y) {
         throw new Error("Cannot call draw() on printOp");
@@ -24,13 +24,13 @@ class PrintNode {
         return this._x.val;
     }
     set x(val) {
-        this._x = new __1.NumberNode(val);
+        this._x = new NumberNode_1.NumberNode(val);
     }
     get y() {
         return this._y.val;
     }
     set y(val) {
-        this._y = new __1.NumberNode(val);
+        this._y = new NumberNode_1.NumberNode(val);
     }
 }
 exports.PrintNode = PrintNode;

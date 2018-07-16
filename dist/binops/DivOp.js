@@ -1,14 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const __1 = require("../..");
-class DivOp extends __1.BinaryOperation {
+const BinaryOperation_1 = require("./BinaryOperation");
+const Scope_1 = require("../structural/Scope");
+const NumberNode_1 = require("../prims/NumberNode");
+class DivOp extends BinaryOperation_1.BinaryOperation {
     constructor(left, right) {
         super(left, right);
     }
     draw(context, x, y) {
     }
     eval(context) {
-        return new __1.NumberNode(this.left.eval(new __1.Scope(context)).eval(context).val / this.right.eval(new __1.Scope(context)).eval(context).val);
+        return new NumberNode_1.NumberNode(this.left.eval(new Scope_1.Scope(context)).eval(context).val / this.right.eval(new Scope_1.Scope(context)).eval(context).val);
     }
 }
 exports.DivOp = DivOp;

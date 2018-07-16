@@ -1,4 +1,8 @@
-import { Shape, Expression, ColorNode, Scope, NumberNode } from '../..';
+import { Shape } from './Shape';
+import { Expression } from '../Expression';
+import { ColorNode } from './ColorNode';
+import { Scope } from '../structural/Scope';
+import { NumberNode } from '../prims/NumberNode';
 export declare class EllipseNode extends Shape implements Expression<EllipseNode> {
     private _width;
     private _height;

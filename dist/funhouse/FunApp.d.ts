@@ -1,4 +1,5 @@
-import { Expression, Scope } from "../..";
+import { Expression } from "../Expression";
+import { Scope } from "../structural/Scope";
 export declare class FunApp<T> implements Expression<T> {
     private _name;
     private _args;

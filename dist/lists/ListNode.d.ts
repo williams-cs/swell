@@ -1,4 +1,5 @@
-import { Expression, Scope } from "../..";
+import { Expression } from "../Expression";
+import { Scope } from "../structural/Scope";
 export declare class ListNode implements Expression<ListNode> {
     private _list;
     constructor(list: Expression<any>[]);

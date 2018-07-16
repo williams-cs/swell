@@ -1,4 +1,6 @@
-import { Expression, Scope, ReturnError } from "../..";
+import { Expression } from "../Expression";
+import { Scope } from "../structural/Scope";
+import { ReturnError } from "../structural/ReturnError";
 import { Some } from "space-lift";
 
 // Application of a function. Assumes arg values passed in same order as FunDef args

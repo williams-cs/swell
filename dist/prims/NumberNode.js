@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+//import{Node} from './Node';
 // Nodes representing numbers
 // Should abstract Node class implement Expression?
 class NumberNode {

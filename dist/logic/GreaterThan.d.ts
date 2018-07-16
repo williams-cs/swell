@@ -1,4 +1,5 @@
-import { Expression, Scope, BooleanNode } from "../..";
+import { Expression, Scope } from "../..";
+import { BooleanNode } from "../prims/BooleanNode";
 export declare class GreaterThan implements Expression<BooleanNode> {
     private _left;
     private _right;

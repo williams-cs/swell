@@ -1,4 +1,7 @@
-import { EllipseNode, Expression, Scope, Effect } from "../..";
+import { Effect } from "./Effect";
+import { EllipseNode } from "../shapes/EllipseNode";
+import { Expression } from "../Expression";
+import { Scope } from "../structural/Scope";
 export declare class EllipseEffect implements Effect<EllipseNode> {
     private _circle;
     private _ctx;

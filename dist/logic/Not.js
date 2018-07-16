@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const __1 = require("../..");
+const BooleanNode_1 = require("../prims/BooleanNode");
 class Not {
     constructor(expr) {
         this._expr = expr;
     }
     eval(context) {
         let e = this._expr.eval(context);
-        if (e instanceof __1.BooleanNode) {
-            return new __1.BooleanNode(!e.val);
+        if (e instanceof BooleanNode_1.BooleanNode) {
+            return new BooleanNode_1.BooleanNode(!e.val);
         }
         else {
             throw new Error("The argument to the ! operator must be boolean.");

@@ -1,19 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const __1 = require("../..");
+const BinaryOperation_1 = require("./BinaryOperation");
+const VariableNode_1 = require("../vars/VariableNode");
 // left side is variable, right side is val
 // Declares new val
-class DeclareOp extends __1.BinaryOperation {
+class DeclareOp extends BinaryOperation_1.BinaryOperation {
     constructor(left, right) {
         super(left, right);
-        if (!(left instanceof __1.VariableNode)) {
+        if (!(left instanceof VariableNode_1.VariableNode)) {
             throw new Error("The left hand side of the assignment must be a variable.");
         }
     }
     draw(context, x, y) {
     }
     eval(context) {
-        if (this.left instanceof __1.VariableNode) {
+        if (this.left instanceof VariableNode_1.VariableNode) {
             let left2 = this.left;
             context.declare(left2.name);
             //console.log("Name: " + left2.name);

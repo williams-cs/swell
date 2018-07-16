@@ -1,4 +1,7 @@
-import {UnaryOperation, Expression, Scope, NumberNode} from '../..';
+import {UnaryOperation} from './UnaryOperation';
+import {Expression} from '../Expression';
+import {Scope} from '../structural/Scope';
+import { NumberNode } from '../prims/NumberNode';
 
 export class NegOp extends UnaryOperation<NumberNode>{
     constructor(val: Expression<NumberNode>){

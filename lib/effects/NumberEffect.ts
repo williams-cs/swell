@@ -1,4 +1,7 @@
-import { Effect, NumberNode, Expression, Scope } from "../..";
+import { Effect } from "./Effect";
+import { NumberNode } from "../prims/NumberNode";
+import { Expression } from "../Expression";
+import { Scope } from "../structural/Scope";
 
 export class NumberEffect implements Effect<NumberNode> {
 

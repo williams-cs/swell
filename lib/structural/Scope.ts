@@ -1,5 +1,5 @@
 import {Option, Some, None} from 'space-lift'
-import { Effect } from '../..';
+import { Effect } from '../effects/Effect';
 
 export class Scope{
     private _map: Map<string, Option<any>>; 

@@ -1,4 +1,8 @@
-import {ColorNode, Expression, NumberNode} from '../..';
+import {ColorNode} from './ColorNode';
+import {Shape} from './Shape';
+import { Effect } from '../effects/Effect';
+import { Expression } from '../Expression';
+import { NumberNode } from '../prims/NumberNode';
 
 // export class Ellipse extends Shape implements Effect<any>{
 export class Ellipse {

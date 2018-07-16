@@ -1,5 +1,6 @@
 // An abstract class for binary operations. 
-import {Scope, Expression}  from '../..';
+import {Scope} from '../structural/Scope';
+import {Expression} from '../Expression';
 
 export abstract class BinaryOperation<T> implements Expression<T> {
     constructor(private _left: Expression<T>, private _right: Expression<T>){};

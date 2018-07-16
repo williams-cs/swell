@@ -1,4 +1,6 @@
-import {Expression, Scope} from '../..';
+import {Expression} from '../Expression';
+import {Scope} from '../structural/Scope';
+//import{Node} from './Node';
 
 // Nodes representing numbers
 // Should abstract Node class implement Expression?

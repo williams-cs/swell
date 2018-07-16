@@ -1,4 +1,9 @@
-import { Shape, Expression, ColorNode, Scope, NumberNode, EllipseEffect } from '../..';
+import { Shape } from './Shape';
+import { Expression } from '../Expression';
+import { ColorNode } from './ColorNode';
+import { Scope } from '../structural/Scope';
+import { NumberNode } from '../prims/NumberNode';
+import { EllipseEffect } from '../effects/EllipseEffect';
 
 export class EllipseNode extends Shape implements Expression<EllipseNode>{
     //private ellipse: Ellipse;

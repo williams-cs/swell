@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const __1 = require("../..");
+const BooleanNode_1 = require("../prims/BooleanNode");
 class Conditional {
     //private _ifOp: IfOp;
     //private _elseOp: ElseOp;
@@ -17,7 +18,7 @@ class Conditional {
         let childCtx = new __1.Scope(context);
         let res = this._test.eval(childCtx);
         //if(typeof res != 'boolean'){
-        if (!(res instanceof __1.BooleanNode)) {
+        if (!(res instanceof BooleanNode_1.BooleanNode)) {
             throw new Error("The condition must be a boolean expression.");
         }
         if (res.val) {

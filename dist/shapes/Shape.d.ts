@@ -1,4 +1,5 @@
-import { ColorNode, NumberNode } from '../..';
+import { ColorNode } from './ColorNode';
+import { NumberNode } from '../prims/NumberNode';
 export declare abstract class Shape {
     private _color;
     private _xPos;

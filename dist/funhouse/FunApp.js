@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const __1 = require("../..");
+const ReturnError_1 = require("../structural/ReturnError");
 const space_lift_1 = require("space-lift");
 // Application of a function. Assumes arg values passed in same order as FunDef args
 class FunApp {
@@ -39,7 +39,7 @@ class FunApp {
         }
         catch (e) {
             // make sure that we catch only the error intended for us
-            if (e instanceof __1.ReturnError && parseInt(e.ID) == id) {
+            if (e instanceof ReturnError_1.ReturnError && parseInt(e.ID) == id) {
                 return e.retVal;
             }
             // error was not intended for us; rethrow

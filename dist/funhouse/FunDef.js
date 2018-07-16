@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const __1 = require("../..");
+const Scope_1 = require("../structural/Scope");
 class FunDef {
     constructor(name, body, args) {
         this._name = name;
@@ -11,7 +11,7 @@ class FunDef {
     // Binds args in context of definition; no values
     // Binds name to parent context (cur context is new context)
     eval(context) {
-        this._funScope = new __1.Scope(context);
+        this._funScope = new Scope_1.Scope(context);
         /*
         if(this._args != null){
             for(let entry of this._args){

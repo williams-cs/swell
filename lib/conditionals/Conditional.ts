@@ -1,4 +1,5 @@
-import { Expression, Scope, BooleanNode } from "../..";
+import { Expression, Scope } from "../..";
+import { BooleanNode } from "../prims/BooleanNode";
 
 export class Conditional implements Expression<any>{
     private _test: Expression<any>;

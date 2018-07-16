@@ -1,4 +1,5 @@
-import { Expression, Scope } from '../..';
+import { Expression } from '../Expression';
+import { Scope } from '../structural/Scope';
 export declare class VariableNode implements Expression<any> {
     private _name;
     constructor(name: string);

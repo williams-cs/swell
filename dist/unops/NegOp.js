@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const __1 = require("../..");
-class NegOp extends __1.UnaryOperation {
+const UnaryOperation_1 = require("./UnaryOperation");
+const NumberNode_1 = require("../prims/NumberNode");
+class NegOp extends UnaryOperation_1.UnaryOperation {
     constructor(val) {
         super(val);
     }
@@ -9,7 +10,7 @@ class NegOp extends __1.UnaryOperation {
     }
     eval(context) {
         let v = this.val.eval(context);
-        return new __1.NumberNode(-v.val);
+        return new NumberNode_1.NumberNode(-v.val);
     }
 }
 exports.NegOp = NegOp;

@@ -1,4 +1,5 @@
-import {Expression, Scope} from '../..';
+import {Expression} from '../Expression';
+import { Scope } from '../structural/Scope';
 
 export class FunDef<T> implements Expression<T>{
     private _name: string;

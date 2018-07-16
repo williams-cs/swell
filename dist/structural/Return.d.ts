@@ -1,4 +1,5 @@
-import { Expression, Scope } from "../..";
+import { Expression } from "../Expression";
+import { Scope } from "../structural/Scope";
 export declare class Return implements Expression<any> {
     private _expr;
     constructor(expr: Expression<any>);
