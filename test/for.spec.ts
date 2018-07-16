@@ -15,7 +15,7 @@ describe('A for loop', () => {
         const body1 = new AssignOp(x, new PlusOp(x,new NumberNode(1)));
 
         const i = new VariableNode("i");
-        const decl1 = new DeclareOp(i, new NumberNode(0));
+        const decl1 = new DeclareOp(i, new NumberNode(1));
         const adj1 = new AssignOp(i, new PlusOp(i,new NumberNode(1)));
         const cond1 = new LessThan(i,new NumberNode(10));
         //const cond1 = new LessThan(i,new NumberNode(10));
