@@ -1,7 +1,3 @@
-import { EllipseEffect } from './lib/effects/EllipseEffect';
-
-//import { ListNode } from './lib/lists/ListNode';
-
 /* CORE */
 export {Expression} from './lib/Expression';
 export {Scope} from './lib/structural/Scope';
