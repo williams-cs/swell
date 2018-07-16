@@ -1,6 +1,4 @@
-import { Expression } from "../Expression";
-import { Scope } from "./Scope";
-import { NumberNode } from "../prims/NumberNode";
+import { Expression, Scope, NumberNode } from "../..";
 
 export class PrintNode implements Expression<any>{
     private _x: NumberNode = new NumberNode(0);

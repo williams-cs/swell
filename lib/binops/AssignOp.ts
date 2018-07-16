@@ -1,7 +1,4 @@
-import {BinaryOperation} from './BinaryOperation';
-import {Expression} from '../Expression';
-import {Scope} from '../structural/Scope';
-import { VariableNode } from '../vars/VariableNode';
+import {BinaryOperation, Expression, Scope, VariableNode} from '../..';
 
 // left side is variable, right side is val
 // Reassign new value to var

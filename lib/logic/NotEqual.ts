@@ -1,6 +1,4 @@
-import { Expression, Scope } from "../..";
-import { BooleanNode } from "../prims/BooleanNode";
-import { NumberNode } from "../prims/NumberNode";
+import { Expression, Scope, BooleanNode, NumberNode } from "../..";
 
 export class NotEqual implements Expression<BooleanNode>{
     private _left: Expression<any>;

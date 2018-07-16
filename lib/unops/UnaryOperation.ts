@@ -1,5 +1,4 @@
-import {Expression} from '../Expression';
-import {Scope} from '../structural/Scope';
+import {Expression, Scope} from '../..';
 
 export abstract class UnaryOperation<T> implements Expression<T> {
     constructor(private _val: Expression<T>){};

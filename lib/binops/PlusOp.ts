@@ -1,7 +1,4 @@
-import {BinaryOperation} from './BinaryOperation';
-import {Expression} from '../Expression';
-import {Scope} from '../structural/Scope';
-import {NumberNode} from '../prims/NumberNode';
+import {BinaryOperation, Expression, Scope, NumberNode} from '../..';
 
 // left and right are both expressions
 export class PlusOp extends BinaryOperation<NumberNode>{

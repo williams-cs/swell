@@ -1,5 +1,4 @@
-import { Expression } from "../Expression";
-import { Scope } from "../structural/Scope";
+import { Expression, Scope } from "../..";
 
 export interface Effect<T>{
     draw(context: Scope, x: number, y: number): void; // draws object

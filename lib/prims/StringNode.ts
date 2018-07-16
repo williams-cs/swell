@@ -1,7 +1,4 @@
-import {Expression} from '../Expression';
-import {Scope} from '../structural/Scope';
-import { StringEffect } from '../effects/StringEffect';
-//import{Node} from './Node';
+import {Expression, Scope, StringEffect} from '../..';
 
 // Nodes representing strings
 // Should abstract Node class implement Expression?
@@ -17,6 +14,7 @@ export class StringNode implements Expression<StringNode>{
     }
 
     draw(context: Scope, x: number, y: number): void {
+        //let e = new StringEffect(this);
         let e = new StringEffect(this);
         e.draw(context, x, y);
     }

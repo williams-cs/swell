@@ -51,3 +51,9 @@ export {Shape} from './lib/shapes/Shape';
 export {PrintNode} from './lib/structural/PrintNode';
 export {Return} from './lib/structural/Return';
 export {ReturnError} from './lib/structural/ReturnError';
+
+/* EFFECTS */
+export {Effect} from './lib/effects/Effect';
+export {EllipseEffect} from './lib/effects/EllipseEffect';
+export {NumberEffect} from './lib/effects/NumberEffect';
+export {StringEffect} from './lib/effects/StringEffect';

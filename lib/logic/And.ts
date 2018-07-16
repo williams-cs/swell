@@ -1,5 +1,4 @@
-import { Expression, Scope, NumberNode} from "../..";
-import { BooleanNode } from "../prims/BooleanNode";
+import { Expression, Scope, BooleanNode} from "../..";
 
 export class And implements Expression<any>{
     private _left: Expression<any>;

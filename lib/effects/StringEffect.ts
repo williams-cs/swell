@@ -1,7 +1,4 @@
-import { Effect } from "./Effect";
-import { StringNode } from "../prims/StringNode";
-import { Expression } from "../Expression";
-import { Scope } from "../structural/Scope";
+import { Effect, StringNode, Expression, Scope } from "../..";
 
 export class StringEffect implements Effect<StringNode> {
 

@@ -1,6 +1,4 @@
-import { Expression } from "../Expression";
-import { Scope } from "../structural/Scope";
-//import { ListHead } from "./ListHead";
+import { Expression, Scope } from "../..";
 
 export class ListNode implements Expression<ListNode>{
     private _list: Expression<any>[];

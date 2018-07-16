@@ -1,5 +1,4 @@
-import {Expression} from '../Expression';
-import {Scope} from '../structural/Scope';
+import {Expression, Scope} from '../..';
 
 export class ColorNode implements Expression<string>{
     private _red: number;

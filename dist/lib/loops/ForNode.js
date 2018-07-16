@@ -6,7 +6,7 @@ class ForNode {
         this._init = init;
         this._cond = cond;
         this._adj = adj;
-        this._body = body; // can also be separate, just difference in parsing
+        this._body = body;
     }
     eval(context) {
         let childCtx = new __1.Scope(context);
