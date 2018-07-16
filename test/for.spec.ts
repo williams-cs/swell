@@ -5,18 +5,27 @@ import { VariableNode, AssignOp, NumberNode, WhileNode, PlusOp, SequenceNode, Co
 import { LessThan } from '../lib/logic/LessThan';
 import { Context } from 'mocha';
 import { DeclareOp } from '../lib/binops/DeclareOp';
+import { ForNode } from '../lib/loops/ForNode';
 
-// while(int i < 10) i++
+// int x = 0;
+// for(int i = 0; i < 10; i++){
+    // x++;
+//}
 
 describe('A while loop', () => {
     it('should evaluate to 9', () => {
         const x = new VariableNode("x");
         const xvar = new DeclareOp(x,new NumberNode(0));
         const body1 = new AssignOp(x, new PlusOp(x,new NumberNode(1)));
-        //const cond1 = new Conditional(new LessThan(x,new NumberNode(10)), add1);
-        const cond1 = new LessThan(x,new NumberNode(10));
-        const while1 = new WhileNode(cond1,body1);
-        const seq1 = new SequenceNode(xvar,while1);
+
+        const i = new VariableNode("i");
+        const decl1 = new DeclareOp(i, new NumberNode(0));
+        const cond1 = new LessThan(i,new NumberNode(10));
+        const adj1 = new AssignOp(i, new PlusOp(i,new NumberNode(1)));
+       //const cond1 = new LessThan(i,new NumberNode(10));
+
+        const for1 = new ForNode(decl1,cond1,adj1,body1);
+        const seq1 = new SequenceNode(xvar,for1);
         const output = seq1.eval(new Scope(null));
         const output1 = seq1.rightVal;
         expect(output1).to.deep.equal(new NumberNode(10));
