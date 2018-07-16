@@ -1,5 +1,4 @@
-import { Expression, Scope, BooleanNode } from '../..';
-import { DeclareOp } from '../binops/DeclareOp';
+import { Expression, Scope, BooleanNode, DeclareOp } from '../..';
 
 export class ForNode implements Expression<any>{
     private _init: Expression<any>;
@@ -11,7 +10,7 @@ export class ForNode implements Expression<any>{
         this._init = init;
         this._cond = cond;
         this._adj = adj;
-        this._body = body; // can also be separate, just difference in parsing
+        this._body = body; 
     }
 
     eval(context: Scope){

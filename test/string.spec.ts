@@ -1,8 +1,6 @@
-
-import {Scope} from '../lib/structural/Scope'
-import{StringNode} from '../lib/prims/StringNode';
 import { assert,expect } from 'chai';
 import 'mocha';
+import{StringNode} from '..';
 
 describe('A string', () => {
     it('should evaluate to a string', () => {

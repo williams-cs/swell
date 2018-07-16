@@ -64,6 +64,8 @@ var SequenceNode_1 = require("./lib/structural/SequenceNode");
 exports.SequenceNode = SequenceNode_1.SequenceNode;
 var WhileNode_1 = require("./lib/loops/WhileNode");
 exports.WhileNode = WhileNode_1.WhileNode;
+var ForNode_1 = require("./lib/loops/ForNode");
+exports.ForNode = ForNode_1.ForNode;
 /* BUILTIN FUNCTIONS */
 var ColorNode_1 = require("./lib/shapes/ColorNode");
 exports.ColorNode = ColorNode_1.ColorNode;

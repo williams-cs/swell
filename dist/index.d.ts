@@ -28,6 +28,7 @@ export { FunApp } from './lib/funhouse/FunApp';
 export { FunDef } from './lib/funhouse/FunDef';
 export { SequenceNode } from './lib/structural/SequenceNode';
 export { WhileNode } from './lib/loops/WhileNode';
+export { ForNode } from './lib/loops/ForNode';
 export { ColorNode } from './lib/shapes/ColorNode';
 export { Ellipse } from './lib/shapes/Ellipse';
 export { EllipseNode } from './lib/shapes/EllipseNode';

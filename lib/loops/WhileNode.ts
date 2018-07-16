@@ -6,7 +6,7 @@ export class WhileNode implements Expression<any>{
 
     constructor(cond: Expression<any>, body: Expression<any>){
         this._cond = cond;
-        this._body = body; // can also be separate, just difference in parsing
+        this._body = body; 
     }
 
     eval(context: Scope){

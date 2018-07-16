@@ -41,6 +41,7 @@ export {FunApp} from './lib/funhouse/FunApp';
 export {FunDef} from './lib/funhouse/FunDef';
 export {SequenceNode} from './lib/structural/SequenceNode';
 export {WhileNode} from './lib/loops/WhileNode';
+export {ForNode} from './lib/loops/ForNode';
 
 /* BUILTIN FUNCTIONS */
 export {ColorNode} from './lib/shapes/ColorNode';

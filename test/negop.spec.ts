@@ -1,8 +1,6 @@
-import{NegOp} from '../lib/unops/NegOp';
-import { NumberNode } from '../lib/prims/NumberNode';
-import {Scope} from '../lib/structural/Scope';
 import { assert,expect } from 'chai';
 import 'mocha';
+import{NegOp, NumberNode} from '..';
 
 describe('A negop', () => {
     it('should evaluate to the negation', () => {

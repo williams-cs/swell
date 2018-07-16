@@ -1,5 +1,4 @@
-import{BooleanNode} from '../lib/prims/BooleanNode';
-import {Scope} from '../lib/structural/Scope';
+import{BooleanNode, Scope} from '..';
 import { assert,expect } from 'chai';
 import 'mocha';
 
