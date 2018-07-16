@@ -1,11 +1,6 @@
-import {FunDef} from '../lib/funhouse/FunDef';
-import {Scope} from '../lib/structural/Scope';
-
 import { assert,expect } from 'chai';
 import 'mocha';
-import { FunApp } from '../lib/funhouse/FunApp';
-import { SequenceNode } from '../lib/structural/SequenceNode';
-import { Return, NumberNode } from '..';
+import { Return, NumberNode, SequenceNode, FunApp, Scope, FunDef } from '..';
 
 // def c(x){
 //  return 1;

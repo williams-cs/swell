@@ -1,15 +1,6 @@
-import {FunDef} from '../lib/funhouse/FunDef';
-import {Scope} from '../lib/structural/Scope';
-
 import { assert,expect } from 'chai';
 import 'mocha';
-import { FunApp } from '../lib/funhouse/FunApp';
-import { SequenceNode } from '../lib/structural/SequenceNode';
-import { VariableNode } from '../lib/vars/VariableNode';
-import { AssignOp } from '../lib/binops/AssignOp';
-import { NumberNode } from '../lib/prims/NumberNode';
-import { PlusOp, Return } from '..';
-import { DeclareOp } from '../lib/binops/DeclareOp';
+import { PlusOp, Return, DeclareOp, NumberNode, AssignOp, VariableNode, SequenceNode, FunApp, Scope, FunDef } from '..';
 
 //let i = 1
 //def bar(x){

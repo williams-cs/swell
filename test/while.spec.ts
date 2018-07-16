@@ -1,10 +1,6 @@
-import {Scope} from '../lib/structural/Scope'
 import { assert,expect } from 'chai';
 import 'mocha';
-import { VariableNode, AssignOp, NumberNode, WhileNode, PlusOp, SequenceNode, Conditional } from '..';
-import { LessThan } from '../lib/logic/LessThan';
-import { Context } from 'mocha';
-import { DeclareOp } from '../lib/binops/DeclareOp';
+import { VariableNode, AssignOp, NumberNode, WhileNode, PlusOp, SequenceNode, Conditional, Scope, LessThan, DeclareOp } from '..';
 
 // while(int i < 10) i++
 

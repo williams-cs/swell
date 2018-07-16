@@ -332,7 +332,10 @@ ASALocalRun/
 .DS_Store
 .nyc_output
 
-*.map
-*.d.ts
+lib/**/*.map
+lib/**/*.d.ts
 lib/**/*.js
+test/**/*.map
+test/**/*.d.ts
+test/**/*.js
 .nyc_output

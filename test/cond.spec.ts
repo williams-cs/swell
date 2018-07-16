@@ -1,9 +1,6 @@
 import { assert,expect } from 'chai';
 import 'mocha';
-import { Scope, SequenceNode, NumberNode, AssignOp, VariableNode, Return } from '..';
-import { LessThan } from '../lib/logic/LessThan';
-import { Conditional } from '../lib/conditionals/Conditional';
-import { BooleanNode } from '../lib/prims/BooleanNode';
+import { Scope, SequenceNode, NumberNode, AssignOp, VariableNode, Return, LessThan, Conditional, BooleanNode } from '..';
 
 // x = 2
 // if(x < 3) return 1

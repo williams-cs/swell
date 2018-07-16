@@ -2,8 +2,8 @@
   "name": "swell",
   "version": "1.0.0",
   "description": "swell williams entry-level language",
-  "main": "./lib/index.js",
-  "types": "./lib/index.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "dependencies": {
     "space-lift": "^0.7.2"
   },
@@ -29,7 +29,8 @@
       "test/",
       "coverage/",
       "lib/Ignore for now/",
-      "lib/*.js"
+      "lib/*.js",
+      "dist/"
     ],
     "reporter": [
       "html"
