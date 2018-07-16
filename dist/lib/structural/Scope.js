@@ -2,25 +2,17 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const space_lift_1 = require("space-lift");
 class Scope {
-    //private _doc: Option<Document>;
-    constructor(parent) {
+    constructor(parent, effects, state) {
         this._retValID = space_lift_1.None;
         this._canvas = space_lift_1.None;
-        this._myState = {
-            dragoffx: 0,
-            dragoffy: 0,
-            initDistance: 0,
-            selection: null,
-            dragging: false,
-            resizing: false
-        };
         this._hadFunEval = false;
         this.globalFunID = 100000000;
         this._map = new Map();
         this._parent = parent;
+        this._effects = effects || this._parent.effects;
+        this._myState = state || this._parent.myState;
         if (this._parent != null && this._parent._hadFunEval)
             this._hadFunEval = true; // copy function eval flag from parent
-        //this._doc = parent.doc;
     }
     copy() {
         let s = new Scope(this._parent);
