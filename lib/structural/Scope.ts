@@ -21,8 +21,8 @@ export class Scope{
     constructor(parent: Scope, effects?: Effect<any>[], state?: {dragoffx: number,dragoffy: number,initDistance: number,selection: any,dragging: boolean,resizing: boolean}){
         this._map = new Map();
         this._parent = parent;
-        this._effects = effects || this._parent.effects;
-        this._myState = state || this._parent.myState;
+        this._effects = effects || null;
+        this._myState = state || null;
         if(this._parent != null && this._parent._hadFunEval) this._hadFunEval = true; // copy function eval flag from parent
     }
 
