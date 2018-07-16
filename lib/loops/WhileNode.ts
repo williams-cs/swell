@@ -1,4 +1,6 @@
-import { Expression, Scope, BooleanNode } from '../..';
+import { Expression } from "../Expression";
+import {Scope} from '../structural/Scope'; 
+import {BooleanNode} from '../prims/BooleanNode';
 
 export class WhileNode implements Expression<any>{
     private _cond: Expression<any>;

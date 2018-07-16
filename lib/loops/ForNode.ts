@@ -1,4 +1,7 @@
-import { Expression, Scope, BooleanNode, DeclareOp } from '../..';
+import { Expression } from "../Expression";
+import {Scope} from '../structural/Scope'; 
+import {BooleanNode} from '../prims/BooleanNode';
+import {DeclareOp} from '../binops/DeclareOp';
 
 export class ForNode implements Expression<any>{
     private _init: Expression<any>;

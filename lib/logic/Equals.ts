@@ -1,4 +1,5 @@
-import { Expression, Scope } from "../..";
+import { Expression } from "../Expression";
+import {Scope} from '../structural/Scope'; 
 import { BooleanNode } from "../prims/BooleanNode";
 import { NumberNode } from "../prims/NumberNode";
 

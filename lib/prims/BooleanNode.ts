@@ -1,4 +1,5 @@
-import { Scope, Expression } from "../..";
+import { Expression } from "../Expression"; 
+import {Scope} from '../structural/Scope'; 
 
 export class BooleanNode implements Expression<BooleanNode>{
     private _val: boolean;
