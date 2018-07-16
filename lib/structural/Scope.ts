@@ -33,6 +33,7 @@ export class Scope{
     }
 
     declare(name: string){
+        //console.log("declaring variable " + name);
         if(this._map.has(name)){
             throw new Error("Scope already has var with name " + name);
         }
@@ -41,6 +42,7 @@ export class Scope{
 
     // Assign/reassign value
     assign(name: string, val: any): void{
+        //console.log("assigning value " + val + " for variable " + name + ".");
         this._map.set(name,Some(val)); //Some(val)?
     }
 

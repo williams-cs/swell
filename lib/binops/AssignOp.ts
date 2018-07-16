@@ -19,10 +19,10 @@ export class AssignOp<T> extends BinaryOperation<T>{
     
     eval(context: Scope): T{
         if(this.left instanceof VariableNode){
-            let left2: VariableNode = this.left as VariableNode;
+            //let left2: VariableNode = this.left as VariableNode;
             let r = this.right.eval(context);
 
-            context.assign(left2.name,r);
+            context.assign(this.left.name,r);
 
             return r;
         }

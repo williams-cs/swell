@@ -3,27 +3,26 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Scope_1 = require("../structural/Scope");
 const BooleanNode_1 = require("../prims/BooleanNode");
 class ForNode {
-    constructor(init, cond, adj, body) {
+    constructor(init, cond, post, body) {
         this._init = init;
         this._cond = cond;
-        this._adj = adj;
+        this._post = post;
         this._body = body;
     }
     eval(context) {
         let childCtx = new Scope_1.Scope(context);
+        this._init.eval(childCtx); // initialize var
         let res = this._cond.eval(childCtx);
         if (!(res instanceof BooleanNode_1.BooleanNode)) {
             throw new Error("The condition must be a boolean expression.");
         }
-        this._init.eval(childCtx); // initialize var
         let ret;
         //let adjust;
         while (res.val) {
-            //console.log("Result.val: " + res.val);
-            //console.log("I'm infinitely looping");
             ret = this._body.eval(childCtx);
+            this._post.eval(childCtx);
             res = this._cond.eval(childCtx);
-            this._adj.eval(childCtx);
+            //this._post.eval(childCtx);
             //ret = this._body.eval(childCtx);
         }
         return ret;

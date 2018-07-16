@@ -19,23 +19,12 @@ export class DeclareOp<T> extends BinaryOperation<T>{
     
     eval(context: Scope): T{
         if(this.left instanceof VariableNode){
-            let left2: VariableNode = this.left as VariableNode;
-            context.declare(left2.name); 
-            //console.log("Name: " + left2.name);
-            //console.log("Map name: " + context.lookup(left2.name));
-
+            //let left2: VariableNode = this.left as VariableNode;
+            context.declare(this.left.name); 
+          
             let r = this.right.eval(context);
-            //console.log("r: " + r);
 
-            context.assign(left2.name,r);
-
-            //console.log("What got assigned: " + left2.name + " " + r);
-            //console.log("Getting value from what got assigned: " + context.map.get(left2.name));
-            //console.log("Val " + r);
-
-            //test for if it's in local scope, parent scope, etc
-            // need to check if it's in local scope, if not, keep going up
-
+            context.assign(this.left.name,r);
             return r;
         }
         throw new Error("HALP (in DeclareOp)");
