@@ -1,6 +1,12 @@
+import {Scope} from '../lib/structural/Scope';
+import {VariableNode} from '../lib/vars/VariableNode';
+import {FunApp} from '../lib/funhouse/FunApp';
+import {FunDef} from '../lib/funhouse/FunDef';
+import {SequenceNode} from '../lib/structural/SequenceNode';
+import {Return} from '../lib/structural/Return';
+
 import { assert,expect } from 'chai';
 import 'mocha';
-import { Return, VariableNode, SequenceNode, FunApp, Scope, FunDef } from '..';
 
 //def identity(x){
 //  return x;

@@ -1,6 +1,12 @@
+import {Scope} from '../lib/structural/Scope';
+import {NumberNode} from '../lib/prims/NumberNode';
+import {FunApp} from '../lib/funhouse/FunApp';
+import {FunDef} from '../lib/funhouse/FunDef';
+import {SequenceNode} from '../lib/structural/SequenceNode';
+import {Return} from '../lib/structural/Return';
+
 import { assert,expect } from 'chai';
 import 'mocha';
-import { Return, NumberNode, SequenceNode, FunApp, Scope, FunDef } from '..';
 
 // def c(x){
 //  return 1;

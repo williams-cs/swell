@@ -1,4 +1,19 @@
-import { NumberNode, Scope, VariableNode, AssignOp, SequenceNode, And, Or, Not, LessThan, GreaterThan, LessThanEq, GreaterThanEq, NotEqual, BooleanNode, Equals } from "..";
+import {Scope} from '../lib/structural/Scope';
+import {AssignOp} from '../lib/binops/AssignOp';
+import {GreaterThan} from '../lib/logic/GreaterThan';
+import {GreaterThanEq} from '../lib/logic/GreaterThanEq';
+import {LessThan} from '../lib/logic/LessThan';
+import {LessThanEq} from '../lib/logic/LessThanEq';
+import {And} from '../lib/logic/And';
+import {Or} from '../lib/logic/Or';
+import {Equals} from '../lib/logic/Equals';
+import {NotEqual} from '../lib/logic/NotEqual';
+import {Not} from '../lib/logic/Not';
+import {NumberNode} from '../lib/prims/NumberNode';
+import {BooleanNode} from '../lib/prims/BooleanNode';
+import {VariableNode} from '../lib/vars/VariableNode';
+import {SequenceNode} from '../lib/structural/SequenceNode';
+
 import { assert,expect } from 'chai';
 import 'mocha';
 

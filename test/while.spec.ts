@@ -1,6 +1,15 @@
+import {Scope} from '../lib/structural/Scope';
+import {AssignOp} from '../lib/binops/AssignOp';
+import {PlusOp} from '../lib/binops/PlusOp';
+import {LessThan} from '../lib/logic/LessThan';
+import {DeclareOp} from '../lib/binops/DeclareOp';
+import {NumberNode} from '../lib/prims/NumberNode';
+import {VariableNode} from '../lib/vars/VariableNode';
+import {SequenceNode} from '../lib/structural/SequenceNode';
+import {WhileNode} from '../lib/loops/WhileNode';
+
 import { assert,expect } from 'chai';
 import 'mocha';
-import { VariableNode, AssignOp, NumberNode, WhileNode, PlusOp, SequenceNode, Conditional, Scope, LessThan, DeclareOp } from '..';
 
 // while(int i < 10) i++
 

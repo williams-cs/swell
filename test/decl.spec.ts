@@ -1,6 +1,14 @@
-import {BinaryOperation, Scope, SequenceNode, AssignOp, PlusOp, VariableNode, NumberNode, MulOp, DeclareOp} from '..';
 import { assert,expect } from 'chai';
 import 'mocha';
+
+import {Scope} from '../lib/structural/Scope';
+import {AssignOp} from '../lib/binops/AssignOp';
+import {MulOp} from '../lib/binops/MulOp';
+import {PlusOp} from '../lib/binops/PlusOp';
+import {DeclareOp} from '../lib/binops/DeclareOp';
+import {NumberNode} from '../lib/prims/NumberNode';
+import {VariableNode} from '../lib/vars/VariableNode';
+import {SequenceNode} from '../lib/structural/SequenceNode';
 
 describe('A sequence test with declaration', () => {
     it('should evaluate to a number', () => {

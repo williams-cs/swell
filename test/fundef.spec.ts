@@ -1,4 +1,7 @@
-import {FunDef, Scope, NumberNode} from '..';
+import {Scope} from '../lib/structural/Scope';
+import {NumberNode} from '../lib/prims/NumberNode';
+import {FunDef} from '../lib/funhouse/FunDef';
+
 import { assert,expect } from 'chai';
 import 'mocha';
 

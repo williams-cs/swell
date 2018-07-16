@@ -1,6 +1,14 @@
+import {Scope} from '../lib/structural/Scope';
+import {AssignOp} from '../lib/binops/AssignOp';
+import {LessThan} from '../lib/logic/LessThan';
+import {NumberNode} from '../lib/prims/NumberNode';
+import {BooleanNode} from '../lib/prims/BooleanNode';
+import {VariableNode} from '../lib/vars/VariableNode';
+import {Conditional} from '../lib/conditionals/Conditional';
+import {SequenceNode} from '../lib/structural/SequenceNode';
+
 import { assert,expect } from 'chai';
 import 'mocha';
-import { Scope, SequenceNode, NumberNode, AssignOp, VariableNode, Return, LessThan, Conditional, BooleanNode } from '..';
 
 // x = 2
 // if(x < 3) return 1

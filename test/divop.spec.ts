@@ -1,4 +1,6 @@
-import {DivOp, NumberNode} from '..';
+import {DivOp} from '../lib/binops/DivOp';
+import {NumberNode} from '../lib/prims/NumberNode';
+
 import { assert,expect } from 'chai';
 import 'mocha';
 

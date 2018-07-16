@@ -1,6 +1,9 @@
+import {Scope} from '../lib/structural/Scope';
+import {PlusOp} from '../lib/binops/PlusOp';
+import {NumberNode} from '../lib/prims/NumberNode';
+
 import { assert,expect } from 'chai';
 import 'mocha';
-import { NumberNode, PlusOp, Scope } from '..';
 
 describe('A plusop', () => {
     it('should evaluate to a number', () => {
