@@ -1,17 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const __1 = require("../..");
+const Scope_1 = require("../structural/Scope");
+const BooleanNode_1 = require("../prims/BooleanNode");
 class ForNode {
     constructor(init, cond, adj, body) {
         this._init = init;
         this._cond = cond;
         this._adj = adj;
-        this._body = body; // can also be separate, just difference in parsing
+        this._body = body;
     }
     eval(context) {
-        let childCtx = new __1.Scope(context);
+        let childCtx = new Scope_1.Scope(context);
         let res = this._cond.eval(childCtx);
-        if (!(res instanceof __1.BooleanNode)) {
+        if (!(res instanceof BooleanNode_1.BooleanNode)) {
             throw new Error("The condition must be a boolean expression.");
         }
         this._init.eval(childCtx); // initialize var

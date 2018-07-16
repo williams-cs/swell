@@ -1,4 +1,6 @@
-import { Expression, Scope, DeclareOp } from '../..';
+import { Expression } from "../Expression";
+import { Scope } from '../structural/Scope';
+import { DeclareOp } from '../binops/DeclareOp';
 export declare class ForNode implements Expression<any> {
     private _init;
     private _cond;

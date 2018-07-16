@@ -1,5 +1,4 @@
 "use strict";
-//import { ListNode } from './lib/lists/ListNode';
 Object.defineProperty(exports, "__esModule", { value: true });
 var Scope_1 = require("./lib/structural/Scope");
 exports.Scope = Scope_1.Scope;
@@ -81,4 +80,10 @@ var Return_1 = require("./lib/structural/Return");
 exports.Return = Return_1.Return;
 var ReturnError_1 = require("./lib/structural/ReturnError");
 exports.ReturnError = ReturnError_1.ReturnError;
+var EllipseEffect_1 = require("./lib/effects/EllipseEffect");
+exports.EllipseEffect = EllipseEffect_1.EllipseEffect;
+var NumberEffect_1 = require("./lib/effects/NumberEffect");
+exports.NumberEffect = NumberEffect_1.NumberEffect;
+var StringEffect_1 = require("./lib/effects/StringEffect");
+exports.StringEffect = StringEffect_1.StringEffect;
 //# sourceMappingURL=index.js.map

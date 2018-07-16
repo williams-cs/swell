@@ -15,6 +15,7 @@
     "outDir": "dist/"
   },
   "include": [
+    "index.ts",
     "lib/**/*"
   ],
   "exclude": [
