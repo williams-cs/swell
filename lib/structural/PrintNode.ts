@@ -3,11 +3,11 @@ import { Scope } from "./Scope";
 import { NumberNode } from "../prims/NumberNode";
 
 export class PrintNode implements Expression<any>{
-    private _x: NumberNode = new NumberNode(0);
-    private _y: NumberNode = new NumberNode(0);
+    private _x: Expression<NumberNode> = new NumberNode(0);
+    private _y: Expression<NumberNode> = new NumberNode(0);
     private _toPrint: Expression<any>
 
-    constructor(toPrint: Expression<any>, x?: NumberNode, y?: NumberNode){
+    constructor(toPrint: Expression<any>, x?: Expression<NumberNode>, y?: Expression<NumberNode>){
         this._toPrint = toPrint;
         //this._x = x || 0;
         //this._y = y || 0;
@@ -26,17 +26,17 @@ export class PrintNode implements Expression<any>{
         return res;
     }
 
-    get x(): number {
-        return this._x.val;
+    get x(): Expression<NumberNode> {
+        return this._x;
     }
-    set x(val: number){
-        this._x = new NumberNode(val);
+    set x(val: Expression<NumberNode>){
+        this._x = val;
     } 
-    get y(): number {
-        return this._y.val;
+    get y(): Expression<NumberNode> {
+        return this._y;
     }
-    set y(val: number){
-        this._y = new NumberNode(val);
+    set y(val: Expression<NumberNode>){
+        this._y = val;
     }
     get toPrint(): Expression<any>{
         return this._toPrint;

@@ -21,16 +21,16 @@ class PrintNode {
         return res;
     }
     get x() {
-        return this._x.val;
+        return this._x;
     }
     set x(val) {
-        this._x = new NumberNode_1.NumberNode(val);
+        this._x = val;
     }
     get y() {
-        return this._y.val;
+        return this._y;
     }
     set y(val) {
-        this._y = new NumberNode_1.NumberNode(val);
+        this._y = val;
     }
     get toPrint() {
         return this._toPrint;
