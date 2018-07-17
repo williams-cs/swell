@@ -60,6 +60,14 @@ export class StringEffect implements Effect<StringNode> {
         throw new Error("Not implemented");
     }
 
+    set canvas(canvas: HTMLCanvasElement) {
+        this._canvas = canvas;
+    }
+
+    get canvas(): HTMLCanvasElement {
+        return this._canvas;
+    }
+
     drawTextGuides(x: number, y: number, w: number, h: number, corner: number) { //corner is 2 or 0
         this._ctx.beginPath();
         this._ctx.rect(x, y, w, h);

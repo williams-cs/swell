@@ -18,6 +18,7 @@ export declare class StringEffect implements Effect<StringNode> {
     onMouseMove(event: any): void;
     ast(): Expression<StringNode>;
     updateAST(): Expression<StringNode>;
+    canvas: HTMLCanvasElement;
     drawTextGuides(x: number, y: number, w: number, h: number, corner: number): void;
     drawSquare(x: number, y: number, w: number, h: number, color: string): void;
 }

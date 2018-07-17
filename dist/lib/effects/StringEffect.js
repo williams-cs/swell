@@ -44,6 +44,12 @@ class StringEffect {
     updateAST() {
         throw new Error("Not implemented");
     }
+    set canvas(canvas) {
+        this._canvas = canvas;
+    }
+    get canvas() {
+        return this._canvas;
+    }
     drawTextGuides(x, y, w, h, corner) {
         this._ctx.beginPath();
         this._ctx.rect(x, y, w, h);
