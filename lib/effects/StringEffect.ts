@@ -48,6 +48,7 @@ export class StringEffect implements Effect<StringNode> {
 
     onMouseMove(event: any): void {
         if (this._canvas == undefined) { console.log("shit") };
+        if (this._ctx == undefined) { console.log("double shit") };
         this.mouse.x = getMousePos(this._canvas, event).x;
         this.mouse.y = getMousePos(this._canvas, event).y;
         console.log("x: " + this.mouse.x);

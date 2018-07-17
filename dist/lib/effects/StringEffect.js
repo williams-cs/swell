@@ -38,6 +38,10 @@ class StringEffect {
             console.log("shit");
         }
         ;
+        if (this._ctx == undefined) {
+            console.log("double shit");
+        }
+        ;
         this.mouse.x = getMousePos(this._canvas, event).x;
         this.mouse.y = getMousePos(this._canvas, event).y;
         console.log("x: " + this.mouse.x);
