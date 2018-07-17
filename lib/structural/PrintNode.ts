@@ -22,7 +22,7 @@ export class PrintNode implements Expression<any>{
     // eval param and call draw
     eval(context: Scope): any {
         let res = this._toPrint.eval(context);
-        res.draw(context, this._x.eval(context), this._y.eval(context));
+        res.draw(context, this._x.eval(context).val, this._y.eval(context).val);
         return res;
     }
 
