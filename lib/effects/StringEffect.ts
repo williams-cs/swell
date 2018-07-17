@@ -13,6 +13,7 @@ export class StringEffect implements Effect<StringNode> {
 
     constructor(str: StringNode) {
         this._str = str;
+        console.log("string effect constructor called");
     }
 
     draw(context: Scope, x: number, y: number): void {
