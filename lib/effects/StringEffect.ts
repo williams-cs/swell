@@ -11,7 +11,7 @@ export class StringEffect implements Effect<StringNode> {
     private _fontSize: number = 20;
     private _w: number;
     private _h: number;
-    private _mouse: {
+    protected mouse: {
         x: number,
         y: number
     } = {
@@ -37,7 +37,7 @@ export class StringEffect implements Effect<StringNode> {
             this._h = this._fontSize;
             context.effects.push(this);
 
-            window.addEventListener('mousemove', this.onMouseMove);
+            this._canvas.addEventListener('mousemove', this.onMouseMove);
         }
         else {
             console.log("canvas is NOT defined");
@@ -57,8 +57,8 @@ export class StringEffect implements Effect<StringNode> {
     onMouseMove(event: any) {
         //this._mouse.x = this.getMousePos(this._canvas,event).x;
         //this._mouse.y = this.getMousePos(this._canvas,event).y;
-        console.log("x: " + this._mouse.x);
-        console.log("y: " + this._mouse.y);
+        console.log("x: " + this.mouse.x);
+        console.log("y: " + this.mouse.y);
     }
 
     ast(): Expression<StringNode> {

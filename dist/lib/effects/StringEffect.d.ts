@@ -9,7 +9,10 @@ export declare class StringEffect implements Effect<StringNode> {
     private _fontSize;
     private _w;
     private _h;
-    private _mouse;
+    protected mouse: {
+        x: number;
+        y: number;
+    };
     constructor(str: StringNode);
     draw(context: Scope, x: number, y: number): void;
     getMousePos(canvas: any, event: any): {

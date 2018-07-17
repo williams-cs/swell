@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class StringEffect {
     constructor(str) {
         this._fontSize = 20;
-        this._mouse = {
+        this.mouse = {
             x: 0,
             y: 0
         };
@@ -22,7 +22,7 @@ class StringEffect {
             this._w = dims.width;
             this._h = this._fontSize;
             context.effects.push(this);
-            window.addEventListener('mousemove', this.onMouseMove);
+            this._canvas.addEventListener('mousemove', this.onMouseMove);
         }
         else {
             console.log("canvas is NOT defined");
@@ -40,8 +40,8 @@ class StringEffect {
     onMouseMove(event) {
         //this._mouse.x = this.getMousePos(this._canvas,event).x;
         //this._mouse.y = this.getMousePos(this._canvas,event).y;
-        console.log("x: " + this._mouse.x);
-        console.log("y: " + this._mouse.y);
+        console.log("x: " + this.mouse.x);
+        console.log("y: " + this.mouse.y);
     }
     ast() {
         throw new Error("Not implemented");
