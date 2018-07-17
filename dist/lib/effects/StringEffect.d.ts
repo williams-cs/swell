@@ -5,7 +5,7 @@ import { Scope } from "../structural/Scope";
 export declare class StringEffect implements Effect<StringNode> {
     private _str;
     private _ctx;
-    private _canvas;
+    protected _canvas: HTMLCanvasElement;
     private _fontSize;
     private _w;
     private _h;

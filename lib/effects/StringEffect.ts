@@ -7,7 +7,7 @@ export class StringEffect implements Effect<StringNode> {
 
     private _str: StringNode;
     private _ctx: CanvasRenderingContext2D;
-    private _canvas: HTMLCanvasElement;
+    protected _canvas: HTMLCanvasElement;
     private _fontSize: number = 20;
     private _w: number;
     private _h: number;
