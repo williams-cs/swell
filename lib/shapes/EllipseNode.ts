@@ -6,15 +6,11 @@ import { NumberNode } from '../prims/NumberNode';
 import { EllipseEffect } from '../effects/EllipseEffect';
 
 export class EllipseNode extends Shape implements Expression<EllipseNode>{
-    //private ellipse: Ellipse;
-    //private parent: Node;
-    //public xPos: PosNode;
-    //public yPos: PosNode;
-    private _width: NumberNode;
-    private _height: NumberNode; 
+    private _width: Expression<NumberNode>;
+    private _height: Expression<NumberNode>; 
     
     constructor(//ellipse: Ellipse, 
-        color: ColorNode, xPos: NumberNode, yPos: NumberNode, width: NumberNode, height: NumberNode){
+        color: ColorNode, xPos: Expression<NumberNode>, yPos: Expression<NumberNode>, width: Expression<NumberNode>, height: Expression<NumberNode>){
         //this.ellipse = ellipse;
         // Make width and height NumNodes?
         super(color, xPos, yPos);
@@ -33,17 +29,17 @@ export class EllipseNode extends Shape implements Expression<EllipseNode>{
 
     move(): void{}
 
-    get width(): NumberNode{
+    get width(): Expression<NumberNode>{
         return this._width;
     }
-    set width(width: NumberNode){
+    set width(width: Expression<NumberNode>){
         this._width = width;
     }
 
-    get heigth(): NumberNode{
+    get heigth(): Expression<NumberNode>{
         return this._height;
     }
-    set height(height: NumberNode){
+    set height(height: Expression<NumberNode>){
         this._height = height;
     }
     // get methods? 

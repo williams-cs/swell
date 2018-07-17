@@ -4,11 +4,11 @@ import { NumberNode } from '../prims/NumberNode';
 
 // export class Ellipse extends Shape implements Effect<any>{
 export class Ellipse {
-    private _width: number;
-    private _height: number;
+    private _width: NumberNode;
+    private _height: NumberNode;
     public value: any;
 
-    constructor(color: ColorNode, xPos: NumberNode, yPos: NumberNode, width: number, height: number){
+    constructor(color: ColorNode, xPos: NumberNode, yPos: NumberNode, width: NumberNode, height: NumberNode){
         // super (color, xPos, yPos);
         this._width = width;
         this._height = height;

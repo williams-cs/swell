@@ -1,8 +1,9 @@
 import {ColorNode} from './ColorNode';
 import { NumberNode } from '../prims/NumberNode';
+import { Expression } from '../Expression';
 
 export abstract class Shape{
-    constructor(private _color: ColorNode, private _xPos: NumberNode, private _yPos: NumberNode){}
+    constructor(private _color: ColorNode, private _xPos: Expression<NumberNode>, private _yPos: Expression<NumberNode>){}
     get color(): ColorNode{
         return this._color;
     }
@@ -10,17 +11,17 @@ export abstract class Shape{
         this._color = color;
     }
     
-    get xPos(): NumberNode{
+    get xPos(): Expression<NumberNode>{
         return this._xPos;
     }
-    set xPos(xPos: NumberNode){
+    set xPos(xPos: Expression<NumberNode>){
         this._xPos = xPos;
     }
 
-    get yPos(): NumberNode{
+    get yPos(): Expression<NumberNode>{
         return this._yPos;
     }
-    set yPos(yPos: NumberNode){
+    set yPos(yPos: Expression<NumberNode>){
         this.yPos = yPos;
     }
 
