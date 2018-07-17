@@ -28,6 +28,9 @@ export class StringEffect implements Effect<StringNode> {
             // this._w = dims.width;
             // this._h = this._fontSize;
         }
+        else {
+            console.log("canvas is NOT defined");
+        }
     }
 
     ast(): Expression<StringNode> {
