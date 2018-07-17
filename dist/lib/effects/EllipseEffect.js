@@ -14,7 +14,7 @@ class EllipseEffect {
             ctx.strokeStyle = "black";
             ctx.stroke();
         }
-        context.effects.push(this);
+        //context.effects.push(this);
     }
     ast() {
         throw new Error("Not implemented");
