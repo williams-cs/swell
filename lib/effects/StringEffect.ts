@@ -16,6 +16,7 @@ export class StringEffect implements Effect<StringNode> {
     }
 
     draw(context: Scope, x: number, y: number): void {
+        console.log("we in dis mofo");
         if (context.canvas.isDefined()) {
             console.log("canvas is defined");
             let ctx = context.canvas.get().getContext("2d");
