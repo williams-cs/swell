@@ -8,15 +8,13 @@ class StringNode {
     constructor(str) {
         this._str = str;
     }
-    ;
     eval(context) {
         return this;
     }
     draw(context, x, y) {
         let e = new StringEffect_1.StringEffect(this);
-        console.log("string effect created");
         e.draw(context, x, y);
-        console.log("draw method called");
+        console.log("StringEffect draw called");
     }
     set str(value) {
         this._str = value;
