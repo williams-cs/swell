@@ -7,10 +7,13 @@ import { StringEffect } from '../effects/StringEffect';
 // Should abstract Node class implement Expression?
 
 export class StringNode implements Expression<StringNode>{
+
     private _str: string;
+
     constructor(str: string){
         this._str = str;
-    };
+        console.log(this._str);
+    }
 
     eval(context: Scope): StringNode {
         return this;
@@ -27,7 +30,7 @@ export class StringNode implements Expression<StringNode>{
         this._str = value;
     }
 
-    get val(): string{
+    get val(): string {
         return this._str;
     }
 }
