@@ -16,7 +16,8 @@ export class Scope{
         resizing: boolean
     };
     private _hadFunEval: boolean = false;
-    public globalFunID = 100000000;
+    //public globalFunID = Math.random();
+    public globalFunID = 10000000;
 
     constructor(parent: Scope, effects?: Effect<any>[], state?: {dragoffx: number,dragoffy: number,initDistance: number,selection: any,dragging: boolean,resizing: boolean}){
         this._map = new Map();
