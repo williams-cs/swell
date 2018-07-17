@@ -12,7 +12,7 @@ export class StringNode implements Expression<StringNode>{
 
     constructor(str: string){
         this._str = str;
-        console.log(this._str);
+        console.log("the string node string: " + this._str);
     }
 
     eval(context: Scope): StringNode {
