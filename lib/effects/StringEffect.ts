@@ -16,18 +16,16 @@ export class StringEffect implements Effect<StringNode> {
     }
 
     draw(context: Scope, x: number, y: number): void {
-        console.log("we in dis mofo");
         if (context.canvas.isDefined()) {
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
             let fontDeets: string = this._fontSize + "px Arial";
             ctx.font = fontDeets;
             ctx.fillStyle = 'black';
-            console.log(this._str.val);
             ctx.fillText(this._str.val, x, y);
-            // let dims = ctx.measureText(this._str.str);
-            // this._w = dims.width;
-            // this._h = this._fontSize;
+            let dims = ctx.measureText(this._str.val);
+            this._w = dims.width;
+            this._h = this._fontSize;
         }
         else {
             console.log("canvas is NOT defined");

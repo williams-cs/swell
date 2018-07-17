@@ -13,9 +13,7 @@ class StringNode {
     }
     draw(context, x, y) {
         let e = new StringEffect_1.StringEffect(this);
-        console.log("string effect created");
         e.draw(context, x, y);
-        console.log("draw method called");
     }
     set str(value) {
         this._str = value;
