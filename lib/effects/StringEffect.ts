@@ -25,8 +25,7 @@ export class StringEffect implements Effect<StringNode> {
             let fontDeets: string = this._fontSize + "px Arial";
             ctx.font = fontDeets;
             ctx.fillStyle = 'black';
-            ctx.fillText(this._str.str, x, y);
-            console.log("canvas is defined");
+            ctx.fillText(this._str.val, x, y);
             // let dims = ctx.measureText(this._str.str);
             // this._w = dims.width;
             // this._h = this._fontSize;
