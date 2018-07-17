@@ -55,8 +55,8 @@ export class StringEffect implements Effect<StringNode> {
     }
 
     onMouseMove(event: any) {
-        this._mouse.x = this.getMousePos(this._canvas,event).x;
-        this._mouse.y = this.getMousePos(this._canvas,event).y;
+        //this._mouse.x = this.getMousePos(this._canvas,event).x;
+        //this._mouse.y = this.getMousePos(this._canvas,event).y;
         console.log("x: " + this._mouse.x);
         console.log("y: " + this._mouse.y);
     }
