@@ -13,19 +13,26 @@ export class StringEffect implements Effect<StringNode> {
 
     constructor(str: StringNode) {
         this._str = str;
+        console.log("string effect constructor called");
     }
 
     draw(context: Scope, x: number, y: number): void {
+        console.log("we in dis mofo");
         if (context.canvas.isDefined()) {
+            console.log("canvas is defined");
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
             let fontDeets: string = this._fontSize + "px Arial";
             ctx.font = fontDeets;
             ctx.fillStyle = 'black';
             ctx.fillText(this._str.str, x, y);
-            let dims = ctx!.measureText(this._str.str);
-            this._w = dims.width;
-            this._h = this._fontSize;
+            console.log("canvas is defined");
+            // let dims = ctx.measureText(this._str.str);
+            // this._w = dims.width;
+            // this._h = this._fontSize;
+        }
+        else {
+            console.log("canvas is NOT defined");
         }
     }
 

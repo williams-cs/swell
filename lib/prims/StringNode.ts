@@ -18,7 +18,9 @@ export class StringNode implements Expression<StringNode>{
 
     draw(context: Scope, x: number, y: number): void {
         let e = new StringEffect(this);
+        console.log("string effect created");
         e.draw(context, x, y);
+        console.log("draw method called");
     }
 
     set str(value: string){
