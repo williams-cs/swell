@@ -22,6 +22,8 @@ class StringEffect {
             this._w = dims.width;
             this._h = this._fontSize;
             context.effects.push(this);
+            this.mouse.x = this.getMousePos(this._canvas, event).x;
+            this.mouse.y = this.getMousePos(this._canvas, event).y;
             this._canvas.addEventListener('mousemove', this.onMouseMove);
         }
         else {
@@ -38,8 +40,7 @@ class StringEffect {
         };
     }
     onMouseMove(event) {
-        this.mouse.x = this.getMousePos(this._canvas, event).x;
-        this.mouse.y = this.getMousePos(this._canvas, event).y;
+        this.getMousePos(this._canvas, event);
         console.log("x: " + this.mouse.x);
         console.log("y: " + this.mouse.y);
     }

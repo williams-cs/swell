@@ -37,6 +37,9 @@ export class StringEffect implements Effect<StringNode> {
             this._h = this._fontSize;
             context.effects.push(this);
 
+            this.mouse.x = this.getMousePos(this._canvas, event).x;
+            this.mouse.y = this.getMousePos(this._canvas, event).y;
+
             this._canvas.addEventListener('mousemove', this.onMouseMove);
         }
         else {
@@ -54,9 +57,8 @@ export class StringEffect implements Effect<StringNode> {
         };
     }
 
-    onMouseMove(event: any) {
-        this.mouse.x = this.getMousePos(this._canvas, event).x;
-        this.mouse.y = this.getMousePos(this._canvas, event).y;
+    onMouseMove(event: any): void {
+        this.getMousePos(this._canvas, event);
         console.log("x: " + this.mouse.x);
         console.log("y: " + this.mouse.y);
     }
@@ -69,7 +71,7 @@ export class StringEffect implements Effect<StringNode> {
         throw new Error("Not implemented");
     }
 
-    drawTextGuides(x: number, y: number, w: number, h: number, corner: number) { //corner is 2 or 4
+    drawTextGuides(x: number, y: number, w: number, h: number, corner: number) { //corner is 2 or 0
         this._ctx.beginPath();
         this._ctx.rect(x, y, w, h);
         this._ctx.strokeStyle = 'gray';
