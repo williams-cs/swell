@@ -13,9 +13,9 @@ class StringEffect {
             ctx.font = fontDeets;
             ctx.fillStyle = 'black';
             ctx.fillText(this._str.str, x, y);
-            let dims = ctx.measureText(this._str.str);
-            this._w = dims.width;
-            this._h = this._fontSize;
+            // let dims = ctx.measureText(this._str.str);
+            // this._w = dims.width;
+            // this._h = this._fontSize;
         }
     }
     ast() {
