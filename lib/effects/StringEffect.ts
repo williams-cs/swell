@@ -17,6 +17,7 @@ export class StringEffect implements Effect<StringNode> {
 
     draw(context: Scope, x: number, y: number): void {
         if (context.canvas.isDefined()) {
+            console.log("canvas is defined");
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
             let fontDeets: string = this._fontSize + "px Arial";

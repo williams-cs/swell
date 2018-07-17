@@ -20,6 +20,7 @@ export class StringNode implements Expression<StringNode>{
         let e = new StringEffect(this);
         console.log("string effect created");
         e.draw(context, x, y);
+        console.log("draw method called");
     }
 
     set str(value: string){
