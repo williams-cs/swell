@@ -15,9 +15,10 @@ class StringEffect {
             console.log("StringEffect String: " + this._str.val);
             ctx.fillText(this._str.val, x, y);
             console.log("woohoo");
-            // let dims = ctx.measureText(this._str.val);
-            // this._w = dims.width;
-            // this._h = this._fontSize;
+            let dims = ctx.measureText(this._str.val);
+            this._w = dims.width;
+            this._h = this._fontSize;
+            context.effects.push(this);
         }
         else {
             console.log("canvas is NOT defined");
