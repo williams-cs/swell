@@ -6,10 +6,18 @@ import { Scope } from "../structural/Scope";
 export class StringEffect implements Effect<StringNode> {
 
     private _str: StringNode;
-    private _ctx: any;
+    private _ctx: CanvasRenderingContext2D;
+    private _canvas: HTMLCanvasElement;
     private _fontSize: number = 20;
     private _w: number;
     private _h: number;
+    private _mouse: {
+        x: number,
+        y: number
+    } = {
+        x: 0,
+        y: 0
+    }
 
     constructor(str: StringNode) {
         this._str = str;
@@ -18,21 +26,39 @@ export class StringEffect implements Effect<StringNode> {
     draw(context: Scope, x: number, y: number): void {
         if (context.canvas.isDefined()) {
             let ctx = context.canvas.get().getContext("2d");
+            this._canvas = context.canvas.get();
             this._ctx = ctx;
             let fontDeets: string = this._fontSize + "px Arial";
             ctx.font = fontDeets;
             ctx.fillStyle = 'black';
-            console.log("StringEffect String: " + this._str.val);
             ctx.fillText(this._str.val, x, y);
-            console.log("woohoo");
             let dims = ctx.measureText(this._str.val);
             this._w = dims.width;
             this._h = this._fontSize;
             context.effects.push(this);
+
+            window.addEventListener('mousemove', this.onMouseMove);
         }
         else {
             console.log("canvas is NOT defined");
         }
+    }
+
+    //allows us to get the mouse position in relation to the canvas!
+    //see mousemove event listener
+    getMousePos(canvas: any, event: any) {
+        let rect = canvas.getBoundingClientRect();
+        return {
+            x: event.clientX - rect.left,
+            y: event.clientY - rect.top
+        };
+    }
+
+    onMouseMove(event: any) {
+        this._mouse.x = this.getMousePos(this._canvas,event).x;
+        this._mouse.y = this.getMousePos(this._canvas,event).y;
+        console.log("x: " + this._mouse.x);
+        console.log("y: " + this._mouse.y);
     }
 
     ast(): Expression<StringNode> {

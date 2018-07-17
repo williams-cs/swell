@@ -3,26 +3,45 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class StringEffect {
     constructor(str) {
         this._fontSize = 20;
+        this._mouse = {
+            x: 0,
+            y: 0
+        };
         this._str = str;
     }
     draw(context, x, y) {
         if (context.canvas.isDefined()) {
             let ctx = context.canvas.get().getContext("2d");
+            this._canvas = context.canvas.get();
             this._ctx = ctx;
             let fontDeets = this._fontSize + "px Arial";
             ctx.font = fontDeets;
             ctx.fillStyle = 'black';
-            console.log("StringEffect String: " + this._str.val);
             ctx.fillText(this._str.val, x, y);
-            console.log("woohoo");
             let dims = ctx.measureText(this._str.val);
             this._w = dims.width;
             this._h = this._fontSize;
             context.effects.push(this);
+            window.addEventListener('mousemove', this.onMouseMove);
         }
         else {
             console.log("canvas is NOT defined");
         }
+    }
+    //allows us to get the mouse position in relation to the canvas!
+    //see mousemove event listener
+    getMousePos(canvas, event) {
+        let rect = canvas.getBoundingClientRect();
+        return {
+            x: event.clientX - rect.left,
+            y: event.clientY - rect.top
+        };
+    }
+    onMouseMove(event) {
+        this._mouse.x = this.getMousePos(this._canvas, event).x;
+        this._mouse.y = this.getMousePos(this._canvas, event).y;
+        console.log("x: " + this._mouse.x);
+        console.log("y: " + this._mouse.y);
     }
     ast() {
         throw new Error("Not implemented");
