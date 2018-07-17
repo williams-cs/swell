@@ -10,9 +10,10 @@ class StringEffect {
         this._str = str;
     }
     draw(context, x, y) {
+        this._canvas = context.canvas.get();
         if (context.canvas.isDefined()) {
             let ctx = context.canvas.get().getContext("2d");
-            this.canvas = context.canvas.get();
+            //this.canvas = context.canvas.get();
             this._ctx = ctx;
             let fontDeets = this._fontSize + "px Arial";
             ctx.font = fontDeets;
