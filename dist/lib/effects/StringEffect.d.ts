@@ -15,10 +15,6 @@ export declare class StringEffect implements Effect<StringNode> {
     };
     constructor(str: StringNode);
     draw(context: Scope, x: number, y: number): void;
-    getMousePos(canvas: any, event: any): {
-        x: number;
-        y: number;
-    };
     onMouseMove(event: any): void;
     ast(): Expression<StringNode>;
     updateAST(): Expression<StringNode>;

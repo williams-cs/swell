@@ -37,9 +37,6 @@ export class StringEffect implements Effect<StringNode> {
             this._h = this._fontSize;
             context.effects.push(this);
 
-            this.mouse.x = this.getMousePos(this._canvas, event).x;
-            this.mouse.y = this.getMousePos(this._canvas, event).y;
-
             this._canvas.addEventListener('mousemove', this.onMouseMove);
         }
         else {
@@ -47,18 +44,9 @@ export class StringEffect implements Effect<StringNode> {
         }
     }
 
-    //allows us to get the mouse position in relation to the canvas!
-    //see mousemove event listener
-    getMousePos(canvas: any, event: any): {x: number, y: number} {
-        let rect = canvas.getBoundingClientRect();
-        return {
-            x: event.clientX - rect.left,
-            y: event.clientY - rect.top
-        };
-    }
-
     onMouseMove(event: any): void {
-        this.getMousePos(this._canvas, event);
+        this.mouse.x = getMousePos(this._canvas, event).x;
+        this.mouse.y = getMousePos(this._canvas, event).y;
         console.log("x: " + this.mouse.x);
         console.log("y: " + this.mouse.y);
     }
@@ -96,4 +84,14 @@ export class StringEffect implements Effect<StringNode> {
         this._ctx.strokeStyle = 'gray';
         this._ctx.stroke();
     }
+}
+
+//allows us to get the mouse position in relation to the canvas!
+//see mousemove event listener
+function getMousePos(canvas: any, event: any): {x: number, y: number} {
+    let rect = canvas.getBoundingClientRect();
+    return {
+        x: event.clientX - rect.left,
+        y: event.clientY - rect.top
+    };
 }

@@ -22,25 +22,15 @@ class StringEffect {
             this._w = dims.width;
             this._h = this._fontSize;
             context.effects.push(this);
-            this.mouse.x = this.getMousePos(this._canvas, event).x;
-            this.mouse.y = this.getMousePos(this._canvas, event).y;
             this._canvas.addEventListener('mousemove', this.onMouseMove);
         }
         else {
             console.log("canvas is NOT defined");
         }
     }
-    //allows us to get the mouse position in relation to the canvas!
-    //see mousemove event listener
-    getMousePos(canvas, event) {
-        let rect = canvas.getBoundingClientRect();
-        return {
-            x: event.clientX - rect.left,
-            y: event.clientY - rect.top
-        };
-    }
     onMouseMove(event) {
-        this.getMousePos(this._canvas, event);
+        this.mouse.x = getMousePos(this._canvas, event).x;
+        this.mouse.y = getMousePos(this._canvas, event).y;
         console.log("x: " + this.mouse.x);
         console.log("y: " + this.mouse.y);
     }
@@ -76,4 +66,13 @@ class StringEffect {
     }
 }
 exports.StringEffect = StringEffect;
+//allows us to get the mouse position in relation to the canvas!
+//see mousemove event listener
+function getMousePos(canvas, event) {
+    let rect = canvas.getBoundingClientRect();
+    return {
+        x: event.clientX - rect.left,
+        y: event.clientY - rect.top
+    };
+}
 //# sourceMappingURL=StringEffect.js.map
