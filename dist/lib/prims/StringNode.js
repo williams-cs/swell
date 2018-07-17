@@ -8,7 +8,6 @@ class StringNode {
     constructor(str) {
         this._str = str;
     }
-    ;
     eval(context) {
         return this;
     }

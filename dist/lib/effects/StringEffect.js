@@ -4,19 +4,17 @@ class StringEffect {
     constructor(str) {
         this._fontSize = 20;
         this._str = str;
-        console.log("string effect constructor called");
     }
     draw(context, x, y) {
         console.log("we in dis mofo");
         if (context.canvas.isDefined()) {
-            console.log("canvas is defined");
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
             let fontDeets = this._fontSize + "px Arial";
             ctx.font = fontDeets;
             ctx.fillStyle = 'black';
-            ctx.fillText(this._str.str, x, y);
-            console.log("canvas is defined");
+            console.log(this._str.val);
+            ctx.fillText(this._str.val, x, y);
             // let dims = ctx.measureText(this._str.str);
             // this._w = dims.width;
             // this._h = this._fontSize;
