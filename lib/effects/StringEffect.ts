@@ -26,7 +26,7 @@ export class StringEffect implements Effect<StringNode> {
     draw(context: Scope, x: number, y: number): void {
         if (context.canvas.isDefined()) {
             let ctx = context.canvas.get().getContext("2d");
-            this._canvas = context.canvas.get();
+            this.canvas = context.canvas.get();
             this._ctx = ctx;
             let fontDeets: string = this._fontSize + "px Arial";
             ctx.font = fontDeets;
@@ -38,6 +38,7 @@ export class StringEffect implements Effect<StringNode> {
             context.effects.push(this);
 
             this._canvas.addEventListener('mousemove', this.onMouseMove);
+            if (this._canvas == undefined) { console.log("shit") };
         }
         else {
             console.log("canvas is NOT defined");
@@ -45,7 +46,6 @@ export class StringEffect implements Effect<StringNode> {
     }
 
     onMouseMove(event: any): void {
-        if (this._canvas == undefined) { console.log("shit") };
         this.mouse.x = getMousePos(this._canvas, event).x;
         this.mouse.y = getMousePos(this._canvas, event).y;
         console.log("x: " + this.mouse.x);

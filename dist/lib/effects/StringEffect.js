@@ -12,7 +12,7 @@ class StringEffect {
     draw(context, x, y) {
         if (context.canvas.isDefined()) {
             let ctx = context.canvas.get().getContext("2d");
-            this._canvas = context.canvas.get();
+            this.canvas = context.canvas.get();
             this._ctx = ctx;
             let fontDeets = this._fontSize + "px Arial";
             ctx.font = fontDeets;
@@ -23,16 +23,16 @@ class StringEffect {
             this._h = this._fontSize;
             context.effects.push(this);
             this._canvas.addEventListener('mousemove', this.onMouseMove);
+            if (this._canvas == undefined) {
+                console.log("shit");
+            }
+            ;
         }
         else {
             console.log("canvas is NOT defined");
         }
     }
     onMouseMove(event) {
-        if (this._canvas == undefined) {
-            console.log("shit");
-        }
-        ;
         this.mouse.x = getMousePos(this._canvas, event).x;
         this.mouse.y = getMousePos(this._canvas, event).y;
         console.log("x: " + this.mouse.x);
