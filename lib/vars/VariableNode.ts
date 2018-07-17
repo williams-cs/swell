@@ -1,5 +1,6 @@
 import {Expression} from '../Expression';
 import {Scope} from '../structural/Scope';
+import { NumberNode } from '../prims/NumberNode';
 
 export class VariableNode implements Expression<any>{
     private _name: string;
