@@ -14,9 +14,9 @@ class StringEffect {
             ctx.fillStyle = 'black';
             console.log("StringEffect String: " + this._str.val);
             ctx.fillText(this._str.val, x, y);
-            let dims = ctx.measureText(this._str.val);
-            this._w = dims.width;
-            this._h = this._fontSize;
+            // let dims = ctx.measureText(this._str.val);
+            // this._w = dims.width;
+            // this._h = this._fontSize;
         }
         else {
             console.log("canvas is NOT defined");
