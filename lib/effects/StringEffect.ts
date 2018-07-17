@@ -46,7 +46,7 @@ export class StringEffect implements Effect<StringNode> {
 
     //allows us to get the mouse position in relation to the canvas!
     //see mousemove event listener
-    getMousePos(canvas: any, event: any) {
+    getMousePos(canvas: any, event: any): {x: number, y: number} {
         let rect = canvas.getBoundingClientRect();
         return {
             x: event.clientX - rect.left,
