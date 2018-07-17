@@ -12,6 +12,7 @@ class StringEffect {
             let fontDeets = this._fontSize + "px Arial";
             ctx.font = fontDeets;
             ctx.fillStyle = 'black';
+            console.log("StringEffect String: " + this._str.val);
             ctx.fillText(this._str.val, x, y);
             let dims = ctx.measureText(this._str.val);
             this._w = dims.width;
