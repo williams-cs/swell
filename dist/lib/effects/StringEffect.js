@@ -23,6 +23,7 @@ class StringEffect {
             this._w = dims.width;
             this._h = this._fontSize;
             context.effects.push(this);
+            console.log(context.effects);
             this._canvas.addEventListener('mousemove', this.onMouseMove);
             if (this._canvas == undefined) {
                 console.log("shit");
