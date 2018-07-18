@@ -30,6 +30,8 @@ export class Scope{
     copy(){
         let s = new Scope(this._parent);
         s.map = new Map(this._map);
+        s.effects = this._effects;
+        s.myState = this._myState;
         return s;
     }
 
@@ -99,15 +101,18 @@ export class Scope{
         this._canvas = val;
     }
 
-    get effects() : Effect<any>[] {
+    get effects(): Effect<any>[] {
         return this._effects;
     }
     set effects(arr: Effect<any>[]) {
         this._effects = arr;
     }
 
-    get myState() : any {
+    get myState(): any {
         return this._myState;
+    }
+    set myState(state: any){
+        this._myState = state;
     }
 
     get hadFunEval(): boolean{
