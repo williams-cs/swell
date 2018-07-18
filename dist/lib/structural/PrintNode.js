@@ -17,7 +17,7 @@ class PrintNode {
     // eval param and call draw
     eval(context) {
         let res = this._toPrint.eval(context);
-        res.draw(context, this._x, this._y);
+        res.draw(context, this._x.eval(context).val, this._y.eval(context).val);
         return res;
     }
     get x() {
