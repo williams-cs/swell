@@ -21,7 +21,6 @@ export class StringNode implements Expression<StringNode>{
     draw(context: Scope, x: number, y: number): void {
         let e = new StringEffect(this);
         e.draw(context, x, y);
-        console.log("StringEffect draw called");
     }
 
     set str(value: string){
