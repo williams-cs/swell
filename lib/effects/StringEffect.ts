@@ -143,10 +143,10 @@ export class StringEffect implements Effect<StringNode> {
         this._canvas = canvas;
     }
 
-    get x(): number {
+    x(): number {
         return this._x;
     }
-    get y(): number {
+    y(): number {
         return this._y;
     }
 }

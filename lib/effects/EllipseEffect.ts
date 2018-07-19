@@ -5,6 +5,8 @@ import { Scope } from "../structural/Scope";
 
 export class EllipseEffect implements Effect<EllipseNode> {
 
+    private _x: number;
+    private _y: number;
     private _circle: EllipseNode;
     private _ctx: any;
     private _radius: number = 10;
@@ -31,5 +33,12 @@ export class EllipseEffect implements Effect<EllipseNode> {
 
     updateAST(): Expression<EllipseNode> {
         throw new Error("Not implemented");
+    }
+
+    x(): number {
+        return this._x;
+    }
+    y(): number {
+        return this._y;
     }
 }

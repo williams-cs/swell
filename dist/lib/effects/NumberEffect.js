@@ -24,6 +24,12 @@ class NumberEffect {
     updateAST() {
         throw new Error("Not implemented");
     }
+    x() {
+        return this._x;
+    }
+    y() {
+        return this._y;
+    }
 }
 exports.NumberEffect = NumberEffect;
 //# sourceMappingURL=NumberEffect.js.map

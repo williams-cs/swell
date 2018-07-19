@@ -22,6 +22,12 @@ class EllipseEffect {
     updateAST() {
         throw new Error("Not implemented");
     }
+    x() {
+        return this._x;
+    }
+    y() {
+        return this._y;
+    }
 }
 exports.EllipseEffect = EllipseEffect;
 //# sourceMappingURL=EllipseEffect.js.map

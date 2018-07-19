@@ -5,6 +5,8 @@ import { Scope } from "../structural/Scope";
 
 export class NumberEffect implements Effect<NumberNode> {
 
+    private _x: number;
+    private _y: number;
     private _num: NumberNode;
     private _str: string;
     private _fontSize: number = 20;
@@ -35,5 +37,12 @@ export class NumberEffect implements Effect<NumberNode> {
 
     updateAST(): Expression<NumberNode> {
         throw new Error("Not implemented");
+    }
+
+    x(): number {
+        return this._x;
+    }
+    y(): number {
+        return this._y;
     }
 }
