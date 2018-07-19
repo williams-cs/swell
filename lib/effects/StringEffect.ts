@@ -5,13 +5,17 @@ import { Scope } from "../structural/Scope";
 
 export class StringEffect implements Effect<StringNode> {
 
-    private _str: StringNode;
     private _ctx: CanvasRenderingContext2D;
-    protected _canvas: HTMLCanvasElement;
+    private _canvas: HTMLCanvasElement;
+    private _str: StringNode;
     private _fontSize: number = 20;
+    private _x: number;
+    private _y: number;
     private _w: number;
     private _h: number;
-    protected mouse: {
+    private _corner: number = 0;
+    private selected: boolean = false;
+    private mouse: {
         x: number,
         y: number
     } = {
@@ -26,18 +30,33 @@ export class StringEffect implements Effect<StringNode> {
     draw(context: Scope, x: number, y: number): void {
         this._canvas = context.canvas.get();
         if (context.canvas.isDefined()) {
-            let ctx = context.canvas.get().getContext("2d");
-            //this.canvas = context.canvas.get();
-            this._ctx = ctx;
-            let fontDeets: string = this._fontSize + "px Arial";
-            ctx.font = fontDeets;
-            ctx.fillStyle = 'black';
-            ctx.fillText(this._str.val, x, y);
-            let dims = ctx.measureText(this._str.val);
-            this._w = dims.width;
-            this._h = this._fontSize;
-            context.effects.push(this);
-            console.log(context.effects);
+            if(this.selected == false) {
+                this._x = x;
+                this._y = y;
+                let ctx = context.canvas.get().getContext("2d");
+                this._ctx = ctx;
+                let fontDeets: string = this._fontSize + "px Arial";
+                ctx.font = fontDeets;
+                ctx.fillStyle = 'black';
+                ctx.fillText(this._str.val, x, y);
+                let dims = ctx.measureText(this._str.val);
+                this._w = dims.width;
+                this._h = this._fontSize;
+                context.effects.push(this);
+                this.drawTextGuides(this._x, this._y - this._fontSize, this._w, this._h, this._corner);
+            }
+            else {
+                let ctx = context.canvas.get().getContext("2d");
+                this._ctx = ctx;
+                let fontDeets: string = this._fontSize + "px Arial";
+                ctx.font = fontDeets;
+                ctx.fillStyle = 'black';
+                ctx.fillText(this._str.val, x, y);
+                let dims = ctx.measureText(this._str.val);
+                this._w = dims.width;
+                this._h = this._fontSize;
+                context.effects.push(this);
+            }
 
             this._canvas.addEventListener('mousemove', this.onMouseMove.bind(this));
             if (this._canvas == undefined) { console.log("shit") };
@@ -45,31 +64,6 @@ export class StringEffect implements Effect<StringNode> {
         else {
             console.log("canvas is NOT defined");
         }
-    }
-
-    onMouseMove(event: any): void {
-        if (this._canvas == undefined) { console.log("shit") };
-        if (this._ctx == undefined) { console.log("double shit") };
-        this.mouse.x = getMousePos(this._canvas, event).x;
-        this.mouse.y = getMousePos(this._canvas, event).y;
-        console.log("x: " + this.mouse.x);
-        console.log("y: " + this.mouse.y);
-    }
-
-    ast(): Expression<StringNode> {
-        throw new Error("Not implemented");
-    }
-
-    updateAST(): Expression<StringNode> {
-        throw new Error("Not implemented");
-    }
-
-    set canvas(canvas: HTMLCanvasElement) {
-        this._canvas = canvas;
-    }
-
-    get canvas(): HTMLCanvasElement {
-        return this._canvas;
     }
 
     drawTextGuides(x: number, y: number, w: number, h: number, corner: number) { //corner is 2 or 0
@@ -96,6 +90,29 @@ export class StringEffect implements Effect<StringNode> {
         this._ctx.rect(x, y, w, h);
         this._ctx.strokeStyle = 'gray';
         this._ctx.stroke();
+    }
+
+    onMouseMove(event: any): void {
+        this.mouse.x = getMousePos(this._canvas, event).x;
+        this.mouse.y = getMousePos(this._canvas, event).y;
+        console.log("x: " + this.mouse.x);
+        console.log("y: " + this.mouse.y);
+    }
+
+    ast(): Expression<StringNode> {
+        throw new Error("Not implemented");
+    }
+
+    updateAST(): Expression<StringNode> {
+        throw new Error("Not implemented");
+    }
+
+    set canvas(canvas: HTMLCanvasElement) {
+        this._canvas = canvas;
+    }
+
+    get canvas(): HTMLCanvasElement {
+        return this._canvas;
     }
 }
 

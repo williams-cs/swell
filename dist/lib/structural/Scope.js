@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const space_lift_1 = require("space-lift");
 class Scope {
-    constructor(parent, effects, state) {
+    constructor(parent, effects, myState) {
         this._retValID = space_lift_1.None;
         this._canvas = space_lift_1.None;
         this._hadFunEval = false;
@@ -11,7 +11,7 @@ class Scope {
         this._map = new Map();
         this._parent = parent;
         this._effects = effects || null;
-        this._myState = state || null;
+        this._myState = myState || null;
         if (this._parent != null && this._parent._hadFunEval)
             this._hadFunEval = true; // copy function eval flag from parent
     }

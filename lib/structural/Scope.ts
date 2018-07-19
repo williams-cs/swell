@@ -19,11 +19,11 @@ export class Scope{
     //public globalFunID = Math.random();
     public globalFunID = 10000000;
 
-    constructor(parent: Scope, effects?: Effect<any>[], state?: {dragoffx: number,dragoffy: number,initDistance: number,selection: any,dragging: boolean,resizing: boolean}){
+    constructor(parent: Scope, effects?: Effect<any>[], myState?: {dragoffx: number,dragoffy: number,initDistance: number,selection: any,dragging: boolean,resizing: boolean}){
         this._map = new Map();
         this._parent = parent;
         this._effects = effects || null;
-        this._myState = state || null;
+        this._myState = myState || null;
         if(this._parent != null && this._parent._hadFunEval) this._hadFunEval = true; // copy function eval flag from parent
     }
 

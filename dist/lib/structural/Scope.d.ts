@@ -9,7 +9,7 @@ export declare class Scope {
     private _myState;
     private _hadFunEval;
     globalFunID: number;
-    constructor(parent: Scope, effects?: Effect<any>[], state?: {
+    constructor(parent: Scope, effects?: Effect<any>[], myState?: {
         dragoffx: number;
         dragoffy: number;
         initDistance: number;
