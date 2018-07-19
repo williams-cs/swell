@@ -12,8 +12,8 @@ class StringEffect {
         this._str = str;
     }
     draw(context, x, y) {
-        this._canvas = context.canvas.get();
         if (context.canvas.isDefined()) {
+            this._canvas = context.canvas.get();
             this._myState = context.myState;
             this._x = x;
             this._y = y;
