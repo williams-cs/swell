@@ -18,6 +18,8 @@ class Scope {
     copy() {
         let s = new Scope(this._parent);
         s.map = new Map(this._map);
+        s.effects = this._effects;
+        s.myState = this._myState;
         return s;
     }
     declare(name) {
@@ -87,6 +89,9 @@ class Scope {
     }
     get myState() {
         return this._myState;
+    }
+    set myState(state) {
+        this._myState = state;
     }
     get hadFunEval() {
         return this._hadFunEval;

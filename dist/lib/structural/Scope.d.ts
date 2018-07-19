@@ -27,6 +27,6 @@ export declare class Scope {
     retValID: Option<string>;
     canvas: Option<HTMLCanvasElement>;
     effects: Effect<any>[];
-    readonly myState: any;
+    myState: any;
     hadFunEval: boolean;
 }
