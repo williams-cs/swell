@@ -176,6 +176,9 @@ export class EllipseEffect implements Effect<EllipseNode> {
             this._myState.dragoffy = this._mouse.y - this._y;
             this._myState.dragging = true;
         }
+        else {
+            this._selected = false;
+        }
     }
 
     onMouseUp(event: any) {
