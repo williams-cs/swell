@@ -51,7 +51,7 @@ export class StringEffect implements Effect<StringNode> {
             let dims = ctx.measureText(this._str.val);
             this._w = dims.width;
             this._h = this._fontSize;
-            context.effects.push(this);
+            //context.effects.push(this);
             if(this._selected) {
                 this.drawTextGuides(this._x, this._y - this._fontSize, this._w, this._h, this._corner);
             }
@@ -107,8 +107,6 @@ export class StringEffect implements Effect<StringNode> {
     onMouseMove(event: any): void {
         this._mouse.x = getMousePos(this._canvas, event).x;
         this._mouse.y = getMousePos(this._canvas, event).y;
-        console.log("x: " + this._mouse.x);
-        console.log("y: " + this._mouse.y);
     }
 
     onMouseDown(event: any): void {
@@ -122,6 +120,7 @@ export class StringEffect implements Effect<StringNode> {
             this._myState.resizing = true;
         }
         else if (this.contains(this._mouse.x, this._mouse.y)) {
+            console.log(true);
             this._selected = true;
             this._myState.selection = this;
             this._myState.dragoffx = this._mouse.x - this._x;
