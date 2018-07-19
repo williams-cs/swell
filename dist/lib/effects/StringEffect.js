@@ -14,7 +14,8 @@ class StringEffect {
     draw(context, x, y) {
         this._canvas = context.canvas.get();
         if (context.canvas.isDefined()) {
-            this._myState = context.myState.get();
+            this._myState = context.myState;
+            console.log(this._myState);
             this._x = x;
             this._y = y;
             let ctx = context.canvas.get().getContext("2d");
