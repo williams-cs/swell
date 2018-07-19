@@ -34,6 +34,7 @@ class StringEffect {
             }
             this._canvas.addEventListener('mousemove', this.onMouseMove.bind(this));
             this._canvas.addEventListener('mousedown', this.onMouseDown.bind(this));
+            this._canvas.addEventListener('mouseup', this.onMouseUp.bind(this));
         }
         else {
             console.log("canvas is NOT defined");
@@ -98,6 +99,11 @@ class StringEffect {
             this._myState.dragoffy = this._mouse.y - this._y;
             this._myState.dragging = true;
         }
+    }
+    onMouseUp(event) {
+        this._myState.dragging = false;
+        this._myState.resizing = false;
+        this._corner = 0;
     }
     ast() {
         throw new Error("Not implemented");

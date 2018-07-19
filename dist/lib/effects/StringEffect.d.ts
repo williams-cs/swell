@@ -23,6 +23,7 @@ export declare class StringEffect implements Effect<StringNode> {
     drawSquare(x: number, y: number, w: number, h: number, color: string): void;
     onMouseMove(event: any): void;
     onMouseDown(event: any): void;
+    onMouseUp(event: any): void;
     ast(): Expression<StringNode>;
     updateAST(): Expression<StringNode>;
     canvas: HTMLCanvasElement;
