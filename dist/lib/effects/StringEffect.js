@@ -26,8 +26,9 @@ class StringEffect {
             let dims = ctx.measureText(this._str.val);
             this._w = dims.width;
             this._h = this._fontSize;
-            context.effects = [];
-            context.effects.push(this);
+            if (!context.effects.includes(this)) {
+                context.effects.push(this);
+            }
             if (this._selected) {
                 this.drawTextGuides(this._x, this._y - this._fontSize, this._w, this._h, this._corner);
             }
