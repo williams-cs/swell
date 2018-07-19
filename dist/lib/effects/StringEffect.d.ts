@@ -26,4 +26,6 @@ export declare class StringEffect implements Effect<StringNode> {
     ast(): Expression<StringNode>;
     updateAST(): Expression<StringNode>;
     canvas: HTMLCanvasElement;
+    readonly x: number;
+    readonly y: number;
 }

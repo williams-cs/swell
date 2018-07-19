@@ -50,7 +50,7 @@ export class StringEffect implements Effect<StringNode> {
             let dims = ctx.measureText(this._str.val);
             this._w = dims.width;
             this._h = this._fontSize;
-            //context.effects.push(this);
+            context.effects.push(this);
             if(this._selected) {
                 this.drawTextGuides(this._x, this._y - this._fontSize, this._w, this._h, this._corner);
             }
@@ -136,12 +136,18 @@ export class StringEffect implements Effect<StringNode> {
         throw new Error("Not implemented");
     }
 
+    get canvas(): HTMLCanvasElement {
+        return this._canvas;
+    }
     set canvas(canvas: HTMLCanvasElement) {
         this._canvas = canvas;
     }
 
-    get canvas(): HTMLCanvasElement {
-        return this._canvas;
+    get x(): number {
+        return this._x;
+    }
+    get y(): number {
+        return this._y;
     }
 }
 

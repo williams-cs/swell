@@ -26,7 +26,7 @@ class StringEffect {
             let dims = ctx.measureText(this._str.val);
             this._w = dims.width;
             this._h = this._fontSize;
-            //context.effects.push(this);
+            context.effects.push(this);
             if (this._selected) {
                 this.drawTextGuides(this._x, this._y - this._fontSize, this._w, this._h, this._corner);
             }
@@ -103,11 +103,17 @@ class StringEffect {
     updateAST() {
         throw new Error("Not implemented");
     }
+    get canvas() {
+        return this._canvas;
+    }
     set canvas(canvas) {
         this._canvas = canvas;
     }
-    get canvas() {
-        return this._canvas;
+    get x() {
+        return this._x;
+    }
+    get y() {
+        return this._y;
     }
 }
 exports.StringEffect = StringEffect;
