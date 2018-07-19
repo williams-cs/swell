@@ -111,6 +111,25 @@ class EllipseEffect {
     onMouseMove(event) {
         this._mouse.x = getMousePos(this._canvas, event).x;
         this._mouse.y = getMousePos(this._canvas, event).y;
+        if (this._myState.dragging && this._selected) {
+            this._x = this._mouse.x - this._myState.dragoffx;
+            this._y = this._mouse.y - this._myState.dragoffy;
+        }
+        else if (this._myState.resizing && this._selected) {
+            if (this._radius >= 10) {
+                let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
+                this._radius += newDistance - this._myState.initDistance;
+                this._myState.initDistance = newDistance;
+            }
+            else {
+                this._radius = 10;
+                let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
+                if (newDistance - this._myState.initDistance > 0) {
+                    this._radius += newDistance - this._myState.initDistance;
+                    this._myState.initDistance = newDistance;
+                }
+            }
+        }
     }
     onMouseDown(event) {
         if (this.guideContains(this._mouse.x, this._mouse.y) > 0) {
