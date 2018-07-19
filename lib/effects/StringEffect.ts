@@ -109,6 +109,10 @@ export class StringEffect implements Effect<StringNode> {
     onMouseMove(event: any): void {
         this._mouse.x = getMousePos(this._canvas, event).x;
         this._mouse.y = getMousePos(this._canvas, event).y;
+        if(this._myState.dragging && this._selected){
+            this._x = this._mouse.x - this._myState.dragoffx;
+            this._y = this._mouse.y - this._myState.dragoffy;
+        }
     }
 
     onMouseDown(event: any): void {
@@ -128,6 +132,9 @@ export class StringEffect implements Effect<StringNode> {
             this._myState.dragoffx = this._mouse.x - this._x;
             this._myState.dragoffy = this._mouse.y - this._y;
             this._myState.dragging = true;
+        }
+        else {
+            this._selected = false;
         }
     }
 
