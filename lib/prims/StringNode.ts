@@ -1,6 +1,8 @@
 import {Expression} from '../Expression';
 import {Scope} from '../structural/Scope';
 import { StringEffect } from '../effects/StringEffect';
+import { Dimensions } from '../structural/Dimensions';
+import { PrintNode } from '../structural/PrintNode';
 //import{Node} from './Node';
 
 // Nodes representing strings
@@ -18,9 +20,9 @@ export class StringNode implements Expression<StringNode>{
         return this;
     }
 
-    draw(context: Scope, x: number, y: number): void {
+    draw(context: Scope, x: number, y: number, dims: Dimensions, ast: PrintNode): void {
         let e = new StringEffect(this);
-        e.draw(context, x, y);
+        e.draw(context, x, y, dims, ast);
     }
 
     set str(value: string){

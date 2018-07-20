@@ -11,20 +11,23 @@ class StringEffect {
         };
         this._str = str;
     }
-    draw(context, x, y) {
+    draw(context, x, y, dims, ast) {
         if (context.canvas.isDefined()) {
+            this._ast = ast;
             this._canvas = context.canvas.get();
+            this._dims = dims;
             this._myState = context.myState;
-            this._x = x;
-            this._y = y;
+            this._x = dims.x;
+            this._y = dims.y;
+            this._scale = dims.scale;
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
             let fontDeets = this._fontSize + "px Arial";
             ctx.font = fontDeets;
             ctx.fillStyle = 'black';
             ctx.fillText(this._str.val, x, y);
-            let dims = ctx.measureText(this._str.val);
-            this._w = dims.width;
+            let textDims = ctx.measureText(this._str.val);
+            this._w = textDims.width;
             this._h = this._fontSize;
             if (!context.effects.includes(this)) {
                 context.effects.push(this);
@@ -111,7 +114,6 @@ class StringEffect {
             this._myState.resizing = true;
         }
         else if (this.contains(this._mouse.x, this._mouse.y)) {
-            console.log(true);
             this._selected = true;
             this._myState.selection = this;
             this._myState.dragoffx = this._mouse.x - this._x;
@@ -123,6 +125,9 @@ class StringEffect {
         }
     }
     onMouseUp(event) {
+        if (this._myState.resizing == true) {
+            this.updateAST();
+        }
         this._myState.dragging = false;
         this._myState.resizing = false;
         this._corner = 0;
@@ -131,7 +136,9 @@ class StringEffect {
         throw new Error("Not implemented");
     }
     updateAST() {
-        throw new Error("Not implemented");
+        this._ast.dims.x = this._x;
+        this._ast.dims.y = this._y;
+        return this._ast;
     }
     get canvas() {
         return this._canvas;

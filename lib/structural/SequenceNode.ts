@@ -1,5 +1,5 @@
 import { Expression } from "../Expression"; 
-import {Scope} from '../structural/Scope'; 
+import {Scope} from './Scope'; 
 
 export class SequenceNode implements Expression<void>{
     private _left: Expression<any>;

@@ -11,8 +11,9 @@ class EllipseEffect {
         };
         this._circle = circle;
     }
-    draw(context, x, y) {
+    draw(context, x, y, dims) {
         if (context.canvas.isDefined()) {
+            this._dims = dims;
             this._canvas = context.canvas.get();
             this._myState = context.myState;
             this._x = x;

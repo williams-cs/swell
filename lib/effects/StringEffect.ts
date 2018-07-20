@@ -2,17 +2,22 @@ import { Effect } from "./Effect";
 import { StringNode } from "../prims/StringNode";
 import { Expression } from "../Expression";
 import { Scope } from "../structural/Scope";
+import { Dimensions } from "../structural/Dimensions";
+import { PrintNode } from "../structural/PrintNode";
 
 export class StringEffect implements Effect<StringNode> {
 
+    private _ast: PrintNode;
     private _ctx: CanvasRenderingContext2D;
     private _canvas: HTMLCanvasElement;
     private _str: StringNode;
+    private _dims: Dimensions;
     private _fontSize: number = 20;
     private _x: number;
     private _y: number;
     private _w: number;
     private _h: number;
+    private _scale: number;
     private _corner: number = 0;
     private _selected: boolean = false;
     private _myState: {
@@ -35,20 +40,23 @@ export class StringEffect implements Effect<StringNode> {
         this._str = str;
     }
 
-    draw(context: Scope, x: number, y: number): void {
+    draw(context: Scope, x: number, y: number, dims: Dimensions, ast: PrintNode): void {
         if (context.canvas.isDefined()) {
+            this._ast = ast;
             this._canvas = context.canvas.get();
+            this._dims = dims;
             this._myState = context.myState;
-            this._x = x;
-            this._y = y;
+            this._x = dims.x;
+            this._y = dims.y;
+            this._scale = dims.scale;
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
             let fontDeets: string = this._fontSize + "px Arial";
             ctx.font = fontDeets;
             ctx.fillStyle = 'black';
             ctx.fillText(this._str.val, x, y);
-            let dims = ctx.measureText(this._str.val);
-            this._w = dims.width;
+            let textDims = ctx.measureText(this._str.val);
+            this._w = textDims.width;
             this._h = this._fontSize;
             if(!context.effects.includes(this)){
                 context.effects.push(this);
@@ -141,7 +149,6 @@ export class StringEffect implements Effect<StringNode> {
             this._myState.resizing = true;
         }
         else if (this.contains(this._mouse.x, this._mouse.y)) {
-            console.log(true);
             this._selected = true;
             this._myState.selection = this;
             this._myState.dragoffx = this._mouse.x - this._x;
@@ -154,6 +161,9 @@ export class StringEffect implements Effect<StringNode> {
     }
 
     onMouseUp(event: any) {
+        if(this._myState.resizing == true) {
+            this.updateAST();
+        }
         this._myState.dragging = false;
         this._myState.resizing = false;
         this._corner = 0;
@@ -164,7 +174,9 @@ export class StringEffect implements Effect<StringNode> {
     }
 
     updateAST(): Expression<StringNode> {
-        throw new Error("Not implemented");
+        this._ast.dims.x = this._x;
+        this._ast.dims.y = this._y;
+        return this._ast;
     }
 
     get canvas(): HTMLCanvasElement {

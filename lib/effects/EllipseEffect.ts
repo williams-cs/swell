@@ -2,10 +2,12 @@ import { Effect } from "./Effect";
 import { EllipseNode } from "../shapes/EllipseNode";
 import { Expression } from "../Expression";
 import { Scope } from "../structural/Scope";
+import { Dimensions } from "../structural/Dimensions";
 
 export class EllipseEffect implements Effect<EllipseNode> {
 
     private _circle: EllipseNode;
+    private _dims: Dimensions;
     private _x: number;
     private _y: number;
     private _radius: number = 30;
@@ -33,8 +35,9 @@ export class EllipseEffect implements Effect<EllipseNode> {
         this._circle = circle;
     }
 
-    draw(context: Scope, x: number, y: number): void {
+    draw(context: Scope, x: number, y: number, dims: Dimensions): void {
         if (context.canvas.isDefined()) {
+            this._dims = dims;
             this._canvas = context.canvas.get();
             this._myState = context.myState;
             this._x = x;

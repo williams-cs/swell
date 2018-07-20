@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Scope_1 = require("../structural/Scope");
+const Scope_1 = require("./Scope");
 class SequenceNode {
     constructor(left, right) {
         this._left = left;

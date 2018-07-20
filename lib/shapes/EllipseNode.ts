@@ -4,6 +4,8 @@ import { ColorNode } from './ColorNode';
 import { Scope } from '../structural/Scope';
 import { NumberNode } from '../prims/NumberNode';
 import { EllipseEffect } from '../effects/EllipseEffect';
+import { Dimensions } from '../structural/Dimensions';
+import { PrintNode } from '../structural/PrintNode';
 
 export class EllipseNode extends Shape implements Expression<EllipseNode>{
     private _width: Expression<NumberNode>;
@@ -18,9 +20,9 @@ export class EllipseNode extends Shape implements Expression<EllipseNode>{
         this._height = height;
     }
 
-    draw(context: Scope, x: number, y: number): void {
+    draw(context: Scope, x: number, y: number, dims: Dimensions, ast: PrintNode): void {
         let e = new EllipseEffect(this);
-        e.draw(context, x, y);
+        e.draw(context, x, y, dims);
     }
 
     eval(context: Scope): EllipseNode {
