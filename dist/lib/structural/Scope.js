@@ -5,6 +5,7 @@ class Scope {
     constructor(parent, effects, myState) {
         this._retValID = space_lift_1.None;
         this._canvas = space_lift_1.None;
+        this._eventLog = [];
         this._hadFunEval = false;
         //public globalFunID = Math.random();
         this.globalFunID = 10000000;
@@ -20,6 +21,7 @@ class Scope {
         s.map = new Map(this._map);
         s.effects = this._effects;
         s.myState = this._myState;
+        s.eventLog = this._eventLog;
         return s;
     }
     declare(name) {
@@ -92,6 +94,12 @@ class Scope {
     }
     set myState(state) {
         this._myState = state;
+    }
+    get eventLog() {
+        return this._eventLog;
+    }
+    set eventLog(update) {
+        this._eventLog = update;
     }
     get hadFunEval() {
         return this._hadFunEval;

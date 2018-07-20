@@ -54,7 +54,7 @@ export class StringEffect implements Effect<StringNode> {
             this._h = this._fontSize;
 
             // logging
-            context.log.push(this.log());
+            context.eventLog.push(this.log());
             
             if(!context.effects.includes(this)){
                 context.effects.push(this);
