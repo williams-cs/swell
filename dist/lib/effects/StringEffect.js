@@ -15,11 +15,8 @@ class StringEffect {
     }
     draw(context, x, y, dims, ast) {
         if (context.canvas.isDefined()) {
-<<<<<<< HEAD
             this._ast = ast;
-=======
             this._context = context;
->>>>>>> 9e40930470ed712bfbc47ceb79d201c3344d24d5
             this._canvas = context.canvas.get();
             this._dims = dims;
             this._myState = context.myState;

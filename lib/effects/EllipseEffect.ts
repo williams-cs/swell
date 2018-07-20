@@ -2,11 +2,8 @@ import { Effect } from "./Effect";
 import { EllipseNode } from "../shapes/EllipseNode";
 import { Expression } from "../Expression";
 import { Scope } from "../structural/Scope";
-<<<<<<< HEAD
 import { Dimensions } from "../structural/Dimensions";
-=======
 import { PaintEvent } from "../logging/PaintEvent";
->>>>>>> 9e40930470ed712bfbc47ceb79d201c3344d24d5
 
 export class EllipseEffect implements Effect<EllipseNode> {
 

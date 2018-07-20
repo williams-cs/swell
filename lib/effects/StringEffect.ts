@@ -9,11 +9,8 @@ import { DragEvent } from "../logging/DragEvent";
 
 export class StringEffect implements Effect<StringNode> {
 
-<<<<<<< HEAD
     private _ast: PrintNode;
-=======
     private _context: Scope;
->>>>>>> 9e40930470ed712bfbc47ceb79d201c3344d24d5
     private _ctx: CanvasRenderingContext2D;
     private _canvas: HTMLCanvasElement;
     private _str: StringNode;
@@ -23,12 +20,9 @@ export class StringEffect implements Effect<StringNode> {
     private _y: number;
     private _w: number;
     private _h: number;
-<<<<<<< HEAD
     private _scale: number;
-=======
     private _x1: number; // Original position for drag logging
     private _y1: number;
->>>>>>> 9e40930470ed712bfbc47ceb79d201c3344d24d5
     private _corner: number = 0;
     private _selected: boolean = false;
     //private _log: string[];
@@ -54,11 +48,8 @@ export class StringEffect implements Effect<StringNode> {
 
     draw(context: Scope, x: number, y: number, dims: Dimensions, ast: PrintNode): void {
         if (context.canvas.isDefined()) {
-<<<<<<< HEAD
             this._ast = ast;
-=======
             this._context = context;
->>>>>>> 9e40930470ed712bfbc47ceb79d201c3344d24d5
             this._canvas = context.canvas.get();
             this._dims = dims;
             this._myState = context.myState;
