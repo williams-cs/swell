@@ -3,6 +3,7 @@ import { StringNode } from "../prims/StringNode";
 import { Expression } from "../Expression";
 import { Scope } from "../structural/Scope";
 export declare class StringEffect implements Effect<StringNode> {
+    private _context;
     private _ctx;
     private _canvas;
     private _str;
@@ -11,6 +12,8 @@ export declare class StringEffect implements Effect<StringNode> {
     private _y;
     private _w;
     private _h;
+    private _x1;
+    private _y1;
     private _corner;
     private _selected;
     private _myState;
@@ -24,7 +27,8 @@ export declare class StringEffect implements Effect<StringNode> {
     onMouseMove(event: any): void;
     onMouseDown(event: any): void;
     onMouseUp(event: any): void;
-    log(): string;
+    logPaint(): string;
+    logMove(): string;
     ast(): Expression<StringNode>;
     updateAST(): Expression<StringNode>;
     canvas: HTMLCanvasElement;

@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const PaintEvent_1 = require("../logging/PaintEvent");
+const DragEvent_1 = require("../logging/DragEvent");
 class StringEffect {
     constructor(str) {
         this._fontSize = 20;
@@ -14,6 +15,7 @@ class StringEffect {
     }
     draw(context, x, y) {
         if (context.canvas.isDefined()) {
+            this._context = context;
             this._canvas = context.canvas.get();
             this._myState = context.myState;
             this._x = x;
@@ -28,7 +30,7 @@ class StringEffect {
             this._w = dims.width;
             this._h = this._fontSize;
             // logging
-            context.eventLog.push(this.log());
+            this._context.eventLog.push(this.logPaint()); // this.context or context?
             if (!context.effects.includes(this)) {
                 context.effects.push(this);
             }
@@ -112,6 +114,7 @@ class StringEffect {
             this._myState.dragoffy = this._y;
             this._myState.initDistance = distance(this._mouse.x, this._mouse.y, this._x, this._y);
             this._myState.resizing = true;
+            // insert resize log here
         }
         else if (this.contains(this._mouse.x, this._mouse.y)) {
             console.log(true);
@@ -120,6 +123,8 @@ class StringEffect {
             this._myState.dragoffx = this._mouse.x - this._x;
             this._myState.dragoffy = this._mouse.y - this._y;
             this._myState.dragging = true;
+            this._x1 = this._x; // Saving original x and y
+            this._y1 = this._y;
         }
         else {
             this._selected = false;
@@ -129,10 +134,15 @@ class StringEffect {
         this._myState.dragging = false;
         this._myState.resizing = false;
         this._corner = 0;
+        this._context.eventLog.push(this.logMove());
     }
-    log() {
+    logPaint() {
         let paint = new PaintEvent_1.PaintEvent(this._str.val);
         return paint.assembleLog();
+    }
+    logMove() {
+        let moveStr = new DragEvent_1.DragEvent(this._str.val, this._x1, this._y1, this._x, this._y);
+        return moveStr.assembleLog();
     }
     ast() {
         throw new Error("Not implemented");

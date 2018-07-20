@@ -12,6 +12,7 @@ export declare class NumberEffect implements Effect<NumberNode> {
     private _h;
     constructor(num: NumberNode);
     draw(context: Scope, x: number, y: number): void;
+    log(): string;
     ast(): Expression<NumberNode>;
     updateAST(): Expression<NumberNode>;
     x(): number;

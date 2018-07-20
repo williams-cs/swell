@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const PaintEvent_1 = require("../logging/PaintEvent");
 class NumberEffect {
     constructor(num) {
         this._fontSize = 20;
@@ -17,6 +18,10 @@ class NumberEffect {
             this._w = dims.width;
             this._h = this._fontSize;
         }
+    }
+    log() {
+        let paint = new PaintEvent_1.PaintEvent(this._str);
+        return paint.assembleLog();
     }
     ast() {
         throw new Error("Not implemented");

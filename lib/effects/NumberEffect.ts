@@ -2,6 +2,7 @@ import { Effect } from "./Effect";
 import { NumberNode } from "../prims/NumberNode";
 import { Expression } from "../Expression";
 import { Scope } from "../structural/Scope";
+import { PaintEvent } from "../logging/PaintEvent";
 
 export class NumberEffect implements Effect<NumberNode> {
 
@@ -29,6 +30,11 @@ export class NumberEffect implements Effect<NumberNode> {
             this._w = dims.width;
             this._h = this._fontSize;
         }
+    }
+
+    log(): string {
+        let paint = new PaintEvent(this._str);
+        return paint.assembleLog();
     }
 
     ast(): Expression<NumberNode> {

@@ -23,6 +23,7 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
     onMouseDown(event: any): void;
     onMouseUp(event: any): void;
     ast(): Expression<EllipseNode>;
+    logPaint(): string;
     updateAST(): Expression<EllipseNode>;
     x(): number;
     y(): number;

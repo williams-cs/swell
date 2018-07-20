@@ -3,9 +3,11 @@ import { StringNode } from "../prims/StringNode";
 import { Expression } from "../Expression";
 import { Scope } from "../structural/Scope";
 import { PaintEvent } from "../logging/PaintEvent";
+import { DragEvent } from "../logging/DragEvent";
 
 export class StringEffect implements Effect<StringNode> {
 
+    private _context: Scope;
     private _ctx: CanvasRenderingContext2D;
     private _canvas: HTMLCanvasElement;
     private _str: StringNode;
@@ -14,6 +16,8 @@ export class StringEffect implements Effect<StringNode> {
     private _y: number;
     private _w: number;
     private _h: number;
+    private _x1: number; // Original position for drag logging
+    private _y1: number;
     private _corner: number = 0;
     private _selected: boolean = false;
     //private _log: string[];
@@ -39,6 +43,7 @@ export class StringEffect implements Effect<StringNode> {
 
     draw(context: Scope, x: number, y: number): void {
         if (context.canvas.isDefined()) {
+            this._context = context;
             this._canvas = context.canvas.get();
             this._myState = context.myState;
             this._x = x;
@@ -54,7 +59,7 @@ export class StringEffect implements Effect<StringNode> {
             this._h = this._fontSize;
 
             // logging
-            context.eventLog.push(this.log());
+            this._context.eventLog.push(this.logPaint()); // this.context or context?
             
             if(!context.effects.includes(this)){
                 context.effects.push(this);
@@ -145,6 +150,7 @@ export class StringEffect implements Effect<StringNode> {
             this._myState.dragoffy = this._y;
             this._myState.initDistance = distance(this._mouse.x, this._mouse.y, this._x, this._y);
             this._myState.resizing = true;
+            // insert resize log here
         }
         else if (this.contains(this._mouse.x, this._mouse.y)) {
             console.log(true);
@@ -153,6 +159,8 @@ export class StringEffect implements Effect<StringNode> {
             this._myState.dragoffx = this._mouse.x - this._x;
             this._myState.dragoffy = this._mouse.y - this._y;
             this._myState.dragging = true;
+            this._x1 = this._x; // Saving original x and y
+            this._y1 = this._y;
         }
         else {
             this._selected = false;
@@ -163,11 +171,17 @@ export class StringEffect implements Effect<StringNode> {
         this._myState.dragging = false;
         this._myState.resizing = false;
         this._corner = 0;
+        this._context.eventLog.push(this.logMove());
     }
 
-    log(): string {
+    logPaint(): string {
         let paint = new PaintEvent(this._str.val);
         return paint.assembleLog();
+    }
+    
+    logMove(): string {
+        let moveStr = new DragEvent(this._str.val, this._x1, this._y1, this._x, this._y);
+        return moveStr.assembleLog();
     }
 
     ast(): Expression<StringNode> {

@@ -2,6 +2,7 @@ import { Effect } from "./Effect";
 import { EllipseNode } from "../shapes/EllipseNode";
 import { Expression } from "../Expression";
 import { Scope } from "../structural/Scope";
+import { PaintEvent } from "../logging/PaintEvent";
 
 export class EllipseEffect implements Effect<EllipseNode> {
 
@@ -190,6 +191,13 @@ export class EllipseEffect implements Effect<EllipseNode> {
     ast(): Expression<EllipseNode> {
         throw new Error("Not implemented");
     }
+
+    logPaint(): string {
+        let paint = new PaintEvent("ellipse at " + this._x + ", " + this._y);
+        return paint.assembleLog();
+    }
+
+    
 
     updateAST(): Expression<EllipseNode> {
         throw new Error("Not implemented");
