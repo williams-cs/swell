@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const PaintEvent_1 = require("../logging/PaintEvent");
 class EllipseEffect {
     constructor(circle) {
         this._radius = 30;
@@ -161,6 +162,10 @@ class EllipseEffect {
     }
     ast() {
         throw new Error("Not implemented");
+    }
+    logPaint() {
+        let paint = new PaintEvent_1.PaintEvent("ellipse at " + this._x + ", " + this._y);
+        return paint.assembleLog();
     }
     updateAST() {
         throw new Error("Not implemented");

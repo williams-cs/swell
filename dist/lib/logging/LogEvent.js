@@ -1,8 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class LogEvent {
-    constructor(toLog) {
+    constructor(toLog, x1, y1, x2, y2) {
         this.toLog = toLog;
+        this.x1 = x1;
+        this.y1 = y1;
+        this.x2 = x2;
+        this.y2 = y2;
     }
     logItem(toLog) {
         let today = new Date();

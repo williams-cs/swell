@@ -5,7 +5,11 @@ import { Scope } from "../structural/Scope";
 import { Dimensions } from "../structural/Dimensions";
 import { PrintNode } from "../structural/PrintNode";
 export declare class StringEffect implements Effect<StringNode> {
+<<<<<<< HEAD
     private _ast;
+=======
+    private _context;
+>>>>>>> 9e40930470ed712bfbc47ceb79d201c3344d24d5
     private _ctx;
     private _canvas;
     private _str;
@@ -15,7 +19,12 @@ export declare class StringEffect implements Effect<StringNode> {
     private _y;
     private _w;
     private _h;
+<<<<<<< HEAD
     private _scale;
+=======
+    private _x1;
+    private _y1;
+>>>>>>> 9e40930470ed712bfbc47ceb79d201c3344d24d5
     private _corner;
     private _selected;
     private _myState;
@@ -29,7 +38,8 @@ export declare class StringEffect implements Effect<StringNode> {
     onMouseMove(event: any): void;
     onMouseDown(event: any): void;
     onMouseUp(event: any): void;
-    log(): string;
+    logPaint(): string;
+    logMove(): string;
     ast(): Expression<StringNode>;
     updateAST(): Expression<StringNode>;
     canvas: HTMLCanvasElement;
