@@ -2,6 +2,7 @@ import { Effect } from "./Effect";
 import { StringNode } from "../prims/StringNode";
 import { Expression } from "../Expression";
 import { Scope } from "../structural/Scope";
+import { PaintEvent } from "../logging/PaintEvent";
 
 export class StringEffect implements Effect<StringNode> {
 
@@ -15,6 +16,7 @@ export class StringEffect implements Effect<StringNode> {
     private _h: number;
     private _corner: number = 0;
     private _selected: boolean = false;
+    //private _log: string[];
     private _myState: {
         dragoffx: number,
         dragoffy: number,
@@ -50,6 +52,10 @@ export class StringEffect implements Effect<StringNode> {
             let dims = ctx.measureText(this._str.val);
             this._w = dims.width;
             this._h = this._fontSize;
+
+            // logging
+            context.log.push(this.log());
+            
             if(!context.effects.includes(this)){
                 context.effects.push(this);
             }
@@ -157,6 +163,11 @@ export class StringEffect implements Effect<StringNode> {
         this._myState.dragging = false;
         this._myState.resizing = false;
         this._corner = 0;
+    }
+
+    log(): string {
+        let paint = new PaintEvent(this._str.val);
+        return paint.assembleLog();
     }
 
     ast(): Expression<StringNode> {
