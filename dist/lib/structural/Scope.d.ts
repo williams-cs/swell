@@ -7,6 +7,7 @@ export declare class Scope {
     private _canvas;
     private _effects;
     private _myState;
+    private _eventLog;
     private _hadFunEval;
     globalFunID: number;
     constructor(parent: Scope, effects?: Effect<any>[], myState?: {
@@ -28,5 +29,6 @@ export declare class Scope {
     canvas: Option<HTMLCanvasElement>;
     effects: Effect<any>[];
     myState: any;
+    eventLog: string[];
     hadFunEval: boolean;
 }

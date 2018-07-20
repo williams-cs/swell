@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const PaintEvent_1 = require("../logging/PaintEvent");
 class StringEffect {
     constructor(str) {
         this._fontSize = 20;
@@ -29,6 +30,8 @@ class StringEffect {
             let textDims = ctx.measureText(this._str.val);
             this._w = textDims.width;
             this._h = this._fontSize;
+            // logging
+            context.eventLog.push(this.log());
             if (!context.effects.includes(this)) {
                 context.effects.push(this);
             }
@@ -131,6 +134,10 @@ class StringEffect {
         this._myState.dragging = false;
         this._myState.resizing = false;
         this._corner = 0;
+    }
+    log() {
+        let paint = new PaintEvent_1.PaintEvent(this._str.val);
+        return paint.assembleLog();
     }
     ast() {
         throw new Error("Not implemented");

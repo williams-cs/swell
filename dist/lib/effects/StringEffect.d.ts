@@ -29,6 +29,7 @@ export declare class StringEffect implements Effect<StringNode> {
     onMouseMove(event: any): void;
     onMouseDown(event: any): void;
     onMouseUp(event: any): void;
+    log(): string;
     ast(): Expression<StringNode>;
     updateAST(): Expression<StringNode>;
     canvas: HTMLCanvasElement;
