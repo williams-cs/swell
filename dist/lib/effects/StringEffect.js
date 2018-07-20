@@ -128,7 +128,7 @@ class StringEffect {
         }
     }
     onMouseUp(event) {
-        if (this._myState.resizing == true) {
+        if (this._myState.resizing || this._myState.dragging) {
             this.updateAST();
         }
         this._myState.dragging = false;

@@ -2,12 +2,9 @@ import { Effect } from "./Effect";
 import { StringNode } from "../prims/StringNode";
 import { Expression } from "../Expression";
 import { Scope } from "../structural/Scope";
-<<<<<<< HEAD
 import { Dimensions } from "../structural/Dimensions";
 import { PrintNode } from "../structural/PrintNode";
-=======
 import { PaintEvent } from "../logging/PaintEvent";
->>>>>>> fd15ccdcd30d4842891ffa5a692662d69ebf9c1b
 
 export class StringEffect implements Effect<StringNode> {
 
@@ -170,7 +167,7 @@ export class StringEffect implements Effect<StringNode> {
     }
 
     onMouseUp(event: any) {
-        if(this._myState.resizing == true) {
+        if(this._myState.resizing || this._myState.dragging) {
             this.updateAST();
         }
         this._myState.dragging = false;
