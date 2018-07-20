@@ -15,7 +15,7 @@ export class Scope{
         dragging: boolean,
         resizing: boolean
     };
-    private _log: string[] = [];
+    private _eventLog: string[] = [];
     private _hadFunEval: boolean = false;
     //public globalFunID = Math.random();
     public globalFunID = 10000000;
@@ -33,7 +33,7 @@ export class Scope{
         s.map = new Map(this._map);
         s.effects = this._effects;
         s.myState = this._myState;
-        s.log = this._log;
+        s.eventLog = this._eventLog;
         return s;
     }
 
@@ -117,11 +117,11 @@ export class Scope{
         this._myState = state;
     }
 
-    get log(): string[] {
-        return this._log;
+    get eventLog(): string[] {
+        return this._eventLog;
     }
-    set log(update: string[]){
-        this._log = update;
+    set eventLog(update: string[]){
+        this._eventLog = update;
     }
 
     get hadFunEval(): boolean{
