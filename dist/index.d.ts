@@ -40,3 +40,4 @@ export { Effect } from './lib/effects/Effect';
 export { EllipseEffect } from './lib/effects/EllipseEffect';
 export { NumberEffect } from './lib/effects/NumberEffect';
 export { StringEffect } from './lib/effects/StringEffect';
+export { Dimensions } from './lib/structural/Dimensions';

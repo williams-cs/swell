@@ -86,4 +86,6 @@ var NumberEffect_1 = require("./lib/effects/NumberEffect");
 exports.NumberEffect = NumberEffect_1.NumberEffect;
 var StringEffect_1 = require("./lib/effects/StringEffect");
 exports.StringEffect = StringEffect_1.StringEffect;
+var Dimensions_1 = require("./lib/structural/Dimensions");
+exports.Dimensions = Dimensions_1.Dimensions;
 //# sourceMappingURL=index.js.map
