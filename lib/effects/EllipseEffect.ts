@@ -14,6 +14,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
     private _canvas: HTMLCanvasElement;
     private _corner: number = 0;
     private _selected: boolean = false;
+    private _isNew: boolean = true;
     private _myState: {
         dragoffx: number,
         dragoffy: number,
@@ -53,6 +54,13 @@ export class EllipseEffect implements Effect<EllipseNode> {
         if(!context.effects.includes(this)){
             context.effects.push(this);
         }
+        if(this._isNew) { //prevents adding event listeners repeatedly
+            this.addEventListeners();
+            this._isNew = false;
+        }
+    }
+
+    addEventListeners(): void {
         this._canvas.addEventListener('mousemove', this.onMouseMove.bind(this));
         this._canvas.addEventListener('mousedown', this.onMouseDown.bind(this));
         this._canvas.addEventListener('mouseup', this.onMouseUp.bind(this));
@@ -144,20 +152,6 @@ export class EllipseEffect implements Effect<EllipseNode> {
         }
         else if(this._myState.resizing && this._selected){
             this.modifyResize(this._dims.radius < 10);
-            /*
-            if(this._dims.radius >= 10) {
-                let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
-                this._dims.radius += newDistance - this._myState.initDistance;
-                this._myState.initDistance = newDistance;
-            }
-            else {
-                this._dims.radius = 10;
-                let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
-                if(newDistance - this._myState.initDistance > 0){
-                    this._dims.radius += newDistance - this._myState.initDistance;
-                    this._myState.initDistance = newDistance;
-                }
-            }*/
         }
     }
 

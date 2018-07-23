@@ -5,6 +5,7 @@ class EllipseEffect {
     constructor(circle) {
         this._corner = 0;
         this._selected = false;
+        this._isNew = true;
         this._mouse = {
             x: 0,
             y: 0
@@ -30,6 +31,12 @@ class EllipseEffect {
         if (!context.effects.includes(this)) {
             context.effects.push(this);
         }
+        if (this._isNew) { //prevents adding event listeners repeatedly
+            this.addEventListeners();
+            this._isNew = false;
+        }
+    }
+    addEventListeners() {
         this._canvas.addEventListener('mousemove', this.onMouseMove.bind(this));
         this._canvas.addEventListener('mousedown', this.onMouseDown.bind(this));
         this._canvas.addEventListener('mouseup', this.onMouseUp.bind(this));
@@ -117,20 +124,6 @@ class EllipseEffect {
         }
         else if (this._myState.resizing && this._selected) {
             this.modifyResize(this._dims.radius < 10);
-            /*
-            if(this._dims.radius >= 10) {
-                let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
-                this._dims.radius += newDistance - this._myState.initDistance;
-                this._myState.initDistance = newDistance;
-            }
-            else {
-                this._dims.radius = 10;
-                let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
-                if(newDistance - this._myState.initDistance > 0){
-                    this._dims.radius += newDistance - this._myState.initDistance;
-                    this._myState.initDistance = newDistance;
-                }
-            }*/
         }
     }
     onMouseDown(event) {
