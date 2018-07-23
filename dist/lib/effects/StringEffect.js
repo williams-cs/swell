@@ -104,25 +104,32 @@ class StringEffect {
             this._myState.dragoffy = this._dims.y;
             this._myState.initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x, this._dims.y);
             this._myState.resizing = true;
+            this._size1 = this._fontSize; // saving old font size
         }
         else if (contains) {
+            this._x1 = this._dims.x; // Saving original x and y
+            this._y1 = this._dims.y;
             this._selected = true;
             this._myState.selection = this;
             this._myState.dragoffx = this._mouse.x - this._dims.x;
             this._myState.dragoffy = this._mouse.y - this._dims.y;
             this._myState.dragging = true;
-            this._x1 = this._dims.x; // Saving original x and y
-            this._y1 = this._dims.y;
         }
         else {
             this._selected = false;
         }
     }
     modifyReset() {
+        if (this._myState.dragging) {
+            this._context.eventLog.push(this.logMove());
+        }
+        else if (this._myState.resizing) {
+            this._context.eventLog.push(this.logResize());
+        }
         this._myState.dragging = false;
         this._myState.resizing = false;
         this._corner = 0;
-        this._context.eventLog.push(this.logMove());
+        //this._context.eventLog.push(this.logMove());
     }
     getMousePosition() {
         this._mouse.x = getMousePos(this._canvas, event).x;
@@ -165,68 +172,6 @@ class StringEffect {
         this._ctx.strokeStyle = 'gray';
         this._ctx.stroke();
     }
-<<<<<<< HEAD
-    onMouseMove(event) {
-        this._mouse.x = getMousePos(this._canvas, event).x;
-        this._mouse.y = getMousePos(this._canvas, event).y;
-        if (this._myState.dragging && this._selected) {
-            this._dims.x = this._mouse.x - this._myState.dragoffx;
-            this._dims.y = this._mouse.y - this._myState.dragoffy;
-        }
-        else if (this._myState.resizing && this._selected) {
-            if (this._fontSize >= 15) {
-                let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
-                this._fontSize += newDistance - this._myState.initDistance;
-                this._myState.initDistance = newDistance;
-            }
-            else {
-                this._fontSize = 15;
-                let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
-                if (newDistance - this._myState.initDistance > 0) {
-                    this._fontSize += newDistance - this._myState.initDistance;
-                    this._myState.initDistance = newDistance;
-                }
-            }
-        }
-    }
-    onMouseDown(event) {
-        if (this.guideContains(this._mouse.x, this._mouse.y) > 0) {
-            this._selected = true;
-            this._corner = this.guideContains(this._mouse.x, this._mouse.y);
-            this._myState.selection = this;
-            this._myState.dragoffx = this._dims.x;
-            this._myState.dragoffy = this._dims.y;
-            this._myState.initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x, this._dims.y);
-            this._myState.resizing = true;
-            this._size1 = this._fontSize; // saving old font size
-        }
-        else if (this.contains(this._mouse.x, this._mouse.y)) {
-            this._x1 = this._dims.x; // Saving original x and y
-            this._y1 = this._dims.y;
-            this._selected = true;
-            this._myState.selection = this;
-            this._myState.dragoffx = this._mouse.x - this._dims.x;
-            this._myState.dragoffy = this._mouse.y - this._dims.y;
-            this._myState.dragging = true;
-        }
-        else {
-            this._selected = false;
-        }
-    }
-    onMouseUp(event) {
-        if (this._myState.dragging) {
-            this._context.eventLog.push(this.logMove());
-        }
-        else if (this._myState.resizing) {
-            this._context.eventLog.push(this.logResize());
-        }
-        this._myState.dragging = false;
-        this._myState.resizing = false;
-        this._corner = 0;
-        //this._context.eventLog.push(this.logMove());
-    }
-=======
->>>>>>> d0798c5f636a9fae918c7d417ab9cf4005f0780f
     logPaint() {
         let paint = new PaintEvent_1.PaintEvent(this._str.val);
         return paint.assembleLog();
