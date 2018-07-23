@@ -11,9 +11,9 @@ class EllipseNode extends Shape_1.Shape {
         this._width = width;
         this._height = height;
     }
-    draw(context, x, y, dims, ast) {
+    draw(context, dims, ast) {
         let e = new EllipseEffect_1.EllipseEffect(this);
-        e.draw(context, x, y, dims);
+        e.draw(context, dims);
     }
     eval(context) {
         return this;

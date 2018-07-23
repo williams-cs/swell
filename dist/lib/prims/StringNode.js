@@ -11,9 +11,9 @@ class StringNode {
     eval(context) {
         return this;
     }
-    draw(context, x, y, dims, ast) {
+    draw(context, dims, ast) {
         let e = new StringEffect_1.StringEffect(this);
-        e.draw(context, x, y, dims, ast);
+        e.draw(context, dims, ast);
     }
     set str(value) {
         this._str = value;

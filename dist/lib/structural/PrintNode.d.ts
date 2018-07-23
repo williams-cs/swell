@@ -8,8 +8,8 @@ export declare class PrintNode implements Expression<any> {
     private _toPrint;
     private _scale;
     private _dims;
-    constructor(toPrint: Expression<any>, x?: Expression<NumberNode>, y?: Expression<NumberNode>, dimensions?: Dimensions);
-    draw(context: Scope, x: number, y: number): void;
+    constructor(toPrint: Expression<any>, dimensions?: Dimensions);
+    draw(context: Scope, dims: Dimensions, ast: PrintNode): void;
     eval(context: Scope): any;
     x: Expression<NumberNode>;
     y: Expression<NumberNode>;

@@ -46,7 +46,7 @@ export class StringEffect implements Effect<StringNode> {
         this._str = str;
     }
 
-    draw(context: Scope, x: number, y: number, dims: Dimensions, ast: PrintNode): void {
+    draw(context: Scope, dims: Dimensions, ast: PrintNode): void {
         if (context.canvas.isDefined()) {
             this._ast = ast;
             this._context = context;
@@ -61,7 +61,7 @@ export class StringEffect implements Effect<StringNode> {
             let fontDeets: string = this._fontSize + "px Arial";
             ctx.font = fontDeets;
             ctx.fillStyle = 'black';
-            ctx.fillText(this._str.val, x, y);
+            ctx.fillText(this._str.val, this._x, this._y);
             let textDims = ctx.measureText(this._str.val);
             this._w = textDims.width;
             this._h = this._fontSize;

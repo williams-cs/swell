@@ -7,13 +7,13 @@ class NumberEffect {
         this._num = num;
         this._str = num.val.toString();
     }
-    draw(context, x, y) {
+    draw(context, dims, ast) {
         if (context.canvas.isDefined()) {
             let ctx = context.canvas.get().getContext("2d");
             let fontDeets = this._fontSize + "px Arial";
             ctx.font = fontDeets;
             ctx.fillStyle = 'black';
-            ctx.fillText(this._str, x, y);
+            ctx.fillText(this._str, this._x, this._y);
             let dims = ctx.measureText(this._str);
             this._w = dims.width;
             this._h = this._fontSize;

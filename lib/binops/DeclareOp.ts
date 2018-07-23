@@ -2,6 +2,7 @@ import {BinaryOperation} from './BinaryOperation';
 import {Expression} from '../Expression';
 import {Scope} from '../structural/Scope';
 import { VariableNode } from '../vars/VariableNode';
+import { Dimensions } from '../structural/Dimensions';
 
 // left side is variable, right side is val
 // Declares new val
@@ -13,7 +14,7 @@ export class DeclareOp<T> extends BinaryOperation<T>{
         }
     }
 
-    draw(context: Scope, x: number, y: number): void {
+    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
     
     }
     

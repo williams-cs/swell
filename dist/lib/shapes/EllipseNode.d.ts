@@ -10,7 +10,7 @@ export declare class EllipseNode extends Shape implements Expression<EllipseNode
     private _height;
     constructor(//ellipse: Ellipse, 
     color: ColorNode, xPos: Expression<NumberNode>, yPos: Expression<NumberNode>, width: Expression<NumberNode>, height: Expression<NumberNode>);
-    draw(context: Scope, x: number, y: number, dims: Dimensions, ast: PrintNode): void;
+    draw(context: Scope, dims: Dimensions, ast: PrintNode): void;
     eval(context: Scope): EllipseNode;
     move(): void;
     width: Expression<NumberNode>;

@@ -11,7 +11,7 @@ class AssignOp extends BinaryOperation_1.BinaryOperation {
             throw new Error("The left hand side of the assignment must be a variable.");
         }
     }
-    draw(context, x, y) {
+    draw(context, dims, ast) {
     }
     eval(context) {
         if (this.left instanceof VariableNode_1.VariableNode) {

@@ -2,6 +2,7 @@ import {BinaryOperation} from './BinaryOperation';
 import {Expression} from '../Expression';
 import {Scope} from '../structural/Scope';
 import {NumberNode} from '../prims/NumberNode';
+import { Dimensions } from '../structural/Dimensions';
 
 // left and right are both expressions
 export class PlusOp extends BinaryOperation<NumberNode>{
@@ -9,7 +10,7 @@ export class PlusOp extends BinaryOperation<NumberNode>{
         super(left,right);
     }
 
-    draw(context: Scope, x: number, y: number): void {
+    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
     
     }
     

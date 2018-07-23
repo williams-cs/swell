@@ -13,7 +13,7 @@ class StringEffect {
         };
         this._str = str;
     }
-    draw(context, x, y, dims, ast) {
+    draw(context, dims, ast) {
         if (context.canvas.isDefined()) {
             this._ast = ast;
             this._context = context;
@@ -28,7 +28,7 @@ class StringEffect {
             let fontDeets = this._fontSize + "px Arial";
             ctx.font = fontDeets;
             ctx.fillStyle = 'black';
-            ctx.fillText(this._str.val, x, y);
+            ctx.fillText(this._str.val, this._x, this._y);
             let textDims = ctx.measureText(this._str.val);
             this._w = textDims.width;
             this._h = this._fontSize;

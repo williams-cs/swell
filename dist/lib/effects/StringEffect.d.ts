@@ -24,7 +24,7 @@ export declare class StringEffect implements Effect<StringNode> {
     private _myState;
     private _mouse;
     constructor(str: StringNode);
-    draw(context: Scope, x: number, y: number, dims: Dimensions, ast: PrintNode): void;
+    draw(context: Scope, dims: Dimensions, ast: PrintNode): void;
     contains(mx: number, my: number): boolean;
     guideContains(mx: number, my: number): number;
     drawTextGuides(x: number, y: number, w: number, h: number, corner: number): void;

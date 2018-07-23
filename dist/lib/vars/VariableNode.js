@@ -11,7 +11,7 @@ class VariableNode {
         //console.log("looking up: " + this._name);
         return context.lookup(this._name, context);
     }
-    draw(context, x, y) {
+    draw(context, dims, ast) {
     }
     // add get/set
     get name() {

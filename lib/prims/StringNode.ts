@@ -20,9 +20,9 @@ export class StringNode implements Expression<StringNode>{
         return this;
     }
 
-    draw(context: Scope, x: number, y: number, dims: Dimensions, ast: PrintNode): void {
+    draw(context: Scope, dims: Dimensions, ast: PrintNode): void {
         let e = new StringEffect(this);
-        e.draw(context, x, y, dims, ast);
+        e.draw(context, dims, ast);
     }
 
     set str(value: string){

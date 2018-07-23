@@ -12,17 +12,17 @@ class EllipseEffect {
         };
         this._circle = circle;
     }
-    draw(context, x, y, dims) {
+    draw(context, dims) {
         if (context.canvas.isDefined()) {
             this._dims = dims;
             this._canvas = context.canvas.get();
             this._myState = context.myState;
-            this._x = x;
-            this._y = y;
+            this._x = dims.x;
+            this._y = dims.y;
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
             ctx.beginPath();
-            ctx.arc(x, y, this._radius, 0, Math.PI * 2, false);
+            ctx.arc(this._x, this._y, this._radius, 0, Math.PI * 2, false);
             ctx.strokeStyle = "black";
             ctx.stroke();
             if (this._selected) {

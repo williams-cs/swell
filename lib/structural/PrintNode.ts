@@ -10,16 +10,14 @@ export class PrintNode implements Expression<any>{
     private _scale: number = 1;
     private _dims: Dimensions;
 
-    constructor(toPrint: Expression<any>, x?: Expression<NumberNode>, y?: Expression<NumberNode>, dimensions?: Dimensions){
+    constructor(toPrint: Expression<any>, dimensions?: Dimensions){
         this._toPrint = toPrint;
-        //this._x = x || 0;
-        //this._y = y || 0;
-        this._x = x || new NumberNode(0);
-        this._y = y || new NumberNode(0);
+        this._x = new NumberNode(this.dims.x) || new NumberNode(0);
+        this._y = new NumberNode(this.dims.y) || new NumberNode(0);
         this._dims = dimensions || null;
     }
 
-    draw(context: Scope, x: number, y: number): void {
+    draw(context: Scope, dims: Dimensions, ast: PrintNode): void {
         throw new Error("Cannot call draw() on printOp");
     }
 

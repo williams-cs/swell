@@ -8,7 +8,7 @@ class PlusOp extends BinaryOperation_1.BinaryOperation {
     constructor(left, right) {
         super(left, right);
     }
-    draw(context, x, y) {
+    draw(context, dims, ast) {
     }
     eval(context) {
         let l = this.left;
