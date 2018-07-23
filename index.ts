@@ -50,9 +50,16 @@ export {PrintNode} from './lib/structural/PrintNode';
 export {Return} from './lib/structural/Return';
 export {ReturnError} from './lib/structural/ReturnError';
 
-/* Effects */
+/* EFFECTS */
 export {Effect} from './lib/effects/Effect';
 export {EllipseEffect} from './lib/effects/EllipseEffect';
 export {NumberEffect} from './lib/effects/NumberEffect';
 export {StringEffect} from './lib/effects/StringEffect';
 export {Dimensions} from './lib/structural/Dimensions';
+
+/* EVENTS */
+export {LogEvent} from './lib/logging/LogEvent';
+export {ClearEvent} from './lib/logging/ClearEvent';
+export {DragEvent} from './lib/logging/DragEvent';
+export {PaintEvent} from './lib/logging/PaintEvent';
+export {ResizeEvent} from './lib/logging/ResizeEvent';
