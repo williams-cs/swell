@@ -49,6 +49,8 @@ var StringNode_1 = require("./lib/prims/StringNode");
 exports.StringNode = StringNode_1.StringNode;
 var BooleanNode_1 = require("./lib/prims/BooleanNode");
 exports.BooleanNode = BooleanNode_1.BooleanNode;
+var NOP_1 = require("./lib/prims/NOP");
+exports.NOP = NOP_1.NOP;
 /* VARIABLES */
 var VariableNode_1 = require("./lib/vars/VariableNode");
 exports.VariableNode = VariableNode_1.VariableNode;

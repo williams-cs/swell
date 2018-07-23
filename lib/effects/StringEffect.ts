@@ -43,6 +43,11 @@ export class StringEffect implements Effect<StringNode> {
         x: 0,
         y: 0
     };
+    private _textMetrics: {
+        w: number,
+        h: number,
+        fontSize: number;
+    }
 
     constructor(str: StringNode) {
         this._str = str;
@@ -107,6 +112,7 @@ export class StringEffect implements Effect<StringNode> {
     onMouseDown(event: any): void {
         if(this._selected && this.contains(this._mouse.x, this._mouse.y)){ //text editing
             console.log(true);
+            this.modifyText();
         }
         this.modifyState(this.guideContains(this._mouse.x, this._mouse.y) > 0, this.contains(this._mouse.x, this._mouse.y));
     }
@@ -119,6 +125,17 @@ export class StringEffect implements Effect<StringNode> {
     modifyDrag(): void {
         this._dims.x = this._mouse.x - this._myState.dragoffx;
         this._dims.y = this._mouse.y - this._myState.dragoffy;
+    }
+
+    modifyText(): void {
+        let leftWall: number = this._dims.x;
+        let xDif: number = this._mouse.x - leftWall;
+        if(xDif % this._fontSize < 10 || this._fontSize - xDif < 10) {
+            this._ctx.moveTo(leftWall + (xDif / this._fontSize), this._dims.y);
+            this._ctx.lineTo(leftWall + (xDif / this._fontSize), this._dims.y + this._fontSize);
+            this._ctx.strokeStyle = "grey";
+            this._ctx.stroke();
+        }
     }
 
     modifyResize(isTooSmall: boolean): void {
