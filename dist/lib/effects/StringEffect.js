@@ -22,7 +22,7 @@ class StringEffect {
             this._myState = context.myState;
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
-            let fontDeets = this._fontSize + "px Courier";
+            let fontDeets = this._fontSize + "px Courier New";
             ctx.font = fontDeets;
             ctx.fillStyle = 'black';
             ctx.fillText(this._str.val, this._dims.x, this._dims.y);
