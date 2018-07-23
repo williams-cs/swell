@@ -40,6 +40,8 @@ class StringEffect {
             this._canvas.addEventListener('mousemove', this.onMouseMove.bind(this));
             this._canvas.addEventListener('mousedown', this.onMouseDown.bind(this));
             this._canvas.addEventListener('mouseup', this.onMouseUp.bind(this));
+            //makes it so that double clicking doesn't select text on the page
+            this._canvas.addEventListener('selectstart', function (e) { e.preventDefault(); return false; }, false);
         }
         else {
             console.log("canvas is NOT defined");
@@ -130,9 +132,6 @@ class StringEffect {
         }
     }
     onMouseUp(event) {
-        if (this._myState.resizing || this._myState.dragging) {
-            this.updateAST();
-        }
         this._myState.dragging = false;
         this._myState.resizing = false;
         this._corner = 0;
@@ -147,11 +146,6 @@ class StringEffect {
         return moveStr.assembleLog();
     }
     ast() {
-        return this._ast;
-    }
-    updateAST() {
-        this._ast.dims.x = this._dims.x;
-        this._ast.dims.y = this._dims.y;
         return this._ast;
     }
     get canvas() {

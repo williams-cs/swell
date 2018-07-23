@@ -6,7 +6,7 @@ import { PrintNode } from "../structural/PrintNode";
 export interface Effect<T>{
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void; // draws object
     ast(): Expression<T>; // returns expression that created obj
-    updateAST(): Expression<T>; // returns a new expression after manipulation
+    //updateAST(): Expression<T>; // returns a new expression after manipulation
     //log(): string;
     x: number;
     y: number;

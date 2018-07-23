@@ -20,7 +20,7 @@ export class StringNode implements Expression<StringNode>{
         return this;
     }
 
-    draw(context: Scope, dims: Dimensions, ast: PrintNode): void {
+    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
         let e = new StringEffect(this);
         e.draw(context, dims, ast);
     }

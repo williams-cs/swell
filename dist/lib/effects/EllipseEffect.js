@@ -33,6 +33,8 @@ class EllipseEffect {
         this._canvas.addEventListener('mousemove', this.onMouseMove.bind(this));
         this._canvas.addEventListener('mousedown', this.onMouseDown.bind(this));
         this._canvas.addEventListener('mouseup', this.onMouseUp.bind(this));
+        //makes it so that double clicking doesn't select text on the page
+        this._canvas.addEventListener('selectstart', function (e) { e.preventDefault(); return false; }, false);
     }
     contains(mx, my) {
         return distance(mx, my, this._dims.x, this._dims.y) < this._dims.radius;

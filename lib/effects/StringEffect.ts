@@ -9,7 +9,7 @@ import { DragEvent } from "../logging/DragEvent";
 
 export class StringEffect implements Effect<StringNode> {
 
-    private _ast: PrintNode;
+    private _ast: Expression<any>;
     private _context: Scope;
     private _ctx: CanvasRenderingContext2D;
     private _canvas: HTMLCanvasElement;
@@ -43,7 +43,7 @@ export class StringEffect implements Effect<StringNode> {
         this._str = str;
     }
 
-    draw(context: Scope, dims: Dimensions, ast: PrintNode): void {
+    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
         if (context.canvas.isDefined()) {
             this._ast = ast;
             this._context = context;
@@ -73,6 +73,8 @@ export class StringEffect implements Effect<StringNode> {
             this._canvas.addEventListener('mousemove', this.onMouseMove.bind(this));
             this._canvas.addEventListener('mousedown', this.onMouseDown.bind(this));
             this._canvas.addEventListener('mouseup', this.onMouseUp.bind(this));
+            //makes it so that double clicking doesn't select text on the page
+            this._canvas.addEventListener('selectstart', function(e) { e.preventDefault(); return false; }, false);
         }
         else {
             console.log("canvas is NOT defined");
@@ -169,9 +171,6 @@ export class StringEffect implements Effect<StringNode> {
     }
 
     onMouseUp(event: any) {
-        if(this._myState.resizing || this._myState.dragging) {
-            this.updateAST();
-        }
         this._myState.dragging = false;
         this._myState.resizing = false;
         this._corner = 0;
@@ -192,11 +191,6 @@ export class StringEffect implements Effect<StringNode> {
         return this._ast;
     }
 
-    updateAST(): Expression<StringNode> {
-        this._ast.dims.x = this._dims.x;
-        this._ast.dims.y = this._dims.y;
-        return this._ast;
-    }
 
     get canvas(): HTMLCanvasElement {
         return this._canvas;
