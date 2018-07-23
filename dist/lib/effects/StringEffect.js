@@ -67,6 +67,7 @@ class StringEffect {
     onMouseDown(event) {
         if (this._selected && this.contains(this._mouse.x, this._mouse.y)) { //text editing
             console.log(true);
+            this.modifyText();
         }
         this.modifyState(this.guideContains(this._mouse.x, this._mouse.y) > 0, this.contains(this._mouse.x, this._mouse.y));
     }
@@ -77,6 +78,16 @@ class StringEffect {
     modifyDrag() {
         this._dims.x = this._mouse.x - this._myState.dragoffx;
         this._dims.y = this._mouse.y - this._myState.dragoffy;
+    }
+    modifyText() {
+        let leftWall = this._dims.x;
+        let xDif = this._mouse.x - leftWall;
+        if (xDif % this._fontSize < 5 && this._mouse.y <= this._dims.y && this._mouse.y >= this._dims.y - this._fontSize) {
+            this._ctx.moveTo(leftWall + (xDif / this._fontSize), this._dims.y);
+            this._ctx.lineTo(leftWall + (xDif / this._fontSize), this._dims.y + this._fontSize);
+            this._ctx.strokeStyle = "grey";
+            this._ctx.stroke();
+        }
     }
     modifyResize(isTooSmall) {
         if (isTooSmall) {

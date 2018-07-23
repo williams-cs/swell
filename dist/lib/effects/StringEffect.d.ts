@@ -20,6 +20,7 @@ export declare class StringEffect implements Effect<StringNode> {
     private _selected;
     private _myState;
     private _mouse;
+    private _textMetrics;
     constructor(str: StringNode);
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
     addEventListeners(): void;
@@ -27,6 +28,7 @@ export declare class StringEffect implements Effect<StringNode> {
     onMouseDown(event: any): void;
     onMouseUp(event: any): void;
     modifyDrag(): void;
+    modifyText(): void;
     modifyResize(isTooSmall: boolean): void;
     modifyState(guideContains: boolean, contains: boolean): void;
     modifyReset(): void;
