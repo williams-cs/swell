@@ -84,7 +84,7 @@ class StringEffect {
     modifyText() {
         let leftWall = this._dims.x;
         let xDif = this._mouse.x - leftWall;
-        if (xDif % this._fontSize < 5 && this._mouse.y <= this._dims.y && this._mouse.y >= this._dims.y - this._fontSize) {
+        if (xDif % this._fontSize < 5) {
             this._ctx.moveTo(leftWall + (xDif / this._fontSize), this._dims.y);
             this._ctx.lineTo(leftWall + (xDif / this._fontSize), this._dims.y + this._fontSize);
             this._ctx.strokeStyle = "grey";
