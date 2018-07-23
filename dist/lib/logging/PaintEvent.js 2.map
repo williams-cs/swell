@@ -1,1 +1,0 @@
-{"version":3,"file":"PaintEvent.js","sourceRoot":"","sources":["../../../lib/logging/PaintEvent.ts"],"names":[],"mappings":";;AAAA,yCAAoC;AAEpC,gBAAwB,SAAQ,mBAAQ;IACpC,gBAAgB;IAChB,YAAY,KAAa;QACrB,KAAK,CAAC,KAAK,CAAC,CAAC;IACjB,CAAC;IAED,WAAW;QACP,IAAI,OAAO,GAAG,UAAU,GAAG,IAAI,CAAC,KAAK,CAAC;QACtC,OAAO,IAAI,CAAC,OAAO,CAAC,OAAO,CAAC,CAAC;IACjC,CAAC;CACJ;AAVD,gCAUC"}
