@@ -53,7 +53,7 @@ export class StringEffect implements Effect<StringNode> {
             this._myState = context.myState;
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
-            let fontDeets: string = this._fontSize + "px Arial";
+            let fontDeets: string = this._fontSize + "px Courier";
             ctx.font = fontDeets;
             ctx.fillStyle = 'black';
             ctx.fillText(this._str.val, this._dims.x, this._dims.y);
