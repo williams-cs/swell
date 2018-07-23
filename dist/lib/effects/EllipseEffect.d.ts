@@ -25,7 +25,7 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
     ast(): Expression<EllipseNode>;
     logPaint(): string;
     updateAST(): Expression<EllipseNode>;
-    x(): number;
-    y(): number;
+    readonly x: number;
+    readonly y: number;
     readonly dims: Dimensions;
 }

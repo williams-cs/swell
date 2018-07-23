@@ -170,10 +170,10 @@ class EllipseEffect {
     updateAST() {
         throw new Error("Not implemented");
     }
-    x() {
+    get x() {
         return this._dims.x;
     }
-    y() {
+    get y() {
         return this._dims.y;
     }
     get dims() {

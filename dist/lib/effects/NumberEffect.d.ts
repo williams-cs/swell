@@ -4,6 +4,7 @@ import { Expression } from "../Expression";
 import { Scope } from "../structural/Scope";
 import { Dimensions } from "../structural/Dimensions";
 export declare class NumberEffect implements Effect<NumberNode> {
+    private _dims;
     private _x;
     private _y;
     private _num;
@@ -16,6 +17,7 @@ export declare class NumberEffect implements Effect<NumberNode> {
     log(): string;
     ast(): Expression<NumberNode>;
     updateAST(): Expression<NumberNode>;
-    x(): number;
-    y(): number;
+    readonly x: number;
+    readonly y: number;
+    readonly dims: Dimensions;
 }

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const PaintEvent_1 = require("../logging/PaintEvent");
 class NumberEffect {
     constructor(num) {
+        this._dims = null;
         this._fontSize = 20;
         this._num = num;
         this._str = num.val.toString();
@@ -29,11 +30,14 @@ class NumberEffect {
     updateAST() {
         throw new Error("Not implemented");
     }
-    x() {
+    get x() {
         return this._x;
     }
-    y() {
+    get y() {
         return this._y;
+    }
+    get dims() {
+        return this._dims;
     }
 }
 exports.NumberEffect = NumberEffect;

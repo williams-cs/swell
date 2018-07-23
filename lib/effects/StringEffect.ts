@@ -211,10 +211,10 @@ export class StringEffect implements Effect<StringNode> {
         this._canvas = canvas;
     }
 
-    x(): number {
+    get x(): number {
         return this._dims.x;
     }
-    y(): number {
+    get y(): number {
         return this._dims.y;
     }
 

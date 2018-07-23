@@ -163,10 +163,10 @@ class StringEffect {
     set canvas(canvas) {
         this._canvas = canvas;
     }
-    x() {
+    get x() {
         return this._dims.x;
     }
-    y() {
+    get y() {
         return this._dims.y;
     }
     get dims() {

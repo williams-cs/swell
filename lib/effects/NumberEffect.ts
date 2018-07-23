@@ -7,6 +7,7 @@ import { Dimensions } from "../structural/Dimensions";
 
 export class NumberEffect implements Effect<NumberNode> {
 
+    private _dims: Dimensions = null;
     private _x: number;
     private _y: number;
     private _num: NumberNode;
@@ -46,10 +47,14 @@ export class NumberEffect implements Effect<NumberNode> {
         throw new Error("Not implemented");
     }
 
-    x(): number {
+    get x(): number {
         return this._x;
     }
-    y(): number {
+    get y(): number {
         return this._y;
+    }
+
+    get dims(): Dimensions {
+        return this._dims;
     }
 }
