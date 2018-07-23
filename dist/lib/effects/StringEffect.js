@@ -8,6 +8,7 @@ class StringEffect {
         this._fontSize = 20;
         //private _size2: number;
         this._corner = 0;
+        this._isNew = true;
         this._selected = false;
         this._mouse = {
             x: 0,
@@ -24,7 +25,7 @@ class StringEffect {
             this._myState = context.myState;
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
-            let fontDeets = this._fontSize + "px Arial";
+            let fontDeets = this._fontSize + "px Courier New";
             ctx.font = fontDeets;
             ctx.fillStyle = 'black';
             ctx.fillText(this._str.val, this._dims.x, this._dims.y);
@@ -39,15 +40,93 @@ class StringEffect {
             if (this._selected) {
                 this.drawTextGuides(this._dims.x, this._dims.y - this._fontSize, this._w, this._h, this._corner);
             }
-            this._canvas.addEventListener('mousemove', this.onMouseMove.bind(this));
-            this._canvas.addEventListener('mousedown', this.onMouseDown.bind(this));
-            this._canvas.addEventListener('mouseup', this.onMouseUp.bind(this));
-            //makes it so that double clicking doesn't select text on the page
-            this._canvas.addEventListener('selectstart', function (e) { e.preventDefault(); return false; }, false);
+            if (this._isNew) { //prevents adding event listeners repeatedly
+                this.addEventListeners();
+                this._isNew = false;
+            }
         }
         else {
             console.log("canvas is NOT defined");
         }
+    }
+    addEventListeners() {
+        this._canvas.addEventListener('mousemove', this.onMouseMove.bind(this));
+        this._canvas.addEventListener('mousedown', this.onMouseDown.bind(this));
+        this._canvas.addEventListener('mouseup', this.onMouseUp.bind(this));
+        //makes it so that double clicking doesn't select text on the page
+        this._canvas.addEventListener('selectstart', function (e) { e.preventDefault(); return false; }, false);
+    }
+    /* Event listener functions */
+    onMouseMove(event) {
+        this.getMousePosition();
+        if (this._myState.dragging && this._selected) {
+            this.modifyDrag();
+        }
+        else if (this._myState.resizing && this._selected) {
+            this.modifyResize(this._fontSize < 15);
+        }
+    }
+    onMouseDown(event) {
+        if (this._selected && this.contains(this._mouse.x, this._mouse.y)) { //text editing
+            console.log(true);
+        }
+        this.modifyState(this.guideContains(this._mouse.x, this._mouse.y) > 0, this.contains(this._mouse.x, this._mouse.y));
+    }
+    onMouseUp(event) {
+        this.modifyReset();
+    }
+    /* Modification functions */
+    modifyDrag() {
+        this._dims.x = this._mouse.x - this._myState.dragoffx;
+        this._dims.y = this._mouse.y - this._myState.dragoffy;
+    }
+    modifyResize(isTooSmall) {
+        if (isTooSmall) {
+            this._fontSize = 15;
+            let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
+            if (newDistance - this._myState.initDistance > 0) {
+                this._fontSize += newDistance - this._myState.initDistance;
+                this._myState.initDistance = newDistance;
+            }
+        }
+        else {
+            let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
+            this._fontSize += newDistance - this._myState.initDistance;
+            this._myState.initDistance = newDistance;
+        }
+    }
+    modifyState(guideContains, contains) {
+        if (guideContains) {
+            this._selected = true;
+            this._corner = this.guideContains(this._mouse.x, this._mouse.y);
+            this._myState.selection = this;
+            this._myState.dragoffx = this._dims.x;
+            this._myState.dragoffy = this._dims.y;
+            this._myState.initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x, this._dims.y);
+            this._myState.resizing = true;
+        }
+        else if (contains) {
+            this._selected = true;
+            this._myState.selection = this;
+            this._myState.dragoffx = this._mouse.x - this._dims.x;
+            this._myState.dragoffy = this._mouse.y - this._dims.y;
+            this._myState.dragging = true;
+            this._x1 = this._dims.x; // Saving original x and y
+            this._y1 = this._dims.y;
+        }
+        else {
+            this._selected = false;
+        }
+    }
+    modifyReset() {
+        this._myState.dragging = false;
+        this._myState.resizing = false;
+        this._corner = 0;
+        this._context.eventLog.push(this.logMove());
+    }
+    getMousePosition() {
+        this._mouse.x = getMousePos(this._canvas, event).x;
+        this._mouse.y = getMousePos(this._canvas, event).y;
     }
     contains(mx, my) {
         return (this._dims.x <= mx) && (this._dims.x + this._w >= mx) &&
@@ -86,6 +165,7 @@ class StringEffect {
         this._ctx.strokeStyle = 'gray';
         this._ctx.stroke();
     }
+<<<<<<< HEAD
     onMouseMove(event) {
         this._mouse.x = getMousePos(this._canvas, event).x;
         this._mouse.y = getMousePos(this._canvas, event).y;
@@ -145,6 +225,8 @@ class StringEffect {
         this._corner = 0;
         //this._context.eventLog.push(this.logMove());
     }
+=======
+>>>>>>> d0798c5f636a9fae918c7d417ab9cf4005f0780f
     logPaint() {
         let paint = new PaintEvent_1.PaintEvent(this._str.val);
         return paint.assembleLog();

@@ -7,6 +7,7 @@ import { PrintNode } from "../structural/PrintNode";
 import { PaintEvent } from "../logging/PaintEvent";
 import { DragEvent } from "../logging/DragEvent";
 import { ResizeEvent } from "../logging/ResizeEvent";
+import { update } from "../../node_modules/immupdate";
 
 export class StringEffect implements Effect<StringNode> {
 
@@ -24,6 +25,7 @@ export class StringEffect implements Effect<StringNode> {
     private _size1: number; // Original scale for resize logging
     //private _size2: number;
     private _corner: number = 0;
+    private _isNew: boolean = true;
     private _selected: boolean = false;
     //private _log: string[];
     private _myState: {
@@ -55,7 +57,7 @@ export class StringEffect implements Effect<StringNode> {
             this._myState = context.myState;
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
-            let fontDeets: string = this._fontSize + "px Arial";
+            let fontDeets: string = this._fontSize + "px Courier New";
             ctx.font = fontDeets;
             ctx.fillStyle = 'black';
             ctx.fillText(this._str.val, this._dims.x, this._dims.y);
@@ -73,15 +75,107 @@ export class StringEffect implements Effect<StringNode> {
                 this.drawTextGuides(this._dims.x, this._dims.y - this._fontSize, this._w, this._h, this._corner);
             }
 
-            this._canvas.addEventListener('mousemove', this.onMouseMove.bind(this));
-            this._canvas.addEventListener('mousedown', this.onMouseDown.bind(this));
-            this._canvas.addEventListener('mouseup', this.onMouseUp.bind(this));
-            //makes it so that double clicking doesn't select text on the page
-            this._canvas.addEventListener('selectstart', function(e) { e.preventDefault(); return false; }, false);
+            if(this._isNew) { //prevents adding event listeners repeatedly
+                this.addEventListeners();
+                this._isNew = false;
+            }
         }
         else {
             console.log("canvas is NOT defined");
         }
+    }
+
+    addEventListeners(): void {
+        this._canvas.addEventListener('mousemove', this.onMouseMove.bind(this));
+        this._canvas.addEventListener('mousedown', this.onMouseDown.bind(this));
+        this._canvas.addEventListener('mouseup', this.onMouseUp.bind(this));
+        //makes it so that double clicking doesn't select text on the page
+        this._canvas.addEventListener('selectstart', function(e) { e.preventDefault(); return false; }, false);
+    }
+
+    /* Event listener functions */
+    onMouseMove(event: any): void {
+        this.getMousePosition();
+        if(this._myState.dragging && this._selected){
+            this.modifyDrag();
+        }
+        else if(this._myState.resizing && this._selected){
+            this.modifyResize(this._fontSize < 15);
+        }
+    }
+
+    onMouseDown(event: any): void {
+        if(this._selected && this.contains(this._mouse.x, this._mouse.y)){ //text editing
+            console.log(true);
+        }
+        this.modifyState(this.guideContains(this._mouse.x, this._mouse.y) > 0, this.contains(this._mouse.x, this._mouse.y));
+    }
+
+    onMouseUp(event: any) {
+        this.modifyReset();
+    }
+
+    /* Modification functions */
+    modifyDrag(): void {
+        this._dims.x = this._mouse.x - this._myState.dragoffx;
+        this._dims.y = this._mouse.y - this._myState.dragoffy;
+    }
+
+    modifyResize(isTooSmall: boolean): void {
+        if(isTooSmall){
+            this._fontSize = 15;
+            let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
+            if(newDistance - this._myState.initDistance > 0){
+                this._fontSize += newDistance - this._myState.initDistance;
+                this._myState.initDistance = newDistance;
+            }
+        }
+        else {
+            let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
+            this._fontSize += newDistance - this._myState.initDistance;
+            this._myState.initDistance = newDistance;
+        }
+    }
+
+    modifyState(guideContains: boolean, contains: boolean): void {
+        if(guideContains) {
+            this._selected = true;
+            this._corner = this.guideContains(this._mouse.x, this._mouse.y);
+            this._myState.selection = this;
+            this._myState.dragoffx = this._dims.x;
+            this._myState.dragoffy = this._dims.y;
+            this._myState.initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x, this._dims.y);
+            this._myState.resizing = true;
+            this._size1 = this._fontSize; // saving old font size
+        } else if (contains) {
+            this._x1 = this._dims.x; // Saving original x and y
+            this._y1 = this._dims.y;
+
+            this._selected = true;
+            this._myState.selection = this;
+            this._myState.dragoffx = this._mouse.x - this._dims.x;
+            this._myState.dragoffy = this._mouse.y - this._dims.y;
+            this._myState.dragging = true;
+        } else {
+            this._selected = false;
+        }
+    }
+
+    modifyReset(): void {
+        if(this._myState.dragging){
+            this._context.eventLog.push(this.logMove());
+        } else if (this._myState.resizing){
+            this._context.eventLog.push(this.logResize());
+        }
+        this._myState.dragging = false;
+        this._myState.resizing = false;
+        this._corner = 0;
+        //this._context.eventLog.push(this.logMove());
+    }
+
+    getMousePosition(): void {
+        this._mouse.x = getMousePos(this._canvas, event).x;
+        this._mouse.y = getMousePos(this._canvas, event).y;
     }
 
     contains(mx: number, my: number): boolean {
@@ -122,68 +216,6 @@ export class StringEffect implements Effect<StringNode> {
         this._ctx.rect(x, y, w, h);
         this._ctx.strokeStyle = 'gray';
         this._ctx.stroke();
-    }
-
-    onMouseMove(event: any): void {
-        this._mouse.x = getMousePos(this._canvas, event).x;
-        this._mouse.y = getMousePos(this._canvas, event).y;
-        if(this._myState.dragging && this._selected){
-            this._dims.x = this._mouse.x - this._myState.dragoffx;
-            this._dims.y = this._mouse.y - this._myState.dragoffy;
-        }
-        else if(this._myState.resizing && this._selected){
-            if (this._fontSize >= 15) {
-                let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
-                this._fontSize += newDistance - this._myState.initDistance;
-                this._myState.initDistance = newDistance;
-            }
-            else {
-                this._fontSize = 15;
-                let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
-                if(newDistance - this._myState.initDistance > 0){
-                    this._fontSize += newDistance - this._myState.initDistance;
-                    this._myState.initDistance = newDistance;
-                }
-            }
-        }
-    }
-
-    onMouseDown(event: any): void {
-        if (this.guideContains(this._mouse.x, this._mouse.y) > 0) {
-            this._selected = true;
-            this._corner = this.guideContains(this._mouse.x, this._mouse.y);
-            this._myState.selection = this;
-            this._myState.dragoffx = this._dims.x;
-            this._myState.dragoffy = this._dims.y;
-            this._myState.initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x, this._dims.y);
-            this._myState.resizing = true;
-            this._size1 = this._fontSize; // saving old font size
-        }
-        else if (this.contains(this._mouse.x, this._mouse.y)) {
-            this._x1 = this._dims.x; // Saving original x and y
-            this._y1 = this._dims.y;
-
-            this._selected = true;
-            this._myState.selection = this;
-            this._myState.dragoffx = this._mouse.x - this._dims.x;
-            this._myState.dragoffy = this._mouse.y - this._dims.y;
-            this._myState.dragging = true;
-        }
-        else {
-            this._selected = false;
-        }
-    }
-
-    onMouseUp(event: any) {
-        if(this._myState.dragging){
-            this._context.eventLog.push(this.logMove());
-        } else if (this._myState.resizing){
-            this._context.eventLog.push(this.logResize());
-        }
-        this._myState.dragging = false;
-        this._myState.resizing = false;
-        this._corner = 0;
-        //this._context.eventLog.push(this.logMove());
     }
 
     logPaint(): string {

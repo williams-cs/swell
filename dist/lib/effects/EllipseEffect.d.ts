@@ -11,10 +11,12 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
     private _canvas;
     private _corner;
     private _selected;
+    private _isNew;
     private _myState;
     private _mouse;
     constructor(circle: EllipseNode);
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
+    addEventListeners(): void;
     contains(mx: number, my: number): boolean;
     guideContains(mx: number, my: number): number;
     drawGuides(x: number, y: number, w: number, h: number, corner: number): void;
@@ -22,6 +24,11 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
     onMouseMove(event: any): void;
     onMouseDown(event: any): void;
     onMouseUp(event: any): void;
+    modifyDrag(): void;
+    modifyResize(isTooSmall: boolean): void;
+    modifyState(guideContains: boolean, contains: boolean): void;
+    modifyReset(): void;
+    getMousePosition(): void;
     ast(): Expression<EllipseNode>;
     logPaint(): string;
     updateAST(): Expression<EllipseNode>;
