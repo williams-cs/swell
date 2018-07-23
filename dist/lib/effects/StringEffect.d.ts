@@ -21,10 +21,6 @@ export declare class StringEffect implements Effect<StringNode> {
     private _mouse;
     constructor(str: StringNode);
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
-    contains(mx: number, my: number): boolean;
-    guideContains(mx: number, my: number): number;
-    drawTextGuides(x: number, y: number, w: number, h: number, corner: number): void;
-    drawSquare(x: number, y: number, w: number, h: number, color: string): void;
     onMouseMove(event: any): void;
     onMouseDown(event: any): void;
     onMouseUp(event: any): void;
@@ -33,6 +29,10 @@ export declare class StringEffect implements Effect<StringNode> {
     modifyState(guideContains: boolean, contains: boolean): void;
     modifyReset(): void;
     getMousePosition(): void;
+    contains(mx: number, my: number): boolean;
+    guideContains(mx: number, my: number): number;
+    drawTextGuides(x: number, y: number, w: number, h: number, corner: number): void;
+    drawSquare(x: number, y: number, w: number, h: number, color: string): void;
     logPaint(): string;
     logMove(): string;
     ast(): Expression<StringNode>;

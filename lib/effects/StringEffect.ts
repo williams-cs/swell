@@ -82,46 +82,6 @@ export class StringEffect implements Effect<StringNode> {
         }
     }
 
-    contains(mx: number, my: number): boolean {
-        return  (this._dims.x <= mx) && (this._dims.x + this._w >= mx) &&
-          (this._dims.y - this._fontSize <= my) && (this._dims.y >= my);
-    }
-
-    guideContains(mx: number, my: number): number {
-        let xdif = mx - (this._dims.x + this._w);
-        let ydif = my - (this._dims.y - this._fontSize);
-        if(xdif <= 5 && ydif <= 5 && xdif >= -5 && ydif >= -5){
-            return 2;
-        }
-        else return 0;
-    }
-
-    drawTextGuides(x: number, y: number, w: number, h: number, corner: number) { //corner is 2 or 0
-        this._ctx.beginPath();
-        this._ctx.rect(x, y, w, h);
-        this._ctx.strokeStyle = 'gray';
-        this._ctx.stroke();
-        if(corner !== 0){
-            switch (corner) { //colors the guide blue if selected
-                case 2:
-                    this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'blue');
-                    break;
-            }
-        }
-        else {
-            this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white');
-        }
-    }
-
-    drawSquare(x: number, y: number, w: number, h: number, color: string) {
-        this._ctx.beginPath();
-        this._ctx.fillStyle = color;
-        this._ctx.fillRect(x, y, w, h);
-        this._ctx.rect(x, y, w, h);
-        this._ctx.strokeStyle = 'gray';
-        this._ctx.stroke();
-    }
-
     /* Event listener functions */
     onMouseMove(event: any): void {
         this.getMousePosition();
@@ -134,6 +94,9 @@ export class StringEffect implements Effect<StringNode> {
     }
 
     onMouseDown(event: any): void {
+        if(this._selected && this.contains(this._mouse.x, this._mouse.y)){ //text editing
+            console.log(true);
+        }
         this.modifyState(this.guideContains(this._mouse.x, this._mouse.y) > 0, this.contains(this._mouse.x, this._mouse.y));
     }
 
@@ -197,6 +160,46 @@ export class StringEffect implements Effect<StringNode> {
     getMousePosition(): void {
         this._mouse.x = getMousePos(this._canvas, event).x;
         this._mouse.y = getMousePos(this._canvas, event).y;
+    }
+
+    contains(mx: number, my: number): boolean {
+        return  (this._dims.x <= mx) && (this._dims.x + this._w >= mx) &&
+          (this._dims.y - this._fontSize <= my) && (this._dims.y >= my);
+    }
+
+    guideContains(mx: number, my: number): number {
+        let xdif = mx - (this._dims.x + this._w);
+        let ydif = my - (this._dims.y - this._fontSize);
+        if(xdif <= 5 && ydif <= 5 && xdif >= -5 && ydif >= -5){
+            return 2;
+        }
+        else return 0;
+    }
+
+    drawTextGuides(x: number, y: number, w: number, h: number, corner: number) { //corner is 2 or 0
+        this._ctx.beginPath();
+        this._ctx.rect(x, y, w, h);
+        this._ctx.strokeStyle = 'gray';
+        this._ctx.stroke();
+        if(corner !== 0){
+            switch (corner) { //colors the guide blue if selected
+                case 2:
+                    this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'blue');
+                    break;
+            }
+        }
+        else {
+            this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white');
+        }
+    }
+
+    drawSquare(x: number, y: number, w: number, h: number, color: string) {
+        this._ctx.beginPath();
+        this._ctx.fillStyle = color;
+        this._ctx.fillRect(x, y, w, h);
+        this._ctx.rect(x, y, w, h);
+        this._ctx.strokeStyle = 'gray';
+        this._ctx.stroke();
     }
 
     logPaint(): string {

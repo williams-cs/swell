@@ -47,43 +47,6 @@ class StringEffect {
             console.log("canvas is NOT defined");
         }
     }
-    contains(mx, my) {
-        return (this._dims.x <= mx) && (this._dims.x + this._w >= mx) &&
-            (this._dims.y - this._fontSize <= my) && (this._dims.y >= my);
-    }
-    guideContains(mx, my) {
-        let xdif = mx - (this._dims.x + this._w);
-        let ydif = my - (this._dims.y - this._fontSize);
-        if (xdif <= 5 && ydif <= 5 && xdif >= -5 && ydif >= -5) {
-            return 2;
-        }
-        else
-            return 0;
-    }
-    drawTextGuides(x, y, w, h, corner) {
-        this._ctx.beginPath();
-        this._ctx.rect(x, y, w, h);
-        this._ctx.strokeStyle = 'gray';
-        this._ctx.stroke();
-        if (corner !== 0) {
-            switch (corner) { //colors the guide blue if selected
-                case 2:
-                    this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'blue');
-                    break;
-            }
-        }
-        else {
-            this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'white');
-        }
-    }
-    drawSquare(x, y, w, h, color) {
-        this._ctx.beginPath();
-        this._ctx.fillStyle = color;
-        this._ctx.fillRect(x, y, w, h);
-        this._ctx.rect(x, y, w, h);
-        this._ctx.strokeStyle = 'gray';
-        this._ctx.stroke();
-    }
     /* Event listener functions */
     onMouseMove(event) {
         this.getMousePosition();
@@ -95,6 +58,9 @@ class StringEffect {
         }
     }
     onMouseDown(event) {
+        if (this._selected && this.contains(this._mouse.x, this._mouse.y)) { //text editing
+            console.log(true);
+        }
         this.modifyState(this.guideContains(this._mouse.x, this._mouse.y) > 0, this.contains(this._mouse.x, this._mouse.y));
     }
     onMouseUp(event) {
@@ -152,6 +118,43 @@ class StringEffect {
     getMousePosition() {
         this._mouse.x = getMousePos(this._canvas, event).x;
         this._mouse.y = getMousePos(this._canvas, event).y;
+    }
+    contains(mx, my) {
+        return (this._dims.x <= mx) && (this._dims.x + this._w >= mx) &&
+            (this._dims.y - this._fontSize <= my) && (this._dims.y >= my);
+    }
+    guideContains(mx, my) {
+        let xdif = mx - (this._dims.x + this._w);
+        let ydif = my - (this._dims.y - this._fontSize);
+        if (xdif <= 5 && ydif <= 5 && xdif >= -5 && ydif >= -5) {
+            return 2;
+        }
+        else
+            return 0;
+    }
+    drawTextGuides(x, y, w, h, corner) {
+        this._ctx.beginPath();
+        this._ctx.rect(x, y, w, h);
+        this._ctx.strokeStyle = 'gray';
+        this._ctx.stroke();
+        if (corner !== 0) {
+            switch (corner) { //colors the guide blue if selected
+                case 2:
+                    this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'blue');
+                    break;
+            }
+        }
+        else {
+            this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'white');
+        }
+    }
+    drawSquare(x, y, w, h, color) {
+        this._ctx.beginPath();
+        this._ctx.fillStyle = color;
+        this._ctx.fillRect(x, y, w, h);
+        this._ctx.rect(x, y, w, h);
+        this._ctx.strokeStyle = 'gray';
+        this._ctx.stroke();
     }
     logPaint() {
         let paint = new PaintEvent_1.PaintEvent(this._str.val);
