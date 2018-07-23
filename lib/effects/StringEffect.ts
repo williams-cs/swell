@@ -195,7 +195,7 @@ export class StringEffect implements Effect<StringNode> {
     }
 
     ast(): Expression<StringNode> {
-        throw new Error("Not implemented");
+        return this._ast;
     }
 
     updateAST(): Expression<StringNode> {
@@ -216,6 +216,10 @@ export class StringEffect implements Effect<StringNode> {
     }
     y(): number {
         return this._dims.y;
+    }
+
+    get dims(): Dimensions {
+        return this._dims;
     }
 }
 

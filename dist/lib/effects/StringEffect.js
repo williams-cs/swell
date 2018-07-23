@@ -150,7 +150,7 @@ class StringEffect {
         return moveStr.assembleLog();
     }
     ast() {
-        throw new Error("Not implemented");
+        return this._ast;
     }
     updateAST() {
         this._ast.dims.x = this._dims.x;
@@ -168,6 +168,9 @@ class StringEffect {
     }
     y() {
         return this._dims.y;
+    }
+    get dims() {
+        return this._dims;
     }
 }
 exports.StringEffect = StringEffect;

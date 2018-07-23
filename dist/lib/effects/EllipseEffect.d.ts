@@ -6,6 +6,7 @@ import { Dimensions } from "../structural/Dimensions";
 export declare class EllipseEffect implements Effect<EllipseNode> {
     private _circle;
     private _dims;
+    private _ast;
     private _ctx;
     private _canvas;
     private _corner;
@@ -26,4 +27,5 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
     updateAST(): Expression<EllipseNode>;
     x(): number;
     y(): number;
+    readonly dims: Dimensions;
 }

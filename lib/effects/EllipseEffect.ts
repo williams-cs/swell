@@ -9,6 +9,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
 
     private _circle: EllipseNode;
     private _dims: Dimensions;
+    private _ast: Expression<any>;
     //private _x: number;
     //private _y: number;
     //private _radius: number = 30;
@@ -39,6 +40,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
         if (context.canvas.isDefined()) {
             this._dims = dims;
+            this._ast = ast;
             this._canvas = context.canvas.get();
             this._myState = context.myState;
             //this._x = dims.x;
@@ -192,15 +194,13 @@ export class EllipseEffect implements Effect<EllipseNode> {
     }
 
     ast(): Expression<EllipseNode> {
-        throw new Error("Not implemented");
+        return this._ast;
     }
 
     logPaint(): string {
         let paint = new PaintEvent("ellipse at " + this._dims.x + ", " + this._dims.y);
         return paint.assembleLog();
     }
-
-    
 
     updateAST(): Expression<EllipseNode> {
         throw new Error("Not implemented");
@@ -211,6 +211,10 @@ export class EllipseEffect implements Effect<EllipseNode> {
     }
     y(): number {
         return this._dims.y;
+    }
+
+    get dims(): Dimensions {
+        return this._dims;
     }
 }
 

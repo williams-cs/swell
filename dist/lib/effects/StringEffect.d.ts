@@ -36,4 +36,5 @@ export declare class StringEffect implements Effect<StringNode> {
     canvas: HTMLCanvasElement;
     x(): number;
     y(): number;
+    readonly dims: Dimensions;
 }

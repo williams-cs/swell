@@ -14,6 +14,7 @@ class EllipseEffect {
     draw(context, dims, ast) {
         if (context.canvas.isDefined()) {
             this._dims = dims;
+            this._ast = ast;
             this._canvas = context.canvas.get();
             this._myState = context.myState;
             //this._x = dims.x;
@@ -160,7 +161,7 @@ class EllipseEffect {
         this._corner = 0;
     }
     ast() {
-        throw new Error("Not implemented");
+        return this._ast;
     }
     logPaint() {
         let paint = new PaintEvent_1.PaintEvent("ellipse at " + this._dims.x + ", " + this._dims.y);
@@ -174,6 +175,9 @@ class EllipseEffect {
     }
     y() {
         return this._dims.y;
+    }
+    get dims() {
+        return this._dims;
     }
 }
 exports.EllipseEffect = EllipseEffect;
