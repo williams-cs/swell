@@ -143,6 +143,7 @@ class StringEffect {
         return paint.assembleLog();
     }
     logMove() {
+        console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);
         let moveStr = new DragEvent_1.DragEvent(this._str.val, this._x1, this._y1, this._dims.x, this._dims.y);
         return moveStr.assembleLog();
     }
