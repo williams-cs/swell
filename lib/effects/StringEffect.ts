@@ -22,6 +22,7 @@ export class StringEffect implements Effect<StringNode> {
     private _x1: number; // Original position for drag logging
     private _y1: number;
     private _corner: number = 0;
+    private _isNew: boolean = true;
     private _selected: boolean = false;
     //private _log: string[];
     private _myState: {
@@ -71,15 +72,22 @@ export class StringEffect implements Effect<StringNode> {
                 this.drawTextGuides(this._dims.x, this._dims.y - this._fontSize, this._w, this._h, this._corner);
             }
 
-            this._canvas.addEventListener('mousemove', this.onMouseMove.bind(this));
-            this._canvas.addEventListener('mousedown', this.onMouseDown.bind(this));
-            this._canvas.addEventListener('mouseup', this.onMouseUp.bind(this));
-            //makes it so that double clicking doesn't select text on the page
-            this._canvas.addEventListener('selectstart', function(e) { e.preventDefault(); return false; }, false);
+            if(this._isNew) { //prevents adding event listeners repeatedly
+                this.addEventListeners();
+                this._isNew = false;
+            }
         }
         else {
             console.log("canvas is NOT defined");
         }
+    }
+
+    addEventListeners(): void {
+        this._canvas.addEventListener('mousemove', this.onMouseMove.bind(this));
+        this._canvas.addEventListener('mousedown', this.onMouseDown.bind(this));
+        this._canvas.addEventListener('mouseup', this.onMouseUp.bind(this));
+        //makes it so that double clicking doesn't select text on the page
+        this._canvas.addEventListener('selectstart', function(e) { e.preventDefault(); return false; }, false);
     }
 
     /* Event listener functions */

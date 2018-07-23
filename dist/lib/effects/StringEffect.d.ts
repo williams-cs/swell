@@ -16,11 +16,13 @@ export declare class StringEffect implements Effect<StringNode> {
     private _x1;
     private _y1;
     private _corner;
+    private _isNew;
     private _selected;
     private _myState;
     private _mouse;
     constructor(str: StringNode);
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
+    addEventListeners(): void;
     onMouseMove(event: any): void;
     onMouseDown(event: any): void;
     onMouseUp(event: any): void;
