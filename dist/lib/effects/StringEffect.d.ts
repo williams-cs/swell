@@ -15,6 +15,7 @@ export declare class StringEffect implements Effect<StringNode> {
     private _h;
     private _x1;
     private _y1;
+    private _size1;
     private _corner;
     private _isNew;
     private _selected;
@@ -39,6 +40,7 @@ export declare class StringEffect implements Effect<StringNode> {
     drawSquare(x: number, y: number, w: number, h: number, color: string): void;
     logPaint(): string;
     logMove(): string;
+    logResize(): string;
     ast(): Expression<StringNode>;
     canvas: HTMLCanvasElement;
     readonly x: number;

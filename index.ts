@@ -29,6 +29,7 @@ export {ListNode} from './lib/lists/ListNode';
 export {NumberNode} from './lib/prims/NumberNode';
 export {StringNode} from './lib/prims/StringNode';
 export {BooleanNode} from './lib/prims/BooleanNode';
+export {NOP} from './lib/prims/NOP';
 
 /* VARIABLES */
 export {VariableNode} from './lib/vars/VariableNode';

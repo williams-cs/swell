@@ -6,6 +6,7 @@ import { Dimensions } from "../structural/Dimensions";
 import { PrintNode } from "../structural/PrintNode";
 import { PaintEvent } from "../logging/PaintEvent";
 import { DragEvent } from "../logging/DragEvent";
+import { ResizeEvent } from "../logging/ResizeEvent";
 import { update } from "../../node_modules/immupdate";
 
 export class StringEffect implements Effect<StringNode> {
@@ -21,6 +22,8 @@ export class StringEffect implements Effect<StringNode> {
     private _h: number;
     private _x1: number; // Original position for drag logging
     private _y1: number;
+    private _size1: number; // Original scale for resize logging
+    //private _size2: number;
     private _corner: number = 0;
     private _isNew: boolean = true;
     private _selected: boolean = false;
@@ -160,26 +163,31 @@ export class StringEffect implements Effect<StringNode> {
             this._myState.dragoffy = this._dims.y;
             this._myState.initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x, this._dims.y);
             this._myState.resizing = true;
-        }
-        else if (contains) {
+            this._size1 = this._fontSize; // saving old font size
+        } else if (contains) {
+            this._x1 = this._dims.x; // Saving original x and y
+            this._y1 = this._dims.y;
+
             this._selected = true;
             this._myState.selection = this;
             this._myState.dragoffx = this._mouse.x - this._dims.x;
             this._myState.dragoffy = this._mouse.y - this._dims.y;
             this._myState.dragging = true;
-            this._x1 = this._dims.x; // Saving original x and y
-            this._y1 = this._dims.y;
-        }
-        else {
+        } else {
             this._selected = false;
         }
     }
 
     modifyReset(): void {
+        if(this._myState.dragging){
+            this._context.eventLog.push(this.logMove());
+        } else if (this._myState.resizing){
+            this._context.eventLog.push(this.logResize());
+        }
         this._myState.dragging = false;
         this._myState.resizing = false;
         this._corner = 0;
-        this._context.eventLog.push(this.logMove());
+        //this._context.eventLog.push(this.logMove());
     }
 
     getMousePosition(): void {
@@ -233,9 +241,14 @@ export class StringEffect implements Effect<StringNode> {
     }
     
     logMove(): string {
-        console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);
+        //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);
         let moveStr = new DragEvent(this._str.val, this._x1, this._y1, this._dims.x, this._dims.y);
         return moveStr.assembleLog();
+    }
+
+    logResize(): string {
+        let sizeStr = new ResizeEvent(this._str.val, this._size1, this._fontSize);
+        return sizeStr.assembleLog();
     }
 
     ast(): Expression<StringNode> {
