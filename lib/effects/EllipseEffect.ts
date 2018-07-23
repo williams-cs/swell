@@ -10,9 +10,6 @@ export class EllipseEffect implements Effect<EllipseNode> {
     private _circle: EllipseNode;
     private _dims: Dimensions;
     private _ast: Expression<any>;
-    //private _x: number;
-    //private _y: number;
-    //private _radius: number = 30;
     private _ctx: CanvasRenderingContext2D;
     private _canvas: HTMLCanvasElement;
     private _corner: number = 0;
@@ -43,8 +40,6 @@ export class EllipseEffect implements Effect<EllipseNode> {
             this._ast = ast;
             this._canvas = context.canvas.get();
             this._myState = context.myState;
-            //this._x = dims.x;
-            //this._y = dims.y;
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
             ctx.beginPath();
@@ -175,7 +170,6 @@ export class EllipseEffect implements Effect<EllipseNode> {
             this._myState.resizing = true;
         }
         else if (this.contains(this._mouse.x, this._mouse.y)) {
-            console.log(true);
             this._selected = true;
             this._myState.selection = this;
             this._myState.dragoffx = this._mouse.x - this._dims.x;

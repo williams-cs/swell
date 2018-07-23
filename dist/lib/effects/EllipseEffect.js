@@ -17,8 +17,6 @@ class EllipseEffect {
             this._ast = ast;
             this._canvas = context.canvas.get();
             this._myState = context.myState;
-            //this._x = dims.x;
-            //this._y = dims.y;
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
             ctx.beginPath();
@@ -144,7 +142,6 @@ class EllipseEffect {
             this._myState.resizing = true;
         }
         else if (this.contains(this._mouse.x, this._mouse.y)) {
-            console.log(true);
             this._selected = true;
             this._myState.selection = this;
             this._myState.dragoffx = this._mouse.x - this._dims.x;

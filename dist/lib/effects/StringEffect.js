@@ -20,9 +20,6 @@ class StringEffect {
             this._canvas = context.canvas.get();
             this._dims = dims;
             this._myState = context.myState;
-            //this._x = dims.x;
-            //this._y = dims.y;
-            //this._scale = dims.scale;
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
             let fontDeets = this._fontSize + "px Arial";

@@ -88,4 +88,15 @@ var StringEffect_1 = require("./lib/effects/StringEffect");
 exports.StringEffect = StringEffect_1.StringEffect;
 var Dimensions_1 = require("./lib/structural/Dimensions");
 exports.Dimensions = Dimensions_1.Dimensions;
+/* EVENTS */
+var LogEvent_1 = require("./lib/logging/LogEvent");
+exports.LogEvent = LogEvent_1.LogEvent;
+var ClearEvent_1 = require("./lib/logging/ClearEvent");
+exports.ClearEvent = ClearEvent_1.ClearEvent;
+var DragEvent_1 = require("./lib/logging/DragEvent");
+exports.DragEvent = DragEvent_1.DragEvent;
+var PaintEvent_1 = require("./lib/logging/PaintEvent");
+exports.PaintEvent = PaintEvent_1.PaintEvent;
+var ResizeEvent_1 = require("./lib/logging/ResizeEvent");
+exports.ResizeEvent = ResizeEvent_1.ResizeEvent;
 //# sourceMappingURL=index.js.map
