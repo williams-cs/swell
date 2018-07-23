@@ -16,11 +16,11 @@ export class StringEffect implements Effect<StringNode> {
     private _str: StringNode;
     private _dims: Dimensions;
     private _fontSize: number = 20;
-    private _x: number;
-    private _y: number;
+    //private _x: number;
+    //private _y: number;
     private _w: number;
     private _h: number;
-    private _scale: number;
+    //private _scale: number;
     private _x1: number; // Original position for drag logging
     private _y1: number;
     private _corner: number = 0;
@@ -53,15 +53,15 @@ export class StringEffect implements Effect<StringNode> {
             this._canvas = context.canvas.get();
             this._dims = dims;
             this._myState = context.myState;
-            this._x = dims.x;
-            this._y = dims.y;
-            this._scale = dims.scale;
+            //this._x = dims.x;
+            //this._y = dims.y;
+            //this._scale = dims.scale;
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
             let fontDeets: string = this._fontSize + "px Arial";
             ctx.font = fontDeets;
             ctx.fillStyle = 'black';
-            ctx.fillText(this._str.val, this._x, this._y);
+            ctx.fillText(this._str.val, this._dims.x, this._dims.y);
             let textDims = ctx.measureText(this._str.val);
             this._w = textDims.width;
             this._h = this._fontSize;
@@ -73,7 +73,7 @@ export class StringEffect implements Effect<StringNode> {
                 context.effects.push(this);
             }
             if(this._selected) {
-                this.drawTextGuides(this._x, this._y - this._fontSize, this._w, this._h, this._corner);
+                this.drawTextGuides(this._dims.x, this._dims.y - this._fontSize, this._w, this._h, this._corner);
             }
 
             this._canvas.addEventListener('mousemove', this.onMouseMove.bind(this));
@@ -86,13 +86,13 @@ export class StringEffect implements Effect<StringNode> {
     }
 
     contains(mx: number, my: number): boolean {
-        return  (this._x <= mx) && (this._x + this._w >= mx) &&
-          (this._y - this._fontSize <= my) && (this._y >= my);
+        return  (this._dims.x <= mx) && (this._dims.x + this._w >= mx) &&
+          (this._dims.y - this._fontSize <= my) && (this._dims.y >= my);
     }
 
     guideContains(mx: number, my: number): number {
-        let xdif = mx - (this._x + this._w);
-        let ydif = my - (this._y - this._fontSize);
+        let xdif = mx - (this._dims.x + this._w);
+        let ydif = my - (this._dims.y - this._fontSize);
         if(xdif <= 5 && ydif <= 5 && xdif >= -5 && ydif >= -5){
             return 2;
         }
@@ -129,8 +129,8 @@ export class StringEffect implements Effect<StringNode> {
         this._mouse.x = getMousePos(this._canvas, event).x;
         this._mouse.y = getMousePos(this._canvas, event).y;
         if(this._myState.dragging && this._selected){
-            this._x = this._mouse.x - this._myState.dragoffx;
-            this._y = this._mouse.y - this._myState.dragoffy;
+            this._dims.x = this._mouse.x - this._myState.dragoffx;
+            this._dims.y = this._mouse.y - this._myState.dragoffy;
         }
         else if(this._myState.resizing && this._selected){
             if (this._fontSize >= 15) {
@@ -154,20 +154,20 @@ export class StringEffect implements Effect<StringNode> {
             this._selected = true;
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
             this._myState.selection = this;
-            this._myState.dragoffx = this._x;
-            this._myState.dragoffy = this._y;
-            this._myState.initDistance = distance(this._mouse.x, this._mouse.y, this._x, this._y);
+            this._myState.dragoffx = this._dims.x;
+            this._myState.dragoffy = this._dims.y;
+            this._myState.initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x, this._dims.y);
             this._myState.resizing = true;
             // insert resize log here
         }
         else if (this.contains(this._mouse.x, this._mouse.y)) {
             this._selected = true;
             this._myState.selection = this;
-            this._myState.dragoffx = this._mouse.x - this._x;
-            this._myState.dragoffy = this._mouse.y - this._y;
+            this._myState.dragoffx = this._mouse.x - this._dims.x;
+            this._myState.dragoffy = this._mouse.y - this._dims.y;
             this._myState.dragging = true;
-            this._x1 = this._x; // Saving original x and y
-            this._y1 = this._y;
+            this._x1 = this._dims.x; // Saving original x and y
+            this._y1 = this._dims.y;
         }
         else {
             this._selected = false;
@@ -190,7 +190,7 @@ export class StringEffect implements Effect<StringNode> {
     }
     
     logMove(): string {
-        let moveStr = new DragEvent(this._str.val, this._x1, this._y1, this._x, this._y);
+        let moveStr = new DragEvent(this._str.val, this._x1, this._y1, this._dims.x, this._dims.y);
         return moveStr.assembleLog();
     }
 
@@ -199,8 +199,8 @@ export class StringEffect implements Effect<StringNode> {
     }
 
     updateAST(): Expression<StringNode> {
-        this._ast.dims.x = this._x;
-        this._ast.dims.y = this._y;
+        this._ast.dims.x = this._dims.x;
+        this._ast.dims.y = this._dims.y;
         return this._ast;
     }
 
@@ -212,10 +212,10 @@ export class StringEffect implements Effect<StringNode> {
     }
 
     x(): number {
-        return this._x;
+        return this._dims.x;
     }
     y(): number {
-        return this._y;
+        return this._dims.y;
     }
 }
 
