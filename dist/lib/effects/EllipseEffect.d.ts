@@ -22,6 +22,11 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
     onMouseMove(event: any): void;
     onMouseDown(event: any): void;
     onMouseUp(event: any): void;
+    modifyDrag(): void;
+    modifyResize(isTooSmall: boolean): void;
+    modifyState(guideContains: boolean, contains: boolean): void;
+    modifyReset(): void;
+    getMousePosition(): void;
     ast(): Expression<EllipseNode>;
     logPaint(): string;
     updateAST(): Expression<EllipseNode>;

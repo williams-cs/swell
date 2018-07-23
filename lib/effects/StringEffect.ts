@@ -6,6 +6,7 @@ import { Dimensions } from "../structural/Dimensions";
 import { PrintNode } from "../structural/PrintNode";
 import { PaintEvent } from "../logging/PaintEvent";
 import { DragEvent } from "../logging/DragEvent";
+import { update } from "../../node_modules/immupdate";
 
 export class StringEffect implements Effect<StringNode> {
 
@@ -121,32 +122,49 @@ export class StringEffect implements Effect<StringNode> {
         this._ctx.stroke();
     }
 
+    /* Event listener functions */
     onMouseMove(event: any): void {
-        this._mouse.x = getMousePos(this._canvas, event).x;
-        this._mouse.y = getMousePos(this._canvas, event).y;
+        this.getMousePosition();
         if(this._myState.dragging && this._selected){
-            this._dims.x = this._mouse.x - this._myState.dragoffx;
-            this._dims.y = this._mouse.y - this._myState.dragoffy;
+            this.modifyDrag();
         }
         else if(this._myState.resizing && this._selected){
-            if (this._fontSize >= 15) {
-                let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
-                this._fontSize += newDistance - this._myState.initDistance;
-                this._myState.initDistance = newDistance;
-            }
-            else {
-                this._fontSize = 15;
-                let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
-                if(newDistance - this._myState.initDistance > 0){
-                    this._fontSize += newDistance - this._myState.initDistance;
-                    this._myState.initDistance = newDistance;
-                }
-            }
+            this.modifyResize(this._fontSize < 15);
         }
     }
 
     onMouseDown(event: any): void {
-        if (this.guideContains(this._mouse.x, this._mouse.y) > 0) {
+        this.modifyState(this.guideContains(this._mouse.x, this._mouse.y) > 0, this.contains(this._mouse.x, this._mouse.y));
+    }
+
+    onMouseUp(event: any) {
+        this.modifyReset();
+    }
+
+    /* Modification functions */
+    modifyDrag(): void {
+        this._dims.x = this._mouse.x - this._myState.dragoffx;
+        this._dims.y = this._mouse.y - this._myState.dragoffy;
+    }
+
+    modifyResize(isTooSmall: boolean): void {
+        if(isTooSmall){
+            this._fontSize = 15;
+            let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
+            if(newDistance - this._myState.initDistance > 0){
+                this._fontSize += newDistance - this._myState.initDistance;
+                this._myState.initDistance = newDistance;
+            }
+        }
+        else {
+            let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
+            this._fontSize += newDistance - this._myState.initDistance;
+            this._myState.initDistance = newDistance;
+        }
+    }
+
+    modifyState(guideContains: boolean, contains: boolean): void {
+        if(guideContains) {
             this._selected = true;
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
             this._myState.selection = this;
@@ -154,9 +172,8 @@ export class StringEffect implements Effect<StringNode> {
             this._myState.dragoffy = this._dims.y;
             this._myState.initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x, this._dims.y);
             this._myState.resizing = true;
-            // insert resize log here
         }
-        else if (this.contains(this._mouse.x, this._mouse.y)) {
+        else if (contains) {
             this._selected = true;
             this._myState.selection = this;
             this._myState.dragoffx = this._mouse.x - this._dims.x;
@@ -170,11 +187,16 @@ export class StringEffect implements Effect<StringNode> {
         }
     }
 
-    onMouseUp(event: any) {
+    modifyReset(): void {
         this._myState.dragging = false;
         this._myState.resizing = false;
         this._corner = 0;
         this._context.eventLog.push(this.logMove());
+    }
+
+    getMousePosition(): void {
+        this._mouse.x = getMousePos(this._canvas, event).x;
+        this._mouse.y = getMousePos(this._canvas, event).y;
     }
 
     logPaint(): string {

@@ -111,14 +111,14 @@ class EllipseEffect {
         this._ctx.stroke();
     }
     onMouseMove(event) {
-        this._mouse.x = getMousePos(this._canvas, event).x;
-        this._mouse.y = getMousePos(this._canvas, event).y;
+        this.getMousePosition();
         if (this._myState.dragging && this._selected) {
-            this._dims.x = this._mouse.x - this._myState.dragoffx;
-            this._dims.y = this._mouse.y - this._myState.dragoffy;
+            this.modifyDrag();
         }
         else if (this._myState.resizing && this._selected) {
-            if (this._dims.radius >= 10) {
+            this.modifyResize(this._dims.radius < 10);
+            /*
+            if(this._dims.radius >= 10) {
                 let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
                 this._dims.radius += newDistance - this._myState.initDistance;
                 this._myState.initDistance = newDistance;
@@ -126,15 +126,41 @@ class EllipseEffect {
             else {
                 this._dims.radius = 10;
                 let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
-                if (newDistance - this._myState.initDistance > 0) {
+                if(newDistance - this._myState.initDistance > 0){
                     this._dims.radius += newDistance - this._myState.initDistance;
                     this._myState.initDistance = newDistance;
                 }
-            }
+            }*/
         }
     }
     onMouseDown(event) {
-        if (this.guideContains(this._mouse.x, this._mouse.y) > 0) {
+        this.modifyState(this.guideContains(this._mouse.x, this._mouse.y) > 0, this.contains(this._mouse.x, this._mouse.y));
+    }
+    onMouseUp(event) {
+        this.modifyReset();
+    }
+    /* Modification functions */
+    modifyDrag() {
+        this._dims.x = this._mouse.x - this._myState.dragoffx;
+        this._dims.y = this._mouse.y - this._myState.dragoffy;
+    }
+    modifyResize(isTooSmall) {
+        if (isTooSmall) {
+            this._dims.radius = 15;
+            let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
+            if (newDistance - this._myState.initDistance > 0) {
+                this._dims.radius += newDistance - this._myState.initDistance;
+                this._myState.initDistance = newDistance;
+            }
+        }
+        else {
+            let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
+            this._dims.radius += newDistance - this._myState.initDistance;
+            this._myState.initDistance = newDistance;
+        }
+    }
+    modifyState(guideContains, contains) {
+        if (guideContains) {
             this._selected = true;
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
             this._myState.selection = this;
@@ -143,7 +169,7 @@ class EllipseEffect {
             this._myState.initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x, this._dims.y);
             this._myState.resizing = true;
         }
-        else if (this.contains(this._mouse.x, this._mouse.y)) {
+        else if (contains) {
             this._selected = true;
             this._myState.selection = this;
             this._myState.dragoffx = this._mouse.x - this._dims.x;
@@ -154,10 +180,14 @@ class EllipseEffect {
             this._selected = false;
         }
     }
-    onMouseUp(event) {
+    modifyReset() {
         this._myState.dragging = false;
         this._myState.resizing = false;
         this._corner = 0;
+    }
+    getMousePosition() {
+        this._mouse.x = getMousePos(this._canvas, event).x;
+        this._mouse.y = getMousePos(this._canvas, event).y;
     }
     ast() {
         return this._ast;

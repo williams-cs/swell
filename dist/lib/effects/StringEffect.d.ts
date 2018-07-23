@@ -28,6 +28,11 @@ export declare class StringEffect implements Effect<StringNode> {
     onMouseMove(event: any): void;
     onMouseDown(event: any): void;
     onMouseUp(event: any): void;
+    modifyDrag(): void;
+    modifyResize(isTooSmall: boolean): void;
+    modifyState(guideContains: boolean, contains: boolean): void;
+    modifyReset(): void;
+    getMousePosition(): void;
     logPaint(): string;
     logMove(): string;
     ast(): Expression<StringNode>;
