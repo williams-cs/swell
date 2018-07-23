@@ -7,8 +7,8 @@ class PrintNode {
         this._y = new NumberNode_1.NumberNode(0);
         this._scale = 1;
         this._toPrint = toPrint;
-        this._x = new NumberNode_1.NumberNode(this.dims.x) || new NumberNode_1.NumberNode(0);
-        this._y = new NumberNode_1.NumberNode(this.dims.y) || new NumberNode_1.NumberNode(0);
+        this._x = new NumberNode_1.NumberNode(dimensions.x) || new NumberNode_1.NumberNode(0);
+        this._y = new NumberNode_1.NumberNode(dimensions.y) || new NumberNode_1.NumberNode(0);
         this._dims = dimensions || null;
     }
     draw(context, dims, ast) {

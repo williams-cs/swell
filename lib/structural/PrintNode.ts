@@ -12,8 +12,8 @@ export class PrintNode implements Expression<any>{
 
     constructor(toPrint: Expression<any>, dimensions?: Dimensions){
         this._toPrint = toPrint;
-        this._x = new NumberNode(this.dims.x) || new NumberNode(0);
-        this._y = new NumberNode(this.dims.y) || new NumberNode(0);
+        this._x = new NumberNode(dimensions.x) || new NumberNode(0);
+        this._y = new NumberNode(dimensions.y) || new NumberNode(0);
         this._dims = dimensions || null;
     }
 
