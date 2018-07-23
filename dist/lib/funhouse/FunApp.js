@@ -47,7 +47,7 @@ class FunApp {
         }
         return fundef.body.eval(child);
     }
-    draw(context, x, y) {
+    draw(context, dims, ast) {
         // this will have to do something
     }
     get name() {

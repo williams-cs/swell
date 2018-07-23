@@ -2,6 +2,7 @@ import { Effect } from "./Effect";
 import { NumberNode } from "../prims/NumberNode";
 import { Expression } from "../Expression";
 import { Scope } from "../structural/Scope";
+import { Dimensions } from "../structural/Dimensions";
 export declare class NumberEffect implements Effect<NumberNode> {
     private _x;
     private _y;
@@ -11,7 +12,7 @@ export declare class NumberEffect implements Effect<NumberNode> {
     private _w;
     private _h;
     constructor(num: NumberNode);
-    draw(context: Scope, x: number, y: number): void;
+    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
     log(): string;
     ast(): Expression<NumberNode>;
     updateAST(): Expression<NumberNode>;

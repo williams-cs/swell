@@ -7,7 +7,7 @@ class ColorNode {
         this._blue = blue;
     }
     ;
-    draw(context, x, y) {
+    draw(context, dims, ast) {
     }
     eval(context) {
         return this._red + " " + this._green + " " + this._blue;

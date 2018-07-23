@@ -1,5 +1,6 @@
 import {Expression} from '../Expression';
 import {Scope} from '../structural/Scope';
+import { Dimensions } from '../structural/Dimensions';
 //import{Node} from './Node';
 
 // Nodes representing numbers
@@ -17,7 +18,7 @@ export class NumberNode implements Expression <NumberNode>{
         return this;
     }
 
-    draw(context: Scope, x: number, y: number): void {
+    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
     
     }
 

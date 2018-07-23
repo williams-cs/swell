@@ -6,7 +6,7 @@ export declare class StringNode implements Expression<StringNode> {
     private _str;
     constructor(str: string);
     eval(context: Scope): StringNode;
-    draw(context: Scope, x: number, y: number, dims: Dimensions, ast: PrintNode): void;
+    draw(context: Scope, dims: Dimensions, ast: PrintNode): void;
     str: string;
     readonly val: string;
 }

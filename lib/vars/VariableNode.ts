@@ -1,6 +1,7 @@
 import {Expression} from '../Expression';
 import {Scope} from '../structural/Scope';
 import { NumberNode } from '../prims/NumberNode';
+import { Dimensions } from '../structural/Dimensions';
 
 export class VariableNode implements Expression<any>{
     private _name: string;
@@ -16,7 +17,7 @@ export class VariableNode implements Expression<any>{
         return context.lookup(this._name, context);
     }
 
-    draw(context: Scope, x: number, y: number): void {
+    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
     
     }
     // add get/set

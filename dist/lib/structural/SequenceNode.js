@@ -6,7 +6,7 @@ class SequenceNode {
         this._left = left;
         this._right = right;
     }
-    draw(context, x, y) {
+    draw(context, dims, ast) {
     }
     eval(context) {
         let leftScope = new Scope_1.Scope(context);

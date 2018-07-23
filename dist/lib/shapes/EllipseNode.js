@@ -3,17 +3,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Shape_1 = require("./Shape");
 const EllipseEffect_1 = require("../effects/EllipseEffect");
 class EllipseNode extends Shape_1.Shape {
-    constructor(//ellipse: Ellipse, 
-    color, xPos, yPos, width, height) {
-        //this.ellipse = ellipse;
-        // Make width and height NumNodes?
+    constructor(color, xPos, yPos, width, height) {
         super(color, xPos, yPos);
         this._width = width;
         this._height = height;
     }
-    draw(context, x, y, dims, ast) {
+    draw(context, dims, ast) {
         let e = new EllipseEffect_1.EllipseEffect(this);
-        e.draw(context, x, y, dims);
+        e.draw(context, dims, ast);
     }
     eval(context) {
         return this;

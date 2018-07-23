@@ -1,5 +1,6 @@
 import {Expression} from '../Expression';
 import { Scope } from '../structural/Scope';
+import { Dimensions } from '../structural/Dimensions';
 
 export class FunDef<T> implements Expression<T>{
     private _name: string;
@@ -30,7 +31,7 @@ export class FunDef<T> implements Expression<T>{
         return null;
     }
 
-    draw(context: Scope, x: number, y: number): void {
+    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
         //NO
     }
 

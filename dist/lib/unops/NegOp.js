@@ -6,7 +6,7 @@ class NegOp extends UnaryOperation_1.UnaryOperation {
     constructor(val) {
         super(val);
     }
-    draw(context, x, y) {
+    draw(context, dims, ast) {
     }
     eval(context) {
         let v = this.val.eval(context);

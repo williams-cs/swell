@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const PaintEvent_1 = require("../logging/PaintEvent");
 class EllipseEffect {
     constructor(circle) {
-        this._radius = 30;
         this._corner = 0;
         this._selected = false;
         this._mouse = {
@@ -12,21 +11,22 @@ class EllipseEffect {
         };
         this._circle = circle;
     }
-    draw(context, x, y, dims) {
+    draw(context, dims, ast) {
         if (context.canvas.isDefined()) {
             this._dims = dims;
+            this._ast = ast;
             this._canvas = context.canvas.get();
             this._myState = context.myState;
-            this._x = x;
-            this._y = y;
+            //this._x = dims.x;
+            //this._y = dims.y;
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
             ctx.beginPath();
-            ctx.arc(x, y, this._radius, 0, Math.PI * 2, false);
+            ctx.arc(this._dims.x, this._dims.y, this._dims.radius, 0, Math.PI * 2, false);
             ctx.strokeStyle = "black";
             ctx.stroke();
             if (this._selected) {
-                this.drawGuides(this._x - this._radius, this._y - this._radius, this._radius * 2, this._radius * 2, this._corner);
+                this.drawGuides(this._dims.x - this._dims.radius, this._dims.y - this._dims.radius, this._dims.radius * 2, this._dims.radius * 2, this._corner);
             }
         }
         if (!context.effects.includes(this)) {
@@ -37,24 +37,24 @@ class EllipseEffect {
         this._canvas.addEventListener('mouseup', this.onMouseUp.bind(this));
     }
     contains(mx, my) {
-        return distance(mx, my, this._x, this._y) < this._radius;
+        return distance(mx, my, this._dims.x, this._dims.y) < this._dims.radius;
     }
     guideContains(mx, my) {
-        let xdif = mx - (this._x - this._radius);
-        let ydif = my - (this._y - this._radius);
+        let xdif = mx - (this._dims.x - this._dims.radius);
+        let ydif = my - (this._dims.y - this._dims.radius);
         if (xdif <= 5 && ydif <= 5 && xdif >= -5 && ydif >= -5) {
             return 1;
         }
-        xdif = mx - (this._x + this._radius);
+        xdif = mx - (this._dims.x + this._dims.radius);
         if (xdif <= 5 && ydif <= 5 && xdif >= -5 && ydif >= -5) {
             return 2;
         }
-        xdif = mx - (this._x + this._radius);
-        ydif = my - (this._y + this._radius);
+        xdif = mx - (this._dims.x + this._dims.radius);
+        ydif = my - (this._dims.y + this._dims.radius);
         if (xdif <= 5 && ydif <= 5 && xdif >= -5 && ydif >= -5) {
             return 3;
         }
-        xdif = mx - (this._x - this._radius);
+        xdif = mx - (this._dims.x - this._dims.radius);
         if (xdif <= 5 && ydif <= 5 && xdif >= -5 && ydif >= -5) {
             return 4;
         }
@@ -114,20 +114,20 @@ class EllipseEffect {
         this._mouse.x = getMousePos(this._canvas, event).x;
         this._mouse.y = getMousePos(this._canvas, event).y;
         if (this._myState.dragging && this._selected) {
-            this._x = this._mouse.x - this._myState.dragoffx;
-            this._y = this._mouse.y - this._myState.dragoffy;
+            this._dims.x = this._mouse.x - this._myState.dragoffx;
+            this._dims.y = this._mouse.y - this._myState.dragoffy;
         }
         else if (this._myState.resizing && this._selected) {
-            if (this._radius >= 10) {
+            if (this._dims.radius >= 10) {
                 let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
-                this._radius += newDistance - this._myState.initDistance;
+                this._dims.radius += newDistance - this._myState.initDistance;
                 this._myState.initDistance = newDistance;
             }
             else {
-                this._radius = 10;
+                this._dims.radius = 10;
                 let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
                 if (newDistance - this._myState.initDistance > 0) {
-                    this._radius += newDistance - this._myState.initDistance;
+                    this._dims.radius += newDistance - this._myState.initDistance;
                     this._myState.initDistance = newDistance;
                 }
             }
@@ -138,17 +138,17 @@ class EllipseEffect {
             this._selected = true;
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
             this._myState.selection = this;
-            this._myState.dragoffx = this._x;
-            this._myState.dragoffy = this._y;
-            this._myState.initDistance = distance(this._mouse.x, this._mouse.y, this._x, this._y);
+            this._myState.dragoffx = this._dims.x;
+            this._myState.dragoffy = this._dims.y;
+            this._myState.initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x, this._dims.y);
             this._myState.resizing = true;
         }
         else if (this.contains(this._mouse.x, this._mouse.y)) {
             console.log(true);
             this._selected = true;
             this._myState.selection = this;
-            this._myState.dragoffx = this._mouse.x - this._x;
-            this._myState.dragoffy = this._mouse.y - this._y;
+            this._myState.dragoffx = this._mouse.x - this._dims.x;
+            this._myState.dragoffy = this._mouse.y - this._dims.y;
             this._myState.dragging = true;
         }
         else {
@@ -161,20 +161,23 @@ class EllipseEffect {
         this._corner = 0;
     }
     ast() {
-        throw new Error("Not implemented");
+        return this._ast;
     }
     logPaint() {
-        let paint = new PaintEvent_1.PaintEvent("ellipse at " + this._x + ", " + this._y);
+        let paint = new PaintEvent_1.PaintEvent("ellipse at " + this._dims.x + ", " + this._dims.y);
         return paint.assembleLog();
     }
     updateAST() {
         throw new Error("Not implemented");
     }
     x() {
-        return this._x;
+        return this._dims.x;
     }
     y() {
-        return this._y;
+        return this._dims.y;
+    }
+    get dims() {
+        return this._dims;
     }
 }
 exports.EllipseEffect = EllipseEffect;

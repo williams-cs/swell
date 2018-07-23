@@ -34,7 +34,7 @@ class WhileNode {
         //this._body.eval(context);
         //}
     }
-    draw(context, x, y) {
+    draw(context, dims, ast) {
     }
 }
 exports.WhileNode = WhileNode;

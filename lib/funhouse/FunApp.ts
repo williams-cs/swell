@@ -2,6 +2,7 @@ import { Expression } from "../Expression";
 import { Scope } from "../structural/Scope";
 import { ReturnError } from "../structural/ReturnError";
 import { Some } from "space-lift";
+import { Dimensions } from "../structural/Dimensions";
 
 // Application of a function. Assumes arg values passed in same order as FunDef args
 export class FunApp<T> implements Expression<T>{
@@ -58,7 +59,7 @@ export class FunApp<T> implements Expression<T>{
         return fundef.body.eval(child);
     }
 
-    draw(context: Scope, x: number, y: number): void {
+    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
         // this will have to do something
     }
 

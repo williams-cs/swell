@@ -38,7 +38,7 @@ class ForNode {
         //this._body.eval(context);
         //}
     }
-    draw(context, x, y) {
+    draw(context, dims, ast) {
     }
 }
 exports.ForNode = ForNode;

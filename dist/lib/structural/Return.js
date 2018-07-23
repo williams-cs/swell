@@ -12,7 +12,7 @@ class Return {
         throw new ReturnError_1.ReturnError(result, context.retIDLookup());
         //return this._expr.eval(context); // will need typechecking at some point
     }
-    draw(context, x, y) { }
+    draw(context, dims, ast) { }
 }
 exports.Return = Return;
 //# sourceMappingURL=Return.js.map

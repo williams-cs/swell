@@ -11,18 +11,15 @@ export class EllipseNode extends Shape implements Expression<EllipseNode>{
     private _width: Expression<NumberNode>;
     private _height: Expression<NumberNode>; 
     
-    constructor(//ellipse: Ellipse, 
-        color: ColorNode, xPos: Expression<NumberNode>, yPos: Expression<NumberNode>, width: Expression<NumberNode>, height: Expression<NumberNode>){
-        //this.ellipse = ellipse;
-        // Make width and height NumNodes?
+    constructor(color: ColorNode, xPos: Expression<NumberNode>, yPos: Expression<NumberNode>, width: Expression<NumberNode>, height: Expression<NumberNode>){
         super(color, xPos, yPos);
         this._width = width;
         this._height = height;
     }
 
-    draw(context: Scope, x: number, y: number, dims: Dimensions, ast: PrintNode): void {
+    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
         let e = new EllipseEffect(this);
-        e.draw(context, x, y, dims);
+        e.draw(context, dims, ast);
     }
 
     eval(context: Scope): EllipseNode {

@@ -6,7 +6,7 @@ import { PrintNode } from './structural/PrintNode';
 export interface Expression <T>{
     //export abstract class Node{
         eval(parent: Scope): T;
-        draw(context: Scope, x: number, y: number, dims: Dimensions, ast: PrintNode): void;
+        draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
         //get(): T;
         //set(value: T): void;
 }

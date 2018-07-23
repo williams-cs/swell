@@ -2,6 +2,7 @@ import { Expression } from "../Expression";
 import {Scope} from '../structural/Scope'; 
 import {BooleanNode} from '../prims/BooleanNode';
 import {DeclareOp} from '../binops/DeclareOp';
+import { Dimensions } from "../structural/Dimensions";
 
 export class ForNode implements Expression<any>{
     private _init: Expression<any>;
@@ -49,7 +50,7 @@ export class ForNode implements Expression<any>{
         //}
     }
 
-    draw(context: Scope, x: number, y: number){
+    draw(context: Scope, dims: Dimensions, ast: Expression<any>){
 
     }
 }

@@ -1,5 +1,6 @@
 import { Expression } from "../Expression"; 
 import {Scope} from './Scope'; 
+import { Dimensions } from "./Dimensions";
 
 export class SequenceNode implements Expression<void>{
     private _left: Expression<any>;
@@ -12,7 +13,7 @@ export class SequenceNode implements Expression<void>{
         this._right = right;
     }
     
-    draw(context: Scope, x: number, y: number): void {
+    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
     
     }
 

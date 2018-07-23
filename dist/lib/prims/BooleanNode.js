@@ -9,7 +9,7 @@ class BooleanNode {
     eval(context) {
         return this;
     }
-    draw(context, x, y) {
+    draw(context, dims, ast) {
     }
     get val() {
         return this._val;

@@ -1,6 +1,7 @@
 import { Expression } from "../Expression";
 import {Scope} from '../structural/Scope'; 
 import {BooleanNode} from '../prims/BooleanNode';
+import { Dimensions } from "../structural/Dimensions";
 
 export class WhileNode implements Expression<any>{
     private _cond: Expression<any>;
@@ -41,7 +42,7 @@ export class WhileNode implements Expression<any>{
         //}
     }
 
-    draw(context: Scope, x: number, y: number){
+    draw(context: Scope, dims: Dimensions, ast: Expression<any>){
 
     }
 }

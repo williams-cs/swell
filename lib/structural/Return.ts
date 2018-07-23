@@ -1,6 +1,7 @@
 import { Expression } from "../Expression";
 import { ReturnError } from "./ReturnError";
 import { Scope } from "./Scope";
+import { Dimensions } from "./Dimensions";
 
 export class Return implements Expression<any>{
     private _expr: Expression<any>;
@@ -16,5 +17,5 @@ export class Return implements Expression<any>{
         //return this._expr.eval(context); // will need typechecking at some point
     }
 
-    draw(context: Scope, x: number, y: number): void {}
+    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {}
 }

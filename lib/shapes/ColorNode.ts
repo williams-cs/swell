@@ -1,5 +1,6 @@
 import {Expression} from '../Expression';
 import {Scope} from '../structural/Scope';
+import { Dimensions } from '../structural/Dimensions';
 
 export class ColorNode implements Expression<string>{
     private _red: number;
@@ -12,7 +13,7 @@ export class ColorNode implements Expression<string>{
         this._blue = blue;
     };
 
-    draw(context: Scope, x: number, y: number): void {
+    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
     
     }
 

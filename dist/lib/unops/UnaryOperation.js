@@ -5,7 +5,7 @@ class UnaryOperation {
         this._val = _val;
     }
     ;
-    draw(context, x, y) { }
+    draw(context, dims, ast) { }
     get val() {
         return this._val;
     }

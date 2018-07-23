@@ -2,13 +2,14 @@ import {BinaryOperation} from './BinaryOperation';
 import {Expression} from '../Expression';
 import {Scope} from '../structural/Scope';
 import { NumberNode } from '../prims/NumberNode';
+import { Dimensions } from '../structural/Dimensions';
 
 export class DivOp extends BinaryOperation<NumberNode>{
     constructor(left: Expression<NumberNode>, right: Expression<NumberNode>){
         super(left,right);
     }
 
-    draw(context: Scope, x: number, y: number): void {
+    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
     
     }
     

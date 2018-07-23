@@ -7,7 +7,7 @@ class MinusOp extends BinaryOperation_1.BinaryOperation {
     constructor(left, right) {
         super(left, right);
     }
-    draw(context, x, y) {
+    draw(context, dims, ast) {
     }
     eval(context) {
         return new NumberNode_1.NumberNode(this.left.eval(new Scope_1.Scope(context)).eval(context).val - this.right.eval(new Scope_1.Scope(context)).eval(context).val);

@@ -3,6 +3,7 @@ import { NumberNode } from "../prims/NumberNode";
 import { Expression } from "../Expression";
 import { Scope } from "../structural/Scope";
 import { PaintEvent } from "../logging/PaintEvent";
+import { Dimensions } from "../structural/Dimensions";
 
 export class NumberEffect implements Effect<NumberNode> {
 
@@ -19,13 +20,13 @@ export class NumberEffect implements Effect<NumberNode> {
         this._str = num.val.toString();
     }
     
-    draw(context: Scope, x: number, y: number): void {
+    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
         if (context.canvas.isDefined()) {
             let ctx = context.canvas.get().getContext("2d");
             let fontDeets: string = this._fontSize + "px Arial";
             ctx.font = fontDeets;
             ctx.fillStyle = 'black';
-            ctx.fillText(this._str, x, y);
+            ctx.fillText(this._str, this._x, this._y);
             let dims = ctx!.measureText(this._str);
             this._w = dims.width;
             this._h = this._fontSize;

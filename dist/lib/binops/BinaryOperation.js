@@ -6,7 +6,7 @@ class BinaryOperation {
         this._right = _right;
     }
     ;
-    draw(context, x, y) { }
+    draw(context, dims, ast) { }
     get left() {
         return this._left;
     }

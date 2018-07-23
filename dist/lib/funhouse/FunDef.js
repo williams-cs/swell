@@ -23,7 +23,7 @@ class FunDef {
         context.assign(this._name, this); // parent or current?
         return null;
     }
-    draw(context, x, y) {
+    draw(context, dims, ast) {
         //NO
     }
     // Get methods
