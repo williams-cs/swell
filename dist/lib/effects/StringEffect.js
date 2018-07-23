@@ -2,9 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const PaintEvent_1 = require("../logging/PaintEvent");
 const DragEvent_1 = require("../logging/DragEvent");
+const ResizeEvent_1 = require("../logging/ResizeEvent");
 class StringEffect {
     constructor(str) {
         this._fontSize = 20;
+        //private _size2: number;
         this._corner = 0;
         this._selected = false;
         this._mouse = {
@@ -116,35 +118,45 @@ class StringEffect {
             this._myState.dragoffy = this._dims.y;
             this._myState.initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x, this._dims.y);
             this._myState.resizing = true;
-            // insert resize log here
+            this._size1 = this._fontSize; // saving old font size
         }
         else if (this.contains(this._mouse.x, this._mouse.y)) {
+            this._x1 = this._dims.x; // Saving original x and y
+            this._y1 = this._dims.y;
             this._selected = true;
             this._myState.selection = this;
             this._myState.dragoffx = this._mouse.x - this._dims.x;
             this._myState.dragoffy = this._mouse.y - this._dims.y;
             this._myState.dragging = true;
-            this._x1 = this._dims.x; // Saving original x and y
-            this._y1 = this._dims.y;
         }
         else {
             this._selected = false;
         }
     }
     onMouseUp(event) {
+        if (this._myState.dragging) {
+            this._context.eventLog.push(this.logMove());
+        }
+        else if (this._myState.resizing) {
+            this._context.eventLog.push(this.logResize());
+        }
         this._myState.dragging = false;
         this._myState.resizing = false;
         this._corner = 0;
-        this._context.eventLog.push(this.logMove());
+        //this._context.eventLog.push(this.logMove());
     }
     logPaint() {
         let paint = new PaintEvent_1.PaintEvent(this._str.val);
         return paint.assembleLog();
     }
     logMove() {
-        console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);
+        //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);
         let moveStr = new DragEvent_1.DragEvent(this._str.val, this._x1, this._y1, this._dims.x, this._dims.y);
         return moveStr.assembleLog();
+    }
+    logResize() {
+        let sizeStr = new ResizeEvent_1.ResizeEvent(this._str.val, this._size1, this._fontSize);
+        return sizeStr.assembleLog();
     }
     ast() {
         return this._ast;
