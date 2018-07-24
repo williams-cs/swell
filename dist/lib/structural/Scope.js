@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const space_lift_1 = require("space-lift");
 class Scope {
-    constructor(parent, eventLog, myState, effects) {
+    constructor(parent, effects, myState, eventLog) {
         this._retValID = space_lift_1.None;
         this._canvas = space_lift_1.None;
         this._eventLog = [];
@@ -18,7 +18,7 @@ class Scope {
             this._hadFunEval = true; // copy function eval flag from parent
     }
     copy() {
-        let s = new Scope(this._parent, this._eventLog, this._myState, this._effects);
+        let s = new Scope(this._parent, this._effects, this._myState, this._eventLog);
         s.varBindings = new Map(this._varBindings);
         return s;
     }
