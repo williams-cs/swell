@@ -22,13 +22,8 @@ class EllipseEffect {
             this._ctx = ctx;
             this.update();
         }
-        if (!context.effects.includes(this)) {
-            context.effects.push(this);
-        }
-        if (this._isNew) { //prevents adding event listeners repeatedly
-            this.addEventListeners();
-            this._isNew = false;
-        }
+        context.effects.push(this);
+        this.addEventListeners();
     }
     update() {
         this._ctx.beginPath();

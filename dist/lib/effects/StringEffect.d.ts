@@ -11,8 +11,6 @@ export declare class StringEffect implements Effect<StringNode> {
     private _str;
     private _dims;
     private _fontSize;
-    private _w;
-    private _h;
     private _x1;
     private _y1;
     private _size1;
