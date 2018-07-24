@@ -28,7 +28,8 @@ class StringEffect {
             this._ctx = ctx;
             this.update();
             // logging
-            this._context.eventLog.push(this.logPaint()); // this.context or context?
+            //this._context.eventLog.push(this.logPaint()); // this.context or context?
+            context.eventLog.push(this.logPaint());
             if (!context.effects.includes(this)) {
                 context.effects.push(this);
             }
@@ -147,9 +148,11 @@ class StringEffect {
     modifyReset() {
         if (this._myState.dragging) {
             this._context.eventLog.push(this.logMove());
+            console.log("Added drag log");
         }
         else if (this._myState.resizing) {
             this._context.eventLog.push(this.logResize());
+            console.log("Added resize log");
         }
         this._myState.dragging = false;
         this._myState.resizing = false;
