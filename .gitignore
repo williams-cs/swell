@@ -338,4 +338,5 @@ lib/**/*.js
 test/**/*.map
 test/**/*.d.ts
 test/**/*.js
+*.icloud
 .nyc_output

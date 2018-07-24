@@ -30,7 +30,7 @@ export class Scope{
     }
 
     copy(){
-        let s = new Scope(this._parent, this._effects, this._myState, this._eventLog,);
+        let s = new Scope(this._parent, this._effects, this._myState, this._eventLog);
         s.varBindings = new Map(this._varBindings);
         return s;
     }
