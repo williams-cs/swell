@@ -10,14 +10,14 @@ export declare class Scope {
     private _eventLog;
     private _hadFunEval;
     globalFunID: number;
-    constructor(parent: Scope, effects?: Effect<any>[], eventLog?: string[], myState?: {
+    constructor(parent: Scope, eventLog?: string[], myState?: {
         dragoffx: number;
         dragoffy: number;
         initDistance: number;
         selection: any;
         dragging: boolean;
         resizing: boolean;
-    });
+    }, effects?: Effect<any>[]);
     copy(): Scope;
     declare(name: string): void;
     assign(name: string, val: any): void;

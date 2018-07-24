@@ -1,4 +1,4 @@
-import {Option, Some, None} from 'space-lift'
+import {Option, Some, None} from 'space-lift';
 import { Effect } from '../effects/Effect';
 
 export class Scope{
@@ -20,7 +20,7 @@ export class Scope{
     //public globalFunID = Math.random();
     public globalFunID = 10000000;
 
-    constructor(parent: Scope, effects?: Effect<any>[], eventLog?: string[], myState?: {dragoffx: number,dragoffy: number,initDistance: number,selection: any,dragging: boolean,resizing: boolean}){
+    constructor(parent: Scope, eventLog?: string[], myState?: {dragoffx: number,dragoffy: number,initDistance: number,selection: any,dragging: boolean,resizing: boolean}, effects?: Effect<any>[]){
         this._varBindings = new Map();
         this._parent = parent;
         this._effects = effects || null;
@@ -30,7 +30,7 @@ export class Scope{
     }
 
     copy(){
-        let s = new Scope(this._parent, this._effects, this._eventLog, this._myState);
+        let s = new Scope(this._parent, this._eventLog, this._myState, this._effects);
         s.varBindings = new Map(this._varBindings);
         return s;
     }
