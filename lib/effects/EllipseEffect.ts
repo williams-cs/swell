@@ -43,10 +43,10 @@ export class EllipseEffect implements Effect<EllipseNode> {
             this._myState = context.myState;
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
-            ctx.beginPath();
-            ctx.arc(this._dims.x, this._dims.y, this._dims.radius, 0, Math.PI * 2, false);
-            ctx.strokeStyle = "black";
-            ctx.stroke();
+            this._ctx.beginPath();
+            this._ctx.arc(this._dims.x, this._dims.y, this._dims.radius, 0, Math.PI * 2, false);
+            this._ctx.strokeStyle = "black";
+            this._ctx.stroke();
             if(this._selected) {
                 this.drawGuides(this._dims.x - this._dims.radius, this._dims.y - this._dims.radius, this._dims.radius * 2, this._dims.radius * 2, this._corner);
             }
@@ -57,6 +57,16 @@ export class EllipseEffect implements Effect<EllipseNode> {
         if(this._isNew) { //prevents adding event listeners repeatedly
             this.addEventListeners();
             this._isNew = false;
+        }
+    }
+
+    update(): void {
+        this._ctx.beginPath();
+        this._ctx.arc(this._dims.x, this._dims.y, this._dims.radius, 0, Math.PI * 2, false);
+        this._ctx.strokeStyle = "black";
+        this._ctx.stroke();
+        if(this._selected) {
+            this.drawGuides(this._dims.x - this._dims.radius, this._dims.y - this._dims.radius, this._dims.radius * 2, this._dims.radius * 2, this._corner);
         }
     }
 
