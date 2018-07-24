@@ -251,12 +251,12 @@ export class EllipseEffect implements Effect<EllipseNode> {
 
     logMove(): string {
         //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);
-        let moveStr = new DragEvent("ellipse ", this._x1, this._y1, this._dims.x, this._dims.y);
+        let moveStr = new DragEvent("ellipse", this._x1, this._y1, this._dims.x, this._dims.y);
         return moveStr.assembleLog();
     }
 
     logResize(): string {
-        let sizeStr = new ResizeEvent("ellipse ", this._size1, this._dims.radius);
+        let sizeStr = new ResizeEvent("ellipse", this._size1, this._dims.radius);
         return sizeStr.assembleLog();
     }
 
