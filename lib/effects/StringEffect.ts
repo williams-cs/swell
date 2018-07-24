@@ -7,7 +7,6 @@ import { PrintNode } from "../structural/PrintNode";
 import { PaintEvent } from "../logging/PaintEvent";
 import { DragEvent } from "../logging/DragEvent";
 import { ResizeEvent } from "../logging/ResizeEvent";
-import { update } from "../../node_modules/immupdate";
 
 export class StringEffect implements Effect<StringNode> {
 
@@ -207,8 +206,10 @@ export class StringEffect implements Effect<StringNode> {
     modifyReset(): void {
         if(this._myState.dragging){
             this._context.eventLog.push(this.logMove());
+            console.log("Added drag log");
         } else if (this._myState.resizing){
             this._context.eventLog.push(this.logResize());
+            console.log("Added resize log");
         }
         this._myState.dragging = false;
         this._myState.resizing = false;
