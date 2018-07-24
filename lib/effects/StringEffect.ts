@@ -152,10 +152,10 @@ export class StringEffect implements Effect<StringNode> {
             moveFactor = leftWall;
         }
         else if(xDif % interval >= interval / 2) {
-            moveFactor = leftWall + Math.ceil(xDif / interval);
+            moveFactor = leftWall + interval * Math.ceil(xDif / interval);
         }
         else if(xDif % interval < interval / 2) {
-            moveFactor = leftWall + Math.floor(xDif / interval);
+            moveFactor = leftWall + interval * Math.floor(xDif / interval);
         }
         this._ctx.moveTo(moveFactor, this._dims.y - this._fontSize);
         this._ctx.lineTo(moveFactor, this._dims.y);
