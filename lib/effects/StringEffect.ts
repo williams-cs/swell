@@ -144,7 +144,7 @@ export class StringEffect implements Effect<StringNode> {
     modifyText(): void {
         let leftWall: number = this._dims.x;
         let xDif: number = this._mouse.x - leftWall;
-        if(xDif % (this._textMetrics.interval) < 10 || (this._textMetrics.interval) - xDif < 10) {
+        if(xDif % (this._textMetrics.interval) < this._textMetrics.interval / 2 || (this._textMetrics.interval) - xDif < this._textMetrics.interval / 2) {
             this._ctx.moveTo(leftWall + (xDif - xDif % this._textMetrics.interval), this._dims.y - this._fontSize);
             this._ctx.lineTo(leftWall + (xDif - xDif % this._textMetrics.interval), this._dims.y);
             this._ctx.strokeStyle = "grey";

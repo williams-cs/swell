@@ -98,7 +98,7 @@ class StringEffect {
     modifyText() {
         let leftWall = this._dims.x;
         let xDif = this._mouse.x - leftWall;
-        if (xDif % (this._textMetrics.interval) < 10 || (this._textMetrics.interval) - xDif < 10) {
+        if (xDif % (this._textMetrics.interval) < this._textMetrics.interval / 2 || (this._textMetrics.interval) - xDif < this._textMetrics.interval / 2) {
             this._ctx.moveTo(leftWall + (xDif - xDif % this._textMetrics.interval), this._dims.y - this._fontSize);
             this._ctx.lineTo(leftWall + (xDif - xDif % this._textMetrics.interval), this._dims.y);
             this._ctx.strokeStyle = "grey";
