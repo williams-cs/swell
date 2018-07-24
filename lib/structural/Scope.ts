@@ -20,7 +20,7 @@ export class Scope{
     //public globalFunID = Math.random();
     public globalFunID = 10000000;
 
-    constructor(parent: Scope, eventLog?: string[], myState?: {dragoffx: number,dragoffy: number,initDistance: number,selection: any,dragging: boolean,resizing: boolean}, effects?: Effect<any>[]){
+    constructor(parent: Scope, effects?: Effect<any>[], myState?: {dragoffx: number,dragoffy: number,initDistance: number,selection: any,dragging: boolean,resizing: boolean}, eventLog?: string[]){
         this._varBindings = new Map();
         this._parent = parent;
         this._effects = effects || null;
@@ -30,7 +30,7 @@ export class Scope{
     }
 
     copy(){
-        let s = new Scope(this._parent, this._eventLog, this._myState, this._effects);
+        let s = new Scope(this._parent, this._effects, this._myState, this._eventLog,);
         s.varBindings = new Map(this._varBindings);
         return s;
     }
