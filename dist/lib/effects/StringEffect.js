@@ -82,7 +82,7 @@ class StringEffect {
     onMouseDown(event) {
         if (this._selected && this.contains(this._mouse.x, this._mouse.y)) { //text editing
             if (!this._isListening) {
-                window.addEventListener('keypress', this.modifyText.bind(this));
+                window.addEventListener('keydown', this.modifyText.bind(this));
             }
             this._isListening = true;
             this._isEditing = true;
