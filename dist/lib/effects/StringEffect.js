@@ -59,8 +59,7 @@ class StringEffect {
             this.drawTextGuides(this._dims.x, this._dims.y - this._fontSize, this._textMetrics.width, this._textMetrics.height, this._corner);
         }
         if (this._isEditing) {
-            let timer = setInterval(this.modifyTextCursor, 1000);
-            //this.modifyTextCursor();
+            this.modifyTextCursor();
         }
     }
     addEventListeners() {
