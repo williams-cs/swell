@@ -43,13 +43,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
             this._myState = context.myState;
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
-            this._ctx.beginPath();
-            this._ctx.arc(this._dims.x, this._dims.y, this._dims.radius, 0, Math.PI * 2, false);
-            this._ctx.strokeStyle = "black";
-            this._ctx.stroke();
-            if(this._selected) {
-                this.drawGuides(this._dims.x - this._dims.radius, this._dims.y - this._dims.radius, this._dims.radius * 2, this._dims.radius * 2, this._corner);
-            }
+            this.update();
         }
         if(!context.effects.includes(this)){
             context.effects.push(this);

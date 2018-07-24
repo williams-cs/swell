@@ -62,13 +62,7 @@ export class StringEffect implements Effect<StringNode> {
             this._myState = context.myState;
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
-            let fontDeets: string = this._fontSize + "px Courier New";
-            this._ctx.font = fontDeets;
-            this._ctx.fillStyle = 'black';
-            this._ctx.fillText(this._str.val, this._dims.x, this._dims.y);
-            let textDims = ctx.measureText(this._str.val);
-            this._w = textDims.width;
-            this._h = this._fontSize;
+            this.update();
             
             // logging
             this._context.eventLog.push(this.logPaint()); // this.context or context?
