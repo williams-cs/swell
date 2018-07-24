@@ -1,1 +1,0 @@
-{"version":3,"file":"ClearEvent.js","sourceRoot":"","sources":["../../../lib/logging/ClearEvent.ts"],"names":[],"mappings":";;AAAA,yCAAoC;AAEpC,gBAAwB,SAAQ,mBAAQ;IACpC,gBAAgB;IAChB,YAAY,KAAc;QACtB,KAAK,CAAC,KAAK,CAAC,CAAC;IACjB,CAAC;IAED,WAAW;QACP,IAAI,OAAO,GAAG,iBAAiB,CAAC;QAChC,OAAO,IAAI,CAAC,OAAO,CAAC,OAAO,CAAC,CAAC;IACjC,CAAC;CACJ;AAVD,gCAUC"}
