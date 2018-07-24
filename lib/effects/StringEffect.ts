@@ -18,8 +18,6 @@ export class StringEffect implements Effect<StringNode> {
     private _str: StringNode;
     private _dims: Dimensions;
     private _fontSize: number = 20;
-    private _w: number;
-    private _h: number;
     private _x1: number; // Original position for drag logging
     private _y1: number;
     private _size1: number; // Original scale for resize logging
@@ -45,9 +43,15 @@ export class StringEffect implements Effect<StringNode> {
         y: 0
     };
     private _textMetrics: {
-        w: number,
-        h: number,
-        fontSize: number;
+        width: number,
+        height: number,
+        interval: number,
+        str: string
+    } = {
+        width: 0,
+        height: 0,
+        interval: 0,
+        str: ""
     }
 
     constructor(str: StringNode) {
@@ -66,6 +70,7 @@ export class StringEffect implements Effect<StringNode> {
             this.update();
             
             // logging
+<<<<<<< HEAD
             //this._context.eventLog.push(this.logPaint()); // this.context or context?
             context.eventLog.push(this.logPaint());
 
@@ -80,6 +85,14 @@ export class StringEffect implements Effect<StringNode> {
                 this.addEventListeners();
                 this._isNew = false;
             }
+=======
+            this._context.eventLog.push(this.logPaint()); // this.context or context?
+            
+            context.effects.push(this);
+            
+            this.addEventListeners();
+            
+>>>>>>> 5d8df4fdf54d8e2cc07dcd66b82c6168b82fc196
         }
         else {
             console.log("canvas is NOT defined");
@@ -92,13 +105,20 @@ export class StringEffect implements Effect<StringNode> {
         this._ctx.fillStyle = 'black';
         this._ctx.fillText(this._str.val, this._dims.x, this._dims.y);
         let textDims = this._ctx.measureText(this._str.val);
+<<<<<<< HEAD
         this._w = textDims.width;
         this._h = this._fontSize;
 
 
 
+=======
+        this._textMetrics.width = textDims.width;
+        this._textMetrics.height = this._fontSize;
+        this._textMetrics.str = this._str.val;
+        this._textMetrics.interval = this._textMetrics.width / this._textMetrics.str.length;
+>>>>>>> 5d8df4fdf54d8e2cc07dcd66b82c6168b82fc196
         if(this._selected) {
-            this.drawTextGuides(this._dims.x, this._dims.y - this._fontSize, this._w, this._h, this._corner);
+            this.drawTextGuides(this._dims.x, this._dims.y - this._fontSize, this._textMetrics.width, this._textMetrics.height, this._corner);
         }
         if(this._isEditing) {
             this.modifyText();
@@ -149,9 +169,9 @@ export class StringEffect implements Effect<StringNode> {
     modifyText(): void {
         let leftWall: number = this._dims.x;
         let xDif: number = this._mouse.x - leftWall;
-        if(xDif % this._fontSize < 10 || this._fontSize - xDif < 10) {
-            this._ctx.moveTo(leftWall + (xDif - xDif % 20), this._dims.y);
-            this._ctx.lineTo(leftWall + (xDif - xDif % 20), this._dims.y + this._fontSize);
+        if(xDif % (this._textMetrics.interval) < this._textMetrics.interval / 2 || (this._textMetrics.interval) - xDif > this._textMetrics.interval / 2) {
+            this._ctx.moveTo(leftWall + (xDif - xDif % this._textMetrics.interval), this._dims.y - this._fontSize);
+            this._ctx.lineTo(leftWall + (xDif - xDif % this._textMetrics.interval), this._dims.y);
             this._ctx.strokeStyle = "grey";
             this._ctx.stroke();
         }
@@ -217,12 +237,12 @@ export class StringEffect implements Effect<StringNode> {
     }
 
     contains(mx: number, my: number): boolean {
-        return  (this._dims.x <= mx) && (this._dims.x + this._w >= mx) &&
+        return  (this._dims.x <= mx) && (this._dims.x + this._textMetrics.width >= mx) &&
           (this._dims.y - this._fontSize <= my) && (this._dims.y >= my);
     }
 
     guideContains(mx: number, my: number): number {
-        let xdif = mx - (this._dims.x + this._w);
+        let xdif = mx - (this._dims.x + this._textMetrics.width);
         let ydif = my - (this._dims.y - this._fontSize);
         if(xdif <= 5 && ydif <= 5 && xdif >= -5 && ydif >= -5){
             return 2;
