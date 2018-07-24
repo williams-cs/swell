@@ -80,6 +80,7 @@ class StringEffect {
     onMouseDown(event) {
         if (this._selected && this.contains(this._mouse.x, this._mouse.y)) { //text editing
             this._isEditing = true;
+            this._myState.dragging = false;
             this._textMetrics.cursorPos = this._mouse.x;
             this.modifyText();
         }
