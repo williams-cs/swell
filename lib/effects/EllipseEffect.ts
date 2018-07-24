@@ -171,6 +171,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
     }
 
     onMouseUp(event: any) {
+        console.log("I'm an ellipse!");
         this.modifyReset();
     }
 
