@@ -136,7 +136,7 @@ class StringEffect {
         let breakPoint = this._textMetrics.cursorPos / this._textMetrics.interval;
         firstHalf = this._str.val.substring(0, breakPoint);
         secondHalf = this._str.val.substring(breakPoint);
-        if (event.keyCode == 37 && this._textMetrics.initMousePos > this.dims.x) {
+        if (event.keyCode == 37 && this._textMetrics.initMousePos > this.dims.x + this._textMetrics.interval / 2) {
             this._textMetrics.initMousePos -= this._textMetrics.interval;
             this.modifyTextCursor();
         }
