@@ -139,6 +139,7 @@ class StringEffect {
         let keyName = event.key;
         firstHalf += keyName;
         this._str.str = firstHalf + secondHalf;
+        this._textMetrics.cursorPos += this._textMetrics.interval;
         console.log(this._str.str);
     }
     modifyResize(isTooSmall) {
