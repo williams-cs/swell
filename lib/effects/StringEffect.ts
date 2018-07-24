@@ -186,7 +186,8 @@ export class StringEffect implements Effect<StringNode> {
         secondHalf = this._str.val.substring(breakPoint);
         let keyName = event.key;
         secondHalf = keyName + secondHalf;
-        console.log(secondHalf);
+        this._str.str = firstHalf + secondHalf;
+        console.log(this._str.str);
     }
 
     modifyResize(isTooSmall: boolean): void {
