@@ -1,0 +1,53 @@
+{
+  "name": "swell",
+  "version": "1.0.0",
+  "description": "swell williams entry-level language",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "dependencies": {
+    "space-lift": "^0.7.2"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.1.3",
+    "@types/mocha": "^5.2.2",
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0",
+    "nyc": "^12.0.2",
+    "ts-node": "^6.1.1",
+    "typescript": "^2.9.1"
+  },
+  "scripts": {
+    "test": "nyc --reporter=text mocha"
+  },
+  "nyc": {
+    "extension": [
+      ".ts",
+      ".tsx"
+    ],
+    "exclude": [
+      "**/*.d.ts",
+      "test/",
+      "coverage/",
+      "lib/Ignore for now/",
+      "lib/*.js",
+      "dist/"
+    ],
+    "reporter": [
+      "html"
+    ],
+    "all": true
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/williams-cs/swell.git"
+  },
+  "keywords": [
+    "dmlanguage"
+  ],
+  "author": "Emmie Hine",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/williams-cs/swell/issues"
+  },
+  "homepage": "https://github.com/williams-cs/swell#readme"
+}
