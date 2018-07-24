@@ -10,6 +10,7 @@ class StringEffect {
         this._corner = 0;
         this._isNew = true;
         this._selected = false;
+        this._isEditing = false;
         this._mouse = {
             x: 0,
             y: 0
@@ -54,6 +55,9 @@ class StringEffect {
         if (this._selected) {
             this.drawTextGuides(this._dims.x, this._dims.y - this._fontSize, this._w, this._h, this._corner);
         }
+        if (this._isEditing) {
+            this.modifyText();
+        }
     }
     addEventListeners() {
         this._canvas.addEventListener('mousemove', this.onMouseMove.bind(this));
@@ -74,8 +78,12 @@ class StringEffect {
     }
     onMouseDown(event) {
         if (this._selected && this.contains(this._mouse.x, this._mouse.y)) { //text editing
-            console.log(true);
+            this._isEditing = true;
             this.modifyText();
+        }
+        else {
+            this._selected = false;
+            this._isEditing = false;
         }
         this.modifyState(this.guideContains(this._mouse.x, this._mouse.y) > 0, this.contains(this._mouse.x, this._mouse.y));
     }
