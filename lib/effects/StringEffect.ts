@@ -184,11 +184,11 @@ export class StringEffect implements Effect<StringNode> {
         let breakPoint: number = this._textMetrics.cursorPos / this._textMetrics.interval;
         firstHalf = this._str.val.substring(0, breakPoint);
         secondHalf = this._str.val.substring(breakPoint);
-        if(event.keyCode == 37 && this._textMetrics.initMousePos > 0) {
+        if(event.keyCode == 37 && this._textMetrics.initMousePos > this.dims.x) {
             this._textMetrics.initMousePos -= this._textMetrics.interval;
             this.modifyTextCursor();
         }
-        else if(event.keyCode == 39 && this._textMetrics.initMousePos > 0) {
+        else if(event.keyCode == 39 && this._textMetrics.initMousePos < this.dims.x + this._textMetrics.width) {
             this._textMetrics.initMousePos += this._textMetrics.interval;
             this.modifyTextCursor();
         }
