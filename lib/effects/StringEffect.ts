@@ -70,29 +70,12 @@ export class StringEffect implements Effect<StringNode> {
             this.update();
             
             // logging
-<<<<<<< HEAD
-            //this._context.eventLog.push(this.logPaint()); // this.context or context?
-            context.eventLog.push(this.logPaint());
-
-            if(!context.effects.includes(this)){
-                context.effects.push(this);
-            }
-            if(this._selected) {
-                this.drawTextGuides(this._dims.x, this._dims.y - this._fontSize, this._w, this._h, this._corner);
-            }
-
-            if(this._isNew) { //prevents adding event listeners repeatedly
-                this.addEventListeners();
-                this._isNew = false;
-            }
-=======
             this._context.eventLog.push(this.logPaint()); // this.context or context?
             
             context.effects.push(this);
             
             this.addEventListeners();
             
->>>>>>> 5d8df4fdf54d8e2cc07dcd66b82c6168b82fc196
         }
         else {
             console.log("canvas is NOT defined");
@@ -105,18 +88,10 @@ export class StringEffect implements Effect<StringNode> {
         this._ctx.fillStyle = 'black';
         this._ctx.fillText(this._str.val, this._dims.x, this._dims.y);
         let textDims = this._ctx.measureText(this._str.val);
-<<<<<<< HEAD
-        this._w = textDims.width;
-        this._h = this._fontSize;
-
-
-
-=======
         this._textMetrics.width = textDims.width;
         this._textMetrics.height = this._fontSize;
         this._textMetrics.str = this._str.val;
         this._textMetrics.interval = this._textMetrics.width / this._textMetrics.str.length;
->>>>>>> 5d8df4fdf54d8e2cc07dcd66b82c6168b82fc196
         if(this._selected) {
             this.drawTextGuides(this._dims.x, this._dims.y - this._fontSize, this._textMetrics.width, this._textMetrics.height, this._corner);
         }
