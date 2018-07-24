@@ -26,9 +26,9 @@ class StringEffect {
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
             let fontDeets = this._fontSize + "px Courier New";
-            ctx.font = fontDeets;
-            ctx.fillStyle = 'black';
-            ctx.fillText(this._str.val, this._dims.x, this._dims.y);
+            this._ctx.font = fontDeets;
+            this._ctx.fillStyle = 'black';
+            this._ctx.fillText(this._str.val, this._dims.x, this._dims.y);
             let textDims = ctx.measureText(this._str.val);
             this._w = textDims.width;
             this._h = this._fontSize;
@@ -48,6 +48,18 @@ class StringEffect {
         else {
             console.log("canvas is NOT defined");
         }
+    }
+    update() {
+        let fontDeets = this._fontSize + "px Courier New";
+        this._ctx.font = fontDeets;
+        this._ctx.fillStyle = 'black';
+        this._ctx.fillText(this._str.val, this._dims.x, this._dims.y);
+        if (this._selected) {
+            this.drawTextGuides(this._dims.x, this._dims.y - this._fontSize, this._w, this._h, this._corner);
+        }
+        let textDims = this._ctx.measureText(this._str.val);
+        this._w = textDims.width;
+        this._h = this._fontSize;
     }
     addEventListeners() {
         this._canvas.addEventListener('mousemove', this.onMouseMove.bind(this));

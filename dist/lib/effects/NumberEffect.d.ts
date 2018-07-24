@@ -14,6 +14,7 @@ export declare class NumberEffect implements Effect<NumberNode> {
     private _h;
     constructor(num: NumberNode);
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
+    update(): void;
     logPaint(): string;
     ast(): Expression<NumberNode>;
     updateAST(): Expression<NumberNode>;

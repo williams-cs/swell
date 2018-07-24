@@ -20,6 +20,8 @@ class NumberEffect {
             this._h = this._fontSize;
         }
     }
+    update() {
+    }
     logPaint() {
         let paint = new PaintEvent_1.PaintEvent(this._str);
         return paint.assembleLog();

@@ -24,6 +24,7 @@ export declare class StringEffect implements Effect<StringNode> {
     private _textMetrics;
     constructor(str: StringNode);
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
+    update(): void;
     addEventListeners(): void;
     onMouseMove(event: any): void;
     onMouseDown(event: any): void;

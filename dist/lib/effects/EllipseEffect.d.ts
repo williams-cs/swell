@@ -16,6 +16,7 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
     private _mouse;
     constructor(circle: EllipseNode);
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
+    update(): void;
     addEventListeners(): void;
     contains(mx: number, my: number): boolean;
     guideContains(mx: number, my: number): number;

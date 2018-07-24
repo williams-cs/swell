@@ -34,6 +34,10 @@ export class NumberEffect implements Effect<NumberNode> {
         }
     }
 
+    update(): void {
+
+    }
+
     logPaint(): string {
         let paint = new PaintEvent(this._str);
         return paint.assembleLog();
