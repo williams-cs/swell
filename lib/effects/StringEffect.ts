@@ -47,7 +47,12 @@ export class StringEffect implements Effect<StringNode> {
         height: number,
         interval: number,
         str: string
-    };
+    } = {
+        width: 0,
+        height: 0,
+        interval: 0,
+        str: ""
+    }
 
     constructor(str: StringNode) {
         this._str = str;

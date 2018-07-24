@@ -15,6 +15,12 @@ class StringEffect {
             x: 0,
             y: 0
         };
+        this._textMetrics = {
+            width: 0,
+            height: 0,
+            interval: 0,
+            str: ""
+        };
         this._str = str;
     }
     draw(context, dims, ast) {
