@@ -1,0 +1,23 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const FunDef_1 = require("../lib/funhouse/FunDef");
+const Scope_1 = require("../lib/structural/Scope");
+const chai_1 = require("chai");
+require("mocha");
+const FunApp_1 = require("../lib/funhouse/FunApp");
+const SequenceNode_1 = require("../lib/structural/SequenceNode");
+const __1 = require("..");
+// def c(x){
+//  return 1;
+describe('An constant function', () => {
+    it('should evaluate to 1', () => {
+        const fundef = new FunDef_1.FunDef("c", new __1.Return(new __1.NumberNode(1)), ["x"]);
+        const funapp = new FunApp_1.FunApp("c", [2]);
+        let context = new Scope_1.Scope(null);
+        const seq = new SequenceNode_1.SequenceNode(fundef, funapp);
+        const output = seq.eval(context);
+        const output1 = seq.rightVal;
+        chai_1.expect(output1.val).to.equal(1);
+    });
+});
+//# sourceMappingURL=fun2.spec.js.map
