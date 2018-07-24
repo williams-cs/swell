@@ -196,12 +196,13 @@ export class StringEffect implements Effect<StringNode> {
         } else if (contains) {
             this._x1 = this._dims.x; // Saving original x and y
             this._y1 = this._dims.y;
-
             this._selected = true;
             this._myState.selection = this;
             this._myState.dragoffx = this._mouse.x - this._dims.x;
             this._myState.dragoffy = this._mouse.y - this._dims.y;
-            this._myState.dragging = true;
+            if(!this._isEditing){
+                this._myState.dragging = true;
+            }
         } else {
             this._selected = false;
         }
