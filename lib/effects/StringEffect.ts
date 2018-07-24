@@ -46,12 +46,14 @@ export class StringEffect implements Effect<StringNode> {
         height: number,
         interval: number,
         str: string,
+        initMousePos: number,
         cursorPos: number
     } = {
         width: 0,
         height: 0,
         interval: 0,
         str: "",
+        initMousePos: 0,
         cursorPos: 0
     }
 
@@ -124,8 +126,9 @@ export class StringEffect implements Effect<StringNode> {
         if(this._selected && this.contains(this._mouse.x, this._mouse.y)){ //text editing
             this._isEditing = true;
             this._myState.dragging = false;
-            this._textMetrics.cursorPos = this._mouse.x;
-            this.modifyText();
+            this._textMetrics.initMousePos = this._mouse.x;
+            this.modifyTextCursor();
+            this._canvas.addEventListener('keypress', this.modifyText);
         }
         else {
             this._selected = false;
@@ -144,27 +147,40 @@ export class StringEffect implements Effect<StringNode> {
         this._dims.y = this._mouse.y - this._myState.dragoffy;
     }
 
-    modifyText(): void {
+    modifyTextCursor(): void {
         let leftWall: number = this._dims.x;
-        let xDif: number = this._textMetrics.cursorPos - leftWall;
+        let xDif: number = this._textMetrics.initMousePos - leftWall;
         let interval: number = this._textMetrics.interval;
         let moveFactor: number = 0;
         if(xDif >= interval / 2 && xDif <= interval){
             moveFactor = leftWall + interval;
+            this._textMetrics.cursorPos = interval;
         }
         else if(xDif <= interval / 2) {
             moveFactor = leftWall;
+            this._textMetrics.cursorPos = 0;
         }
         else if(xDif % interval >= interval / 2) {
             moveFactor = leftWall + interval * Math.ceil(xDif / interval);
+            this._textMetrics.cursorPos = interval * Math.ceil(xDif / interval);
         }
         else if(xDif % interval < interval / 2) {
             moveFactor = leftWall + interval * Math.floor(xDif / interval);
+            this._textMetrics.cursorPos = interval * Math.floor(xDif / interval);
         }
         this._ctx.moveTo(moveFactor, this._dims.y - this._fontSize);
         this._ctx.lineTo(moveFactor, this._dims.y);
         this._ctx.strokeStyle = "grey";
         this._ctx.stroke();
+    }
+
+    modifyText(): void {
+        let firstHalf: string;
+        let secondHalf: string;
+        let breakPoint: number = this._textMetrics.cursorPos / this._textMetrics.interval;
+        firstHalf = this._str.val.substring(0, breakPoint);
+        secondHalf = this._str.val.substring(breakPoint);
+        console.log(firstHalf + secondHalf);
     }
 
     modifyResize(isTooSmall: boolean): void {
