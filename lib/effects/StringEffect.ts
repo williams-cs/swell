@@ -95,12 +95,12 @@ export class StringEffect implements Effect<StringNode> {
         this._ctx.font = fontDeets;
         this._ctx.fillStyle = 'black';
         this._ctx.fillText(this._str.val, this._dims.x, this._dims.y);
-        if(this._selected) {
-            this.drawTextGuides(this._dims.x, this._dims.y - this._fontSize, this._w, this._h, this._corner);
-        }
         let textDims = this._ctx.measureText(this._str.val);
         this._w = textDims.width;
         this._h = this._fontSize;
+        if(this._selected) {
+            this.drawTextGuides(this._dims.x, this._dims.y - this._fontSize, this._w, this._h, this._corner);
+        }
     }
 
     addEventListeners(): void {
