@@ -129,6 +129,7 @@ class StringEffect {
         this._ctx.lineTo(moveFactor, this._dims.y);
         this._ctx.strokeStyle = "grey";
         this._ctx.stroke();
+        let timer = setInterval(this.modifyTextCursor, 1000);
     }
     modifyText(event) {
         let firstHalf;
