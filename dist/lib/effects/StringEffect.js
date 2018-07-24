@@ -237,7 +237,6 @@ class StringEffect {
         this._ctx.beginPath();
         this._ctx.rect(x, y, w, h);
         this._ctx.strokeStyle = 'gray';
-        this._ctx.lineWidth = 0.5;
         this._ctx.stroke();
         if (corner !== 0) {
             switch (corner) { //colors the guide blue if selected
@@ -256,7 +255,6 @@ class StringEffect {
         this._ctx.fillRect(x, y, w, h);
         this._ctx.rect(x, y, w, h);
         this._ctx.strokeStyle = 'gray';
-        this._ctx.lineWidth = 0.5;
         this._ctx.stroke();
     }
     logPaint() {
