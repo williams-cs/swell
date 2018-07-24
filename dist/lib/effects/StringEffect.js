@@ -59,7 +59,8 @@ class StringEffect {
             this.drawTextGuides(this._dims.x, this._dims.y - this._fontSize, this._textMetrics.width, this._textMetrics.height, this._corner);
         }
         if (this._isEditing) {
-            this.modifyTextCursor();
+            let timer = setInterval(this.modifyTextCursor, 1000);
+            //this.modifyTextCursor();
         }
     }
     addEventListeners() {
@@ -129,7 +130,6 @@ class StringEffect {
         this._ctx.lineTo(moveFactor, this._dims.y);
         this._ctx.strokeStyle = "grey";
         this._ctx.stroke();
-        let timer = setInterval(this.modifyTextCursor, 1000);
     }
     modifyText(event) {
         let firstHalf;
