@@ -45,12 +45,14 @@ export class StringEffect implements Effect<StringNode> {
         width: number,
         height: number,
         interval: number,
-        str: string
+        str: string,
+        cursorPos: number
     } = {
         width: 0,
         height: 0,
         interval: 0,
-        str: ""
+        str: "",
+        cursorPos: 0
     }
 
     constructor(str: StringNode) {
@@ -121,6 +123,7 @@ export class StringEffect implements Effect<StringNode> {
     onMouseDown(event: any): void {
         if(this._selected && this.contains(this._mouse.x, this._mouse.y)){ //text editing
             this._isEditing = true;
+            this._textMetrics.cursorPos = this._mouse.x;
             this.modifyText();
         }
         else {
@@ -142,7 +145,7 @@ export class StringEffect implements Effect<StringNode> {
 
     modifyText(): void {
         let leftWall: number = this._dims.x;
-        let xDif: number = this._mouse.x - leftWall;
+        let xDif: number = this._textMetrics.cursorPos - leftWall;
         let interval: number = this._textMetrics.interval;
         let moveFactor: number = 0;
         if(xDif >= interval / 2 && xDif <= interval){
