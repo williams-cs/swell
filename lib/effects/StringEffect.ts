@@ -255,10 +255,8 @@ export class StringEffect implements Effect<StringNode> {
     modifyReset(): void {
         if(this._myState.dragging){
             this._context.eventLog.push(this.logMove());
-            console.log("Added drag log");
         } else if (this._myState.resizing){
             this._context.eventLog.push(this.logResize());
-            console.log("Added resize log");
         }
         this._myState.dragging = false;
         this._myState.resizing = false;
@@ -317,7 +315,7 @@ export class StringEffect implements Effect<StringNode> {
     }
     
     logMove(): string {
-        console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);
+        //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);
         let moveStr = new DragEvent(this._str.val, this._x1, this._y1, this._dims.x, this._dims.y);
         return moveStr.assembleLog();
     }

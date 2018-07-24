@@ -6,7 +6,7 @@ export class DragEvent extends LogEvent{
     }
     
     assembleLog(): string{
-        let toPrint = "Dragged " + this.toLog + "from " + this.x1.toString() + ", " + this.y1.toString() + " to " + this.x2.toString() + ", " + this.y2.toString();
+        let toPrint = "Dragged " + this.toLog + " from " + this.x1.toString() + ", " + this.y1.toString() + " to " + this.x2.toString() + ", " + this.y2.toString();
         return this.logItem(toPrint);
     }
 }
