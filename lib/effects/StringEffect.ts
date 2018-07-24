@@ -184,11 +184,12 @@ export class StringEffect implements Effect<StringNode> {
         let breakPoint: number = this._textMetrics.cursorPos / this._textMetrics.interval;
         firstHalf = this._str.val.substring(0, breakPoint);
         secondHalf = this._str.val.substring(breakPoint);
-        if(event.keyCode == 8 && this._str.str.length > 0) {
+        if(event.keyCode == 8 && this._str.val.length > 0) {
             firstHalf = firstHalf.substring(0, firstHalf.length - 1);
             this._str.str = firstHalf + secondHalf;
             this._textMetrics.initMousePos += this._textMetrics.interval;
             this.modifyTextCursor();
+            console.log("backspace");
         }
         else {
             let keyName = event.key;
