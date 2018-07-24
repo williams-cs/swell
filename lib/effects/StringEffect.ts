@@ -25,6 +25,7 @@ export class StringEffect implements Effect<StringNode> {
     private _isNew: boolean = true;
     private _selected: boolean = false;
     private _isEditing: boolean = false;
+    private _isListening: boolean = false;
     //private _log: string[];
     private _myState: {
         dragoffx: number,
@@ -124,9 +125,10 @@ export class StringEffect implements Effect<StringNode> {
 
     onMouseDown(event: any): void {
         if(this._selected && this.contains(this._mouse.x, this._mouse.y)){ //text editing
-            if(!this._isEditing){
+            if(!this._isListening){
                 window.addEventListener('keypress', this.modifyText.bind(this));
             }
+            this._isListening = true;
             this._isEditing = true;
             this._myState.dragging = false;
             this._textMetrics.initMousePos = this._mouse.x;
@@ -183,7 +185,8 @@ export class StringEffect implements Effect<StringNode> {
         firstHalf = this._str.val.substring(0, breakPoint);
         secondHalf = this._str.val.substring(breakPoint);
         let keyName = event.key;
-        console.log(keyName);
+        secondHalf = keyName + secondHalf;
+        console.log(secondHalf);
     }
 
     modifyResize(isTooSmall: boolean): void {

@@ -11,6 +11,7 @@ class StringEffect {
         this._isNew = true;
         this._selected = false;
         this._isEditing = false;
+        this._isListening = false;
         this._mouse = {
             x: 0,
             y: 0
@@ -80,9 +81,10 @@ class StringEffect {
     }
     onMouseDown(event) {
         if (this._selected && this.contains(this._mouse.x, this._mouse.y)) { //text editing
-            if (!this._isEditing) {
+            if (!this._isListening) {
                 window.addEventListener('keypress', this.modifyText.bind(this));
             }
+            this._isListening = true;
             this._isEditing = true;
             this._myState.dragging = false;
             this._textMetrics.initMousePos = this._mouse.x;
@@ -135,7 +137,8 @@ class StringEffect {
         firstHalf = this._str.val.substring(0, breakPoint);
         secondHalf = this._str.val.substring(breakPoint);
         let keyName = event.key;
-        console.log(keyName);
+        secondHalf = keyName + secondHalf;
+        console.log(secondHalf);
     }
     modifyResize(isTooSmall) {
         if (isTooSmall) {

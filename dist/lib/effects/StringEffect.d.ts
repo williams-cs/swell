@@ -18,6 +18,7 @@ export declare class StringEffect implements Effect<StringNode> {
     private _isNew;
     private _selected;
     private _isEditing;
+    private _isListening;
     private _myState;
     private _mouse;
     private _textMetrics;
