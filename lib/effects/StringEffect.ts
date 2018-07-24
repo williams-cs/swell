@@ -107,7 +107,6 @@ export class StringEffect implements Effect<StringNode> {
         this._canvas.addEventListener('mousemove', this.onMouseMove.bind(this));
         this._canvas.addEventListener('mousedown', this.onMouseDown.bind(this));
         this._canvas.addEventListener('mouseup', this.onMouseUp.bind(this));
-        this._canvas.addEventListener('keypress', this.modifyText.bind(this));
         //makes it so that double clicking doesn't select text on the page
         this._canvas.addEventListener('selectstart', function(e) { e.preventDefault(); return false; }, false);
     }
@@ -126,7 +125,7 @@ export class StringEffect implements Effect<StringNode> {
     onMouseDown(event: any): void {
         if(this._selected && this.contains(this._mouse.x, this._mouse.y)){ //text editing
             if(!this._isEditing){
-                
+                window.addEventListener('keypress', this.modifyText.bind(this));
             }
             this._isEditing = true;
             this._myState.dragging = false;
