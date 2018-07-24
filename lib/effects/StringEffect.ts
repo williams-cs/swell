@@ -25,6 +25,7 @@ export class StringEffect implements Effect<StringNode> {
     private _isNew: boolean = true;
     private _selected: boolean = false;
     private _isEditing: boolean = false;
+    private _isListening: boolean = false;
     //private _log: string[];
     private _myState: {
         dragoffx: number,
@@ -46,12 +47,14 @@ export class StringEffect implements Effect<StringNode> {
         height: number,
         interval: number,
         str: string,
+        initMousePos: number,
         cursorPos: number
     } = {
         width: 0,
         height: 0,
         interval: 0,
         str: "",
+        initMousePos: 0,
         cursorPos: 0
     }
 
@@ -97,7 +100,7 @@ export class StringEffect implements Effect<StringNode> {
             this.drawTextGuides(this._dims.x, this._dims.y - this._fontSize, this._textMetrics.width, this._textMetrics.height, this._corner);
         }
         if(this._isEditing) {
-            this.modifyText();
+            this.modifyTextCursor();
         }
     }
 
@@ -122,9 +125,14 @@ export class StringEffect implements Effect<StringNode> {
 
     onMouseDown(event: any): void {
         if(this._selected && this.contains(this._mouse.x, this._mouse.y)){ //text editing
+            if(!this._isListening){
+                window.addEventListener('keypress', this.modifyText.bind(this));
+            }
+            this._isListening = true;
             this._isEditing = true;
-            this._textMetrics.cursorPos = this._mouse.x;
-            this.modifyText();
+            this._myState.dragging = false;
+            this._textMetrics.initMousePos = this._mouse.x;
+            this.modifyTextCursor();
         }
         else {
             this._selected = false;
@@ -143,27 +151,42 @@ export class StringEffect implements Effect<StringNode> {
         this._dims.y = this._mouse.y - this._myState.dragoffy;
     }
 
-    modifyText(): void {
+    modifyTextCursor(): void {
         let leftWall: number = this._dims.x;
-        let xDif: number = this._textMetrics.cursorPos - leftWall;
+        let xDif: number = this._textMetrics.initMousePos - leftWall;
         let interval: number = this._textMetrics.interval;
         let moveFactor: number = 0;
         if(xDif >= interval / 2 && xDif <= interval){
             moveFactor = leftWall + interval;
+            this._textMetrics.cursorPos = interval;
         }
         else if(xDif <= interval / 2) {
             moveFactor = leftWall;
+            this._textMetrics.cursorPos = 0;
         }
         else if(xDif % interval >= interval / 2) {
             moveFactor = leftWall + interval * Math.ceil(xDif / interval);
+            this._textMetrics.cursorPos = interval * Math.ceil(xDif / interval);
         }
         else if(xDif % interval < interval / 2) {
             moveFactor = leftWall + interval * Math.floor(xDif / interval);
+            this._textMetrics.cursorPos = interval * Math.floor(xDif / interval);
         }
         this._ctx.moveTo(moveFactor, this._dims.y - this._fontSize);
         this._ctx.lineTo(moveFactor, this._dims.y);
         this._ctx.strokeStyle = "grey";
         this._ctx.stroke();
+    }
+
+    modifyText(event: any): void {
+        let firstHalf: string;
+        let secondHalf: string;
+        let breakPoint: number = this._textMetrics.cursorPos / this._textMetrics.interval;
+        firstHalf = this._str.val.substring(0, breakPoint);
+        secondHalf = this._str.val.substring(breakPoint);
+        let keyName = event.key;
+        secondHalf = keyName + secondHalf;
+        console.log(secondHalf);
     }
 
     modifyResize(isTooSmall: boolean): void {
@@ -195,12 +218,13 @@ export class StringEffect implements Effect<StringNode> {
         } else if (contains) {
             this._x1 = this._dims.x; // Saving original x and y
             this._y1 = this._dims.y;
-
             this._selected = true;
             this._myState.selection = this;
             this._myState.dragoffx = this._mouse.x - this._dims.x;
             this._myState.dragoffy = this._mouse.y - this._dims.y;
-            this._myState.dragging = true;
+            if(!this._isEditing){
+                this._myState.dragging = true;
+            }
         } else {
             this._selected = false;
         }
