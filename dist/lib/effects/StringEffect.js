@@ -58,7 +58,7 @@ class StringEffect {
             this.drawTextGuides(this._dims.x, this._dims.y - this._fontSize, this._textMetrics.width, this._textMetrics.height, this._corner);
         }
         if (this._isEditing) {
-            this.modifyText();
+            this.modifyTextCursor();
         }
     }
     addEventListeners() {
@@ -128,7 +128,7 @@ class StringEffect {
         this._ctx.strokeStyle = "grey";
         this._ctx.stroke();
     }
-    modifyText() {
+    modifyText(event) {
         let firstHalf;
         let secondHalf;
         let breakPoint = this._textMetrics.cursorPos / this._textMetrics.interval;

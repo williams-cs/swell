@@ -99,7 +99,7 @@ export class StringEffect implements Effect<StringNode> {
             this.drawTextGuides(this._dims.x, this._dims.y - this._fontSize, this._textMetrics.width, this._textMetrics.height, this._corner);
         }
         if(this._isEditing) {
-            this.modifyText();
+            this.modifyTextCursor();
         }
     }
 
@@ -176,7 +176,7 @@ export class StringEffect implements Effect<StringNode> {
         this._ctx.stroke();
     }
 
-    modifyText(): void {
+    modifyText(event: any): void {
         let firstHalf: string;
         let secondHalf: string;
         let breakPoint: number = this._textMetrics.cursorPos / this._textMetrics.interval;

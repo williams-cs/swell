@@ -30,7 +30,7 @@ export declare class StringEffect implements Effect<StringNode> {
     onMouseUp(event: any): void;
     modifyDrag(): void;
     modifyTextCursor(): void;
-    modifyText(): void;
+    modifyText(event: any): void;
     modifyResize(isTooSmall: boolean): void;
     modifyState(guideContains: boolean, contains: boolean): void;
     modifyReset(): void;
