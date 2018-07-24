@@ -4,6 +4,8 @@ import { Expression } from "../Expression";
 import { Scope } from "../structural/Scope";
 import { Dimensions } from "../structural/Dimensions";
 import { PaintEvent } from "../logging/PaintEvent";
+import { DragEvent } from "../logging/DragEvent";
+import { ResizeEvent } from "../logging/ResizeEvent";
 
 export class EllipseEffect implements Effect<EllipseNode> {
 
@@ -15,6 +17,13 @@ export class EllipseEffect implements Effect<EllipseNode> {
     private _corner: number = 0;
     private _selected: boolean = false;
     private _isNew: boolean = true;
+
+    private _x1: number; // used to save coords for logging
+    private _y1: number;
+    private _size1: number; // saves size for logging
+
+    private _context: Scope;
+
     private _myState: {
         dragoffx: number,
         dragoffy: number,
@@ -40,6 +49,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
             this._dims = dims;
             this._ast = ast;
             this._canvas = context.canvas.get();
+            this._context = context;
             this._myState = context.myState;
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
@@ -195,8 +205,13 @@ export class EllipseEffect implements Effect<EllipseNode> {
             this._myState.dragoffy = this._dims.y;
             this._myState.initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x, this._dims.y);
             this._myState.resizing = true;
+
+            this._size1 = this.dims.radius; // saving old font size
         }
         else if (contains) {
+            this._x1 = this._dims.x; // Saving original x and y
+            this._y1 = this._dims.y;
+
             this._selected = true;
             this._myState.selection = this;
             this._myState.dragoffx = this._mouse.x - this._dims.x;
@@ -209,6 +224,11 @@ export class EllipseEffect implements Effect<EllipseNode> {
     }
 
     modifyReset(): void {
+        if(this._myState.dragging){
+            this._context.eventLog.push(this.logMove());
+        } else if (this._myState.resizing){
+            this._context.eventLog.push(this.logResize());
+        }
         this._myState.dragging = false;
         this._myState.resizing = false;
         this._corner = 0;
@@ -226,6 +246,17 @@ export class EllipseEffect implements Effect<EllipseNode> {
     logPaint(): string {
         let paint = new PaintEvent("ellipse at " + this._dims.x + ", " + this._dims.y);
         return paint.assembleLog();
+    }
+
+    logMove(): string {
+        //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);
+        let moveStr = new DragEvent("ellipse ", this._x1, this._y1, this._dims.x, this._dims.y);
+        return moveStr.assembleLog();
+    }
+
+    logResize(): string {
+        let sizeStr = new ResizeEvent("ellipse ", this._size1, this._dims.radius);
+        return sizeStr.assembleLog();
     }
 
     updateAST(): Expression<EllipseNode> {

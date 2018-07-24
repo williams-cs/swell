@@ -12,6 +12,10 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
     private _corner;
     private _selected;
     private _isNew;
+    private _x1;
+    private _y1;
+    private _size1;
+    private _context;
     private _myState;
     private _mouse;
     constructor(circle: EllipseNode);
@@ -32,6 +36,8 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
     getMousePosition(): void;
     ast(): Expression<EllipseNode>;
     logPaint(): string;
+    logMove(): string;
+    logResize(): string;
     updateAST(): Expression<EllipseNode>;
     readonly x: number;
     readonly y: number;

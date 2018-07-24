@@ -26,6 +26,14 @@ class NumberEffect {
         let paint = new PaintEvent_1.PaintEvent(this._str);
         return paint.assembleLog();
     }
+    // logMove(): string {
+    //     let moveStr = new DragEvent(this._str, this._x1, this._y1, this._dims.x, this._dims.y);
+    //     return moveStr.assembleLog();
+    // }
+    // logResize(): string {
+    //     let sizeStr = new ResizeEvent(this._str, this._size1, this._fontSize);
+    //     return sizeStr.assembleLog();
+    // }
     ast() {
         throw new Error("Not implemented");
     }
