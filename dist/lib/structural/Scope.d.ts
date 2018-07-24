@@ -1,7 +1,7 @@
 import { Option } from 'space-lift';
 import { Effect } from '../effects/Effect';
 export declare class Scope {
-    private _map;
+    private _varBindings;
     private _parent;
     private _retValID;
     private _canvas;
@@ -10,7 +10,7 @@ export declare class Scope {
     private _eventLog;
     private _hadFunEval;
     globalFunID: number;
-    constructor(parent: Scope, effects?: Effect<any>[], myState?: {
+    constructor(parent: Scope, effects?: Effect<any>[], eventLog?: string[], myState?: {
         dragoffx: number;
         dragoffy: number;
         initDistance: number;
@@ -23,7 +23,7 @@ export declare class Scope {
     assign(name: string, val: any): void;
     lookup(name: string, context: Scope): any;
     retIDLookup(): any;
-    map: Map<string, Option<any>>;
+    varBindings: Map<string, Option<any>>;
     readonly parent: Scope;
     retValID: Option<string>;
     canvas: Option<HTMLCanvasElement>;

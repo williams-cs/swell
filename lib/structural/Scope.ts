@@ -2,7 +2,7 @@ import {Option, Some, None} from 'space-lift'
 import { Effect } from '../effects/Effect';
 
 export class Scope{
-    private _map: Map<string, Option<any>>; 
+    private _varBindings: Map<string, Option<any>>; 
     private _parent: Scope;
     private _retValID: Option<string> = None;
     private _canvas: Option<HTMLCanvasElement> = None;
@@ -20,42 +20,40 @@ export class Scope{
     //public globalFunID = Math.random();
     public globalFunID = 10000000;
 
-    constructor(parent: Scope, effects?: Effect<any>[], myState?: {dragoffx: number,dragoffy: number,initDistance: number,selection: any,dragging: boolean,resizing: boolean}){
-        this._map = new Map();
+    constructor(parent: Scope, effects?: Effect<any>[], eventLog?: string[], myState?: {dragoffx: number,dragoffy: number,initDistance: number,selection: any,dragging: boolean,resizing: boolean}){
+        this._varBindings = new Map();
         this._parent = parent;
         this._effects = effects || null;
         this._myState = myState || null;
+        this._eventLog = eventLog;
         if(this._parent != null && this._parent._hadFunEval) this._hadFunEval = true; // copy function eval flag from parent
     }
 
     copy(){
-        let s = new Scope(this._parent);
-        s.map = new Map(this._map);
-        s.effects = this._effects;
-        s.myState = this._myState;
-        s.eventLog = this._eventLog;
+        let s = new Scope(this._parent, this._effects, this._eventLog, this._myState);
+        s.varBindings = new Map(this._varBindings);
         return s;
     }
 
     declare(name: string){
         //console.log("declaring variable " + name);
-        if(this._map.has(name)){
+        if(this._varBindings.has(name)){
             throw new Error("Scope already has var with name " + name);
         }
-        this._map.set(name,None);
+        this._varBindings.set(name,None);
     }
 
     // Assign/reassign value
     assign(name: string, val: any): void{
         //console.log("assigning value " + val + " for variable " + name + ".");
-        this._map.set(name,Some(val)); //Some(val)?
+        this._varBindings.set(name,Some(val)); //Some(val)?
     }
 
     // look up value in context
     lookup(name: string, context: Scope): any{
-        if(context.map.has(name)){
-            if(context.map.get(name).isDefined()){
-                return (context.map.get(name).get()); //extra get to manage Some()
+        if(context.varBindings.has(name)){
+            if(context.varBindings.get(name).isDefined()){
+                return (context.varBindings.get(name).get()); //extra get to manage Some()
             }
         }
 
@@ -78,11 +76,11 @@ export class Scope{
         }
     }
 
-    get map(): Map<string, Option<any>>{
-        return this._map;
+    get varBindings(): Map<string, Option<any>>{
+        return this._varBindings;
     }
-    set map(m: Map<string, Option<any>>){
-        this._map = m;
+    set varBindings(m: Map<string, Option<any>>){
+        this._varBindings = m;
     }
 
     get parent(): Scope{
