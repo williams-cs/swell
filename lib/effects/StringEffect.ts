@@ -144,12 +144,24 @@ export class StringEffect implements Effect<StringNode> {
     modifyText(): void {
         let leftWall: number = this._dims.x;
         let xDif: number = this._mouse.x - leftWall;
-        if(xDif % (this._textMetrics.interval) < this._textMetrics.interval / 2 || (this._textMetrics.interval) - xDif > this._textMetrics.interval / 2) {
-            this._ctx.moveTo(leftWall + (xDif - xDif % this._textMetrics.interval), this._dims.y - this._fontSize);
-            this._ctx.lineTo(leftWall + (xDif - xDif % this._textMetrics.interval), this._dims.y);
-            this._ctx.strokeStyle = "grey";
-            this._ctx.stroke();
+        let interval: number = this._textMetrics.interval;
+        let moveFactor: number = 0;
+        if(xDif >= interval / 2 && xDif <= interval){
+            moveFactor = leftWall + interval;
         }
+        else if(xDif <= interval / 2) {
+            moveFactor = leftWall;
+        }
+        else if(xDif % interval >= interval / 2) {
+            moveFactor = leftWall + Math.ceil(xDif / interval);
+        }
+        else if(xDif % interval < interval / 2) {
+            moveFactor = leftWall + Math.floor(xDif / interval);
+        }
+        this._ctx.moveTo(moveFactor, this._dims.y - this._fontSize);
+        this._ctx.lineTo(moveFactor, this._dims.y);
+        this._ctx.strokeStyle = "grey";
+        this._ctx.stroke();
     }
 
     modifyResize(isTooSmall: boolean): void {
