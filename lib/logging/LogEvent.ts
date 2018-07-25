@@ -35,6 +35,9 @@ export abstract class LogEvent<T> {
     get tag(): string {
         return this._tag;
     }
+    set tag(tag: string){
+        this._tag = tag;
+    }
     get x1(): number{
         return this._x1;
     }
