@@ -74,11 +74,11 @@ class StringEffect {
     /* Event listener functions */
     onMouseMove(event) {
         this.getMousePosition();
-        if (this._myState.dragging && this._selected) {
+        if (this._isDragging && this._selected) {
             console.log(this._str.val + " is being dragged.");
             this.modifyDrag();
         }
-        else if (this._myState.resizing && this._selected) {
+        else if (this._isResizing && this._selected) {
             this.modifyResize(this._fontSize < 15);
         }
     }
