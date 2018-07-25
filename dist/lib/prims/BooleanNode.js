@@ -11,6 +11,9 @@ class BooleanNode {
     }
     draw(context, dims, ast) {
     }
+    toString() {
+        return "" + this._val;
+    }
     get val() {
         return this._val;
     }

@@ -6,5 +6,6 @@ export declare class BooleanNode implements Expression<BooleanNode> {
     constructor(val: boolean);
     eval(context: Scope): BooleanNode;
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
+    toString(): string;
     val: boolean;
 }
