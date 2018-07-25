@@ -1,5 +1,6 @@
 import {Option, Some, None} from 'space-lift';
 import { Effect } from '../effects/Effect';
+import { LogEvent } from '../logging/LogEvent';
 
 export class Scope{
     private _varBindings: Map<string, Option<any>>; 
@@ -15,12 +16,12 @@ export class Scope{
         dragging: boolean,
         resizing: boolean
     };
-    private _eventLog: string[] = [];
+    private _eventLog: LogEvent[] = [];
     private _hadFunEval: boolean = false;
     //public globalFunID = Math.random();
     public globalFunID = 10000000;
 
-    constructor(parent: Scope, effects?: Effect<any>[], myState?: {dragoffx: number,dragoffy: number,initDistance: number,selection: any,dragging: boolean,resizing: boolean}, eventLog?: string[]){
+    constructor(parent: Scope, effects?: Effect<any>[], myState?: {dragoffx: number,dragoffy: number,initDistance: number,selection: any,dragging: boolean,resizing: boolean}, eventLog?: LogEvent[]){
         this._varBindings = new Map();
         this._parent = parent;
         this._effects = effects || null;
@@ -115,10 +116,10 @@ export class Scope{
         this._myState = state;
     }
 
-    get eventLog(): string[] {
+    get eventLog(): LogEvent[] {
         return this._eventLog;
     }
-    set eventLog(update: string[]){
+    set eventLog(update: LogEvent[]){
         this._eventLog = update;
     }
 
