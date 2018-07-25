@@ -88,6 +88,7 @@ class StringEffect {
             this._isListening = true;
             this._isEditing = true;
             this._myState.dragging = false;
+            console.log(this._str.val + " is setting dragging to false");
             this._textMetrics.initMousePos = this._mouse.x;
             this.modifyTextCursor();
         }
@@ -184,6 +185,7 @@ class StringEffect {
             this._selected = true;
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
             this._myState.selection = this;
+            console.log("state selection is " + this._str.val);
             this._myState.dragoffx = this._dims.x.eval(this._context).val;
             this._myState.dragoffy = this._dims.y.eval(this._context).val;
             this._myState.initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
@@ -195,6 +197,7 @@ class StringEffect {
             this._y1 = this._dims.y.eval(this._context).val;
             this._selected = true;
             this._myState.selection = this;
+            console.log("state selection is " + this._str.val);
             this._myState.dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
             this._myState.dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
             if (!this._isEditing) {
@@ -208,11 +211,12 @@ class StringEffect {
     }
     modifyReset() {
         //console.log(this._str.val + " just released");
-        if (this._myState.dragging && this._myState.selection === this) {
+        console.log(this._str.val + " is dragging? " + this._myState.dragging);
+        if (this._myState.dragging && this._selected) {
             console.log(this._str.val + " logging drag");
             this._context.eventLog.push(this.logMove());
         }
-        else if (this._myState.resizing && this._myState.selection === this) {
+        else if (this._myState.resizing && this._selected) {
             console.log(this._str.val + " logging resize");
             this._context.eventLog.push(this.logResize());
         }

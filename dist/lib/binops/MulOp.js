@@ -12,6 +12,9 @@ class MulOp extends BinaryOperation_1.BinaryOperation {
     eval(context) {
         return new NumberNode_1.NumberNode(this.left.eval(new Scope_1.Scope(context)).eval(context).val * this.right.eval(new Scope_1.Scope(context)).eval(context).val);
     }
+    toString() {
+        return this.left.toString() + ' * ' + this.right.toString();
+    }
 }
 exports.MulOp = MulOp;
 //# sourceMappingURL=MulOp.js.map

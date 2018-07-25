@@ -5,6 +5,9 @@ class NOP {
         return this;
     }
     draw(context, dims, ast) { }
+    toString() {
+        return "";
+    }
 }
 exports.NOP = NOP;
 //# sourceMappingURL=NOP.js.map

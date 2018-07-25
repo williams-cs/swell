@@ -22,6 +22,9 @@ class AssignOp extends BinaryOperation_1.BinaryOperation {
         }
         throw new Error("HALP (in AssignOp)");
     }
+    toString() {
+        return this.left.toString() + ' = ' + this.right.toString();
+    }
 }
 exports.AssignOp = AssignOp;
 //# sourceMappingURL=AssignOp.js.map
