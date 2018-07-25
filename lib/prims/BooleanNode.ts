@@ -17,6 +17,10 @@ export class BooleanNode implements Expression<BooleanNode>{
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
     
     }
+    
+    toString() : string {
+        return "" + this._val;
+    }
 
     get val(): boolean{
         return this._val;

@@ -7,4 +7,8 @@ export class NOP implements Expression<NOP>{
         return this;
     }
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {}
+
+    toString() : string {
+        return "";
+    }
 }
