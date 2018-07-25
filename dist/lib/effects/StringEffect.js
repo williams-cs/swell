@@ -131,33 +131,35 @@ class StringEffect {
         this._ctx.stroke();
     }
     modifyText(event) {
-        let firstHalf;
-        let secondHalf;
-        let breakPoint = this._textMetrics.cursorPos / this._textMetrics.interval;
-        firstHalf = this._str.val.substring(0, breakPoint);
-        secondHalf = this._str.val.substring(breakPoint);
-        if (event.keyCode == 37 && this._textMetrics.initMousePos > this._dims.x.eval(this._context).val + this._textMetrics.interval / 2) {
-            this._textMetrics.initMousePos -= this._textMetrics.interval;
-            this.modifyTextCursor();
-        }
-        else if (event.keyCode == 39 && this._textMetrics.initMousePos < this._dims.x.eval(this._context).val + this._textMetrics.width) {
-            this._textMetrics.initMousePos += this._textMetrics.interval;
-            this.modifyTextCursor();
-        }
-        else if (event.keyCode == 8 && this._str.val.length > 0) {
-            firstHalf = firstHalf.substring(0, firstHalf.length - 1);
-            this._str.str = firstHalf + secondHalf;
-            this._textMetrics.initMousePos -= this._textMetrics.interval;
-            this.modifyTextCursor();
-            console.log("backspace");
-        }
-        else {
-            let keyName = event.key;
-            if (keyName.length == 1) {
-                firstHalf += keyName;
-                this._str.str = firstHalf + secondHalf;
+        if (this._isEditing) {
+            let firstHalf;
+            let secondHalf;
+            let breakPoint = this._textMetrics.cursorPos / this._textMetrics.interval;
+            firstHalf = this._str.val.substring(0, breakPoint);
+            secondHalf = this._str.val.substring(breakPoint);
+            if (event.keyCode == 37 && this._textMetrics.initMousePos > this._dims.x.eval(this._context).val + this._textMetrics.interval / 2) {
+                this._textMetrics.initMousePos -= this._textMetrics.interval;
+                this.modifyTextCursor();
+            }
+            else if (event.keyCode == 39 && this._textMetrics.initMousePos < this._dims.x.eval(this._context).val + this._textMetrics.width) {
                 this._textMetrics.initMousePos += this._textMetrics.interval;
                 this.modifyTextCursor();
+            }
+            else if (event.keyCode == 8 && this._str.val.length > 0) {
+                firstHalf = firstHalf.substring(0, firstHalf.length - 1);
+                this._str.str = firstHalf + secondHalf;
+                this._textMetrics.initMousePos -= this._textMetrics.interval;
+                this.modifyTextCursor();
+                console.log("backspace");
+            }
+            else {
+                let keyName = event.key;
+                if (keyName.length == 1) {
+                    firstHalf += keyName;
+                    this._str.str = firstHalf + secondHalf;
+                    this._textMetrics.initMousePos += this._textMetrics.interval;
+                    this.modifyTextCursor();
+                }
             }
         }
     }
