@@ -17,6 +17,15 @@ export class ListNode implements Expression<ListNode>{
         return new ListNode(evalList);
     }
 
+    toString() : string {
+        let list  = '';
+        for (let i =0 ; i < this._list.length-1; i++) {
+            list += this._list[i].toString() + ", ";
+        }
+        list += this._list[this._list.length-1].toString();
+        return '[' + list + ']';
+    }
+
     draw(){
 
     }

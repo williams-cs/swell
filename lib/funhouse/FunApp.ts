@@ -16,6 +16,15 @@ export class FunApp<T> implements Expression<T>{
         this._defaultValue = defaultValue;
     }
 
+    toString() : string {
+        let argsList= ''
+        for (let i =0 ; i < this._args.length-1; i++) {
+            argsList += this._args[i].toString() + ", ";
+        }
+        argsList += this._args[this._args.length-1].toString();
+        return this.name + '(' + argsList + ")";
+    }
+
     // Assigns args to values in new context
     eval(context: Scope): any{
         let fundef = context.lookup(this._name,context); // looking up function

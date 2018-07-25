@@ -42,5 +42,9 @@ export class EllipseNode implements Expression<EllipseNode> {
     set height(height: Expression<NumberNode>){
         this._height = height;
     }
+
+    toString() : string {
+        return "ellipse(" + this._width.toString() + ", " + this._height.toString() + ")"
+    }
     // get methods? 
 }

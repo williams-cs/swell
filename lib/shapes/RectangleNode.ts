@@ -39,5 +39,9 @@ export class RectangleNode implements Expression<RectangleNode> {
     set height(height: Expression<NumberNode>){
         this._height = height;
     }
+
+    toString() : string {
+        return "rect(" + this._width.toString() + ", " + this._height.toString() + ")";
+    }
     // get methods? 
 }
