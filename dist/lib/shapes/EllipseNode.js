@@ -7,6 +7,7 @@ class EllipseNode {
         this._height = height;
     }
     draw(context, dims, ast) {
+        let radius = this._width.eval(context).val / 2;
         let e = new EllipseEffect_1.EllipseEffect(this);
         e.draw(context, dims, ast);
     }
