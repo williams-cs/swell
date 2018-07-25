@@ -8,7 +8,6 @@ class StringEffect {
         this._fontSize = 20;
         //private _size2: number;
         this._corner = 0;
-        this._isNew = true;
         this._selected = false;
         this._isEditing = false;
         this._isListening = false;
@@ -66,6 +65,7 @@ class StringEffect {
         this._canvas.addEventListener('mousemove', this.onMouseMove.bind(this));
         this._canvas.addEventListener('mousedown', this.onMouseDown.bind(this));
         this._canvas.addEventListener('mouseup', this.onMouseUp.bind(this));
+        window.addEventListener('mousedown', this.isMouseOutside.bind(this));
         //makes it so that double clicking doesn't select text on the page
         this._canvas.addEventListener('selectstart', function (e) { e.preventDefault(); return false; }, false);
     }
@@ -221,6 +221,18 @@ class StringEffect {
     getMousePosition() {
         this._mouse.x = getMousePos(this._canvas, event).x;
         this._mouse.y = getMousePos(this._canvas, event).y;
+    }
+    isMouseOutside(event) {
+        let mouseX = event.clientX;
+        let mouseY = event.clientY;
+        let rect = this._canvas.getBoundingClientRect();
+        if (mouseX < rect.left || mouseX > rect.right || mouseY < rect.top || mouseY > rect.bottom) {
+            this._myState.dragging = false;
+            this._myState.resizing = false;
+            this._selected = false;
+            this._isEditing = false;
+            this._corner = 0;
+        }
     }
     contains(mx, my) {
         return (this._dims.x.eval(this._context).val <= mx) && (this._dims.x.eval(this._context).val + this._textMetrics.width >= mx) &&

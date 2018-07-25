@@ -46,6 +46,7 @@ export {ForNode} from './lib/loops/ForNode';
 export {ColorNode} from './lib/shapes/ColorNode';
 export {Ellipse} from './lib/shapes/Ellipse';
 export {EllipseNode} from './lib/shapes/EllipseNode';
+export {RectangleNode} from './lib/shapes/RectangleNode';
 export {Shape} from './lib/shapes/Shape';
 export {PrintNode} from './lib/structural/PrintNode';
 export {Return} from './lib/structural/Return';
