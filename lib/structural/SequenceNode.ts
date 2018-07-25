@@ -18,6 +18,10 @@ export class SequenceNode implements Expression<void>{
     
     }
 
+    toString() : string {
+        return this._left.toString() + ";\n" + this._right.toString() + ";";
+    }
+
     eval(context: Scope): void {
         let leftScope = new Scope(context, context.effects, context.myState, context.eventLog);
         leftScope.canvas = Some(context.canvas.get());
