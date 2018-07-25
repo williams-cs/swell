@@ -4,6 +4,7 @@ export class ResizeEvent extends LogEvent<any>{
     //toLog: string;
     constructor(toLog: string, x1: number, y1: number){
         super(toLog, x1, y1);
+        this.tag = "resize";
     }
     
     assembleLog(): string{
