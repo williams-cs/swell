@@ -24,7 +24,7 @@ export abstract class LogEvent<T> {
     }
 
     // Assembles coherent log message
-    abstract assembleLog(item: string): string;
+    abstract assembleLog(): string;
 
     get dateTime(): string {
         return this._dateTime;

@@ -8,7 +8,7 @@ export declare abstract class LogEvent<T> {
     private _y2;
     constructor(toLog: string, x1?: number, y1?: number, x2?: number, y2?: number);
     logItem(toLog: string): string;
-    abstract assembleLog(item: string): string;
+    abstract assembleLog(): string;
     readonly dateTime: string;
     readonly toLog: string;
     readonly tag: string;
