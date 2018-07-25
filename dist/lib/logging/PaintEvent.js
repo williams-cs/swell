@@ -5,6 +5,7 @@ class PaintEvent extends LogEvent_1.LogEvent {
     //toLog: string;
     constructor(toLog) {
         super(toLog);
+        this.tag = "paint";
     }
     assembleLog() {
         let toPrint = "Painted " + this.toLog;

@@ -24,6 +24,9 @@ class LogEvent {
     get tag() {
         return this._tag;
     }
+    set tag(tag) {
+        this._tag = tag;
+    }
     get x1() {
         return this._x1;
     }
