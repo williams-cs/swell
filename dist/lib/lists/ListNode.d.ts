@@ -4,6 +4,7 @@ export declare class ListNode implements Expression<ListNode> {
     private _list;
     constructor(list: Expression<any>[]);
     eval(context: Scope): ListNode;
+    toString(): string;
     draw(): void;
     readonly list: Expression<any>[];
 }

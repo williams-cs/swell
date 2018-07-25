@@ -8,6 +8,7 @@ export declare class SequenceNode implements Expression<void> {
     private _rightVal;
     constructor(left: Expression<any>, right: Expression<any>);
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
+    toString(): string;
     eval(context: Scope): void;
     left: Expression<any>;
     right: Expression<any>;

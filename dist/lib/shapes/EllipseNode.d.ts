@@ -11,4 +11,5 @@ export declare class EllipseNode implements Expression<EllipseNode> {
     move(): void;
     width: Expression<NumberNode>;
     height: Expression<NumberNode>;
+    toString(): string;
 }

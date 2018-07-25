@@ -28,6 +28,9 @@ class RectangleNode {
     set height(height) {
         this._height = height;
     }
+    toString() {
+        return "rect(" + this._width.toString() + ", " + this._height.toString() + ")";
+    }
 }
 exports.RectangleNode = RectangleNode;
 //# sourceMappingURL=RectangleNode.js.map
