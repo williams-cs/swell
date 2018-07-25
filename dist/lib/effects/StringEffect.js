@@ -207,7 +207,7 @@ class StringEffect {
         }
     }
     modifyReset() {
-        console.log(this._str.val + " just released");
+        //console.log(this._str.val + " just released");
         if (this._myState.dragging) {
             console.log(this._str.val + " logging drag");
             this._context.eventLog.push(this.logMove());
