@@ -74,6 +74,8 @@ var Ellipse_1 = require("./lib/shapes/Ellipse");
 exports.Ellipse = Ellipse_1.Ellipse;
 var EllipseNode_1 = require("./lib/shapes/EllipseNode");
 exports.EllipseNode = EllipseNode_1.EllipseNode;
+var RectangleNode_1 = require("./lib/shapes/RectangleNode");
+exports.RectangleNode = RectangleNode_1.RectangleNode;
 var Shape_1 = require("./lib/shapes/Shape");
 exports.Shape = Shape_1.Shape;
 var PrintNode_1 = require("./lib/structural/PrintNode");
@@ -90,6 +92,8 @@ var StringEffect_1 = require("./lib/effects/StringEffect");
 exports.StringEffect = StringEffect_1.StringEffect;
 var Dimensions_1 = require("./lib/structural/Dimensions");
 exports.Dimensions = Dimensions_1.Dimensions;
+var RectangleEffect_1 = require("./lib/effects/RectangleEffect");
+exports.RectangleEffect = RectangleEffect_1.RectangleEffect;
 /* EVENTS */
 var LogEvent_1 = require("./lib/logging/LogEvent");
 exports.LogEvent = LogEvent_1.LogEvent;
