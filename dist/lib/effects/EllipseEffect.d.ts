@@ -12,7 +12,6 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
     private _canvas;
     private _corner;
     private _selected;
-    private _isNew;
     private _x1;
     private _y1;
     private _size1;
@@ -35,6 +34,7 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
     modifyState(guideContains: boolean, contains: boolean): void;
     modifyReset(): void;
     getMousePosition(): void;
+    isMouseOutside(event: any): void;
     ast(): Expression<EllipseNode>;
     logPaint(): LogEvent<any>;
     logMove(): LogEvent<any>;

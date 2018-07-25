@@ -16,7 +16,6 @@ export declare class StringEffect implements Effect<StringNode> {
     private _y1;
     private _size1;
     private _corner;
-    private _isNew;
     private _selected;
     private _isEditing;
     private _isListening;
@@ -37,6 +36,7 @@ export declare class StringEffect implements Effect<StringNode> {
     modifyState(guideContains: boolean, contains: boolean): void;
     modifyReset(): void;
     getMousePosition(): void;
+    isMouseOutside(event: any): void;
     contains(mx: number, my: number): boolean;
     guideContains(mx: number, my: number): number;
     drawTextGuides(x: number, y: number, w: number, h: number, corner: number): void;
