@@ -249,6 +249,7 @@ export class StringEffect implements Effect<StringNode> {
             }
         } else {
             this._selected = false;
+            this._isEditing = false;
         }
     }
 

@@ -200,6 +200,7 @@ class StringEffect {
         }
         else {
             this._selected = false;
+            this._isEditing = false;
         }
     }
     modifyReset() {
