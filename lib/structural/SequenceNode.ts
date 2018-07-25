@@ -1,7 +1,7 @@
 import { Expression } from "../Expression"; 
 import {Scope} from './Scope'; 
 import { Dimensions } from "./Dimensions";
-import { Some } from "../../node_modules/space-lift";
+import { Some } from "space-lift";
 
 export class SequenceNode implements Expression<void>{
     private _left: Expression<any>;

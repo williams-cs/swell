@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Scope_1 = require("./Scope");
-const space_lift_1 = require("../../node_modules/space-lift");
+const space_lift_1 = require("space-lift");
 class SequenceNode {
     constructor(left, right) {
         this._left = left;

@@ -2,18 +2,39 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 class LogEvent {
     constructor(toLog, x1, y1, x2, y2) {
-        this.toLog = toLog;
-        this.x1 = x1;
-        this.y1 = y1;
-        this.x2 = x2;
-        this.y2 = y2;
+        this._toLog = toLog;
+        this._x1 = x1;
+        this._y1 = y1;
+        this._x2 = x2;
+        this._y2 = y2;
     }
     logItem(toLog) {
         let today = new Date();
         let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
         let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        this.dateTime = date + ' ' + time;
-        return " " + this.dateTime + ": " + toLog;
+        this._dateTime = date + ' ' + time;
+        return " " + this._dateTime + ": " + toLog;
+    }
+    get dateTime() {
+        return this._dateTime;
+    }
+    get toLog() {
+        return this._toLog;
+    }
+    get tag() {
+        return this._tag;
+    }
+    get x1() {
+        return this._x1;
+    }
+    get y1() {
+        return this._y1;
+    }
+    get x2() {
+        return this._x2;
+    }
+    get y2() {
+        return this._y2;
     }
 }
 exports.LogEvent = LogEvent;
