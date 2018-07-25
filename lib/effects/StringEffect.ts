@@ -257,9 +257,12 @@ export class StringEffect implements Effect<StringNode> {
     }
 
     modifyReset(): void {
+        console.log(this._str.val + " just released");
         if(this._myState.dragging){
+            console.log(this._str.val + " logging drag");
             this._context.eventLog.push(this.logMove());
         } else if (this._myState.resizing){
+            console.log(this._str.val + " logging resize");
             this._context.eventLog.push(this.logResize());
         }
         this._myState.dragging = false;
