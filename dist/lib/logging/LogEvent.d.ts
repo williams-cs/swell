@@ -11,7 +11,7 @@ export declare abstract class LogEvent<T> {
     abstract assembleLog(): string;
     readonly dateTime: string;
     readonly toLog: string;
-    readonly tag: string;
+    tag: string;
     readonly x1: number;
     readonly y1: number;
     readonly x2: number;

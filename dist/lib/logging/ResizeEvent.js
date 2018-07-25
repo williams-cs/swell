@@ -5,6 +5,7 @@ class ResizeEvent extends LogEvent_1.LogEvent {
     //toLog: string;
     constructor(toLog, x1, y1) {
         super(toLog, x1, y1);
+        this.tag = "resize";
     }
     assembleLog() {
         // let today = new Date();

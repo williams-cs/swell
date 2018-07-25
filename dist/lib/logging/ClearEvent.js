@@ -5,6 +5,7 @@ class ClearEvent extends LogEvent_1.LogEvent {
     //toLog: string;
     constructor(toLog) {
         super(toLog);
+        this.tag = "clear";
     }
     assembleLog() {
         let toPrint = "Console cleared";
