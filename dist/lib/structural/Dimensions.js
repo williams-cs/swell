@@ -32,6 +32,18 @@ class Dimensions {
     set scale(val) {
         this._scale = val;
     }
+    get width() {
+        return this._width;
+    }
+    set width(val) {
+        this._width = val;
+    }
+    get height() {
+        return this._height;
+    }
+    set height(val) {
+        this._height = val;
+    }
 }
 exports.Dimensions = Dimensions;
 //# sourceMappingURL=Dimensions.js.map

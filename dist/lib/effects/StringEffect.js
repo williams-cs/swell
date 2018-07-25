@@ -11,6 +11,8 @@ class StringEffect {
         this._selected = false;
         this._isEditing = false;
         this._isListening = false;
+        this._isDragging = false;
+        this._isResizing = false;
         this._mouse = {
             x: 0,
             y: 0
@@ -72,11 +74,11 @@ class StringEffect {
     /* Event listener functions */
     onMouseMove(event) {
         this.getMousePosition();
-        if (this._myState.dragging && this._selected) {
+        if (this._isDragging && this._selected) {
             console.log(this._str.val + " is being dragged.");
             this.modifyDrag();
         }
-        else if (this._myState.resizing && this._selected) {
+        else if (this._isResizing && this._selected) {
             this.modifyResize(this._fontSize < 15);
         }
     }
@@ -88,6 +90,7 @@ class StringEffect {
             this._isListening = true;
             this._isEditing = true;
             this._myState.dragging = false;
+            this._isDragging = false;
             console.log(this._str.val + " is setting dragging to false");
             this._textMetrics.initMousePos = this._mouse.x;
             this.modifyTextCursor();
@@ -191,6 +194,7 @@ class StringEffect {
             this._myState.dragoffy = this._dims.y.eval(this._context).val;
             this._myState.initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
             this._myState.resizing = true;
+            this._isResizing = true;
             this._size1 = this._fontSize; // saving old font size
         }
         else if (contains) {
@@ -204,6 +208,7 @@ class StringEffect {
             this._myState.dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
             if (!this._isEditing) {
                 this._myState.dragging = true;
+                this._isDragging = true;
             }
         }
         else {
@@ -223,7 +228,9 @@ class StringEffect {
             this._context.eventLog.push(this.logResize());
         }
         this._myState.dragging = false;
+        this._isDragging = false;
         this._myState.resizing = false;
+        this._isResizing = false;
         this._corner = 0;
         //this._context.eventLog.push(this.logMove());
     }
@@ -237,7 +244,9 @@ class StringEffect {
         let rect = this._canvas.getBoundingClientRect();
         if (mouseX < rect.left || mouseX > rect.right || mouseY < rect.top || mouseY > rect.bottom) {
             this._myState.dragging = false;
+            this._isDragging = false;
             this._myState.resizing = false;
+            this._isResizing = false;
             this._selected = false;
             this._isEditing = false;
             this._corner = 0;
