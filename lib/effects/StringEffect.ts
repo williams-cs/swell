@@ -26,6 +26,8 @@ export class StringEffect implements Effect<StringNode> {
     private _selected: boolean = false;
     private _isEditing: boolean = false;
     private _isListening: boolean = false;
+    private _isDragging: boolean = false;
+    private _isResizing: boolean = false;
     //private _log: string[];
     private _myState: {
         dragoffx: number,
@@ -79,7 +81,6 @@ export class StringEffect implements Effect<StringNode> {
             context.effects.push(this);
             
             this.addEventListeners();
-            
         }
         else {
             console.log("canvas is NOT defined");
@@ -133,6 +134,7 @@ export class StringEffect implements Effect<StringNode> {
             this._isListening = true;
             this._isEditing = true;
             this._myState.dragging = false;
+            this._isDragging = false;
             this._textMetrics.initMousePos = this._mouse.x;
             this.modifyTextCursor();
         }
@@ -239,6 +241,7 @@ export class StringEffect implements Effect<StringNode> {
             this._myState.dragoffy = this._dims.y.eval(this._context).val;
             this._myState.initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
             this._myState.resizing = true;
+            this._isResizing = true;
             this._size1 = this._fontSize; // saving old font size
         } else if (contains) {
             this._x1 = this._dims.x.eval(this._context).val; // Saving original x and y
@@ -249,6 +252,7 @@ export class StringEffect implements Effect<StringNode> {
             this._myState.dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
             if(!this._isEditing){
                 this._myState.dragging = true;
+                this._isDragging = true;
             }
         } else {
             this._selected = false;
@@ -263,7 +267,9 @@ export class StringEffect implements Effect<StringNode> {
             this._context.eventLog.push(this.logResize());
         }
         this._myState.dragging = false;
+        this._isDragging = false;
         this._myState.resizing = false;
+        this._isResizing = false;
         this._corner = 0;
         //this._context.eventLog.push(this.logMove());
     }
@@ -279,7 +285,9 @@ export class StringEffect implements Effect<StringNode> {
         let rect = this._canvas.getBoundingClientRect();
         if(mouseX < rect.left || mouseX > rect.right || mouseY < rect.top || mouseY > rect.bottom) {
             this._myState.dragging = false;
+            this._isDragging = false;
             this._myState.resizing = false;
+            this._isResizing = false;
             this._selected = false;
             this._isEditing = false;
             this._corner = 0;

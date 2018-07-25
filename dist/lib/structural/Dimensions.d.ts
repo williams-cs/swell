@@ -5,9 +5,13 @@ export declare class Dimensions {
     private _y;
     private _radius;
     private _scale;
+    private _width;
+    private _height;
     constructor(x: Expression<NumberNode>, y: Expression<NumberNode>, scale: Expression<NumberNode>, radius?: Expression<NumberNode>);
     x: Expression<NumberNode>;
     y: Expression<NumberNode>;
     radius: Expression<NumberNode>;
     scale: Expression<NumberNode>;
+    width: Expression<NumberNode>;
+    height: Expression<NumberNode>;
 }

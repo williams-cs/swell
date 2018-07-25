@@ -6,6 +6,8 @@ export class Dimensions {
     private _y: Expression<NumberNode>;
     private _radius: Expression<NumberNode>;
     private _scale: Expression<NumberNode>;
+    private _width: Expression<NumberNode>;
+    private _height: Expression<NumberNode>;
 
     constructor(x: Expression<NumberNode>, y: Expression<NumberNode>, scale: Expression<NumberNode>, radius?: Expression<NumberNode>) {
         this._x = x;
@@ -40,5 +42,19 @@ export class Dimensions {
     }
     set scale(val: Expression<NumberNode>) {
         this._scale = val;
+    }
+
+    get width(): Expression<NumberNode> {
+        return this._width;
+    }
+    set width(val: Expression<NumberNode>) {
+        this._width = val;
+    }
+
+    get height(): Expression<NumberNode> {
+        return this._height;
+    }
+    set height(val: Expression<NumberNode>) {
+        this._height = val;
     }
 }
