@@ -18,6 +18,10 @@ export class NegOp extends UnaryOperation<NumberNode>{
         return new NumberNode(-v.val);
     }
 
+    toString() : string {
+        return "-" + this.val;
+    }
+
     // put in UnaryOp class
     /*
     get value(): number{
