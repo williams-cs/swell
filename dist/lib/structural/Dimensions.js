@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const NumberNode_1 = require("../prims/NumberNode");
 class Dimensions {
     constructor(x, y, scale, radius) {
         this._x = x;
         this._y = y;
         this._scale = scale;
-        this._radius = radius || 30;
+        this._radius = radius || new NumberNode_1.NumberNode(30);
     }
     get x() {
         return this._x;

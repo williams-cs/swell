@@ -90,14 +90,14 @@ export class StringEffect implements Effect<StringNode> {
         let fontDeets: string = this._fontSize + "px Courier New";
         this._ctx.font = fontDeets;
         this._ctx.fillStyle = 'black';
-        this._ctx.fillText(this._str.val, this._dims.x, this._dims.y);
+        this._ctx.fillText(this._str.val, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
         let textDims = this._ctx.measureText(this._str.val);
         this._textMetrics.width = textDims.width;
         this._textMetrics.height = this._fontSize;
         this._textMetrics.str = this._str.val;
         this._textMetrics.interval = this._textMetrics.width / this._textMetrics.str.length;
         if(this._selected) {
-            this.drawTextGuides(this._dims.x, this._dims.y - this._fontSize, this._textMetrics.width, this._textMetrics.height, this._corner);
+            this.drawTextGuides(this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val - this._fontSize, this._textMetrics.width, this._textMetrics.height, this._corner);
         }
         if(this._isEditing) {
             this.modifyTextCursor();
@@ -147,12 +147,12 @@ export class StringEffect implements Effect<StringNode> {
 
     /* Modification functions */
     modifyDrag(): void {
-        this._dims.x = this._mouse.x - this._myState.dragoffx;
-        this._dims.y = this._mouse.y - this._myState.dragoffy;
+        this._dims.x.eval(this._context).val = this._mouse.x - this._myState.dragoffx;
+        this._dims.y.eval(this._context).val = this._mouse.y - this._myState.dragoffy;
     }
 
     modifyTextCursor(): void {
-        let leftWall: number = this._dims.x;
+        let leftWall: number = this._dims.x.eval(this._context).val;
         let xDif: number = this._textMetrics.initMousePos - leftWall;
         let interval: number = this._textMetrics.interval;
         let moveFactor: number = 0;
@@ -172,8 +172,8 @@ export class StringEffect implements Effect<StringNode> {
             moveFactor = leftWall + interval * Math.floor(xDif / interval);
             this._textMetrics.cursorPos = interval * Math.floor(xDif / interval);
         }
-        this._ctx.moveTo(moveFactor, this._dims.y - this._fontSize);
-        this._ctx.lineTo(moveFactor, this._dims.y);
+        this._ctx.moveTo(moveFactor, this._dims.y.eval(this._context).val - this._fontSize);
+        this._ctx.lineTo(moveFactor, this._dims.y.eval(this._context).val);
         this._ctx.strokeStyle = "grey";
         this._ctx.stroke();
     }
@@ -184,11 +184,11 @@ export class StringEffect implements Effect<StringNode> {
         let breakPoint: number = this._textMetrics.cursorPos / this._textMetrics.interval;
         firstHalf = this._str.val.substring(0, breakPoint);
         secondHalf = this._str.val.substring(breakPoint);
-        if(event.keyCode == 37 && this._textMetrics.initMousePos > this.dims.x + this._textMetrics.interval / 2) {
+        if(event.keyCode == 37 && this._textMetrics.initMousePos > this._dims.x.eval(this._context).val + this._textMetrics.interval / 2) {
             this._textMetrics.initMousePos -= this._textMetrics.interval;
             this.modifyTextCursor();
         }
-        else if(event.keyCode == 39 && this._textMetrics.initMousePos < this.dims.x + this._textMetrics.width) {
+        else if(event.keyCode == 39 && this._textMetrics.initMousePos < this._dims.x.eval(this._context).val + this._textMetrics.width) {
             this._textMetrics.initMousePos += this._textMetrics.interval;
             this.modifyTextCursor();
         }
@@ -231,18 +231,18 @@ export class StringEffect implements Effect<StringNode> {
             this._selected = true;
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
             this._myState.selection = this;
-            this._myState.dragoffx = this._dims.x;
-            this._myState.dragoffy = this._dims.y;
-            this._myState.initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x, this._dims.y);
+            this._myState.dragoffx = this._dims.x.eval(this._context).val;
+            this._myState.dragoffy = this._dims.y.eval(this._context).val;
+            this._myState.initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
             this._myState.resizing = true;
             this._size1 = this._fontSize; // saving old font size
         } else if (contains) {
-            this._x1 = this._dims.x; // Saving original x and y
-            this._y1 = this._dims.y;
+            this._x1 = this._dims.x.eval(this._context).val; // Saving original x and y
+            this._y1 = this._dims.y.eval(this._context).val;
             this._selected = true;
             this._myState.selection = this;
-            this._myState.dragoffx = this._mouse.x - this._dims.x;
-            this._myState.dragoffy = this._mouse.y - this._dims.y;
+            this._myState.dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
+            this._myState.dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
             if(!this._isEditing){
                 this._myState.dragging = true;
             }
@@ -269,13 +269,13 @@ export class StringEffect implements Effect<StringNode> {
     }
 
     contains(mx: number, my: number): boolean {
-        return  (this._dims.x <= mx) && (this._dims.x + this._textMetrics.width >= mx) &&
-          (this._dims.y - this._fontSize <= my) && (this._dims.y >= my);
+        return  (this._dims.x.eval(this._context).val <= mx) && (this._dims.x.eval(this._context).val + this._textMetrics.width >= mx) &&
+          (this._dims.y.eval(this._context).val - this._fontSize <= my) && (this._dims.y.eval(this._context).val >= my);
     }
 
     guideContains(mx: number, my: number): number {
-        let xdif = mx - (this._dims.x + this._textMetrics.width);
-        let ydif = my - (this._dims.y - this._fontSize);
+        let xdif = mx - (this._dims.x.eval(this._context).val + this._textMetrics.width);
+        let ydif = my - (this._dims.y.eval(this._context).val - this._fontSize);
         if(xdif <= 5 && ydif <= 5 && xdif >= -5 && ydif >= -5){
             return 2;
         }
@@ -314,8 +314,8 @@ export class StringEffect implements Effect<StringNode> {
     }
     
     logMove(): string {
-        //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);
-        let moveStr = new DragEvent(this._str.val, this._x1, this._y1, this._dims.x, this._dims.y);
+        //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x.eval(this._context).val + " " + this._dims.y.eval(this._context).val);
+        let moveStr = new DragEvent(this._str.val, this._x1, this._y1, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
         return moveStr.assembleLog();
     }
 
@@ -337,10 +337,10 @@ export class StringEffect implements Effect<StringNode> {
     }
 
     get x(): number {
-        return this._dims.x;
+        return this._dims.x.eval(this._context).val;
     }
     get y(): number {
-        return this._dims.y;
+        return this._dims.y.eval(this._context).val;
     }
 
     get dims(): Dimensions {

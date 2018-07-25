@@ -7,5 +7,6 @@ export declare class Conditional implements Expression<any> {
     constructor(test: Expression<any>, trueBranch: Expression<any>, falseBranch?: Expression<any>);
     eval(context: Scope): any;
     readonly trueBranch: Expression<any>;
+    readonly falseBranch: Expression<any>;
     draw(): void;
 }
