@@ -274,15 +274,17 @@ export class StringEffect implements Effect<StringNode> {
         console.log(this._str.val + " is dragging? " + this._myState.dragging);
         if(this._myState.dragging && this._selected){
             console.log(this._str.val + " logging drag");
+            this._isDragging = false;
             this._context.eventLog.push(this.logMove());
         } else if (this._myState.resizing && this._selected){
             console.log(this._str.val + " logging resize");
+            this._isResizing = false;
             this._context.eventLog.push(this.logResize());
         }
         this._myState.dragging = false;
-        this._isDragging = false;
+        //this._isDragging = false;
         this._myState.resizing = false;
-        this._isResizing = false;
+        //this._isResizing = false;
         this._corner = 0;
         //this._context.eventLog.push(this.logMove());
     }
