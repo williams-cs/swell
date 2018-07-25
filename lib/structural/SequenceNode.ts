@@ -1,6 +1,7 @@
 import { Expression } from "../Expression"; 
 import {Scope} from './Scope'; 
 import { Dimensions } from "./Dimensions";
+import { Some } from "../../node_modules/space-lift";
 
 export class SequenceNode implements Expression<void>{
     private _left: Expression<any>;
@@ -18,8 +19,8 @@ export class SequenceNode implements Expression<void>{
     }
 
     eval(context: Scope): void {
-        let leftScope = new Scope(context);
-        
+        let leftScope = new Scope(context, context.effects, context.myState, context.eventLog);
+        leftScope.canvas = Some(context.canvas.get());
         //throwing away after evaling
         this._leftVal = this._left.eval(leftScope);
         this._rightVal = this._right.eval(leftScope); // leftScope may be modified now
