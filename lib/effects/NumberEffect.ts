@@ -6,6 +6,7 @@ import { PaintEvent } from "../logging/PaintEvent";
 import { Dimensions } from "../structural/Dimensions";
 import { DragEvent } from "../logging/DragEvent";
 import { ResizeEvent } from "../logging/ResizeEvent";
+import { LogEvent } from "../logging/LogEvent";
 
 export class NumberEffect implements Effect<NumberNode> {
 
@@ -40,9 +41,8 @@ export class NumberEffect implements Effect<NumberNode> {
 
     }
 
-    logPaint(): string {
-        let paint = new PaintEvent(this._str);
-        return paint.assembleLog();
+    logPaint(): LogEvent<any> {
+        return new PaintEvent(this._str);
     }
 
     // logMove(): string {

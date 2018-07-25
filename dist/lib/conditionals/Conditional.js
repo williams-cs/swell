@@ -31,6 +31,9 @@ class Conditional {
     get trueBranch() {
         return this._trueBranch;
     }
+    get falseBranch() {
+        return this._falseBranch;
+    }
     /*
     constructor(ifOp: IfOp, elseOp?: ElseOp, ...elseIfOps: ElseIfOp[]){
         this._ifOp = ifOp;

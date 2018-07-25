@@ -1,4 +1,4 @@
-export abstract class LogEvent {
+export abstract class LogEvent<T> {
     private _dateTime: string;
     private _toLog: string;
     private _tag: string;
@@ -23,6 +23,7 @@ export abstract class LogEvent {
         return " " + this._dateTime + ": " + toLog;
     }
 
+    // Assembles coherent log message
     abstract assembleLog(item: string): string;
 
     get dateTime(): string {

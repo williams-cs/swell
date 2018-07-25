@@ -3,6 +3,7 @@ import { NumberNode } from "../prims/NumberNode";
 import { Expression } from "../Expression";
 import { Scope } from "../structural/Scope";
 import { Dimensions } from "../structural/Dimensions";
+import { LogEvent } from "../logging/LogEvent";
 export declare class NumberEffect implements Effect<NumberNode> {
     private _dims;
     private _x;
@@ -15,7 +16,7 @@ export declare class NumberEffect implements Effect<NumberNode> {
     constructor(num: NumberNode);
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
     update(): void;
-    logPaint(): string;
+    logPaint(): LogEvent<any>;
     ast(): Expression<NumberNode>;
     updateAST(): Expression<NumberNode>;
     readonly x: number;

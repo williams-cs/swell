@@ -256,17 +256,14 @@ class StringEffect {
         this._ctx.stroke();
     }
     logPaint() {
-        let paint = new PaintEvent_1.PaintEvent(this._str.val);
-        return paint.assembleLog();
+        return new PaintEvent_1.PaintEvent(this._str.val);
     }
     logMove() {
         //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);
-        let moveStr = new DragEvent_1.DragEvent(this._str.val, this._x1, this._y1, this._dims.x, this._dims.y);
-        return moveStr.assembleLog();
+        return new DragEvent_1.DragEvent(this._str.val, this._x1, this._y1, this._dims.x, this._dims.y);
     }
     logResize() {
-        let sizeStr = new ResizeEvent_1.ResizeEvent(this._str.val, this._size1, this._fontSize);
-        return sizeStr.assembleLog();
+        return new ResizeEvent_1.ResizeEvent(this._str.val, this._size1, this._fontSize);
     }
     ast() {
         return this._ast;

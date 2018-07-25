@@ -6,6 +6,7 @@ import { Dimensions } from "../structural/Dimensions";
 import { PaintEvent } from "../logging/PaintEvent";
 import { DragEvent } from "../logging/DragEvent";
 import { ResizeEvent } from "../logging/ResizeEvent";
+import { LogEvent } from "../logging/LogEvent";
 
 export class EllipseEffect implements Effect<EllipseNode> {
 
@@ -244,20 +245,17 @@ export class EllipseEffect implements Effect<EllipseNode> {
         return this._ast;
     }
 
-    logPaint(): string {
-        let paint = new PaintEvent("ellipse at " + this._dims.x + ", " + this._dims.y);
-        return paint.assembleLog();
+    logPaint(): LogEvent<any> {
+        return new PaintEvent("ellipse at " + this._dims.x + ", " + this._dims.y);
     }
 
-    logMove(): string {
+    logMove(): LogEvent<any> {
         //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);
-        let moveStr = new DragEvent("ellipse", this._x1, this._y1, this._dims.x, this._dims.y);
-        return moveStr.assembleLog();
+        return new DragEvent("ellipse", this._x1, this._y1, this._dims.x, this._dims.y);
     }
 
-    logResize(): string {
-        let sizeStr = new ResizeEvent("ellipse", this._size1, this._dims.radius);
-        return sizeStr.assembleLog();
+    logResize(): LogEvent<any> {
+        return new ResizeEvent("ellipse", this._size1, this._dims.radius);
     }
 
     updateAST(): Expression<EllipseNode> {

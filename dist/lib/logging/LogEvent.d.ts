@@ -1,4 +1,4 @@
-export declare abstract class LogEvent {
+export declare abstract class LogEvent<T> {
     private _dateTime;
     private _toLog;
     private _tag;

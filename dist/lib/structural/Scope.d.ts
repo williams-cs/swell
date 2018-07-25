@@ -1,5 +1,6 @@
 import { Option } from 'space-lift';
 import { Effect } from '../effects/Effect';
+import { LogEvent } from '../logging/LogEvent';
 export declare class Scope {
     private _varBindings;
     private _parent;
@@ -17,7 +18,7 @@ export declare class Scope {
         selection: any;
         dragging: boolean;
         resizing: boolean;
-    }, eventLog?: string[]);
+    }, eventLog?: LogEvent<any>[]);
     copy(): Scope;
     declare(name: string): void;
     assign(name: string, val: any): void;
@@ -29,6 +30,6 @@ export declare class Scope {
     canvas: Option<HTMLCanvasElement>;
     effects: Effect<any>[];
     myState: any;
-    eventLog: string[];
+    eventLog: LogEvent<any>[];
     hadFunEval: boolean;
 }

@@ -23,8 +23,7 @@ class NumberEffect {
     update() {
     }
     logPaint() {
-        let paint = new PaintEvent_1.PaintEvent(this._str);
-        return paint.assembleLog();
+        return new PaintEvent_1.PaintEvent(this._str);
     }
     // logMove(): string {
     //     let moveStr = new DragEvent(this._str, this._x1, this._y1, this._dims.x, this._dims.y);

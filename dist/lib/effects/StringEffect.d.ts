@@ -3,6 +3,7 @@ import { StringNode } from "../prims/StringNode";
 import { Expression } from "../Expression";
 import { Scope } from "../structural/Scope";
 import { Dimensions } from "../structural/Dimensions";
+import { LogEvent } from "../logging/LogEvent";
 export declare class StringEffect implements Effect<StringNode> {
     private _ast;
     private _context;
@@ -40,9 +41,9 @@ export declare class StringEffect implements Effect<StringNode> {
     guideContains(mx: number, my: number): number;
     drawTextGuides(x: number, y: number, w: number, h: number, corner: number): void;
     drawSquare(x: number, y: number, w: number, h: number, color: string): void;
-    logPaint(): string;
-    logMove(): string;
-    logResize(): string;
+    logPaint(): LogEvent<any>;
+    logMove(): LogEvent<any>;
+    logResize(): LogEvent<any>;
     ast(): Expression<StringNode>;
     canvas: HTMLCanvasElement;
     readonly x: number;
