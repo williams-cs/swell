@@ -7,12 +7,11 @@ import { EllipseEffect } from '../effects/EllipseEffect';
 import { Dimensions } from '../structural/Dimensions';
 import { PrintNode } from '../structural/PrintNode';
 
-export class EllipseNode extends Shape implements Expression<EllipseNode>{
+export class EllipseNode implements Expression<EllipseNode> {
     private _width: Expression<NumberNode>;
     private _height: Expression<NumberNode>; 
     
-    constructor(color: ColorNode, xPos: Expression<NumberNode>, yPos: Expression<NumberNode>, width: Expression<NumberNode>, height: Expression<NumberNode>){
-        super(color, xPos, yPos);
+    constructor(width: Expression<NumberNode>, height: Expression<NumberNode>){
         this._width = width;
         this._height = height;
     }

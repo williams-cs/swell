@@ -1,10 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Shape_1 = require("./Shape");
 const EllipseEffect_1 = require("../effects/EllipseEffect");
-class EllipseNode extends Shape_1.Shape {
-    constructor(color, xPos, yPos, width, height) {
-        super(color, xPos, yPos);
+class EllipseNode {
+    constructor(width, height) {
         this._width = width;
         this._height = height;
     }
