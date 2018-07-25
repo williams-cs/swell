@@ -4,6 +4,8 @@ import { Expression } from "../Expression";
 import { Scope } from "../structural/Scope";
 import { PaintEvent } from "../logging/PaintEvent";
 import { Dimensions } from "../structural/Dimensions";
+import { DragEvent } from "../logging/DragEvent";
+import { ResizeEvent } from "../logging/ResizeEvent";
 
 export class NumberEffect implements Effect<NumberNode> {
 
@@ -42,6 +44,16 @@ export class NumberEffect implements Effect<NumberNode> {
         let paint = new PaintEvent(this._str);
         return paint.assembleLog();
     }
+
+    // logMove(): string {
+    //     let moveStr = new DragEvent(this._str, this._x1, this._y1, this._dims.x, this._dims.y);
+    //     return moveStr.assembleLog();
+    // }
+
+    // logResize(): string {
+    //     let sizeStr = new ResizeEvent(this._str, this._size1, this._fontSize);
+    //     return sizeStr.assembleLog();
+    // }
 
     ast(): Expression<NumberNode> {
         throw new Error("Not implemented");

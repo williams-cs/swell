@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const PaintEvent_1 = require("../logging/PaintEvent");
+const DragEvent_1 = require("../logging/DragEvent");
+const ResizeEvent_1 = require("../logging/ResizeEvent");
 class EllipseEffect {
     constructor(circle) {
         this._corner = 0;
@@ -17,6 +19,7 @@ class EllipseEffect {
             this._dims = dims;
             this._ast = ast;
             this._canvas = context.canvas.get();
+            this._context = context;
             this._myState = context.myState;
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
@@ -159,8 +162,11 @@ class EllipseEffect {
             this._myState.dragoffy = this._dims.y;
             this._myState.initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x, this._dims.y);
             this._myState.resizing = true;
+            this._size1 = this.dims.radius; // saving old font size
         }
         else if (contains) {
+            this._x1 = this._dims.x; // Saving original x and y
+            this._y1 = this._dims.y;
             this._selected = true;
             this._myState.selection = this;
             this._myState.dragoffx = this._mouse.x - this._dims.x;
@@ -172,6 +178,12 @@ class EllipseEffect {
         }
     }
     modifyReset() {
+        if (this._myState.dragging) {
+            this._context.eventLog.push(this.logMove());
+        }
+        else if (this._myState.resizing) {
+            this._context.eventLog.push(this.logResize());
+        }
         this._myState.dragging = false;
         this._myState.resizing = false;
         this._corner = 0;
@@ -186,6 +198,15 @@ class EllipseEffect {
     logPaint() {
         let paint = new PaintEvent_1.PaintEvent("ellipse at " + this._dims.x + ", " + this._dims.y);
         return paint.assembleLog();
+    }
+    logMove() {
+        //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);
+        let moveStr = new DragEvent_1.DragEvent("ellipse ", this._x1, this._y1, this._dims.x, this._dims.y);
+        return moveStr.assembleLog();
+    }
+    logResize() {
+        let sizeStr = new ResizeEvent_1.ResizeEvent("ellipse ", this._size1, this._dims.radius);
+        return sizeStr.assembleLog();
     }
     updateAST() {
         throw new Error("Not implemented");
