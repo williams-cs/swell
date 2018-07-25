@@ -15,6 +15,9 @@ class StringNode {
         let e = new StringEffect_1.StringEffect(this);
         e.draw(context, dims, ast);
     }
+    toString() {
+        return '' + this._str;
+    }
     set str(value) {
         this._str = value;
     }

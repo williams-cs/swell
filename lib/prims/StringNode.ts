@@ -24,6 +24,10 @@ export class StringNode implements Expression<StringNode>{
         let e = new StringEffect(this);
         e.draw(context, dims, ast);
     }
+    
+    toString() : string {
+        return '' + this._str;
+    }
 
     set str(value: string){
         this._str = value;

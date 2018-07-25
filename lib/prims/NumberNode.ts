@@ -22,6 +22,10 @@ export class NumberNode implements Expression <NumberNode>{
     
     }
 
+    toString() : string {
+        return "" + this._val;
+    }
+
     get val(): number{
         return this._val;
     }

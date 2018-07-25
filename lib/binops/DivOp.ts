@@ -16,4 +16,8 @@ export class DivOp extends BinaryOperation<NumberNode>{
     eval(context: Scope): NumberNode{
         return new NumberNode(this.left.eval(new Scope(context)).eval(context).val / this.right.eval(new Scope(context)).eval(context).val);
     }
+
+    toString() : string {
+        return this.left.toString() + ' / ' + this.right.toString();
+    }
 }

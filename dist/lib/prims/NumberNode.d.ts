@@ -6,5 +6,6 @@ export declare class NumberNode implements Expression<NumberNode> {
     constructor(val: number);
     eval(context: Scope): NumberNode;
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
+    toString(): string;
     val: number;
 }
