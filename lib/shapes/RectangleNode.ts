@@ -1,13 +1,10 @@
-import { Shape } from './Shape';
 import { Expression } from '../Expression';
-import { ColorNode } from './ColorNode';
 import { Scope } from '../structural/Scope';
 import { NumberNode } from '../prims/NumberNode';
-import { EllipseEffect } from '../effects/EllipseEffect';
+import { RectangleEffect } from '../effects/RectangleEffect';
 import { Dimensions } from '../structural/Dimensions';
-import { PrintNode } from '../structural/PrintNode';
 
-export class EllipseNode implements Expression<EllipseNode> {
+export class RectangleNode implements Expression<RectangleNode> {
     private _width: Expression<NumberNode>;
     private _height: Expression<NumberNode>; 
     
@@ -19,11 +16,11 @@ export class EllipseNode implements Expression<EllipseNode> {
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
         let radius = this._width.eval(context).val / 2;
         dims.radius = new NumberNode(radius);
-        let e = new EllipseEffect(this);
-        e.draw(context, dims, ast);
+        //let e = new RectangleEffect(this);
+        //e.draw(context, dims, ast);
     }
 
-    eval(context: Scope): EllipseNode {
+    eval(context: Scope): RectangleNode {
         return this;
     }
 

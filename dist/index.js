@@ -90,6 +90,8 @@ var StringEffect_1 = require("./lib/effects/StringEffect");
 exports.StringEffect = StringEffect_1.StringEffect;
 var Dimensions_1 = require("./lib/structural/Dimensions");
 exports.Dimensions = Dimensions_1.Dimensions;
+var RectangleEffect_1 = require("./lib/effects/RectangleEffect");
+exports.RectangleEffect = RectangleEffect_1.RectangleEffect;
 /* EVENTS */
 var LogEvent_1 = require("./lib/logging/LogEvent");
 exports.LogEvent = LogEvent_1.LogEvent;

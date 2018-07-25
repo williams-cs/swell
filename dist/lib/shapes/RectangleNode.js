@@ -1,8 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const NumberNode_1 = require("../prims/NumberNode");
-const EllipseEffect_1 = require("../effects/EllipseEffect");
-class EllipseNode {
+class RectangleNode {
     constructor(width, height) {
         this._width = width;
         this._height = height;
@@ -10,8 +9,8 @@ class EllipseNode {
     draw(context, dims, ast) {
         let radius = this._width.eval(context).val / 2;
         dims.radius = new NumberNode_1.NumberNode(radius);
-        let e = new EllipseEffect_1.EllipseEffect(this);
-        e.draw(context, dims, ast);
+        //let e = new RectangleEffect(this);
+        //e.draw(context, dims, ast);
     }
     eval(context) {
         return this;
@@ -30,5 +29,5 @@ class EllipseNode {
         this._height = height;
     }
 }
-exports.EllipseNode = EllipseNode;
-//# sourceMappingURL=EllipseNode.js.map
+exports.RectangleNode = RectangleNode;
+//# sourceMappingURL=RectangleNode.js.map
