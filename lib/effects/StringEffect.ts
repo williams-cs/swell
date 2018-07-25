@@ -7,6 +7,7 @@ import { PrintNode } from "../structural/PrintNode";
 import { PaintEvent } from "../logging/PaintEvent";
 import { DragEvent } from "../logging/DragEvent";
 import { ResizeEvent } from "../logging/ResizeEvent";
+import { LogEvent } from "../logging/LogEvent";
 
 export class StringEffect implements Effect<StringNode> {
 
@@ -308,20 +309,24 @@ export class StringEffect implements Effect<StringNode> {
         this._ctx.stroke();
     }
 
-    logPaint(): string {
-        let paint = new PaintEvent(this._str.val);
-        return paint.assembleLog();
+    logPaint(): LogEvent<any> {
+        return new PaintEvent(this._str.val);
     }
     
+<<<<<<< HEAD
     logMove(): string {
         //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x.eval(this._context).val + " " + this._dims.y.eval(this._context).val);
         let moveStr = new DragEvent(this._str.val, this._x1, this._y1, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
         return moveStr.assembleLog();
+=======
+    logMove(): LogEvent<any> {
+        //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);
+        return new DragEvent(this._str.val, this._x1, this._y1, this._dims.x, this._dims.y);
+>>>>>>> bbf71679c961b96336702a8fab418bd996f35ed0
     }
 
-    logResize(): string {
-        let sizeStr = new ResizeEvent(this._str.val, this._size1, this._fontSize);
-        return sizeStr.assembleLog();
+    logResize(): LogEvent<any> {
+        return new ResizeEvent(this._str.val, this._size1, this._fontSize);
     }
 
     ast(): Expression<StringNode> {

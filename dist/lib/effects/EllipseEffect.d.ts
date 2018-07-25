@@ -3,6 +3,7 @@ import { EllipseNode } from "../shapes/EllipseNode";
 import { Expression } from "../Expression";
 import { Scope } from "../structural/Scope";
 import { Dimensions } from "../structural/Dimensions";
+import { LogEvent } from "../logging/LogEvent";
 export declare class EllipseEffect implements Effect<EllipseNode> {
     private _circle;
     private _dims;
@@ -35,9 +36,9 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
     modifyReset(): void;
     getMousePosition(): void;
     ast(): Expression<EllipseNode>;
-    logPaint(): string;
-    logMove(): string;
-    logResize(): string;
+    logPaint(): LogEvent<any>;
+    logMove(): LogEvent<any>;
+    logResize(): LogEvent<any>;
     updateAST(): Expression<EllipseNode>;
     readonly x: number;
     readonly y: number;

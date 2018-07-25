@@ -256,17 +256,20 @@ class StringEffect {
         this._ctx.stroke();
     }
     logPaint() {
-        let paint = new PaintEvent_1.PaintEvent(this._str.val);
-        return paint.assembleLog();
+        return new PaintEvent_1.PaintEvent(this._str.val);
     }
     logMove() {
+<<<<<<< HEAD
         //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x.eval(this._context).val + " " + this._dims.y.eval(this._context).val);
         let moveStr = new DragEvent_1.DragEvent(this._str.val, this._x1, this._y1, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
         return moveStr.assembleLog();
+=======
+        //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);
+        return new DragEvent_1.DragEvent(this._str.val, this._x1, this._y1, this._dims.x, this._dims.y);
+>>>>>>> bbf71679c961b96336702a8fab418bd996f35ed0
     }
     logResize() {
-        let sizeStr = new ResizeEvent_1.ResizeEvent(this._str.val, this._size1, this._fontSize);
-        return sizeStr.assembleLog();
+        return new ResizeEvent_1.ResizeEvent(this._str.val, this._size1, this._fontSize);
     }
     ast() {
         return this._ast;

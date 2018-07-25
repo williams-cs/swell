@@ -16,12 +16,12 @@ export class Scope{
         dragging: boolean,
         resizing: boolean
     };
-    private _eventLog: LogEvent[] = [];
+    private _eventLog: LogEvent<any>[] = [];
     private _hadFunEval: boolean = false;
     //public globalFunID = Math.random();
     public globalFunID = 10000000;
 
-    constructor(parent: Scope, effects?: Effect<any>[], myState?: {dragoffx: number,dragoffy: number,initDistance: number,selection: any,dragging: boolean,resizing: boolean}, eventLog?: LogEvent[]){
+    constructor(parent: Scope, effects?: Effect<any>[], myState?: {dragoffx: number,dragoffy: number,initDistance: number,selection: any,dragging: boolean,resizing: boolean}, eventLog?: LogEvent<any>[]){
         this._varBindings = new Map();
         this._parent = parent;
         this._effects = effects || null;
@@ -116,10 +116,10 @@ export class Scope{
         this._myState = state;
     }
 
-    get eventLog(): LogEvent[] {
+    get eventLog(): LogEvent<any>[] {
         return this._eventLog;
     }
-    set eventLog(update: LogEvent[]){
+    set eventLog(update: LogEvent<any>[]){
         this._eventLog = update;
     }
 

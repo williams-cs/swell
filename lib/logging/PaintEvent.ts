@@ -1,6 +1,6 @@
 import {LogEvent} from './LogEvent';
 
-export class PaintEvent extends LogEvent{
+export class PaintEvent extends LogEvent<any>{
     //toLog: string;
     constructor(toLog: string){
         super(toLog);

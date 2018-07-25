@@ -197,17 +197,14 @@ class EllipseEffect {
         return this._ast;
     }
     logPaint() {
-        let paint = new PaintEvent_1.PaintEvent("ellipse at " + this._dims.x.eval(this._context).val + ", " + this._dims.y.eval(this._context).val);
-        return paint.assembleLog();
+        return new PaintEvent_1.PaintEvent("ellipse at " + this._dims.x + ", " + this._dims.y);
     }
     logMove() {
-        //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x.eval(this._context).val + " " + this._dims.y.eval(this._context).val);
-        let moveStr = new DragEvent_1.DragEvent("ellipse", this._x1, this._y1, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
-        return moveStr.assembleLog();
+        //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);
+        return new DragEvent_1.DragEvent("ellipse", this._x1, this._y1, this._dims.x, this._dims.y);
     }
     logResize() {
-        let sizeStr = new ResizeEvent_1.ResizeEvent("ellipse", this._size1, this._dims.radius.eval(this._context).val);
-        return sizeStr.assembleLog();
+        return new ResizeEvent_1.ResizeEvent("ellipse", this._size1, this._dims.radius);
     }
     updateAST() {
         throw new Error("Not implemented");

@@ -18,7 +18,11 @@ export declare class Scope {
         selection: any;
         dragging: boolean;
         resizing: boolean;
+<<<<<<< HEAD
     }, eventLog?: LogEvent[]);
+=======
+    }, eventLog?: LogEvent<any>[]);
+>>>>>>> bbf71679c961b96336702a8fab418bd996f35ed0
     copy(): Scope;
     declare(name: string): void;
     assign(name: string, val: any): void;
@@ -30,6 +34,10 @@ export declare class Scope {
     canvas: Option<HTMLCanvasElement>;
     effects: Effect<any>[];
     myState: any;
+<<<<<<< HEAD
     eventLog: LogEvent[];
+=======
+    eventLog: LogEvent<any>[];
+>>>>>>> bbf71679c961b96336702a8fab418bd996f35ed0
     hadFunEval: boolean;
 }
