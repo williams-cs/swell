@@ -17,6 +17,9 @@ class PlusOp extends BinaryOperation_1.BinaryOperation {
         let re = r.eval(new Scope_1.Scope(context));
         return new NumberNode_1.NumberNode(le.val + re.val);
     }
+    toString() {
+        return this.left.toString() + ' + ' + this.right.toString();
+    }
 }
 exports.PlusOp = PlusOp;
 //# sourceMappingURL=PlusOp.js.map

@@ -264,6 +264,7 @@ export class StringEffect implements Effect<StringNode> {
 
     modifyReset(): void {
         //console.log(this._str.val + " just released");
+        console.log(this._str.val + " is dragging? " + this._myState.dragging);
         if(this._myState.dragging && this._myState.selection === this){
             console.log(this._str.val + " logging drag");
             this._context.eventLog.push(this.logMove());

@@ -7,4 +7,5 @@ export declare class PlusOp extends BinaryOperation<NumberNode> {
     constructor(left: Expression<NumberNode>, right: Expression<NumberNode>);
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
     eval(context: Scope): NumberNode;
+    toString(): string;
 }
