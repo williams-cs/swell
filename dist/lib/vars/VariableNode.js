@@ -14,6 +14,9 @@ class VariableNode {
     draw(context, dims, ast) {
     }
     // add get/set
+    toString() {
+        return "var " + this._name;
+    }
     get name() {
         return this._name;
     }

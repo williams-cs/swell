@@ -208,11 +208,11 @@ class StringEffect {
     }
     modifyReset() {
         //console.log(this._str.val + " just released");
-        if (this._myState.dragging) {
+        if (this._myState.dragging && this._myState.selection === this) {
             console.log(this._str.val + " logging drag");
             this._context.eventLog.push(this.logMove());
         }
-        else if (this._myState.resizing) {
+        else if (this._myState.resizing && this._myState.selection === this) {
             console.log(this._str.val + " logging resize");
             this._context.eventLog.push(this.logResize());
         }
