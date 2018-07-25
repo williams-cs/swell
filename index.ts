@@ -57,6 +57,7 @@ export {EllipseEffect} from './lib/effects/EllipseEffect';
 export {NumberEffect} from './lib/effects/NumberEffect';
 export {StringEffect} from './lib/effects/StringEffect';
 export {Dimensions} from './lib/structural/Dimensions';
+export {RectangleEffect} from "./lib/effects/RectangleEffect";
 
 /* EVENTS */
 export {LogEvent} from './lib/logging/LogEvent';

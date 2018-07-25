@@ -36,7 +36,7 @@ export class EllipseNode implements Expression<EllipseNode> {
         this._width = width;
     }
 
-    get heigth(): Expression<NumberNode>{
+    get height(): Expression<NumberNode>{
         return this._height;
     }
     set height(height: Expression<NumberNode>){

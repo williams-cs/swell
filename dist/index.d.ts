@@ -42,6 +42,7 @@ export { EllipseEffect } from './lib/effects/EllipseEffect';
 export { NumberEffect } from './lib/effects/NumberEffect';
 export { StringEffect } from './lib/effects/StringEffect';
 export { Dimensions } from './lib/structural/Dimensions';
+export { RectangleEffect } from "./lib/effects/RectangleEffect";
 export { LogEvent } from './lib/logging/LogEvent';
 export { ClearEvent } from './lib/logging/ClearEvent';
 export { DragEvent } from './lib/logging/DragEvent';
