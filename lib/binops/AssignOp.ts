@@ -29,4 +29,8 @@ export class AssignOp<T> extends BinaryOperation<T>{
         }
         throw new Error("HALP (in AssignOp)");
     }
+    
+    toString() :string {
+        return this.left.toString() + ' = ' + this.right.toString();
+    }
 }
