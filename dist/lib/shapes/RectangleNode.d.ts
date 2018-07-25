@@ -11,4 +11,5 @@ export declare class RectangleNode implements Expression<RectangleNode> {
     move(): void;
     width: Expression<NumberNode>;
     height: Expression<NumberNode>;
+    toString(): string;
 }

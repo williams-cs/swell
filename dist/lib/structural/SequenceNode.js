@@ -9,6 +9,9 @@ class SequenceNode {
     }
     draw(context, dims, ast) {
     }
+    toString() {
+        return this._left.toString() + ";\n" + this._right.toString() + ";";
+    }
     eval(context) {
         let leftScope = new Scope_1.Scope(context, context.effects, context.myState, context.eventLog);
         leftScope.canvas = space_lift_1.Some(context.canvas.get());

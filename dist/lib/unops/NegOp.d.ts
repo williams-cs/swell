@@ -7,4 +7,5 @@ export declare class NegOp extends UnaryOperation<NumberNode> {
     constructor(val: Expression<NumberNode>);
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
     eval(context: Scope): NumberNode;
+    toString(): string;
 }

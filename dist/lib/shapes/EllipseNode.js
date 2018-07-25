@@ -29,6 +29,9 @@ class EllipseNode {
     set height(height) {
         this._height = height;
     }
+    toString() {
+        return "ellipse(" + this._width.toString() + ", " + this._height.toString() + ")";
+    }
 }
 exports.EllipseNode = EllipseNode;
 //# sourceMappingURL=EllipseNode.js.map
