@@ -313,16 +313,9 @@ export class StringEffect implements Effect<StringNode> {
         return new PaintEvent(this._str.val);
     }
     
-<<<<<<< HEAD
-    logMove(): string {
-        //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x.eval(this._context).val + " " + this._dims.y.eval(this._context).val);
-        let moveStr = new DragEvent(this._str.val, this._x1, this._y1, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
-        return moveStr.assembleLog();
-=======
     logMove(): LogEvent<any> {
         //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);
-        return new DragEvent(this._str.val, this._x1, this._y1, this._dims.x, this._dims.y);
->>>>>>> bbf71679c961b96336702a8fab418bd996f35ed0
+        return new DragEvent(this._str.val, this._x1, this._y1, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
 
     logResize(): LogEvent<any> {
