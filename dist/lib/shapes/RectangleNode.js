@@ -4,6 +4,7 @@ const NumberNode_1 = require("../prims/NumberNode");
 const RectangleEffect_1 = require("../effects/RectangleEffect");
 class RectangleNode {
     constructor(width, height) {
+        this._newLine = false;
         this._width = width;
         this._height = height;
     }
@@ -28,6 +29,9 @@ class RectangleNode {
     }
     set height(height) {
         this._height = height;
+    }
+    newLine() {
+        return this._newLine;
     }
     toString() {
         return "rect(" + this._width.toString() + ", " + this._height.toString() + ")";

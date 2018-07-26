@@ -15,6 +15,9 @@ class MinusOp extends BinaryOperation_1.BinaryOperation {
     toString() {
         return this.left.toString() + ' - ' + this.right.toString();
     }
+    newLine() {
+        return this.newLine();
+    }
 }
 exports.MinusOp = MinusOp;
 //# sourceMappingURL=MinusOp.js.map

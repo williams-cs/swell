@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 class BooleanNode {
     constructor(val) {
+        this._newLine = false;
         //super(parent);
         this._val = val;
     }
@@ -19,6 +20,9 @@ class BooleanNode {
     }
     set val(value) {
         this._val = value;
+    }
+    newLine() {
+        return this._newLine;
     }
 }
 exports.BooleanNode = BooleanNode;

@@ -7,6 +7,7 @@ export class PrintNode implements Expression<any>{
     private _toPrint: Expression<any>;
     private _scale: number = 1;
     private _dims: Dimensions;
+    private _newLine : boolean = false;
 
     constructor(toPrint: Expression<any>, dimensions?: Dimensions){
         this._toPrint = toPrint;
@@ -33,5 +34,9 @@ export class PrintNode implements Expression<any>{
     }
     get dims(): Dimensions {
         return this._dims;
+    }
+
+    newLine() : boolean {
+        return this._newLine;
     }
 }

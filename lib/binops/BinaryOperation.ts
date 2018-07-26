@@ -4,6 +4,7 @@ import {Expression} from '../Expression';
 import {Dimensions} from '../structural/Dimensions';
 
 export abstract class BinaryOperation<T> implements Expression<T> {
+    private _newLine : boolean = false;
     constructor(private _left: Expression<T>, private _right: Expression<T>){};
     abstract eval(context: Scope): T;
 
@@ -23,6 +24,9 @@ export abstract class BinaryOperation<T> implements Expression<T> {
     }
     set right(right: Expression<T>){
         this._right = right;
+    }
+    newLine() : boolean {
+        return this._newLine;
     }
 }
 

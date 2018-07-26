@@ -25,8 +25,8 @@ class AssignOp extends BinaryOperation_1.BinaryOperation {
     toString() {
         return this.left.toString() + ' = ' + this.right.toString();
     }
-    get newLine() {
-        return this.newLine;
+    newLine() {
+        return this.newLine();
     }
 }
 exports.AssignOp = AssignOp;

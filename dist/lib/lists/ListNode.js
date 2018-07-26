@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //import { ListHead } from "./ListHead";
 class ListNode {
     constructor(list) {
+        this._newLine = false;
         this._list = list;
     }
     eval(context) {
@@ -24,6 +25,9 @@ class ListNode {
     }
     get list() {
         return this._list;
+    }
+    newLine() {
+        return this._newLine;
     }
 }
 exports.ListNode = ListNode;

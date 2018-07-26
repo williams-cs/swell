@@ -9,5 +9,5 @@ export declare class WhileNode implements Expression<any> {
     eval(context: Scope): any;
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
     toString(): string;
-    readonly newLine: boolean;
+    newLine(): boolean;
 }

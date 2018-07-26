@@ -40,7 +40,7 @@ class WhileNode {
     toString() {
         return "";
     }
-    get newLine() {
+    newLine() {
         return this._newLine;
     }
 }

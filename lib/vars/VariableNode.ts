@@ -5,6 +5,7 @@ import { Dimensions } from '../structural/Dimensions';
 
 export class VariableNode implements Expression<any>{
     private _name: string;
+    private _newLine : boolean = false;
     //private _val: Expression<any>;
     constructor(name: string){
         this._name = name;
@@ -28,6 +29,10 @@ export class VariableNode implements Expression<any>{
     
     get name(): string{
         return this._name;
+    }
+
+    newLine() : boolean {
+        return this._newLine;
     }
 
     /*

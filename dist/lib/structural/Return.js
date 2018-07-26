@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ReturnError_1 = require("./ReturnError");
 class Return {
     constructor(expr) {
+        this._newLine = false;
         this._expr = expr;
     }
     eval(context) {
@@ -11,6 +12,12 @@ class Return {
         console.log("return result: " + result);
         throw new ReturnError_1.ReturnError(result, context.retIDLookup());
         //return this._expr.eval(context); // will need typechecking at some point
+    }
+    toString() {
+        return "";
+    }
+    newLine() {
+        return this._newLine;
     }
     draw(context, dims, ast) { }
 }

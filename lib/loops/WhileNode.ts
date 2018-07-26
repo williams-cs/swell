@@ -50,7 +50,7 @@ export class WhileNode implements Expression<any>{
     toString() :string {
         return "";
     }
-    get newLine() : boolean {
+    newLine() : boolean {
         return this._newLine;
     }
 }

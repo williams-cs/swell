@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class VariableNode {
     //private _val: Expression<any>;
     constructor(name) {
+        this._newLine = false;
         this._name = name;
         //this._val = val;
     }
@@ -19,6 +20,9 @@ class VariableNode {
     }
     get name() {
         return this._name;
+    }
+    newLine() {
+        return this._newLine;
     }
 }
 exports.VariableNode = VariableNode;

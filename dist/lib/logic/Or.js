@@ -3,8 +3,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const BooleanNode_1 = require("../prims/BooleanNode");
 class Or {
     constructor(left, right) {
+        this._newLine = false;
         this._left = left;
         this._right = right;
+    }
+    toString() {
+        return "";
+    }
+    newLine() {
+        return this._newLine;
     }
     eval(context) {
         let lhs = this._left.eval(context);

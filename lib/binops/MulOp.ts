@@ -20,4 +20,7 @@ export class MulOp extends BinaryOperation<NumberNode>{
     toString() : string {
         return this.left.toString() + ' * ' + this.right.toString();
     }
+    newLine() : boolean {
+        return this.newLine();
+    }
 }

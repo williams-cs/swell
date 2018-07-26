@@ -33,7 +33,7 @@ export class AssignOp<T> extends BinaryOperation<T>{
     toString() :string {
         return this.left.toString() + ' = ' + this.right.toString();
     }
-    get newLine() : boolean {
-        return this.newLine;
+    newLine() : boolean {
+        return this.newLine();
     }
 }

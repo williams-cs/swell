@@ -20,6 +20,9 @@ class PlusOp extends BinaryOperation_1.BinaryOperation {
     toString() {
         return this.left.toString() + ' + ' + this.right.toString();
     }
+    newLine() {
+        return this.newLine();
+    }
 }
 exports.PlusOp = PlusOp;
 //# sourceMappingURL=PlusOp.js.map

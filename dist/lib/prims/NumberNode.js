@@ -5,6 +5,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // Should abstract Node class implement Expression?
 class NumberNode {
     constructor(val) {
+        this._newLine = false;
         //super(parent);
         this._val = val;
     }
@@ -19,6 +20,9 @@ class NumberNode {
     }
     get val() {
         return this._val;
+    }
+    newLine() {
+        return this._newLine;
     }
     set val(value) {
         this._val = value;

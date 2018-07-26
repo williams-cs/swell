@@ -8,14 +8,14 @@ class SequenceNode {
         this._left = left;
         this._right = right;
     }
-    get newLine() {
+    newLine() {
         return this._newLine;
     }
     draw(context, dims, ast) {
     }
     toString() {
         let result = this._left.toString() + ";\n";
-        if (this._right.newLine == false) {
+        if (this._right.newLine() == false) {
             result += this._right.toString() + ";";
         }
         else {

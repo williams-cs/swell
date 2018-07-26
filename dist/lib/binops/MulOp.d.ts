@@ -8,4 +8,5 @@ export declare class MulOp extends BinaryOperation<NumberNode> {
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
     eval(context: Scope): NumberNode;
     toString(): string;
+    newLine(): boolean;
 }

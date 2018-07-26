@@ -3,6 +3,7 @@ import {Scope} from '../structural/Scope';
 import { Dimensions } from "../structural/Dimensions";
 
 export class NOP implements Expression<NOP>{
+    private _newLine : boolean = true;
     eval(context: Scope): NOP {
         return this;
     }
@@ -10,5 +11,9 @@ export class NOP implements Expression<NOP>{
 
     toString() : string {
         return "";
+    }
+
+    newLine() : boolean {
+        return this._newLine;
     }
 }

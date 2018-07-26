@@ -15,6 +15,9 @@ class DivOp extends BinaryOperation_1.BinaryOperation {
     toString() {
         return this.left.toString() + ' / ' + this.right.toString();
     }
+    newLine() {
+        return this.newLine();
+    }
 }
 exports.DivOp = DivOp;
 //# sourceMappingURL=DivOp.js.map

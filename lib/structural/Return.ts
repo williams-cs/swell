@@ -5,6 +5,7 @@ import { Dimensions } from "./Dimensions";
 
 export class Return implements Expression<any>{
     private _expr: Expression<any>;
+    private _newLine : boolean = false;
     constructor(expr: Expression<any>){
         this._expr = expr;
     }
@@ -15,6 +16,14 @@ export class Return implements Expression<any>{
         console.log("return result: " + result);
         throw new ReturnError(result,context.retIDLookup());
         //return this._expr.eval(context); // will need typechecking at some point
+    }
+
+    toString() :string {
+        return "";
+    }
+
+    newLine() : boolean {
+        return this._newLine;
     }
 
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {}

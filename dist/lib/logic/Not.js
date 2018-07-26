@@ -3,7 +3,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const BooleanNode_1 = require("../prims/BooleanNode");
 class Not {
     constructor(expr) {
+        this._newLine = false;
         this._expr = expr;
+    }
+    toString() {
+        return "";
+    }
+    newLine() {
+        return this._newLine;
     }
     eval(context) {
         let e = this._expr.eval(context);

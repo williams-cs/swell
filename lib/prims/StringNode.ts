@@ -11,6 +11,7 @@ import { PrintNode } from '../structural/PrintNode';
 export class StringNode implements Expression<StringNode>{
 
     private _str: string;
+    private _newLine : boolean = false;
 
     constructor(str: string){
         this._str = str;
@@ -35,5 +36,9 @@ export class StringNode implements Expression<StringNode>{
 
     get val(): string {
         return this._str;
+    }
+
+    newLine() : boolean {
+        return this._newLine;
     }
 }

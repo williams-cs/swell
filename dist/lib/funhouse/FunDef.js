@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Scope_1 = require("../structural/Scope");
 class FunDef {
     constructor(name, body, args) {
+        this._newLine = true;
         this._name = name;
         this._body = body;
         this._args = args;
@@ -22,6 +23,9 @@ class FunDef {
         context.declare(this._name); // assign with val function
         context.assign(this._name, this); // parent or current?
         return null;
+    }
+    newLine() {
+        return this._newLine;
     }
     toString() {
         let argsList = '';

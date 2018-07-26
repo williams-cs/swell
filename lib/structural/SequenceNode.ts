@@ -10,7 +10,7 @@ export class SequenceNode implements Expression<void>{
     private _rightVal: any;
     private _newLine : boolean = false;
 
-    get newLine() : boolean {
+    newLine() : boolean {
         return this._newLine;
     }
 
@@ -25,7 +25,7 @@ export class SequenceNode implements Expression<void>{
 
     toString() : string {
         let result = this._left.toString() + ";\n";
-        if(this._right.newLine == false){
+        if(this._right.newLine() == false){
             result += this._right.toString() + ";";
         }
         else {

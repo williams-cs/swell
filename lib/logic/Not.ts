@@ -4,9 +4,18 @@ import { BooleanNode } from "../prims/BooleanNode";
 
 export class Not implements Expression<BooleanNode>{
     private _expr: Expression<any>;
+    private _newLine : boolean = false;
 
     constructor(expr: Expression<any>){
         this._expr = expr;
+    }
+
+    toString() :string {
+        return "";
+    }
+
+    newLine() : boolean {
+        return this._newLine;
     }
 
     eval(context: Scope): BooleanNode {
