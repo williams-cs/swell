@@ -7,6 +7,7 @@ import { PaintEvent } from "../logging/PaintEvent";
 import { DragEvent } from "../logging/DragEvent";
 import { ResizeEvent } from "../logging/ResizeEvent";
 import { LogEvent } from "../logging/LogEvent";
+import { NumberNode } from "../prims/NumberNode";
 
 export class EllipseEffect implements Effect<EllipseNode> {
 
@@ -192,15 +193,24 @@ export class EllipseEffect implements Effect<EllipseNode> {
     modifyResize(isTooSmall: boolean): void {
         if(isTooSmall){
             this._dims.radius.eval(this._context).val = 15;
+            let widthAndHeight: NumberNode = new NumberNode(this._dims.radius.eval(this._context).val * 2);
+            this._circle.width = widthAndHeight;
+            this._circle.height = widthAndHeight;
             let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
             if(newDistance - this._myState.initDistance > 0){
                 this._dims.radius.eval(this._context).val += newDistance - this._myState.initDistance;
+                widthAndHeight = new NumberNode(this._dims.radius.eval(this._context).val * 2);
+                this._circle.width = widthAndHeight;
+                this._circle.height = widthAndHeight;
                 this._myState.initDistance = newDistance;
             }
         }
         else {
             let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
             this._dims.radius.eval(this._context).val += newDistance - this._myState.initDistance;
+            let widthAndHeight: NumberNode = new NumberNode(this._dims.radius.eval(this._context).val * 2);
+            this._circle.width = widthAndHeight;
+            this._circle.height = widthAndHeight;
             this._myState.initDistance = newDistance;
         }
     }
