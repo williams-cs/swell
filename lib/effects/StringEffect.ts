@@ -23,7 +23,7 @@ export class StringEffect implements Effect<StringNode> {
     private _size1: number; // Original scale for resize logging
     //private _size2: number;
     private _corner: number = 0;
-    private _selected: boolean = false;
+    private _isSelected: boolean = false; // Private bools
     private _isEditing: boolean = false;
     private _isListening: boolean = false;
     private _isDragging: boolean = false;
@@ -97,7 +97,7 @@ export class StringEffect implements Effect<StringNode> {
         this._textMetrics.height = this._fontSize;
         this._textMetrics.str = this._str.val;
         this._textMetrics.interval = this._textMetrics.width / this._textMetrics.str.length;
-        if(this._selected) {
+        if(this._isSelected) {
             this.drawTextGuides(this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val - this._fontSize, this._textMetrics.width, this._textMetrics.height, this._corner);
         }
         if(this._isEditing) {
@@ -117,17 +117,17 @@ export class StringEffect implements Effect<StringNode> {
     /* Event listener functions */
     onMouseMove(event: any): void {
         this.getMousePosition();
-        if(this._isDragging && this._selected){
-            console.log(this._str.val + " is being dragged.");
+        if(this._isDragging && this._isSelected){
+            //console.log(this._str.val + " is being dragged.");
             this.modifyDrag();
         }
-        else if(this._isResizing && this._selected){
+        else if(this._isResizing && this._isSelected){
             this.modifyResize(this._fontSize < 15);
         }
     }
 
     onMouseDown(event: any): void {
-        if(this._selected && this.contains(this._mouse.x, this._mouse.y)){ //text editing
+        if(this._isSelected && this.contains(this._mouse.x, this._mouse.y)){ //text editing
             if(!this._isListening){
                 window.addEventListener('keydown', this.modifyText.bind(this));
             }
@@ -135,12 +135,12 @@ export class StringEffect implements Effect<StringNode> {
             this._isEditing = true;
             this._myState.dragging = false;
             this._isDragging = false;
-            console.log(this._str.val + " is setting dragging to false");
+            //console.log(this._str.val + " is setting dragging to false");
             this._textMetrics.initMousePos = this._mouse.x;
             this.modifyTextCursor();
         }
         else {
-            this._selected = false;
+            this._isSelected = false;
             this._isEditing = false;
         }
         this.modifyState(this.guideContains(this._mouse.x, this._mouse.y) > 0, this.contains(this._mouse.x, this._mouse.y));
@@ -235,12 +235,12 @@ export class StringEffect implements Effect<StringNode> {
 
     modifyState(guideContains: boolean, contains: boolean): void {
         if(guideContains) {
-            this._selected = true;
+            this._isSelected = true;
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
             this._myState.selection = this;
 
-            console.log(this._str.val + "is selected?" + this._selected);
-            console.log("state selection is " + this._str.val);
+            //console.log(this._str.val + "is selected?" + this._selected);
+            //console.log("state selection is " + this._str.val);
 
             this._myState.dragoffx = this._dims.x.eval(this._context).val;
             this._myState.dragoffy = this._dims.y.eval(this._context).val;
@@ -251,38 +251,41 @@ export class StringEffect implements Effect<StringNode> {
         } else if (contains) {
             this._x1 = this._dims.x.eval(this._context).val; // Saving original x and y
             this._y1 = this._dims.y.eval(this._context).val;
-            this._selected = true;
+            this._isSelected = true;
             this._myState.selection = this;
 
-            console.log(this._str.val + "is selected?" + this._selected);
-            console.log("state selection is " + this._str.val);
+            //console.log(this._str.val + "is selected?" + this._selected);
+            //console.log("state selection is " + this._str.val);
 
             this._myState.dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
             this._myState.dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
             if(!this._isEditing){
                 this._myState.dragging = true;
                 this._isDragging = true;
+                //console.log(this._str.val + " is dragging? " + this._isDragging);
             }
         } else {
-            this._selected = false;
+            this._isSelected = false;
             this._isEditing = false;
         }
     }
 
     modifyReset(): void {
         //console.log(this._str.val + " just released");
-        console.log(this._str.val + " is dragging? " + this._myState.dragging);
-        if(this._myState.dragging && this._selected){
-            console.log(this._str.val + " logging drag");
+        //console.log(this._str.val + " is dragging? " + this._myState.dragging);
+        if(this._isDragging && this._isSelected){
+            //console.log(this._str.val + " logging drag");
+            this._isDragging = false;
             this._context.eventLog.push(this.logMove());
-        } else if (this._myState.resizing && this._selected){
-            console.log(this._str.val + " logging resize");
+        } else if (this._isResizing && this._isSelected){
+            //console.log(this._str.val + " logging resize");
+            this._isResizing = false;
             this._context.eventLog.push(this.logResize());
         }
         this._myState.dragging = false;
-        this._isDragging = false;
+        //this._isDragging = false;
         this._myState.resizing = false;
-        this._isResizing = false;
+        //this._isResizing = false;
         this._corner = 0;
         //this._context.eventLog.push(this.logMove());
     }
@@ -301,7 +304,7 @@ export class StringEffect implements Effect<StringNode> {
             this._isDragging = false;
             this._myState.resizing = false;
             this._isResizing = false;
-            this._selected = false;
+            this._isSelected = false;
             this._isEditing = false;
             this._corner = 0;
         }

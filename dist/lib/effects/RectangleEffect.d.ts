@@ -28,6 +28,8 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
     addEventListeners(): void;
     contains(mx: number, my: number): boolean;
     guideContains(mx: number, my: number): number;
+    drawGuides(x: number, y: number, w: number, h: number, corner: number): void;
+    drawSquare(x: number, y: number, w: number, h: number, color: string): void;
     onMouseMove(event: any): void;
     onMouseDown(event: any): void;
     onMouseUp(event: any): void;
