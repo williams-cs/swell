@@ -16,7 +16,11 @@ export class EllipseEffect implements Effect<EllipseNode> {
     private _ctx: CanvasRenderingContext2D;
     private _canvas: HTMLCanvasElement;
     private _corner: number = 0;
-    private _selected: boolean = false;
+    private _isSelected: boolean = false; // Private bools
+    private _isEditing: boolean = false;
+    private _isListening: boolean = false;
+    private _isDragging: boolean = false;
+    private _isResizing: boolean = false;
 
     private _x1: number; // used to save coords for logging
     private _y1: number;
@@ -55,6 +59,9 @@ export class EllipseEffect implements Effect<EllipseNode> {
             this._ctx = ctx;
             this.update();
         }
+        // logging
+        this._context.eventLog.push(this.logPaint()); // this.context or context?
+
         context.effects.push(this);
     
         this.addEventListeners();
@@ -66,7 +73,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
         this._ctx.arc(this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val, this._dims.radius.eval(this._context).val, 0, Math.PI * 2, false);
         this._ctx.strokeStyle = "black";
         this._ctx.stroke();
-        if(this._selected) {
+        if(this._isSelected) {
             this.drawGuides(this._dims.x.eval(this._context).val - this._dims.radius.eval(this._context).val, this._dims.y.eval(this._context).val - this._dims.radius.eval(this._context).val, this._dims.radius.eval(this._context).val * 2, this._dims.radius.eval(this._context).val * 2, this._corner);
         }
     }
@@ -159,10 +166,10 @@ export class EllipseEffect implements Effect<EllipseNode> {
 
     onMouseMove(event: any): void {
         this.getMousePosition();
-        if(this._myState.dragging && this._selected){
+        if(this._isDragging && this._isSelected){
             this.modifyDrag();
         }
-        else if(this._myState.resizing && this._selected){
+        else if(this._isResizing && this._isSelected){
             this.modifyResize(this._dims.radius.eval(this._context).val < 10);
         }
     }
@@ -172,7 +179,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
     }
 
     onMouseUp(event: any) {
-        console.log("I'm an ellipse!");
+        //console.log("I'm an ellipse!");
         this.modifyReset();
     }
 
@@ -200,7 +207,9 @@ export class EllipseEffect implements Effect<EllipseNode> {
 
     modifyState(guideContains: boolean, contains: boolean): void {
         if(guideContains) {
-            this._selected = true;
+            this._isSelected = true;
+            this._isResizing = true;
+
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
             this._myState.selection = this;
             this._myState.dragoffx = this._dims.x.eval(this._context).val;
@@ -214,21 +223,33 @@ export class EllipseEffect implements Effect<EllipseNode> {
             this._x1 = this._dims.x.eval(this._context).val; // Saving original x and y
             this._y1 = this._dims.y.eval(this._context).val;
 
-            this._selected = true;
+            this._isSelected = true;
+            //this._isDragging = true;
             this._myState.selection = this;
             this._myState.dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
             this._myState.dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
             this._myState.dragging = true;
+            // @Alex--this is in StringEffect, not sure if we also need it here
+
+            if(!this._isEditing){
+                this._myState.dragging = true;
+                this._isDragging = true;
+                //console.log(this._str.val + " is dragging? " + this._isDragging);
+            }
+
         }
         else {
-            this._selected = false;
+            this._isSelected = false;
+            this._isEditing = false;
         }
     }
 
     modifyReset(): void {
-        if(this._myState.dragging){
+        if(this._isDragging && this._isSelected){ // probs only need dragging but oh well
+            this._isDragging = false;
             this._context.eventLog.push(this.logMove());
-        } else if (this._myState.resizing){
+        } else if (this._isResizing && this._isSelected){
+            this._isResizing = false;
             this._context.eventLog.push(this.logResize());
         }
         this._myState.dragging = false;
@@ -248,7 +269,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
         if(mouseX < rect.left || mouseX > rect.right || mouseY < rect.top || mouseY > rect.bottom) {
             this._myState.dragging = false;
             this._myState.resizing = false;
-            this._selected = false;
+            this._isSelected = false;
             this._corner = 0;
         }
     }
