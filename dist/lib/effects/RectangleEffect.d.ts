@@ -4,6 +4,7 @@ import { RectangleNode } from "../shapes/RectangleNode";
 import { Expression } from "../Expression";
 import { Scope } from "../structural/Scope";
 import { Dimensions } from "../structural/Dimensions";
+import { LogEvent } from "../logging/LogEvent";
 export declare class RectangleEffect implements Effect<RectangleNode> {
     private _rect;
     private _dims;
@@ -15,7 +16,10 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
     private _ctx;
     private _canvas;
     private _corner;
-    private _selected;
+    private _isSelected;
+    private _isListening;
+    private _isDragging;
+    private _isResizing;
     private _x1;
     private _y1;
     private _size1;
@@ -39,6 +43,9 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
     modifyReset(): void;
     getMousePosition(): void;
     isMouseOutside(event: any): void;
+    logPaint(): LogEvent<any>;
+    logMove(): LogEvent<any>;
+    logResize(): LogEvent<any>;
     ast(): Expression<RectangleNode>;
     updateAST(): Expression<NumberNode>;
     readonly x: number;
