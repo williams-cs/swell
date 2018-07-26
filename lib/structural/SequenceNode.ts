@@ -8,7 +8,7 @@ export class SequenceNode implements Expression<void>{
     private _right: Expression<any>;
     private _leftVal: any;
     private _rightVal: any;
-    private _newLine : boolean = false;
+    private _newLine : boolean = true;
 
     newLine() : boolean {
         return this._newLine;

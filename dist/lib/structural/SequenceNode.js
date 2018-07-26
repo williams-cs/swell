@@ -4,7 +4,7 @@ const Scope_1 = require("./Scope");
 const space_lift_1 = require("space-lift");
 class SequenceNode {
     constructor(left, right) {
-        this._newLine = false;
+        this._newLine = true;
         this._left = left;
         this._right = right;
     }
