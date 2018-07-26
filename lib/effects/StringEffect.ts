@@ -262,6 +262,7 @@ export class StringEffect implements Effect<StringNode> {
             if(!this._isEditing){
                 this._myState.dragging = true;
                 this._isDragging = true;
+                //console.log(this._str.val + " is dragging? " + this._isDragging);
             }
         } else {
             this._selected = false;
@@ -272,11 +273,11 @@ export class StringEffect implements Effect<StringNode> {
     modifyReset(): void {
         //console.log(this._str.val + " just released");
         console.log(this._str.val + " is dragging? " + this._myState.dragging);
-        if(this._myState.dragging && this._selected){
+        if(this._isDragging && this._selected){
             console.log(this._str.val + " logging drag");
             this._isDragging = false;
             this._context.eventLog.push(this.logMove());
-        } else if (this._myState.resizing && this._selected){
+        } else if (this._isResizing && this._selected){
             console.log(this._str.val + " logging resize");
             this._isResizing = false;
             this._context.eventLog.push(this.logResize());
