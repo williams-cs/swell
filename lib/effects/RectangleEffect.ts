@@ -103,21 +103,24 @@ export class RectangleEffect implements Effect<RectangleNode> {
         let h = this._dims.height.eval(this._context).val;
         let xdif = mx - x;
         let ydif = my - y;
+        /*
         if(xdif <= 5 && ydif <= 5 && xdif >= -5 && ydif >= -5){
             return 1;
         }
         xdif = mx - (x + w);
         if(xdif <= 5 && ydif <= 5 && xdif >= -5 && ydif >= -5){
             return 2;
-        }
+        }*/
+        xdif = mx - (x + w);
         ydif = my - (y + h);
         if(xdif <= 5 && ydif <= 5 && xdif >= -5 && ydif >= -5){
             return 3;
         }
+        /*
         xdif = mx - x;
         if(xdif <= 5 && ydif <= 5 && xdif >= -5 && ydif >= -5){
             return 4;
-        }
+        }*/
         return 0;
     }
 
@@ -129,29 +132,11 @@ export class RectangleEffect implements Effect<RectangleNode> {
         this._ctx.stroke();
         if(corner !== 0){
             switch (corner) { //colors the correct guide blue
-                case 1:
-                    this.drawSquare(x-2.5, y-2.5, 5, 5, 'blue');
-                    this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white');
-                    this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white');
-                    this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white');
-                    break;
-                case 2:
-                    this.drawSquare(x-2.5, y-2.5, 5, 5, 'white');
-                    this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white');
-                    this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'blue');
-                    this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white');
-                    break;
                 case 3:
                     this.drawSquare(x-2.5, y-2.5, 5, 5, 'white');
                     this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'blue');
                     this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white');
                     this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white');
-                    break;
-                case 4:
-                    this.drawSquare(x-2.5, y-2.5, 5, 5, 'white');
-                    this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white');
-                    this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white');
-                    this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'blue');
                     break;
             }
         }
