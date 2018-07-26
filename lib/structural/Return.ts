@@ -19,7 +19,7 @@ export class Return implements Expression<any>{
     }
 
     toString() :string {
-        return "";
+        return "return " + this._expr.toString();
     }
 
     newLine() : boolean {
