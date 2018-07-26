@@ -16,7 +16,7 @@ class StringNode {
         e.draw(context, dims, ast);
     }
     toString() {
-        return '' + this._str;
+        return '\"' + this._str + '\"';
     }
     set str(value) {
         this._str = value;

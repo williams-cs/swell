@@ -16,6 +16,10 @@ export class Dimensions {
         this._radius = radius || new NumberNode(30);
     }
 
+    toString() : string {
+        return this.x.toString() + ", " + this.y.toString() + ", " + this.scale.toString() + ", " + this.radius.toString();
+    }
+
     get x(): Expression<NumberNode> {
         return this._x;
     }

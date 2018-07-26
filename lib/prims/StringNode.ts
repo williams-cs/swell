@@ -26,7 +26,7 @@ export class StringNode implements Expression<StringNode>{
     }
     
     toString() : string {
-        return '' + this._str;
+        return '\"' + this._str + '\"';
     }
 
     set str(value: string){
