@@ -31,6 +31,15 @@ export class FunDef<T> implements Expression<T>{
         return null;
     }
 
+    toString() : string {
+        let argsList= ''
+        for (let i =0 ; i < this._args.length-1; i++) {
+            argsList += this._args[i] + ", ";
+        }
+        argsList += this._args[this._args.length-1];
+        return "fun " + this._name + "(" + argsList + ')' + ' {\n ' + this._body.toString() + '}';
+    }
+
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
         //NO
     }

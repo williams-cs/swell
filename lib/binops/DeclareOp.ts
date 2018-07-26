@@ -18,6 +18,9 @@ export class DeclareOp<T> extends BinaryOperation<T>{
     
     }
     
+    toString() : string {
+        return this.left.toString() + ' = ' + this.right.toString();
+    }
     eval(context: Scope): T{
         if(this.left instanceof VariableNode){
             //let left2: VariableNode = this.left as VariableNode;

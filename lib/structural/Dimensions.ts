@@ -17,7 +17,7 @@ export class Dimensions {
     }
 
     toString() : string {
-        return this.x.toString() + ", " + this.y.toString() + ", " + this.scale.toString() + ", " + this.radius.toString();
+        return this.x.toString() + ", " + this.y.toString();
     }
 
     get x(): Expression<NumberNode> {
