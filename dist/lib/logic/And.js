@@ -8,7 +8,7 @@ class And {
         this._right = right;
     }
     toString() {
-        return "";
+        return this._left.toString() + 'and' + this._right.toString();
     }
     eval(context) {
         let lhs = this._left.eval(context);

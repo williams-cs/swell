@@ -16,7 +16,11 @@ class Conditional {
         this._falseBranch = falseBranch;
     }
     toString() {
-        return '';
+        let res = 'if(' + this._test.toString() + ") {\n " + this._trueBranch.toString() + "}";
+        if (this._falseBranch !== undefined) {
+            res += '\nelse {\n ' + this._falseBranch.toString() + '}';
+        }
+        return res;
     }
     eval(context) {
         let childCtx = new Scope_1.Scope(context);

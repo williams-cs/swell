@@ -14,7 +14,7 @@ export class NotEqual implements Expression<BooleanNode>{
     }
 
     toString() :string {
-        return "";
+        return this._left.toString() + " not equals " + this._right.toString();
     }
 
     newLine() : boolean {

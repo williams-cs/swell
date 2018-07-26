@@ -14,7 +14,7 @@ export class Equals implements Expression<BooleanNode>{
     }
 
     toString() :string {
-        return "";
+        return this._left.toString() + ' equals ' + this._right.toString();
     }
 
     newLine() : boolean {

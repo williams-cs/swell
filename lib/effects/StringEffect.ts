@@ -226,13 +226,13 @@ export class StringEffect implements Effect<StringNode> {
             this._fontSize = 15;
             let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
             if(newDistance - this._myState.initDistance > 0){
-                this._fontSize += newDistance - this._myState.initDistance;
+                this._fontSize += (newDistance - this._myState.initDistance) * 0.2;
                 this._myState.initDistance = newDistance;
             }
         }
         else {
             let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
-            this._fontSize += newDistance - this._myState.initDistance;
+            this._fontSize += (newDistance - this._myState.initDistance) * 0.2;
             this._myState.initDistance = newDistance;
         }
     }

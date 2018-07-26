@@ -9,7 +9,7 @@ class GreaterThan {
         this._right = right;
     }
     toString() {
-        return "";
+        return this._left.toString() + " > " + this._right.toString();
     }
     newLine() {
         return this._newLine;

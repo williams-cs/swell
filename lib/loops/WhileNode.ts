@@ -48,7 +48,7 @@ export class WhileNode implements Expression<any>{
     }
 
     toString() :string {
-        return "";
+        return "while(" + this._cond.toString() + ") {\n " + this._body.toString() + "}";
     }
     newLine() : boolean {
         return this._newLine;
