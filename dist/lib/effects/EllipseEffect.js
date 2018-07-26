@@ -148,13 +148,13 @@ class EllipseEffect {
     modifyResize(isTooSmall) {
         if (isTooSmall) {
             this._dims.radius.eval(this._context).val = 15;
-            let widthAndHeight = new NumberNode_1.NumberNode(this._dims.radius.eval(this._context).val * 2);
+            let widthAndHeight = new NumberNode_1.NumberNode(Math.round(this._dims.radius.eval(this._context).val * 2));
             this._circle.width = widthAndHeight;
             this._circle.height = widthAndHeight;
             let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
             if (newDistance - this._myState.initDistance > 0) {
                 this._dims.radius.eval(this._context).val += newDistance - this._myState.initDistance;
-                widthAndHeight = new NumberNode_1.NumberNode(this._dims.radius.eval(this._context).val * 2);
+                widthAndHeight = new NumberNode_1.NumberNode(Math.round(this._dims.radius.eval(this._context).val * 2));
                 this._circle.width = widthAndHeight;
                 this._circle.height = widthAndHeight;
                 this._myState.initDistance = newDistance;
@@ -163,7 +163,7 @@ class EllipseEffect {
         else {
             let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
             this._dims.radius.eval(this._context).val += newDistance - this._myState.initDistance;
-            let widthAndHeight = new NumberNode_1.NumberNode(this._dims.radius.eval(this._context).val * 2);
+            let widthAndHeight = new NumberNode_1.NumberNode(Math.round(this._dims.radius.eval(this._context).val * 2));
             this._circle.width = widthAndHeight;
             this._circle.height = widthAndHeight;
             this._myState.initDistance = newDistance;
