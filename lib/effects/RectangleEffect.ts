@@ -101,26 +101,11 @@ export class RectangleEffect implements Effect<RectangleNode> {
         let y = this._dims.y.eval(this._context).val;
         let w = this._dims.width.eval(this._context).val;
         let h = this._dims.height.eval(this._context).val;
-        let xdif = mx - x;
-        let ydif = my - y;
-        /*
-        if(xdif <= 5 && ydif <= 5 && xdif >= -5 && ydif >= -5){
-            return 1;
-        }
-        xdif = mx - (x + w);
-        if(xdif <= 5 && ydif <= 5 && xdif >= -5 && ydif >= -5){
-            return 2;
-        }*/
-        xdif = mx - (x + w);
-        ydif = my - (y + h);
+        let xdif = mx - (x + w);
+        let ydif = my - (y + h);
         if(xdif <= 5 && ydif <= 5 && xdif >= -5 && ydif >= -5){
             return 3;
         }
-        /*
-        xdif = mx - x;
-        if(xdif <= 5 && ydif <= 5 && xdif >= -5 && ydif >= -5){
-            return 4;
-        }*/
         return 0;
     }
 
