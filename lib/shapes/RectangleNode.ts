@@ -14,10 +14,10 @@ export class RectangleNode implements Expression<RectangleNode> {
     }
 
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
-        let radius = this._width.eval(context).val / 2;
-        dims.radius = new NumberNode(radius);
-        //let e = new RectangleEffect(this);
-        //e.draw(context, dims, ast);
+        dims.width = new NumberNode(this._width.eval(context).val);
+        dims.height = new NumberNode(this._height.eval(context).val);
+        let e = new RectangleEffect(this);
+        e.draw(context, dims, ast);
     }
 
     eval(context: Scope): RectangleNode {
