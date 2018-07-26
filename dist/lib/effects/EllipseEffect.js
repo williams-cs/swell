@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const PaintEvent_1 = require("../logging/PaintEvent");
 const DragEvent_1 = require("../logging/DragEvent");
 const ResizeEvent_1 = require("../logging/ResizeEvent");
+const NumberNode_1 = require("../prims/NumberNode");
 class EllipseEffect {
     constructor(circle) {
         this._corner = 0;
@@ -147,15 +148,24 @@ class EllipseEffect {
     modifyResize(isTooSmall) {
         if (isTooSmall) {
             this._dims.radius.eval(this._context).val = 15;
+            let widthAndHeight = new NumberNode_1.NumberNode(this._dims.radius.eval(this._context).val * 2);
+            this._circle.width = widthAndHeight;
+            this._circle.height = widthAndHeight;
             let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
             if (newDistance - this._myState.initDistance > 0) {
                 this._dims.radius.eval(this._context).val += newDistance - this._myState.initDistance;
+                widthAndHeight = new NumberNode_1.NumberNode(this._dims.radius.eval(this._context).val * 2);
+                this._circle.width = widthAndHeight;
+                this._circle.height = widthAndHeight;
                 this._myState.initDistance = newDistance;
             }
         }
         else {
             let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
             this._dims.radius.eval(this._context).val += newDistance - this._myState.initDistance;
+            let widthAndHeight = new NumberNode_1.NumberNode(this._dims.radius.eval(this._context).val * 2);
+            this._circle.width = widthAndHeight;
+            this._circle.height = widthAndHeight;
             this._myState.initDistance = newDistance;
         }
     }
