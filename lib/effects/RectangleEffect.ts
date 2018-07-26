@@ -101,22 +101,10 @@ export class RectangleEffect implements Effect<RectangleNode> {
         let y = this._dims.y.eval(this._context).val;
         let w = this._dims.width.eval(this._context).val;
         let h = this._dims.height.eval(this._context).val;
-        let xdif = mx - x;
-        let ydif = my - y;
-        if(xdif <= 5 && ydif <= 5 && xdif >= -5 && ydif >= -5){
-            return 1;
-        }
-        xdif = mx - (x + w);
-        if(xdif <= 5 && ydif <= 5 && xdif >= -5 && ydif >= -5){
-            return 2;
-        }
-        ydif = my - (y + h);
+        let xdif = mx - (x + w);
+        let ydif = my - (y + h);
         if(xdif <= 5 && ydif <= 5 && xdif >= -5 && ydif >= -5){
             return 3;
-        }
-        xdif = mx - x;
-        if(xdif <= 5 && ydif <= 5 && xdif >= -5 && ydif >= -5){
-            return 4;
         }
         return 0;
     }
@@ -129,37 +117,13 @@ export class RectangleEffect implements Effect<RectangleNode> {
         this._ctx.stroke();
         if(corner !== 0){
             switch (corner) { //colors the correct guide blue
-                case 1:
-                    this.drawSquare(x-2.5, y-2.5, 5, 5, 'blue');
-                    this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white');
-                    this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white');
-                    this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white');
-                    break;
-                case 2:
-                    this.drawSquare(x-2.5, y-2.5, 5, 5, 'white');
-                    this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white');
-                    this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'blue');
-                    this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white');
-                    break;
                 case 3:
-                    this.drawSquare(x-2.5, y-2.5, 5, 5, 'white');
                     this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'blue');
-                    this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white');
-                    this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white');
-                    break;
-                case 4:
-                    this.drawSquare(x-2.5, y-2.5, 5, 5, 'white');
-                    this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white');
-                    this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white');
-                    this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'blue');
                     break;
             }
         }
         else {
-            this.drawSquare(x-2.5, y-2.5, 5, 5, 'white');
-            this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white');
             this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white');
-            this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white');
         }
     }
 
@@ -178,7 +142,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
             this.modifyDrag();
         }
         else if(this._myState.resizing && this._selected){
-            this.modifyResize(this._dims.radius.eval(this._context).val < 10);
+            this.modifyResize(this._dims.width.eval(this._context).val < 5, this._dims.height.eval(this._context).val < 5);
         }
     }
 
@@ -197,18 +161,32 @@ export class RectangleEffect implements Effect<RectangleNode> {
         this._dims.y.eval(this._context).val = this._mouse.y - this._myState.dragoffy;
     }
 
-    modifyResize(isTooSmall: boolean): void {
-        if(isTooSmall){
-            this._dims.radius.eval(this._context).val = 15;
+    modifyResize(widthTooSmall: boolean, heightTooSmall: boolean): void {
+        if(widthTooSmall) {
+            this._dims.width.eval(this._context).val = 5;
             let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
             if(newDistance - this._myState.initDistance > 0){
-                this._dims.radius.eval(this._context).val += newDistance - this._myState.initDistance;
+                let ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
+                this._dims.width.eval(this._context).val += newDistance - this._myState.initDistance;
+                this._dims.height.eval(this._context).val += (newDistance - this._myState.initDistance) / ratio;
+                this._myState.initDistance = newDistance;
+            }
+        }
+        else if(heightTooSmall) {
+            this._dims.height.eval(this._context).val = 5;
+            let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
+            if(newDistance - this._myState.initDistance > 0){
+                let ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
+                this._dims.width.eval(this._context).val += newDistance - this._myState.initDistance;
+                this._dims.height.eval(this._context).val += (newDistance - this._myState.initDistance) / ratio;
                 this._myState.initDistance = newDistance;
             }
         }
         else {
             let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
-            this._dims.radius.eval(this._context).val += newDistance - this._myState.initDistance;
+            let ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
+            this._dims.width.eval(this._context).val += newDistance - this._myState.initDistance;
+            this._dims.height.eval(this._context).val += (newDistance - this._myState.initDistance) / ratio;
             this._myState.initDistance = newDistance;
         }
     }
@@ -218,12 +196,10 @@ export class RectangleEffect implements Effect<RectangleNode> {
             this._selected = true;
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
             this._myState.selection = this;
-            this._myState.dragoffx = this._dims.x.eval(this._context).val;
-            this._myState.dragoffy = this._dims.y.eval(this._context).val;
-            this._myState.initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+            this._myState.dragoffx = this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val / 2;
+            this._myState.dragoffy = this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val / 2;
+            this._myState.initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val / 2, this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val / 2);
             this._myState.resizing = true;
-
-            this._size1 = this._dims.radius.eval(this._context).val; // saving old font size
         }
         else if (contains) {
             this._x1 = this._dims.x.eval(this._context).val; // Saving original x and y

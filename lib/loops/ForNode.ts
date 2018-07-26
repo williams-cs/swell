@@ -9,6 +9,7 @@ export class ForNode implements Expression<any>{
     private _cond: Expression<any>;
     private _post: Expression<any>;
     private _body: Expression<any>;
+    private _newLine : boolean = false;
 
     constructor(init: Expression<any>, cond: Expression<BooleanNode>, post: Expression<any>, body: Expression<any>){
         this._init = init;
@@ -52,5 +53,9 @@ export class ForNode implements Expression<any>{
 
     draw(context: Scope, dims: Dimensions, ast: Expression<any>){
 
+    }
+
+    get newLine() : boolean {
+        return this._newLine;
     }
 }

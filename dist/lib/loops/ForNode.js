@@ -4,6 +4,7 @@ const Scope_1 = require("../structural/Scope");
 const BooleanNode_1 = require("../prims/BooleanNode");
 class ForNode {
     constructor(init, cond, post, body) {
+        this._newLine = false;
         this._init = init;
         this._cond = cond;
         this._post = post;
@@ -39,6 +40,9 @@ class ForNode {
         //}
     }
     draw(context, dims, ast) {
+    }
+    get newLine() {
+        return this._newLine;
     }
 }
 exports.ForNode = ForNode;

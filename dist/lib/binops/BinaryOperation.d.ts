@@ -7,6 +7,7 @@ export declare abstract class BinaryOperation<T> implements Expression<T> {
     constructor(_left: Expression<T>, _right: Expression<T>);
     abstract eval(context: Scope): T;
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
+    toString(): void;
     left: Expression<T>;
     right: Expression<T>;
 }
