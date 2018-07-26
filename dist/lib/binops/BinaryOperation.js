@@ -7,7 +7,8 @@ class BinaryOperation {
     }
     ;
     draw(context, dims, ast) { }
-    toString() { }
+    toString() { return ""; }
+    ;
     get left() {
         return this._left;
     }

@@ -8,6 +8,7 @@ export interface Expression <T>{
         //newLineTerminated;
         eval(parent: Scope): T;
         draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
+        toString() : string;
         //get(): T;
         //set(value: T): void;
 }

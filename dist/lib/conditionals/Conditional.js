@@ -14,6 +14,9 @@ class Conditional {
         this._trueBranch = trueBranch;
         this._falseBranch = falseBranch;
     }
+    toString() {
+        return '';
+    }
     eval(context) {
         let childCtx = new Scope_1.Scope(context);
         let res = this._test.eval(childCtx);
