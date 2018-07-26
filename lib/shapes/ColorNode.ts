@@ -6,6 +6,7 @@ export class ColorNode implements Expression<string>{
     private _red: number;
     private _green: number;
     private _blue: number;
+    private _newLine : boolean = false;
 
     constructor(red: number, green: number, blue: number){
         this._red = red;
@@ -15,6 +16,10 @@ export class ColorNode implements Expression<string>{
 
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
     
+    }
+
+    toString() :string {
+        return "";
     }
 
     eval(context: Scope){
@@ -40,5 +45,9 @@ export class ColorNode implements Expression<string>{
     }
     set blue(blue: number){
         this._blue = blue;
+    }
+
+    newLine() : boolean {
+        return this._newLine;
     }
 }

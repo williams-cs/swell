@@ -3,6 +3,7 @@ import {Scope} from '../structural/Scope';
 import { Dimensions } from '../structural/Dimensions';
 
 export abstract class UnaryOperation<T> implements Expression<T> {
+    private _newLine : boolean = false;
     constructor(private _val: Expression<T>){};
     abstract eval(context?: Scope): T;
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {}
@@ -12,5 +13,9 @@ export abstract class UnaryOperation<T> implements Expression<T> {
     }
     set val(value: Expression<T>){
         this._val = value;
+    }
+
+    newLine() : boolean {
+        return this._newLine;
     }
 }

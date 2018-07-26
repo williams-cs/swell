@@ -26,6 +26,9 @@ class DeclareOp extends BinaryOperation_1.BinaryOperation {
         }
         throw new Error("HALP (in DeclareOp)");
     }
+    newLine() {
+        return this.newLine();
+    }
 }
 exports.DeclareOp = DeclareOp;
 //# sourceMappingURL=DeclareOp.js.map

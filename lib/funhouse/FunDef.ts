@@ -7,6 +7,7 @@ export class FunDef<T> implements Expression<T>{
     private _body: Expression<T>;
     private _args: string[];
     private _funScope: Scope;
+    private _newLine : boolean = true;
 
     constructor(name: string, body: Expression<T>, args?: string[]){
         this._name = name;
@@ -29,6 +30,10 @@ export class FunDef<T> implements Expression<T>{
         context.declare(this._name); // assign with val function
         context.assign(this._name,this); // parent or current?
         return null;
+    }
+
+    newLine() : boolean {
+        return this._newLine;
     }
 
     toString() : string {

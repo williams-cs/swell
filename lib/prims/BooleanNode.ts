@@ -4,6 +4,7 @@ import { Dimensions } from "../structural/Dimensions";
 
 export class BooleanNode implements Expression<BooleanNode>{
     private _val: boolean;
+    private _newLine : boolean = false;
 
     constructor(val: boolean){
         //super(parent);
@@ -28,4 +29,8 @@ export class BooleanNode implements Expression<BooleanNode>{
     set val(value: boolean){
         this._val = value;
     }
+    newLine() : boolean {
+        return this._newLine;
+    }
+    
 }

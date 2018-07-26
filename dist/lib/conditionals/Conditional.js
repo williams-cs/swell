@@ -10,6 +10,7 @@ class Conditional {
     //private _elseIfRes: any;
     //private _elseRes: any;
     constructor(test, trueBranch, falseBranch) {
+        this._newLine = true;
         this._test = test;
         this._trueBranch = trueBranch;
         this._falseBranch = falseBranch;
@@ -36,6 +37,9 @@ class Conditional {
     }
     get falseBranch() {
         return this._falseBranch;
+    }
+    newLine() {
+        return this._newLine;
     }
     /*
     constructor(ifOp: IfOp, elseOp?: ElseOp, ...elseIfOps: ElseIfOp[]){

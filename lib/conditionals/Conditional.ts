@@ -6,6 +6,7 @@ export class Conditional implements Expression<any>{
     private _test: Expression<any>;
     private _trueBranch: Expression<any>;
     private _falseBranch: Expression<any>;
+    private _newLine : boolean = true;
     //private _ifOp: IfOp;
     //private _elseOp: ElseOp;
     //private _elseIfOps: ElseIfOp[];
@@ -43,6 +44,10 @@ export class Conditional implements Expression<any>{
     }
     get falseBranch(): Expression<any>{
         return this._falseBranch;
+    }
+
+    newLine() : boolean {
+        return this._newLine;
     }
 
     /*

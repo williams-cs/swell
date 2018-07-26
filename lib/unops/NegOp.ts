@@ -22,6 +22,10 @@ export class NegOp extends UnaryOperation<NumberNode>{
         return "-" + this.val;
     }
 
+    newLine() : boolean {
+        return this.newLine();
+    }
+
     // put in UnaryOp class
     /*
     get value(): number{

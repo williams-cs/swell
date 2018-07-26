@@ -5,6 +5,7 @@ import { BooleanNode } from "../prims/BooleanNode";
 export class And implements Expression<any>{
     private _left: Expression<any>;
     private _right: Expression<any>;
+    private _newLine : boolean = false;
 
     constructor(left: Expression<any>, right: Expression<any>){
         this._left = left;
@@ -23,6 +24,10 @@ export class And implements Expression<any>{
         } else {
             throw new Error("The arguments to the 'and' operator must be booleans.");
         }
+    }
+
+    newLine() : boolean {
+        return this._newLine;
     }
 
     draw(){

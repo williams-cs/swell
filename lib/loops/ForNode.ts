@@ -59,7 +59,7 @@ export class ForNode implements Expression<any>{
         return "";
     }
 
-    get newLine() : boolean {
+    newLine() : boolean {
         return this._newLine;
     }
 }

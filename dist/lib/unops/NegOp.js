@@ -15,6 +15,9 @@ class NegOp extends UnaryOperation_1.UnaryOperation {
     toString() {
         return "-" + this.val;
     }
+    newLine() {
+        return this.newLine();
+    }
 }
 exports.NegOp = NegOp;
 //# sourceMappingURL=NegOp.js.map

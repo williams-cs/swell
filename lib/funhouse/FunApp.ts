@@ -9,6 +9,7 @@ export class FunApp<T> implements Expression<T>{
     private _name: string;
     private _args: Expression<{}>[];
     private _defaultValue: T = undefined;
+    private _newLine : boolean = false;
 
     constructor(name: string, args?: any[], defaultValue?: T){
         this._name = name;
@@ -23,6 +24,10 @@ export class FunApp<T> implements Expression<T>{
         }
         argsList += this._args[this._args.length-1].toString();
         return this.name + '(' + argsList + ")";
+    }
+
+    newLine() : boolean {
+        return this._newLine;
     }
 
     // Assigns args to values in new context

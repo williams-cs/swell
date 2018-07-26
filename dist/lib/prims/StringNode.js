@@ -6,6 +6,7 @@ const StringEffect_1 = require("../effects/StringEffect");
 // Should abstract Node class implement Expression?
 class StringNode {
     constructor(str) {
+        this._newLine = false;
         this._str = str;
     }
     eval(context) {
@@ -23,6 +24,9 @@ class StringNode {
     }
     get val() {
         return this._str;
+    }
+    newLine() {
+        return this._newLine;
     }
 }
 exports.StringNode = StringNode;

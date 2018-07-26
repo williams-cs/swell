@@ -4,8 +4,15 @@ const BooleanNode_1 = require("../prims/BooleanNode");
 const NumberNode_1 = require("../prims/NumberNode");
 class LessThan {
     constructor(left, right) {
+        this._newLine = false;
         this._left = left;
         this._right = right;
+    }
+    toString() {
+        return "";
+    }
+    newLine() {
+        return this._newLine;
     }
     eval(context) {
         //console.log(this._left.eval(context) + " is less than " + this._right.eval(context));

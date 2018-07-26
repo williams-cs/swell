@@ -5,8 +5,10 @@ export declare class FunApp<T> implements Expression<T> {
     private _name;
     private _args;
     private _defaultValue;
+    private _newLine;
     constructor(name: string, args?: any[], defaultValue?: T);
     toString(): string;
+    newLine(): boolean;
     eval(context: Scope): any;
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
     readonly name: string;

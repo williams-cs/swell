@@ -6,6 +6,7 @@ const space_lift_1 = require("space-lift");
 class FunApp {
     constructor(name, args, defaultValue) {
         this._defaultValue = undefined;
+        this._newLine = false;
         this._name = name;
         this._args = args;
         this._defaultValue = defaultValue;
@@ -17,6 +18,9 @@ class FunApp {
         }
         argsList += this._args[this._args.length - 1].toString();
         return this.name + '(' + argsList + ")";
+    }
+    newLine() {
+        return this._newLine;
     }
     // Assigns args to values in new context
     eval(context) {

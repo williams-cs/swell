@@ -33,4 +33,7 @@ export class DeclareOp<T> extends BinaryOperation<T>{
         }
         throw new Error("HALP (in DeclareOp)");
     }
+    newLine() : boolean {
+        return this.newLine();
+    }
 }

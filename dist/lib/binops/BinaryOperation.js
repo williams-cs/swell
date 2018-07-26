@@ -4,6 +4,7 @@ class BinaryOperation {
     constructor(_left, _right) {
         this._left = _left;
         this._right = _right;
+        this._newLine = false;
     }
     ;
     draw(context, dims, ast) { }
@@ -20,6 +21,9 @@ class BinaryOperation {
     }
     set right(right) {
         this._right = right;
+    }
+    newLine() {
+        return this._newLine;
     }
 }
 exports.BinaryOperation = BinaryOperation;

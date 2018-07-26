@@ -3,11 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class PrintNode {
     constructor(toPrint, dimensions) {
         this._scale = 1;
+        this._newLine = false;
         this._toPrint = toPrint;
         this._dims = dimensions || null;
     }
     toString() {
-        return "print(" + this.toPrint.toString() + ", " + this.dims.toString() + " )";
+        return "print(" + this.toPrint.toString() + ", " + this.dims.toString() + ")";
     }
     draw(context, dims, ast) {
         throw new Error("Cannot call draw() on printOp");
@@ -23,6 +24,9 @@ class PrintNode {
     }
     get dims() {
         return this._dims;
+    }
+    newLine() {
+        return this._newLine;
     }
 }
 exports.PrintNode = PrintNode;

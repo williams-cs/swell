@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const BooleanNode_1 = require("../prims/BooleanNode");
 class And {
     constructor(left, right) {
+        this._newLine = false;
         this._left = left;
         this._right = right;
     }
@@ -18,6 +19,9 @@ class And {
         else {
             throw new Error("The arguments to the 'and' operator must be booleans.");
         }
+    }
+    newLine() {
+        return this._newLine;
     }
     draw() {
     }

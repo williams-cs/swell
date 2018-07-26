@@ -5,10 +5,19 @@ import { BooleanNode } from "../prims/BooleanNode";
 export class Or implements Expression<any>{
     private _left: Expression<any>;
     private _right: Expression<any>;
+    private _newLine : boolean = false;
 
     constructor(left: Expression<any>, right: Expression<any>){
         this._left = left;
         this._right = right;
+    }
+
+    toString() :string {
+        return "";
+    }
+
+    newLine() : boolean {
+        return this._newLine;
     }
 
     eval(context: Scope): BooleanNode{

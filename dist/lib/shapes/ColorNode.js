@@ -2,12 +2,16 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 class ColorNode {
     constructor(red, green, blue) {
+        this._newLine = false;
         this._red = red;
         this._green = green;
         this._blue = blue;
     }
     ;
     draw(context, dims, ast) {
+    }
+    toString() {
+        return "";
     }
     eval(context) {
         return this._red + " " + this._green + " " + this._blue;
@@ -29,6 +33,9 @@ class ColorNode {
     }
     set blue(blue) {
         this._blue = blue;
+    }
+    newLine() {
+        return this._newLine;
     }
 }
 exports.ColorNode = ColorNode;

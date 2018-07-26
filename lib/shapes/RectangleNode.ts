@@ -7,6 +7,7 @@ import { Dimensions } from '../structural/Dimensions';
 export class RectangleNode implements Expression<RectangleNode> {
     private _width: Expression<NumberNode>;
     private _height: Expression<NumberNode>; 
+    private _newLine : boolean = false;
     
     constructor(width: Expression<NumberNode>, height: Expression<NumberNode>){
         this._width = width;
@@ -38,6 +39,10 @@ export class RectangleNode implements Expression<RectangleNode> {
     }
     set height(height: Expression<NumberNode>){
         this._height = height;
+    }
+
+    newLine() : boolean {
+        return this._newLine;
     }
 
     toString() : string {

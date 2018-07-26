@@ -7,7 +7,7 @@ export declare class SequenceNode implements Expression<void> {
     private _leftVal;
     private _rightVal;
     private _newLine;
-    readonly newLine: boolean;
+    newLine(): boolean;
     constructor(left: Expression<any>, right: Expression<any>);
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
     toString(): string;

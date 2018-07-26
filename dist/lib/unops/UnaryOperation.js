@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class UnaryOperation {
     constructor(_val) {
         this._val = _val;
+        this._newLine = false;
     }
     ;
     draw(context, dims, ast) { }
@@ -11,6 +12,9 @@ class UnaryOperation {
     }
     set val(value) {
         this._val = value;
+    }
+    newLine() {
+        return this._newLine;
     }
 }
 exports.UnaryOperation = UnaryOperation;
