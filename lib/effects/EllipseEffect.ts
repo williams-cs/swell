@@ -108,45 +108,45 @@ export class EllipseEffect implements Effect<EllipseNode> {
     
     //draws the guides for different objects
     drawGuides(x: number, y: number, w: number, h: number, corner: number) { //corner is 1,2,3 or 4
-    this._ctx.beginPath();
-    this._ctx.rect(x, y, w, h);
-    this._ctx.strokeStyle = 'gray';
-    this._ctx.stroke();
-    if(corner !== 0){
-        switch (corner) { //colors the correct guide blue
-            case 1:
-                this.drawSquare(x-2.5, y-2.5, 5, 5, 'blue');
-                this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white');
-                this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white');
-                this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white');
-                break;
-            case 2:
-                this.drawSquare(x-2.5, y-2.5, 5, 5, 'white');
-                this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white');
-                this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'blue');
-                this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white');
-                break;
-            case 3:
-                this.drawSquare(x-2.5, y-2.5, 5, 5, 'white');
-                this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'blue');
-                this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white');
-                this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white');
-                break;
-            case 4:
-                this.drawSquare(x-2.5, y-2.5, 5, 5, 'white');
-                this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white');
-                this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white');
-                this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'blue');
-                break;
+        this._ctx.beginPath();
+        this._ctx.rect(x, y, w, h);
+        this._ctx.strokeStyle = 'gray';
+        this._ctx.stroke();
+        if(corner !== 0){
+            switch (corner) { //colors the correct guide blue
+                case 1:
+                    this.drawSquare(x-2.5, y-2.5, 5, 5, 'blue');
+                    this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white');
+                    this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white');
+                    this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white');
+                    break;
+                case 2:
+                    this.drawSquare(x-2.5, y-2.5, 5, 5, 'white');
+                    this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white');
+                    this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'blue');
+                    this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white');
+                    break;
+                case 3:
+                    this.drawSquare(x-2.5, y-2.5, 5, 5, 'white');
+                    this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'blue');
+                    this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white');
+                    this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white');
+                    break;
+                case 4:
+                    this.drawSquare(x-2.5, y-2.5, 5, 5, 'white');
+                    this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white');
+                    this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white');
+                    this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'blue');
+                    break;
+            }
+        }
+        else {
+            this.drawSquare(x-2.5, y-2.5, 5, 5, 'white');
+            this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white');
+            this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white');
+            this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white');
         }
     }
-    else {
-        this.drawSquare(x-2.5, y-2.5, 5, 5, 'white');
-        this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white');
-        this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white');
-        this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white');
-    }
-}
 
     drawSquare(x: number, y: number, w: number, h: number, color: string) {
         this._ctx.beginPath();

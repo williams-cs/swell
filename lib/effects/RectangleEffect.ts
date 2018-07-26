@@ -59,9 +59,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
             this.update();
         }
         context.effects.push(this);
-    
         this.addEventListeners();
-        
     }
 
     update(): void {
@@ -74,7 +72,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
         this._ctx.strokeStyle = "black";
         this._ctx.stroke();
         if(this._selected) {
-            //this.drawGuides()
+            this.drawGuides(x, y, width, height, this._corner);
         }
     }
 
@@ -103,7 +101,75 @@ export class RectangleEffect implements Effect<RectangleNode> {
         let y = this._dims.y.eval(this._context).val;
         let w = this._dims.width.eval(this._context).val;
         let h = this._dims.height.eval(this._context).val;
+        let xdif = mx - x;
+        let ydif = my - y;
+        if(xdif <= 5 && ydif <= 5 && xdif >= -5 && ydif >= -5){
+            return 1;
+        }
+        xdif = mx - (x + w);
+        if(xdif <= 5 && ydif <= 5 && xdif >= -5 && ydif >= -5){
+            return 2;
+        }
+        ydif = my - (y + h);
+        if(xdif <= 5 && ydif <= 5 && xdif >= -5 && ydif >= -5){
+            return 3;
+        }
+        xdif = mx - x;
+        if(xdif <= 5 && ydif <= 5 && xdif >= -5 && ydif >= -5){
+            return 4;
+        }
         return 0;
+    }
+
+    //draws the guides for different objects
+    drawGuides(x: number, y: number, w: number, h: number, corner: number) { //corner is 1,2,3 or 4
+        this._ctx.beginPath();
+        this._ctx.rect(x, y, w, h);
+        this._ctx.strokeStyle = 'gray';
+        this._ctx.stroke();
+        if(corner !== 0){
+            switch (corner) { //colors the correct guide blue
+                case 1:
+                    this.drawSquare(x-2.5, y-2.5, 5, 5, 'blue');
+                    this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white');
+                    this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white');
+                    this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white');
+                    break;
+                case 2:
+                    this.drawSquare(x-2.5, y-2.5, 5, 5, 'white');
+                    this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white');
+                    this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'blue');
+                    this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white');
+                    break;
+                case 3:
+                    this.drawSquare(x-2.5, y-2.5, 5, 5, 'white');
+                    this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'blue');
+                    this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white');
+                    this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white');
+                    break;
+                case 4:
+                    this.drawSquare(x-2.5, y-2.5, 5, 5, 'white');
+                    this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white');
+                    this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white');
+                    this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'blue');
+                    break;
+            }
+        }
+        else {
+            this.drawSquare(x-2.5, y-2.5, 5, 5, 'white');
+            this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white');
+            this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white');
+            this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white');
+        }
+    }
+
+    drawSquare(x: number, y: number, w: number, h: number, color: string) {
+        this._ctx.beginPath();
+        this._ctx.fillStyle = color;
+        this._ctx.fillRect(x, y, w, h);
+        this._ctx.rect(x, y, w, h);
+        this._ctx.strokeStyle = 'gray';
+        this._ctx.stroke();
     }
 
     onMouseMove(event: any): void {
