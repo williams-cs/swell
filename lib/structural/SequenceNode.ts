@@ -24,7 +24,13 @@ export class SequenceNode implements Expression<void>{
     }
 
     toString() : string {
-        let result = this._left.toString() + ";\n";
+        let result = this._left.toString();
+        if(this._left.newLine() == true) {
+            result += '\n';
+        }
+        else {
+            result += ";\n";
+        }
         if(this._right.newLine() == false){
             result += this._right.toString() + ";";
         }
