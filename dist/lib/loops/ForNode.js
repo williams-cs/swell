@@ -42,7 +42,7 @@ class ForNode {
     draw(context, dims, ast) {
     }
     toString() {
-        return 'for( ' + this._init.toString() + ", " + this._cond.toString() + ", " + this._post.toString() + ") {\n "
+        return 'for(' + this._init.toString() + ", " + this._cond.toString() + ", " + this._post.toString() + ") {\n "
             + this._body.toString() + "}";
     }
     newLine() {

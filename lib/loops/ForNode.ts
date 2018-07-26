@@ -56,7 +56,7 @@ export class ForNode implements Expression<any>{
     }
 
     toString() :string {
-        return 'for( ' + this._init.toString() + ", " + this._cond.toString() + ", " + this._post.toString() + ") {\n " 
+        return 'for(' + this._init.toString() + ", " + this._cond.toString() + ", " + this._post.toString() + ") {\n " 
             + this._body.toString() + "}";
     }
 
