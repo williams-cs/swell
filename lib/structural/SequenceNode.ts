@@ -8,6 +8,11 @@ export class SequenceNode implements Expression<void>{
     private _right: Expression<any>;
     private _leftVal: any;
     private _rightVal: any;
+    private _newLine : boolean = false;
+
+    get newLine() : boolean {
+        return this._newLine;
+    }
 
     constructor(left: Expression<any>, right: Expression<any>){
         this._left = left;
@@ -19,7 +24,14 @@ export class SequenceNode implements Expression<void>{
     }
 
     toString() : string {
-        return this._left.toString() + ";\n" + this._right.toString() + ";";
+        let result = this._left.toString() + ";\n";
+        if(this._right.newLine == false){
+            result += this._right.toString() + ";";
+        }
+        else {
+            result += this._right.toString();
+        }
+        return result;
     }
 
     eval(context: Scope): void {

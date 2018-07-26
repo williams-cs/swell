@@ -6,6 +6,7 @@ import { Dimensions } from "../structural/Dimensions";
 export class WhileNode implements Expression<any>{
     private _cond: Expression<any>;
     private _body: Expression<any>;
+    private _newLine : boolean = true;
 
     constructor(cond: Expression<any>, body: Expression<any>){
         this._cond = cond;
@@ -44,5 +45,12 @@ export class WhileNode implements Expression<any>{
 
     draw(context: Scope, dims: Dimensions, ast: Expression<any>){
 
+    }
+
+    toString() :string {
+        return "";
+    }
+    get newLine() : boolean {
+        return this._newLine;
     }
 }

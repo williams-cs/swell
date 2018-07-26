@@ -4,6 +4,7 @@ const Scope_1 = require("../structural/Scope");
 const BooleanNode_1 = require("../prims/BooleanNode");
 class WhileNode {
     constructor(cond, body) {
+        this._newLine = true;
         this._cond = cond;
         this._body = body;
     }
@@ -35,6 +36,12 @@ class WhileNode {
         //}
     }
     draw(context, dims, ast) {
+    }
+    toString() {
+        return "";
+    }
+    get newLine() {
+        return this._newLine;
     }
 }
 exports.WhileNode = WhileNode;

@@ -7,4 +7,5 @@ export declare class AssignOp<T> extends BinaryOperation<T> {
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
     eval(context: Scope): T;
     toString(): string;
+    readonly newLine: boolean;
 }
