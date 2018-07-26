@@ -132,8 +132,6 @@ export class StringEffect implements Effect<StringNode> {
             if(!this._isListening){
                 window.addEventListener('keydown', this.modifyText.bind(this));
             }
-            
-            this._context.eventLog.push(this.logClick());
 
             this._isListening = true;
             this._isEditing = true;
@@ -243,6 +241,8 @@ export class StringEffect implements Effect<StringNode> {
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
             this._myState.selection = this;
 
+            this._context.eventLog.push(this.logClick());
+
             //console.log(this._str.val + "is selected?" + this._selected);
             //console.log("state selection is " + this._str.val);
 
@@ -257,6 +257,8 @@ export class StringEffect implements Effect<StringNode> {
             this._y1 = this._dims.y.eval(this._context).val;
             this._isSelected = true;
             this._myState.selection = this;
+
+            this._context.eventLog.push(this.logClick());
 
             //console.log(this._str.val + "is selected?" + this._selected);
             //console.log("state selection is " + this._str.val);
