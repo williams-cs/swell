@@ -4,13 +4,24 @@ const Scope_1 = require("./Scope");
 const space_lift_1 = require("space-lift");
 class SequenceNode {
     constructor(left, right) {
+        this._newLine = false;
         this._left = left;
         this._right = right;
+    }
+    get newLine() {
+        return this._newLine;
     }
     draw(context, dims, ast) {
     }
     toString() {
-        return this._left.toString() + ";\n" + this._right.toString() + ";";
+        let result = this._left.toString() + ";\n";
+        if (this._right.newLine == false) {
+            result += this._right.toString() + ";";
+        }
+        else {
+            result += this._right.toString();
+        }
+        return result;
     }
     eval(context) {
         let leftScope = new Scope_1.Scope(context, context.effects, context.myState, context.eventLog);

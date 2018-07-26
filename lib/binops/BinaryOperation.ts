@@ -9,7 +9,7 @@ export abstract class BinaryOperation<T> implements Expression<T> {
 
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {}
 
-    toString() {}
+    toString() : string {return ""};
 
     get left(): Expression<T>{
         return this._left;

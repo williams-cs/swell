@@ -6,6 +6,8 @@ import { Scope } from "../structural/Scope";
 import { PaintEvent } from "../logging/PaintEvent";
 import { Dimensions } from "../structural/Dimensions";
 import { LogEvent } from "../logging/LogEvent";
+import { ResizeEvent } from "../logging/ResizeEvent";
+import { DragEvent } from "../logging/DragEvent";
 
 export class RectangleEffect implements Effect<RectangleNode> {
 
@@ -19,7 +21,11 @@ export class RectangleEffect implements Effect<RectangleNode> {
     private _ctx: CanvasRenderingContext2D;
     private _canvas: HTMLCanvasElement;
     private _corner: number = 0;
-    private _selected: boolean = false;
+
+    private _isSelected: boolean = false; // private bools
+    private _isListening: boolean = false;
+    private _isDragging: boolean = false;
+    private _isResizing: boolean = false;
 
     private _x1: number; // used to save coords for logging
     private _y1: number;
@@ -58,6 +64,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
             this._ctx = ctx;
             this.update();
         }
+        this._context.eventLog.push(this.logPaint());
         context.effects.push(this);
         this.addEventListeners();
     }
@@ -71,7 +78,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
         this._ctx.rect(x, y, width, height);
         this._ctx.strokeStyle = "black";
         this._ctx.stroke();
-        if(this._selected) {
+        if(this._isSelected) {
             this.drawGuides(x, y, width, height, this._corner);
         }
     }
@@ -138,10 +145,10 @@ export class RectangleEffect implements Effect<RectangleNode> {
 
     onMouseMove(event: any): void {
         this.getMousePosition();
-        if(this._myState.dragging && this._selected){
+        if(this._myState.dragging && this._isSelected){
             this.modifyDrag();
         }
-        else if(this._myState.resizing && this._selected){
+        else if(this._isResizing && this._isSelected){
             this.modifyResize(this._dims.width.eval(this._context).val < 5, this._dims.height.eval(this._context).val < 5);
         }
     }
@@ -151,7 +158,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
     }
 
     onMouseUp(event: any) {
-        console.log("I'm an ellipse!");
+        //console.log("I'm an ellipse!");
         this.modifyReset();
     }
 
@@ -193,34 +200,41 @@ export class RectangleEffect implements Effect<RectangleNode> {
 
     modifyState(guideContains: boolean, contains: boolean): void {
         if(guideContains) {
-            this._selected = true;
+            this._isSelected = true;
+            this._isResizing = true;
+
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
             this._myState.selection = this;
             this._myState.dragoffx = this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val / 2;
             this._myState.dragoffy = this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val / 2;
             this._myState.initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val / 2, this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val / 2);
             this._myState.resizing = true;
+            this._size1 = this._dims.width.eval(this._context).val;
         }
         else if (contains) {
             this._x1 = this._dims.x.eval(this._context).val; // Saving original x and y
             this._y1 = this._dims.y.eval(this._context).val;
 
-            this._selected = true;
+            this._isSelected = true;
+            this._isDragging = true;
+
             this._myState.selection = this;
             this._myState.dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
             this._myState.dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
             this._myState.dragging = true;
         }
         else {
-            this._selected = false;
+            this._isSelected = false;
         }
     }
 
     modifyReset(): void {
-        if(this._myState.dragging){
-            //this._context.eventLog.push(this.logMove());
-        } else if (this._myState.resizing){
-            //this._context.eventLog.push(this.logResize());
+        if(this._isDragging && this._isSelected){
+            this._isDragging = false;
+            this._context.eventLog.push(this.logMove());
+        } else if (this._isResizing && this._isSelected){
+            this._isResizing = false;
+            this._context.eventLog.push(this.logResize());
         }
         this._myState.dragging = false;
         this._myState.resizing = false;
@@ -239,7 +253,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
         if(mouseX < rect.left || mouseX > rect.right || mouseY < rect.top || mouseY > rect.bottom) {
             this._myState.dragging = false;
             this._myState.resizing = false;
-            this._selected = false;
+            this._isSelected = false;
             this._corner = 0;
         }
     }
@@ -257,6 +271,19 @@ export class RectangleEffect implements Effect<RectangleNode> {
     //     let sizeStr = new ResizeEvent(this._str, this._size1, this._fontSize);
     //     return sizeStr.assembleLog();
     // }
+
+    logPaint(): LogEvent<any> {
+        return new PaintEvent("rectangle at " + this._dims.x + ", " + this._dims.y);
+    }
+
+    logMove(): LogEvent<any> {
+        //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);
+        return new DragEvent("rectangle", this._x1, this._y1, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+    }
+
+    logResize(): LogEvent<any> {
+        return new ResizeEvent("rectangle", this._size1, this._dims.radius.eval(this._context).val);
+    }
 
     ast(): Expression<RectangleNode> {
         throw new Error("Not implemented");

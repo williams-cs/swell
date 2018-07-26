@@ -11,6 +11,9 @@ export class And implements Expression<any>{
         this._right = right;
     }
 
+    toString() :string {
+        return "";
+    }
     eval(context: Scope): BooleanNode{
         let lhs = this._left.eval(context);
         let rhs = this._right.eval(context);
