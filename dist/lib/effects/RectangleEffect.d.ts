@@ -34,7 +34,7 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
     onMouseDown(event: any): void;
     onMouseUp(event: any): void;
     modifyDrag(): void;
-    modifyResize(isTooSmall: boolean): void;
+    modifyResize(widthTooSmall: boolean, heightTooSmall: boolean): void;
     modifyState(guideContains: boolean, contains: boolean): void;
     modifyReset(): void;
     getMousePosition(): void;
