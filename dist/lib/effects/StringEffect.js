@@ -88,7 +88,6 @@ class StringEffect {
             if (!this._isListening) {
                 window.addEventListener('keydown', this.modifyText.bind(this));
             }
-            this._context.eventLog.push(this.logClick());
             this._isListening = true;
             this._isEditing = true;
             this._myState.dragging = false;
@@ -190,6 +189,7 @@ class StringEffect {
             this._isSelected = true;
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
             this._myState.selection = this;
+            this._context.eventLog.push(this.logClick());
             //console.log(this._str.val + "is selected?" + this._selected);
             //console.log("state selection is " + this._str.val);
             this._myState.dragoffx = this._dims.x.eval(this._context).val;
@@ -204,6 +204,7 @@ class StringEffect {
             this._y1 = this._dims.y.eval(this._context).val;
             this._isSelected = true;
             this._myState.selection = this;
+            this._context.eventLog.push(this.logClick());
             //console.log(this._str.val + "is selected?" + this._selected);
             //console.log("state selection is " + this._str.val);
             this._myState.dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
