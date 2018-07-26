@@ -75,7 +75,7 @@ class StringEffect {
     onMouseMove(event) {
         this.getMousePosition();
         if (this._isDragging && this._selected) {
-            console.log(this._str.val + " is being dragged.");
+            //console.log(this._str.val + " is being dragged.");
             this.modifyDrag();
         }
         else if (this._isResizing && this._selected) {
@@ -91,7 +91,7 @@ class StringEffect {
             this._isEditing = true;
             this._myState.dragging = false;
             this._isDragging = false;
-            console.log(this._str.val + " is setting dragging to false");
+            //console.log(this._str.val + " is setting dragging to false");
             this._textMetrics.initMousePos = this._mouse.x;
             this.modifyTextCursor();
         }
@@ -188,8 +188,8 @@ class StringEffect {
             this._selected = true;
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
             this._myState.selection = this;
-            console.log(this._str.val + "is selected?" + this._selected);
-            console.log("state selection is " + this._str.val);
+            //console.log(this._str.val + "is selected?" + this._selected);
+            //console.log("state selection is " + this._str.val);
             this._myState.dragoffx = this._dims.x.eval(this._context).val;
             this._myState.dragoffy = this._dims.y.eval(this._context).val;
             this._myState.initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
@@ -202,8 +202,8 @@ class StringEffect {
             this._y1 = this._dims.y.eval(this._context).val;
             this._selected = true;
             this._myState.selection = this;
-            console.log(this._str.val + "is selected?" + this._selected);
-            console.log("state selection is " + this._str.val);
+            //console.log(this._str.val + "is selected?" + this._selected);
+            //console.log("state selection is " + this._str.val);
             this._myState.dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
             this._myState.dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
             if (!this._isEditing) {
@@ -219,14 +219,14 @@ class StringEffect {
     }
     modifyReset() {
         //console.log(this._str.val + " just released");
-        console.log(this._str.val + " is dragging? " + this._myState.dragging);
+        //console.log(this._str.val + " is dragging? " + this._myState.dragging);
         if (this._isDragging && this._selected) {
-            console.log(this._str.val + " logging drag");
+            //console.log(this._str.val + " logging drag");
             this._isDragging = false;
             this._context.eventLog.push(this.logMove());
         }
         else if (this._isResizing && this._selected) {
-            console.log(this._str.val + " logging resize");
+            //console.log(this._str.val + " logging resize");
             this._isResizing = false;
             this._context.eventLog.push(this.logResize());
         }
