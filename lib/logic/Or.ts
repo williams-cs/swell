@@ -13,7 +13,7 @@ export class Or implements Expression<any>{
     }
 
     toString() :string {
-        return "";
+        return this._left.toString() + ' or ' + this._right.toString();
     }
 
     newLine() : boolean {

@@ -7,7 +7,7 @@ class Not {
         this._expr = expr;
     }
     toString() {
-        return "";
+        return "not " + this._expr.toString();
     }
     newLine() {
         return this._newLine;
