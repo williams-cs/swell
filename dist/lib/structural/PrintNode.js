@@ -8,7 +8,7 @@ class PrintNode {
         this._dims = dimensions || null;
     }
     toString() {
-        return "print(" + this.toPrint.toString() + ", " + this.dims.toString() + " )";
+        return "print(" + this.toPrint.toString() + ", " + this.dims.toString() + ")";
     }
     draw(context, dims, ast) {
         throw new Error("Cannot call draw() on printOp");

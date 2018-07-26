@@ -15,7 +15,7 @@ export class PrintNode implements Expression<any>{
     }
 
     toString() : string {
-        return "print(" + this.toPrint.toString() + ", " + this.dims.toString() + " )";
+        return "print(" + this.toPrint.toString() + ", " + this.dims.toString() + ")";
     }
 
     draw(context: Scope, dims: Dimensions, ast: PrintNode): void {
