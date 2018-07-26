@@ -9,7 +9,7 @@ class NotEqual {
         this._right = right;
     }
     toString() {
-        return "";
+        return this._left.toString() + " not equals " + this._right.toString();
     }
     newLine() {
         return this._newLine;

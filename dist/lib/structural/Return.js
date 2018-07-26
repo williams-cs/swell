@@ -14,7 +14,7 @@ class Return {
         //return this._expr.eval(context); // will need typechecking at some point
     }
     toString() {
-        return "";
+        return "return " + this._expr.toString();
     }
     newLine() {
         return this._newLine;

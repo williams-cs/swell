@@ -38,7 +38,7 @@ class WhileNode {
     draw(context, dims, ast) {
     }
     toString() {
-        return "";
+        return "while( " + this._cond.toString() + " ) {\n " + this._body.toString() + "}";
     }
     newLine() {
         return this._newLine;

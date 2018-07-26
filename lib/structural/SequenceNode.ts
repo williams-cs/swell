@@ -8,7 +8,7 @@ export class SequenceNode implements Expression<void>{
     private _right: Expression<any>;
     private _leftVal: any;
     private _rightVal: any;
-    private _newLine : boolean = false;
+    private _newLine : boolean = true;
 
     newLine() : boolean {
         return this._newLine;
@@ -24,7 +24,13 @@ export class SequenceNode implements Expression<void>{
     }
 
     toString() : string {
-        let result = this._left.toString() + ";\n";
+        let result = this._left.toString();
+        if(this._left.newLine() == true) {
+            result += '\n';
+        }
+        else {
+            result += ";\n";
+        }
         if(this._right.newLine() == false){
             result += this._right.toString() + ";";
         }
