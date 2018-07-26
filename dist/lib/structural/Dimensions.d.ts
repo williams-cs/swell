@@ -8,6 +8,7 @@ export declare class Dimensions {
     private _width;
     private _height;
     constructor(x: Expression<NumberNode>, y: Expression<NumberNode>, scale: Expression<NumberNode>, radius?: Expression<NumberNode>);
+    toString(): string;
     x: Expression<NumberNode>;
     y: Expression<NumberNode>;
     radius: Expression<NumberNode>;

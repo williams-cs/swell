@@ -6,6 +6,7 @@ export declare class PrintNode implements Expression<any> {
     private _scale;
     private _dims;
     constructor(toPrint: Expression<any>, dimensions?: Dimensions);
+    toString(): string;
     draw(context: Scope, dims: Dimensions, ast: PrintNode): void;
     eval(context: Scope): any;
     readonly toPrint: Expression<any>;

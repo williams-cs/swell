@@ -8,6 +8,9 @@ class Dimensions {
         this._scale = scale;
         this._radius = radius || new NumberNode_1.NumberNode(30);
     }
+    toString() {
+        return this.x.toString() + ", " + this.y.toString() + ", " + this.scale.toString() + ", " + this.radius.toString();
+    }
     get x() {
         return this._x;
     }

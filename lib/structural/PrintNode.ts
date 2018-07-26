@@ -13,6 +13,10 @@ export class PrintNode implements Expression<any>{
         this._dims = dimensions || null;
     }
 
+    toString() : string {
+        return "print(" + this.toPrint.toString() + ", " + this.dims.toString() + " )";
+    }
+
     draw(context: Scope, dims: Dimensions, ast: PrintNode): void {
         throw new Error("Cannot call draw() on printOp");
     }
