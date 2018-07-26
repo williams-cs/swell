@@ -176,16 +176,17 @@ class EllipseEffect {
             this._x1 = this._dims.x.eval(this._context).val; // Saving original x and y
             this._y1 = this._dims.y.eval(this._context).val;
             this._isSelected = true;
+            //this._isDragging = true;
             this._myState.selection = this;
             this._myState.dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
             this._myState.dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
             this._myState.dragging = true;
             // @Alex--this is in StringEffect, not sure if we also need it here
-            // if(!this._isEditing){
-            //     this._myState.dragging = true;
-            //     this._isDragging = true;
-            //     //console.log(this._str.val + " is dragging? " + this._isDragging);
-            // }
+            if (!this._isEditing) {
+                this._myState.dragging = true;
+                this._isDragging = true;
+                //console.log(this._str.val + " is dragging? " + this._isDragging);
+            }
         }
         else {
             this._isSelected = false;
