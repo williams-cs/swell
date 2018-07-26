@@ -8,7 +8,7 @@ class EllipseEffect {
     constructor(circle) {
         this._corner = 0;
         this._isSelected = false; // Private bools
-        this._isListening = false;
+        //private _isListening: boolean = false;
         this._isDragging = false;
         this._isResizing = false;
         this._mouse = {

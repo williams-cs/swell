@@ -18,7 +18,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
     private _canvas: HTMLCanvasElement;
     private _corner: number = 0;
     private _isSelected: boolean = false; // Private bools
-    private _isListening: boolean = false;
+    //private _isListening: boolean = false;
     private _isDragging: boolean = false;
     private _isResizing: boolean = false;
 

@@ -8,6 +8,7 @@ import { PaintEvent } from "../logging/PaintEvent";
 import { DragEvent } from "../logging/DragEvent";
 import { ResizeEvent } from "../logging/ResizeEvent";
 import { LogEvent } from "../logging/LogEvent";
+import { ClickEvent } from "../logging/ClickEvent";
 
 export class StringEffect implements Effect<StringNode> {
 
@@ -131,6 +132,9 @@ export class StringEffect implements Effect<StringNode> {
             if(!this._isListening){
                 window.addEventListener('keydown', this.modifyText.bind(this));
             }
+            
+            this._context.eventLog.push(this.logClick());
+
             this._isListening = true;
             this._isEditing = true;
             this._myState.dragging = false;
@@ -361,6 +365,10 @@ export class StringEffect implements Effect<StringNode> {
 
     logResize(): LogEvent<any> {
         return new ResizeEvent(this._str.val, this._size1, this._fontSize);
+    }
+
+    logClick(): LogEvent<any>{
+        return new ClickEvent(this._str.val, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
 
     ast(): Expression<StringNode> {

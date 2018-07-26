@@ -12,7 +12,6 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
     private _canvas;
     private _corner;
     private _isSelected;
-    private _isListening;
     private _isDragging;
     private _isResizing;
     private _x1;

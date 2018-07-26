@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const PaintEvent_1 = require("../logging/PaintEvent");
 const DragEvent_1 = require("../logging/DragEvent");
 const ResizeEvent_1 = require("../logging/ResizeEvent");
+const ClickEvent_1 = require("../logging/ClickEvent");
 class StringEffect {
     constructor(str) {
         this._fontSize = 20;
@@ -87,6 +88,7 @@ class StringEffect {
             if (!this._isListening) {
                 window.addEventListener('keydown', this.modifyText.bind(this));
             }
+            this._context.eventLog.push(this.logClick());
             this._isListening = true;
             this._isEditing = true;
             this._myState.dragging = false;
@@ -301,6 +303,9 @@ class StringEffect {
     }
     logResize() {
         return new ResizeEvent_1.ResizeEvent(this._str.val, this._size1, this._fontSize);
+    }
+    logClick() {
+        return new ClickEvent_1.ClickEvent(this._str.val, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
     ast() {
         return this._ast;
