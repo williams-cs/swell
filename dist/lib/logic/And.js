@@ -6,6 +6,9 @@ class And {
         this._left = left;
         this._right = right;
     }
+    toString() {
+        return "";
+    }
     eval(context) {
         let lhs = this._left.eval(context);
         let rhs = this._right.eval(context);

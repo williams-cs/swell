@@ -5,6 +5,7 @@ export declare class Conditional implements Expression<any> {
     private _trueBranch;
     private _falseBranch;
     constructor(test: Expression<any>, trueBranch: Expression<any>, falseBranch?: Expression<any>);
+    toString(): string;
     eval(context: Scope): any;
     readonly trueBranch: Expression<any>;
     readonly falseBranch: Expression<any>;

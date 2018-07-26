@@ -19,6 +19,10 @@ export class Conditional implements Expression<any>{
         this._falseBranch = falseBranch;
     }
 
+    toString() : string {
+        return '';
+    }
+
     eval(context: Scope){
         let childCtx = new Scope(context);
 
