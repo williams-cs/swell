@@ -361,7 +361,7 @@ export class StringEffect implements Effect<StringNode> {
     }
 
     logPaint(): LogEvent<any> {
-        return new PaintEvent(this._str.val);
+        return new PaintEvent(this._str.val, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
     
     logMove(): LogEvent<any> {

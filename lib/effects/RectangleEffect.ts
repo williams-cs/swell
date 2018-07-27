@@ -292,7 +292,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
     // }
 
     logPaint(): LogEvent<any> {
-        return new PaintEvent("rectangle at " + this._dims.x + ", " + this._dims.y);
+        return new PaintEvent("rectangle", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
 
     logMove(): LogEvent<any> {

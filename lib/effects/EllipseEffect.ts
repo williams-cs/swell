@@ -289,7 +289,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
     }
 
     logPaint(): LogEvent<any> {
-        return new PaintEvent("ellipse at " + this._dims.x + ", " + this._dims.y);
+        return new PaintEvent("ellipse", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
 
     logMove(): LogEvent<any> {
