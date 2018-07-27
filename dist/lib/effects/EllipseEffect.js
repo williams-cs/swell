@@ -199,11 +199,15 @@ class EllipseEffect {
     modifyReset() {
         if (this._isDragging && this._isSelected) { // probs only need dragging but oh well
             this._isDragging = false;
-            this._context.eventLog.push(this.logMove());
+            if (Math.abs(this._x1 - this._dims.x.eval(this._context).val) > 1 || Math.abs(this._y1 - this._dims.y.eval(this._context).val) > 1) {
+                this._context.eventLog.push(this.logMove());
+            }
         }
         else if (this._isResizing && this._isSelected) {
             this._isResizing = false;
-            this._context.eventLog.push(this.logResize());
+            if (Math.abs(this._size1 - this._dims.radius.eval(this._context).val) > 0) {
+                this._context.eventLog.push(this.logResize());
+            }
         }
         this._myState.dragging = false;
         this._myState.resizing = false;

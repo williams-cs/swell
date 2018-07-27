@@ -217,7 +217,8 @@ export class RectangleEffect implements Effect<RectangleNode> {
             this._myState.dragoffy = this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val / 2;
             this._myState.initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val / 2, this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val / 2);
             this._myState.resizing = true;
-            this._size1 = this._dims.width.eval(this._context).val;
+
+            this._size1 = Math.sqrt((this._dims.width.eval(this._context).val)^2 + (this._dims.height.eval(this._context).val)^2); // size is diagonal length
         }
         else if (contains) {
             this._x1 = this._dims.x.eval(this._context).val; // Saving original x and y
@@ -239,10 +240,15 @@ export class RectangleEffect implements Effect<RectangleNode> {
     modifyReset(): void {
         if(this._isDragging && this._isSelected){
             this._isDragging = false;
-            this._context.eventLog.push(this.logMove());
+            if(Math.abs(this._x1 - this._dims.x.eval(this._context).val) > 1 || Math.abs(this._y1 - this._dims.y.eval(this._context).val) > 1) {
+                this._context.eventLog.push(this.logMove());
+            }
         } else if (this._isResizing && this._isSelected){
             this._isResizing = false;
-            this._context.eventLog.push(this.logResize());
+            let size2 = Math.sqrt((this._dims.width.eval(this._context).val)^2 + (this._dims.height.eval(this._context).val)^2); 
+            if(Math.abs(this._size1 - size2) > 0){
+                this._context.eventLog.push(this.logResize());
+            }
         }
         this._myState.dragging = false;
         this._myState.resizing = false;
@@ -290,7 +296,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
     }
 
     logResize(): LogEvent<any> {
-        return new ResizeEvent("rectangle", this._size1, this._dims.radius.eval(this._context).val);
+        return new ResizeEvent("rectangle", this._size1, this._dims.width.eval(this._context).val);
     }
 
     ast(): Expression<RectangleNode> {
