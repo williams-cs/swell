@@ -197,7 +197,7 @@ class RectangleEffect {
         }
         else if (this._isResizing && this._isSelected) {
             this._isResizing = false;
-            let size2 = Math.sqrt((this._dims.width.eval(this._context).val) ^ 2 + (this._dims.height.eval(this._context).val) ^ 2);
+            let size2 = Math.sqrt(Math.pow(this._dims.width.eval(this._context).val, 2) + Math.pow(this._dims.height.eval(this._context).val, 2));
             if (Math.abs(this._size1 - size2) > 0) {
                 this._context.eventLog.push(this.logResize());
             }
