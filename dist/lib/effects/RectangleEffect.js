@@ -4,6 +4,7 @@ const NumberNode_1 = require("../prims/NumberNode");
 const PaintEvent_1 = require("../logging/PaintEvent");
 const ResizeEvent_1 = require("../logging/ResizeEvent");
 const DragEvent_1 = require("../logging/DragEvent");
+const ClickEvent_1 = require("../logging/ClickEvent");
 class RectangleEffect {
     constructor(rect) {
         this._corner = 0;
@@ -163,6 +164,7 @@ class RectangleEffect {
         if (guideContains) {
             this._isSelected = true;
             this._isResizing = true;
+            this._context.eventLog.push(this.logClick());
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
             this._myState.selection = this;
             this._myState.dragoffx = this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val / 2;
@@ -174,6 +176,7 @@ class RectangleEffect {
         else if (contains) {
             this._x1 = this._dims.x.eval(this._context).val; // Saving original x and y
             this._y1 = this._dims.y.eval(this._context).val;
+            this._context.eventLog.push(this.logClick());
             this._isSelected = true;
             this._isDragging = true;
             this._myState.selection = this;
@@ -238,6 +241,9 @@ class RectangleEffect {
     }
     logResize() {
         return new ResizeEvent_1.ResizeEvent("rectangle", this._size1, this._dims.width.eval(this._context).val);
+    }
+    logClick() {
+        return new ClickEvent_1.ClickEvent("rectangle at ", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
     ast() {
         throw new Error("Not implemented");

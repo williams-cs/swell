@@ -46,6 +46,7 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
     logPaint(): LogEvent<any>;
     logMove(): LogEvent<any>;
     logResize(): LogEvent<any>;
+    logClick(): LogEvent<any>;
     ast(): Expression<RectangleNode>;
     updateAST(): Expression<NumberNode>;
     readonly x: number;

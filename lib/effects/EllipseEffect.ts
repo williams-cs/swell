@@ -8,6 +8,7 @@ import { DragEvent } from "../logging/DragEvent";
 import { ResizeEvent } from "../logging/ResizeEvent";
 import { LogEvent } from "../logging/LogEvent";
 import { NumberNode } from "../prims/NumberNode";
+import { ClickEvent } from "../logging/ClickEvent";
 
 export class EllipseEffect implements Effect<EllipseNode> {
 
@@ -217,6 +218,8 @@ export class EllipseEffect implements Effect<EllipseNode> {
             this._isSelected = true;
             this._isResizing = true;
 
+            this._context.eventLog.push(this.logClick());
+
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
             this._myState.selection = this;
             this._myState.dragoffx = this._dims.x.eval(this._context).val;
@@ -232,6 +235,8 @@ export class EllipseEffect implements Effect<EllipseNode> {
 
             this._isSelected = true;
             this._isDragging = true;
+
+            this._context.eventLog.push(this.logClick());
 
             this._myState.dragging = true;
             this._myState.selection = this;
@@ -294,6 +299,10 @@ export class EllipseEffect implements Effect<EllipseNode> {
 
     logResize(): LogEvent<any> {
         return new ResizeEvent("ellipse", this._size1, this._dims.radius.eval(this._context).val);
+    }
+
+    logClick(): LogEvent<any>{
+        return new ClickEvent("ellipse at ", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
 
     updateAST(): Expression<EllipseNode> {

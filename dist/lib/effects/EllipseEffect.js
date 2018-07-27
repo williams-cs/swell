@@ -4,6 +4,7 @@ const PaintEvent_1 = require("../logging/PaintEvent");
 const DragEvent_1 = require("../logging/DragEvent");
 const ResizeEvent_1 = require("../logging/ResizeEvent");
 const NumberNode_1 = require("../prims/NumberNode");
+const ClickEvent_1 = require("../logging/ClickEvent");
 class EllipseEffect {
     constructor(circle) {
         this._corner = 0;
@@ -173,6 +174,7 @@ class EllipseEffect {
         if (guideContains) {
             this._isSelected = true;
             this._isResizing = true;
+            this._context.eventLog.push(this.logClick());
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
             this._myState.selection = this;
             this._myState.dragoffx = this._dims.x.eval(this._context).val;
@@ -186,6 +188,7 @@ class EllipseEffect {
             this._y1 = this._dims.y.eval(this._context).val;
             this._isSelected = true;
             this._isDragging = true;
+            this._context.eventLog.push(this.logClick());
             this._myState.dragging = true;
             this._myState.selection = this;
             this._myState.dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
@@ -240,6 +243,9 @@ class EllipseEffect {
     }
     logResize() {
         return new ResizeEvent_1.ResizeEvent("ellipse", this._size1, this._dims.radius.eval(this._context).val);
+    }
+    logClick() {
+        return new ClickEvent_1.ClickEvent("ellipse at ", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
     updateAST() {
         throw new Error("Not implemented");

@@ -41,6 +41,7 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
     logPaint(): LogEvent<any>;
     logMove(): LogEvent<any>;
     logResize(): LogEvent<any>;
+    logClick(): LogEvent<any>;
     updateAST(): Expression<EllipseNode>;
     readonly x: number;
     readonly y: number;
