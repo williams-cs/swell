@@ -235,7 +235,7 @@ class EllipseEffect {
         return this._ast;
     }
     logPaint() {
-        return new PaintEvent_1.PaintEvent("ellipse at " + this._dims.x + ", " + this._dims.y);
+        return new PaintEvent_1.PaintEvent("ellipse", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
     logMove() {
         //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);

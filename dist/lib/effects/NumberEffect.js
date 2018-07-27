@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const PaintEvent_1 = require("../logging/PaintEvent");
 class NumberEffect {
     constructor(num) {
         this._dims = null;
@@ -23,7 +22,8 @@ class NumberEffect {
     update() {
     }
     logPaint() {
-        return new PaintEvent_1.PaintEvent(this._str);
+        return null;
+        //return new PaintEvent(this._str, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val););
     }
     // logMove(): string {
     //     let moveStr = new DragEvent(this._str, this._x1, this._y1, this._dims.x, this._dims.y);

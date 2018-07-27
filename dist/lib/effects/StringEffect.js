@@ -300,7 +300,7 @@ class StringEffect {
         this._ctx.stroke();
     }
     logPaint() {
-        return new PaintEvent_1.PaintEvent(this._str.val);
+        return new PaintEvent_1.PaintEvent(this._str.val, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
     logMove() {
         return new DragEvent_1.DragEvent(this._str.val, this._x1, this._y1, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
