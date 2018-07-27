@@ -33,7 +33,7 @@ class FunDef {
             argsList += this._args[i] + ", ";
         }
         argsList += this._args[this._args.length - 1];
-        return "fun " + this._name + "(" + argsList + ')' + ' {\n\t ' + this._body.toString() + '}';
+        return "fun " + this._name + "(" + argsList + ')' + ' {\n ' + this._body.toString() + '}';
     }
     draw(context, dims, ast) {
         //NO
