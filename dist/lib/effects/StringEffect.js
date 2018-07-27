@@ -226,7 +226,9 @@ class StringEffect {
         if (this._isDragging && this._isSelected) {
             //console.log(this._str.val + " logging drag");
             this._isDragging = false;
-            this._context.eventLog.push(this.logMove());
+            if (Math.abs(this._x1 - this._dims.x.eval(this._context).val) > 1 || Math.abs(this._y1 - this._dims.y.eval(this._context).val) > 1) {
+                this._context.eventLog.push(this.logMove());
+            }
         }
         else if (this._isResizing && this._isSelected) {
             //console.log(this._str.val + " logging resize");
@@ -299,11 +301,7 @@ class StringEffect {
         return new PaintEvent_1.PaintEvent(this._str.val);
     }
     logMove() {
-        let curX = this._dims.x.eval(this._context).val;
-        let curY = this._dims.y.eval(this._context).val;
-        if (Math.abs(this._x1 - curX) > 1 || Math.abs(this._y1 - curY) > 1) {
-            return new DragEvent_1.DragEvent(this._str.val, this._x1, this._y1, curX, curY);
-        }
+        return new DragEvent_1.DragEvent(this._str.val, this._x1, this._y1, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
     logResize() {
         return new ResizeEvent_1.ResizeEvent(this._str.val, this._size1, this._fontSize);
