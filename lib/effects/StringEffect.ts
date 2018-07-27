@@ -288,7 +288,9 @@ export class StringEffect implements Effect<StringNode> {
         } else if (this._isResizing && this._isSelected){
             //console.log(this._str.val + " logging resize");
             this._isResizing = false;
-            this._context.eventLog.push(this.logResize());
+            if(Math.abs(this._size1 - this._fontSize) > 0){
+                this._context.eventLog.push(this.logResize());
+            }
         }
         this._myState.dragging = false;
         //this._isDragging = false;
