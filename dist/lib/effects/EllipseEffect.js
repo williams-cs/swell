@@ -4,11 +4,12 @@ const PaintEvent_1 = require("../logging/PaintEvent");
 const DragEvent_1 = require("../logging/DragEvent");
 const ResizeEvent_1 = require("../logging/ResizeEvent");
 const NumberNode_1 = require("../prims/NumberNode");
+const ClickEvent_1 = require("../logging/ClickEvent");
 class EllipseEffect {
     constructor(circle) {
         this._corner = 0;
         this._isSelected = false; // Private bools
-        this._isListening = false;
+        //private _isListening: boolean = false;
         this._isDragging = false;
         this._isResizing = false;
         this._mouse = {
@@ -173,6 +174,7 @@ class EllipseEffect {
         if (guideContains) {
             this._isSelected = true;
             this._isResizing = true;
+            this._context.eventLog.push(this.logClick());
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
             this._myState.selection = this;
             this._myState.dragoffx = this._dims.x.eval(this._context).val;
@@ -186,6 +188,7 @@ class EllipseEffect {
             this._y1 = this._dims.y.eval(this._context).val;
             this._isSelected = true;
             this._isDragging = true;
+            this._context.eventLog.push(this.logClick());
             this._myState.dragging = true;
             this._myState.selection = this;
             this._myState.dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
@@ -199,11 +202,15 @@ class EllipseEffect {
     modifyReset() {
         if (this._isDragging && this._isSelected) { // probs only need dragging but oh well
             this._isDragging = false;
-            this._context.eventLog.push(this.logMove());
+            if (Math.abs(this._x1 - this._dims.x.eval(this._context).val) > 1 || Math.abs(this._y1 - this._dims.y.eval(this._context).val) > 1) {
+                this._context.eventLog.push(this.logMove());
+            }
         }
         else if (this._isResizing && this._isSelected) {
             this._isResizing = false;
-            this._context.eventLog.push(this.logResize());
+            if (Math.abs(this._size1 - this._dims.radius.eval(this._context).val) > 0) {
+                this._context.eventLog.push(this.logResize());
+            }
         }
         this._myState.dragging = false;
         this._myState.resizing = false;
@@ -228,7 +235,7 @@ class EllipseEffect {
         return this._ast;
     }
     logPaint() {
-        return new PaintEvent_1.PaintEvent("ellipse at " + this._dims.x + ", " + this._dims.y);
+        return new PaintEvent_1.PaintEvent("ellipse", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
     logMove() {
         //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);
@@ -236,6 +243,9 @@ class EllipseEffect {
     }
     logResize() {
         return new ResizeEvent_1.ResizeEvent("ellipse", this._size1, this._dims.radius.eval(this._context).val);
+    }
+    logClick() {
+        return new ClickEvent_1.ClickEvent("ellipse at ", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
     updateAST() {
         throw new Error("Not implemented");

@@ -8,6 +8,7 @@ import { PaintEvent } from "../logging/PaintEvent";
 import { DragEvent } from "../logging/DragEvent";
 import { ResizeEvent } from "../logging/ResizeEvent";
 import { LogEvent } from "../logging/LogEvent";
+import { ClickEvent } from "../logging/ClickEvent";
 
 export class StringEffect implements Effect<StringNode> {
 
@@ -117,7 +118,7 @@ export class StringEffect implements Effect<StringNode> {
     /* Event listener functions */
     onMouseMove(event: any): void {
         this.getMousePosition();
-        if(this._isDragging && this._isSelected){
+        if(this._isSelected && this._isDragging){
             //console.log(this._str.val + " is being dragged.");
             this.modifyDrag();
         }
@@ -131,6 +132,7 @@ export class StringEffect implements Effect<StringNode> {
             if(!this._isListening){
                 window.addEventListener('keydown', this.modifyText.bind(this));
             }
+
             this._isListening = true;
             this._isEditing = true;
             this._myState.dragging = false;
@@ -239,6 +241,8 @@ export class StringEffect implements Effect<StringNode> {
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
             this._myState.selection = this;
 
+            this._context.eventLog.push(this.logClick());
+
             //console.log(this._str.val + "is selected?" + this._selected);
             //console.log("state selection is " + this._str.val);
 
@@ -253,6 +257,8 @@ export class StringEffect implements Effect<StringNode> {
             this._y1 = this._dims.y.eval(this._context).val;
             this._isSelected = true;
             this._myState.selection = this;
+
+            this._context.eventLog.push(this.logClick());
 
             //console.log(this._str.val + "is selected?" + this._selected);
             //console.log("state selection is " + this._str.val);
@@ -276,11 +282,15 @@ export class StringEffect implements Effect<StringNode> {
         if(this._isDragging && this._isSelected){
             //console.log(this._str.val + " logging drag");
             this._isDragging = false;
-            this._context.eventLog.push(this.logMove());
+            if(Math.abs(this._x1 - this._dims.x.eval(this._context).val) > 1 || Math.abs(this._y1 - this._dims.y.eval(this._context).val) > 1) {
+                this._context.eventLog.push(this.logMove());
+            }
         } else if (this._isResizing && this._isSelected){
             //console.log(this._str.val + " logging resize");
             this._isResizing = false;
-            this._context.eventLog.push(this.logResize());
+            if(Math.abs(this._size1 - this._fontSize) > 0){
+                this._context.eventLog.push(this.logResize());
+            }
         }
         this._myState.dragging = false;
         //this._isDragging = false;
@@ -351,16 +361,19 @@ export class StringEffect implements Effect<StringNode> {
     }
 
     logPaint(): LogEvent<any> {
-        return new PaintEvent(this._str.val);
+        return new PaintEvent(this._str.val, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
     
     logMove(): LogEvent<any> {
-        //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);
         return new DragEvent(this._str.val, this._x1, this._y1, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
 
     logResize(): LogEvent<any> {
         return new ResizeEvent(this._str.val, this._size1, this._fontSize);
+    }
+
+    logClick(): LogEvent<any>{
+        return new ClickEvent(this._str.val, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
 
     ast(): Expression<StringNode> {

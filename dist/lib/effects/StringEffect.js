@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const PaintEvent_1 = require("../logging/PaintEvent");
 const DragEvent_1 = require("../logging/DragEvent");
 const ResizeEvent_1 = require("../logging/ResizeEvent");
+const ClickEvent_1 = require("../logging/ClickEvent");
 class StringEffect {
     constructor(str) {
         this._fontSize = 20;
@@ -74,7 +75,7 @@ class StringEffect {
     /* Event listener functions */
     onMouseMove(event) {
         this.getMousePosition();
-        if (this._isDragging && this._isSelected) {
+        if (this._isSelected && this._isDragging) {
             //console.log(this._str.val + " is being dragged.");
             this.modifyDrag();
         }
@@ -188,6 +189,7 @@ class StringEffect {
             this._isSelected = true;
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
             this._myState.selection = this;
+            this._context.eventLog.push(this.logClick());
             //console.log(this._str.val + "is selected?" + this._selected);
             //console.log("state selection is " + this._str.val);
             this._myState.dragoffx = this._dims.x.eval(this._context).val;
@@ -202,6 +204,7 @@ class StringEffect {
             this._y1 = this._dims.y.eval(this._context).val;
             this._isSelected = true;
             this._myState.selection = this;
+            this._context.eventLog.push(this.logClick());
             //console.log(this._str.val + "is selected?" + this._selected);
             //console.log("state selection is " + this._str.val);
             this._myState.dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
@@ -223,12 +226,16 @@ class StringEffect {
         if (this._isDragging && this._isSelected) {
             //console.log(this._str.val + " logging drag");
             this._isDragging = false;
-            this._context.eventLog.push(this.logMove());
+            if (Math.abs(this._x1 - this._dims.x.eval(this._context).val) > 1 || Math.abs(this._y1 - this._dims.y.eval(this._context).val) > 1) {
+                this._context.eventLog.push(this.logMove());
+            }
         }
         else if (this._isResizing && this._isSelected) {
             //console.log(this._str.val + " logging resize");
             this._isResizing = false;
-            this._context.eventLog.push(this.logResize());
+            if (Math.abs(this._size1 - this._fontSize) > 0) {
+                this._context.eventLog.push(this.logResize());
+            }
         }
         this._myState.dragging = false;
         //this._isDragging = false;
@@ -293,14 +300,16 @@ class StringEffect {
         this._ctx.stroke();
     }
     logPaint() {
-        return new PaintEvent_1.PaintEvent(this._str.val);
+        return new PaintEvent_1.PaintEvent(this._str.val, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
     logMove() {
-        //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);
         return new DragEvent_1.DragEvent(this._str.val, this._x1, this._y1, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
     logResize() {
         return new ResizeEvent_1.ResizeEvent(this._str.val, this._size1, this._fontSize);
+    }
+    logClick() {
+        return new ClickEvent_1.ClickEvent(this._str.val, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
     ast() {
         return this._ast;

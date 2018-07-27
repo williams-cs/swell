@@ -42,7 +42,8 @@ export class NumberEffect implements Effect<NumberNode> {
     }
 
     logPaint(): LogEvent<any> {
-        return new PaintEvent(this._str);
+        return null;
+        //return new PaintEvent(this._str, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val););
     }
 
     // logMove(): string {

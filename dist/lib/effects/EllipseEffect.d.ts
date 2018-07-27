@@ -12,7 +12,6 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
     private _canvas;
     private _corner;
     private _isSelected;
-    private _isListening;
     private _isDragging;
     private _isResizing;
     private _x1;
@@ -42,6 +41,7 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
     logPaint(): LogEvent<any>;
     logMove(): LogEvent<any>;
     logResize(): LogEvent<any>;
+    logClick(): LogEvent<any>;
     updateAST(): Expression<EllipseNode>;
     readonly x: number;
     readonly y: number;
