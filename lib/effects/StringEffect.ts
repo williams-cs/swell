@@ -118,8 +118,7 @@ export class StringEffect implements Effect<StringNode> {
     /* Event listener functions */
     onMouseMove(event: any): void {
         this.getMousePosition();
-        if(this._isSelected){
-            this._isDragging = true;
+        if(this._isSelected && this._isDragging){
             //console.log(this._str.val + " is being dragged.");
             this.modifyDrag();
         }
@@ -362,8 +361,11 @@ export class StringEffect implements Effect<StringNode> {
     }
     
     logMove(): LogEvent<any> {
-        //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);
-        return new DragEvent(this._str.val, this._x1, this._y1, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+        let curX = this._dims.x.eval(this._context).val;
+        let curY = this._dims.y.eval(this._context).val;
+        if(Math.abs(this._x1 -  curX) > 1 || Math.abs(this._y1 - curY) > 1) {
+            return new DragEvent(this._str.val, this._x1, this._y1, curX, curY);
+        }
     }
 
     logResize(): LogEvent<any> {

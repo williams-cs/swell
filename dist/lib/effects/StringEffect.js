@@ -75,8 +75,7 @@ class StringEffect {
     /* Event listener functions */
     onMouseMove(event) {
         this.getMousePosition();
-        if (this._isSelected) {
-            this._isDragging = true;
+        if (this._isSelected && this._isDragging) {
             //console.log(this._str.val + " is being dragged.");
             this.modifyDrag();
         }
@@ -300,8 +299,11 @@ class StringEffect {
         return new PaintEvent_1.PaintEvent(this._str.val);
     }
     logMove() {
-        //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);
-        return new DragEvent_1.DragEvent(this._str.val, this._x1, this._y1, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+        let curX = this._dims.x.eval(this._context).val;
+        let curY = this._dims.y.eval(this._context).val;
+        if (Math.abs(this._x1 - curX) > 1 || Math.abs(this._y1 - curY) > 1) {
+            return new DragEvent_1.DragEvent(this._str.val, this._x1, this._y1, curX, curY);
+        }
     }
     logResize() {
         return new ResizeEvent_1.ResizeEvent(this._str.val, this._size1, this._fontSize);
