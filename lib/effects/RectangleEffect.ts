@@ -24,9 +24,9 @@ export class RectangleEffect implements Effect<RectangleNode> {
     private _corner: number = 0;
 
     private _isSelected: boolean = false; // private bools
-    private _isListening: boolean = false;
     private _isDragging: boolean = false;
     private _isResizing: boolean = false;
+    private _isSelectingMultiple: boolean = false;
 
     private _x1: number; // used to save coords for logging
     private _y1: number;
@@ -88,6 +88,8 @@ export class RectangleEffect implements Effect<RectangleNode> {
         this._canvas.addEventListener('mousemove', this.onMouseMove.bind(this));
         this._canvas.addEventListener('mousedown', this.onMouseDown.bind(this));
         this._canvas.addEventListener('mouseup', this.onMouseUp.bind(this));
+        this._canvas.addEventListener('keydown', this.onShiftDown.bind(this));
+        this._canvas.addEventListener('keyup', this.onShiftUp.bind(this));
         window.addEventListener('mousedown', this.isMouseOutside.bind(this));
         //makes it so that double clicking doesn't select text on the page
         this._canvas.addEventListener('selectstart', function(e) { e.preventDefault(); return false; }, false);
@@ -161,6 +163,18 @@ export class RectangleEffect implements Effect<RectangleNode> {
     onMouseUp(event: any) {
         //console.log("I'm an ellipse!");
         this.modifyReset();
+    }
+
+    onShiftDown(event: any) {
+        if(event.keyCode == 16) { //shift keycode
+            this._isSelectingMultiple = true;
+        }
+    }
+
+    onShiftUp(event: any) {
+        if(event.keyCode == 16) { //shift keycode
+            this._isSelectingMultiple = false;
+        }
     }
 
     /* Modification functions */
@@ -237,7 +251,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
             this._myState.dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
             this._myState.dragging = true;
         }
-        else {
+        else if (!this._isSelectingMultiple) {
             this._isSelected = false;
         }
     }
