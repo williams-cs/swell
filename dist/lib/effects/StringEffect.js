@@ -48,7 +48,7 @@ class StringEffect {
             this._context = context;
             this._canvas = context.canvas.get();
             this._dims = dims;
-            this._myState = context.myState;
+            //this._myState = context.myState;
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
             this.update();
@@ -91,10 +91,6 @@ class StringEffect {
     /* Event listener functions */
     onMouseMove(event) {
         this.getMousePosition();
-        /*
-        if(this._myState.dragging) {
-            this._isDragging = true;
-        }*/
         if (this._isSelected && this._isDragging) {
             //console.log(this._str.val + " is being dragged.");
             this.modifyDrag();
