@@ -91,6 +91,9 @@ class StringEffect {
     /* Event listener functions */
     onMouseMove(event) {
         this.getMousePosition();
+        if (this._myState.dragging) {
+            this._isDragging = true;
+        }
         if (this._isSelected && this._isDragging) {
             //console.log(this._str.val + " is being dragged.");
             this.modifyDrag();

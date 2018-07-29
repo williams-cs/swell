@@ -134,6 +134,9 @@ export class StringEffect implements Effect<StringNode> {
     /* Event listener functions */
     onMouseMove(event: any): void {
         this.getMousePosition();
+        if(this._myState.dragging) {
+            this._isDragging = true;
+        }
         if(this._isSelected && this._isDragging){
             //console.log(this._str.val + " is being dragged.");
             this.modifyDrag();
