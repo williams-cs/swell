@@ -273,6 +273,9 @@ export class StringEffect implements Effect<StringNode> {
                 this._isDragging = true;
                 this._myState.dragging = true;
             }
+            else if (this._myState.dragging == true) {
+                this._isDragging = true;
+            }
         } else if (guideContains) { //if the corner guides contain the mouse we are resizing 
             this._isSelected = true;
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
@@ -311,6 +314,7 @@ export class StringEffect implements Effect<StringNode> {
         } else if (!this._isSelectingMultiple) {
             this._isSelected = false;
             this._isDragging = false;
+            this._myState.dragging = false;
             this._isEditing = false;
         }
     }

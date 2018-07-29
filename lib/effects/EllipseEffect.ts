@@ -246,6 +246,9 @@ export class EllipseEffect implements Effect<EllipseNode> {
                 this._isDragging = true;
                 this._myState.dragging = true;
             }
+            else if (this._myState.dragging == true) {
+                this._isDragging = true;
+            }
         }
         else if(guideContains) {
             this._isSelected = true;
@@ -280,6 +283,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
         else if (!this._isSelectingMultiple) {
             this._isSelected = false;
             this._isDragging = false;
+            this._myState.dragging = false;
         }
     }
 

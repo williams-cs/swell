@@ -239,6 +239,9 @@ export class RectangleEffect implements Effect<RectangleNode> {
                 this._isDragging = true;
                 this._myState.dragging = true;
             }
+            else if (this._myState.dragging == true) {
+                this._isDragging = true;
+            }
         }
         else if(guideContains) {
             this._isSelected = true;
@@ -272,6 +275,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
         else if (!this._isSelectingMultiple) {
             this._isSelected = false;
             this._isDragging = false;
+            this._myState.dragging = false;
         }
     }
 
