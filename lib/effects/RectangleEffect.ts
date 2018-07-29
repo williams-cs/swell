@@ -233,7 +233,14 @@ export class RectangleEffect implements Effect<RectangleNode> {
     }
 
     modifyState(guideContains: boolean, contains: boolean): void {
-        if(guideContains) {
+        if (this._isSelectingMultiple) {
+            if (contains) {
+                this._isSelected = true;
+                this._isDragging = true;
+                this._myState.dragging = true;
+            }
+        }
+        else if(guideContains) {
             this._isSelected = true;
             this._isResizing = true;
 
@@ -248,21 +255,14 @@ export class RectangleEffect implements Effect<RectangleNode> {
 
             this._size1 = Math.sqrt((this._dims.width.eval(this._context).val)^2 + (this._dims.height.eval(this._context).val)^2); // size is diagonal length
         }
-        else if (contains || this._myState.dragging) {
-            if(this._isSelectingMultiple) {
-                this._myState.dragging = true;
-            }
-            else {
-                this._myState.dragging = false;
-            }
+        else if (contains) {
+            this._myState.dragging = false;
             this._x1 = this._dims.x.eval(this._context).val; // Saving original x and y
             this._y1 = this._dims.y.eval(this._context).val;
 
             this._context.eventLog.push(this.logClick());
-            if(contains) {
-                this._isSelected = true;
-                this._isDragging = true;
-            }
+            this._isSelected = true;
+            this._isDragging = true;
 
             //this._myState.selection = this;
             this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
@@ -271,6 +271,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
         }
         else if (!this._isSelectingMultiple) {
             this._isSelected = false;
+            this._isDragging = false;
         }
     }
 

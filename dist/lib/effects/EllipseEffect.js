@@ -195,7 +195,14 @@ class EllipseEffect {
         }
     }
     modifyState(guideContains, contains) {
-        if (guideContains) {
+        if (this._isSelectingMultiple) {
+            if (contains) {
+                this._isSelected = true;
+                this._isDragging = true;
+                this._myState.dragging = true;
+            }
+        }
+        else if (guideContains) {
             this._isSelected = true;
             this._isResizing = true;
             this._context.eventLog.push(this.logClick());
@@ -207,19 +214,12 @@ class EllipseEffect {
             //this._myState.resizing = true;
             this._size1 = this._dims.radius.eval(this._context).val; // saving old font size
         }
-        else if (contains || this._myState.dragging) {
-            if (this._isSelectingMultiple) {
-                this._myState.dragging = true;
-            }
-            else {
-                this._myState.dragging = false;
-            }
+        else if (contains) {
+            this._myState.dragging = false;
             this._x1 = this._dims.x.eval(this._context).val; // Saving original x and y
             this._y1 = this._dims.y.eval(this._context).val;
-            if (contains) {
-                this._isSelected = true;
-                this._isDragging = true;
-            }
+            this._isSelected = true;
+            this._isDragging = true;
             this._context.eventLog.push(this.logClick());
             //this._myState.dragging = true;
             //this._myState.selection = this;
@@ -228,6 +228,7 @@ class EllipseEffect {
         }
         else if (!this._isSelectingMultiple) {
             this._isSelected = false;
+            this._isDragging = false;
         }
     }
     modifyReset() {
