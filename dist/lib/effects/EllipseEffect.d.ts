@@ -22,7 +22,6 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
     private _dragoffx;
     private _dragoffy;
     private _initDistance;
-    private _myState;
     private _mouse;
     constructor(circle: EllipseNode);
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;

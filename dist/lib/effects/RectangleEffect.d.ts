@@ -27,7 +27,6 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
     private _dragoffx;
     private _dragoffy;
     private _initDistance;
-    private _myState;
     private _mouse;
     constructor(rect: RectangleNode);
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;

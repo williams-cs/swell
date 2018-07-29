@@ -16,14 +16,22 @@ class EllipseEffect {
         this._dragoffx = 0;
         this._dragoffy = 0;
         this._initDistance = 0;
-        this._myState = {
-            dragoffx: 0,
-            dragoffy: 0,
-            initDistance: 0,
-            selection: null,
-            dragging: false,
-            resizing: false
-        };
+        /*
+            private _myState: {
+                dragoffx: number,
+                dragoffy: number,
+                initDistance: number,
+                selection: any,
+                dragging: boolean,
+                resizing: boolean
+            } = {
+                dragoffx: 0,
+                dragoffy: 0,
+                initDistance: 0,
+                selection: null,
+                dragging: false,
+                resizing: false
+            }*/
         this._mouse = {
             x: 0,
             y: 0
@@ -36,7 +44,6 @@ class EllipseEffect {
             this._ast = ast;
             this._canvas = context.canvas.get();
             this._context = context;
-            //this._myState = context.myState;
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
             this.update();
@@ -222,7 +229,7 @@ class EllipseEffect {
             this._size1 = this._dims.radius.eval(this._context).val; // saving old font size
         }
         else if (contains) {
-            this._myState.dragging = false;
+            //this._myState.dragging = false;
             this._x1 = this._dims.x.eval(this._context).val; // Saving original x and y
             this._y1 = this._dims.y.eval(this._context).val;
             this._isSelected = true;
@@ -236,7 +243,7 @@ class EllipseEffect {
         else if (!this._isSelectingMultiple) {
             this._isSelected = false;
             this._isDragging = false;
-            this._myState.dragging = false;
+            //this._myState.dragging = false;
         }
     }
     modifyReset() {
@@ -252,8 +259,10 @@ class EllipseEffect {
                 this._context.eventLog.push(this.logResize());
             }
         }
-        this._myState.dragging = false;
-        this._myState.resizing = false;
+        this._isDragging = false;
+        this._isResizing = false;
+        //this._myState.dragging = false;
+        //this._myState.resizing = false;
         this._corner = 0;
     }
     getMousePosition() {
@@ -265,8 +274,10 @@ class EllipseEffect {
         let mouseY = event.clientY;
         let rect = this._canvas.getBoundingClientRect();
         if (mouseX < rect.left || mouseX > rect.right || mouseY < rect.top || mouseY > rect.bottom) {
-            this._myState.dragging = false;
-            this._myState.resizing = false;
+            //this._myState.dragging = false;
+            //this._myState.resizing = false;
+            this._isDragging = false;
+            this._isResizing = false;
             this._isSelected = false;
             this._corner = 0;
         }

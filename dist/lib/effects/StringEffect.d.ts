@@ -26,7 +26,6 @@ export declare class StringEffect implements Effect<StringNode> {
     private _dragoffx;
     private _dragoffy;
     private _initDistance;
-    private _myState;
     private _mouse;
     private _textMetrics;
     constructor(str: StringNode);

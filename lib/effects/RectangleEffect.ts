@@ -37,7 +37,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
     private _dragoffx: number = 0;
     private _dragoffy: number = 0;
     private _initDistance: number = 0;
-
+/*
     private _myState: {
         dragoffx: number,
         dragoffy: number,
@@ -52,7 +52,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
         selection: null,
         dragging: false,
         resizing: false
-    }
+    }*/
     private _mouse: {
         x: number,
         y: number
@@ -71,7 +71,6 @@ export class RectangleEffect implements Effect<RectangleNode> {
             this._ast = ast;
             this._canvas = context.canvas.get();
             this._context = context;
-            //this._myState = context.myState;
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
             this.update();
@@ -263,7 +262,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
             this._size1 = Math.sqrt((this._dims.width.eval(this._context).val)^2 + (this._dims.height.eval(this._context).val)^2); // size is diagonal length
         }
         else if (contains) {
-            this._myState.dragging = false;
+            //this._myState.dragging = false;
             this._x1 = this._dims.x.eval(this._context).val; // Saving original x and y
             this._y1 = this._dims.y.eval(this._context).val;
 
@@ -279,7 +278,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
         else if (!this._isSelectingMultiple) {
             this._isSelected = false;
             this._isDragging = false;
-            this._myState.dragging = false;
+            //this._myState.dragging = false;
         }
     }
 
@@ -296,8 +295,10 @@ export class RectangleEffect implements Effect<RectangleNode> {
                 this._context.eventLog.push(this.logResize());
             }
         }
-        this._myState.dragging = false;
-        this._myState.resizing = false;
+        //this._myState.dragging = false;
+        //this._myState.resizing = false;
+        this._isDragging = false;
+        this._isResizing = false;
         this._corner = 0;
     }
 
@@ -311,8 +312,10 @@ export class RectangleEffect implements Effect<RectangleNode> {
         let mouseY = event.clientY;
         let rect = this._canvas.getBoundingClientRect();
         if(mouseX < rect.left || mouseX > rect.right || mouseY < rect.top || mouseY > rect.bottom) {
-            this._myState.dragging = false;
-            this._myState.resizing = false;
+            //this._myState.dragging = false;
+            //this._myState.resizing = false;
+            this._isDragging = false;
+            this._isResizing = false;
             this._isSelected = false;
             this._corner = 0;
         }
