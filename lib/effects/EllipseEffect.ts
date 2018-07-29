@@ -33,22 +33,6 @@ export class EllipseEffect implements Effect<EllipseNode> {
     private _dragoffx: number = 0;
     private _dragoffy: number = 0;
     private _initDistance: number = 0;
-/*
-    private _myState: {
-        dragoffx: number,
-        dragoffy: number,
-        initDistance: number,
-        selection: any,
-        dragging: boolean,
-        resizing: boolean
-    } = {
-        dragoffx: 0,
-        dragoffy: 0,
-        initDistance: 0,
-        selection: null,
-        dragging: false,
-        resizing: false
-    }*/
     private _mouse: {
         x: number,
         y: number
@@ -260,16 +244,13 @@ export class EllipseEffect implements Effect<EllipseNode> {
             this._context.eventLog.push(this.logClick());
 
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
-            //this._myState.selection = this;
             this._dragoffx = this._dims.x.eval(this._context).val;
             this._dragoffy = this._dims.y.eval(this._context).val;
             this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
-            //this._myState.resizing = true;
 
             this._size1 = this._dims.radius.eval(this._context).val; // saving old font size
         }
         else if (contains) {
-            //this._myState.dragging = false;
             this._x1 = this._dims.x.eval(this._context).val; // Saving original x and y
             this._y1 = this._dims.y.eval(this._context).val;
             this._isSelected = true;
@@ -277,8 +258,6 @@ export class EllipseEffect implements Effect<EllipseNode> {
         
             this._context.eventLog.push(this.logClick());
 
-            //this._myState.dragging = true;
-            //this._myState.selection = this;
             this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
             this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
 
@@ -286,7 +265,6 @@ export class EllipseEffect implements Effect<EllipseNode> {
         else if (!this._isSelectingMultiple) {
             this._isSelected = false;
             this._isDragging = false;
-           //this._myState.dragging = false;
         }
     }
 
@@ -304,8 +282,6 @@ export class EllipseEffect implements Effect<EllipseNode> {
         }
         this._isDragging = false;
         this._isResizing = false;
-        //this._myState.dragging = false;
-        //this._myState.resizing = false;
         this._corner = 0;
     }
 
@@ -319,8 +295,6 @@ export class EllipseEffect implements Effect<EllipseNode> {
         let mouseY = event.clientY;
         let rect = this._canvas.getBoundingClientRect();
         if(mouseX < rect.left || mouseX > rect.right || mouseY < rect.top || mouseY > rect.bottom) {
-            //this._myState.dragging = false;
-            //this._myState.resizing = false;
             this._isDragging = false;
             this._isResizing = false;
             this._isSelected = false;
