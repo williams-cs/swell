@@ -130,7 +130,6 @@ class StringEffect {
     onShiftDown(event) {
         if (event.keyCode == "16") { //shift keycode
             this._isSelectingMultiple = true;
-            console.log("suh");
         }
     }
     onShiftUp(event) {
@@ -227,7 +226,7 @@ class StringEffect {
                 this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
                 this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
             }
-            else if (this._myState.dragging == true) {
+            else {
                 this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
                 this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
                 this._isDragging = true;
