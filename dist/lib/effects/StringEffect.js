@@ -99,8 +99,11 @@ class StringEffect {
             this._textMetrics.initMousePos = this._mouse.x;
             this.modifyTextCursor();
         }
-        else {
+        else if (!this._isSelectingMultiple) {
             this._isSelected = false;
+            this._isEditing = false;
+        }
+        else {
             this._isEditing = false;
         }
         this.modifyState(this.guideContains(this._mouse.x, this._mouse.y) > 0, this.contains(this._mouse.x, this._mouse.y));
