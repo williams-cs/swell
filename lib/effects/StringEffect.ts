@@ -30,7 +30,7 @@ export class StringEffect implements Effect<StringNode> {
     private _isDragging: boolean = false;
     private _isResizing: boolean = false;
     private _isSelectingMultiple: boolean = false;
-    private _multipleSelected: boolean = false;
+    private _isDraggingMultiple: boolean = false;
     //private _log: string[];
     private _myState: {
         dragoffx: number,
@@ -278,7 +278,7 @@ export class StringEffect implements Effect<StringNode> {
             this._myState.resizing = true;
             this._isResizing = true;
             this._size1 = this._fontSize; // saving old font size
-        } else if (contains) {
+        } else if (contains || this._isSelectingMultiple) {
             this._x1 = this._dims.x.eval(this._context).val; // Saving original x and y
             this._y1 = this._dims.y.eval(this._context).val;
             this._isSelected = true;

@@ -251,7 +251,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
 
             this._size1 = this._dims.radius.eval(this._context).val; // saving old font size
         }
-        else if (contains) {
+        else if (contains || this._isSelectingMultiple) {
             this._x1 = this._dims.x.eval(this._context).val; // Saving original x and y
             this._y1 = this._dims.y.eval(this._context).val;
 

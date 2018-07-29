@@ -15,7 +15,7 @@ class StringEffect {
         this._isDragging = false;
         this._isResizing = false;
         this._isSelectingMultiple = false;
-        this._multipleSelected = false;
+        this._isDraggingMultiple = false;
         //private _log: string[];
         this._myState = {
             dragoffx: 0,
@@ -226,7 +226,7 @@ class StringEffect {
             this._isResizing = true;
             this._size1 = this._fontSize; // saving old font size
         }
-        else if (contains) {
+        else if (contains || this._isSelectingMultiple) {
             this._x1 = this._dims.x.eval(this._context).val; // Saving original x and y
             this._y1 = this._dims.y.eval(this._context).val;
             this._isSelected = true;

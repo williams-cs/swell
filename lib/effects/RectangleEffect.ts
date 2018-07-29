@@ -244,7 +244,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
 
             this._size1 = Math.sqrt((this._dims.width.eval(this._context).val)^2 + (this._dims.height.eval(this._context).val)^2); // size is diagonal length
         }
-        else if (contains) {
+        else if (contains || this._isSelectingMultiple) {
             this._x1 = this._dims.x.eval(this._context).val; // Saving original x and y
             this._y1 = this._dims.y.eval(this._context).val;
 
