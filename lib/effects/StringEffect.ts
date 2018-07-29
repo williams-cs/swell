@@ -29,6 +29,7 @@ export class StringEffect implements Effect<StringNode> {
     private _isListening: boolean = false;
     private _isDragging: boolean = false;
     private _isResizing: boolean = false;
+    private _isSelectingMultiple: boolean = false;
     //private _log: string[];
     private _myState: {
         dragoffx: number,
@@ -152,6 +153,18 @@ export class StringEffect implements Effect<StringNode> {
         this.modifyReset();
     }
 
+    onShiftDown(event: any) {
+        if(event.keyCode == 16) { //shift keycode
+            this._isSelectingMultiple = true;
+        }
+    }
+
+    onShiftUp(event: any) {
+        if(event.keyCode == 16) { //shift keycode
+            this._isSelectingMultiple = false;
+        }
+    }
+
     /* Modification functions */
     modifyDrag(): void {
         this._dims.x.eval(this._context).val = this._mouse.x - this._myState.dragoffx;
@@ -236,7 +249,7 @@ export class StringEffect implements Effect<StringNode> {
     }
 
     modifyState(guideContains: boolean, contains: boolean): void {
-        if(guideContains) {
+        if (guideContains) { //if the corner guides contain the mouse we are resizing 
             this._isSelected = true;
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
             this._myState.selection = this;
@@ -270,7 +283,7 @@ export class StringEffect implements Effect<StringNode> {
                 this._isDragging = true;
                 //console.log(this._str.val + " is dragging? " + this._isDragging);
             }
-        } else {
+        } else if (!this._isSelectingMultiple) {
             this._isSelected = false;
             this._isEditing = false;
         }

@@ -21,6 +21,7 @@ export declare class StringEffect implements Effect<StringNode> {
     private _isListening;
     private _isDragging;
     private _isResizing;
+    private _isSelectingMultiple;
     private _myState;
     private _mouse;
     private _textMetrics;
@@ -31,6 +32,8 @@ export declare class StringEffect implements Effect<StringNode> {
     onMouseMove(event: any): void;
     onMouseDown(event: any): void;
     onMouseUp(event: any): void;
+    onShiftDown(event: any): void;
+    onShiftUp(event: any): void;
     modifyDrag(): void;
     modifyTextCursor(): void;
     modifyText(event: any): void;

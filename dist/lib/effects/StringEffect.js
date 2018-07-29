@@ -14,6 +14,7 @@ class StringEffect {
         this._isListening = false;
         this._isDragging = false;
         this._isResizing = false;
+        this._isSelectingMultiple = false;
         this._mouse = {
             x: 0,
             y: 0
@@ -105,6 +106,16 @@ class StringEffect {
     onMouseUp(event) {
         this.modifyReset();
     }
+    onShiftDown(event) {
+        if (event.keyCode == 16) { //shift keycode
+            this._isSelectingMultiple = true;
+        }
+    }
+    onShiftUp(event) {
+        if (event.keyCode == 16) { //shift keycode
+            this._isSelectingMultiple = false;
+        }
+    }
     /* Modification functions */
     modifyDrag() {
         this._dims.x.eval(this._context).val = this._mouse.x - this._myState.dragoffx;
@@ -185,7 +196,7 @@ class StringEffect {
         }
     }
     modifyState(guideContains, contains) {
-        if (guideContains) {
+        if (guideContains) { //if the corner guides contain the mouse we are resizing 
             this._isSelected = true;
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
             this._myState.selection = this;
@@ -215,7 +226,7 @@ class StringEffect {
                 //console.log(this._str.val + " is dragging? " + this._isDragging);
             }
         }
-        else {
+        else if (!this._isSelectingMultiple) {
             this._isSelected = false;
             this._isEditing = false;
         }
