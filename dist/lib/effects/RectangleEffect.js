@@ -106,7 +106,7 @@ class RectangleEffect {
     }
     onMouseMove(event) {
         this.getMousePosition();
-        if (this._myState.dragging && this._isSelected) {
+        if (this._isDragging && this._isSelected) {
             this.modifyDrag();
         }
         else if (this._isResizing && this._isSelected) {

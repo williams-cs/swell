@@ -148,7 +148,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
 
     onMouseMove(event: any): void {
         this.getMousePosition();
-        if(this._myState.dragging && this._isSelected){
+        if(this._isDragging && this._isSelected){
             this.modifyDrag();
         }
         else if(this._isResizing && this._isSelected){

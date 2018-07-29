@@ -30,6 +30,7 @@ export class StringEffect implements Effect<StringNode> {
     private _isDragging: boolean = false;
     private _isResizing: boolean = false;
     private _isSelectingMultiple: boolean = false;
+    private _multipleSelected: boolean = false;
     //private _log: string[];
     private _myState: {
         dragoffx: number,
@@ -135,7 +136,6 @@ export class StringEffect implements Effect<StringNode> {
             if(!this._isListening){
                 window.addEventListener('keydown', this.modifyText.bind(this));
             }
-
             this._isListening = true;
             this._isEditing = true;
             this._myState.dragging = false;

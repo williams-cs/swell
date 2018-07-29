@@ -15,6 +15,7 @@ class StringEffect {
         this._isDragging = false;
         this._isResizing = false;
         this._isSelectingMultiple = false;
+        this._multipleSelected = false;
         this._mouse = {
             x: 0,
             y: 0
