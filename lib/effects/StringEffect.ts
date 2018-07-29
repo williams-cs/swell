@@ -292,8 +292,10 @@ export class StringEffect implements Effect<StringNode> {
             }
             this._x1 = this._dims.x.eval(this._context).val; // Saving original x and y
             this._y1 = this._dims.y.eval(this._context).val;
-            this._isSelected = true;
-            this._myState.selection = this;
+            if(contains) {
+                this._isSelected = true;
+            }
+            //this._myState.selection = this;
 
             this._context.eventLog.push(this.logClick());
 

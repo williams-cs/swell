@@ -238,8 +238,10 @@ class StringEffect {
             }
             this._x1 = this._dims.x.eval(this._context).val; // Saving original x and y
             this._y1 = this._dims.y.eval(this._context).val;
-            this._isSelected = true;
-            this._myState.selection = this;
+            if (contains) {
+                this._isSelected = true;
+            }
+            //this._myState.selection = this;
             this._context.eventLog.push(this.logClick());
             //console.log(this._str.val + "is selected?" + this._selected);
             //console.log("state selection is " + this._str.val);

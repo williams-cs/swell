@@ -259,9 +259,10 @@ export class RectangleEffect implements Effect<RectangleNode> {
             this._y1 = this._dims.y.eval(this._context).val;
 
             this._context.eventLog.push(this.logClick());
-            
-            this._isSelected = true;
-            this._isDragging = true;
+            if(contains) {
+                this._isSelected = true;
+                this._isDragging = true;
+            }
 
             //this._myState.selection = this;
             this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
