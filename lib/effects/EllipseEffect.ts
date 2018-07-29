@@ -248,7 +248,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
             if (contains) {
                 this._isSelected = true;
                 this._isDragging = true;
-                this._myState.dragging = true;
+                //this._myState.dragging = true;
                 this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
                 this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
             }
