@@ -245,8 +245,8 @@ export class RectangleEffect implements Effect<RectangleNode> {
                 this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
             }
             else if (this._myState.dragging == true) {
-                this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
-                this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
+                //this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
+                //this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
                 this._isDragging = true;
             }
         }
