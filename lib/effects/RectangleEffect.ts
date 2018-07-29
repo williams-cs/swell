@@ -193,6 +193,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
 
     /* Modification functions */
     modifyDrag(): void {
+        console.log("rectangle dragoffx: " + this._dragoffx);
         this._dims.x.eval(this._context).val = this._mouse.x - this._dragoffx;
         this._dims.y.eval(this._context).val = this._mouse.y - this._dragoffy;
     }

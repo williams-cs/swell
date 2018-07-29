@@ -188,6 +188,7 @@ export class StringEffect implements Effect<StringNode> {
 
     /* Modification functions */
     modifyDrag(): void {
+        console.log("string dragoffx: " + this._dragoffx);
         this._dims.x.eval(this._context).val = this._mouse.x - this._dragoffx;
         this._dims.y.eval(this._context).val = this._mouse.y - this._dragoffy;
     }
