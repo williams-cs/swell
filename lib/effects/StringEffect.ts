@@ -39,7 +39,14 @@ export class StringEffect implements Effect<StringNode> {
         selection: any,
         dragging: boolean,
         resizing: boolean
-    };
+    } = {
+        dragoffx: 0,
+        dragoffy: 0,
+        initDistance: 0,
+        selection: null,
+        dragging: false,
+        resizing: false
+    }
     private _mouse: {
         x: number,
         y: number
@@ -73,7 +80,7 @@ export class StringEffect implements Effect<StringNode> {
             this._context = context;
             this._canvas = context.canvas.get();
             this._dims = dims;
-            this._myState = context.myState;
+            //this._myState = context.myState;
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
             this.update();
@@ -132,7 +139,7 @@ export class StringEffect implements Effect<StringNode> {
     }
 
     onMouseDown(event: any): void {
-        if(this._isSelected && this.contains(this._mouse.x, this._mouse.y)){ //text editing
+        if(!this._isSelectingMultiple && this._isSelected && this.contains(this._mouse.x, this._mouse.y)){ //text editing
             if(!this._isListening){
                 window.addEventListener('keydown', this.modifyText.bind(this));
             }

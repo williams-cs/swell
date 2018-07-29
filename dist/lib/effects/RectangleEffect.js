@@ -12,6 +12,14 @@ class RectangleEffect {
         this._isDragging = false;
         this._isResizing = false;
         this._isSelectingMultiple = false;
+        this._myState = {
+            dragoffx: 0,
+            dragoffy: 0,
+            initDistance: 0,
+            selection: null,
+            dragging: false,
+            resizing: false
+        };
         this._mouse = {
             x: 0,
             y: 0
@@ -24,7 +32,7 @@ class RectangleEffect {
             this._ast = ast;
             this._canvas = context.canvas.get();
             this._context = context;
-            this._myState = context.myState;
+            //this._myState = context.myState;
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
             this.update();

@@ -16,6 +16,15 @@ class StringEffect {
         this._isResizing = false;
         this._isSelectingMultiple = false;
         this._multipleSelected = false;
+        //private _log: string[];
+        this._myState = {
+            dragoffx: 0,
+            dragoffy: 0,
+            initDistance: 0,
+            selection: null,
+            dragging: false,
+            resizing: false
+        };
         this._mouse = {
             x: 0,
             y: 0
@@ -36,7 +45,7 @@ class StringEffect {
             this._context = context;
             this._canvas = context.canvas.get();
             this._dims = dims;
-            this._myState = context.myState;
+            //this._myState = context.myState;
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
             this.update();
@@ -88,7 +97,7 @@ class StringEffect {
         }
     }
     onMouseDown(event) {
-        if (this._isSelected && this.contains(this._mouse.x, this._mouse.y)) { //text editing
+        if (!this._isSelectingMultiple && this._isSelected && this.contains(this._mouse.x, this._mouse.y)) { //text editing
             if (!this._isListening) {
                 window.addEventListener('keydown', this.modifyText.bind(this));
             }

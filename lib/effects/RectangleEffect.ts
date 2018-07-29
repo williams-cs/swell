@@ -41,7 +41,14 @@ export class RectangleEffect implements Effect<RectangleNode> {
         selection: any,
         dragging: boolean,
         resizing: boolean
-    };
+    } = {
+        dragoffx: 0,
+        dragoffy: 0,
+        initDistance: 0,
+        selection: null,
+        dragging: false,
+        resizing: false
+    }
     private _mouse: {
         x: number,
         y: number
@@ -60,7 +67,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
             this._ast = ast;
             this._canvas = context.canvas.get();
             this._context = context;
-            this._myState = context.myState;
+            //this._myState = context.myState;
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
             this.update();
