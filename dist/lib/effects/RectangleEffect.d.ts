@@ -24,6 +24,9 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
     private _y1;
     private _size1;
     private _context;
+    private _dragoffx;
+    private _dragoffy;
+    private _initDistance;
     private _myState;
     private _mouse;
     constructor(rect: RectangleNode);

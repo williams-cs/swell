@@ -32,6 +32,11 @@ export class StringEffect implements Effect<StringNode> {
     private _isSelectingMultiple: boolean = false;
     private _isDraggingMultiple: boolean = false;
     //private _log: string[];
+
+    private _dragoffx: number = 0;
+    private _dragoffy: number = 0;
+    private _initDistance: number = 0;
+
     private _myState: {
         dragoffx: number,
         dragoffy: number,
@@ -80,7 +85,7 @@ export class StringEffect implements Effect<StringNode> {
             this._context = context;
             this._canvas = context.canvas.get();
             this._dims = dims;
-            //this._myState = context.myState;
+            this._myState = context.myState;
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
             this.update();
@@ -145,7 +150,7 @@ export class StringEffect implements Effect<StringNode> {
             }
             this._isListening = true;
             this._isEditing = true;
-            this._myState.dragging = false;
+            //this._myState.dragging = false;
             this._isDragging = false;
             //console.log(this._str.val + " is setting dragging to false");
             this._textMetrics.initMousePos = this._mouse.x;
@@ -180,8 +185,8 @@ export class StringEffect implements Effect<StringNode> {
 
     /* Modification functions */
     modifyDrag(): void {
-        this._dims.x.eval(this._context).val = this._mouse.x - this._myState.dragoffx;
-        this._dims.y.eval(this._context).val = this._mouse.y - this._myState.dragoffy;
+        this._dims.x.eval(this._context).val = this._mouse.x - this._dragoffx;
+        this._dims.y.eval(this._context).val = this._mouse.y - this._dragoffy;
     }
 
     modifyTextCursor(): void {
@@ -248,16 +253,16 @@ export class StringEffect implements Effect<StringNode> {
     modifyResize(isTooSmall: boolean): void {
         if(isTooSmall){
             this._fontSize = 15;
-            let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
-            if(newDistance - this._myState.initDistance > 0){
-                this._fontSize += (newDistance - this._myState.initDistance) * 0.2;
-                this._myState.initDistance = newDistance;
+            let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
+            if(newDistance - this._initDistance > 0){
+                this._fontSize += (newDistance - this._initDistance) * 0.2;
+                this._initDistance = newDistance;
             }
         }
         else {
-            let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
-            this._fontSize += (newDistance - this._myState.initDistance) * 0.2;
-            this._myState.initDistance = newDistance;
+            let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
+            this._fontSize += (newDistance - this._initDistance) * 0.2;
+            this._initDistance = newDistance;
         }
     }
 
@@ -272,13 +277,19 @@ export class StringEffect implements Effect<StringNode> {
             //console.log(this._str.val + "is selected?" + this._selected);
             //console.log("state selection is " + this._str.val);
 
-            this._myState.dragoffx = this._dims.x.eval(this._context).val;
-            this._myState.dragoffy = this._dims.y.eval(this._context).val;
-            this._myState.initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+            this._dragoffx = this._dims.x.eval(this._context).val;
+            this._dragoffy = this._dims.y.eval(this._context).val;
+            this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
             this._myState.resizing = true;
             this._isResizing = true;
             this._size1 = this._fontSize; // saving old font size
-        } else if (contains || this._isSelectingMultiple) {
+        } else if (contains || this._myState.dragging) {
+            if(this._isSelectingMultiple) {
+                this._myState.dragging = true;
+            }
+            else {
+                this._myState.dragging = false;
+            }
             this._x1 = this._dims.x.eval(this._context).val; // Saving original x and y
             this._y1 = this._dims.y.eval(this._context).val;
             this._isSelected = true;
@@ -289,10 +300,10 @@ export class StringEffect implements Effect<StringNode> {
             //console.log(this._str.val + "is selected?" + this._selected);
             //console.log("state selection is " + this._str.val);
 
-            this._myState.dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
-            this._myState.dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
+            this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
+            this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
             if(!this._isEditing){
-                this._myState.dragging = true;
+                //this._myState.dragging = true;
                 this._isDragging = true;
                 //console.log(this._str.val + " is dragging? " + this._isDragging);
             }
@@ -318,10 +329,10 @@ export class StringEffect implements Effect<StringNode> {
                 this._context.eventLog.push(this.logResize());
             }
         }
-        this._myState.dragging = false;
-        //this._isDragging = false;
-        this._myState.resizing = false;
-        //this._isResizing = false;
+        //this._myState.dragging = false;
+        this._isDragging = false;
+        //this._myState.resizing = false;
+        this._isResizing = false;
         this._corner = 0;
         //this._context.eventLog.push(this.logMove());
     }
