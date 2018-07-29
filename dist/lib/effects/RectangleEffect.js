@@ -189,11 +189,11 @@ class RectangleEffect {
             this._isResizing = true;
             this._context.eventLog.push(this.logClick());
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
-            this._myState.selection = this;
+            //this._myState.selection = this;
             this._dragoffx = this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val / 2;
             this._dragoffy = this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val / 2;
             this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val / 2, this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val / 2);
-            this._myState.resizing = true;
+            //this._myState.resizing = true;
             this._size1 = Math.sqrt((this._dims.width.eval(this._context).val) ^ 2 + (this._dims.height.eval(this._context).val) ^ 2); // size is diagonal length
         }
         else if (contains || this._myState.dragging) {
@@ -208,7 +208,7 @@ class RectangleEffect {
             this._context.eventLog.push(this.logClick());
             this._isSelected = true;
             this._isDragging = true;
-            this._myState.selection = this;
+            //this._myState.selection = this;
             this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
             this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
             //this._myState.dragging = true;

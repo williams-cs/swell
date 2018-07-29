@@ -273,9 +273,9 @@ class StringEffect {
                 this._context.eventLog.push(this.logResize());
             }
         }
-        //this._myState.dragging = false;
+        this._myState.dragging = false;
         this._isDragging = false;
-        //this._myState.resizing = false;
+        this._myState.resizing = false;
         this._isResizing = false;
         this._corner = 0;
         //this._context.eventLog.push(this.logMove());

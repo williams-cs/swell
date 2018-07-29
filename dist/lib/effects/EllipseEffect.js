@@ -200,11 +200,11 @@ class EllipseEffect {
             this._isResizing = true;
             this._context.eventLog.push(this.logClick());
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
-            this._myState.selection = this;
+            //this._myState.selection = this;
             this._dragoffx = this._dims.x.eval(this._context).val;
             this._dragoffy = this._dims.y.eval(this._context).val;
             this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
-            this._myState.resizing = true;
+            //this._myState.resizing = true;
             this._size1 = this._dims.radius.eval(this._context).val; // saving old font size
         }
         else if (contains || this._myState.dragging) {
@@ -220,7 +220,7 @@ class EllipseEffect {
             this._isDragging = true;
             this._context.eventLog.push(this.logClick());
             //this._myState.dragging = true;
-            this._myState.selection = this;
+            //this._myState.selection = this;
             this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
             this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
         }
