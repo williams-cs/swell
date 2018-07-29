@@ -141,9 +141,10 @@ class EllipseEffect {
     }
     onMouseMove(event) {
         this.getMousePosition();
-        if (this._myState.dragging) {
+        /*
+        if(this._myState.dragging) {
             this._isDragging = true;
-        }
+        }*/
         if (this._isDragging && this._isSelected) {
             this.modifyDrag();
         }
@@ -203,7 +204,6 @@ class EllipseEffect {
             if (contains) {
                 this._isSelected = true;
                 this._isDragging = true;
-                //this._myState.dragging = true;
                 this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
                 this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
             }

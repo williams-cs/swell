@@ -134,9 +134,10 @@ export class StringEffect implements Effect<StringNode> {
     /* Event listener functions */
     onMouseMove(event: any): void {
         this.getMousePosition();
+        /*
         if(this._myState.dragging) {
             this._isDragging = true;
-        }
+        }*/
         if(this._isSelected && this._isDragging){
             //console.log(this._str.val + " is being dragged.");
             this.modifyDrag();
@@ -153,7 +154,6 @@ export class StringEffect implements Effect<StringNode> {
             }
             this._isListening = true;
             this._isEditing = true;
-            //this._myState.dragging = false;
             this._isDragging = false;
             //console.log(this._str.val + " is setting dragging to false");
             this._textMetrics.initMousePos = this._mouse.x;
@@ -274,7 +274,6 @@ export class StringEffect implements Effect<StringNode> {
             if (contains) {
                 this._isSelected = true;
                 this._isDragging = true;
-                //this._myState.dragging = true;
                 this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
                 this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
             }
