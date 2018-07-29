@@ -186,13 +186,13 @@ export class EllipseEffect implements Effect<EllipseNode> {
     }
 
     onShiftDown(event: any) {
-        if(event.keyCode == 16) { //shift keycode
+        if(event.keyCode == "16") { //shift keycode
             this._isSelectingMultiple = true;
         }
     }
 
     onShiftUp(event: any) {
-        if(event.keyCode == 16) { //shift keycode
+        if(event.keyCode == "16") { //shift keycode
             this._isSelectingMultiple = false;
         }
     }

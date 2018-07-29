@@ -166,13 +166,13 @@ export class RectangleEffect implements Effect<RectangleNode> {
     }
 
     onShiftDown(event: any) {
-        if(event.keyCode == 16) { //shift keycode
+        if(event.keyCode == "16") { //shift keycode
             this._isSelectingMultiple = true;
         }
     }
 
     onShiftUp(event: any) {
-        if(event.keyCode == 16) { //shift keycode
+        if(event.keyCode == "16") { //shift keycode
             this._isSelectingMultiple = false;
         }
     }

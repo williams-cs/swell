@@ -156,7 +156,7 @@ export class StringEffect implements Effect<StringNode> {
     }
 
     onShiftDown(event: any) {
-        if(event.keyCode == 16) { //shift keycode
+        if(event.keyCode == "16") { //shift keycode
             this._isSelectingMultiple = true;
             console.log("suh");
         }
