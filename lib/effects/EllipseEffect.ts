@@ -244,7 +244,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
                 this._initDistance = newDistance;
             }
         }
-        else if(heightTooSmall) {
+        if(heightTooSmall) {
             this._dims.height.eval(this._context).val = 20;
             this._circle.height = new NumberNode(20);
             let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
