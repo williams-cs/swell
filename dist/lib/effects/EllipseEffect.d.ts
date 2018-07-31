@@ -19,6 +19,7 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
     private _y1;
     private _size1;
     private _context;
+    private _ratio;
     private _dragoffx;
     private _dragoffy;
     private _initDistance;

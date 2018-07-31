@@ -13,6 +13,7 @@ class EllipseEffect {
         this._isDragging = false;
         this._isResizing = false;
         this._isSelectingMultiple = false;
+        this._ratio = 0;
         this._dragoffx = 0;
         this._dragoffy = 0;
         this._initDistance = 0;
@@ -30,6 +31,7 @@ class EllipseEffect {
             this._context = context;
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
+            this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
             this.update();
         }
         // logging
@@ -200,10 +202,9 @@ class EllipseEffect {
             this._circle.width = new NumberNode_1.NumberNode(20);
             let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
             if (newDistance - this._initDistance > 0) {
-                let ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
                 this._dims.width.eval(this._context).val += (newDistance - this._initDistance) * 2;
                 this._circle.width = new NumberNode_1.NumberNode(Math.round(this._dims.width.eval(this._context).val));
-                this._dims.height.eval(this._context).val += (newDistance - this._initDistance) * 2 / ratio;
+                this._dims.height.eval(this._context).val += (newDistance - this._initDistance) * 2 / this._ratio;
                 this._circle.height = new NumberNode_1.NumberNode(Math.round(this._dims.height.eval(this._context).val));
                 this._initDistance = newDistance;
             }
@@ -213,20 +214,18 @@ class EllipseEffect {
             this._circle.height = new NumberNode_1.NumberNode(20);
             let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
             if (newDistance - this._initDistance > 0) {
-                let ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
                 this._dims.width.eval(this._context).val += (newDistance - this._initDistance) * 2;
                 this._circle.width = new NumberNode_1.NumberNode(Math.round(this._dims.width.eval(this._context).val));
-                this._dims.height.eval(this._context).val += (newDistance - this._initDistance) * 2 / ratio;
+                this._dims.height.eval(this._context).val += (newDistance - this._initDistance) * 2 / this._ratio;
                 this._circle.height = new NumberNode_1.NumberNode(Math.round(this._dims.height.eval(this._context).val));
                 this._initDistance = newDistance;
             }
         }
         else {
             let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
-            let ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
             this._dims.width.eval(this._context).val += (newDistance - this._initDistance) * 2;
             this._circle.width = new NumberNode_1.NumberNode(Math.round(this._dims.width.eval(this._context).val));
-            this._dims.height.eval(this._context).val += (newDistance - this._initDistance) * 2 / ratio;
+            this._dims.height.eval(this._context).val += (newDistance - this._initDistance) * 2 / this._ratio;
             this._circle.height = new NumberNode_1.NumberNode(Math.round(this._dims.height.eval(this._context).val));
             this._initDistance = newDistance;
         }
