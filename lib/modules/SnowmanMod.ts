@@ -13,7 +13,7 @@ export class SnowmanMod implements Module {
         let inputtext = inputbox.value;
         let goal1: boolean = false;
         let goal2: boolean = false;
-        let hits = inputtext.match(new RegExp("\\b" + "ellipse("));
+        let hits = inputtext.match(new RegExp("\\b" + "print(ellipse("));
         if(hits.length === 3) goal1 = true;
         var numbers = inputtext.match(/\d+/g).map(Number);
         if(numbers.length >= 12){
