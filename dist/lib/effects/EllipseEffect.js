@@ -97,21 +97,25 @@ class EllipseEffect {
         xdif = mx - x;
         ydif = mx - (y - h / 2);
         if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) { //top middle
+            console.log(5);
             return 5;
         }
         xdif = mx - (x + w / 2);
         ydif = mx - y;
         if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) { //middle right
+            console.log(6);
             return 6;
         }
         xdif = mx - x;
         ydif = mx - (y + h / 2);
         if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) { //bottom middle
+            console.log(7);
             return 7;
         }
         xdif = mx - (x - w / 2);
         ydif = mx - y;
         if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) { //middle left
+            console.log(8);
             return 8;
         }
         else
