@@ -8,4 +8,5 @@ export interface Effect<T> {
     x: number;
     y: number;
     dims: Dimensions;
+    selected: boolean;
 }

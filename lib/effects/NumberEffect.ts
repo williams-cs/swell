@@ -18,6 +18,7 @@ export class NumberEffect implements Effect<NumberNode> {
     private _fontSize: number = 20;
     private _w: number;
     private _h: number;
+    private _isSelected: boolean;
 
     constructor(num: NumberNode) {
         this._num = num;
@@ -73,5 +74,9 @@ export class NumberEffect implements Effect<NumberNode> {
 
     get dims(): Dimensions {
         return this._dims;
+    }
+
+    get selected(): boolean {
+        return this._isSelected;
     }
 }

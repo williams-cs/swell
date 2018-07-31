@@ -48,6 +48,9 @@ class NumberEffect {
     get dims() {
         return this._dims;
     }
+    get selected() {
+        return this._isSelected;
+    }
 }
 exports.NumberEffect = NumberEffect;
 //# sourceMappingURL=NumberEffect.js.map
