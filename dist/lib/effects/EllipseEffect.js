@@ -129,13 +129,13 @@ class EllipseEffect {
         }
         else {
             this.drawSquare(x - 2.5, y - 2.5, 5, 5, 'white'); // top left
-            this.drawSquare((x + w / 2) - 1.5, y - 1.5, 3, 3, "white"); // top middle
+            this.drawSquare((x + w / 2) - 2, y - 2, 4, 4, "white"); // top middle
             this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'white'); // top right
-            this.drawSquare(x + w - 1.5, (y + h / 2) - 1.5, 3, 3, 'white'); // middle right
+            this.drawSquare(x + w - 2, (y + h / 2) - 2, 4, 4, 'white'); // middle right
             this.drawSquare(x + w - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom right
-            this.drawSquare((x + w / 2) - 1.5, y + h - 1.5, 3, 3, 'white'); // bottom middle
+            this.drawSquare((x + w / 2) - 2, y + h - 2, 4, 4, 'white'); // bottom middle
             this.drawSquare(x - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom left
-            this.drawSquare(x - 1.5, (y + h / 2) - 1.5, 3, 3, 'white'); // middle left
+            this.drawSquare(x - 2, (y + h / 2) - 2, 4, 4, 'white'); // middle left
         }
     }
     drawSquare(x, y, w, h, color) {
