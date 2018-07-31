@@ -99,7 +99,7 @@ class EllipseEffect {
         this._ctx.rect(x, y, w, h);
         this._ctx.strokeStyle = 'gray';
         this._ctx.stroke();
-        if (corner !== 0 && corner <= 4) {
+        if (corner !== 0) {
             switch (corner) { //colors the correct guide blue
                 case 1:
                     this.drawSquare(x - 2.5, y - 2.5, 5, 5, 'blue'); // top left
