@@ -47,7 +47,7 @@ class EllipseEffect {
         this._ctx.strokeStyle = "black";
         this._ctx.stroke();
         if (this._isSelected) {
-            this.drawGuides(x, y, w, h, this._corner);
+            this.drawGuides(x - w, y - h, w * 2, h * 2, this._corner);
         }
     }
     addEventListeners() {
