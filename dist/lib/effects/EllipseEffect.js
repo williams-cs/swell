@@ -43,11 +43,11 @@ class EllipseEffect {
         let w = this._dims.width.eval(this._context).val;
         let h = this._dims.height.eval(this._context).val;
         this._ctx.beginPath();
-        this._ctx.ellipse(x, y, w, h, 0, 0, Math.PI * 2, false);
+        this._ctx.ellipse(x, y, w / 2, h / 2, 0, 0, Math.PI * 2, false);
         this._ctx.strokeStyle = "black";
         this._ctx.stroke();
         if (this._isSelected) {
-            this.drawGuides(x - w, y - h, w * 2, h * 2, this._corner);
+            this.drawGuides(x - w, y - h, w, h, this._corner);
         }
     }
     addEventListeners() {
@@ -64,22 +64,26 @@ class EllipseEffect {
         return distance(mx, my, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val) < this._dims.radius.eval(this._context).val;
     }
     guideContains(mx, my) {
-        let xdif = mx - (this._dims.x.eval(this._context).val - this._dims.radius.eval(this._context).val);
-        let ydif = my - (this._dims.y.eval(this._context).val - this._dims.radius.eval(this._context).val);
-        if (xdif <= 5 && ydif <= 5 && xdif >= -5 && ydif >= -5) {
+        let x = this._dims.x.eval(this._context).val;
+        let y = this._dims.y.eval(this._context).val;
+        let w = this._dims.width.eval(this._context).val;
+        let h = this._dims.height.eval(this._context).val;
+        let xdif = mx - x;
+        let ydif = my - y;
+        if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) {
             return 1;
         }
-        xdif = mx - (this._dims.x.eval(this._context).val + this._dims.radius.eval(this._context).val);
-        if (xdif <= 5 && ydif <= 5 && xdif >= -5 && ydif >= -5) {
+        xdif = mx - (x + w);
+        if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) {
             return 2;
         }
-        xdif = mx - (this._dims.x.eval(this._context).val + this._dims.radius.eval(this._context).val);
-        ydif = my - (this._dims.y.eval(this._context).val + this._dims.radius.eval(this._context).val);
-        if (xdif <= 5 && ydif <= 5 && xdif >= -5 && ydif >= -5) {
+        xdif = mx - (x + w);
+        ydif = my - (y + h);
+        if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) {
             return 3;
         }
-        xdif = mx - (this._dims.x.eval(this._context).val - this._dims.radius.eval(this._context).val);
-        if (xdif <= 5 && ydif <= 5 && xdif >= -5 && ydif >= -5) {
+        xdif = mx - x;
+        if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) {
             return 4;
         }
         else

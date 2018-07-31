@@ -107,7 +107,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
         let h = this._dims.height.eval(this._context).val;
         let xdif = mx - (x + w);
         let ydif = my - (y + h);
-        if(xdif <= 5 && ydif <= 5 && xdif >= -5 && ydif >= -5){
+        if(Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5){
             return 3;
         }
         return 0;
