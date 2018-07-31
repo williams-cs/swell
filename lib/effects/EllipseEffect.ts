@@ -236,6 +236,8 @@ export class EllipseEffect implements Effect<EllipseNode> {
         if(widthTooSmall){
             this._dims.width.eval(this._context).val = 20;
             this._circle.width = new NumberNode(20);
+            this._dims.height.eval(this._context).val = 20 / this._ratio;
+            this._circle.height = new NumberNode(Math.round(20 / this._ratio));
             let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
             if(newDistance - this._initDistance > 0){
                 this._dims.width.eval(this._context).val += (newDistance - this._initDistance) * 2;
@@ -248,6 +250,8 @@ export class EllipseEffect implements Effect<EllipseNode> {
         if(heightTooSmall) {
             this._dims.height.eval(this._context).val = 20;
             this._circle.height = new NumberNode(20);
+            this._dims.width.eval(this._context).val = 20 * this._ratio;
+            this._circle.width = new NumberNode(Math.round(20 * this._ratio));
             let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
             if(newDistance - this._initDistance > 0){
                 this._dims.width.eval(this._context).val += (newDistance - this._initDistance) * 2;
