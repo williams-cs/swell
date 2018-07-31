@@ -1,4 +1,6 @@
 export abstract class LogEvent<T> {
+    private _date: string;
+    private _time: string;
     private _dateTime: string;
     private _toLog: string;
     private _tag: string;
@@ -8,6 +10,10 @@ export abstract class LogEvent<T> {
     private _y2: number;
 
     constructor(toLog: string, x1?: number, y1?: number, x2?: number, y2?: number){
+        let today = new Date();
+        this._date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        this._time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        this._dateTime = this._date + ' ' + this._time;
         this._toLog = toLog;
         this._x1 = x1;
         this._y1 = y1;
@@ -16,10 +22,6 @@ export abstract class LogEvent<T> {
     }
 
     logItem(toLog: string): string {
-        let today = new Date();
-        let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-        let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        this._dateTime = date + ' ' + time;
         return " " + this._dateTime + ": " + toLog;
     }
 
