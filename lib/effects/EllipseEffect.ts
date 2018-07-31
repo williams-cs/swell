@@ -103,23 +103,19 @@ export class EllipseEffect implements Effect<EllipseNode> {
         let xdif = mx - (x - w/2);
         let ydif = my - (y - h/2);
         if(Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5){
-            console.log(1);
             return 1;
         }
         xdif = mx - (x + w/2);
         if(Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5){
-            console.log(2);
             return 2;
         }
         xdif = mx - (x + w/2);
         ydif = my - (y + h/2);
         if(Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5){
-            console.log(3);
             return 3;
         }
         xdif = mx - (x - w/2);
         if(Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5){
-            console.log(4);
             return 4;
         }
         else return 0;
@@ -152,6 +148,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
                     this.drawSquare((x+w/2)-2.5, y+h-2.5, 5, 5, 'white'); // bottom middle
                     this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white'); // bottom left
                     this.drawSquare(x-2.5, (y+h/2)-2.5, 5, 5, 'white'); // middle left
+                    break;
                 case 3:
                     this.drawSquare(x-2.5, y-2.5, 5, 5, 'white'); // top left
                     this.drawSquare((x+w/2)-2.5, y-2.5, 5, 5, 'white'); // top middle
