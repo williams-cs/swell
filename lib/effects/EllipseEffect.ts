@@ -96,8 +96,8 @@ export class EllipseEffect implements Effect<EllipseNode> {
         let y: number = this._dims.y.eval(this._context).val;
         let w: number = this._dims.width.eval(this._context).val;
         let h: number = this._dims.height.eval(this._context).val;
-        let xdif = mx - x - w/2;
-        let ydif = my - y - h/2;
+        let xdif = mx - (x - w/2);
+        let ydif = my - (y - h/2);
         if(Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5){
             return 1;
         }
@@ -110,7 +110,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
         if(Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5){
             return 3;
         }
-        xdif = mx - x - w/2;
+        xdif = mx - (x - w/2);
         if(Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5){
             return 4;
         }
