@@ -88,7 +88,11 @@ export class EllipseEffect implements Effect<EllipseNode> {
     }
 
     contains(mx: number, my: number): boolean {
-        return distance(mx, my, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val) < this._dims.radius.eval(this._context).val;
+        let x: number = this._dims.x.eval(this._context).val;
+        let y: number = this._dims.y.eval(this._context).val;
+        let w: number = this._dims.width.eval(this._context).val;
+        let h: number = this._dims.height.eval(this._context).val;
+        return Math.pow(mx - x, 2)/Math.pow(w/2, 2) + Math.pow(my - y, 2)/Math.pow(h/2, 2) <= 1;
     }
 
     guideContains(mx: number, my: number): number {

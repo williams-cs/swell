@@ -61,7 +61,11 @@ class EllipseEffect {
         this._canvas.addEventListener('selectstart', function (e) { e.preventDefault(); return false; }, false);
     }
     contains(mx, my) {
-        return distance(mx, my, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val) < this._dims.radius.eval(this._context).val;
+        let x = this._dims.x.eval(this._context).val;
+        let y = this._dims.y.eval(this._context).val;
+        let w = this._dims.width.eval(this._context).val;
+        let h = this._dims.height.eval(this._context).val;
+        return Math.pow(mx - x, 2) / Math.pow(w / 2, 2) + Math.pow(my - y, 2) / Math.pow(h / 2, 2) <= 1;
     }
     guideContains(mx, my) {
         let x = this._dims.x.eval(this._context).val;
