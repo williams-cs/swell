@@ -57,4 +57,5 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
     readonly x: number;
     readonly y: number;
     readonly dims: Dimensions;
+    readonly selected: boolean;
 }

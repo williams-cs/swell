@@ -332,6 +332,9 @@ class EllipseEffect {
     get dims() {
         return this._dims;
     }
+    get selected() {
+        return this._isSelected;
+    }
 }
 exports.EllipseEffect = EllipseEffect;
 //allows us to get the mouse position in relation to the canvas!

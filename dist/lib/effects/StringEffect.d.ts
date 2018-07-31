@@ -57,4 +57,5 @@ export declare class StringEffect implements Effect<StringNode> {
     readonly x: number;
     readonly y: number;
     readonly dims: Dimensions;
+    readonly selected: boolean;
 }

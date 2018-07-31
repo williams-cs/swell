@@ -417,6 +417,10 @@ export class StringEffect implements Effect<StringNode> {
     get dims(): Dimensions {
         return this._dims;
     }
+
+    get selected(): boolean {
+        return this._isSelected;
+    }
 }
 
 //allows us to get the mouse position in relation to the canvas!

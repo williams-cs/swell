@@ -355,6 +355,9 @@ class StringEffect {
     get dims() {
         return this._dims;
     }
+    get selected() {
+        return this._isSelected;
+    }
 }
 exports.StringEffect = StringEffect;
 //allows us to get the mouse position in relation to the canvas!

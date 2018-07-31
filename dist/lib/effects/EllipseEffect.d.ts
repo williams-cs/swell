@@ -52,4 +52,5 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
     readonly x: number;
     readonly y: number;
     readonly dims: Dimensions;
+    readonly selected: boolean;
 }
