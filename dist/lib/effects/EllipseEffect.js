@@ -79,6 +79,7 @@ class EllipseEffect {
         }
         xdif = mx - (x + w / 2);
         if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) {
+            console.log("2");
             return 2;
         }
         xdif = mx - (x + w / 2);
