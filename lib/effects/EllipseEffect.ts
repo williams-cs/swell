@@ -102,23 +102,31 @@ export class EllipseEffect implements Effect<EllipseNode> {
         let y: number = this._dims.y.eval(this._context).val;
         let w: number = this._dims.width.eval(this._context).val;
         let h: number = this._dims.height.eval(this._context).val;
-        let xdif = mx - (x - w/2);
-        let ydif = my - (y - h/2);
-        if(Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5){
+        let xdif: number = mx - (x - w/2);
+        let ydif: number = my - (y - h/2);
+        /* Corner Guides */
+        if(Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5){ //top left
             return 1;
         }
         xdif = mx - (x + w/2);
-        if(Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5){
+        if(Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5){ //top right
             return 2;
         }
         xdif = mx - (x + w/2);
         ydif = my - (y + h/2);
-        if(Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5){
+        if(Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5){ //bottom right
             return 3;
         }
         xdif = mx - (x - w/2);
-        if(Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5){
+        if(Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5){ //bottom left
             return 4;
+        }
+        /* Middle Guides */
+        xdif = mx - x;
+        ydif = mx - y;
+        if(Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5){ //top middle
+            console.log(true);
+            return 5;
         }
         else return 0;
     }
