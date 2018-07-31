@@ -63,12 +63,16 @@ export class EllipseEffect implements Effect<EllipseNode> {
     }
 
     update(): void {
+        let x: number = this._dims.x.eval(this._context).val;
+        let y: number = this._dims.y.eval(this._context).val;
+        let w: number = this._dims.width.eval(this._context).val;
+        let h: number = this._dims.height.eval(this._context).val;
         this._ctx.beginPath();
-        this._ctx.arc(this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val, this._dims.radius.eval(this._context).val, 0, Math.PI * 2, false);
+        this._ctx.ellipse(x, y, w, h, 0, 0, Math.PI * 2, false);
         this._ctx.strokeStyle = "black";
         this._ctx.stroke();
         if(this._isSelected) {
-            this.drawGuides(this._dims.x.eval(this._context).val - this._dims.radius.eval(this._context).val, this._dims.y.eval(this._context).val - this._dims.radius.eval(this._context).val, this._dims.radius.eval(this._context).val * 2, this._dims.radius.eval(this._context).val * 2, this._corner);
+            this.drawGuides(x, y, w, h, this._corner);
         }
     }
 
