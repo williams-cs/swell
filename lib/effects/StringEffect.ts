@@ -346,7 +346,8 @@ export class StringEffect implements Effect<StringNode> {
     guideContains(mx: number, my: number): number {
         let xdif = mx - (this._dims.x.eval(this._context).val + this._textMetrics.width);
         let ydif = my - (this._dims.y.eval(this._context).val - this._fontSize);
-        if(xdif <= 5 && ydif <= 5 && xdif >= -5 && ydif >= -5){
+        if(Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5){
+            this._isEditing = false;
             return 2;
         }
         else return 0;
