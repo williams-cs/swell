@@ -22,7 +22,6 @@ export declare class StringEffect implements Effect<StringNode> {
     private _isDragging;
     private _isResizing;
     private _isSelectingMultiple;
-    private _isDraggingMultiple;
     private _dragoffx;
     private _dragoffy;
     private _initDistance;
