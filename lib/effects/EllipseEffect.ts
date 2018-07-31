@@ -198,7 +198,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
             this.modifyDrag();
         }
         else if(this._isResizing && this._isSelected){
-            this.modifyResize(this._dims.width.eval(this._context).val < 10, this._dims.width.eval(this._context).val < 10);
+            this.modifyResize(this._dims.width.eval(this._context).val < 20, this._dims.width.eval(this._context).val < 20);
         }
     }
 
@@ -232,8 +232,8 @@ export class EllipseEffect implements Effect<EllipseNode> {
 
     modifyResize(widthTooSmall: boolean, heightTooSmall: boolean): void {
         if(widthTooSmall){
-            this._dims.width.eval(this._context).val = 10;
-            this._circle.width = new NumberNode(10);
+            this._dims.width.eval(this._context).val = 20;
+            this._circle.width = new NumberNode(20);
             let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
             if(newDistance - this._initDistance > 0){
                 let ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
@@ -245,8 +245,8 @@ export class EllipseEffect implements Effect<EllipseNode> {
             }
         }
         else if(heightTooSmall) {
-            this._dims.height.eval(this._context).val = 10;
-            this._circle.height = new NumberNode(5);
+            this._dims.height.eval(this._context).val = 20;
+            this._circle.height = new NumberNode(20);
             let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
             if(newDistance - this._initDistance > 0){
                 let ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
