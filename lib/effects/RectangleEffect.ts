@@ -24,9 +24,9 @@ export class RectangleEffect implements Effect<RectangleNode> {
     private _corner: number = 0;
 
     private _isSelected: boolean = false; // private bools
-    private _isListening: boolean = false;
     private _isDragging: boolean = false;
     private _isResizing: boolean = false;
+    private _isSelectingMultiple: boolean = false;
 
     private _x1: number; // used to save coords for logging
     private _y1: number;
@@ -34,14 +34,9 @@ export class RectangleEffect implements Effect<RectangleNode> {
 
     private _context: Scope;
 
-    private _myState: {
-        dragoffx: number,
-        dragoffy: number,
-        initDistance: number,
-        selection: any,
-        dragging: boolean,
-        resizing: boolean
-    };
+    private _dragoffx: number = 0;
+    private _dragoffy: number = 0;
+    private _initDistance: number = 0;
     private _mouse: {
         x: number,
         y: number
@@ -60,7 +55,6 @@ export class RectangleEffect implements Effect<RectangleNode> {
             this._ast = ast;
             this._canvas = context.canvas.get();
             this._context = context;
-            this._myState = context.myState;
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
             this.update();
@@ -88,6 +82,8 @@ export class RectangleEffect implements Effect<RectangleNode> {
         this._canvas.addEventListener('mousemove', this.onMouseMove.bind(this));
         this._canvas.addEventListener('mousedown', this.onMouseDown.bind(this));
         this._canvas.addEventListener('mouseup', this.onMouseUp.bind(this));
+        window.addEventListener('keydown', this.onShiftDown.bind(this));
+        window.addEventListener('keyup', this.onShiftUp.bind(this));
         window.addEventListener('mousedown', this.isMouseOutside.bind(this));
         //makes it so that double clicking doesn't select text on the page
         this._canvas.addEventListener('selectstart', function(e) { e.preventDefault(); return false; }, false);
@@ -146,7 +142,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
 
     onMouseMove(event: any): void {
         this.getMousePosition();
-        if(this._myState.dragging && this._isSelected){
+        if(this._isDragging && this._isSelected){
             this.modifyDrag();
         }
         else if(this._isResizing && this._isSelected){
@@ -163,63 +159,87 @@ export class RectangleEffect implements Effect<RectangleNode> {
         this.modifyReset();
     }
 
+    onShiftDown(event: any) {
+        if(event.keyCode == "16") { //shift keycode
+            this._isSelectingMultiple = true;
+        }
+    }
+
+    onShiftUp(event: any) {
+        if(event.keyCode == "16") { //shift keycode
+            this._isSelectingMultiple = false;
+        }
+    }
+
     /* Modification functions */
     modifyDrag(): void {
-        this._dims.x.eval(this._context).val = this._mouse.x - this._myState.dragoffx;
-        this._dims.y.eval(this._context).val = this._mouse.y - this._myState.dragoffy;
+        console.log("rectangle dragoffx: " + this._dragoffx);
+        this._dims.x.eval(this._context).val = this._mouse.x - this._dragoffx;
+        this._dims.y.eval(this._context).val = this._mouse.y - this._dragoffy;
     }
 
     modifyResize(widthTooSmall: boolean, heightTooSmall: boolean): void {
         if(widthTooSmall) {
             this._dims.width.eval(this._context).val = 5;
             this._rect.width = new NumberNode(5);
-            let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
-            if(newDistance - this._myState.initDistance > 0){
+            let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
+            if(newDistance - this._initDistance > 0){
                 let ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
-                this._dims.width.eval(this._context).val += newDistance - this._myState.initDistance;
+                this._dims.width.eval(this._context).val += newDistance - this._initDistance;
                 this._rect.width = new NumberNode(Math.round(this._dims.width.eval(this._context).val));
-                this._dims.height.eval(this._context).val += (newDistance - this._myState.initDistance) / ratio;
+                this._dims.height.eval(this._context).val += (newDistance - this._initDistance) / ratio;
                 this._rect.height = new NumberNode(Math.round(this._dims.height.eval(this._context).val));
-                this._myState.initDistance = newDistance;
+                this._initDistance = newDistance;
             }
         }
         else if(heightTooSmall) {
             this._dims.height.eval(this._context).val = 5;
             this._rect.height = new NumberNode(5);
-            let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
-            if(newDistance - this._myState.initDistance > 0){
+            let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
+            if(newDistance - this._initDistance > 0){
                 let ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
-                this._dims.width.eval(this._context).val += newDistance - this._myState.initDistance;
+                this._dims.width.eval(this._context).val += newDistance - this._initDistance;
                 this._rect.width = new NumberNode(Math.round(this._dims.width.eval(this._context).val));
-                this._dims.height.eval(this._context).val += (newDistance - this._myState.initDistance) / ratio;
+                this._dims.height.eval(this._context).val += (newDistance - this._initDistance) / ratio;
                 this._rect.height = new NumberNode(Math.round(this._dims.height.eval(this._context).val));
-                this._myState.initDistance = newDistance;
+                this._initDistance = newDistance;
             }
         }
         else {
-            let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
+            let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
             let ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
-            this._dims.width.eval(this._context).val += newDistance - this._myState.initDistance;
+            this._dims.width.eval(this._context).val += newDistance - this._initDistance;
             this._rect.width = new NumberNode(Math.round(this._dims.width.eval(this._context).val));
-            this._dims.height.eval(this._context).val += (newDistance - this._myState.initDistance) / ratio;
+            this._dims.height.eval(this._context).val += (newDistance - this._initDistance) / ratio;
             this._rect.height = new NumberNode(Math.round(this._dims.height.eval(this._context).val));
-            this._myState.initDistance = newDistance;
+            this._initDistance = newDistance;
         }
     }
 
     modifyState(guideContains: boolean, contains: boolean): void {
-        if(guideContains) {
+        if (this._isSelectingMultiple) {
+            if (contains) {
+                this._isSelected = true;
+                this._isDragging = true;
+                this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
+                this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
+            }
+            else {
+                this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
+                this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
+                this._isDragging = true;
+            }
+        }
+        else if(guideContains) {
             this._isSelected = true;
             this._isResizing = true;
 
             this._context.eventLog.push(this.logClick());
 
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
-            this._myState.selection = this;
-            this._myState.dragoffx = this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val / 2;
-            this._myState.dragoffy = this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val / 2;
-            this._myState.initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val / 2, this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val / 2);
-            this._myState.resizing = true;
+            this._dragoffx = this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val / 2;
+            this._dragoffy = this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val / 2;
+            this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val / 2, this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val / 2);
 
             this._size1 = Math.sqrt((this._dims.width.eval(this._context).val)^2 + (this._dims.height.eval(this._context).val)^2); // size is diagonal length
         }
@@ -228,17 +248,15 @@ export class RectangleEffect implements Effect<RectangleNode> {
             this._y1 = this._dims.y.eval(this._context).val;
 
             this._context.eventLog.push(this.logClick());
-            
             this._isSelected = true;
             this._isDragging = true;
 
-            this._myState.selection = this;
-            this._myState.dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
-            this._myState.dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
-            this._myState.dragging = true;
+            this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
+            this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
         }
-        else {
+        else if (!this._isSelectingMultiple) {
             this._isSelected = false;
+            this._isDragging = false;
         }
     }
 
@@ -255,8 +273,8 @@ export class RectangleEffect implements Effect<RectangleNode> {
                 this._context.eventLog.push(this.logResize());
             }
         }
-        this._myState.dragging = false;
-        this._myState.resizing = false;
+        this._isDragging = false;
+        this._isResizing = false;
         this._corner = 0;
     }
 
@@ -270,8 +288,8 @@ export class RectangleEffect implements Effect<RectangleNode> {
         let mouseY = event.clientY;
         let rect = this._canvas.getBoundingClientRect();
         if(mouseX < rect.left || mouseX > rect.right || mouseY < rect.top || mouseY > rect.bottom) {
-            this._myState.dragging = false;
-            this._myState.resizing = false;
+            this._isDragging = false;
+            this._isResizing = false;
             this._isSelected = false;
             this._corner = 0;
         }

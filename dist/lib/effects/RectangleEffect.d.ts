@@ -17,14 +17,16 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
     private _canvas;
     private _corner;
     private _isSelected;
-    private _isListening;
     private _isDragging;
     private _isResizing;
+    private _isSelectingMultiple;
     private _x1;
     private _y1;
     private _size1;
     private _context;
-    private _myState;
+    private _dragoffx;
+    private _dragoffy;
+    private _initDistance;
     private _mouse;
     constructor(rect: RectangleNode);
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
@@ -37,6 +39,8 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
     onMouseMove(event: any): void;
     onMouseDown(event: any): void;
     onMouseUp(event: any): void;
+    onShiftDown(event: any): void;
+    onShiftUp(event: any): void;
     modifyDrag(): void;
     modifyResize(widthTooSmall: boolean, heightTooSmall: boolean): void;
     modifyState(guideContains: boolean, contains: boolean): void;

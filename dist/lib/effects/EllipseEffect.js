@@ -12,6 +12,26 @@ class EllipseEffect {
         //private _isListening: boolean = false;
         this._isDragging = false;
         this._isResizing = false;
+        this._isSelectingMultiple = false;
+        this._dragoffx = 0;
+        this._dragoffy = 0;
+        this._initDistance = 0;
+        /*
+            private _myState: {
+                dragoffx: number,
+                dragoffy: number,
+                initDistance: number,
+                selection: any,
+                dragging: boolean,
+                resizing: boolean
+            } = {
+                dragoffx: 0,
+                dragoffy: 0,
+                initDistance: 0,
+                selection: null,
+                dragging: false,
+                resizing: false
+            }*/
         this._mouse = {
             x: 0,
             y: 0
@@ -24,7 +44,6 @@ class EllipseEffect {
             this._ast = ast;
             this._canvas = context.canvas.get();
             this._context = context;
-            this._myState = context.myState;
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
             this.update();
@@ -47,6 +66,8 @@ class EllipseEffect {
         this._canvas.addEventListener('mousemove', this.onMouseMove.bind(this));
         this._canvas.addEventListener('mousedown', this.onMouseDown.bind(this));
         this._canvas.addEventListener('mouseup', this.onMouseUp.bind(this));
+        window.addEventListener('keydown', this.onShiftDown.bind(this));
+        window.addEventListener('keyup', this.onShiftUp.bind(this));
         window.addEventListener('mousedown', this.isMouseOutside.bind(this));
         //makes it so that double clicking doesn't select text on the page
         this._canvas.addEventListener('selectstart', function (e) { e.preventDefault(); return false; }, false);
@@ -141,10 +162,21 @@ class EllipseEffect {
         //console.log("I'm an ellipse!");
         this.modifyReset();
     }
+    onShiftDown(event) {
+        if (event.keyCode == "16") { //shift keycode
+            this._isSelectingMultiple = true;
+        }
+    }
+    onShiftUp(event) {
+        if (event.keyCode == "16") { //shift keycode
+            this._isSelectingMultiple = false;
+        }
+    }
     /* Modification functions */
     modifyDrag() {
-        this._dims.x.eval(this._context).val = this._mouse.x - this._myState.dragoffx;
-        this._dims.y.eval(this._context).val = this._mouse.y - this._myState.dragoffy;
+        console.log("ellipse dragoffx: " + this._dragoffx);
+        this._dims.x.eval(this._context).val = this._mouse.x - this._dragoffx;
+        this._dims.y.eval(this._context).val = this._mouse.y - this._dragoffy;
     }
     modifyResize(isTooSmall) {
         if (isTooSmall) {
@@ -152,51 +184,66 @@ class EllipseEffect {
             let widthAndHeight = new NumberNode_1.NumberNode(Math.round(this._dims.radius.eval(this._context).val * 2));
             this._circle.width = widthAndHeight;
             this._circle.height = widthAndHeight;
-            let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
-            if (newDistance - this._myState.initDistance > 0) {
-                this._dims.radius.eval(this._context).val += newDistance - this._myState.initDistance;
+            let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
+            if (newDistance - this._initDistance > 0) {
+                this._dims.radius.eval(this._context).val += newDistance - this._initDistance;
                 widthAndHeight = new NumberNode_1.NumberNode(Math.round(this._dims.radius.eval(this._context).val * 2));
                 this._circle.width = widthAndHeight;
                 this._circle.height = widthAndHeight;
-                this._myState.initDistance = newDistance;
+                this._initDistance = newDistance;
             }
         }
         else {
-            let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
-            this._dims.radius.eval(this._context).val += newDistance - this._myState.initDistance;
+            let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
+            this._dims.radius.eval(this._context).val += newDistance - this._initDistance;
             let widthAndHeight = new NumberNode_1.NumberNode(Math.round(this._dims.radius.eval(this._context).val * 2));
             this._circle.width = widthAndHeight;
             this._circle.height = widthAndHeight;
-            this._myState.initDistance = newDistance;
+            this._initDistance = newDistance;
         }
     }
     modifyState(guideContains, contains) {
-        if (guideContains) {
+        if (this._isSelectingMultiple) {
+            if (contains) {
+                this._isSelected = true;
+                this._isDragging = true;
+                this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
+                this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
+            }
+            else {
+                this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
+                this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
+                this._isDragging = true;
+            }
+        }
+        else if (guideContains) {
             this._isSelected = true;
             this._isResizing = true;
             this._context.eventLog.push(this.logClick());
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
-            this._myState.selection = this;
-            this._myState.dragoffx = this._dims.x.eval(this._context).val;
-            this._myState.dragoffy = this._dims.y.eval(this._context).val;
-            this._myState.initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
-            this._myState.resizing = true;
+            //this._myState.selection = this;
+            this._dragoffx = this._dims.x.eval(this._context).val;
+            this._dragoffy = this._dims.y.eval(this._context).val;
+            this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+            //this._myState.resizing = true;
             this._size1 = this._dims.radius.eval(this._context).val; // saving old font size
         }
         else if (contains) {
+            //this._myState.dragging = false;
             this._x1 = this._dims.x.eval(this._context).val; // Saving original x and y
             this._y1 = this._dims.y.eval(this._context).val;
             this._isSelected = true;
             this._isDragging = true;
             this._context.eventLog.push(this.logClick());
-            this._myState.dragging = true;
-            this._myState.selection = this;
-            this._myState.dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
-            this._myState.dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
-            this._myState.dragging = true;
+            //this._myState.dragging = true;
+            //this._myState.selection = this;
+            this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
+            this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
         }
-        else {
+        else if (!this._isSelectingMultiple) {
             this._isSelected = false;
+            this._isDragging = false;
+            //this._myState.dragging = false;
         }
     }
     modifyReset() {
@@ -212,8 +259,10 @@ class EllipseEffect {
                 this._context.eventLog.push(this.logResize());
             }
         }
-        this._myState.dragging = false;
-        this._myState.resizing = false;
+        this._isDragging = false;
+        this._isResizing = false;
+        //this._myState.dragging = false;
+        //this._myState.resizing = false;
         this._corner = 0;
     }
     getMousePosition() {
@@ -225,8 +274,10 @@ class EllipseEffect {
         let mouseY = event.clientY;
         let rect = this._canvas.getBoundingClientRect();
         if (mouseX < rect.left || mouseX > rect.right || mouseY < rect.top || mouseY > rect.bottom) {
-            this._myState.dragging = false;
-            this._myState.resizing = false;
+            //this._myState.dragging = false;
+            //this._myState.resizing = false;
+            this._isDragging = false;
+            this._isResizing = false;
             this._isSelected = false;
             this._corner = 0;
         }
