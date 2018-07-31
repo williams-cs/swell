@@ -79,7 +79,6 @@ class EllipseEffect {
         }
         xdif = mx - (x + w / 2);
         if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) {
-            console.log("2");
             return 2;
         }
         xdif = mx - (x + w / 2);
@@ -113,7 +112,6 @@ class EllipseEffect {
                     this.drawSquare(x - 2.5, (y + h / 2) - 2.5, 5, 5, 'white'); // middle left
                     break;
                 case 2:
-                    console.log("in 2");
                     this.drawSquare(x - 2.5, y - 2.5, 5, 5, 'white'); // top left
                     this.drawSquare((x + w / 2) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
                     this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'blue'); // top right
@@ -147,7 +145,7 @@ class EllipseEffect {
         else {
             this.drawSquare(x - 2.5, y - 2.5, 5, 5, 'white'); // top left
             this.drawSquare((x + w / 2) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
-            this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'blue'); // top right
+            this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'white'); // top right
             this.drawSquare(x + w - 2.5, (y + h / 2) - 2.5, 5, 5, 'white'); // middle right
             this.drawSquare(x + w - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom right
             this.drawSquare((x + w / 2) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
