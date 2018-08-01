@@ -270,7 +270,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
             this.modifyResize(this._dims.width.eval(this._context).val < 20, this._dims.height.eval(this._context).val < 20);
         }
         else if(this._isChangingDims && this._isSelected) {
-            this.modifyChangeDims();
+            this.modifyChangeDims(this._dims.width.eval(this._context).val < 20, this._dims.height.eval(this._context).val < 20);
         }
     }
 
@@ -341,17 +341,39 @@ export class EllipseEffect implements Effect<EllipseNode> {
         }
     }
 
-    modifyChangeDims(): void {
+    modifyChangeDims(widthTooSmall: boolean, heightTooSmall: boolean): void {
         let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
         if (this._corner == 5 || this._corner == 7) {
-            this._dims.height.eval(this._context).val += (newDistance - this._initDistance) * 2 / this._ratio;
-            this._circle.height = new NumberNode(Math.round(this._dims.height.eval(this._context).val));
-            this._initDistance = newDistance;
+            if (!heightTooSmall) {
+                this._dims.height.eval(this._context).val += (newDistance - this._initDistance) * 2 / this._ratio;
+                this._circle.height = new NumberNode(Math.round(this._dims.height.eval(this._context).val));
+                this._initDistance = newDistance;
+            }
+            else {
+                this._dims.height.eval(this._context).val = 20;
+                this._circle.height = new NumberNode(20);
+                if(newDistance - this._initDistance > 0){
+                    this._dims.height.eval(this._context).val += (newDistance - this._initDistance) * 2 / this._ratio;
+                    this._circle.height = new NumberNode(Math.round(this._dims.height.eval(this._context).val));
+                    this._initDistance = newDistance;
+                }
+            }
         }
         else {
-            this._dims.width.eval(this._context).val += (newDistance - this._initDistance) * 2;
-            this._circle.width = new NumberNode(Math.round(this._dims.width.eval(this._context).val));
-            this._initDistance = newDistance;            
+            if (!widthTooSmall) {
+                this._dims.width.eval(this._context).val += (newDistance - this._initDistance) * 2;
+                this._circle.width = new NumberNode(Math.round(this._dims.width.eval(this._context).val));
+                this._initDistance = newDistance;            
+            }
+            else {
+                this._dims.width.eval(this._context).val = 20;
+                this._circle.width = new NumberNode(20);
+                if(newDistance - this._initDistance > 0){
+                    this._dims.width.eval(this._context).val += (newDistance - this._initDistance) * 2;
+                    this._circle.width = new NumberNode(Math.round(this._dims.width.eval(this._context).val));
+                    this._initDistance = newDistance;
+                }
+            }
         }
     }
 
