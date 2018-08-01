@@ -311,14 +311,17 @@ class EllipseEffect {
                 this._dims.height.eval(this._context).val += (newDistance - this._initDistance) * 2 / this._ratio;
                 this._circle.height = new NumberNode_1.NumberNode(Math.round(this._dims.height.eval(this._context).val));
                 this._initDistance = newDistance;
+                this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
             }
             else {
                 this._dims.height.eval(this._context).val = 14;
                 this._circle.height = new NumberNode_1.NumberNode(14);
+                this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
                 if (newDistance - this._initDistance > 0) {
                     this._dims.height.eval(this._context).val += (newDistance - this._initDistance) * 2 / this._ratio;
                     this._circle.height = new NumberNode_1.NumberNode(Math.round(this._dims.height.eval(this._context).val));
                     this._initDistance = newDistance;
+                    this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
                 }
             }
         }
@@ -327,14 +330,17 @@ class EllipseEffect {
                 this._dims.width.eval(this._context).val += (newDistance - this._initDistance) * 2;
                 this._circle.width = new NumberNode_1.NumberNode(Math.round(this._dims.width.eval(this._context).val));
                 this._initDistance = newDistance;
+                this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
             }
             else {
                 this._dims.width.eval(this._context).val = 14;
                 this._circle.width = new NumberNode_1.NumberNode(14);
+                this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
                 if (newDistance - this._initDistance > 0) {
                     this._dims.width.eval(this._context).val += (newDistance - this._initDistance) * 2;
                     this._circle.width = new NumberNode_1.NumberNode(Math.round(this._dims.width.eval(this._context).val));
                     this._initDistance = newDistance;
+                    this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
                 }
             }
         }
