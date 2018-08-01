@@ -11,6 +11,7 @@ class RectangleEffect {
         this._isSelected = false; // private bools
         this._isDragging = false;
         this._isResizing = false;
+        this._isChangingDims = false;
         this._isSelectingMultiple = false;
         this._ratio = 0;
         this._dragoffx = 0;
@@ -76,8 +77,8 @@ class RectangleEffect {
         let y = this._dims.y.eval(this._context).val;
         let w = this._dims.width.eval(this._context).val;
         let h = this._dims.height.eval(this._context).val;
-        let xdif = mx - (x - w);
-        let ydif = my - (y - h);
+        let xdif = mx - x;
+        let ydif = my - y;
         /* Corner Guides */
         if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) { //top left
             return 1;
@@ -91,28 +92,28 @@ class RectangleEffect {
         if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) { //bottom right
             return 3;
         }
-        xdif = mx - (x - w);
+        xdif = mx - x;
         if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) { //bottom left
             return 4;
         }
         /* Middle Guides */
-        xdif = mx - x;
-        ydif = my - (y - h);
+        xdif = mx - (x + w / 2);
+        ydif = my - y;
         if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) { //top middle
             return 5;
         }
         xdif = mx - (x + w);
-        ydif = my - y;
+        ydif = my - (y + h / 2);
         if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) { //middle right
             return 6;
         }
-        xdif = mx - x;
+        xdif = mx - (x + w / 2);
         ydif = my - (y + h);
         if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) { //bottom middle
             return 7;
         }
-        xdif = mx - (x - w);
-        ydif = my - y;
+        xdif = mx - x;
+        ydif = my - (y + h / 2);
         if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) { //middle left
             return 8;
         }
@@ -129,43 +130,43 @@ class RectangleEffect {
             switch (corner) { //colors the correct guide blue
                 case 1:
                     this.drawSquare(x - 2.5, y - 2.5, 5, 5, 'blue'); // top left
-                    this.drawSquare((x + w) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
+                    this.drawSquare((x + w / 2) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
                     this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'white'); // top right
-                    this.drawSquare(x + w - 2.5, (y + h) - 2.5, 5, 5, 'white'); // middle right
+                    this.drawSquare(x + w - 2.5, (y + h / 2) - 2.5, 5, 5, 'white'); // middle right
                     this.drawSquare(x + w - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom right
-                    this.drawSquare((x + w) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
+                    this.drawSquare((x + w / 2) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
                     this.drawSquare(x - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom left
-                    this.drawSquare(x - 2.5, (y + h) - 2.5, 5, 5, 'white'); // middle left
+                    this.drawSquare(x - 2.5, (y + h / 2) - 2.5, 5, 5, 'white'); // middle left
                     break;
                 case 2:
                     this.drawSquare(x - 2.5, y - 2.5, 5, 5, 'white'); // top left
-                    this.drawSquare((x + w) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
+                    this.drawSquare((x + w / 2) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
                     this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'blue'); // top right
-                    this.drawSquare(x + w - 2.5, (y + h) - 2.5, 5, 5, 'white'); // middle right
+                    this.drawSquare(x + w - 2.5, (y + h / 2) - 2.5, 5, 5, 'white'); // middle right
                     this.drawSquare(x + w - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom right
-                    this.drawSquare((x + w) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
+                    this.drawSquare((x + w / 2) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
                     this.drawSquare(x - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom left
-                    this.drawSquare(x - 2.5, (y + h) - 2.5, 5, 5, 'white'); // middle left
+                    this.drawSquare(x - 2.5, (y + h / 2) - 2.5, 5, 5, 'white'); // middle left
                     break;
                 case 3:
                     this.drawSquare(x - 2.5, y - 2.5, 5, 5, 'white'); // top left
-                    this.drawSquare((x + w) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
+                    this.drawSquare((x + w / 2) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
                     this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'white'); // top right
-                    this.drawSquare(x + w - 2.5, (y + h) - 2.5, 5, 5, 'white'); // middle right
+                    this.drawSquare(x + w - 2.5, (y + h / 2) - 2.5, 5, 5, 'white'); // middle right
                     this.drawSquare(x + w - 2.5, y + h - 2.5, 5, 5, 'blue'); // bottom right
-                    this.drawSquare((x + w) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
+                    this.drawSquare((x + w / 2) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
                     this.drawSquare(x - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom left
-                    this.drawSquare(x - 2.5, (y + h) - 2.5, 5, 5, 'white'); // middle left
+                    this.drawSquare(x - 2.5, (y + h / 2) - 2.5, 5, 5, 'white'); // middle left
                     break;
                 case 4:
                     this.drawSquare(x - 2.5, y - 2.5, 5, 5, 'white'); // top left
-                    this.drawSquare((x + w) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
+                    this.drawSquare((x + w / 2) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
                     this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'white'); // top right
-                    this.drawSquare(x + w - 2.5, (y + h) - 2.5, 5, 5, 'white'); // middle right
+                    this.drawSquare(x + w - 2.5, (y + h / 2) - 2.5, 5, 5, 'white'); // middle right
                     this.drawSquare(x + w - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom right
-                    this.drawSquare((x + w) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
+                    this.drawSquare((x + w / 2) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
                     this.drawSquare(x - 2.5, y + h - 2.5, 5, 5, 'blue'); // bottom left
-                    this.drawSquare(x - 2.5, (y + h) - 2.5, 5, 5, 'white'); // middle left
+                    this.drawSquare(x - 2.5, (y + h / 2) - 2.5, 5, 5, 'white'); // middle left
                     break;
             }
         }
@@ -173,55 +174,55 @@ class RectangleEffect {
             switch (corner) { //colors the correct guide blue
                 case 5:
                     this.drawSquare(x - 2.5, y - 2.5, 5, 5, 'white'); // top left
-                    this.drawSquare((x + w) - 2.5, y - 2.5, 5, 5, 'blue'); // top middle
+                    this.drawSquare((x + w / 2) - 2.5, y - 2.5, 5, 5, 'blue'); // top middle
                     this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'white'); // top right
-                    this.drawSquare(x + w - 2.5, (y + h) - 2.5, 5, 5, 'white'); // middle right
+                    this.drawSquare(x + w - 2.5, (y + h / 2) - 2.5, 5, 5, 'white'); // middle right
                     this.drawSquare(x + w - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom right
-                    this.drawSquare((x + w) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
+                    this.drawSquare((x + w / 2) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
                     this.drawSquare(x - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom left
-                    this.drawSquare(x - 2.5, (y + h) - 2.5, 5, 5, 'white'); // middle left
+                    this.drawSquare(x - 2.5, (y + h / 2) - 2.5, 5, 5, 'white'); // middle left
                     break;
                 case 6:
                     this.drawSquare(x - 2.5, y - 2.5, 5, 5, 'white'); // top left
-                    this.drawSquare((x + w) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
+                    this.drawSquare((x + w / 2) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
                     this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'white'); // top right
-                    this.drawSquare(x + w - 2.5, (y + h) - 2.5, 5, 5, 'blue'); // middle right
+                    this.drawSquare(x + w - 2.5, (y + h / 2) - 2.5, 5, 5, 'blue'); // middle right
                     this.drawSquare(x + w - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom right
-                    this.drawSquare((x + w) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
+                    this.drawSquare((x + w / 2) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
                     this.drawSquare(x - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom left
-                    this.drawSquare(x - 2.5, (y + h) - 2.5, 5, 5, 'white'); // middle left
+                    this.drawSquare(x - 2.5, (y + h / 2) - 2.5, 5, 5, 'white'); // middle left
                     break;
                 case 7:
                     this.drawSquare(x - 2.5, y - 2.5, 5, 5, 'white'); // top left
-                    this.drawSquare((x + w) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
+                    this.drawSquare((x + w / 2) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
                     this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'white'); // top right
-                    this.drawSquare(x + w - 2.5, (y + h) - 2.5, 5, 5, 'white'); // middle right
+                    this.drawSquare(x + w - 2.5, (y + h / 2) - 2.5, 5, 5, 'white'); // middle right
                     this.drawSquare(x + w - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom right
-                    this.drawSquare((x + w) - 2.5, y + h - 2.5, 5, 5, 'blue'); // bottom middle
+                    this.drawSquare((x + w / 2) - 2.5, y + h - 2.5, 5, 5, 'blue'); // bottom middle
                     this.drawSquare(x - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom left
-                    this.drawSquare(x - 2.5, (y + h) - 2.5, 5, 5, 'white'); // middle left
+                    this.drawSquare(x - 2.5, (y + h / 2) - 2.5, 5, 5, 'white'); // middle left
                     break;
                 case 8:
                     this.drawSquare(x - 2.5, y - 2.5, 5, 5, 'white'); // top left
-                    this.drawSquare((x + w) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
+                    this.drawSquare((x + w / 2) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
                     this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'white'); // top right
-                    this.drawSquare(x + w - 2.5, (y + h) - 2.5, 5, 5, 'white'); // middle right
+                    this.drawSquare(x + w - 2.5, (y + h / 2) - 2.5, 5, 5, 'white'); // middle right
                     this.drawSquare(x + w - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom right
-                    this.drawSquare((x + w) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
+                    this.drawSquare((x + w / 2) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
                     this.drawSquare(x - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom left
-                    this.drawSquare(x - 2.5, (y + h) - 2.5, 5, 5, 'blue'); // middle left
+                    this.drawSquare(x - 2.5, (y + h / 2) - 2.5, 5, 5, 'blue'); // middle left
                     break;
             }
         }
         else {
             this.drawSquare(x - 2.5, y - 2.5, 5, 5, 'white'); // top left
-            this.drawSquare((x + w) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
+            this.drawSquare((x + w / 2) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
             this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'white'); // top right
-            this.drawSquare(x + w - 2.5, (y + h) - 2.5, 5, 5, 'white'); // middle right
+            this.drawSquare(x + w - 2.5, (y + h / 2) - 2.5, 5, 5, 'white'); // middle right
             this.drawSquare(x + w - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom right
-            this.drawSquare((x + w) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
+            this.drawSquare((x + w / 2) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
             this.drawSquare(x - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom left
-            this.drawSquare(x - 2.5, (y + h) - 2.5, 5, 5, 'white'); // middle left
+            this.drawSquare(x - 2.5, (y + h / 2) - 2.5, 5, 5, 'white'); // middle left
         }
     }
     drawSquare(x, y, w, h, color) {
@@ -238,11 +239,14 @@ class RectangleEffect {
             this.modifyDrag();
         }
         else if (this._isResizing && this._isSelected) {
-            this.modifyResize(this._dims.width.eval(this._context).val < 5, this._dims.height.eval(this._context).val < 5);
+            this.modifyResize(this._dims.width.eval(this._context).val < 10, this._dims.height.eval(this._context).val < 10);
+        }
+        else if (this._isChangingDims && this._isSelected) {
+            this.modifyChangeDims(this._dims.width.eval(this._context).val < 10, this._dims.height.eval(this._context).val < 10);
         }
     }
     onMouseDown(event) {
-        this.modifyState(this.guideContains(this._mouse.x, this._mouse.y) > 0, this.contains(this._mouse.x, this._mouse.y));
+        this.modifyState(this.guideContains(this._mouse.x, this._mouse.y), this.contains(this._mouse.x, this._mouse.y));
     }
     onMouseUp(event) {
         //console.log("I'm an ellipse!");
@@ -266,40 +270,98 @@ class RectangleEffect {
     }
     modifyResize(widthTooSmall, heightTooSmall) {
         if (widthTooSmall) {
-            this._dims.width.eval(this._context).val = 5;
-            this._rect.width = new NumberNode_1.NumberNode(5);
-            this._dims.height.eval(this._context).val = 5 / this._ratio;
-            this._rect.height = new NumberNode_1.NumberNode(Math.round(5 / this._ratio));
+            this._dims.width.eval(this._context).val = 10;
+            this._rect.width = new NumberNode_1.NumberNode(10);
+            this._dims.height.eval(this._context).val = 10 / this._ratio;
+            this._rect.height = new NumberNode_1.NumberNode(Math.round(10 / this._ratio));
             let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
             if (newDistance - this._initDistance > 0) {
-                this._dims.width.eval(this._context).val += newDistance - this._initDistance;
-                this._rect.width = new NumberNode_1.NumberNode(Math.round(this._dims.width.eval(this._context).val));
-                this._dims.height.eval(this._context).val += (newDistance - this._initDistance) / this._ratio;
-                this._rect.height = new NumberNode_1.NumberNode(Math.round(this._dims.height.eval(this._context).val));
-                this._initDistance = newDistance;
+                this.modifyResizeHelper();
             }
         }
         if (heightTooSmall) {
-            this._dims.height.eval(this._context).val = 5;
-            this._rect.height = new NumberNode_1.NumberNode(5);
-            this._dims.width.eval(this._context).val = 5 * this._ratio;
-            this._rect.width = new NumberNode_1.NumberNode(Math.round(5 * this._ratio));
+            this._dims.height.eval(this._context).val = 10;
+            this._rect.height = new NumberNode_1.NumberNode(10);
+            this._dims.width.eval(this._context).val = 10 * this._ratio;
+            this._rect.width = new NumberNode_1.NumberNode(Math.round(10 * this._ratio));
             let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
             if (newDistance - this._initDistance > 0) {
-                this._dims.width.eval(this._context).val += newDistance - this._initDistance;
-                this._rect.width = new NumberNode_1.NumberNode(Math.round(this._dims.width.eval(this._context).val));
-                this._dims.height.eval(this._context).val += (newDistance - this._initDistance) / this._ratio;
-                this._rect.height = new NumberNode_1.NumberNode(Math.round(this._dims.height.eval(this._context).val));
-                this._initDistance = newDistance;
+                this.modifyResizeHelper();
             }
         }
         else {
-            let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
-            this._dims.width.eval(this._context).val += newDistance - this._initDistance;
-            this._rect.width = new NumberNode_1.NumberNode(Math.round(this._dims.width.eval(this._context).val));
-            this._dims.height.eval(this._context).val += (newDistance - this._initDistance) / this._ratio;
-            this._rect.height = new NumberNode_1.NumberNode(Math.round(this._dims.height.eval(this._context).val));
-            this._initDistance = newDistance;
+            this.modifyResizeHelper();
+        }
+    }
+    modifyResizeHelper() {
+        let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
+        switch (this._corner) {
+            case 1:
+                this._dims.y.eval(this._context).val -= Math.round(newDistance - this._initDistance);
+                this._dims.x.eval(this._context).val -= Math.round(newDistance - this._initDistance);
+                break;
+            case 2:
+                this._dims.y.eval(this._context).val -= Math.round(newDistance - this._initDistance);
+                break;
+            case 4:
+                this._dims.x.eval(this._context).val -= Math.round(newDistance - this._initDistance);
+                break;
+        }
+        this._dims.width.eval(this._context).val += newDistance - this._initDistance;
+        this._rect.width = new NumberNode_1.NumberNode(Math.round(this._dims.width.eval(this._context).val));
+        this._dims.height.eval(this._context).val += (newDistance - this._initDistance) / this._ratio;
+        this._rect.height = new NumberNode_1.NumberNode(Math.round(this._dims.height.eval(this._context).val));
+        this._initDistance = newDistance;
+    }
+    modifyChangeDims(widthTooSmall, heightTooSmall) {
+        let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
+        if (widthTooSmall) {
+            this._dims.width.eval(this._context).val = 10;
+            this._rect.width = new NumberNode_1.NumberNode(10);
+            this._dims.height.eval(this._context).val = 10 / this._ratio;
+            this._rect.height = new NumberNode_1.NumberNode(Math.round(10 / this._ratio));
+            if (newDistance - this._initDistance > 0) {
+                this.modifyChangeDimsHelper();
+            }
+        }
+        if (heightTooSmall) {
+            this._dims.height.eval(this._context).val = 10;
+            this._rect.height = new NumberNode_1.NumberNode(10);
+            this._dims.width.eval(this._context).val = 10 * this._ratio;
+            this._rect.width = new NumberNode_1.NumberNode(Math.round(10 * this._ratio));
+            if (newDistance - this._initDistance > 0) {
+                this.modifyChangeDimsHelper();
+            }
+        }
+        else {
+            this.modifyChangeDimsHelper();
+        }
+    }
+    modifyChangeDimsHelper() {
+        let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
+        switch (this._corner) {
+            case 5:
+                this._dims.y.eval(this._context).val -= Math.round(newDistance - this._initDistance);
+                this._dims.height.eval(this._context).val += newDistance - this._initDistance;
+                this._rect.height = new NumberNode_1.NumberNode(Math.round(this._dims.height.eval(this._context).val));
+                this._initDistance = newDistance;
+                break;
+            case 6:
+                this._dims.width.eval(this._context).val += newDistance - this._initDistance;
+                this._rect.width = new NumberNode_1.NumberNode(Math.round(this._dims.height.eval(this._context).val));
+                this._initDistance = newDistance;
+                break;
+            case 7:
+                this._dims.height.eval(this._context).val += newDistance - this._initDistance;
+                this._rect.height = new NumberNode_1.NumberNode(Math.round(this._dims.height.eval(this._context).val));
+                this._initDistance = newDistance;
+                break;
+            case 8:
+                this._dims.x.eval(this._context).val -= Math.round(newDistance - this._initDistance);
+                this._dims.width.eval(this._context).val += newDistance - this._initDistance;
+                this._rect.width = new NumberNode_1.NumberNode(Math.round(this._dims.height.eval(this._context).val));
+                this._initDistance = newDistance;
+                break;
         }
     }
     modifyState(guideContains, contains) {
@@ -316,15 +378,49 @@ class RectangleEffect {
                 this._isDragging = true;
             }
         }
-        else if (guideContains) {
+        else if (guideContains > 0 && guideContains <= 4) { //resizing
             this._isSelected = true;
             this._isResizing = true;
             this._context.eventLog.push(this.logClick());
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
             this._dragoffx = this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val / 2;
             this._dragoffy = this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val / 2;
-            this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val / 2, this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val / 2);
+            switch (this._corner) {
+                case 1:
+                    this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val, this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val);
+                    break;
+                case 2:
+                    this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val);
+                    break;
+                case 3:
+                    this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+                    break;
+                case 4:
+                    this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val, this._dims.y.eval(this._context).val);
+                    break;
+            }
             this._size1 = Math.sqrt((this._dims.width.eval(this._context).val) ^ 2 + (this._dims.height.eval(this._context).val) ^ 2); // size is diagonal length
+        }
+        else if (guideContains > 4) { //changing shape dimensions
+            this._isSelected = true;
+            this._isChangingDims = true;
+            this._corner = guideContains;
+            this._dragoffx = this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val / 2;
+            this._dragoffy = this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val / 2;
+            switch (this._corner) {
+                case 5:
+                    this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val / 2, this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val);
+                    break;
+                case 6:
+                    this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val / 2);
+                    break;
+                case 7:
+                    this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val / 2, this._dims.y.eval(this._context).val);
+                    break;
+                case 8:
+                    this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val, this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val / 2);
+                    break;
+            }
         }
         else if (contains) {
             this._x1 = this._dims.x.eval(this._context).val; // Saving original x and y
@@ -356,6 +452,7 @@ class RectangleEffect {
         }
         this._isDragging = false;
         this._isResizing = false;
+        this._isChangingDims = false;
         this._corner = 0;
     }
     getMousePosition() {
