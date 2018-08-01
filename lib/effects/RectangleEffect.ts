@@ -351,6 +351,10 @@ export class RectangleEffect implements Effect<RectangleNode> {
     get selected(): boolean {
         return this._isSelected;
     }
+
+    toString(): string{
+        return "rectangle at " + this._dims.x + " , " + this._dims.y;
+    }
 }
 
 //allows us to get the mouse position in relation to the canvas!

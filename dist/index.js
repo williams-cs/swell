@@ -105,4 +105,6 @@ var PaintEvent_1 = require("./lib/logging/PaintEvent");
 exports.PaintEvent = PaintEvent_1.PaintEvent;
 var ResizeEvent_1 = require("./lib/logging/ResizeEvent");
 exports.ResizeEvent = ResizeEvent_1.ResizeEvent;
+var SelectEvent_1 = require("./lib/logging/SelectEvent");
+exports.SelectEvent = SelectEvent_1.SelectEvent;
 //# sourceMappingURL=index.js.map

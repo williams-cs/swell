@@ -7,6 +7,7 @@ class LogEvent {
         this._time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
         this._dateTime = this._date + ' ' + this._time;
         this._toLog = toLog;
+        //this._toLogArray = toLogArray;
         this._x1 = x1;
         this._y1 = y1;
         this._x2 = x2;

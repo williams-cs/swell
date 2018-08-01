@@ -51,6 +51,9 @@ class NumberEffect {
     get selected() {
         return this._isSelected;
     }
+    toString() {
+        return this._num + " at " + this._dims.x + " , " + this._dims.y;
+    }
 }
 exports.NumberEffect = NumberEffect;
 //# sourceMappingURL=NumberEffect.js.map

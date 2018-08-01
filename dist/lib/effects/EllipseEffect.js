@@ -395,7 +395,7 @@ class EllipseEffect {
         return new ResizeEvent_1.ResizeEvent("ellipse", this._size1, this._dims.radius.eval(this._context).val);
     }
     logClick() {
-        return new ClickEvent_1.ClickEvent("ellipse at ", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+        return new ClickEvent_1.ClickEvent("ellipse", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
     updateAST() {
         throw new Error("Not implemented");
@@ -411,6 +411,9 @@ class EllipseEffect {
     }
     get selected() {
         return this._isSelected;
+    }
+    toString() {
+        return "ellipse at " + this._dims.x + " , " + this._dims.y;
     }
 }
 exports.EllipseEffect = EllipseEffect;

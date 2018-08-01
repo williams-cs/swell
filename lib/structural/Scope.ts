@@ -14,8 +14,13 @@ export class Scope{
         initDistance: number,
         selection: any,
         dragging: boolean,
-        resizing: boolean
+        resizing: boolean,
+        //isMultipleSelected: boolean
     };
+
+    private _mulSelected: boolean;
+    private _mulSelArray: Effect<any>[];
+
     private _eventLog: LogEvent<any>[] = [];
     private _hadFunEval: boolean = false;
     //public globalFunID = Math.random();
@@ -121,6 +126,20 @@ export class Scope{
     }
     set eventLog(update: LogEvent<any>[]){
         this._eventLog = update;
+    }
+
+    get mulSelected(): boolean {
+        return this._mulSelected;
+    }
+    set mulSelected(update: boolean){
+        this._mulSelected = update;
+    }
+
+    get mulSelArray(): Effect<any>[] {
+        return this._mulSelArray;
+    }
+    set mulSelArray(update: Effect<any>[]){
+        this._mulSelArray = update;
     }
 
     get hadFunEval(): boolean{

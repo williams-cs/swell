@@ -447,7 +447,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
     }
 
     logClick(): LogEvent<any>{
-        return new ClickEvent("ellipse at ", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+        return new ClickEvent("ellipse", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
 
     updateAST(): Expression<EllipseNode> {
@@ -467,6 +467,10 @@ export class EllipseEffect implements Effect<EllipseNode> {
     
     get selected(): boolean {
         return this._isSelected;
+    }
+
+    toString(): string{
+        return "ellipse at " + this._dims.x + " , " + this._dims.y;
     }
 }
 

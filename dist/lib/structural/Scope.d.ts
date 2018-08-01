@@ -8,6 +8,8 @@ export declare class Scope {
     private _canvas;
     private _effects;
     private _myState;
+    private _mulSelected;
+    private _mulSelArray;
     private _eventLog;
     private _hadFunEval;
     globalFunID: number;
@@ -31,5 +33,7 @@ export declare class Scope {
     effects: Effect<any>[];
     myState: any;
     eventLog: LogEvent<any>[];
+    mulSelected: boolean;
+    mulSelArray: Effect<any>[];
     hadFunEval: boolean;
 }

@@ -24,4 +24,5 @@ export declare class NumberEffect implements Effect<NumberNode> {
     readonly y: number;
     readonly dims: Dimensions;
     readonly selected: boolean;
+    toString(): string;
 }
