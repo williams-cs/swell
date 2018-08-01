@@ -241,6 +241,9 @@ class RectangleEffect {
         else if (this._isResizing && this._isSelected) {
             this.modifyResize(this._dims.width.eval(this._context).val < 5, this._dims.height.eval(this._context).val < 5);
         }
+        else if (this._isChangingDims && this._isSelected) {
+            this.modifyChangeDims(this._dims.width.eval(this._context).val < 5, this._dims.height.eval(this._context).val < 5);
+        }
     }
     onMouseDown(event) {
         this.modifyState(this.guideContains(this._mouse.x, this._mouse.y), this.contains(this._mouse.x, this._mouse.y));
@@ -271,66 +274,44 @@ class RectangleEffect {
             this._rect.width = new NumberNode_1.NumberNode(5);
             this._dims.height.eval(this._context).val = 5 / this._ratio;
             this._rect.height = new NumberNode_1.NumberNode(Math.round(5 / this._ratio));
-            //let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
-            /*
-            if(newDistance - this._initDistance > 0){
-                this._dims.width.eval(this._context).val += newDistance - this._initDistance;
-                this._rect.width = new NumberNode(Math.round(this._dims.width.eval(this._context).val));
-                this._dims.height.eval(this._context).val += (newDistance - this._initDistance) / this._ratio;
-                this._rect.height = new NumberNode(Math.round(this._dims.height.eval(this._context).val));
-                this._initDistance = newDistance;
-            }*/
+            let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
+            if (newDistance - this._initDistance > 0) {
+                this.modifyResizeHelper();
+            }
         }
         if (heightTooSmall) {
             this._dims.height.eval(this._context).val = 5;
             this._rect.height = new NumberNode_1.NumberNode(5);
             this._dims.width.eval(this._context).val = 5 * this._ratio;
             this._rect.width = new NumberNode_1.NumberNode(Math.round(5 * this._ratio));
-            //let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
-            /*
-            if(newDistance - this._initDistance > 0){
-                this._dims.width.eval(this._context).val += newDistance - this._initDistance;
-                this._rect.width = new NumberNode(Math.round(this._dims.width.eval(this._context).val));
-                this._dims.height.eval(this._context).val += (newDistance - this._initDistance) / this._ratio;
-                this._rect.height = new NumberNode(Math.round(this._dims.height.eval(this._context).val));
-                this._initDistance = newDistance;
-            }*/
+            let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
+            if (newDistance - this._initDistance > 0) {
+                this.modifyResizeHelper();
+            }
         }
+        else {
+            this.modifyResizeHelper();
+        }
+    }
+    modifyResizeHelper() {
         let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
         switch (this._corner) {
             case 1:
                 this._dims.y.eval(this._context).val -= newDistance - this._initDistance;
                 this._dims.x.eval(this._context).val -= newDistance - this._initDistance;
-                this._dims.width.eval(this._context).val += newDistance - this._initDistance;
-                this._rect.width = new NumberNode_1.NumberNode(Math.round(this._dims.width.eval(this._context).val));
-                this._dims.height.eval(this._context).val += (newDistance - this._initDistance) / this._ratio;
-                this._rect.height = new NumberNode_1.NumberNode(Math.round(this._dims.height.eval(this._context).val));
-                this._initDistance = newDistance;
                 break;
             case 2:
                 this._dims.y.eval(this._context).val -= newDistance - this._initDistance;
-                this._dims.width.eval(this._context).val += newDistance - this._initDistance;
-                this._rect.width = new NumberNode_1.NumberNode(Math.round(this._dims.width.eval(this._context).val));
-                this._dims.height.eval(this._context).val += (newDistance - this._initDistance) / this._ratio;
-                this._rect.height = new NumberNode_1.NumberNode(Math.round(this._dims.height.eval(this._context).val));
-                this._initDistance = newDistance;
-                break;
-            case 3:
-                this._dims.width.eval(this._context).val += newDistance - this._initDistance;
-                this._rect.width = new NumberNode_1.NumberNode(Math.round(this._dims.width.eval(this._context).val));
-                this._dims.height.eval(this._context).val += (newDistance - this._initDistance) / this._ratio;
-                this._rect.height = new NumberNode_1.NumberNode(Math.round(this._dims.height.eval(this._context).val));
-                this._initDistance = newDistance;
                 break;
             case 4:
                 this._dims.x.eval(this._context).val -= newDistance - this._initDistance;
-                this._dims.width.eval(this._context).val += newDistance - this._initDistance;
-                this._rect.width = new NumberNode_1.NumberNode(Math.round(this._dims.width.eval(this._context).val));
-                this._dims.height.eval(this._context).val += (newDistance - this._initDistance) / this._ratio;
-                this._rect.height = new NumberNode_1.NumberNode(Math.round(this._dims.height.eval(this._context).val));
-                this._initDistance = newDistance;
                 break;
         }
+        this._dims.width.eval(this._context).val += newDistance - this._initDistance;
+        this._rect.width = new NumberNode_1.NumberNode(Math.round(this._dims.width.eval(this._context).val));
+        this._dims.height.eval(this._context).val += (newDistance - this._initDistance) / this._ratio;
+        this._rect.height = new NumberNode_1.NumberNode(Math.round(this._dims.height.eval(this._context).val));
+        this._initDistance = newDistance;
     }
     modifyChangeDims(widthTooSmall, heightTooSmall) {
         let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
@@ -339,15 +320,47 @@ class RectangleEffect {
             this._rect.width = new NumberNode_1.NumberNode(5);
             this._dims.height.eval(this._context).val = 5 / this._ratio;
             this._rect.height = new NumberNode_1.NumberNode(Math.round(5 / this._ratio));
+            if (newDistance - this._initDistance > 0) {
+                this.modifyChangeDimsHelper();
+            }
         }
         if (heightTooSmall) {
             this._dims.height.eval(this._context).val = 5;
             this._rect.height = new NumberNode_1.NumberNode(5);
             this._dims.width.eval(this._context).val = 5 * this._ratio;
             this._rect.width = new NumberNode_1.NumberNode(Math.round(5 * this._ratio));
+            if (newDistance - this._initDistance > 0) {
+                this.modifyChangeDimsHelper();
+            }
         }
+        else {
+            this.modifyChangeDimsHelper();
+        }
+    }
+    modifyChangeDimsHelper() {
+        let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
         switch (this._corner) {
             case 5:
+                this._dims.y.eval(this._context).val -= newDistance - this._initDistance;
+                this._dims.height.eval(this._context).val += newDistance - this._initDistance;
+                this._rect.height = new NumberNode_1.NumberNode(Math.round(this._dims.height.eval(this._context).val));
+                this._initDistance = newDistance;
+                break;
+            case 6:
+                this._dims.width.eval(this._context).val += newDistance - this._initDistance;
+                this._rect.width = new NumberNode_1.NumberNode(Math.round(this._dims.height.eval(this._context).val));
+                this._initDistance = newDistance;
+                break;
+            case 7:
+                this._dims.height.eval(this._context).val += newDistance - this._initDistance;
+                this._rect.height = new NumberNode_1.NumberNode(Math.round(this._dims.height.eval(this._context).val));
+                this._initDistance = newDistance;
+                break;
+            case 8:
+                this._dims.x.eval(this._context).val -= newDistance - this._initDistance;
+                this._dims.width.eval(this._context).val += newDistance - this._initDistance;
+                this._rect.width = new NumberNode_1.NumberNode(Math.round(this._dims.height.eval(this._context).val));
+                this._initDistance = newDistance;
                 break;
         }
     }
