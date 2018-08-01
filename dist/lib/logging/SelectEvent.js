@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const LogEvent_1 = require("./LogEvent");
 class SelectEvent extends LogEvent_1.LogEvent {
-    constructor(toLog, x1, y1) {
-        super(toLog, x1, y1);
+    constructor(toLogArray, x1, y1) {
+        super(toLogArray, x1, y1);
         this.tag = "select";
     }
     assembleLog() {
