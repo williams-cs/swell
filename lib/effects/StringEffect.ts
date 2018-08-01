@@ -406,6 +406,7 @@ export class StringEffect implements Effect<StringNode> {
     }
 
     logSelected(): LogEvent<any>{
+        console.log("Logging selected!!");
         return new SelectEvent(this._context.mulSelArray);
     }
 
