@@ -19,6 +19,7 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
     private _isSelected;
     private _isDragging;
     private _isResizing;
+    private _isChangingDims;
     private _isSelectingMultiple;
     private _x1;
     private _y1;
@@ -44,7 +45,7 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
     onShiftUp(event: any): void;
     modifyDrag(): void;
     modifyResize(widthTooSmall: boolean, heightTooSmall: boolean): void;
-    modifyState(guideContains: boolean, contains: boolean): void;
+    modifyState(guideContains: number, contains: boolean): void;
     modifyReset(): void;
     getMousePosition(): void;
     isMouseOutside(event: any): void;

@@ -26,6 +26,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
     private _isSelected: boolean = false; // private bools
     private _isDragging: boolean = false;
     private _isResizing: boolean = false;
+    private _isChangingDims: boolean = false;
     private _isSelectingMultiple: boolean = false;
 
     private _x1: number; // used to save coords for logging
@@ -276,7 +277,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
     }
 
     onMouseDown(event: any): void {
-        this.modifyState(this.guideContains(this._mouse.x, this._mouse.y) > 0, this.contains(this._mouse.x, this._mouse.y));
+        this.modifyState(this.guideContains(this._mouse.x, this._mouse.y), this.contains(this._mouse.x, this._mouse.y));
     }
 
     onMouseUp(event: any) {
@@ -334,6 +335,16 @@ export class RectangleEffect implements Effect<RectangleNode> {
         }
         else {
             let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
+            switch (this._corner) {
+                case 2:
+                    this._dims.y.eval(this._context).val += newDistance - this._initDistance;
+                    this._dims.width.eval(this._context).val += newDistance - this._initDistance;
+                    this._rect.width = new NumberNode(Math.round(this._dims.width.eval(this._context).val));
+                    this._dims.height.eval(this._context).val += (newDistance - this._initDistance) / this._ratio;
+                    this._rect.height = new NumberNode(Math.round(this._dims.height.eval(this._context).val));
+                    this._initDistance = newDistance;
+                break;
+            }
             this._dims.width.eval(this._context).val += newDistance - this._initDistance;
             this._rect.width = new NumberNode(Math.round(this._dims.width.eval(this._context).val));
             this._dims.height.eval(this._context).val += (newDistance - this._initDistance) / this._ratio;
@@ -342,7 +353,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
         }
     }
 
-    modifyState(guideContains: boolean, contains: boolean): void {
+    modifyState(guideContains: number, contains: boolean): void {
         if (this._isSelectingMultiple) {
             if (contains) {
                 this._isSelected = true;
@@ -356,7 +367,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
                 this._isDragging = true;
             }
         }
-        else if(guideContains) {
+        else if(guideContains > 0 && guideContains <= 4) { //resizing
             this._isSelected = true;
             this._isResizing = true;
 
@@ -368,6 +379,14 @@ export class RectangleEffect implements Effect<RectangleNode> {
             this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val / 2, this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val / 2);
 
             this._size1 = Math.sqrt((this._dims.width.eval(this._context).val)^2 + (this._dims.height.eval(this._context).val)^2); // size is diagonal length
+        }
+        else if(guideContains > 4){ //changing shape dimensions
+            this._isSelected = true;
+            this._isChangingDims = true;
+            this._corner = guideContains;
+            this._dragoffx = this._dims.x.eval(this._context).val;
+            this._dragoffy = this._dims.y.eval(this._context).val;
+            this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
         }
         else if (contains) {
             this._x1 = this._dims.x.eval(this._context).val; // Saving original x and y
@@ -401,6 +420,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
         }
         this._isDragging = false;
         this._isResizing = false;
+        this._isChangingDims = false;
         this._corner = 0;
     }
 

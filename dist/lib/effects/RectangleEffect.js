@@ -11,6 +11,7 @@ class RectangleEffect {
         this._isSelected = false; // private bools
         this._isDragging = false;
         this._isResizing = false;
+        this._isChangingDims = false;
         this._isSelectingMultiple = false;
         this._ratio = 0;
         this._dragoffx = 0;
@@ -242,7 +243,7 @@ class RectangleEffect {
         }
     }
     onMouseDown(event) {
-        this.modifyState(this.guideContains(this._mouse.x, this._mouse.y) > 0, this.contains(this._mouse.x, this._mouse.y));
+        this.modifyState(this.guideContains(this._mouse.x, this._mouse.y), this.contains(this._mouse.x, this._mouse.y));
     }
     onMouseUp(event) {
         //console.log("I'm an ellipse!");
@@ -295,6 +296,16 @@ class RectangleEffect {
         }
         else {
             let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
+            switch (this._corner) {
+                case 2:
+                    this._dims.y.eval(this._context).val += newDistance - this._initDistance;
+                    this._dims.width.eval(this._context).val += newDistance - this._initDistance;
+                    this._rect.width = new NumberNode_1.NumberNode(Math.round(this._dims.width.eval(this._context).val));
+                    this._dims.height.eval(this._context).val += (newDistance - this._initDistance) / this._ratio;
+                    this._rect.height = new NumberNode_1.NumberNode(Math.round(this._dims.height.eval(this._context).val));
+                    this._initDistance = newDistance;
+                    break;
+            }
             this._dims.width.eval(this._context).val += newDistance - this._initDistance;
             this._rect.width = new NumberNode_1.NumberNode(Math.round(this._dims.width.eval(this._context).val));
             this._dims.height.eval(this._context).val += (newDistance - this._initDistance) / this._ratio;
@@ -316,7 +327,7 @@ class RectangleEffect {
                 this._isDragging = true;
             }
         }
-        else if (guideContains) {
+        else if (guideContains > 0 && guideContains <= 4) { //resizing
             this._isSelected = true;
             this._isResizing = true;
             this._context.eventLog.push(this.logClick());
@@ -325,6 +336,14 @@ class RectangleEffect {
             this._dragoffy = this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val / 2;
             this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val / 2, this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val / 2);
             this._size1 = Math.sqrt((this._dims.width.eval(this._context).val) ^ 2 + (this._dims.height.eval(this._context).val) ^ 2); // size is diagonal length
+        }
+        else if (guideContains > 4) { //changing shape dimensions
+            this._isSelected = true;
+            this._isChangingDims = true;
+            this._corner = guideContains;
+            this._dragoffx = this._dims.x.eval(this._context).val;
+            this._dragoffy = this._dims.y.eval(this._context).val;
+            this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
         }
         else if (contains) {
             this._x1 = this._dims.x.eval(this._context).val; // Saving original x and y
@@ -356,6 +375,7 @@ class RectangleEffect {
         }
         this._isDragging = false;
         this._isResizing = false;
+        this._isChangingDims = false;
         this._corner = 0;
     }
     getMousePosition() {
