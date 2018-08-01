@@ -76,12 +76,48 @@ class RectangleEffect {
         let y = this._dims.y.eval(this._context).val;
         let w = this._dims.width.eval(this._context).val;
         let h = this._dims.height.eval(this._context).val;
-        let xdif = mx - (x + w);
-        let ydif = my - (y + h);
-        if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) {
+        let xdif = mx - (x - w);
+        let ydif = my - (y - h);
+        /* Corner Guides */
+        if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) { //top left
+            return 1;
+        }
+        xdif = mx - (x + w);
+        if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) { //top right
+            return 2;
+        }
+        xdif = mx - (x + w);
+        ydif = my - (y + h);
+        if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) { //bottom right
             return 3;
         }
-        return 0;
+        xdif = mx - (x - w);
+        if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) { //bottom left
+            return 4;
+        }
+        /* Middle Guides */
+        xdif = mx - x;
+        ydif = my - (y - h);
+        if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) { //top middle
+            return 5;
+        }
+        xdif = mx - (x + w);
+        ydif = my - y;
+        if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) { //middle right
+            return 6;
+        }
+        xdif = mx - x;
+        ydif = my - (y + h);
+        if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) { //bottom middle
+            return 7;
+        }
+        xdif = mx - (x - w);
+        ydif = my - y;
+        if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) { //middle left
+            return 8;
+        }
+        else
+            return 0;
     }
     //draws the guides for different objects
     drawGuides(x, y, w, h, corner) {
@@ -89,15 +125,103 @@ class RectangleEffect {
         this._ctx.rect(x, y, w, h);
         this._ctx.strokeStyle = 'gray';
         this._ctx.stroke();
-        if (corner !== 0) {
+        if (corner !== 0 && corner <= 4) {
             switch (corner) { //colors the correct guide blue
+                case 1:
+                    this.drawSquare(x - 2.5, y - 2.5, 5, 5, 'blue'); // top left
+                    this.drawSquare((x + w) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
+                    this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'white'); // top right
+                    this.drawSquare(x + w - 2.5, (y + h) - 2.5, 5, 5, 'white'); // middle right
+                    this.drawSquare(x + w - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom right
+                    this.drawSquare((x + w) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
+                    this.drawSquare(x - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom left
+                    this.drawSquare(x - 2.5, (y + h) - 2.5, 5, 5, 'white'); // middle left
+                    break;
+                case 2:
+                    this.drawSquare(x - 2.5, y - 2.5, 5, 5, 'white'); // top left
+                    this.drawSquare((x + w) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
+                    this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'blue'); // top right
+                    this.drawSquare(x + w - 2.5, (y + h) - 2.5, 5, 5, 'white'); // middle right
+                    this.drawSquare(x + w - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom right
+                    this.drawSquare((x + w) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
+                    this.drawSquare(x - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom left
+                    this.drawSquare(x - 2.5, (y + h) - 2.5, 5, 5, 'white'); // middle left
+                    break;
                 case 3:
-                    this.drawSquare(x + w - 2.5, y + h - 2.5, 5, 5, 'blue');
+                    this.drawSquare(x - 2.5, y - 2.5, 5, 5, 'white'); // top left
+                    this.drawSquare((x + w) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
+                    this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'white'); // top right
+                    this.drawSquare(x + w - 2.5, (y + h) - 2.5, 5, 5, 'white'); // middle right
+                    this.drawSquare(x + w - 2.5, y + h - 2.5, 5, 5, 'blue'); // bottom right
+                    this.drawSquare((x + w) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
+                    this.drawSquare(x - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom left
+                    this.drawSquare(x - 2.5, (y + h) - 2.5, 5, 5, 'white'); // middle left
+                    break;
+                case 4:
+                    this.drawSquare(x - 2.5, y - 2.5, 5, 5, 'white'); // top left
+                    this.drawSquare((x + w) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
+                    this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'white'); // top right
+                    this.drawSquare(x + w - 2.5, (y + h) - 2.5, 5, 5, 'white'); // middle right
+                    this.drawSquare(x + w - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom right
+                    this.drawSquare((x + w) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
+                    this.drawSquare(x - 2.5, y + h - 2.5, 5, 5, 'blue'); // bottom left
+                    this.drawSquare(x - 2.5, (y + h) - 2.5, 5, 5, 'white'); // middle left
+                    break;
+            }
+        }
+        else if (corner !== 0) {
+            switch (corner) { //colors the correct guide blue
+                case 5:
+                    this.drawSquare(x - 2.5, y - 2.5, 5, 5, 'white'); // top left
+                    this.drawSquare((x + w) - 2.5, y - 2.5, 5, 5, 'blue'); // top middle
+                    this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'white'); // top right
+                    this.drawSquare(x + w - 2.5, (y + h) - 2.5, 5, 5, 'white'); // middle right
+                    this.drawSquare(x + w - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom right
+                    this.drawSquare((x + w) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
+                    this.drawSquare(x - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom left
+                    this.drawSquare(x - 2.5, (y + h) - 2.5, 5, 5, 'white'); // middle left
+                    break;
+                case 6:
+                    this.drawSquare(x - 2.5, y - 2.5, 5, 5, 'white'); // top left
+                    this.drawSquare((x + w) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
+                    this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'white'); // top right
+                    this.drawSquare(x + w - 2.5, (y + h) - 2.5, 5, 5, 'blue'); // middle right
+                    this.drawSquare(x + w - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom right
+                    this.drawSquare((x + w) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
+                    this.drawSquare(x - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom left
+                    this.drawSquare(x - 2.5, (y + h) - 2.5, 5, 5, 'white'); // middle left
+                    break;
+                case 7:
+                    this.drawSquare(x - 2.5, y - 2.5, 5, 5, 'white'); // top left
+                    this.drawSquare((x + w) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
+                    this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'white'); // top right
+                    this.drawSquare(x + w - 2.5, (y + h) - 2.5, 5, 5, 'white'); // middle right
+                    this.drawSquare(x + w - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom right
+                    this.drawSquare((x + w) - 2.5, y + h - 2.5, 5, 5, 'blue'); // bottom middle
+                    this.drawSquare(x - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom left
+                    this.drawSquare(x - 2.5, (y + h) - 2.5, 5, 5, 'white'); // middle left
+                    break;
+                case 8:
+                    this.drawSquare(x - 2.5, y - 2.5, 5, 5, 'white'); // top left
+                    this.drawSquare((x + w) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
+                    this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'white'); // top right
+                    this.drawSquare(x + w - 2.5, (y + h) - 2.5, 5, 5, 'white'); // middle right
+                    this.drawSquare(x + w - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom right
+                    this.drawSquare((x + w) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
+                    this.drawSquare(x - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom left
+                    this.drawSquare(x - 2.5, (y + h) - 2.5, 5, 5, 'blue'); // middle left
                     break;
             }
         }
         else {
-            this.drawSquare(x + w - 2.5, y + h - 2.5, 5, 5, 'white');
+            this.drawSquare(x - 2.5, y - 2.5, 5, 5, 'white'); // top left
+            this.drawSquare((x + w) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
+            this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'white'); // top right
+            this.drawSquare(x + w - 2.5, (y + h) - 2.5, 5, 5, 'white'); // middle right
+            this.drawSquare(x + w - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom right
+            this.drawSquare((x + w) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
+            this.drawSquare(x - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom left
+            this.drawSquare(x - 2.5, (y + h) - 2.5, 5, 5, 'white'); // middle left
         }
     }
     drawSquare(x, y, w, h, color) {
