@@ -15,14 +15,14 @@ export class Scope{
         selection: any,
         dragging: boolean,
         resizing: boolean,
-        isMultipleSelected: boolean
+        //isMultipleSelected: boolean
     };
     private _eventLog: LogEvent<any>[] = [];
     private _hadFunEval: boolean = false;
     //public globalFunID = Math.random();
     public globalFunID = 10000000;
 
-    constructor(parent: Scope, effects?: Effect<any>[], myState?: {dragoffx: number,dragoffy: number,initDistance: number,selection: any,dragging: boolean,resizing: boolean, isMultipleSelected: boolean}, eventLog?: LogEvent<any>[]){
+    constructor(parent: Scope, effects?: Effect<any>[], myState?: {dragoffx: number,dragoffy: number,initDistance: number,selection: any,dragging: boolean,resizing: boolean}, eventLog?: LogEvent<any>[]){
         this._varBindings = new Map();
         this._parent = parent;
         this._effects = effects || null;

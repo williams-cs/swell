@@ -18,7 +18,6 @@ export declare class Scope {
         selection: any;
         dragging: boolean;
         resizing: boolean;
-        isMultipleSelected: boolean;
     }, eventLog?: LogEvent<any>[]);
     copy(): Scope;
     declare(name: string): void;
