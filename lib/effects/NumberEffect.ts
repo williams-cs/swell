@@ -79,4 +79,8 @@ export class NumberEffect implements Effect<NumberNode> {
     get selected(): boolean {
         return this._isSelected;
     }
+
+    toString(): string{
+        return this._num + " at " + this._dims.x + " , " + this._dims.y;
+    }
 }

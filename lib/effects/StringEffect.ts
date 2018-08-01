@@ -9,6 +9,7 @@ import { DragEvent } from "../logging/DragEvent";
 import { ResizeEvent } from "../logging/ResizeEvent";
 import { LogEvent } from "../logging/LogEvent";
 import { ClickEvent } from "../logging/ClickEvent";
+import { SelectEvent } from "../logging/SelectEvent";
 
 export class StringEffect implements Effect<StringNode> {
 
@@ -317,6 +318,10 @@ export class StringEffect implements Effect<StringNode> {
         this._isDragging = false;
         this._isResizing = false;
         this._corner = 0;
+
+        if(this._context.mulSelected){
+            this.logSelected();
+        }
         // if(this.isMultipleSelected){
         //     context.eventLog.push(new SelectEvent(selectedElems));
         //     masterLog.push(context.eventLog[context.eventLog.length - 1]);
@@ -400,6 +405,10 @@ export class StringEffect implements Effect<StringNode> {
         return new ClickEvent(this._str.val, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
 
+    logSelected(): LogEvent<any>{
+        return new SelectEvent(this._context.mulSelArray);
+    }
+
     ast(): Expression<StringNode> {
         return this._ast;
     }
@@ -425,6 +434,10 @@ export class StringEffect implements Effect<StringNode> {
 
     get selected(): boolean {
         return this._isSelected;
+    }
+
+    toString(): string{
+        return this._str.val + " at " + this._dims.x + " , " + this._dims.y;;
     }
 }
 

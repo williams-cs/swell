@@ -4,6 +4,7 @@ const PaintEvent_1 = require("../logging/PaintEvent");
 const DragEvent_1 = require("../logging/DragEvent");
 const ResizeEvent_1 = require("../logging/ResizeEvent");
 const ClickEvent_1 = require("../logging/ClickEvent");
+const SelectEvent_1 = require("../logging/SelectEvent");
 class StringEffect {
     constructor(str) {
         this._fontSize = 20;
@@ -269,6 +270,9 @@ class StringEffect {
         this._isDragging = false;
         this._isResizing = false;
         this._corner = 0;
+        if (this._context.mulSelected) {
+            this.logSelected();
+        }
         // if(this.isMultipleSelected){
         //     context.eventLog.push(new SelectEvent(selectedElems));
         //     masterLog.push(context.eventLog[context.eventLog.length - 1]);
@@ -342,6 +346,9 @@ class StringEffect {
     logClick() {
         return new ClickEvent_1.ClickEvent(this._str.val, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
+    logSelected() {
+        return new SelectEvent_1.SelectEvent(this._context.mulSelArray);
+    }
     ast() {
         return this._ast;
     }
@@ -362,6 +369,10 @@ class StringEffect {
     }
     get selected() {
         return this._isSelected;
+    }
+    toString() {
+        return this._str.val + " at " + this._dims.x + " , " + this._dims.y;
+        ;
     }
 }
 exports.StringEffect = StringEffect;

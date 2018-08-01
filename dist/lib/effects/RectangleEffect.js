@@ -291,6 +291,9 @@ class RectangleEffect {
     get selected() {
         return this._isSelected;
     }
+    toString() {
+        return "rectangle at " + this._dims.x + " , " + this._dims.y;
+    }
 }
 exports.RectangleEffect = RectangleEffect;
 //allows us to get the mouse position in relation to the canvas!

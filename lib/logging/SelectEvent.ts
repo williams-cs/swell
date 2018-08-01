@@ -12,7 +12,7 @@ export class SelectEvent extends LogEvent<any>{
         for(let elem of this.toLog){
             logStrings.push(elem.toString());
         }
-        let toPrint = "Selected " + this.toLog;
+        let toPrint = "Selected " + logStrings;
         return this.logItem(toPrint);
     }
 }

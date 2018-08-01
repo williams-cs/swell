@@ -52,10 +52,12 @@ export declare class StringEffect implements Effect<StringNode> {
     logMove(): LogEvent<any>;
     logResize(): LogEvent<any>;
     logClick(): LogEvent<any>;
+    logSelected(): LogEvent<any>;
     ast(): Expression<StringNode>;
     canvas: HTMLCanvasElement;
     readonly x: number;
     readonly y: number;
     readonly dims: Dimensions;
     readonly selected: boolean;
+    toString(): string;
 }

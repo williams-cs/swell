@@ -99,6 +99,18 @@ class Scope {
     set eventLog(update) {
         this._eventLog = update;
     }
+    get mulSelected() {
+        return this._mulSelected;
+    }
+    set mulSelected(update) {
+        this._mulSelected = update;
+    }
+    get mulSelArray() {
+        return this._mulSelArray;
+    }
+    set mulSelArray(update) {
+        this._mulSelArray = update;
+    }
     get hadFunEval() {
         return this._hadFunEval;
     }
