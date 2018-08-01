@@ -160,43 +160,43 @@ export class RectangleEffect implements Effect<RectangleNode> {
             switch (corner) { //colors the correct guide blue
                 case 1:
                     this.drawSquare(x-2.5, y-2.5, 5, 5, 'blue'); // top left
-                    this.drawSquare((x+w)-2.5, y-2.5, 5, 5, 'white'); // top middle
+                    this.drawSquare((x+w/2)-2.5, y-2.5, 5, 5, 'white'); // top middle
                     this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white'); // top right
-                    this.drawSquare(x+w-2.5, (y+h)-2.5, 5, 5, 'white'); // middle right
+                    this.drawSquare(x+w-2.5, (y+h/2)-2.5, 5, 5, 'white'); // middle right
                     this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white'); // bottom right
-                    this.drawSquare((x+w)-2.5, y+h-2.5, 5, 5, 'white'); // bottom middle
+                    this.drawSquare((x+w/2)-2.5, y+h-2.5, 5, 5, 'white'); // bottom middle
                     this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white'); // bottom left
-                    this.drawSquare(x-2.5, (y+h)-2.5, 5, 5, 'white'); // middle left
+                    this.drawSquare(x-2.5, (y+h/2)-2.5, 5, 5, 'white'); // middle left
                     break;
                 case 2:
                     this.drawSquare(x-2.5, y-2.5, 5, 5, 'white'); // top left
-                    this.drawSquare((x+w)-2.5, y-2.5, 5, 5, 'white'); // top middle
+                    this.drawSquare((x+w/2)-2.5, y-2.5, 5, 5, 'white'); // top middle
                     this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'blue'); // top right
-                    this.drawSquare(x+w-2.5, (y+h)-2.5, 5, 5, 'white'); // middle right
+                    this.drawSquare(x+w-2.5, (y+h/2)-2.5, 5, 5, 'white'); // middle right
                     this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white'); // bottom right
-                    this.drawSquare((x+w)-2.5, y+h-2.5, 5, 5, 'white'); // bottom middle
+                    this.drawSquare((x+w/2)-2.5, y+h-2.5, 5, 5, 'white'); // bottom middle
                     this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white'); // bottom left
-                    this.drawSquare(x-2.5, (y+h)-2.5, 5, 5, 'white'); // middle left
+                    this.drawSquare(x-2.5, (y+h/2)-2.5, 5, 5, 'white'); // middle left
                     break;
                 case 3:
                     this.drawSquare(x-2.5, y-2.5, 5, 5, 'white'); // top left
-                    this.drawSquare((x+w)-2.5, y-2.5, 5, 5, 'white'); // top middle
+                    this.drawSquare((x+w/2)-2.5, y-2.5, 5, 5, 'white'); // top middle
                     this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white'); // top right
-                    this.drawSquare(x+w-2.5, (y+h)-2.5, 5, 5, 'white'); // middle right
+                    this.drawSquare(x+w-2.5, (y+h/2)-2.5, 5, 5, 'white'); // middle right
                     this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'blue'); // bottom right
-                    this.drawSquare((x+w)-2.5, y+h-2.5, 5, 5, 'white'); // bottom middle
+                    this.drawSquare((x+w/2)-2.5, y+h-2.5, 5, 5, 'white'); // bottom middle
                     this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white'); // bottom left
-                    this.drawSquare(x-2.5, (y+h)-2.5, 5, 5, 'white'); // middle left
+                    this.drawSquare(x-2.5, (y+h/2)-2.5, 5, 5, 'white'); // middle left
                     break;
                 case 4:
                     this.drawSquare(x-2.5, y-2.5, 5, 5, 'white'); // top left
-                    this.drawSquare((x+w)-2.5, y-2.5, 5, 5, 'white'); // top middle
+                    this.drawSquare((x+w/2)-2.5, y-2.5, 5, 5, 'white'); // top middle
                     this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white'); // top right
-                    this.drawSquare(x+w-2.5, (y+h)-2.5, 5, 5, 'white'); // middle right
+                    this.drawSquare(x+w-2.5, (y+h/2)-2.5, 5, 5, 'white'); // middle right
                     this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white'); // bottom right
-                    this.drawSquare((x+w)-2.5, y+h-2.5, 5, 5, 'white'); // bottom middle
+                    this.drawSquare((x+w/2)-2.5, y+h-2.5, 5, 5, 'white'); // bottom middle
                     this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'blue'); // bottom left
-                    this.drawSquare(x-2.5, (y+h)-2.5, 5, 5, 'white'); // middle left
+                    this.drawSquare(x-2.5, (y+h/2)-2.5, 5, 5, 'white'); // middle left
                     break;
             }
         }
@@ -204,43 +204,43 @@ export class RectangleEffect implements Effect<RectangleNode> {
             switch (corner) { //colors the correct guide blue
                 case 5:
                     this.drawSquare(x-2.5, y-2.5, 5, 5, 'white'); // top left
-                    this.drawSquare((x+w)-2.5, y-2.5, 5, 5, 'blue'); // top middle
+                    this.drawSquare((x+w/2)-2.5, y-2.5, 5, 5, 'blue'); // top middle
                     this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white'); // top right
-                    this.drawSquare(x+w-2.5, (y+h)-2.5, 5, 5, 'white'); // middle right
+                    this.drawSquare(x+w-2.5, (y+h/2)-2.5, 5, 5, 'white'); // middle right
                     this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white'); // bottom right
-                    this.drawSquare((x+w)-2.5, y+h-2.5, 5, 5, 'white'); // bottom middle
+                    this.drawSquare((x+w/2)-2.5, y+h-2.5, 5, 5, 'white'); // bottom middle
                     this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white'); // bottom left
-                    this.drawSquare(x-2.5, (y+h)-2.5, 5, 5, 'white'); // middle left
+                    this.drawSquare(x-2.5, (y+h/2)-2.5, 5, 5, 'white'); // middle left
                     break;
                 case 6:
                     this.drawSquare(x-2.5, y-2.5, 5, 5, 'white'); // top left
-                    this.drawSquare((x+w)-2.5, y-2.5, 5, 5, 'white'); // top middle
+                    this.drawSquare((x+w/2)-2.5, y-2.5, 5, 5, 'white'); // top middle
                     this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white'); // top right
-                    this.drawSquare(x+w-2.5, (y+h)-2.5, 5, 5, 'blue'); // middle right
+                    this.drawSquare(x+w-2.5, (y+h/2)-2.5, 5, 5, 'blue'); // middle right
                     this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white'); // bottom right
-                    this.drawSquare((x+w)-2.5, y+h-2.5, 5, 5, 'white'); // bottom middle
+                    this.drawSquare((x+w/2)-2.5, y+h-2.5, 5, 5, 'white'); // bottom middle
                     this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white'); // bottom left
-                    this.drawSquare(x-2.5, (y+h)-2.5, 5, 5, 'white'); // middle left
+                    this.drawSquare(x-2.5, (y+h/2)-2.5, 5, 5, 'white'); // middle left
                     break;
                 case 7:
                     this.drawSquare(x-2.5, y-2.5, 5, 5, 'white'); // top left
-                    this.drawSquare((x+w)-2.5, y-2.5, 5, 5, 'white'); // top middle
+                    this.drawSquare((x+w/2)-2.5, y-2.5, 5, 5, 'white'); // top middle
                     this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white'); // top right
-                    this.drawSquare(x+w-2.5, (y+h)-2.5, 5, 5, 'white'); // middle right
+                    this.drawSquare(x+w-2.5, (y+h/2)-2.5, 5, 5, 'white'); // middle right
                     this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white'); // bottom right
-                    this.drawSquare((x+w)-2.5, y+h-2.5, 5, 5, 'blue'); // bottom middle
+                    this.drawSquare((x+w/2)-2.5, y+h-2.5, 5, 5, 'blue'); // bottom middle
                     this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white'); // bottom left
-                    this.drawSquare(x-2.5, (y+h)-2.5, 5, 5, 'white'); // middle left
+                    this.drawSquare(x-2.5, (y+h/2)-2.5, 5, 5, 'white'); // middle left
                     break;
                 case 8:
                     this.drawSquare(x-2.5, y-2.5, 5, 5, 'white'); // top left
-                    this.drawSquare((x+w)-2.5, y-2.5, 5, 5, 'white'); // top middle
+                    this.drawSquare((x+w/2)-2.5, y-2.5, 5, 5, 'white'); // top middle
                     this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white'); // top right
-                    this.drawSquare(x+w-2.5, (y+h)-2.5, 5, 5, 'white'); // middle right
+                    this.drawSquare(x+w-2.5, (y+h/2)-2.5, 5, 5, 'white'); // middle right
                     this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white'); // bottom right
-                    this.drawSquare((x+w)-2.5, y+h-2.5, 5, 5, 'white'); // bottom middle
+                    this.drawSquare((x+w/2)-2.5, y+h-2.5, 5, 5, 'white'); // bottom middle
                     this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white'); // bottom left
-                    this.drawSquare(x-2.5, (y+h)-2.5, 5, 5, 'blue'); // middle left
+                    this.drawSquare(x-2.5, (y+h/2)-2.5, 5, 5, 'blue'); // middle left
                     break;
             }
         }
