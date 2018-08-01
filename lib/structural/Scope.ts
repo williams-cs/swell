@@ -18,7 +18,7 @@ export class Scope{
         //isMultipleSelected: boolean
     };
 
-    private _mulSelected: boolean = false;
+    private _mulSelected: boolean;
     private _mulSelArray: Effect<any>[];
 
     private _eventLog: LogEvent<any>[] = [];
