@@ -413,7 +413,6 @@ export class StringEffect implements Effect<StringNode> {
         return this._ast;
     }
 
-
     get canvas(): HTMLCanvasElement {
         return this._canvas;
     }

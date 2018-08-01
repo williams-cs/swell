@@ -269,6 +269,9 @@ export class EllipseEffect implements Effect<EllipseNode> {
         else if(this._isResizing && this._isSelected){
             this.modifyResize(this._dims.width.eval(this._context).val < 20, this._dims.height.eval(this._context).val < 20);
         }
+        else if(this._isChangingDims && this._isSelected) {
+            this.modifyChangeDims();
+        }
     }
 
     onMouseDown(event: any): void {
@@ -339,7 +342,17 @@ export class EllipseEffect implements Effect<EllipseNode> {
     }
 
     modifyChangeDims(): void {
-        
+        let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
+        if (this._corner == 5 || this._corner == 7) {
+            this._dims.height.eval(this._context).val += (newDistance - this._initDistance) * 2 / this._ratio;
+            this._circle.height = new NumberNode(Math.round(this._dims.height.eval(this._context).val));
+            this._initDistance = newDistance;
+        }
+        else {
+            this._dims.width.eval(this._context).val += (newDistance - this._initDistance) * 2;
+            this._circle.width = new NumberNode(Math.round(this._dims.width.eval(this._context).val));
+            this._initDistance = newDistance;            
+        }
     }
 
     modifyState(guideContains: number, contains: boolean): void {
@@ -377,7 +390,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
             this._dragoffy = this._dims.y.eval(this._context).val;
             this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
         }
-        else if (contains) {
+        else if (contains) { //simply selecting the shape
             this._x1 = this._dims.x.eval(this._context).val; // Saving original x and y
             this._y1 = this._dims.y.eval(this._context).val;
             this._isSelected = true;
@@ -409,6 +422,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
         }
         this._isDragging = false;
         this._isResizing = false;
+        this._isChangingDims = false;
         this._corner = 0;
     }
 
