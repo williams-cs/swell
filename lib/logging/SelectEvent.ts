@@ -8,6 +8,10 @@ export class SelectEvent extends LogEvent<any>{
     }
     
     assembleLog(): string {
+        let logStrings: string[] = [];
+        for(let elem of this.toLog){
+            logStrings.push(elem.toString());
+        }
         let toPrint = "Selected " + this.toLog;
         return this.logItem(toPrint);
     }

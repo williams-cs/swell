@@ -269,7 +269,12 @@ class StringEffect {
         this._isDragging = false;
         this._isResizing = false;
         this._corner = 0;
-        //this._context.eventLog.push(this.logMove());
+        // if(this.isMultipleSelected){
+        //     context.eventLog.push(new SelectEvent(selectedElems));
+        //     masterLog.push(context.eventLog[context.eventLog.length - 1]);
+        //     //console.log("multiple selected");
+        // }
+        // //this._context.eventLog.push(this.logMove());
     }
     getMousePosition() {
         this._mouse.x = getMousePos(this._canvas, event).x;

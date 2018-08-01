@@ -7,6 +7,10 @@ class SelectEvent extends LogEvent_1.LogEvent {
         this.tag = "select";
     }
     assembleLog() {
+        let logStrings = [];
+        for (let elem of this.toLog) {
+            logStrings.push(elem.toString());
+        }
         let toPrint = "Selected " + this.toLog;
         return this.logItem(toPrint);
     }
