@@ -107,8 +107,8 @@ export class RectangleEffect implements Effect<RectangleNode> {
         let y: number = this._dims.y.eval(this._context).val;
         let w: number = this._dims.width.eval(this._context).val;
         let h: number = this._dims.height.eval(this._context).val;
-        let xdif: number = mx - (x - w);
-        let ydif: number = my - (y - h);
+        let xdif: number = mx - x;
+        let ydif: number = my - y;
         /* Corner Guides */
         if(Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5){ //top left
             return 1;
@@ -122,28 +122,28 @@ export class RectangleEffect implements Effect<RectangleNode> {
         if(Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5){ //bottom right
             return 3;
         }
-        xdif = mx - (x - w);
+        xdif = mx - x;
         if(Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5){ //bottom left
             return 4;
         }
         /* Middle Guides */
-        xdif = mx - x;
-        ydif = my - (y - h);
+        xdif = mx - (x + w/2);
+        ydif = my - y;
         if(Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5){ //top middle
             return 5;
         }
         xdif = mx - (x + w);
-        ydif = my - y;
+        ydif = my - (y + h/2);
         if(Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5){ //middle right
             return 6;
         }
-        xdif = mx - x;
+        xdif = mx - (x + w/2);
         ydif = my - (y + h);
         if(Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5){ //bottom middle
             return 7;
         }
-        xdif = mx - (x - w);
-        ydif = my - y;
+        xdif = mx - x;
+        ydif = my - (y + h/2);
         if(Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5){ //middle left
             return 8;
         }
@@ -246,13 +246,13 @@ export class RectangleEffect implements Effect<RectangleNode> {
         }
         else {
             this.drawSquare(x-2.5, y-2.5, 5, 5, 'white'); // top left
-            this.drawSquare((x+w)-2.5, y-2.5, 5, 5, 'white'); // top middle
+            this.drawSquare((x+w/2)-2.5, y-2.5, 5, 5, 'white'); // top middle
             this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white'); // top right
-            this.drawSquare(x+w-2.5, (y+h)-2.5, 5, 5, 'white'); // middle right
+            this.drawSquare(x+w-2.5, (y+h/2)-2.5, 5, 5, 'white'); // middle right
             this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white'); // bottom right
-            this.drawSquare((x+w)-2.5, y+h-2.5, 5, 5, 'white'); // bottom middle
+            this.drawSquare((x+w/2)-2.5, y+h-2.5, 5, 5, 'white'); // bottom middle
             this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white'); // bottom left
-            this.drawSquare(x-2.5, (y+h)-2.5, 5, 5, 'white'); // middle left
+            this.drawSquare(x-2.5, (y+h/2)-2.5, 5, 5, 'white'); // middle left
         }
     }
 
