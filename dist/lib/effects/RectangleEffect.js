@@ -239,10 +239,10 @@ class RectangleEffect {
             this.modifyDrag();
         }
         else if (this._isResizing && this._isSelected) {
-            this.modifyResize(this._dims.width.eval(this._context).val < 5, this._dims.height.eval(this._context).val < 5);
+            this.modifyResize(this._dims.width.eval(this._context).val < 10, this._dims.height.eval(this._context).val < 10);
         }
         else if (this._isChangingDims && this._isSelected) {
-            this.modifyChangeDims(this._dims.width.eval(this._context).val < 5, this._dims.height.eval(this._context).val < 5);
+            this.modifyChangeDims(this._dims.width.eval(this._context).val < 10, this._dims.height.eval(this._context).val < 10);
         }
     }
     onMouseDown(event) {
@@ -270,20 +270,20 @@ class RectangleEffect {
     }
     modifyResize(widthTooSmall, heightTooSmall) {
         if (widthTooSmall) {
-            this._dims.width.eval(this._context).val = 5;
-            this._rect.width = new NumberNode_1.NumberNode(5);
-            this._dims.height.eval(this._context).val = 5 / this._ratio;
-            this._rect.height = new NumberNode_1.NumberNode(Math.round(5 / this._ratio));
+            this._dims.width.eval(this._context).val = 10;
+            this._rect.width = new NumberNode_1.NumberNode(10);
+            this._dims.height.eval(this._context).val = 10 / this._ratio;
+            this._rect.height = new NumberNode_1.NumberNode(Math.round(10 / this._ratio));
             let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
             if (newDistance - this._initDistance > 0) {
                 this.modifyResizeHelper();
             }
         }
         if (heightTooSmall) {
-            this._dims.height.eval(this._context).val = 5;
-            this._rect.height = new NumberNode_1.NumberNode(5);
-            this._dims.width.eval(this._context).val = 5 * this._ratio;
-            this._rect.width = new NumberNode_1.NumberNode(Math.round(5 * this._ratio));
+            this._dims.height.eval(this._context).val = 10;
+            this._rect.height = new NumberNode_1.NumberNode(10);
+            this._dims.width.eval(this._context).val = 10 * this._ratio;
+            this._rect.width = new NumberNode_1.NumberNode(Math.round(10 * this._ratio));
             let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
             if (newDistance - this._initDistance > 0) {
                 this.modifyResizeHelper();
@@ -297,14 +297,14 @@ class RectangleEffect {
         let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
         switch (this._corner) {
             case 1:
-                this._dims.y.eval(this._context).val -= newDistance - this._initDistance;
-                this._dims.x.eval(this._context).val -= newDistance - this._initDistance;
+                this._dims.y.eval(this._context).val -= Math.round(newDistance - this._initDistance);
+                this._dims.x.eval(this._context).val -= Math.round(newDistance - this._initDistance);
                 break;
             case 2:
-                this._dims.y.eval(this._context).val -= newDistance - this._initDistance;
+                this._dims.y.eval(this._context).val -= Math.round(newDistance - this._initDistance);
                 break;
             case 4:
-                this._dims.x.eval(this._context).val -= newDistance - this._initDistance;
+                this._dims.x.eval(this._context).val -= Math.round(newDistance - this._initDistance);
                 break;
         }
         this._dims.width.eval(this._context).val += newDistance - this._initDistance;
@@ -316,19 +316,19 @@ class RectangleEffect {
     modifyChangeDims(widthTooSmall, heightTooSmall) {
         let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
         if (widthTooSmall) {
-            this._dims.width.eval(this._context).val = 5;
-            this._rect.width = new NumberNode_1.NumberNode(5);
-            this._dims.height.eval(this._context).val = 5 / this._ratio;
-            this._rect.height = new NumberNode_1.NumberNode(Math.round(5 / this._ratio));
+            this._dims.width.eval(this._context).val = 10;
+            this._rect.width = new NumberNode_1.NumberNode(10);
+            this._dims.height.eval(this._context).val = 10 / this._ratio;
+            this._rect.height = new NumberNode_1.NumberNode(Math.round(10 / this._ratio));
             if (newDistance - this._initDistance > 0) {
                 this.modifyChangeDimsHelper();
             }
         }
         if (heightTooSmall) {
-            this._dims.height.eval(this._context).val = 5;
-            this._rect.height = new NumberNode_1.NumberNode(5);
-            this._dims.width.eval(this._context).val = 5 * this._ratio;
-            this._rect.width = new NumberNode_1.NumberNode(Math.round(5 * this._ratio));
+            this._dims.height.eval(this._context).val = 10;
+            this._rect.height = new NumberNode_1.NumberNode(10);
+            this._dims.width.eval(this._context).val = 10 * this._ratio;
+            this._rect.width = new NumberNode_1.NumberNode(Math.round(10 * this._ratio));
             if (newDistance - this._initDistance > 0) {
                 this.modifyChangeDimsHelper();
             }
@@ -341,7 +341,7 @@ class RectangleEffect {
         let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
         switch (this._corner) {
             case 5:
-                this._dims.y.eval(this._context).val -= newDistance - this._initDistance;
+                this._dims.y.eval(this._context).val -= Math.round(newDistance - this._initDistance);
                 this._dims.height.eval(this._context).val += newDistance - this._initDistance;
                 this._rect.height = new NumberNode_1.NumberNode(Math.round(this._dims.height.eval(this._context).val));
                 this._initDistance = newDistance;
@@ -357,7 +357,7 @@ class RectangleEffect {
                 this._initDistance = newDistance;
                 break;
             case 8:
-                this._dims.x.eval(this._context).val -= newDistance - this._initDistance;
+                this._dims.x.eval(this._context).val -= Math.round(newDistance - this._initDistance);
                 this._dims.width.eval(this._context).val += newDistance - this._initDistance;
                 this._rect.width = new NumberNode_1.NumberNode(Math.round(this._dims.height.eval(this._context).val));
                 this._initDistance = newDistance;
@@ -392,8 +392,8 @@ class RectangleEffect {
             this._isSelected = true;
             this._isChangingDims = true;
             this._corner = guideContains;
-            this._dragoffx = this._dims.x.eval(this._context).val;
-            this._dragoffy = this._dims.y.eval(this._context).val;
+            this._dragoffx = this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val / 2;
+            this._dragoffy = this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val / 2;
             this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
         }
         else if (contains) {
