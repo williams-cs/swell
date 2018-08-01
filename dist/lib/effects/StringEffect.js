@@ -347,6 +347,7 @@ class StringEffect {
         return new ClickEvent_1.ClickEvent(this._str.val, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
     logSelected() {
+        console.log("Logging selected!!");
         return new SelectEvent_1.SelectEvent(this._context.mulSelArray);
     }
     ast() {
