@@ -337,7 +337,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
             let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
             switch (this._corner) {
                 case 2:
-                    this._dims.y.eval(this._context).val += newDistance - this._initDistance;
+                    this._dims.y.eval(this._context).val -= newDistance - this._initDistance;
                     this._dims.width.eval(this._context).val += newDistance - this._initDistance;
                     this._rect.width = new NumberNode(Math.round(this._dims.width.eval(this._context).val));
                     this._dims.height.eval(this._context).val += (newDistance - this._initDistance) / this._ratio;
