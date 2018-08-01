@@ -429,6 +429,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
             this._context.eventLog.push(this.logClick());
 
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
+            
             this._dragoffx = this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val / 2;
             this._dragoffy = this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val / 2;
             this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val / 2, this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val / 2);
@@ -441,7 +442,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
             this._corner = guideContains;
             this._dragoffx = this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val / 2;
             this._dragoffy = this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val / 2;
-            this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+            this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val / 2, this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val / 2);
         }
         else if (contains) {
             this._x1 = this._dims.x.eval(this._context).val; // Saving original x and y
