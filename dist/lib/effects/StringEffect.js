@@ -270,6 +270,7 @@ class StringEffect {
         this._isDragging = false;
         this._isResizing = false;
         this._corner = 0;
+        console.log("mulSelected: " + this._context.mulSelected);
         if (this._context.mulSelected) {
             this.logSelected();
         }
