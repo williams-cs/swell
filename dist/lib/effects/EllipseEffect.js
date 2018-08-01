@@ -262,7 +262,7 @@ class EllipseEffect {
     }
     /* Modification functions */
     modifyDrag() {
-        console.log("ellipse dragoffx: " + this._dragoffx);
+        //console.log("ellipse dragoffx: " + this._dragoffx);
         this._dims.x.eval(this._context).val = this._mouse.x - this._dragoffx;
         this._dims.y.eval(this._context).val = this._mouse.y - this._dragoffy;
     }
