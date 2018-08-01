@@ -12,6 +12,7 @@ class EllipseEffect {
         //private _isListening: boolean = false;
         this._isDragging = false;
         this._isResizing = false;
+        this._isChangingDims = false;
         this._isSelectingMultiple = false;
         this._ratio = 0;
         this._dragoffx = 0;
@@ -97,25 +98,21 @@ class EllipseEffect {
         xdif = mx - x;
         ydif = my - (y - h / 2);
         if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) { //top middle
-            console.log(5);
             return 5;
         }
         xdif = mx - (x + w / 2);
         ydif = my - y;
         if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) { //middle right
-            console.log(6);
             return 6;
         }
         xdif = mx - x;
         ydif = my - (y + h / 2);
         if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) { //bottom middle
-            console.log(7);
             return 7;
         }
         xdif = mx - (x - w / 2);
         ydif = my - y;
         if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) { //middle left
-            console.log(8);
             return 8;
         }
         else
@@ -244,7 +241,7 @@ class EllipseEffect {
         }
     }
     onMouseDown(event) {
-        this.modifyState(this.guideContains(this._mouse.x, this._mouse.y) > 0, this.contains(this._mouse.x, this._mouse.y));
+        this.modifyState(this.guideContains(this._mouse.x, this._mouse.y), this.contains(this._mouse.x, this._mouse.y));
     }
     onMouseUp(event) {
         //console.log("I'm an ellipse!");
@@ -304,6 +301,8 @@ class EllipseEffect {
             this._initDistance = newDistance;
         }
     }
+    modifyChangeDims() {
+    }
     modifyState(guideContains, contains) {
         if (this._isSelectingMultiple) {
             if (contains) {
@@ -318,15 +317,23 @@ class EllipseEffect {
                 this._isDragging = true;
             }
         }
-        else if (guideContains) {
+        else if (guideContains > 0 && guideContains <= 4) { //resizing
             this._isSelected = true;
             this._isResizing = true;
             this._context.eventLog.push(this.logClick());
-            this._corner = this.guideContains(this._mouse.x, this._mouse.y);
+            this._corner = guideContains;
             this._dragoffx = this._dims.x.eval(this._context).val;
             this._dragoffy = this._dims.y.eval(this._context).val;
             this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
             this._size1 = this._dims.radius.eval(this._context).val; // saving old font size
+        }
+        else if (guideContains > 4) { //changing shape dimensions
+            this._isSelected = true;
+            this._isChangingDims = true;
+            this._corner = guideContains;
+            this._dragoffx = this._dims.x.eval(this._context).val;
+            this._dragoffy = this._dims.y.eval(this._context).val;
+            this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
         }
         else if (contains) {
             this._x1 = this._dims.x.eval(this._context).val; // Saving original x and y
