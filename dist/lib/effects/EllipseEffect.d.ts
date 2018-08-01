@@ -40,7 +40,7 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
     onShiftUp(event: any): void;
     modifyDrag(): void;
     modifyResize(widthTooSmall: boolean, heightTooSmall: boolean): void;
-    modifyChangeDims(): void;
+    modifyChangeDims(widthTooSmall: boolean, heightTooSmall: boolean): void;
     modifyState(guideContains: number, contains: boolean): void;
     modifyReset(): void;
     getMousePosition(): void;
