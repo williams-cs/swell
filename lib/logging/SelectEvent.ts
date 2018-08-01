@@ -1,13 +1,13 @@
 import {LogEvent} from './LogEvent';
 
 export class SelectEvent extends LogEvent<any>{
-    constructor(toLogArray: string[], x1: number, y1: number){
-        super(toLogArray, x1, y1);
+    constructor(toLog: string[]){
+        super(toLog);
         this.tag = "select";
     }
     
     assembleLog(): string {
-        let toPrint = "Selected " + this.toLog + " at " + this.x1.toString() + ", " + this.y1.toString();
+        let toPrint = "Selected " + this.toLog;
         return this.logItem(toPrint);
     }
 }
