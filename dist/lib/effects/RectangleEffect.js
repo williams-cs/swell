@@ -318,8 +318,8 @@ class RectangleEffect {
         if (widthTooSmall) {
             this._dims.width.eval(this._context).val = 10;
             this._rect.width = new NumberNode_1.NumberNode(10);
-            this._dims.height.eval(this._context).val = 10 / this._ratio;
-            this._rect.height = new NumberNode_1.NumberNode(Math.round(10 / this._ratio));
+            //this._dims.height.eval(this._context).val = 10 / this._ratio;
+            //this._rect.height = new NumberNode(Math.round(10 / this._ratio));
             if (newDistance - this._initDistance > 0) {
                 this.modifyChangeDimsHelper();
             }
@@ -327,8 +327,8 @@ class RectangleEffect {
         if (heightTooSmall) {
             this._dims.height.eval(this._context).val = 10;
             this._rect.height = new NumberNode_1.NumberNode(10);
-            this._dims.width.eval(this._context).val = 10 * this._ratio;
-            this._rect.width = new NumberNode_1.NumberNode(Math.round(10 * this._ratio));
+            //this._dims.width.eval(this._context).val = 10 * this._ratio;
+            //this._rect.width = new NumberNode(Math.round(10 * this._ratio));
             if (newDistance - this._initDistance > 0) {
                 this.modifyChangeDimsHelper();
             }
@@ -344,22 +344,26 @@ class RectangleEffect {
                 this._dims.y.eval(this._context).val -= Math.round(newDistance - this._initDistance);
                 this._dims.height.eval(this._context).val += newDistance - this._initDistance;
                 this._rect.height = new NumberNode_1.NumberNode(Math.round(this._dims.height.eval(this._context).val));
+                this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
                 this._initDistance = newDistance;
                 break;
             case 6:
                 this._dims.width.eval(this._context).val += newDistance - this._initDistance;
                 this._rect.width = new NumberNode_1.NumberNode(Math.round(this._dims.height.eval(this._context).val));
+                this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
                 this._initDistance = newDistance;
                 break;
             case 7:
                 this._dims.height.eval(this._context).val += newDistance - this._initDistance;
                 this._rect.height = new NumberNode_1.NumberNode(Math.round(this._dims.height.eval(this._context).val));
+                this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
                 this._initDistance = newDistance;
                 break;
             case 8:
                 this._dims.x.eval(this._context).val -= Math.round(newDistance - this._initDistance);
                 this._dims.width.eval(this._context).val += newDistance - this._initDistance;
                 this._rect.width = new NumberNode_1.NumberNode(Math.round(this._dims.height.eval(this._context).val));
+                this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
                 this._initDistance = newDistance;
                 break;
         }
@@ -385,20 +389,18 @@ class RectangleEffect {
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
             this._dragoffx = this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val / 2;
             this._dragoffy = this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val / 2;
+            /*
             switch (this._corner) {
-                case 1:
-                    this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val, this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val);
-                    break;
-                case 2:
-                    this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val);
-                    break;
-                case 3:
-                    this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
-                    break;
-                case 4:
-                    this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val, this._dims.y.eval(this._context).val);
-                    break;
-            }
+                case 1: this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val, this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val);
+                break;
+                case 2: this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val);
+                break;
+                case 3: this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+                break;
+                case 4: this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val, this._dims.y.eval(this._context).val);
+                break;
+            }*/
+            this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val / 2, this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val / 2);
             this._size1 = Math.sqrt((this._dims.width.eval(this._context).val) ^ 2 + (this._dims.height.eval(this._context).val) ^ 2); // size is diagonal length
         }
         else if (guideContains > 4) { //changing shape dimensions
@@ -407,20 +409,19 @@ class RectangleEffect {
             this._corner = guideContains;
             this._dragoffx = this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val / 2;
             this._dragoffy = this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val / 2;
+            /*
             switch (this._corner) {
-                case 5:
-                    this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val / 2, this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val);
-                    break;
-                case 6:
-                    this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val / 2);
-                    break;
-                case 7:
-                    this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val / 2, this._dims.y.eval(this._context).val);
-                    break;
-                case 8:
-                    this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val, this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val / 2);
-                    break;
+                case 5: this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val / 2, this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val);
+                break;
+                case 6: this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val / 2);
+                break;
+                case 7: this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val / 2, this._dims.y.eval(this._context).val);
+                break;
+                case 8: this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val, this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val / 2);
+                break;
             }
+            */
+            this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val + this._dims.width.eval(this._context).val / 2, this._dims.y.eval(this._context).val + this._dims.height.eval(this._context).val / 2);
         }
         else if (contains) {
             this._x1 = this._dims.x.eval(this._context).val; // Saving original x and y
