@@ -101,11 +101,11 @@ class Scope {
         this._eventLog = update;
     }
     get mulSelected() {
-        return this._mulSelected.val;
+        return this._mulSelected;
     }
-    set mulSelected(update) {
-        this._mulSelected.val = update;
-    }
+    // set mulSelected(update: boolean){
+    //     this._mulSelected.val = update;
+    // }
     get mulSelArray() {
         return this._mulSelArray;
     }

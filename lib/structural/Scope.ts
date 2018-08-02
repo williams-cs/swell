@@ -128,12 +128,12 @@ export class Scope{
         this._eventLog = update;
     }
 
-    get mulSelected(): boolean {
-        return this._mulSelected.val;
+    get mulSelected(): any {
+        return this._mulSelected;
     }
-    set mulSelected(update: boolean){
-        this._mulSelected.val = update;
-    }
+    // set mulSelected(update: boolean){
+    //     this._mulSelected.val = update;
+    // }
 
     get mulSelArray(): Effect<any>[] {
         return this._mulSelArray;
