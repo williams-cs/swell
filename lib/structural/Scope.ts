@@ -128,7 +128,7 @@ export class Scope{
         this._eventLog = update;
     }
 
-    get mulSelected(): any {
+    get mulSelected(): {val: boolean} {
         return this._mulSelected;
     }
     // set mulSelected(update: boolean){

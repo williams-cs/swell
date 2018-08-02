@@ -33,7 +33,9 @@ export declare class Scope {
     effects: Effect<any>[];
     myState: any;
     eventLog: LogEvent<any>[];
-    readonly mulSelected: any;
+    readonly mulSelected: {
+        val: boolean;
+    };
     mulSelArray: Effect<any>[];
     hadFunEval: boolean;
 }
