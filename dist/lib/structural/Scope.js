@@ -5,6 +5,7 @@ class Scope {
     constructor(parent, effects, myState, eventLog) {
         this._retValID = space_lift_1.None;
         this._canvas = space_lift_1.None;
+        this._mulSelected = { val: false };
         this._eventLog = [];
         this._hadFunEval = false;
         //public globalFunID = Math.random();
@@ -100,10 +101,10 @@ class Scope {
         this._eventLog = update;
     }
     get mulSelected() {
-        return this._mulSelected;
+        return this._mulSelected.val;
     }
     set mulSelected(update) {
-        this._mulSelected = update;
+        this._mulSelected.val = update;
     }
     get mulSelArray() {
         return this._mulSelArray;

@@ -18,7 +18,7 @@ export class Scope{
         //isMultipleSelected: boolean
     };
 
-    private _mulSelected: boolean;
+    private _mulSelected: {val: boolean} = {val: false};
     private _mulSelArray: Effect<any>[];
 
     private _eventLog: LogEvent<any>[] = [];
@@ -129,10 +129,10 @@ export class Scope{
     }
 
     get mulSelected(): boolean {
-        return this._mulSelected;
+        return this._mulSelected.val;
     }
     set mulSelected(update: boolean){
-        this._mulSelected = update;
+        this._mulSelected.val = update;
     }
 
     get mulSelArray(): Effect<any>[] {
