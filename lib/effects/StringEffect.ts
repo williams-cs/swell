@@ -319,8 +319,8 @@ export class StringEffect implements Effect<StringNode> {
         this._isResizing = false;
         this._corner = 0;
 
-        console.log("string effect mulSelected: " + this._context.mulSelected);
-        if(this._context.mulSelected){
+        console.log("string effect mulSelected: " + this._context.mulSelected.val);
+        if(this._context.mulSelected.val){
             this.logSelected();
         }
         // if(this.isMultipleSelected){
