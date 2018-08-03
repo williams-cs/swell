@@ -22,6 +22,8 @@ export class EllipseEffect implements Effect<EllipseNode> {
     //private _isListening: boolean = false;
     private _isDragging: boolean = false;
     private _isResizing: boolean = false;
+    private _isChangingDims: boolean = false;
+    private _isSelectingMultiple: boolean = false;
 
     private _x1: number; // used to save coords for logging
     private _y1: number;
@@ -29,14 +31,10 @@ export class EllipseEffect implements Effect<EllipseNode> {
 
     private _context: Scope;
 
-    private _myState: {
-        dragoffx: number,
-        dragoffy: number,
-        initDistance: number,
-        selection: any,
-        dragging: boolean,
-        resizing: boolean
-    };
+    private _ratio: number = 0;
+    private _dragoffx: number = 0;
+    private _dragoffy: number = 0;
+    private _initDistance: number = 0;
     private _mouse: {
         x: number,
         y: number
@@ -55,9 +53,9 @@ export class EllipseEffect implements Effect<EllipseNode> {
             this._ast = ast;
             this._canvas = context.canvas.get();
             this._context = context;
-            this._myState = context.myState;
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
+            this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
             this.update();
         }
         // logging
@@ -68,12 +66,16 @@ export class EllipseEffect implements Effect<EllipseNode> {
     }
 
     update(): void {
+        let x: number = this._dims.x.eval(this._context).val;
+        let y: number = this._dims.y.eval(this._context).val;
+        let w: number = this._dims.width.eval(this._context).val;
+        let h: number = this._dims.height.eval(this._context).val;
         this._ctx.beginPath();
-        this._ctx.arc(this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val, this._dims.radius.eval(this._context).val, 0, Math.PI * 2, false);
+        this._ctx.ellipse(x, y, w/2, h/2, 0, 0, Math.PI * 2, false);
         this._ctx.strokeStyle = "black";
         this._ctx.stroke();
         if(this._isSelected) {
-            this.drawGuides(this._dims.x.eval(this._context).val - this._dims.radius.eval(this._context).val, this._dims.y.eval(this._context).val - this._dims.radius.eval(this._context).val, this._dims.radius.eval(this._context).val * 2, this._dims.radius.eval(this._context).val * 2, this._corner);
+            this.drawGuides(x - w/2, y - h/2, w, h, this._corner);
         }
     }
 
@@ -81,76 +83,172 @@ export class EllipseEffect implements Effect<EllipseNode> {
         this._canvas.addEventListener('mousemove', this.onMouseMove.bind(this));
         this._canvas.addEventListener('mousedown', this.onMouseDown.bind(this));
         this._canvas.addEventListener('mouseup', this.onMouseUp.bind(this));
+        window.addEventListener('keydown', this.onShiftDown.bind(this));
+        window.addEventListener('keyup', this.onShiftUp.bind(this));
         window.addEventListener('mousedown', this.isMouseOutside.bind(this));
         //makes it so that double clicking doesn't select text on the page
         this._canvas.addEventListener('selectstart', function(e) { e.preventDefault(); return false; }, false);
     }
 
     contains(mx: number, my: number): boolean {
-        return distance(mx, my, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val) < this._dims.radius.eval(this._context).val;
+        let x: number = this._dims.x.eval(this._context).val;
+        let y: number = this._dims.y.eval(this._context).val;
+        let w: number = this._dims.width.eval(this._context).val;
+        let h: number = this._dims.height.eval(this._context).val;
+        return Math.pow(mx - x, 2)/Math.pow(w/2, 2) + Math.pow(my - y, 2)/Math.pow(h/2, 2) <= 1;
     }
 
     guideContains(mx: number, my: number): number {
-        let xdif = mx - (this._dims.x.eval(this._context).val - this._dims.radius.eval(this._context).val);
-        let ydif = my - (this._dims.y.eval(this._context).val - this._dims.radius.eval(this._context).val);
-        if(xdif <= 5 && ydif <= 5 && xdif >= -5 && ydif >= -5){
+        let x: number = this._dims.x.eval(this._context).val;
+        let y: number = this._dims.y.eval(this._context).val;
+        let w: number = this._dims.width.eval(this._context).val;
+        let h: number = this._dims.height.eval(this._context).val;
+        let xdif: number = mx - (x - w/2);
+        let ydif: number = my - (y - h/2);
+        /* Corner Guides */
+        if(Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5){ //top left
             return 1;
         }
-        xdif = mx - (this._dims.x.eval(this._context).val + this._dims.radius.eval(this._context).val);
-        if(xdif <= 5 && ydif <= 5 && xdif >= -5 && ydif >= -5){
+        xdif = mx - (x + w/2);
+        if(Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5){ //top right
             return 2;
         }
-        xdif = mx - (this._dims.x.eval(this._context).val + this._dims.radius.eval(this._context).val);
-        ydif = my - (this._dims.y.eval(this._context).val + this._dims.radius.eval(this._context).val);
-        if(xdif <= 5 && ydif <= 5 && xdif >= -5 && ydif >= -5){
+        xdif = mx - (x + w/2);
+        ydif = my - (y + h/2);
+        if(Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5){ //bottom right
             return 3;
         }
-        xdif = mx - (this._dims.x.eval(this._context).val - this._dims.radius.eval(this._context).val);
-        if(xdif <= 5 && ydif <= 5 && xdif >= -5 && ydif >= -5){
+        xdif = mx - (x - w/2);
+        if(Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5){ //bottom left
             return 4;
+        }
+        /* Middle Guides */
+        xdif = mx - x;
+        ydif = my - (y - h/2);
+        if(Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5){ //top middle
+            return 5;
+        }
+        xdif = mx - (x + w/2);
+        ydif = my - y;
+        if(Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5){ //middle right
+            return 6;
+        }
+        xdif = mx - x;
+        ydif = my - (y + h/2);
+        if(Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5){ //bottom middle
+            return 7;
+        }
+        xdif = mx - (x - w/2);
+        ydif = my - y;
+        if(Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5){ //middle left
+            return 8;
         }
         else return 0;
     }
     
     //draws the guides for different objects
-    drawGuides(x: number, y: number, w: number, h: number, corner: number) { //corner is 1,2,3 or 4
+    drawGuides(x: number, y: number, w: number, h: number, corner: number) { //corner is 1,2,3 or 4 for corner guides, 5,6,7 or 8 for side guides
         this._ctx.beginPath();
         this._ctx.rect(x, y, w, h);
         this._ctx.strokeStyle = 'gray';
         this._ctx.stroke();
-        if(corner !== 0){
+        if(corner !== 0 && corner <= 4){
             switch (corner) { //colors the correct guide blue
                 case 1:
-                    this.drawSquare(x-2.5, y-2.5, 5, 5, 'blue');
-                    this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white');
-                    this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white');
-                    this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white');
+                    this.drawSquare(x-2.5, y-2.5, 5, 5, 'blue'); // top left
+                    this.drawSquare((x+w/2)-2.5, y-2.5, 5, 5, 'white'); // top middle
+                    this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white'); // top right
+                    this.drawSquare(x+w-2.5, (y+h/2)-2.5, 5, 5, 'white'); // middle right
+                    this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white'); // bottom right
+                    this.drawSquare((x+w/2)-2.5, y+h-2.5, 5, 5, 'white'); // bottom middle
+                    this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white'); // bottom left
+                    this.drawSquare(x-2.5, (y+h/2)-2.5, 5, 5, 'white'); // middle left
                     break;
                 case 2:
-                    this.drawSquare(x-2.5, y-2.5, 5, 5, 'white');
-                    this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white');
-                    this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'blue');
-                    this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white');
+                    this.drawSquare(x-2.5, y-2.5, 5, 5, 'white'); // top left
+                    this.drawSquare((x+w/2)-2.5, y-2.5, 5, 5, 'white'); // top middle
+                    this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'blue'); // top right
+                    this.drawSquare(x+w-2.5, (y+h/2)-2.5, 5, 5, 'white'); // middle right
+                    this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white'); // bottom right
+                    this.drawSquare((x+w/2)-2.5, y+h-2.5, 5, 5, 'white'); // bottom middle
+                    this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white'); // bottom left
+                    this.drawSquare(x-2.5, (y+h/2)-2.5, 5, 5, 'white'); // middle left
                     break;
                 case 3:
-                    this.drawSquare(x-2.5, y-2.5, 5, 5, 'white');
-                    this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'blue');
-                    this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white');
-                    this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white');
+                    this.drawSquare(x-2.5, y-2.5, 5, 5, 'white'); // top left
+                    this.drawSquare((x+w/2)-2.5, y-2.5, 5, 5, 'white'); // top middle
+                    this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white'); // top right
+                    this.drawSquare(x+w-2.5, (y+h/2)-2.5, 5, 5, 'white'); // middle right
+                    this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'blue'); // bottom right
+                    this.drawSquare((x+w/2)-2.5, y+h-2.5, 5, 5, 'white'); // bottom middle
+                    this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white'); // bottom left
+                    this.drawSquare(x-2.5, (y+h/2)-2.5, 5, 5, 'white'); // middle left
                     break;
                 case 4:
-                    this.drawSquare(x-2.5, y-2.5, 5, 5, 'white');
-                    this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white');
-                    this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white');
-                    this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'blue');
+                    this.drawSquare(x-2.5, y-2.5, 5, 5, 'white'); // top left
+                    this.drawSquare((x+w/2)-2.5, y-2.5, 5, 5, 'white'); // top middle
+                    this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white'); // top right
+                    this.drawSquare(x+w-2.5, (y+h/2)-2.5, 5, 5, 'white'); // middle right
+                    this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white'); // bottom right
+                    this.drawSquare((x+w/2)-2.5, y+h-2.5, 5, 5, 'white'); // bottom middle
+                    this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'blue'); // bottom left
+                    this.drawSquare(x-2.5, (y+h/2)-2.5, 5, 5, 'white'); // middle left
+                    break;
+            }
+        }
+        else if (corner !== 0 && corner > 4) {
+            switch (corner) { //colors the correct guide blue
+                case 5:
+                    this.drawSquare(x-2.5, y-2.5, 5, 5, 'white'); // top left
+                    this.drawSquare((x+w/2)-2.5, y-2.5, 5, 5, 'blue'); // top middle
+                    this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white'); // top right
+                    this.drawSquare(x+w-2.5, (y+h/2)-2.5, 5, 5, 'white'); // middle right
+                    this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white'); // bottom right
+                    this.drawSquare((x+w/2)-2.5, y+h-2.5, 5, 5, 'white'); // bottom middle
+                    this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white'); // bottom left
+                    this.drawSquare(x-2.5, (y+h/2)-2.5, 5, 5, 'white'); // middle left
+                    break;
+                case 6:
+                    this.drawSquare(x-2.5, y-2.5, 5, 5, 'white'); // top left
+                    this.drawSquare((x+w/2)-2.5, y-2.5, 5, 5, 'white'); // top middle
+                    this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white'); // top right
+                    this.drawSquare(x+w-2.5, (y+h/2)-2.5, 5, 5, 'blue'); // middle right
+                    this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white'); // bottom right
+                    this.drawSquare((x+w/2)-2.5, y+h-2.5, 5, 5, 'white'); // bottom middle
+                    this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white'); // bottom left
+                    this.drawSquare(x-2.5, (y+h/2)-2.5, 5, 5, 'white'); // middle left
+                    break;
+                case 7:
+                    this.drawSquare(x-2.5, y-2.5, 5, 5, 'white'); // top left
+                    this.drawSquare((x+w/2)-2.5, y-2.5, 5, 5, 'white'); // top middle
+                    this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white'); // top right
+                    this.drawSquare(x+w-2.5, (y+h/2)-2.5, 5, 5, 'white'); // middle right
+                    this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white'); // bottom right
+                    this.drawSquare((x+w/2)-2.5, y+h-2.5, 5, 5, 'blue'); // bottom middle
+                    this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white'); // bottom left
+                    this.drawSquare(x-2.5, (y+h/2)-2.5, 5, 5, 'white'); // middle left
+                    break;
+                case 8:
+                    this.drawSquare(x-2.5, y-2.5, 5, 5, 'white'); // top left
+                    this.drawSquare((x+w/2)-2.5, y-2.5, 5, 5, 'white'); // top middle
+                    this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white'); // top right
+                    this.drawSquare(x+w-2.5, (y+h/2)-2.5, 5, 5, 'white'); // middle right
+                    this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white'); // bottom right
+                    this.drawSquare((x+w/2)-2.5, y+h-2.5, 5, 5, 'white'); // bottom middle
+                    this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white'); // bottom left
+                    this.drawSquare(x-2.5, (y+h/2)-2.5, 5, 5, 'blue'); // middle left
                     break;
             }
         }
         else {
-            this.drawSquare(x-2.5, y-2.5, 5, 5, 'white');
-            this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white');
-            this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white');
-            this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white');
+            this.drawSquare(x-2.5, y-2.5, 5, 5, 'white'); // top left
+            this.drawSquare((x+w/2)-2.5, y-2.5, 5, 5, 'white'); // top middle
+            this.drawSquare(x+w-2.5, y-2.5, 5, 5, 'white'); // top right
+            this.drawSquare(x+w-2.5, (y+h/2)-2.5, 5, 5, 'white'); // middle right
+            this.drawSquare(x+w-2.5, y+h-2.5, 5, 5, 'white'); // bottom right
+            this.drawSquare((x+w/2)-2.5, y+h-2.5, 5, 5, 'white'); // bottom middle
+            this.drawSquare(x-2.5, y+h-2.5, 5, 5, 'white'); // bottom left
+            this.drawSquare(x-2.5, (y+h/2)-2.5, 5, 5, 'white'); // middle left
         }
     }
 
@@ -169,12 +267,15 @@ export class EllipseEffect implements Effect<EllipseNode> {
             this.modifyDrag();
         }
         else if(this._isResizing && this._isSelected){
-            this.modifyResize(this._dims.radius.eval(this._context).val < 10);
+            this.modifyResize(this._dims.width.eval(this._context).val < 14, this._dims.height.eval(this._context).val < 14);
+        }
+        else if(this._isChangingDims && this._isSelected) {
+            this.modifyChangeDims(this._dims.width.eval(this._context).val < 14, this._dims.height.eval(this._context).val < 14);
         }
     }
 
     onMouseDown(event: any): void {
-        this.modifyState(this.guideContains(this._mouse.x, this._mouse.y) > 0, this.contains(this._mouse.x, this._mouse.y));
+        this.modifyState(this.guideContains(this._mouse.x, this._mouse.y), this.contains(this._mouse.x, this._mouse.y));
     }
 
     onMouseUp(event: any) {
@@ -182,71 +283,156 @@ export class EllipseEffect implements Effect<EllipseNode> {
         this.modifyReset();
     }
 
-    /* Modification functions */
-    modifyDrag(): void {
-        this._dims.x.eval(this._context).val = this._mouse.x - this._myState.dragoffx;
-        this._dims.y.eval(this._context).val = this._mouse.y - this._myState.dragoffy;
+    onShiftDown(event: any) {
+        if(event.keyCode == "16") { //shift keycode
+            this._isSelectingMultiple = true;
+        }
     }
 
-    modifyResize(isTooSmall: boolean): void {
-        if(isTooSmall){
-            this._dims.radius.eval(this._context).val = 15;
-            let widthAndHeight: NumberNode = new NumberNode(Math.round(this._dims.radius.eval(this._context).val * 2));
-            this._circle.width = widthAndHeight;
-            this._circle.height = widthAndHeight;
-            let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
-            if(newDistance - this._myState.initDistance > 0){
-                this._dims.radius.eval(this._context).val += newDistance - this._myState.initDistance;
-                widthAndHeight = new NumberNode(Math.round(this._dims.radius.eval(this._context).val * 2));
-                this._circle.width = widthAndHeight;
-                this._circle.height = widthAndHeight;
-                this._myState.initDistance = newDistance;
+    onShiftUp(event: any) {
+        if(event.keyCode == "16") { //shift keycode
+            this._isSelectingMultiple = false;
+        }
+    }
+
+    /* Modification functions */
+    modifyDrag(): void {
+        //console.log("ellipse dragoffx: " + this._dragoffx);
+        this._dims.x.eval(this._context).val = this._mouse.x - this._dragoffx;
+        this._dims.y.eval(this._context).val = this._mouse.y - this._dragoffy;
+    }
+
+    modifyResize(widthTooSmall: boolean, heightTooSmall: boolean): void {
+        if(widthTooSmall){
+            this._dims.width.eval(this._context).val = 14;
+            this._circle.width = new NumberNode(14);
+            this._dims.height.eval(this._context).val = 14 / this._ratio;
+            this._circle.height = new NumberNode(Math.round(14 / this._ratio));
+            let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
+            if(newDistance - this._initDistance > 0){
+                this._dims.width.eval(this._context).val += (newDistance - this._initDistance) * 2;
+                this._circle.width = new NumberNode(Math.round(this._dims.width.eval(this._context).val));
+                this._dims.height.eval(this._context).val += (newDistance - this._initDistance) * 2 / this._ratio;
+                this._circle.height = new NumberNode(Math.round(this._dims.height.eval(this._context).val));
+                this._initDistance = newDistance;
+            }
+        }
+        if(heightTooSmall) {
+            this._dims.height.eval(this._context).val = 14;
+            this._circle.height = new NumberNode(14);
+            this._dims.width.eval(this._context).val = 14 * this._ratio;
+            this._circle.width = new NumberNode(Math.round(14 * this._ratio));
+            let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
+            if(newDistance - this._initDistance > 0){
+                this._dims.width.eval(this._context).val += (newDistance - this._initDistance) * 2;
+                this._circle.width = new NumberNode(Math.round(this._dims.width.eval(this._context).val));
+                this._dims.height.eval(this._context).val += (newDistance - this._initDistance) * 2 / this._ratio;
+                this._circle.height = new NumberNode(Math.round(this._dims.height.eval(this._context).val));
+                this._initDistance = newDistance;
             }
         }
         else {
-            let newDistance = distance(this._mouse.x, this._mouse.y, this._myState.dragoffx, this._myState.dragoffy);
-            this._dims.radius.eval(this._context).val += newDistance - this._myState.initDistance;
-            let widthAndHeight: NumberNode = new NumberNode(Math.round(this._dims.radius.eval(this._context).val * 2));
-            this._circle.width = widthAndHeight;
-            this._circle.height = widthAndHeight;
-            this._myState.initDistance = newDistance;
+            let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
+            this._dims.width.eval(this._context).val += (newDistance - this._initDistance) * 2;
+            this._circle.width = new NumberNode(Math.round(this._dims.width.eval(this._context).val));
+            this._dims.height.eval(this._context).val += (newDistance - this._initDistance) * 2 / this._ratio;
+            this._circle.height = new NumberNode(Math.round(this._dims.height.eval(this._context).val));
+            this._initDistance = newDistance;
         }
     }
 
-    modifyState(guideContains: boolean, contains: boolean): void {
-        if(guideContains) {
+    modifyChangeDims(widthTooSmall: boolean, heightTooSmall: boolean): void {
+        let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
+        if (this._corner == 5 || this._corner == 7) {
+            if (!heightTooSmall) {
+                this._dims.height.eval(this._context).val += (newDistance - this._initDistance) * 2 / this._ratio;
+                this._circle.height = new NumberNode(Math.round(this._dims.height.eval(this._context).val));
+                this._initDistance = newDistance;
+                this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
+            }
+            else {
+                this._dims.height.eval(this._context).val = 14;
+                this._circle.height = new NumberNode(14);
+                this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
+                if(newDistance - this._initDistance > 0){
+                    this._dims.height.eval(this._context).val += (newDistance - this._initDistance) * 2 / this._ratio;
+                    this._circle.height = new NumberNode(Math.round(this._dims.height.eval(this._context).val));
+                    this._initDistance = newDistance;
+                    this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
+                }
+            }
+        }
+        else {
+            if (!widthTooSmall) {
+                this._dims.width.eval(this._context).val += (newDistance - this._initDistance) * 2;
+                this._circle.width = new NumberNode(Math.round(this._dims.width.eval(this._context).val));
+                this._initDistance = newDistance;
+                this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;       
+            }
+            else {
+                this._dims.width.eval(this._context).val = 14;
+                this._circle.width = new NumberNode(14);
+                this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
+                if(newDistance - this._initDistance > 0){
+                    this._dims.width.eval(this._context).val += (newDistance - this._initDistance) * 2;
+                    this._circle.width = new NumberNode(Math.round(this._dims.width.eval(this._context).val));
+                    this._initDistance = newDistance;
+                    this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
+                }
+            }
+        }
+    }
+
+    modifyState(guideContains: number, contains: boolean): void {
+        if (this._isSelectingMultiple) {
+            if (contains) {
+                this._isSelected = true;
+                this._isDragging = true;
+                this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
+                this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
+            }
+            else {
+                this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
+                this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
+                this._isDragging = true;
+            }
+        }
+        else if(guideContains > 0 && guideContains <= 4) { //resizing
             this._isSelected = true;
             this._isResizing = true;
 
             this._context.eventLog.push(this.logClick());
 
-            this._corner = this.guideContains(this._mouse.x, this._mouse.y);
-            this._myState.selection = this;
-            this._myState.dragoffx = this._dims.x.eval(this._context).val;
-            this._myState.dragoffy = this._dims.y.eval(this._context).val;
-            this._myState.initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
-            this._myState.resizing = true;
+            this._corner = guideContains;
+            this._dragoffx = this._dims.x.eval(this._context).val;
+            this._dragoffy = this._dims.y.eval(this._context).val;
+            this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
 
             this._size1 = this._dims.radius.eval(this._context).val; // saving old font size
         }
-        else if (contains) {
+        else if(guideContains > 4){ //changing shape dimensions
+            this._isSelected = true;
+            this._isChangingDims = true;
+            this._corner = guideContains;
+            this._dragoffx = this._dims.x.eval(this._context).val;
+            this._dragoffy = this._dims.y.eval(this._context).val;
+            this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+        }
+        else if (contains) { //simply selecting the shape
             this._x1 = this._dims.x.eval(this._context).val; // Saving original x and y
             this._y1 = this._dims.y.eval(this._context).val;
-
             this._isSelected = true;
             this._isDragging = true;
-
+        
             this._context.eventLog.push(this.logClick());
 
-            this._myState.dragging = true;
-            this._myState.selection = this;
-            this._myState.dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
-            this._myState.dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
-            this._myState.dragging = true;
+            this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
+            this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
 
         }
-        else {
+        else if (!this._isSelectingMultiple) {
             this._isSelected = false;
+            this._isDragging = false;
         }
     }
 
@@ -262,8 +448,9 @@ export class EllipseEffect implements Effect<EllipseNode> {
                 this._context.eventLog.push(this.logResize());
             }
         }
-        this._myState.dragging = false;
-        this._myState.resizing = false;
+        this._isDragging = false;
+        this._isResizing = false;
+        this._isChangingDims = false;
         this._corner = 0;
     }
 
@@ -277,8 +464,8 @@ export class EllipseEffect implements Effect<EllipseNode> {
         let mouseY = event.clientY;
         let rect = this._canvas.getBoundingClientRect();
         if(mouseX < rect.left || mouseX > rect.right || mouseY < rect.top || mouseY > rect.bottom) {
-            this._myState.dragging = false;
-            this._myState.resizing = false;
+            this._isDragging = false;
+            this._isResizing = false;
             this._isSelected = false;
             this._corner = 0;
         }
@@ -302,7 +489,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
     }
 
     logClick(): LogEvent<any>{
-        return new ClickEvent("ellipse at ", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+        return new ClickEvent("ellipse", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
 
     updateAST(): Expression<EllipseNode> {
@@ -318,6 +505,14 @@ export class EllipseEffect implements Effect<EllipseNode> {
 
     get dims(): Dimensions {
         return this._dims;
+    }
+    
+    get selected(): boolean {
+        return this._isSelected;
+    }
+
+    toString(): string{
+        return "ellipse at " + this._dims.x + " , " + this._dims.y;
     }
 }
 

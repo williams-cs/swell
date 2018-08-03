@@ -1,7 +1,7 @@
 export interface Module {
-    name: string;
-    predicate: any;
-    instructions: string;
-    starterCode?: string;
-    checkGoal(): boolean;
+    readonly _name: string;
+    readonly _goal: any;
+    readonly _instructions: string;
+    readonly _starterCode?: string;
+    checkGoal(document: Document, canvas: HTMLCanvasElement): boolean;
 }

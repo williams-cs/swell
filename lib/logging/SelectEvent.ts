@@ -1,13 +1,18 @@
 import {LogEvent} from './LogEvent';
+import { Effect } from '../effects/Effect';
 
 export class SelectEvent extends LogEvent<any>{
-    constructor(toLog: string, x1: number, y1: number){
-        super(toLog, x1, y1);
+    constructor(toLog: Effect<any>[]){
+        super(toLog);
         this.tag = "select";
     }
     
-    assembleLog(): string{
-        let toPrint = "Selected " + this.toLog + " at " + this.x1.toString() + ", " + this.y1.toString();
+    assembleLog(): string {
+        let logStrings: string[] = [];
+        for(let elem of this.toLog){
+            logStrings.push(elem.toString());
+        }
+        let toPrint = "Selected " + logStrings;
         return this.logItem(toPrint);
     }
 }

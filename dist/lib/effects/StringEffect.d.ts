@@ -21,7 +21,10 @@ export declare class StringEffect implements Effect<StringNode> {
     private _isListening;
     private _isDragging;
     private _isResizing;
-    private _myState;
+    private _isSelectingMultiple;
+    private _dragoffx;
+    private _dragoffy;
+    private _initDistance;
     private _mouse;
     private _textMetrics;
     constructor(str: StringNode);
@@ -31,6 +34,8 @@ export declare class StringEffect implements Effect<StringNode> {
     onMouseMove(event: any): void;
     onMouseDown(event: any): void;
     onMouseUp(event: any): void;
+    onShiftDown(event: any): void;
+    onShiftUp(event: any): void;
     modifyDrag(): void;
     modifyTextCursor(): void;
     modifyText(event: any): void;
@@ -47,9 +52,12 @@ export declare class StringEffect implements Effect<StringNode> {
     logMove(): LogEvent<any>;
     logResize(): LogEvent<any>;
     logClick(): LogEvent<any>;
+    logSelected(): LogEvent<any>;
     ast(): Expression<StringNode>;
     canvas: HTMLCanvasElement;
     readonly x: number;
     readonly y: number;
     readonly dims: Dimensions;
+    readonly selected: boolean;
+    toString(): string;
 }

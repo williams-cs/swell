@@ -14,11 +14,16 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
     private _isSelected;
     private _isDragging;
     private _isResizing;
+    private _isChangingDims;
+    private _isSelectingMultiple;
     private _x1;
     private _y1;
     private _size1;
     private _context;
-    private _myState;
+    private _ratio;
+    private _dragoffx;
+    private _dragoffy;
+    private _initDistance;
     private _mouse;
     constructor(circle: EllipseNode);
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
@@ -31,9 +36,12 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
     onMouseMove(event: any): void;
     onMouseDown(event: any): void;
     onMouseUp(event: any): void;
+    onShiftDown(event: any): void;
+    onShiftUp(event: any): void;
     modifyDrag(): void;
-    modifyResize(isTooSmall: boolean): void;
-    modifyState(guideContains: boolean, contains: boolean): void;
+    modifyResize(widthTooSmall: boolean, heightTooSmall: boolean): void;
+    modifyChangeDims(widthTooSmall: boolean, heightTooSmall: boolean): void;
+    modifyState(guideContains: number, contains: boolean): void;
     modifyReset(): void;
     getMousePosition(): void;
     isMouseOutside(event: any): void;
@@ -46,4 +54,6 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
     readonly x: number;
     readonly y: number;
     readonly dims: Dimensions;
+    readonly selected: boolean;
+    toString(): string;
 }

@@ -18,8 +18,8 @@ export class EllipseNode implements Expression<EllipseNode> {
     }
 
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
-        let radius = this._width.eval(context).val / 2;
-        dims.radius = new NumberNode(radius);
+        dims.width = this._width;
+        dims.height = this._height;
         let e = new EllipseEffect(this);
         e.draw(context, dims, ast);
     }

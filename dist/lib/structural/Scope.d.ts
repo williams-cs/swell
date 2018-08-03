@@ -1,6 +1,7 @@
 import { Option } from 'space-lift';
 import { Effect } from '../effects/Effect';
 import { LogEvent } from '../logging/LogEvent';
+import { MulSel } from '../logging/MulSel';
 export declare class Scope {
     private _varBindings;
     private _parent;
@@ -8,6 +9,8 @@ export declare class Scope {
     private _canvas;
     private _effects;
     private _myState;
+    private _mulSelected;
+    private _mulSelArray;
     private _eventLog;
     private _hadFunEval;
     globalFunID: number;
@@ -31,5 +34,7 @@ export declare class Scope {
     effects: Effect<any>[];
     myState: any;
     eventLog: LogEvent<any>[];
+    readonly mulSelected: MulSel;
+    mulSelArray: Effect<any>[];
     hadFunEval: boolean;
 }

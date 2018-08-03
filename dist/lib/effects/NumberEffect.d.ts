@@ -13,6 +13,7 @@ export declare class NumberEffect implements Effect<NumberNode> {
     private _fontSize;
     private _w;
     private _h;
+    private _isSelected;
     constructor(num: NumberNode);
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
     update(): void;
@@ -22,4 +23,6 @@ export declare class NumberEffect implements Effect<NumberNode> {
     readonly x: number;
     readonly y: number;
     readonly dims: Dimensions;
+    readonly selected: boolean;
+    toString(): string;
 }
