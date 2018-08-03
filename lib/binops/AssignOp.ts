@@ -34,6 +34,6 @@ export class AssignOp<T> extends BinaryOperation<T>{
         return this.left.toString() + ' = ' + this.right.toString();
     }
     newLine() : boolean {
-        return this.newLine();
+        return false;
     }
 }
