@@ -109,11 +109,6 @@ class StringEffect {
         else {
             this._isEditing = false;
         }
-        if (this._context.mulSelected.val) {
-            console.log("string effect mulSelected: " + this._context.mulSelected.val);
-            //if(this._context.mulSelected.val){
-            this.logSelected();
-        }
         this.modifyState(this.guideContains(this._mouse.x, this._mouse.y) > 0, this.contains(this._mouse.x, this._mouse.y));
     }
     onMouseUp(event) {
@@ -211,6 +206,11 @@ class StringEffect {
     }
     modifyState(guideContains, contains) {
         if (this._isSelectingMultiple) {
+            //if(this._context.mulSelected.val){
+            console.log("string effect mulSelected: " + this._context.mulSelected.val);
+            //if(this._context.mulSelected.val){
+            this.logSelected();
+            //}
             if (contains) {
                 this._isSelected = true;
                 this._isDragging = true;
