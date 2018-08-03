@@ -5,7 +5,6 @@ class Scope {
     constructor(parent, effects, myState, eventLog) {
         this._retValID = space_lift_1.None;
         this._canvas = space_lift_1.None;
-        this._mulSelected = { val: false };
         this._eventLog = [];
         this._hadFunEval = false;
         //public globalFunID = Math.random();

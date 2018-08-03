@@ -205,9 +205,9 @@ class StringEffect {
         }
     }
     modifyState(guideContains, contains) {
-        if (this._isSelectingMultiple) {
+        if (this._isSelectingMultiple && this._context.mulSelected.mulSel) {
             //if(this._context.mulSelected.val){
-            console.log("string effect mulSelected: " + this._context.mulSelected.val);
+            console.log("string effect mulSelected: " + this._context.mulSelected.mulSel);
             //if(this._context.mulSelected.val){
             this._context.eventLog.push(this.logSelected());
             //this.logSelected();

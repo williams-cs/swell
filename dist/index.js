@@ -107,4 +107,6 @@ var ResizeEvent_1 = require("./lib/logging/ResizeEvent");
 exports.ResizeEvent = ResizeEvent_1.ResizeEvent;
 var SelectEvent_1 = require("./lib/logging/SelectEvent");
 exports.SelectEvent = SelectEvent_1.SelectEvent;
+var MulSel_1 = require("./lib/logging/MulSel");
+exports.MulSel = MulSel_1.MulSel;
 //# sourceMappingURL=index.js.map
