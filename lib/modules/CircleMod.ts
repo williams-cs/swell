@@ -7,7 +7,7 @@ export class CircleMod implements Module {
     constructor(){}
 
     // goals: width = height and x and y are between 150 and 350
-    checkGoal(document: Document, canvas: HTMLCanvasElement): boolean {
+    checkGoal(document: Document): boolean {
         let inputbox = document.getElementById('input') as HTMLInputElement;
         let inputtext = inputbox.value;
         let goal1: boolean = false;

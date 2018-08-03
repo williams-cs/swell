@@ -6,7 +6,7 @@ class CircleMod {
         this._instructions = "Draw a circle in the middle of the screen!";
     }
     // goals: width = height and x and y are between 150 and 350
-    checkGoal(document, canvas) {
+    checkGoal(document) {
         let inputbox = document.getElementById('input');
         let inputtext = inputbox.value;
         let goal1 = false;
