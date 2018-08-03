@@ -12,7 +12,7 @@ export class CircleMod implements Module {
         let inputtext = inputbox.value;
         let goal1: boolean = false;
         let goal2: boolean = false;
-        let hits = inputtext.match(new RegExp("\^print\(ellipse\("));
+        let hits = inputtext.match(new RegExp("\\^print\\(ellipse\\("));
         if(hits.length === 1) goal1 = true;
         var numbers = inputtext.match(/\d+/g).map(Number);
         if(numbers[0] === numbers[1] && 150 <= numbers[2] && 350 >= numbers[2]
