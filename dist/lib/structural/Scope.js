@@ -16,7 +16,7 @@ class Scope {
         this._myState = myState || null;
         this._eventLog = eventLog;
         this._mulSelected = new MulSel_1.MulSel;
-        this._mulSelected.mulSel = false;
+        //this._mulSelected.mulSel = false;
         if (this._parent != null && this._parent._hadFunEval)
             this._hadFunEval = true; // copy function eval flag from parent
     }
