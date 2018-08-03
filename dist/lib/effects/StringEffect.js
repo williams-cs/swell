@@ -106,6 +106,12 @@ class StringEffect {
             this._isSelected = false;
             this._isEditing = false;
         }
+        else if (this._context.mulSelected.val) {
+            console.log("string effect mulSelected: " + this._context.mulSelected.val);
+            //if(this._context.mulSelected.val){
+            this.logSelected();
+            //}
+        }
         else {
             this._isEditing = false;
         }
@@ -270,10 +276,10 @@ class StringEffect {
         this._isDragging = false;
         this._isResizing = false;
         this._corner = 0;
-        console.log("string effect mulSelected: " + this._context.mulSelected.val);
-        if (this._context.mulSelected.val) {
-            this.logSelected();
-        }
+        // console.log("string effect mulSelected: " + this._context.mulSelected.val);
+        // if(this._context.mulSelected.val){
+        //     this.logSelected();
+        // }
         // if(this.isMultipleSelected){
         //     context.eventLog.push(new SelectEvent(selectedElems));
         //     masterLog.push(context.eventLog[context.eventLog.length - 1]);
