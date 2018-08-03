@@ -12,15 +12,15 @@ class CircleMod {
         let goal1 = false;
         let goal2 = false;
         let numbers;
-        if (inputtext !== null) {
+        if (inputtext != null) {
             let hits = inputtext.match(new RegExp("\\^print\\(ellipse\\("));
-            if (hits !== null && hits.length === 1)
+            if (hits != null && hits.length === 1)
                 goal1 = true;
             var nums = inputtext.match(/\d+/g);
-            if (nums !== null) {
+            if (nums != null) {
                 numbers = nums.map(Number);
             }
-            if (numbers !== null && numbers[0] === numbers[1] && 150 <= numbers[2] && 350 >= numbers[2]
+            if (numbers != null && numbers[0] === numbers[1] && 150 <= numbers[2] && 350 >= numbers[2]
                 && 150 <= numbers[3] && 350 >= numbers[3])
                 return (goal1 && goal2);
         }
