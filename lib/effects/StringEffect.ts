@@ -249,6 +249,8 @@ export class StringEffect implements Effect<StringNode> {
 
     modifyState(guideContains: boolean, contains: boolean): void {
         if (this._isSelectingMultiple) {
+            console.log("Selecting multiple");
+            console.log("string effect mulSelected: " + this._context.mulSelected.mulSel);
             if(this._context.mulSelected.mulSel){
                 console.log("string effect mulSelected: " + this._context.mulSelected.mulSel);
                 //if(this._context.mulSelected.val){
