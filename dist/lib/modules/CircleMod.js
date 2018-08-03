@@ -6,18 +6,24 @@ class CircleMod {
         this._instructions = "Draw a circle in the middle of the screen!";
     }
     // goals: width = height and x and y are between 150 and 350
-    checkGoal(document, canvas) {
+    checkGoal(document) {
         let inputbox = document.getElementById('input');
         let inputtext = inputbox.value;
         let goal1 = false;
         let goal2 = false;
-        let hits = inputtext.match(new RegExp("\\b" + "print(ellipse("));
-        if (hits.length === 1)
-            goal1 = true;
-        var numbers = inputtext.match(/\d+/g).map(Number);
-        if (numbers[0] === numbers[1] && 150 <= numbers[2] && 350 >= numbers[2]
-            && 150 <= numbers[3] && 350 >= numbers[3])
-            return (goal1 && goal2);
+        let numbers;
+        if (inputtext != null) {
+            let hits = inputtext.match(new RegExp("\\^print\\(ellipse\\("));
+            if (hits != null && hits.length === 1)
+                goal1 = true;
+            var nums = inputtext.match(/\d+/g);
+            if (nums != null) {
+                numbers = nums.map(Number);
+            }
+            if (numbers != null && numbers[0] === numbers[1] && 150 <= numbers[2] && 350 >= numbers[2]
+                && 150 <= numbers[3] && 350 >= numbers[3])
+                return (goal1 && goal2);
+        }
         // if math works out
     }
     dist(x1, y1, x2, y2) {
