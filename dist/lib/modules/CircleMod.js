@@ -11,7 +11,7 @@ class CircleMod {
         let inputtext = inputbox.value;
         let goal1 = false;
         let goal2 = false;
-        let hits = inputtext.match(new RegExp("\bprint\(ellipse\(*"));
+        let hits = inputtext.match(new RegExp("\^print\(ellipse\("));
         if (hits.length === 1)
             goal1 = true;
         var numbers = inputtext.match(/\d+/g).map(Number);
