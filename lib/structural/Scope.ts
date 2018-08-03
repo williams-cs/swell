@@ -34,6 +34,8 @@ export class Scope{
         this._effects = effects || null;
         this._myState = myState || null;
         this._eventLog = eventLog;
+        this._mulSelected = new MulSel;
+        this._mulSelected.mulSel = false;
         if(this._parent != null && this._parent._hadFunEval) this._hadFunEval = true; // copy function eval flag from parent
     }
 
