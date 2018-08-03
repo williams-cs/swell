@@ -141,13 +141,14 @@ export class StringEffect implements Effect<StringNode> {
         } else if (!this._isSelectingMultiple){
             this._isSelected = false;
             this._isEditing = false;
-        } else if(this._context.mulSelected.val){
+        }  else {
+            this._isEditing = false;
+        }
+
+        if(this._context.mulSelected.val){
             console.log("string effect mulSelected: " + this._context.mulSelected.val);
             //if(this._context.mulSelected.val){
                 this.logSelected();
-            //}
-        } else {
-            this._isEditing = false;
         }
         this.modifyState(this.guideContains(this._mouse.x, this._mouse.y) > 0, this.contains(this._mouse.x, this._mouse.y));
     }
