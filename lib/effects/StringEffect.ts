@@ -252,7 +252,8 @@ export class StringEffect implements Effect<StringNode> {
             //if(this._context.mulSelected.val){
                 console.log("string effect mulSelected: " + this._context.mulSelected.val);
                 //if(this._context.mulSelected.val){
-                this.logSelected();
+                this._context.eventLog.push(this.logSelected());
+                //this.logSelected();
             //}
             if (contains) {
                 this._isSelected = true;
