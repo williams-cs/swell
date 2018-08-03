@@ -16,7 +16,7 @@ class MulOp extends BinaryOperation_1.BinaryOperation {
         return this.left.toString() + ' * ' + this.right.toString();
     }
     newLine() {
-        return this.newLine();
+        return false;
     }
 }
 exports.MulOp = MulOp;

@@ -27,7 +27,7 @@ class DeclareOp extends BinaryOperation_1.BinaryOperation {
         throw new Error("HALP (in DeclareOp)");
     }
     newLine() {
-        return this.newLine();
+        return false;
     }
 }
 exports.DeclareOp = DeclareOp;
