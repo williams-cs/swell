@@ -251,12 +251,12 @@ export class StringEffect implements Effect<StringNode> {
         if (this._isSelectingMultiple) {
             console.log("Selecting multiple");
             console.log("string effect mulSelected: " + this._context.mulSelected.mulSel);
-            if(this._context.mulSelected.mulSel){
-                console.log("string effect mulSelected: " + this._context.mulSelected.mulSel);
-                //if(this._context.mulSelected.val){
-                this._context.eventLog.push(this.logSelected());
-                //this.logSelected();
-            }
+            // if(this._context.mulSelected.mulSel){
+            //     console.log("string effect mulSelected: " + this._context.mulSelected.mulSel);
+            //     //if(this._context.mulSelected.val){
+            //     this._context.eventLog.push(this.logSelected());
+            //     //this.logSelected();
+            // }
             if (contains) {
                 this._isSelected = true;
                 this._isDragging = true;
@@ -267,6 +267,13 @@ export class StringEffect implements Effect<StringNode> {
                 this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
                 this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
                 this._isDragging = true;
+            }
+
+            if(this._context.mulSelected.mulSel){
+                console.log("string effect mulSelected: " + this._context.mulSelected.mulSel);
+                //if(this._context.mulSelected.val){
+                this._context.eventLog.push(this.logSelected());
+                //this.logSelected();
             }
         } else if (guideContains) { //if the corner guides contain the mouse we are resizing 
             this._isSelected = true;
