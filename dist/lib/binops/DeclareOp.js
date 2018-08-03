@@ -14,7 +14,7 @@ class DeclareOp extends BinaryOperation_1.BinaryOperation {
     draw(context, dims, ast) {
     }
     toString() {
-        return this.left.toString() + ' = ' + this.right.toString();
+        return "var" + this.left.toString() + ' = ' + this.right.toString();
     }
     eval(context) {
         if (this.left instanceof VariableNode_1.VariableNode) {
