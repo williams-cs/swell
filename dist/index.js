@@ -109,4 +109,9 @@ var SelectEvent_1 = require("./lib/logging/SelectEvent");
 exports.SelectEvent = SelectEvent_1.SelectEvent;
 var MulSel_1 = require("./lib/logging/MulSel");
 exports.MulSel = MulSel_1.MulSel;
+/* MODULES */
+var CircleMod_1 = require("./lib/modules/CircleMod");
+exports.CircleMod = CircleMod_1.CircleMod;
+var SnowmanMod_1 = require("./lib/modules/SnowmanMod");
+exports.SnowmanMod = SnowmanMod_1.SnowmanMod;
 //# sourceMappingURL=index.js.map

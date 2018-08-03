@@ -68,3 +68,7 @@ export {PaintEvent} from './lib/logging/PaintEvent';
 export {ResizeEvent} from './lib/logging/ResizeEvent';
 export {SelectEvent} from './lib/logging/SelectEvent';
 export {MulSel} from './lib/logging/MulSel';
+
+/* MODULES */
+export {CircleMod} from './lib/modules/CircleMod';
+export {SnowmanMod} from './lib/modules/SnowmanMod';
