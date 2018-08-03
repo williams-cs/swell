@@ -14,6 +14,7 @@ class CircleMod {
         let numbers;
         if (inputtext != null) {
             let hits = inputtext.match(new RegExp("\\^print\\(ellipse\\("));
+            console.log("hits: " + hits);
             if (hits != null && hits.length === 1) {
                 goal1 = true;
                 console.log("goal 1 met");
