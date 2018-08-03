@@ -23,6 +23,12 @@ class CircleMod {
     dist(x1, y1, x2, y2) {
         return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
     }
+    get name() {
+        return this._name;
+    }
+    get instructions() {
+        return this._instructions;
+    }
 }
 exports.CircleMod = CircleMod;
 //# sourceMappingURL=CircleMod.js.map

@@ -6,4 +6,6 @@ export declare class CircleMod implements Module {
     constructor();
     checkGoal(document: Document, canvas: HTMLCanvasElement): boolean;
     dist(x1: number, y1: number, x2: number, y2: number): number;
+    readonly name: string;
+    readonly instructions: string;
 }
