@@ -23,7 +23,7 @@ class AssignOp extends BinaryOperation_1.BinaryOperation {
         throw new Error("HALP (in AssignOp)");
     }
     toString() {
-        return this.left.toString() + ' = ' + this.right.toString();
+        return "var " + this.left.toString() + ' = ' + this.right.toString();
     }
     newLine() {
         return false;

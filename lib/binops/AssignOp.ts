@@ -31,7 +31,7 @@ export class AssignOp<T> extends BinaryOperation<T>{
     }
     
     toString() :string {
-        return this.left.toString() + ' = ' + this.right.toString();
+        return "var " + this.left.toString() + ' = ' + this.right.toString();
     }
     newLine() : boolean {
         return false;
