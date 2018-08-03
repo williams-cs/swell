@@ -16,6 +16,7 @@ export { Or } from './lib/logic/Or';
 export { Equals } from './lib/logic/Equals';
 export { NotEqual } from './lib/logic/NotEqual';
 export { Increment } from './lib/binops/Increment';
+export { Decrement } from './lib/binops/Decrement';
 export { UnaryOperation } from './lib/unops/UnaryOperation';
 export { NegOp } from './lib/unops/NegOp';
 export { Not } from './lib/logic/Not';

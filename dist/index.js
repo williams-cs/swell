@@ -35,6 +35,8 @@ var NotEqual_1 = require("./lib/logic/NotEqual");
 exports.NotEqual = NotEqual_1.NotEqual;
 var Increment_1 = require("./lib/binops/Increment");
 exports.Increment = Increment_1.Increment;
+var Decrement_1 = require("./lib/binops/Decrement");
+exports.Decrement = Decrement_1.Decrement;
 /* UNARY OPS */
 var UnaryOperation_1 = require("./lib/unops/UnaryOperation");
 exports.UnaryOperation = UnaryOperation_1.UnaryOperation;
