@@ -390,11 +390,11 @@ export class EllipseEffect implements Effect<EllipseNode> {
                 this._isDragging = true;
                 this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
                 this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
-            }
-            else {
+            } else { // these are exactly the same
                 this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
                 this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
                 this._isDragging = true;
+                this._isSelected = true;
             }
         }
         else if(guideContains > 0 && guideContains <= 4) { //resizing
