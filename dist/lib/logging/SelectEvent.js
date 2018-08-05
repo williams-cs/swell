@@ -5,14 +5,17 @@ class SelectEvent extends LogEvent_1.LogEvent {
     constructor(toLog) {
         super(toLog);
         this.tag = "select";
+        this._toPrint = this.assembleStrings();
     }
-    assembleLog() {
+    assembleStrings() {
         let logStrings = [];
         for (let elem of this.toLog) {
             logStrings.push(elem.toString());
         }
-        let toPrint = "Selected" + logStrings;
-        return this.logItem(toPrint);
+        return "Selected" + logStrings;
+    }
+    assembleLog() {
+        return this.logItem(this._toPrint);
     }
 }
 exports.SelectEvent = SelectEvent;
