@@ -514,7 +514,7 @@ class RectangleEffect {
         return this._isSelected;
     }
     toString() {
-        return "rectangle at " + this._dims.x + " , " + this._dims.y;
+        return " rectangle at " + this.x + ", " + this.y;
     }
 }
 exports.RectangleEffect = RectangleEffect;

@@ -579,7 +579,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
     }
 
     toString(): string{
-        return "rectangle at " + this._dims.x + " , " + this._dims.y;
+        return " rectangle at " + this.x + ", " + this.y;
     }
 }
 

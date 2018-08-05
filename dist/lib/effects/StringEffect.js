@@ -345,13 +345,13 @@ class StringEffect {
         return new PaintEvent_1.PaintEvent(this._str.val, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
     logMove() {
-        return new DragEvent_1.DragEvent(this._str.val, this._x1, this._y1, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+        return new DragEvent_1.DragEvent(this._str.val, this._x1, this._y1, this.x, this.y);
     }
     logResize() {
         return new ResizeEvent_1.ResizeEvent(this._str.val, this._size1, this._fontSize);
     }
     logClick() {
-        return new ClickEvent_1.ClickEvent(this._str.val, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+        return new ClickEvent_1.ClickEvent(this._str.val, this.x, this.y);
     }
     logSelected() {
         console.log("Logging selected!!");
@@ -379,8 +379,7 @@ class StringEffect {
         return this._isSelected;
     }
     toString() {
-        return this._str.val + " at " + this._dims.x + " , " + this._dims.y;
-        ;
+        return " " + this._str.val + " at " + this.x + ", " + this.y;
     }
 }
 exports.StringEffect = StringEffect;

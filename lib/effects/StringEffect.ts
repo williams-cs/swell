@@ -399,7 +399,7 @@ export class StringEffect implements Effect<StringNode> {
     }
     
     logMove(): LogEvent<any> {
-        return new DragEvent(this._str.val, this._x1, this._y1, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+        return new DragEvent(this._str.val, this._x1, this._y1, this.x, this.y);
     }
 
     logResize(): LogEvent<any> {
@@ -407,7 +407,7 @@ export class StringEffect implements Effect<StringNode> {
     }
 
     logClick(): LogEvent<any>{
-        return new ClickEvent(this._str.val, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+        return new ClickEvent(this._str.val, this.x, this.y);
     }
 
     logSelected(): LogEvent<any>{
@@ -442,7 +442,7 @@ export class StringEffect implements Effect<StringNode> {
     }
 
     toString(): string{
-        return this._str.val + " at " + this._dims.x + " , " + this._dims.y;;
+        return " " + this._str.val + " at " + this.x + ", " + this.y;
     }
 }
 
