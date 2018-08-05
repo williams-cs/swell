@@ -456,7 +456,7 @@ class EllipseEffect {
         return this._isSelected;
     }
     toString() {
-        return ("ellipse at " + this.x + ", " + this.y + " ");
+        return (" ellipse at " + this.x + ", " + this.y);
     }
 }
 exports.EllipseEffect = EllipseEffect;

@@ -11,7 +11,7 @@ class SelectEvent extends LogEvent_1.LogEvent {
         for (let elem of this.toLog) {
             logStrings.push(elem.toString());
         }
-        let toPrint = "Selected " + logStrings;
+        let toPrint = "Selected" + logStrings;
         return this.logItem(toPrint);
     }
 }
