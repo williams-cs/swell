@@ -512,7 +512,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
     }
 
     toString(): string{
-        return ("ellipse at " + this.x + ", " + this.y + " ");
+        return (" ellipse at " + this.x + ", " + this.y + " ");
     }
 }
 
