@@ -347,10 +347,21 @@ class EllipseEffect {
     }
     modifyState(guideContains, contains) {
         if (this._isSelectingMultiple) {
-            this._isSelected = true;
-            this._isDragging = true; // originally had if else with if(contains), but they were the same except for isSelected
-            this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
-            this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
+            if (contains) {
+                this._isSelected = true;
+                this._isDragging = true;
+                this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
+                this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
+            }
+            else {
+                this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
+                this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
+                this._isDragging = true;
+            }
+            // this._isSelected = true;
+            // this._isDragging = true; // originally had if else with if(contains), but they were the same except for isSelected
+            // this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
+            // this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
         }
         else if (guideContains > 0 && guideContains <= 4) { //resizing
             this._isSelected = true;
