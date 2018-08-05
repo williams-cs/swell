@@ -502,10 +502,10 @@ class RectangleEffect {
         throw new Error("Not implemented");
     }
     get x() {
-        return this._x;
+        return this._dims.x.eval(this._context).val;
     }
     get y() {
-        return this._y;
+        return this._dims.y.eval(this._context).val;
     }
     get dims() {
         return this._dims;
