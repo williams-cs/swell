@@ -444,7 +444,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
             
             this._dragoffx = x + w / 2;
             this._dragoffy = y + h / 2;
-            /*
+            
             switch (this._corner) {
                 case 1: this._initDistance = distance(this._mouse.x, this._mouse.y, x + w, y + h);
                 break;
@@ -454,8 +454,8 @@ export class RectangleEffect implements Effect<RectangleNode> {
                 break;
                 case 4: this._initDistance = distance(this._mouse.x, this._mouse.y, x + w, y);
                 break;
-            }*/
-            this._initDistance = distance(this._mouse.x, this._mouse.y, x + w / 2, y + h / 2);
+            }
+            //this._initDistance = distance(this._mouse.x, this._mouse.y, x + w / 2, y + h / 2);
 
             this._size1 = Math.sqrt(w^2 + h^2); // size is diagonal length
         }

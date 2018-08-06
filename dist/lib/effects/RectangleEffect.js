@@ -264,7 +264,7 @@ class RectangleEffect {
     }
     /* Modification functions */
     modifyDrag() {
-        console.log("rectangle dragoffx: " + this._dragoffx);
+        //console.log("rectangle dragoffx: " + this._dragoffx);
         this._dims.x.eval(this._context).val = this._mouse.x - this._dragoffx;
         this._dims.y.eval(this._context).val = this._mouse.y - this._dragoffy;
     }
@@ -398,18 +398,21 @@ class RectangleEffect {
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
             this._dragoffx = x + w / 2;
             this._dragoffy = y + h / 2;
-            /*
             switch (this._corner) {
-                case 1: this._initDistance = distance(this._mouse.x, this._mouse.y, x + w, y + h);
-                break;
-                case 2: this._initDistance = distance(this._mouse.x, this._mouse.y, x, y + h);
-                break;
-                case 3: this._initDistance = distance(this._mouse.x, this._mouse.y, x, y);
-                break;
-                case 4: this._initDistance = distance(this._mouse.x, this._mouse.y, x + w, y);
-                break;
-            }*/
-            this._initDistance = distance(this._mouse.x, this._mouse.y, x + w / 2, y + h / 2);
+                case 1:
+                    this._initDistance = distance(this._mouse.x, this._mouse.y, x + w, y + h);
+                    break;
+                case 2:
+                    this._initDistance = distance(this._mouse.x, this._mouse.y, x, y + h);
+                    break;
+                case 3:
+                    this._initDistance = distance(this._mouse.x, this._mouse.y, x, y);
+                    break;
+                case 4:
+                    this._initDistance = distance(this._mouse.x, this._mouse.y, x + w, y);
+                    break;
+            }
+            //this._initDistance = distance(this._mouse.x, this._mouse.y, x + w / 2, y + h / 2);
             this._size1 = Math.sqrt(w ^ 2 + h ^ 2); // size is diagonal length
         }
         else if (guideContains > 4) { //changing shape dimensions
