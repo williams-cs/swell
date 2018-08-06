@@ -400,7 +400,7 @@ class RectangleEffect {
             this._dragoffy = y + h / 2;
             switch (this._corner) {
                 case 1:
-                    this._initDistance = distance(this._mouse.x, this._mouse.y, x + w, y + h);
+                    this._initDistance = distance(this._mouse.x, this._mouse.y, x, y);
                     break;
                 case 2:
                     this._initDistance = distance(this._mouse.x, this._mouse.y, x, y + h);
