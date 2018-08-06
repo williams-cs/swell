@@ -315,7 +315,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
             this._rect.height = new NumberNode(Math.round(10 / this._ratio));
             let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
             if(newDistance - this._initDistance > 0){
-                this.modifyResizeHelper();
+                this.modifyResizeHelper(true);
             }
         }
         if(heightTooSmall) {
@@ -325,27 +325,29 @@ export class RectangleEffect implements Effect<RectangleNode> {
             this._rect.width = new NumberNode(Math.round(10 * this._ratio));
             let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
             if(newDistance - this._initDistance > 0){
-                this.modifyResizeHelper();
+                this.modifyResizeHelper(true);
             }
         }
         else {
-            this.modifyResizeHelper();
+            this.modifyResizeHelper(false);
         }
     }
 
-    modifyResizeHelper(): void {
+    modifyResizeHelper(isTooSmall: boolean): void {
         let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
-        switch (this._corner) {
-            case 1:
-                this._dims.y.eval(this._context).val -= Math.round(newDistance - this._initDistance);
-                this._dims.x.eval(this._context).val -= Math.round(newDistance - this._initDistance);
-            break;
-            case 2:
-                this._dims.y.eval(this._context).val -= Math.round(newDistance - this._initDistance);
-            break;
-            case 4:
-                this._dims.x.eval(this._context).val -= Math.round(newDistance - this._initDistance);
-            break;
+        if(!isTooSmall) {
+            switch (this._corner) {
+                case 1:
+                    this._dims.y.eval(this._context).val -= Math.round(newDistance - this._initDistance);
+                    this._dims.x.eval(this._context).val -= Math.round(newDistance - this._initDistance);
+                break;
+                case 2:
+                    this._dims.y.eval(this._context).val -= Math.round(newDistance - this._initDistance);
+                break;
+                case 4:
+                    this._dims.x.eval(this._context).val -= Math.round(newDistance - this._initDistance);
+                break;
+            }
         }
         this._dims.width.eval(this._context).val += newDistance - this._initDistance;
         this._rect.width = new NumberNode(Math.round(this._dims.width.eval(this._context).val));
@@ -472,21 +474,29 @@ export class RectangleEffect implements Effect<RectangleNode> {
             this._isSelected = true;
             this._isChangingDims = true;
             this._corner = guideContains;
-            this._dragoffx = x + w / 2;
-            this._dragoffy = y + h / 2;
-            /*
+            
             switch (this._corner) {
-                case 5: this._initDistance = distance(this._mouse.x, this._mouse.y, x + w / 2, y + h);
+                case 5: 
+                    this._initDistance = distance(this._mouse.x, this._mouse.y, x + w / 2, y + h);
+                    this._dragoffx = x + w / 2;
+                    this._dragoffy = y + h;
                 break;
-                case 6: this._initDistance = distance(this._mouse.x, this._mouse.y, x, y + h / 2);
+                case 6: 
+                    this._initDistance = distance(this._mouse.x, this._mouse.y, x, y + h / 2);
+                    this._dragoffx = x;
+                    this._dragoffy = y + h / 2;
                 break;
-                case 7: this._initDistance = distance(this._mouse.x, this._mouse.y, x + w / 2, y);
+                case 7: 
+                    this._initDistance = distance(this._mouse.x, this._mouse.y, x + w / 2, y);
+                    this._dragoffx = x + w / 2;
+                    this._dragoffy = y;
                 break;
-                case 8: this._initDistance = distance(this._mouse.x, this._mouse.y, x + w, y + h / 2);
+                case 8: 
+                    this._initDistance = distance(this._mouse.x, this._mouse.y, x + w, y + h / 2);
+                    this._dragoffx = x + w;
+                    this._dragoffy = y + h / 2;
                 break;
             }
-            */
-            this._initDistance = distance(this._mouse.x, this._mouse.y, x + w / 2, y + h / 2);
         }
         else if (contains) {
             this._x1 = x; // Saving original x and y
