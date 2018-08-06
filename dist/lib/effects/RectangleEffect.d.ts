@@ -48,6 +48,11 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
     modifyResizeHelper(): void;
     modifyChangeDims(widthTooSmall: boolean, heightTooSmall: boolean): void;
     modifyChangeDimsHelper(): void;
+    /**
+     *
+     * @param guideContains
+     * @param contains
+     */
     modifyState(guideContains: number, contains: boolean): void;
     modifyReset(): void;
     getMousePosition(): void;
