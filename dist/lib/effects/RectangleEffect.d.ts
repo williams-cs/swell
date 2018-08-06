@@ -45,7 +45,7 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
     onShiftUp(event: any): void;
     modifyDrag(): void;
     modifyResize(widthTooSmall: boolean, heightTooSmall: boolean): void;
-    modifyResizeHelper(isTooSmall: boolean): void;
+    modifyResizeHelper(newDistance: number): void;
     modifyChangeDims(widthTooSmall: boolean, heightTooSmall: boolean): void;
     modifyChangeDimsHelper(): void;
     /**

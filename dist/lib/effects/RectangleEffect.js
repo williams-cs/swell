@@ -276,7 +276,7 @@ class RectangleEffect {
             this._rect.height = new NumberNode_1.NumberNode(Math.round(10 / this._ratio));
             let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
             if (newDistance - this._initDistance > 0) {
-                this.modifyResizeHelper(true);
+                this.modifyResizeHelper(newDistance);
             }
         }
         if (heightTooSmall) {
@@ -286,15 +286,15 @@ class RectangleEffect {
             this._rect.width = new NumberNode_1.NumberNode(Math.round(10 * this._ratio));
             let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
             if (newDistance - this._initDistance > 0) {
-                this.modifyResizeHelper(true);
+                this.modifyResizeHelper(newDistance);
             }
         }
         if (!widthTooSmall && !heightTooSmall) {
-            this.modifyResizeHelper(false);
+            let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
+            this.modifyResizeHelper(newDistance);
         }
     }
-    modifyResizeHelper(isTooSmall) {
-        let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
+    modifyResizeHelper(newDistance) {
         if (newDistance - this._initDistance > 0) {
             switch (this._corner) {
                 case 1:
