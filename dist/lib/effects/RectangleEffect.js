@@ -396,20 +396,26 @@ class RectangleEffect {
             this._isResizing = true;
             this._context.eventLog.push(this.logClick());
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
-            this._dragoffx = x + w / 2;
-            this._dragoffy = y + h / 2;
             switch (this._corner) {
                 case 1:
-                    this._initDistance = distance(this._mouse.x, this._mouse.y, x, y);
+                    this._initDistance = distance(this._mouse.x, this._mouse.y, x + w, y + h);
+                    this._dragoffx = x + w;
+                    this._dragoffy = y + h;
                     break;
                 case 2:
                     this._initDistance = distance(this._mouse.x, this._mouse.y, x, y + h);
+                    this._dragoffx = x;
+                    this._dragoffy = y + h;
                     break;
                 case 3:
                     this._initDistance = distance(this._mouse.x, this._mouse.y, x, y);
+                    this._dragoffx = x;
+                    this._dragoffy = y;
                     break;
                 case 4:
                     this._initDistance = distance(this._mouse.x, this._mouse.y, x + w, y);
+                    this._dragoffx = x + w;
+                    this._dragoffy = y;
                     break;
             }
             //this._initDistance = distance(this._mouse.x, this._mouse.y, x + w / 2, y + h / 2);
