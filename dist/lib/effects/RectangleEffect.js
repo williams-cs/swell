@@ -276,7 +276,6 @@ class RectangleEffect {
             this._rect.height = new NumberNode_1.NumberNode(Math.round(10 / this._ratio));
             let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
             if (newDistance - this._initDistance > 0) {
-                console.log("why");
                 this.modifyResizeHelper(true);
             }
         }
@@ -287,11 +286,10 @@ class RectangleEffect {
             this._rect.width = new NumberNode_1.NumberNode(Math.round(10 * this._ratio));
             let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
             if (newDistance - this._initDistance > 0) {
-                console.log("why");
                 this.modifyResizeHelper(true);
             }
         }
-        else {
+        if (!widthTooSmall && !heightTooSmall) {
             this.modifyResizeHelper(false);
         }
     }
