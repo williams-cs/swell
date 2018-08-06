@@ -33,6 +33,10 @@ var Equals_1 = require("./lib/logic/Equals");
 exports.Equals = Equals_1.Equals;
 var NotEqual_1 = require("./lib/logic/NotEqual");
 exports.NotEqual = NotEqual_1.NotEqual;
+var Increment_1 = require("./lib/binops/Increment");
+exports.Increment = Increment_1.Increment;
+var Decrement_1 = require("./lib/binops/Decrement");
+exports.Decrement = Decrement_1.Decrement;
 /* UNARY OPS */
 var UnaryOperation_1 = require("./lib/unops/UnaryOperation");
 exports.UnaryOperation = UnaryOperation_1.UnaryOperation;
@@ -107,4 +111,11 @@ var ResizeEvent_1 = require("./lib/logging/ResizeEvent");
 exports.ResizeEvent = ResizeEvent_1.ResizeEvent;
 var SelectEvent_1 = require("./lib/logging/SelectEvent");
 exports.SelectEvent = SelectEvent_1.SelectEvent;
+var MulSel_1 = require("./lib/logging/MulSel");
+exports.MulSel = MulSel_1.MulSel;
+/* MODULES */
+var CircleMod_1 = require("./lib/modules/CircleMod");
+exports.CircleMod = CircleMod_1.CircleMod;
+var SnowmanMod_1 = require("./lib/modules/SnowmanMod");
+exports.SnowmanMod = SnowmanMod_1.SnowmanMod;
 //# sourceMappingURL=index.js.map

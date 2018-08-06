@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const space_lift_1 = require("space-lift");
+const MulSel_1 = require("../logging/MulSel");
 class Scope {
     constructor(parent, effects, myState, eventLog) {
         this._retValID = space_lift_1.None;
@@ -14,6 +15,8 @@ class Scope {
         this._effects = effects || null;
         this._myState = myState || null;
         this._eventLog = eventLog;
+        this._mulSelected = new MulSel_1.MulSel;
+        //this._mulSelected.mulSel = false;
         if (this._parent != null && this._parent._hadFunEval)
             this._hadFunEval = true; // copy function eval flag from parent
     }
@@ -102,9 +105,9 @@ class Scope {
     get mulSelected() {
         return this._mulSelected;
     }
-    set mulSelected(update) {
-        this._mulSelected = update;
-    }
+    // set mulSelected(update: boolean){
+    //     this._mulSelected.val = update;
+    // }
     get mulSelArray() {
         return this._mulSelArray;
     }

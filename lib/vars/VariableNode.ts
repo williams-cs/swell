@@ -24,7 +24,7 @@ export class VariableNode implements Expression<any>{
     // add get/set
 
     toString() : string {
-        return "var " + this._name;
+        return this._name;
     }
     
     get name(): string{

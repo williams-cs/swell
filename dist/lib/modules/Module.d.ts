@@ -3,5 +3,5 @@ export interface Module {
     readonly _goal: any;
     readonly _instructions: string;
     readonly _starterCode?: string;
-    checkGoal(document: Document, canvas: HTMLCanvasElement): boolean;
+    checkGoal(document: Document): boolean;
 }

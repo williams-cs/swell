@@ -138,12 +138,10 @@ export class StringEffect implements Effect<StringNode> {
             //console.log(this._str.val + " is setting dragging to false");
             this._textMetrics.initMousePos = this._mouse.x;
             this.modifyTextCursor();
-        }
-        else if (!this._isSelectingMultiple){
+        } else if (!this._isSelectingMultiple){
             this._isSelected = false;
             this._isEditing = false;
-        }
-        else {
+        }  else {
             this._isEditing = false;
         }
         this.modifyState(this.guideContains(this._mouse.x, this._mouse.y) > 0, this.contains(this._mouse.x, this._mouse.y));
@@ -256,12 +254,18 @@ export class StringEffect implements Effect<StringNode> {
                 this._isDragging = true;
                 this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
                 this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
-            }
-            else {
+            } else {
                 this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
                 this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
                 this._isDragging = true;
             }
+
+            // if(this._context.mulSelected.mulSel){
+            //     console.log("string effect mulSelected: " + this._context.mulSelected.mulSel);
+            //     //if(this._context.mulSelected.val){
+            //     this._context.eventLog.push(this.logSelected());
+            //     //this.logSelected();
+            // }
         } else if (guideContains) { //if the corner guides contain the mouse we are resizing 
             this._isSelected = true;
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
@@ -319,10 +323,10 @@ export class StringEffect implements Effect<StringNode> {
         this._isResizing = false;
         this._corner = 0;
 
-        console.log("mulSelected: " + this._context.mulSelected);
-        if(this._context.mulSelected){
-            this.logSelected();
-        }
+        // console.log("string effect mulSelected: " + this._context.mulSelected.val);
+        // if(this._context.mulSelected.val){
+        //     this.logSelected();
+        // }
         // if(this.isMultipleSelected){
         //     context.eventLog.push(new SelectEvent(selectedElems));
         //     masterLog.push(context.eventLog[context.eventLog.length - 1]);
@@ -395,7 +399,7 @@ export class StringEffect implements Effect<StringNode> {
     }
     
     logMove(): LogEvent<any> {
-        return new DragEvent(this._str.val, this._x1, this._y1, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+        return new DragEvent(this._str.val, this._x1, this._y1, this.x, this.y);
     }
 
     logResize(): LogEvent<any> {
@@ -403,7 +407,7 @@ export class StringEffect implements Effect<StringNode> {
     }
 
     logClick(): LogEvent<any>{
-        return new ClickEvent(this._str.val, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+        return new ClickEvent(this._str.val, this.x, this.y);
     }
 
     logSelected(): LogEvent<any>{
@@ -438,7 +442,7 @@ export class StringEffect implements Effect<StringNode> {
     }
 
     toString(): string{
-        return this._str.val + " at " + this._dims.x + " , " + this._dims.y;;
+        return " " + this._str.val + " at " + this.x + ", " + this.y;
     }
 }
 

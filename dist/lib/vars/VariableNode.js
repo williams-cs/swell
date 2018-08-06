@@ -16,7 +16,7 @@ class VariableNode {
     }
     // add get/set
     toString() {
-        return "var " + this._name;
+        return this._name;
     }
     get name() {
         return this._name;

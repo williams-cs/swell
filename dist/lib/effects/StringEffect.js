@@ -217,6 +217,12 @@ class StringEffect {
                 this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
                 this._isDragging = true;
             }
+            // if(this._context.mulSelected.mulSel){
+            //     console.log("string effect mulSelected: " + this._context.mulSelected.mulSel);
+            //     //if(this._context.mulSelected.val){
+            //     this._context.eventLog.push(this.logSelected());
+            //     //this.logSelected();
+            // }
         }
         else if (guideContains) { //if the corner guides contain the mouse we are resizing 
             this._isSelected = true;
@@ -270,10 +276,10 @@ class StringEffect {
         this._isDragging = false;
         this._isResizing = false;
         this._corner = 0;
-        console.log("mulSelected: " + this._context.mulSelected);
-        if (this._context.mulSelected) {
-            this.logSelected();
-        }
+        // console.log("string effect mulSelected: " + this._context.mulSelected.val);
+        // if(this._context.mulSelected.val){
+        //     this.logSelected();
+        // }
         // if(this.isMultipleSelected){
         //     context.eventLog.push(new SelectEvent(selectedElems));
         //     masterLog.push(context.eventLog[context.eventLog.length - 1]);
@@ -339,13 +345,13 @@ class StringEffect {
         return new PaintEvent_1.PaintEvent(this._str.val, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
     logMove() {
-        return new DragEvent_1.DragEvent(this._str.val, this._x1, this._y1, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+        return new DragEvent_1.DragEvent(this._str.val, this._x1, this._y1, this.x, this.y);
     }
     logResize() {
         return new ResizeEvent_1.ResizeEvent(this._str.val, this._size1, this._fontSize);
     }
     logClick() {
-        return new ClickEvent_1.ClickEvent(this._str.val, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+        return new ClickEvent_1.ClickEvent(this._str.val, this.x, this.y);
     }
     logSelected() {
         console.log("Logging selected!!");
@@ -373,8 +379,7 @@ class StringEffect {
         return this._isSelected;
     }
     toString() {
-        return this._str.val + " at " + this._dims.x + " , " + this._dims.y;
-        ;
+        return " " + this._str.val + " at " + this.x + ", " + this.y;
     }
 }
 exports.StringEffect = StringEffect;

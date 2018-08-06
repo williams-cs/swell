@@ -302,7 +302,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
 
     /* Modification functions */
     modifyDrag(): void {
-        console.log("rectangle dragoffx: " + this._dragoffx);
+        //console.log("rectangle dragoffx: " + this._dragoffx);
         this._dims.x.eval(this._context).val = this._mouse.x - this._dragoffx;
         this._dims.y.eval(this._context).val = this._mouse.y - this._dragoffy;
     }
@@ -572,10 +572,10 @@ export class RectangleEffect implements Effect<RectangleNode> {
     }
 
     get x(): number {
-        return this._x;
+        return this._dims.x.eval(this._context).val;
     }
     get y(): number {
-        return this._y;
+        return this._dims.y.eval(this._context).val;
     }
 
     get dims(): Dimensions {
@@ -587,7 +587,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
     }
 
     toString(): string{
-        return "rectangle at " + this._dims.x + " , " + this._dims.y;
+        return " rectangle at " + this.x + ", " + this.y;
     }
 }
 

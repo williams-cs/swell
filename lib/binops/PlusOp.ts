@@ -26,6 +26,6 @@ export class PlusOp extends BinaryOperation<NumberNode>{
         return this.left.toString() + ' + ' + this.right.toString();
     }
     newLine() : boolean {
-        return this.newLine();
+        return false;
     }
 }

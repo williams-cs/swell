@@ -5,7 +5,7 @@ class SnowmanMod {
         this._name = "Do You Want to Build a Snowman?";
         this._instructions = "Draw three ellipses to make a snowman!";
     }
-    checkGoal(document, canvas) {
+    checkGoal(document) {
         let inputbox = document.getElementById('input');
         let inputtext = inputbox.value;
         let goal1 = false;

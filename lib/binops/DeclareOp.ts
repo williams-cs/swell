@@ -19,7 +19,7 @@ export class DeclareOp<T> extends BinaryOperation<T>{
     }
     
     toString() : string {
-        return this.left.toString() + ' = ' + this.right.toString();
+        return "var " + this.left.toString() + ' = ' + this.right.toString();
     }
     eval(context: Scope): T{
         if(this.left instanceof VariableNode){
@@ -34,6 +34,6 @@ export class DeclareOp<T> extends BinaryOperation<T>{
         throw new Error("HALP (in DeclareOp)");
     }
     newLine() : boolean {
-        return this.newLine();
+        return false;
     }
 }

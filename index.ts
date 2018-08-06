@@ -18,6 +18,8 @@ export {And} from './lib/logic/And';
 export {Or} from './lib/logic/Or';
 export {Equals} from './lib/logic/Equals';
 export {NotEqual} from './lib/logic/NotEqual';
+export {Increment} from './lib/binops/Increment';
+export {Decrement} from './lib/binops/Decrement';
 
 /* UNARY OPS */
 export {UnaryOperation} from './lib/unops/UnaryOperation';
@@ -67,3 +69,8 @@ export {DragEvent} from './lib/logging/DragEvent';
 export {PaintEvent} from './lib/logging/PaintEvent';
 export {ResizeEvent} from './lib/logging/ResizeEvent';
 export {SelectEvent} from './lib/logging/SelectEvent';
+export {MulSel} from './lib/logging/MulSel';
+
+/* MODULES */
+export {CircleMod} from './lib/modules/CircleMod';
+export {SnowmanMod} from './lib/modules/SnowmanMod';

@@ -4,6 +4,6 @@ export interface Module {
     readonly _instructions: string; // Instructions for student
     readonly _starterCode?: string; // Optional starter code
 
-    checkGoal(document: Document, canvas: HTMLCanvasElement): boolean; // Check if module is complete
+    checkGoal(document: Document): boolean; // Check if module is complete
 
 } 
