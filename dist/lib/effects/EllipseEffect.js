@@ -467,6 +467,9 @@ class EllipseEffect {
     get selected() {
         return this._isSelected;
     }
+    get justDragged() {
+        return this._justDragged;
+    }
     toString() {
         return (" ellipse at " + this.x + ", " + this.y);
     }

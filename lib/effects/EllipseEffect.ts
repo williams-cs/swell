@@ -387,7 +387,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
 
     modifyState(guideContains: number, contains: boolean): void {
         this._justDragged = false;
-        
+
         if (this._isSelectingMultiple) {
             if (contains) {
                 this._isSelected = true;
@@ -523,6 +523,10 @@ export class EllipseEffect implements Effect<EllipseNode> {
     
     get selected(): boolean {
         return this._isSelected;
+    }
+
+    get justDragged(): boolean {
+        return this._justDragged;
     }
 
     toString(): string{
