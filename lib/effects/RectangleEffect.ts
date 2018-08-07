@@ -294,6 +294,9 @@ export class RectangleEffect implements Effect<RectangleNode> {
         }
     }
 
+    /**
+     * @param event 
+     */
     onShiftUp(event: any) {
         if(event.keyCode == "16") { //shift keycode
             this._isSelectingMultiple = false;

@@ -257,6 +257,9 @@ class RectangleEffect {
             this._isSelectingMultiple = true;
         }
     }
+    /**
+     * @param event
+     */
     onShiftUp(event) {
         if (event.keyCode == "16") { //shift keycode
             this._isSelectingMultiple = false;
@@ -264,7 +267,7 @@ class RectangleEffect {
     }
     /* Modification functions */
     modifyDrag() {
-        console.log("rectangle dragoffx: " + this._dragoffx);
+        //console.log("rectangle dragoffx: " + this._dragoffx);
         this._dims.x.eval(this._context).val = this._mouse.x - this._dragoffx;
         this._dims.y.eval(this._context).val = this._mouse.y - this._dragoffy;
     }

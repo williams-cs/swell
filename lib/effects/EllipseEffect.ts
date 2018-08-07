@@ -25,6 +25,8 @@ export class EllipseEffect implements Effect<EllipseNode> {
     private _isChangingDims: boolean = false;
     private _isSelectingMultiple: boolean = false;
 
+    private _justDragged: boolean = false; // Has this object just been dragged?
+
     private _x1: number; // used to save coords for logging
     private _y1: number;
     private _size1: number; // saves size for logging
@@ -384,6 +386,8 @@ export class EllipseEffect implements Effect<EllipseNode> {
     }
 
     modifyState(guideContains: number, contains: boolean): void {
+        this._justDragged = false;
+        
         if (this._isSelectingMultiple) {
             if (contains) {
                 this._isSelected = true;
@@ -443,7 +447,8 @@ export class EllipseEffect implements Effect<EllipseNode> {
         if(this._isDragging && (this._isSelected || this._isSelectingMultiple)){ // probs only need dragging but oh well
             this._isDragging = false;
             if(Math.abs(this._x1 - this._dims.x.eval(this._context).val) > 1 || Math.abs(this._y1 - this._dims.y.eval(this._context).val) > 1) {
-                this._context.eventLog.push(this.logMove());
+                this._justDragged = true;
+                //this._context.eventLog.push(this.logMove());
             }
         } else if (this._isResizing && this._isSelected){
             this._isResizing = false;

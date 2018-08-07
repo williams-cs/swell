@@ -14,6 +14,7 @@ class EllipseEffect {
         this._isResizing = false;
         this._isChangingDims = false;
         this._isSelectingMultiple = false;
+        this._justDragged = false; // Has this object just been dragged?
         this._ratio = 0;
         this._dragoffx = 0;
         this._dragoffy = 0;
@@ -346,6 +347,7 @@ class EllipseEffect {
         }
     }
     modifyState(guideContains, contains) {
+        this._justDragged = false;
         if (this._isSelectingMultiple) {
             if (contains) {
                 this._isSelected = true;
@@ -399,7 +401,8 @@ class EllipseEffect {
         if (this._isDragging && (this._isSelected || this._isSelectingMultiple)) { // probs only need dragging but oh well
             this._isDragging = false;
             if (Math.abs(this._x1 - this._dims.x.eval(this._context).val) > 1 || Math.abs(this._y1 - this._dims.y.eval(this._context).val) > 1) {
-                this._context.eventLog.push(this.logMove());
+                this._justDragged = true;
+                //this._context.eventLog.push(this.logMove());
             }
         }
         else if (this._isResizing && this._isSelected) {
