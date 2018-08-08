@@ -13,16 +13,23 @@ class CircleMod {
         let goal2 = false;
         let numbers;
         if (inputtext != null) {
-            let hits = inputtext.match(new RegExp("\\^print\\(ellipse\\("));
-            if (hits != null && hits.length === 1)
+            //let hits = inputtext.match(new RegExp("\\^print\\(ellipse\\("));
+            //console.log("hits: " + hits);
+            //if(hits != null && hits.length === 1) {
+            if (inputtext.includes("print(ellipse(") && inputtext.includes(");")) { // rough way of checking
                 goal1 = true;
+                console.log("goal 1 met");
+            }
             var nums = inputtext.match(/\d+/g);
             if (nums != null) {
                 numbers = nums.map(Number);
             }
             if (numbers != null && numbers[0] === numbers[1] && 150 <= numbers[2] && 350 >= numbers[2]
-                && 150 <= numbers[3] && 350 >= numbers[3])
-                return (goal1 && goal2);
+                && 150 <= numbers[3] && 350 >= numbers[3]) {
+                console.log("goal 2 met");
+                goal2 = true;
+            }
+            return (goal1 && goal2);
         }
         // if math works out
     }

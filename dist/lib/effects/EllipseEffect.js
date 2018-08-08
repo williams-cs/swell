@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const PaintEvent_1 = require("../logging/PaintEvent");
-const DragEvent_1 = require("../logging/DragEvent");
 const ResizeEvent_1 = require("../logging/ResizeEvent");
 const NumberNode_1 = require("../prims/NumberNode");
 const ClickEvent_1 = require("../logging/ClickEvent");
@@ -14,6 +13,7 @@ class EllipseEffect {
         this._isResizing = false;
         this._isChangingDims = false;
         this._isSelectingMultiple = false;
+        this._justDragged = false; // Has this object just been dragged?
         this._ratio = 0;
         this._dragoffx = 0;
         this._dragoffy = 0;
@@ -345,7 +345,9 @@ class EllipseEffect {
             }
         }
     }
+    // on mouse down
     modifyState(guideContains, contains) {
+        this._justDragged = false;
         if (this._isSelectingMultiple) {
             if (contains) {
                 this._isSelected = true;
@@ -358,6 +360,10 @@ class EllipseEffect {
                 this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
                 this._isDragging = true;
             }
+            // this._isSelected = true;
+            // this._isDragging = true; // originally had if else with if(contains), but they were the same except for isSelected
+            // this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
+            // this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
         }
         else if (guideContains > 0 && guideContains <= 4) { //resizing
             this._isSelected = true;
@@ -391,11 +397,13 @@ class EllipseEffect {
             this._isDragging = false;
         }
     }
+    // on mouse up
     modifyReset() {
-        if (this._isDragging && this._isSelected) { // probs only need dragging but oh well
+        if (this._isDragging) { // probs only need dragging but oh well | isSel || selMul?
             this._isDragging = false;
             if (Math.abs(this._x1 - this._dims.x.eval(this._context).val) > 1 || Math.abs(this._y1 - this._dims.y.eval(this._context).val) > 1) {
-                this._context.eventLog.push(this.logMove());
+                this._justDragged = true;
+                //this._context.eventLog.push(this.logMove());
             }
         }
         else if (this._isResizing && this._isSelected) {
@@ -404,6 +412,11 @@ class EllipseEffect {
                 this._context.eventLog.push(this.logResize());
             }
         }
+        // if(this._isSelectingMultiple){
+        //     if(Math.abs(this._x1 - this._dims.x.eval(this._context).val) > 1 || Math.abs(this._y1 - this._dims.y.eval(this._context).val) > 1) {
+        //         this._context.eventLog.push(this.logMove());
+        //     }
+        // }
         this._isDragging = false;
         this._isResizing = false;
         this._isChangingDims = false;
@@ -430,10 +443,10 @@ class EllipseEffect {
     logPaint() {
         return new PaintEvent_1.PaintEvent("ellipse", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
-    logMove() {
-        //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);
-        return new DragEvent_1.DragEvent("ellipse", this._x1, this._y1, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
-    }
+    // logMove(): LogEvent<any> {
+    //     //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);
+    //     return new DragEvent("ellipse", this._x1, this._y1, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+    // }
     logResize() {
         return new ResizeEvent_1.ResizeEvent("ellipse", this._size1, this._dims.radius.eval(this._context).val);
     }
@@ -455,8 +468,20 @@ class EllipseEffect {
     get selected() {
         return this._isSelected;
     }
-    toString() {
-        return "ellipse at " + this._dims.x + " , " + this._dims.y;
+    get justDragged() {
+        return this._justDragged;
+    }
+    set justDragged(val) {
+        this._justDragged = val;
+    }
+    get isDragging() {
+        return this._isDragging;
+    }
+    toSelString() {
+        return (" ellipse at " + this.x + ", " + this.y);
+    }
+    toDragString() {
+        return (" ellipse from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
     }
 }
 exports.EllipseEffect = EllipseEffect;

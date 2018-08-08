@@ -25,6 +25,8 @@ export class EllipseEffect implements Effect<EllipseNode> {
     private _isChangingDims: boolean = false;
     private _isSelectingMultiple: boolean = false;
 
+    private _justDragged: boolean = false; // Has this object just been dragged?
+
     private _x1: number; // used to save coords for logging
     private _y1: number;
     private _size1: number; // saves size for logging
@@ -383,19 +385,25 @@ export class EllipseEffect implements Effect<EllipseNode> {
         }
     }
 
+    // on mouse down
     modifyState(guideContains: number, contains: boolean): void {
+        this._justDragged = false;
+
         if (this._isSelectingMultiple) {
             if (contains) {
                 this._isSelected = true;
                 this._isDragging = true;
                 this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
                 this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
-            }
-            else {
+            } else {
                 this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
                 this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
                 this._isDragging = true;
             }
+                // this._isSelected = true;
+                // this._isDragging = true; // originally had if else with if(contains), but they were the same except for isSelected
+                // this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
+                // this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
         }
         else if(guideContains > 0 && guideContains <= 4) { //resizing
             this._isSelected = true;
@@ -436,18 +444,26 @@ export class EllipseEffect implements Effect<EllipseNode> {
         }
     }
 
+    // on mouse up
     modifyReset(): void {
-        if(this._isDragging && this._isSelected){ // probs only need dragging but oh well
+        if(this._isDragging){ // probs only need dragging but oh well | isSel || selMul?
             this._isDragging = false;
             if(Math.abs(this._x1 - this._dims.x.eval(this._context).val) > 1 || Math.abs(this._y1 - this._dims.y.eval(this._context).val) > 1) {
-                this._context.eventLog.push(this.logMove());
-            }
+                this._justDragged = true;
+                //this._context.eventLog.push(this.logMove());
+            } 
         } else if (this._isResizing && this._isSelected){
             this._isResizing = false;
             if(Math.abs(this._size1 - this._dims.radius.eval(this._context).val) > 0){
                 this._context.eventLog.push(this.logResize());
             }
         }
+
+        // if(this._isSelectingMultiple){
+        //     if(Math.abs(this._x1 - this._dims.x.eval(this._context).val) > 1 || Math.abs(this._y1 - this._dims.y.eval(this._context).val) > 1) {
+        //         this._context.eventLog.push(this.logMove());
+        //     }
+        // }
         this._isDragging = false;
         this._isResizing = false;
         this._isChangingDims = false;
@@ -479,10 +495,10 @@ export class EllipseEffect implements Effect<EllipseNode> {
         return new PaintEvent("ellipse", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
 
-    logMove(): LogEvent<any> {
-        //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);
-        return new DragEvent("ellipse", this._x1, this._y1, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
-    }
+    // logMove(): LogEvent<any> {
+    //     //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);
+    //     return new DragEvent("ellipse", this._x1, this._y1, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+    // }
 
     logResize(): LogEvent<any> {
         return new ResizeEvent("ellipse", this._size1, this._dims.radius.eval(this._context).val);
@@ -511,8 +527,23 @@ export class EllipseEffect implements Effect<EllipseNode> {
         return this._isSelected;
     }
 
-    toString(): string{
-        return "ellipse at " + this._dims.x + " , " + this._dims.y;
+    get justDragged(): boolean {
+        return this._justDragged;
+    }
+    set justDragged(val: boolean) {
+        this._justDragged = val;
+    }
+
+    get isDragging(): boolean {
+        return this._isDragging;
+    }
+
+    toSelString(): string{
+        return (" ellipse at " + this.x + ", " + this.y);
+    }
+
+    toDragString(): string{
+        return(" ellipse from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
     }
 }
 

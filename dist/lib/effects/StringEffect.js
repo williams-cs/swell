@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const PaintEvent_1 = require("../logging/PaintEvent");
-const DragEvent_1 = require("../logging/DragEvent");
 const ResizeEvent_1 = require("../logging/ResizeEvent");
 const ClickEvent_1 = require("../logging/ClickEvent");
 const SelectEvent_1 = require("../logging/SelectEvent");
@@ -206,14 +205,6 @@ class StringEffect {
     }
     modifyState(guideContains, contains) {
         if (this._isSelectingMultiple) {
-            console.log("Selecting multiple");
-            console.log("string effect mulSelected: " + this._context.mulSelected.mulSel);
-            if (this._context.mulSelected.mulSel) {
-                console.log("string effect mulSelected: " + this._context.mulSelected.mulSel);
-                //if(this._context.mulSelected.val){
-                this._context.eventLog.push(this.logSelected());
-                //this.logSelected();
-            }
             if (contains) {
                 this._isSelected = true;
                 this._isDragging = true;
@@ -225,6 +216,12 @@ class StringEffect {
                 this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
                 this._isDragging = true;
             }
+            // if(this._context.mulSelected.mulSel){
+            //     console.log("string effect mulSelected: " + this._context.mulSelected.mulSel);
+            //     //if(this._context.mulSelected.val){
+            //     this._context.eventLog.push(this.logSelected());
+            //     //this.logSelected();
+            // }
         }
         else if (guideContains) { //if the corner guides contain the mouse we are resizing 
             this._isSelected = true;
@@ -265,7 +262,7 @@ class StringEffect {
             //console.log(this._str.val + " logging drag");
             this._isDragging = false;
             if (Math.abs(this._x1 - this._dims.x.eval(this._context).val) > 1 || Math.abs(this._y1 - this._dims.y.eval(this._context).val) > 1) {
-                this._context.eventLog.push(this.logMove());
+                //this._context.eventLog.push(this.logMove());
             }
         }
         else if (this._isResizing && this._isSelected) {
@@ -346,14 +343,14 @@ class StringEffect {
     logPaint() {
         return new PaintEvent_1.PaintEvent(this._str.val, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
-    logMove() {
-        return new DragEvent_1.DragEvent(this._str.val, this._x1, this._y1, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
-    }
+    // logMove(): LogEvent<any> {
+    //     return new DragEvent(this._str.val, this._x1, this._y1, this.x, this.y);
+    // }
     logResize() {
         return new ResizeEvent_1.ResizeEvent(this._str.val, this._size1, this._fontSize);
     }
     logClick() {
-        return new ClickEvent_1.ClickEvent(this._str.val, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+        return new ClickEvent_1.ClickEvent(this._str.val, this.x, this.y);
     }
     logSelected() {
         console.log("Logging selected!!");
@@ -380,9 +377,11 @@ class StringEffect {
     get selected() {
         return this._isSelected;
     }
-    toString() {
-        return this._str.val + " at " + this._dims.x + " , " + this._dims.y;
-        ;
+    toSelString() {
+        return " " + this._str.val + " at " + this.x + ", " + this.y;
+    }
+    toDragString() {
+        return "Boo you";
     }
 }
 exports.StringEffect = StringEffect;

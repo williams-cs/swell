@@ -42,18 +42,25 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
     onMouseDown(event: any): void;
     onMouseUp(event: any): void;
     onShiftDown(event: any): void;
+    /**
+     * @param event
+     */
     onShiftUp(event: any): void;
     modifyDrag(): void;
     modifyResize(widthTooSmall: boolean, heightTooSmall: boolean): void;
-    modifyResizeHelper(): void;
+    modifyResizeHelper(newDistance: number): void;
     modifyChangeDims(widthTooSmall: boolean, heightTooSmall: boolean): void;
     modifyChangeDimsHelper(): void;
+    /**
+     *
+     * @param guideContains
+     * @param contains
+     */
     modifyState(guideContains: number, contains: boolean): void;
     modifyReset(): void;
     getMousePosition(): void;
     isMouseOutside(event: any): void;
     logPaint(): LogEvent<any>;
-    logMove(): LogEvent<any>;
     logResize(): LogEvent<any>;
     logClick(): LogEvent<any>;
     ast(): Expression<RectangleNode>;
@@ -62,5 +69,6 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
     readonly y: number;
     readonly dims: Dimensions;
     readonly selected: boolean;
-    toString(): string;
+    toSelString(): string;
+    toDragString(): string;
 }

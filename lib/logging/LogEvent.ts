@@ -4,7 +4,7 @@ export abstract class LogEvent<T> {
     private _date: string;
     private _time: string;
     private _dateTime: string;
-    private _toLog: string | Effect<any>[];
+    private _toLog: string | Effect<any>[] | Effect<any>;
     //private _toLogArray: string[];
     private _tag: string;
     private _x1: number; // used for initial x or size
@@ -12,7 +12,7 @@ export abstract class LogEvent<T> {
     private _x2: number;
     private _y2: number;
 
-    constructor(toLog: string | Effect<any>[], x1?: number, y1?: number, x2?: number, y2?: number){
+    constructor(toLog: string | Effect<any>[] | Effect<any>, x1?: number, y1?: number, x2?: number, y2?: number){
         let today = new Date();
         this._date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
         this._time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
@@ -35,7 +35,7 @@ export abstract class LogEvent<T> {
     get dateTime(): string {
         return this._dateTime;
     }
-    get toLog(): string | Effect<any>[]{
+    get toLog(): string | Effect<any>[] | Effect<any>{
         return this._toLog;
     }
     get tag(): string {

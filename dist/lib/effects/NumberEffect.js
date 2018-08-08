@@ -51,8 +51,11 @@ class NumberEffect {
     get selected() {
         return this._isSelected;
     }
-    toString() {
+    toSelString() {
         return this._num + " at " + this._dims.x + " , " + this._dims.y;
+    }
+    toDragString() {
+        return "are we even using this?";
     }
 }
 exports.NumberEffect = NumberEffect;
