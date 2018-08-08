@@ -8,6 +8,9 @@ class WhileNode {
         this._cond = cond;
         this._body = body;
         this._ws = ws;
+        if (ws == undefined) {
+            this._ws = "";
+        }
     }
     eval(context) {
         let childCtx = new Scope_1.Scope(context);

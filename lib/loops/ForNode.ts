@@ -11,12 +11,15 @@ export class ForNode implements Expression<any>{
     private _ws : string;
     private _newLine : boolean = true;
 
-    constructor(init: Expression<any>, cond: Expression<BooleanNode>, post: Expression<any>, body: Expression<any>, ws : string){
+    constructor(init: Expression<any>, cond: Expression<BooleanNode>, post: Expression<any>, body: Expression<any>, ws? : string){
         this._init = init;
         this._cond = cond;
         this._post = post;
         this._body = body; 
         this._ws = ws;
+        if(ws == undefined) {
+            this._ws = "";
+        }
     }
 
     eval(context: Scope){

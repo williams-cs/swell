@@ -9,10 +9,13 @@ export class WhileNode implements Expression<any>{
     private _newLine : boolean = true;
     private _ws : string;
 
-    constructor(cond: Expression<any>, body: Expression<any>, ws : string){
+    constructor(cond: Expression<any>, body: Expression<any>, ws? : string){
         this._cond = cond;
         this._body = body; 
         this._ws = ws;
+        if(ws == undefined) {
+            this._ws = "";
+        }
     }
 
     eval(context: Scope){
