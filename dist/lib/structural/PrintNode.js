@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class PrintNode {
-    constructor(toPrint, ws, dimensions) {
+    constructor(toPrint, dimensions, ws) {
         this._scale = 1;
         this._newLine = false;
         this._toPrint = toPrint;

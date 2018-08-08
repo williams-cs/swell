@@ -10,7 +10,7 @@ export class PrintNode implements Expression<any>{
     private _newLine : boolean = false;
     private _ws : string;
 
-    constructor(toPrint: Expression<any>, ws? : string, dimensions?: Dimensions){
+    constructor(toPrint: Expression<any>, dimensions?: Dimensions, ws? : string){
         this._toPrint = toPrint;
         this._ws = ws;
         if (ws == undefined) {
