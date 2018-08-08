@@ -53,6 +53,8 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
     updateAST(): Expression<EllipseNode>;
     readonly x: number;
     readonly y: number;
+    readonly w: number;
+    readonly h: number;
     readonly dims: Dimensions;
     readonly selected: boolean;
     getJustDragged(): boolean;
