@@ -8,14 +8,16 @@ export class PrintNode implements Expression<any>{
     private _scale: number = 1;
     private _dims: Dimensions;
     private _newLine : boolean = false;
+    private _ws : string;
 
-    constructor(toPrint: Expression<any>, dimensions?: Dimensions){
+    constructor(toPrint: Expression<any>, ws : string, dimensions?: Dimensions){
         this._toPrint = toPrint;
+        this._ws = ws;
         this._dims = dimensions || null;
     }
 
     toString() : string {
-        return "print(" + this.toPrint.toString() + ", " + this.dims.toString() + ")";
+        return this._ws + "print(" + this.toPrint.toString() + ", " + this.dims.toString() + ")";
     }
 
     draw(context: Scope, dims: Dimensions, ast: PrintNode): void {
