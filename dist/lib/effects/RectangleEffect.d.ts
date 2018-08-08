@@ -68,6 +68,8 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
     updateAST(): Expression<NumberNode>;
     readonly x: number;
     readonly y: number;
+    readonly w: number;
+    readonly h: number;
     readonly dims: Dimensions;
     readonly selected: boolean;
     justDragged: boolean;

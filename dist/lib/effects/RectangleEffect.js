@@ -386,8 +386,8 @@ class RectangleEffect {
         this._justDragged = false;
         let x = this.x;
         let y = this.y;
-        let w = this._dims.width.eval(this._context).val;
-        let h = this._dims.height.eval(this._context).val;
+        let w = this.w;
+        let h = this.h;
         if (this._isSelectingMultiple) {
             if (contains) {
                 this._x1 = this.x;
@@ -408,6 +408,7 @@ class RectangleEffect {
             this._isResizing = true;
             this._context.eventLog.push(this.logClick());
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
+            this._size1 = Math.sqrt(Math.pow(w, 2) + Math.pow(h, 2)); // size is diagonal length
             switch (this._corner) {
                 case 1:
                     this._initDistance = distance(this._mouse.x, this._mouse.y, x + w, y + h);
@@ -431,7 +432,6 @@ class RectangleEffect {
                     break;
             }
             //this._initDistance = distance(this._mouse.x, this._mouse.y, x + w / 2, y + h / 2);
-            this._size1 = Math.sqrt(w ^ 2 + h ^ 2); // size is diagonal length
         }
         else if (guideContains > 4) { //changing shape dimensions
             this._isSelected = true;
@@ -477,13 +477,13 @@ class RectangleEffect {
     modifyReset() {
         if (this._isDragging && this._isSelected) {
             this._isDragging = false;
-            if (Math.abs(this._x1 - this._dims.x.eval(this._context).val) > 1 || Math.abs(this._y1 - this._dims.y.eval(this._context).val) > 1) {
+            if (Math.abs(this._x1 - this.x) > 1 || Math.abs(this._y1 - this.y) > 1) {
                 this._justDragged = true;
             }
         }
         else if (this._isResizing && this._isSelected) {
             this._isResizing = false;
-            let size2 = Math.sqrt(Math.pow(this._dims.width.eval(this._context).val, 2) + Math.pow(this._dims.height.eval(this._context).val, 2));
+            let size2 = Math.sqrt(Math.pow(this.w, 2) + Math.pow(this.h, 2));
             if (Math.abs(this._size1 - size2) > 0) {
                 this._context.eventLog.push(this.logResize());
             }
@@ -543,6 +543,12 @@ class RectangleEffect {
     }
     get y() {
         return this._dims.y.eval(this._context).val;
+    }
+    get w() {
+        return this._dims.width.eval(this._context).val;
+    }
+    get h() {
+        return this._dims.height.eval(this._context).val;
     }
     get dims() {
         return this._dims;
