@@ -3,12 +3,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Scope_1 = require("../structural/Scope");
 const BooleanNode_1 = require("../prims/BooleanNode");
 class ForNode {
-    constructor(init, cond, post, body) {
+    constructor(init, cond, post, body, ws) {
         this._newLine = true;
         this._init = init;
         this._cond = cond;
         this._post = post;
         this._body = body;
+        this._ws = ws;
     }
     eval(context) {
         let childCtx = new Scope_1.Scope(context);
@@ -42,7 +43,7 @@ class ForNode {
     draw(context, dims, ast) {
     }
     toString() {
-        return 'for(' + this._init.toString() + ", " + this._cond.toString() + ", " + this._post.toString() + ") {\n "
+        return this._ws + 'for(' + this._init.toString() + ", " + this._cond.toString() + ", " + this._post.toString() + ") {\n "
             + this._body.toString() + "}";
     }
     newLine() {

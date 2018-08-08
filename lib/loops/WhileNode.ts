@@ -7,10 +7,12 @@ export class WhileNode implements Expression<any>{
     private _cond: Expression<any>;
     private _body: Expression<any>;
     private _newLine : boolean = true;
+    private _ws : string;
 
-    constructor(cond: Expression<any>, body: Expression<any>){
+    constructor(cond: Expression<any>, body: Expression<any>, ws : string){
         this._cond = cond;
         this._body = body; 
+        this._ws = ws;
     }
 
     eval(context: Scope){
@@ -48,7 +50,7 @@ export class WhileNode implements Expression<any>{
     }
 
     toString() :string {
-        return "while(" + this._cond.toString() + ") {\n " + this._body.toString() + "}";
+        return this._ws + "while(" + this._cond.toString() + ") {\n " + this._body.toString() + "}";
     }
     newLine() : boolean {
         return this._newLine;
