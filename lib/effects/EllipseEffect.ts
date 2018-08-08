@@ -545,7 +545,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
     }
 
     toDragString(): string{
-        return(" ellipse from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
+        return("ellipse from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
     }
 }
 
