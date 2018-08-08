@@ -4,6 +4,7 @@ import {SequenceNode} from '../lib/structural/SequenceNode';
 
 import { assert,expect } from 'chai';
 import 'mocha';
+import { Scope } from '../lib/structural/Scope';
 
 describe('A SeqNode', () => {
     it('should evaluate to a tuple', () => {
@@ -11,7 +12,7 @@ describe('A SeqNode', () => {
         const plus0 = new PlusOp(new NumberNode(2),new NumberNode(2));
         const node0 = new SequenceNode(num0,plus0);
         
-        const output = node0.eval(null);
+        const output = node0.eval(new Scope(null));
         const output1 = node0.rightVal;
         //deep or strict equal?
         //expect(output).to.deep.equal([num0.eval(null),plus0.eval(null)])

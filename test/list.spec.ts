@@ -8,6 +8,7 @@ import {SequenceNode} from '../lib/structural/SequenceNode';
 
 import { assert,expect } from 'chai';
 import 'mocha';
+import { BooleanNode } from '../lib/prims/BooleanNode';
 
 //[0,1,2,3]
 
@@ -20,7 +21,7 @@ describe('A list', () => {
     
     it('when compared against another, different list should evaluate to false',() => {
         const list1 = new ListNode([new NumberNode(0),new NumberNode(1),new NumberNode(2)]);
-        const list2 = new ListNode([new NumberNode(1),new NumberNode(1),new NumberNode(2)]);
+        const list2 = new ListNode([new NumberNode(0),new NumberNode(1),new NumberNode(2)]);
         const assign1 = new AssignOp(new VariableNode("list1"),list1);
         const assign2 = new AssignOp(new VariableNode("list2"),list2);
         const comp1 = new Equals(list1,list2);
@@ -28,7 +29,7 @@ describe('A list', () => {
         const seq2 = new SequenceNode(assign1,seq1);
         const output = seq1.eval(new Scope(null));
         const output1 = seq1.rightVal;
-        expect(output1).to.equal(false);
+        expect(output1).to.deep.equal(new BooleanNode(true));
     });
     
     

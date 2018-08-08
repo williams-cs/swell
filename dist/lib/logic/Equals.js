@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const BooleanNode_1 = require("../prims/BooleanNode");
 class Equals {
     constructor(left, right) {
         this._newLine = false;
@@ -15,7 +16,7 @@ class Equals {
     eval(context) {
         let lhs = this._left.eval(context);
         let rhs = this._right.eval(context);
-        return lhs.equalsVal(rhs);
+        return new BooleanNode_1.BooleanNode(lhs.equalsVal(rhs));
     }
     equalsVal(right) {
         throw new Error("well this is meta");
