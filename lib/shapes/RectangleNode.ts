@@ -17,8 +17,8 @@ export class RectangleNode implements Expression<RectangleNode> {
     }
 
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
-        dims.width = new NumberNode(this._width.eval(context).val);
-        dims.height = new NumberNode(this._height.eval(context).val);
+        dims.width = new NumberNode(this._width.eval(context).val, "");
+        dims.height = new NumberNode(this._height.eval(context).val, "");
         let e = new RectangleEffect(this);
         e.draw(context, dims, ast);
     }

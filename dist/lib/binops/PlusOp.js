@@ -15,7 +15,7 @@ class PlusOp extends BinaryOperation_1.BinaryOperation {
         let r = this.right;
         let le = l.eval(new Scope_1.Scope(context));
         let re = r.eval(new Scope_1.Scope(context));
-        return new NumberNode_1.NumberNode(le.val + re.val);
+        return new NumberNode_1.NumberNode(le.val + re.val, "");
     }
     toString() {
         return this.left.toString() + ' + ' + this.right.toString();

@@ -9,11 +9,12 @@ import { Dimensions } from '../structural/Dimensions';
 export class NumberNode implements Expression <NumberNode>{
     private _val: number;
     private _newLine : boolean = false;
-    private _ws :  string;
+    private _ws :  string = "";
 
-    constructor(val: number){
+    constructor(val: number, ws? : string){
         //super(parent);
         this._val = val;
+        this._ws = ws;
     };
     
     eval(context: Scope): NumberNode {

@@ -4,10 +4,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // Nodes representing numbers
 // Should abstract Node class implement Expression?
 class NumberNode {
-    constructor(val) {
+    constructor(val, ws) {
         this._newLine = false;
+        this._ws = "";
         //super(parent);
         this._val = val;
+        this._ws = ws;
     }
     ;
     eval(context) {

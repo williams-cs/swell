@@ -14,7 +14,7 @@ export class MinusOp extends BinaryOperation<NumberNode>{
     }
     
     eval(context: Scope): NumberNode{
-        return new NumberNode(this.left.eval(new Scope(context)).eval(context).val - this.right.eval(new Scope(context)).eval(context).val);
+        return new NumberNode(this.left.eval(new Scope(context)).eval(context).val - this.right.eval(new Scope(context)).eval(context).val ,"");
     }
 
     toString() : string {

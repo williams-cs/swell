@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class BooleanNode {
     constructor(val, ws) {
         this._newLine = false;
+        this._ws = "";
         //super(parent);
         this._val = val;
         this._ws = ws;

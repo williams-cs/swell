@@ -13,10 +13,10 @@ export class Decrement implements Expression<any>{
     constructor(variable : Expression<any>){
         this.expr= variable;
         if(variable instanceof VariableNode){
-            this.innerRep= new AssignOp(variable, new MinusOp(variable, new NumberNode(1)));
+            this.innerRep= new AssignOp(variable, new MinusOp(variable, new NumberNode(1, "")));
         }
         else {
-            this.innerRep = new MinusOp(variable, new NumberNode(1));
+            this.innerRep = new MinusOp(variable, new NumberNode(1, ""));
         }
     }
 

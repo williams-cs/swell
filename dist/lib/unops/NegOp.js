@@ -10,7 +10,7 @@ class NegOp extends UnaryOperation_1.UnaryOperation {
     }
     eval(context) {
         let v = this.val.eval(context);
-        return new NumberNode_1.NumberNode(-v.val);
+        return new NumberNode_1.NumberNode(-v.val, "");
     }
     toString() {
         return "-" + this.val;
