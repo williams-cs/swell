@@ -446,10 +446,10 @@ export class StringEffect implements Effect<StringNode> {
         return this._dims;
     }
 
-    get justDragged(): boolean {
+    getJustDragged(): boolean {
         return this._justDragged;
     }
-    set justDragged(val: boolean) {
+    setJustDragged(val: boolean) {
         this._justDragged = val;
     }
     get isDragging(): boolean {

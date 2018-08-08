@@ -19,6 +19,7 @@ export class NumberEffect implements Effect<NumberNode> {
     private _w: number;
     private _h: number;
     private _isSelected: boolean;
+    private _justDragged: boolean;
 
     constructor(num: NumberNode) {
         this._num = num;
@@ -78,6 +79,12 @@ export class NumberEffect implements Effect<NumberNode> {
 
     get selected(): boolean {
         return this._isSelected;
+    }
+    getJustDragged(): boolean {
+        return this._justDragged;
+    }
+    setJustDragged(val: boolean) {
+        this._justDragged = val;
     }
 
     toSelString(): string {
