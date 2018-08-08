@@ -7,9 +7,11 @@ const StringEffect_1 = require("../effects/StringEffect");
 class StringNode {
     constructor(str, ws) {
         this._newLine = false;
-        this._ws = "";
         this._str = str;
         this._ws = ws;
+        if (ws == undefined) {
+            this._ws = "";
+        }
     }
     eval(context) {
         return this;

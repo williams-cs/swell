@@ -6,10 +6,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class NumberNode {
     constructor(val, ws) {
         this._newLine = false;
-        this._ws = "";
         //super(parent);
         this._val = val;
         this._ws = ws;
+        if (ws == undefined) {
+            this._ws = "";
+        }
     }
     ;
     eval(context) {

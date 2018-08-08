@@ -12,11 +12,14 @@ export class StringNode implements Expression<StringNode>{
 
     private _str: string;
     private _newLine : boolean = false;
-    private _ws : string = "";
+    private _ws : string;
 
     constructor(str: string, ws? : string){
         this._str = str;
         this._ws = ws;
+        if (ws == undefined) {
+            this._ws= "";
+        }
     }
 
     eval(context: Scope): StringNode {
