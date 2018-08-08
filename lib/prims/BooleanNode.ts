@@ -5,12 +5,15 @@ import { Dimensions } from "../structural/Dimensions";
 export class BooleanNode implements Expression<BooleanNode>{
     private _val: boolean;
     private _newLine : boolean = false;
-    private _ws : string = "";
+    private _ws : string;
 
     constructor(val: boolean, ws? : string){
         //super(parent);
         this._val = val;
         this._ws = ws;
+        if (ws == undefined) {
+            this._ws= "";
+        }
     };
     
     eval(context: Scope): BooleanNode {
