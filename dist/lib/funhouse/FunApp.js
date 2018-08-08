@@ -4,12 +4,13 @@ const ReturnError_1 = require("../structural/ReturnError");
 const space_lift_1 = require("space-lift");
 // Application of a function. Assumes arg values passed in same order as FunDef args
 class FunApp {
-    constructor(name, args, defaultValue) {
+    constructor(name, ws, args, defaultValue) {
         this._defaultValue = undefined;
         this._newLine = false;
         this._name = name;
         this._args = args;
         this._defaultValue = defaultValue;
+        this._ws = ws;
     }
     toString() {
         let argsList = '';
@@ -17,7 +18,7 @@ class FunApp {
             argsList += this._args[i].toString() + ", ";
         }
         argsList += this._args[this._args.length - 1].toString();
-        return this.name + '(' + argsList + ")";
+        return this._ws + this.name + '(' + argsList + ")";
     }
     newLine() {
         return this._newLine;
