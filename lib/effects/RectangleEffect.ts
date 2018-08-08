@@ -318,6 +318,10 @@ export class RectangleEffect implements Effect<RectangleNode> {
             this._rect.height = new NumberNode(Math.round(9 / this._ratio));
             let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
             if(newDistance - this._initDistance > 0){
+                this._dims.width.eval(this._context).val = 10;
+                this._rect.width = new NumberNode(10);
+                this._dims.height.eval(this._context).val = 10 / this._ratio;
+                this._rect.height = new NumberNode(Math.round(10 / this._ratio));
                 this.modifyResizeHelper(newDistance);
             }
         }
@@ -328,6 +332,10 @@ export class RectangleEffect implements Effect<RectangleNode> {
             this._rect.width = new NumberNode(Math.round(9 * this._ratio));
             let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
             if(newDistance - this._initDistance > 0){
+                this._dims.height.eval(this._context).val = 10;
+                this._rect.height = new NumberNode(10);
+                this._dims.width.eval(this._context).val = 10 * this._ratio;
+                this._rect.width = new NumberNode(Math.round(10 * this._ratio));
                 this.modifyResizeHelper(newDistance);
             }
         }
