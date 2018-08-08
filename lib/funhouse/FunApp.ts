@@ -10,11 +10,13 @@ export class FunApp<T> implements Expression<T>{
     private _args: Expression<{}>[];
     private _defaultValue: T = undefined;
     private _newLine : boolean = false;
+    private _ws : string;
 
-    constructor(name: string, args?: any[], defaultValue?: T){
+    constructor(name: string, ws: string, args?: any[], defaultValue?: T){
         this._name = name;
         this._args = args;
         this._defaultValue = defaultValue;
+        this._ws = ws;
     }
 
     toString() : string {
@@ -23,7 +25,7 @@ export class FunApp<T> implements Expression<T>{
             argsList += this._args[i].toString() + ", ";
         }
         argsList += this._args[this._args.length-1].toString();
-        return this.name + '(' + argsList + ")";
+        return this._ws + this.name + '(' + argsList + ")";
     }
 
     newLine() : boolean {
