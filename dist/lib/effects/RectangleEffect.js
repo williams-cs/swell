@@ -527,7 +527,7 @@ class RectangleEffect {
     //     return new DragEvent("rectangle", this._x1, this._y1, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     // }
     logResize() {
-        return new ResizeEvent_1.ResizeEvent("rectangle", this._size1, this._dims.width.eval(this._context).val);
+        return new ResizeEvent_1.ResizeEvent("rectangle", this._size1, Math.sqrt(Math.pow(this.w, 2) + Math.pow(this.h, 2)));
     }
     logClick() {
         return new ClickEvent_1.ClickEvent("rectangle", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
