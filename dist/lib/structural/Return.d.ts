@@ -4,7 +4,8 @@ import { Dimensions } from "./Dimensions";
 export declare class Return implements Expression<any> {
     private _expr;
     private _newLine;
-    constructor(expr: Expression<any>);
+    private _ws;
+    constructor(expr: Expression<any>, ws?: string);
     eval(context: Scope): void;
     toString(): string;
     newLine(): boolean;

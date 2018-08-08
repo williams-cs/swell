@@ -6,8 +6,13 @@ import { Dimensions } from "./Dimensions";
 export class Return implements Expression<any>{
     private _expr: Expression<any>;
     private _newLine : boolean = false;
-    constructor(expr: Expression<any>){
+    private _ws : string;
+    constructor(expr: Expression<any>, ws? : string){
         this._expr = expr;
+        this._ws = ws;
+        if (ws == undefined){
+            this._ws = "";
+        }
     }
 
     eval(context: Scope){
@@ -19,7 +24,7 @@ export class Return implements Expression<any>{
     }
 
     toString() :string {
-        return "return " + this._expr.toString();
+        return this._ws + "return " + this._expr.toString();
     }
 
     newLine() : boolean {

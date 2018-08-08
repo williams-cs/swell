@@ -2,9 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const ReturnError_1 = require("./ReturnError");
 class Return {
-    constructor(expr) {
+    constructor(expr, ws) {
         this._newLine = false;
         this._expr = expr;
+        this._ws = ws;
+        if (ws == undefined) {
+            this._ws = "";
+        }
     }
     eval(context) {
         // If return val is a var, returns that var's value
@@ -14,7 +18,7 @@ class Return {
         //return this._expr.eval(context); // will need typechecking at some point
     }
     toString() {
-        return "return " + this._expr.toString();
+        return this._ws + "return " + this._expr.toString();
     }
     newLine() {
         return this._newLine;
