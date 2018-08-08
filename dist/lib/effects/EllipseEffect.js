@@ -375,7 +375,7 @@ class EllipseEffect {
             this._dragoffx = this._dims.x.eval(this._context).val;
             this._dragoffy = this._dims.y.eval(this._context).val;
             this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
-            this._size1 = this._dims.radius.eval(this._context).val; // saving old font size
+            this._size1 = Math.sqrt(Math.pow(this.w, 2) + Math.pow(this.h, 2)); // saving old size
         }
         else if (guideContains > 4) { //changing shape dimensions
             this._isSelected = true;
@@ -411,8 +411,9 @@ class EllipseEffect {
         else if (this._isResizing && this._isSelected) {
             console.log("resizing ellipse");
             this._isResizing = false;
-            console.log("Size diff: " + Math.abs(this._size1 - this._dims.radius.eval(this._context).val));
-            if (Math.abs(this._size1 - this._dims.radius.eval(this._context).val) > 0) {
+            let size2 = Math.sqrt(Math.pow(this.w, 2) + Math.pow(this.h, 2));
+            console.log("Size diff: " + Math.abs(this._size1 - size2));
+            if (Math.abs(this._size1 - size2) > 0) {
                 this._context.eventLog.push(this.logResize());
             }
         }
@@ -452,7 +453,7 @@ class EllipseEffect {
     //     return new DragEvent("ellipse", this._x1, this._y1, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     // }
     logResize() {
-        return new ResizeEvent_1.ResizeEvent("ellipse", this._size1, this._dims.radius.eval(this._context).val);
+        return new ResizeEvent_1.ResizeEvent("ellipse", this._size1, Math.sqrt(Math.pow(this.w, 2) + Math.pow(this.h, 2)));
     }
     logClick() {
         return new ClickEvent_1.ClickEvent("ellipse", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
@@ -465,6 +466,12 @@ class EllipseEffect {
     }
     get y() {
         return this._dims.y.eval(this._context).val;
+    }
+    get w() {
+        return this._dims.width.eval(this._context).val;
+    }
+    get h() {
+        return this._dims.height.eval(this._context).val;
     }
     get dims() {
         return this._dims;
