@@ -18,7 +18,7 @@ class GreaterThanEq {
         let lhs = this._left.eval(context);
         let rhs = this._right.eval(context);
         if (lhs instanceof NumberNode_1.NumberNode && rhs instanceof NumberNode_1.NumberNode) {
-            return (new BooleanNode_1.BooleanNode(lhs.val >= rhs.val));
+            return (new BooleanNode_1.BooleanNode(lhs.val >= rhs.val, ""));
         }
         else {
             throw new Error("The arguments to the >= operator must be numeric.");

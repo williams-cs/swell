@@ -15,7 +15,7 @@ class Not {
     eval(context) {
         let e = this._expr.eval(context);
         if (e instanceof BooleanNode_1.BooleanNode) {
-            return new BooleanNode_1.BooleanNode(!e.val);
+            return new BooleanNode_1.BooleanNode(!e.val, "");
         }
         else {
             throw new Error("The argument to the ! operator must be boolean.");

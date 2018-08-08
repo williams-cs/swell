@@ -12,9 +12,11 @@ export class StringNode implements Expression<StringNode>{
 
     private _str: string;
     private _newLine : boolean = false;
+    private _ws : string;
 
-    constructor(str: string){
+    constructor(str: string, ws : string){
         this._str = str;
+        this._ws = ws;
     }
 
     eval(context: Scope): StringNode {
@@ -27,7 +29,7 @@ export class StringNode implements Expression<StringNode>{
     }
     
     toString() : string {
-        return '\"' + this._str + '\"';
+        return this._ws + '\"' + this._str + '\"';
     }
 
     set str(value: string){

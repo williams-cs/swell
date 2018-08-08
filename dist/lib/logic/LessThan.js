@@ -23,7 +23,7 @@ class LessThan {
             //console.log(lhs.val + "<" + rhs.val);
             //let bool: boolean = lhs.val < rhs.val;
             //console.log("bool: " + bool);
-            return (new BooleanNode_1.BooleanNode(lhs.val < rhs.val));
+            return (new BooleanNode_1.BooleanNode(lhs.val < rhs.val, ""));
         }
         else {
             throw new Error("Arguments to less than must produce numeric values.");

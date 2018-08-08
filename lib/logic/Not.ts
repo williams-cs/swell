@@ -21,7 +21,7 @@ export class Not implements Expression<BooleanNode>{
     eval(context: Scope): BooleanNode {
         let e = this._expr.eval(context);
         if (e instanceof BooleanNode) {
-            return new BooleanNode(!e.val);
+            return new BooleanNode(!e.val , "");
         } else {
             throw new Error("The argument to the ! operator must be boolean.");
         }

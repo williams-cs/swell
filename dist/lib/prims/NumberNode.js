@@ -16,7 +16,7 @@ class NumberNode {
     draw(context, dims, ast) {
     }
     toString() {
-        return "" + this._val;
+        return this._ws + this._val;
     }
     get val() {
         return this._val;
