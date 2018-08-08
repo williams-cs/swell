@@ -310,7 +310,7 @@ export class StringEffect implements Effect<StringNode> {
             //console.log(this._str.val + " logging drag");
             this._isDragging = false;
             if(Math.abs(this._x1 - this._dims.x.eval(this._context).val) > 1 || Math.abs(this._y1 - this._dims.y.eval(this._context).val) > 1) {
-                this._context.eventLog.push(this.logMove());
+                //this._context.eventLog.push(this.logMove());
             }
         } else if (this._isResizing && this._isSelected){
             //console.log(this._str.val + " logging resize");
@@ -398,9 +398,9 @@ export class StringEffect implements Effect<StringNode> {
         return new PaintEvent(this._str.val, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
     
-    logMove(): LogEvent<any> {
-        return new DragEvent(this._str.val, this._x1, this._y1, this.x, this.y);
-    }
+    // logMove(): LogEvent<any> {
+    //     return new DragEvent(this._str.val, this._x1, this._y1, this.x, this.y);
+    // }
 
     logResize(): LogEvent<any> {
         return new ResizeEvent(this._str.val, this._size1, this._fontSize);
@@ -441,8 +441,12 @@ export class StringEffect implements Effect<StringNode> {
         return this._isSelected;
     }
 
-    toString(): string{
+    toSelString(): string {
         return " " + this._str.val + " at " + this.x + ", " + this.y;
+    }
+
+    toDragString(): string {
+        return "Boo you";
     }
 }
 

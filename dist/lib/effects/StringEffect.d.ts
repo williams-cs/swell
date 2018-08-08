@@ -49,7 +49,6 @@ export declare class StringEffect implements Effect<StringNode> {
     drawTextGuides(x: number, y: number, w: number, h: number, corner: number): void;
     drawSquare(x: number, y: number, w: number, h: number, color: string): void;
     logPaint(): LogEvent<any>;
-    logMove(): LogEvent<any>;
     logResize(): LogEvent<any>;
     logClick(): LogEvent<any>;
     logSelected(): LogEvent<any>;
@@ -59,5 +58,6 @@ export declare class StringEffect implements Effect<StringNode> {
     readonly y: number;
     readonly dims: Dimensions;
     readonly selected: boolean;
-    toString(): string;
+    toSelString(): string;
+    toDragString(): string;
 }

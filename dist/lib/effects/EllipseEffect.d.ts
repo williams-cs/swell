@@ -48,7 +48,6 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
     isMouseOutside(event: any): void;
     ast(): Expression<EllipseNode>;
     logPaint(): LogEvent<any>;
-    logMove(): LogEvent<any>;
     logResize(): LogEvent<any>;
     logClick(): LogEvent<any>;
     updateAST(): Expression<EllipseNode>;
@@ -57,5 +56,6 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
     readonly dims: Dimensions;
     readonly selected: boolean;
     readonly justDragged: boolean;
-    toString(): string;
+    toSelString(): string;
+    toDragString(): string;
 }

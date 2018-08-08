@@ -521,7 +521,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
         if(this._isDragging && this._isSelected){
             this._isDragging = false;
             if(Math.abs(this._x1 - this._dims.x.eval(this._context).val) > 1 || Math.abs(this._y1 - this._dims.y.eval(this._context).val) > 1) {
-                this._context.eventLog.push(this.logMove());
+                //this._context.eventLog.push(this.logMove());
             }
         } else if (this._isResizing && this._isSelected){
             this._isResizing = false;
@@ -571,10 +571,10 @@ export class RectangleEffect implements Effect<RectangleNode> {
         return new PaintEvent("rectangle", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
 
-    logMove(): LogEvent<any> {
-        //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);
-        return new DragEvent("rectangle", this._x1, this._y1, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
-    }
+    // logMove(): LogEvent<any> {
+    //     //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);
+    //     return new DragEvent("rectangle", this._x1, this._y1, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+    // }
 
     logResize(): LogEvent<any> {
         return new ResizeEvent("rectangle", this._size1, this._dims.width.eval(this._context).val);
@@ -607,8 +607,12 @@ export class RectangleEffect implements Effect<RectangleNode> {
         return this._isSelected;
     }
 
-    toString(): string{
+    toSelString(): string{
         return " rectangle at " + this.x + ", " + this.y;
+    }
+
+    toDragString(): string {
+        return "Boo";
     }
 }
 

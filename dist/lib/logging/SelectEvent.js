@@ -10,7 +10,7 @@ class SelectEvent extends LogEvent_1.LogEvent {
     assembleStrings() {
         let logStrings = [];
         for (let elem of this.toLog) {
-            logStrings.push(elem.toString());
+            logStrings.push(elem.toSelString());
         }
         return "Selected" + logStrings;
     }

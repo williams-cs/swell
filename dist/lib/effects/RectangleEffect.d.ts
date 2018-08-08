@@ -61,7 +61,6 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
     getMousePosition(): void;
     isMouseOutside(event: any): void;
     logPaint(): LogEvent<any>;
-    logMove(): LogEvent<any>;
     logResize(): LogEvent<any>;
     logClick(): LogEvent<any>;
     ast(): Expression<RectangleNode>;
@@ -70,5 +69,6 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
     readonly y: number;
     readonly dims: Dimensions;
     readonly selected: boolean;
-    toString(): string;
+    toSelString(): string;
+    toDragString(): string;
 }

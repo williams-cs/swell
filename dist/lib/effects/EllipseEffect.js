@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const PaintEvent_1 = require("../logging/PaintEvent");
-const DragEvent_1 = require("../logging/DragEvent");
 const ResizeEvent_1 = require("../logging/ResizeEvent");
 const NumberNode_1 = require("../prims/NumberNode");
 const ClickEvent_1 = require("../logging/ClickEvent");
@@ -402,7 +401,7 @@ class EllipseEffect {
             this._isDragging = false;
             if (Math.abs(this._x1 - this._dims.x.eval(this._context).val) > 1 || Math.abs(this._y1 - this._dims.y.eval(this._context).val) > 1) {
                 //this._justDragged = true;
-                this._context.eventLog.push(this.logMove());
+                //this._context.eventLog.push(this.logMove());
             }
         }
         else if (this._isResizing && this._isSelected) {
@@ -442,10 +441,10 @@ class EllipseEffect {
     logPaint() {
         return new PaintEvent_1.PaintEvent("ellipse", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
-    logMove() {
-        //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);
-        return new DragEvent_1.DragEvent("ellipse", this._x1, this._y1, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
-    }
+    // logMove(): LogEvent<any> {
+    //     //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);
+    //     return new DragEvent("ellipse", this._x1, this._y1, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+    // }
     logResize() {
         return new ResizeEvent_1.ResizeEvent("ellipse", this._size1, this._dims.radius.eval(this._context).val);
     }
@@ -470,8 +469,11 @@ class EllipseEffect {
     get justDragged() {
         return this._justDragged;
     }
-    toString() {
+    toSelString() {
         return (" ellipse at " + this.x + ", " + this.y);
+    }
+    toDragString() {
+        return (" ellipse from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
     }
 }
 exports.EllipseEffect = EllipseEffect;

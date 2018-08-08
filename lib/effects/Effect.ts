@@ -7,7 +7,8 @@ export interface Effect<T>{
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void; // draws object
     ast(): Expression<T>; // returns expression that created obj
     update(): void;
-    toString(): string;
+    toSelString(): string; // returns string for selection logging
+    toDragString(): string; // returns string for dragging
     //updateAST(): Expression<T>; // returns a new expression after manipulation
     //log(): string;
     x: number;

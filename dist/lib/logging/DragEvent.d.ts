@@ -1,5 +1,6 @@
 import { LogEvent } from './LogEvent';
+import { Effect } from '../effects/Effect';
 export declare class DragEvent extends LogEvent<any> {
-    constructor(toLog: string, x1: number, y1: number, x2: number, y2: number);
+    constructor(toLog: Effect<any>);
     assembleLog(): string;
 }

@@ -448,7 +448,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
             this._isDragging = false;
             if(Math.abs(this._x1 - this._dims.x.eval(this._context).val) > 1 || Math.abs(this._y1 - this._dims.y.eval(this._context).val) > 1) {
                 //this._justDragged = true;
-                this._context.eventLog.push(this.logMove());
+                //this._context.eventLog.push(this.logMove());
             }
         } else if (this._isResizing && this._isSelected){
             this._isResizing = false;
@@ -493,10 +493,10 @@ export class EllipseEffect implements Effect<EllipseNode> {
         return new PaintEvent("ellipse", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
 
-    logMove(): LogEvent<any> {
-        //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);
-        return new DragEvent("ellipse", this._x1, this._y1, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
-    }
+    // logMove(): LogEvent<any> {
+    //     //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);
+    //     return new DragEvent("ellipse", this._x1, this._y1, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+    // }
 
     logResize(): LogEvent<any> {
         return new ResizeEvent("ellipse", this._size1, this._dims.radius.eval(this._context).val);
@@ -529,8 +529,12 @@ export class EllipseEffect implements Effect<EllipseNode> {
         return this._justDragged;
     }
 
-    toString(): string{
+    toSelString(): string{
         return (" ellipse at " + this.x + ", " + this.y);
+    }
+
+    toDragString(): string{
+        return(" ellipse from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
     }
 }
 

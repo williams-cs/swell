@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const NumberNode_1 = require("../prims/NumberNode");
 const PaintEvent_1 = require("../logging/PaintEvent");
 const ResizeEvent_1 = require("../logging/ResizeEvent");
-const DragEvent_1 = require("../logging/DragEvent");
 const ClickEvent_1 = require("../logging/ClickEvent");
 class RectangleEffect {
     constructor(rect) {
@@ -469,7 +468,7 @@ class RectangleEffect {
         if (this._isDragging && this._isSelected) {
             this._isDragging = false;
             if (Math.abs(this._x1 - this._dims.x.eval(this._context).val) > 1 || Math.abs(this._y1 - this._dims.y.eval(this._context).val) > 1) {
-                this._context.eventLog.push(this.logMove());
+                //this._context.eventLog.push(this.logMove());
             }
         }
         else if (this._isResizing && this._isSelected) {
@@ -513,10 +512,10 @@ class RectangleEffect {
     logPaint() {
         return new PaintEvent_1.PaintEvent("rectangle", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
-    logMove() {
-        //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);
-        return new DragEvent_1.DragEvent("rectangle", this._x1, this._y1, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
-    }
+    // logMove(): LogEvent<any> {
+    //     //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);
+    //     return new DragEvent("rectangle", this._x1, this._y1, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+    // }
     logResize() {
         return new ResizeEvent_1.ResizeEvent("rectangle", this._size1, this._dims.width.eval(this._context).val);
     }
@@ -541,8 +540,11 @@ class RectangleEffect {
     get selected() {
         return this._isSelected;
     }
-    toString() {
+    toSelString() {
         return " rectangle at " + this.x + ", " + this.y;
+    }
+    toDragString() {
+        return "Boo";
     }
 }
 exports.RectangleEffect = RectangleEffect;

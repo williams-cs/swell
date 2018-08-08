@@ -12,8 +12,8 @@ export class SelectEvent extends LogEvent<any>{
     
     assembleStrings(): string {
         let logStrings: string[] = [];
-        for(let elem of this.toLog){
-            logStrings.push(elem.toString());
+        for(let elem of (this.toLog as Effect<any>[])){
+            logStrings.push(elem.toSelString());
         }
         return "Selected" + logStrings;
     }

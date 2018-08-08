@@ -80,7 +80,10 @@ export class NumberEffect implements Effect<NumberNode> {
         return this._isSelected;
     }
 
-    toString(): string{
+    toSelString(): string {
         return this._num + " at " + this._dims.x + " , " + this._dims.y;
+    }
+    toDragString(): string {
+        return "are we even using this?";
     }
 }
