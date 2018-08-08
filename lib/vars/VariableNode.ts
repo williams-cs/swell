@@ -6,10 +6,15 @@ import { Dimensions } from '../structural/Dimensions';
 export class VariableNode implements Expression<any>{
     private _name: string;
     private _newLine : boolean = false;
+    private _ws : string;
     //private _val: Expression<any>;
-    constructor(name: string){
+    constructor(name: string, ws? : string){
         this._name = name;
         //this._val = val;
+        this._ws = ws;
+        if(ws == undefined){
+            this._ws = "";
+        }
     }
     
     eval(context: Scope): any {
@@ -24,7 +29,7 @@ export class VariableNode implements Expression<any>{
     // add get/set
 
     toString() : string {
-        return this._name;
+        return this._ws + this._name;
     }
     
     get name(): string{
