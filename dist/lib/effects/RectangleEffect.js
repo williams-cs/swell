@@ -530,7 +530,7 @@ class RectangleEffect {
         return new ResizeEvent_1.ResizeEvent("rectangle", this._size1, this._dims.width.eval(this._context).val);
     }
     logClick() {
-        return new ClickEvent_1.ClickEvent("rectangle at ", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+        return new ClickEvent_1.ClickEvent("rectangle", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
     ast() {
         throw new Error("Not implemented");

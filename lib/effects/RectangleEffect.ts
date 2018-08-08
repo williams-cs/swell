@@ -593,7 +593,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
     }
 
     logClick(): LogEvent<any>{
-        return new ClickEvent("rectangle at ", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+        return new ClickEvent("rectangle", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
 
     ast(): Expression<RectangleNode> {
