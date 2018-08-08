@@ -9,7 +9,7 @@ export declare class ForNode implements Expression<any> {
     private _body;
     private _ws;
     private _newLine;
-    constructor(init: Expression<any>, cond: Expression<BooleanNode>, post: Expression<any>, body: Expression<any>, ws: string);
+    constructor(init: Expression<any>, cond: Expression<BooleanNode>, post: Expression<any>, body: Expression<any>, ws?: string);
     eval(context: Scope): any;
     equalsVal(right: Expression<any>): boolean;
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): string;

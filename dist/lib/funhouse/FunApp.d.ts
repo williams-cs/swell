@@ -7,7 +7,7 @@ export declare class FunApp<T> implements Expression<T> {
     private _defaultValue;
     private _newLine;
     private _ws;
-    constructor(name: string, ws: string, args?: any[], defaultValue?: T);
+    constructor(name: string, ws?: string, args?: any[], defaultValue?: T);
     toString(): string;
     newLine(): boolean;
     eval(context: Scope): any;

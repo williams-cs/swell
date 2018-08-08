@@ -6,6 +6,9 @@ class BooleanNode {
         //super(parent);
         this._val = val;
         this._ws = ws;
+        if (ws == undefined) {
+            this._ws = "";
+        }
     }
     ;
     eval(context) {

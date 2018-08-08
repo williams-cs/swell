@@ -5,7 +5,7 @@ export declare class NumberNode implements Expression<NumberNode> {
     private _val;
     private _newLine;
     private _ws;
-    constructor(val: number);
+    constructor(val: number, ws?: string);
     eval(context: Scope): NumberNode;
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
     equalsVal(right: Expression<any>): boolean;

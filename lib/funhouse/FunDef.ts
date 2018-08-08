@@ -8,11 +8,16 @@ export class FunDef<T> implements Expression<T>{
     private _args: string[];
     private _funScope: Scope;
     private _newLine : boolean = true;
+    private _ws : string;
 
-    constructor(name: string, body: Expression<T>, args?: string[]){
+    constructor(name: string, body: Expression<T>, args?: string[], ws? : string){
         this._name = name;
         this._body = body;
         this._args = args;
+        this._ws = ws;
+        if(ws == undefined) {
+            this._ws = "";
+        }
     };
 
     // Binds args in context of definition; no values
@@ -42,7 +47,7 @@ export class FunDef<T> implements Expression<T>{
             argsList += this._args[i] + ", ";
         }
         argsList += this._args[this._args.length-1];
-        return "fun " + this._name + "(" + argsList + ')' + ' {\n ' + this._body.toString() + '}';
+        return this._ws + "fun " + this._name + "(" + argsList + ')' + ' {\n ' + this._body.toString() + '}';
     }
 
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {

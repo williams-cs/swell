@@ -5,7 +5,7 @@ export declare class BooleanNode implements Expression<BooleanNode> {
     private _val;
     private _newLine;
     private _ws;
-    constructor(val: boolean, ws: string);
+    constructor(val: boolean, ws?: string);
     eval(context: Scope): BooleanNode;
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
     equalsVal(right: Expression<any>): boolean;

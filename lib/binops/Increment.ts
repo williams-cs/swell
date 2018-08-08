@@ -16,7 +16,7 @@ export class Increment implements Expression<any>{
             this.innerRep= new AssignOp(variable, new PlusOp(variable, new NumberNode(1)));
         }
         else {
-            this.innerRep = new PlusOp(variable, new NumberNode(1));
+            this.innerRep = new PlusOp(variable, new NumberNode(1, ""));
         }
     }
 

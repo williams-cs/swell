@@ -11,9 +11,13 @@ export class NumberNode implements Expression <NumberNode>{
     private _newLine : boolean = false;
     private _ws :  string;
 
-    constructor(val: number){
+    constructor(val: number, ws? : string){
         //super(parent);
         this._val = val;
+        this._ws = ws;
+        if (ws == undefined) {
+            this._ws= "";
+        }
     };
     
     eval(context: Scope): NumberNode {

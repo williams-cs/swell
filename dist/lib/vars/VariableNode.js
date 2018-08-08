@@ -2,10 +2,14 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 class VariableNode {
     //private _val: Expression<any>;
-    constructor(name) {
+    constructor(name, ws) {
         this._newLine = false;
         this._name = name;
         //this._val = val;
+        this._ws = ws;
+        if (ws == undefined) {
+            this._ws = "";
+        }
     }
     eval(context) {
         //todo: grab val from context
@@ -18,7 +22,7 @@ class VariableNode {
         throw new Error("Cannot directly compare vars, eval first");
     }
     toString() {
-        return this._name;
+        return this._ws + this._name;
     }
     get name() {
         return this._name;

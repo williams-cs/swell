@@ -7,7 +7,7 @@ export declare class EllipseNode implements Expression<EllipseNode> {
     private _height;
     private _newLine;
     private _ws;
-    constructor(width: Expression<NumberNode>, height: Expression<NumberNode>, ws: string);
+    constructor(width: Expression<NumberNode>, height: Expression<NumberNode>, ws?: string);
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
     equalsVal(right: Expression<any>): boolean;
     eval(context: Scope): EllipseNode;

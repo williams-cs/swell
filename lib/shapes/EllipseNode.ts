@@ -13,10 +13,13 @@ export class EllipseNode implements Expression<EllipseNode> {
     private _newLine : boolean = false;
     private _ws : string;
     
-    constructor(width: Expression<NumberNode>, height: Expression<NumberNode>, ws : string){
+    constructor(width: Expression<NumberNode>, height: Expression<NumberNode>, ws? : string){
         this._width = width;
         this._height = height;
         this._ws = ws;
+        if (ws == undefined) {
+            this._ws= "";
+        }
     }
 
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {

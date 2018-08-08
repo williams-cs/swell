@@ -11,7 +11,7 @@ class Increment {
             this.innerRep = new AssignOp_1.AssignOp(variable, new PlusOp_1.PlusOp(variable, new NumberNode_1.NumberNode(1)));
         }
         else {
-            this.innerRep = new PlusOp_1.PlusOp(variable, new NumberNode_1.NumberNode(1));
+            this.innerRep = new PlusOp_1.PlusOp(variable, new NumberNode_1.NumberNode(1, ""));
         }
     }
     eval(context) {

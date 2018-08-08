@@ -7,10 +7,13 @@ export class BooleanNode implements Expression<BooleanNode>{
     private _newLine : boolean = false;
     private _ws : string;
 
-    constructor(val: boolean, ws : string){
+    constructor(val: boolean, ws? : string){
         //super(parent);
         this._val = val;
         this._ws = ws;
+        if (ws == undefined) {
+            this._ws= "";
+        }
     };
     
     eval(context: Scope): BooleanNode {

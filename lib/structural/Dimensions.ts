@@ -13,7 +13,7 @@ export class Dimensions {
         this._x = x;
         this._y = y;
         this._scale = scale;
-        this._radius = radius || new NumberNode(30);
+        this._radius = radius || new NumberNode(30, "");
     }
 
     toString() : string {

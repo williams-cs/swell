@@ -10,15 +10,18 @@ export class RectangleNode implements Expression<RectangleNode> {
     private _newLine : boolean = false;
     private _ws : string;
     
-    constructor(width: Expression<NumberNode>, height: Expression<NumberNode>, ws : string){
+    constructor(width: Expression<NumberNode>, height: Expression<NumberNode>, ws? : string){
         this._width = width;
         this._height = height;
         this._ws = ws;
+        if (ws == undefined) {
+            this._ws= "";
+        }
     }
 
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
-        dims.width = new NumberNode(this._width.eval(context).val);
-        dims.height = new NumberNode(this._height.eval(context).val);
+        dims.width = new NumberNode(this._width.eval(context).val, "");
+        dims.height = new NumberNode(this._height.eval(context).val, "");
         let e = new RectangleEffect(this);
         e.draw(context, dims, ast);
     }

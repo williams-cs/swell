@@ -9,6 +9,9 @@ class StringNode {
         this._newLine = false;
         this._str = str;
         this._ws = ws;
+        if (ws == undefined) {
+            this._ws = "";
+        }
     }
     eval(context) {
         return this;
