@@ -253,7 +253,7 @@ export class StringEffect implements Effect<StringNode> {
     // on mouse down
     modifyState(guideContains: boolean, contains: boolean): void {
         this._justDragged = false;
-        
+
         if (this._isSelectingMultiple) {
             if (contains) {
                 this._x1 = this.x;
@@ -465,7 +465,7 @@ export class StringEffect implements Effect<StringNode> {
     }
 
     toDragString(): string{
-        return(this._str.val + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
+        return(this._str.val + " from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
     }
 }
 

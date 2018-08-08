@@ -396,7 +396,7 @@ class StringEffect {
         return " " + this._str.val + " at " + this.x + ", " + this.y;
     }
     toDragString() {
-        return (this._str.val + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
+        return (this._str.val + " from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
     }
 }
 exports.StringEffect = StringEffect;

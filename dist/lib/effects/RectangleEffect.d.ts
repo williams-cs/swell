@@ -21,6 +21,7 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
     private _isResizing;
     private _isChangingDims;
     private _isSelectingMultiple;
+    private _justDragged;
     private _x1;
     private _y1;
     private _size1;
@@ -69,6 +70,8 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
     readonly y: number;
     readonly dims: Dimensions;
     readonly selected: boolean;
+    justDragged: boolean;
+    readonly isDragging: boolean;
     toSelString(): string;
     toDragString(): string;
 }

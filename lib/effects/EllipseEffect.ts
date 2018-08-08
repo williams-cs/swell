@@ -448,7 +448,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
 
     // on mouse up
     modifyReset(): void {
-        if(this._isDragging){ // probs only need dragging but oh well | isSel || selMul?
+        if(this._isDragging && this._isSelected){ // probs only need dragging but oh well | isSel || selMul?
             this._isDragging = false;
             if(Math.abs(this._x1 - this._dims.x.eval(this._context).val) > 1 || Math.abs(this._y1 - this._dims.y.eval(this._context).val) > 1) {
                 this._justDragged = true;
