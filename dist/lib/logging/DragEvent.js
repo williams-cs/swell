@@ -11,7 +11,7 @@ class DragEvent extends LogEvent_1.LogEvent {
         this.tag = "drag";
     }
     assembleLog() {
-        let toPrint = "Dragged " + this.toLog.toDragString() + " from " + this.x1.toString() + ", " + this.y1.toString() + " to " + this.x2.toString() + ", " + this.y2.toString();
+        let toPrint = "Dragged " + this.toLog.toDragString();
         return this.logItem(toPrint);
     }
 }
