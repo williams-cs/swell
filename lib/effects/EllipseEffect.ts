@@ -531,6 +531,10 @@ export class EllipseEffect implements Effect<EllipseNode> {
         return this._justDragged;
     }
 
+    get isDragging(): boolean {
+        return this._isDragging;
+    }
+
     toSelString(): string{
         return (" ellipse at " + this.x + ", " + this.y);
     }
