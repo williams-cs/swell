@@ -2,10 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const EllipseEffect_1 = require("../effects/EllipseEffect");
 class EllipseNode {
-    constructor(width, height) {
+    constructor(width, height, ws) {
         this._newLine = false;
         this._width = width;
         this._height = height;
+        this._ws = ws;
     }
     draw(context, dims, ast) {
         dims.width = this._width;
@@ -33,7 +34,7 @@ class EllipseNode {
         return this._newLine;
     }
     toString() {
-        return "ellipse(" + this._width.toString() + ", " + this._height.toString() + ")";
+        return this._ws + "ellipse(" + this._width.toString() + ", " + this._height.toString() + ")";
     }
 }
 exports.EllipseNode = EllipseNode;

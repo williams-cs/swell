@@ -6,7 +6,8 @@ export declare class RectangleNode implements Expression<RectangleNode> {
     private _width;
     private _height;
     private _newLine;
-    constructor(width: Expression<NumberNode>, height: Expression<NumberNode>);
+    private _ws;
+    constructor(width: Expression<NumberNode>, height: Expression<NumberNode>, ws: string);
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
     eval(context: Scope): RectangleNode;
     move(): void;

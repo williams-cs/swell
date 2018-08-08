@@ -11,10 +11,12 @@ export class EllipseNode implements Expression<EllipseNode> {
     private _width: Expression<NumberNode>;
     private _height: Expression<NumberNode>; 
     private _newLine : boolean = false;
+    private _ws : string;
     
-    constructor(width: Expression<NumberNode>, height: Expression<NumberNode>){
+    constructor(width: Expression<NumberNode>, height: Expression<NumberNode>, ws : string){
         this._width = width;
         this._height = height;
+        this._ws = ws;
     }
 
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
@@ -49,7 +51,7 @@ export class EllipseNode implements Expression<EllipseNode> {
     }
 
     toString() : string {
-        return "ellipse(" + this._width.toString() + ", " + this._height.toString() + ")"
+        return this._ws + "ellipse(" + this._width.toString() + ", " + this._height.toString() + ")"
     }
     // get methods? 
 }
