@@ -9,10 +9,15 @@ class DragEvent extends LogEvent_1.LogEvent {
     constructor(toLog) {
         super(toLog);
         this.tag = "drag";
+        this._toPrint = this.assembleString();
+    }
+    assembleString() {
+        this._toPrint = this.toLog.toDragString();
+        return this._toPrint;
     }
     assembleLog() {
-        let toPrint = "Dragged " + this.toLog.toDragString();
-        return this.logItem(toPrint);
+        let print = "Dragged " + this._toPrint;
+        return this.logItem(print);
     }
 }
 exports.DragEvent = DragEvent;
