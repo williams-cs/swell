@@ -51,6 +51,12 @@ class NumberEffect {
     get selected() {
         return this._isSelected;
     }
+    getJustDragged() {
+        return this._justDragged;
+    }
+    setJustDragged(val) {
+        this._justDragged = val;
+    }
     toSelString() {
         return this._num + " at " + this._dims.x + " , " + this._dims.y;
     }

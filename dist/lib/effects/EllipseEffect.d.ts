@@ -55,7 +55,8 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
     readonly y: number;
     readonly dims: Dimensions;
     readonly selected: boolean;
-    justDragged: boolean;
+    getJustDragged(): boolean;
+    setJustDragged(val: boolean): void;
     readonly isDragging: boolean;
     toSelString(): string;
     toDragString(): string;

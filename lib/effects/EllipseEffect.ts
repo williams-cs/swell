@@ -457,6 +457,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
         } else if (this._isResizing && this._isSelected){
             console.log("resizing ellipse");
             this._isResizing = false;
+            console.log("Size diff: " + Math.abs(this._size1 - this._dims.radius.eval(this._context).val));
             if(Math.abs(this._size1 - this._dims.radius.eval(this._context).val) > 0){
                 this._context.eventLog.push(this.logResize());
             }
@@ -530,10 +531,10 @@ export class EllipseEffect implements Effect<EllipseNode> {
         return this._isSelected;
     }
 
-    get justDragged(): boolean {
+    getJustDragged(): boolean {
         return this._justDragged;
     }
-    set justDragged(val: boolean) {
+    setJustDragged(val: boolean) {
         this._justDragged = val;
     }
 

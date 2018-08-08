@@ -380,10 +380,10 @@ class StringEffect {
     get dims() {
         return this._dims;
     }
-    get justDragged() {
+    getJustDragged() {
         return this._justDragged;
     }
-    set justDragged(val) {
+    setJustDragged(val) {
         this._justDragged = val;
     }
     get isDragging() {

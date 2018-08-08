@@ -15,4 +15,6 @@ export interface Effect<T>{
     y: number;
     dims: Dimensions;
     selected: boolean;
+    getJustDragged(): boolean;
+    setJustDragged(val: boolean): void;
 }

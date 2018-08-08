@@ -624,10 +624,10 @@ export class RectangleEffect implements Effect<RectangleNode> {
         return this._isSelected;
     }
 
-    get justDragged(): boolean {
+    getJustDragged(): boolean {
         return this._justDragged;
     }
-    set justDragged(val: boolean) {
+    setJustDragged(val: boolean) {
         this._justDragged = val;
     }
 
