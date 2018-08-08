@@ -471,6 +471,9 @@ class EllipseEffect {
     get justDragged() {
         return this._justDragged;
     }
+    set justDragged(val) {
+        this._justDragged = val;
+    }
     get isDragging() {
         return this._isDragging;
     }

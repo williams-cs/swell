@@ -530,6 +530,9 @@ export class EllipseEffect implements Effect<EllipseNode> {
     get justDragged(): boolean {
         return this._justDragged;
     }
+    set justDragged(val: boolean) {
+        this._justDragged = val;
+    }
 
     get isDragging(): boolean {
         return this._isDragging;
