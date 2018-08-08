@@ -5,9 +5,10 @@ const StringEffect_1 = require("../effects/StringEffect");
 // Nodes representing strings
 // Should abstract Node class implement Expression?
 class StringNode {
-    constructor(str) {
+    constructor(str, ws) {
         this._newLine = false;
         this._str = str;
+        this._ws = ws;
     }
     eval(context) {
         return this;
@@ -17,7 +18,7 @@ class StringNode {
         e.draw(context, dims, ast);
     }
     toString() {
-        return '\"' + this._str + '\"';
+        return this._ws + '\"' + this._str + '\"';
     }
     set str(value) {
         this._str = value;

@@ -29,7 +29,7 @@ export class LessThan implements Expression<BooleanNode>{
             //console.log(lhs.val + "<" + rhs.val);
             //let bool: boolean = lhs.val < rhs.val;
             //console.log("bool: " + bool);
-            return (new BooleanNode(lhs.val < rhs.val));
+            return (new BooleanNode(lhs.val < rhs.val , ""));
         } else {
             throw new Error("Arguments to less than must produce numeric values.");
         }

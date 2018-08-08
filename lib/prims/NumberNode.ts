@@ -9,6 +9,7 @@ import { Dimensions } from '../structural/Dimensions';
 export class NumberNode implements Expression <NumberNode>{
     private _val: number;
     private _newLine : boolean = false;
+    private _ws :  string;
 
     constructor(val: number){
         //super(parent);
@@ -24,7 +25,7 @@ export class NumberNode implements Expression <NumberNode>{
     }
 
     toString() : string {
-        return "" + this._val;
+        return this._ws + this._val;
     }
 
     get val(): number{

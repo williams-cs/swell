@@ -20,7 +20,7 @@ export class And implements Expression<any>{
         let rhs = this._right.eval(context);
 
         if (lhs instanceof BooleanNode && rhs instanceof BooleanNode) {
-            return new BooleanNode(lhs.val && rhs.val);
+            return new BooleanNode(lhs.val && rhs.val, "");
         } else {
             throw new Error("The arguments to the 'and' operator must be booleans.");
         }

@@ -25,7 +25,7 @@ export class GreaterThan implements Expression<BooleanNode>{
         let lhs = this._left.eval(context);
         let rhs = this._right.eval(context);
         if (lhs instanceof NumberNode && rhs instanceof NumberNode) {
-            return (new BooleanNode(lhs.val > rhs.val));
+            return (new BooleanNode(lhs.val > rhs.val, ""));
         } else {
             throw new Error("The arguments to the > operator must be numeric.");
         }

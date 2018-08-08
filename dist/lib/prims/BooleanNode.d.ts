@@ -4,7 +4,8 @@ import { Dimensions } from "../structural/Dimensions";
 export declare class BooleanNode implements Expression<BooleanNode> {
     private _val;
     private _newLine;
-    constructor(val: boolean);
+    private _ws;
+    constructor(val: boolean, ws: string);
     eval(context: Scope): BooleanNode;
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
     toString(): string;
