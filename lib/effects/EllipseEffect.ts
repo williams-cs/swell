@@ -385,6 +385,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
         }
     }
 
+    // on mouse down
     modifyState(guideContains: number, contains: boolean): void {
         this._justDragged = false;
 
@@ -443,13 +444,14 @@ export class EllipseEffect implements Effect<EllipseNode> {
         }
     }
 
+    // on mouse up
     modifyReset(): void {
-        if(this._isDragging && (this._isSelected || this._isSelectingMultiple)){ // probs only need dragging but oh well
+        if(this._isDragging){ // probs only need dragging but oh well | isSel || selMul?
             this._isDragging = false;
             if(Math.abs(this._x1 - this._dims.x.eval(this._context).val) > 1 || Math.abs(this._y1 - this._dims.y.eval(this._context).val) > 1) {
-                //this._justDragged = true;
+                this._justDragged = true;
                 //this._context.eventLog.push(this.logMove());
-            }
+            } 
         } else if (this._isResizing && this._isSelected){
             this._isResizing = false;
             if(Math.abs(this._size1 - this._dims.radius.eval(this._context).val) > 0){

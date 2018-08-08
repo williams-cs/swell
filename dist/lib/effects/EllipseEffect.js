@@ -345,6 +345,7 @@ class EllipseEffect {
             }
         }
     }
+    // on mouse down
     modifyState(guideContains, contains) {
         this._justDragged = false;
         if (this._isSelectingMultiple) {
@@ -396,11 +397,12 @@ class EllipseEffect {
             this._isDragging = false;
         }
     }
+    // on mouse up
     modifyReset() {
-        if (this._isDragging && (this._isSelected || this._isSelectingMultiple)) { // probs only need dragging but oh well
+        if (this._isDragging) { // probs only need dragging but oh well | isSel || selMul?
             this._isDragging = false;
             if (Math.abs(this._x1 - this._dims.x.eval(this._context).val) > 1 || Math.abs(this._y1 - this._dims.y.eval(this._context).val) > 1) {
-                //this._justDragged = true;
+                this._justDragged = true;
                 //this._context.eventLog.push(this.logMove());
             }
         }
