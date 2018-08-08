@@ -14,6 +14,9 @@ class Ellipse {
     ;
     draw() { }
     ;
+    equalsVal(right) {
+        throw new Error("Cannot call equals directly on shape");
+    }
     ast() {
         return null;
     }

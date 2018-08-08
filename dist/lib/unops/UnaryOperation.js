@@ -13,6 +13,10 @@ class UnaryOperation {
     set val(value) {
         this._val = value;
     }
+    equalsVal(right) {
+        throw new Error("Cannot call equals on UnaryOp");
+    }
+    ;
     newLine() {
         return this._newLine;
     }

@@ -9,6 +9,7 @@ export declare class And implements Expression<any> {
     toString(): string;
     eval(context: Scope): BooleanNode;
     newLine(): boolean;
+    equalsVal(right: Expression<any>): boolean;
     draw(): void;
     readonly left: Expression<any>;
     readonly right: Expression<any>;

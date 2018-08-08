@@ -10,6 +10,9 @@ class ColorNode {
     ;
     draw(context, dims, ast) {
     }
+    equalsVal(right) {
+        throw new Error("Cannot call equals directly on shape");
+    }
     toString() {
         return "";
     }

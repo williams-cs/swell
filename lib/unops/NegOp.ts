@@ -18,11 +18,15 @@ export class NegOp extends UnaryOperation<NumberNode>{
         return new NumberNode(-v.val);
     }
 
-    toString() : string {
+    equalsVal(right: Expression<any>): boolean{
+        throw new Error("Cannot call equals on NegOp");
+    }
+
+    toString(): string {
         return "-" + this.val;
     }
 
-    newLine() : boolean {
+    newLine(): boolean {
         return this.newLine();
     }
 

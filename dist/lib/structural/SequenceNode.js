@@ -13,6 +13,9 @@ class SequenceNode {
     }
     draw(context, dims, ast) {
     }
+    equalsVal(right) {
+        throw new Error("Cannot call equals on SequenceNode");
+    }
     toString() {
         let result = this._left.toString();
         if (this._left.newLine() == true) {

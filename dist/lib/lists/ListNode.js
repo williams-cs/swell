@@ -21,7 +21,19 @@ class ListNode {
         list += this._list[this._list.length - 1].toString();
         return '[' + list + ']';
     }
+    equalsVal(right) {
+        if (right instanceof ListNode) {
+            for (let i = 0; i < this.list.length; i++) {
+                if (!(this.list[i].equalsVal(right.list[i]))) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
     draw() {
+        throw new Error("Cannot draw a ListNode");
     }
     get list() {
         return this._list;

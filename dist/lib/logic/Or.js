@@ -23,7 +23,11 @@ class Or {
             throw new Error("The arguments to the 'or' operator must be booleans.");
         }
     }
+    equalsVal(right) {
+        throw new Error("Cannot call equals on logical ops");
+    }
     draw() {
+        throw new Error("Cannot call draw on logical ops");
     }
     get left() {
         return this._left;

@@ -8,6 +8,9 @@ class BinaryOperation {
     }
     ;
     draw(context, dims, ast) { }
+    equalsVal(right) {
+        throw new Error("Cannot call equals directly on BinOp");
+    }
     toString() { return ""; }
     ;
     get left() {

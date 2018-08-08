@@ -6,6 +6,7 @@ export declare class Return implements Expression<any> {
     private _newLine;
     constructor(expr: Expression<any>);
     eval(context: Scope): void;
+    equalsVal(right: Expression<any>): boolean;
     toString(): string;
     newLine(): boolean;
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;

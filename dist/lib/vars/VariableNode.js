@@ -14,7 +14,9 @@ class VariableNode {
     }
     draw(context, dims, ast) {
     }
-    // add get/set
+    equalsVal(right) {
+        throw new Error("Cannot directly compare vars, eval first");
+    }
     toString() {
         return this._name;
     }

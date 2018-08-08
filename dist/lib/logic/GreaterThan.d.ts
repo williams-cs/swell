@@ -9,6 +9,7 @@ export declare class GreaterThan implements Expression<BooleanNode> {
     toString(): string;
     newLine(): boolean;
     eval(context: Scope): BooleanNode;
+    equalsVal(right: Expression<any>): boolean;
     draw(): void;
     readonly left: Expression<any>;
     readonly right: Expression<any>;

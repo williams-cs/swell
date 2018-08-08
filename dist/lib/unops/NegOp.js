@@ -12,6 +12,9 @@ class NegOp extends UnaryOperation_1.UnaryOperation {
         let v = this.val.eval(context);
         return new NumberNode_1.NumberNode(-v.val);
     }
+    equalsVal(right) {
+        throw new Error("Cannot call equals on NegOp");
+    }
     toString() {
         return "-" + this.val;
     }

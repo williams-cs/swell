@@ -8,6 +8,7 @@ export declare class NumberNode implements Expression<NumberNode> {
     constructor(val: number);
     eval(context: Scope): NumberNode;
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
+    equalsVal(right: Expression<any>): boolean;
     toString(): string;
     val: number;
     newLine(): boolean;

@@ -18,7 +18,14 @@ export class BooleanNode implements Expression<BooleanNode>{
     }
 
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
-    
+        throw new Error("Not implemented");
+    }
+
+    equalsVal(right: Expression<any>): boolean{
+        if(right instanceof BooleanNode){
+            return this.val === right.val;
+        }
+        return false;
     }
     
     toString() : string {

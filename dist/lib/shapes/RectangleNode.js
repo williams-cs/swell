@@ -18,6 +18,9 @@ class RectangleNode {
     eval(context) {
         return this;
     }
+    equalsVal(right) {
+        throw new Error("Cannot call equals directly on shape");
+    }
     move() { }
     get width() {
         return this._width;

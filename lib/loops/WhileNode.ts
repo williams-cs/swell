@@ -45,8 +45,12 @@ export class WhileNode implements Expression<any>{
         //}
     }
 
-    draw(context: Scope, dims: Dimensions, ast: Expression<any>){
+    equalsVal(right: Expression<any>): boolean{
+        throw new Error("Cannot call equals on While loop");
+    }
 
+    draw(context: Scope, dims: Dimensions, ast: Expression<any>){
+        return "Cannot call draw on While loop";
     }
 
     toString() :string {

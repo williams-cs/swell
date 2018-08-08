@@ -24,15 +24,15 @@ export class Equals implements Expression<BooleanNode>{
     eval(context: Scope): BooleanNode {
         let lhs = this._left.eval(context);
         let rhs = this._right.eval(context);
-        if (lhs instanceof NumberNode && rhs instanceof NumberNode) {
-            return (new BooleanNode(lhs.val === rhs.val, ""));
-        } else {
-            throw new Error("The arguments to the == operator must be numeric.");
-        }
+        return lhs.equalsVal(rhs);
+    }
+
+    equalsVal(right: Expression<any>): boolean{
+        throw new Error("well this is meta");
     }
 
     draw(){
-
+        throw new Error("Cannot call draw on logical ops");
     }
 
     get left(): Expression<any>{

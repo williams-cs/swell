@@ -84,6 +84,10 @@ class Conditional {
     }
     */
     draw() {
+        throw new Error("Not implemented");
+    }
+    equalsVal(right) {
+        throw new Error("Cannot call equals directly on conditionals");
     }
 }
 exports.Conditional = Conditional;

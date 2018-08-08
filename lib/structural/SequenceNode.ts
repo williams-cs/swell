@@ -23,6 +23,10 @@ export class SequenceNode implements Expression<void>{
     
     }
 
+    equalsVal(right: Expression<any>): boolean{
+        throw new Error("Cannot call equals on SequenceNode");
+    }
+
     toString() : string {
         let result = this._left.toString();
         if(this._left.newLine() == true) {

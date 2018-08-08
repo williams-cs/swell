@@ -20,14 +20,18 @@ export class Increment implements Expression<any>{
         }
     }
 
-    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
-    
-    }
-    
     eval(context: Scope): NumberNode {
         return this.innerRep.eval(context);
     }
 
+    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
+        throw new Error("Not implemented");
+    }
+
+    equalsVal(right: Expression<any>): boolean{
+        throw new Error("Cannot call equals directly on binary operations");
+    }
+    
     toString() : string {
         return this.expr.toString() + "++";
     }

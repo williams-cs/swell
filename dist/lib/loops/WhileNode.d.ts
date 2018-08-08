@@ -8,7 +8,8 @@ export declare class WhileNode implements Expression<any> {
     private _ws;
     constructor(cond: Expression<any>, body: Expression<any>, ws: string);
     eval(context: Scope): any;
-    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
+    equalsVal(right: Expression<any>): boolean;
+    draw(context: Scope, dims: Dimensions, ast: Expression<any>): string;
     toString(): string;
     newLine(): boolean;
 }

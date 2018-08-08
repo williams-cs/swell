@@ -52,8 +52,12 @@ export class ForNode implements Expression<any>{
         //}
     }
 
-    draw(context: Scope, dims: Dimensions, ast: Expression<any>){
+    equalsVal(right: Expression<any>): boolean{
+        throw new Error("Cannot call equals on For loop");
+    }
 
+    draw(context: Scope, dims: Dimensions, ast: Expression<any>){
+        return "Cannot call draw on For loop";
     }
 
     toString() :string {

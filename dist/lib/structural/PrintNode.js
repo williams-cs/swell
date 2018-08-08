@@ -11,6 +11,9 @@ class PrintNode {
     toString() {
         return this._ws + "print(" + this.toPrint.toString() + ", " + this.dims.toString() + ")";
     }
+    equalsVal(right) {
+        throw new Error("Cannot call equals on PrintNode");
+    }
     draw(context, dims, ast) {
         throw new Error("Cannot call draw() on printOp");
     }

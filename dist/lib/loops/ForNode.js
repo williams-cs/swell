@@ -40,7 +40,11 @@ class ForNode {
         //this._body.eval(context);
         //}
     }
+    equalsVal(right) {
+        throw new Error("Cannot call equals on For loop");
+    }
     draw(context, dims, ast) {
+        return "Cannot call draw on For loop";
     }
     toString() {
         return this._ws + 'for(' + this._init.toString() + ", " + this._cond.toString() + ", " + this._post.toString() + ") {\n "

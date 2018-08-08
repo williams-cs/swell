@@ -460,12 +460,23 @@ export class StringEffect implements Effect<StringNode> {
         return this._isSelected;
     }
 
+    get str(): string {
+        return this._str.val;
+    }
+
     toSelString(): string {
         return " " + this._str.val + " at " + this.x + ", " + this.y;
     }
 
     toDragString(): string{
         return(this._str.val + " from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
+    }
+
+    equalsVal(right: Effect<any>): boolean{
+        if(right instanceof StringEffect){
+            return this.str === right.str;
+        }
+        return false;
     }
 }
 

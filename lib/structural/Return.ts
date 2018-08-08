@@ -18,6 +18,10 @@ export class Return implements Expression<any>{
         //return this._expr.eval(context); // will need typechecking at some point
     }
 
+    equalsVal(right: Expression<any>): boolean{
+        throw new Error("Cannot call equals on Return");
+    }
+    
     toString() :string {
         return "return " + this._expr.toString();
     }

@@ -26,6 +26,10 @@ export class EllipseNode implements Expression<EllipseNode> {
         e.draw(context, dims, ast);
     }
 
+    equalsVal(right: Expression<any>): boolean{
+        throw new Error("Cannot call equals directly on shape");
+    }
+    
     eval(context: Scope): EllipseNode {
         return this;
     }

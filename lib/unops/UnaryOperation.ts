@@ -15,6 +15,10 @@ export abstract class UnaryOperation<T> implements Expression<T> {
         this._val = value;
     }
 
+    equalsVal(right: Expression<any>): boolean{
+        throw new Error("Cannot call equals on UnaryOp");
+    };
+
     newLine() : boolean {
         return this._newLine;
     }

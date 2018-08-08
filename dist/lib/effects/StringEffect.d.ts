@@ -62,6 +62,8 @@ export declare class StringEffect implements Effect<StringNode> {
     setJustDragged(val: boolean): void;
     readonly isDragging: boolean;
     readonly selected: boolean;
+    readonly str: string;
     toSelString(): string;
     toDragString(): string;
+    equalsVal(right: Effect<any>): boolean;
 }

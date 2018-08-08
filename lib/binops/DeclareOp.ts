@@ -13,14 +13,10 @@ export class DeclareOp<T> extends BinaryOperation<T>{
             throw new Error("The left hand side of the assignment must be a variable.");
         }
     }
-
-    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
-    
-    }
-    
     toString() : string {
         return "var " + this.left.toString() + ' = ' + this.right.toString();
     }
+
     eval(context: Scope): T{
         if(this.left instanceof VariableNode){
             //let left2: VariableNode = this.left as VariableNode;
@@ -33,6 +29,15 @@ export class DeclareOp<T> extends BinaryOperation<T>{
         }
         throw new Error("HALP (in DeclareOp)");
     }
+
+    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
+        throw new Error("Not implemented");
+    }
+
+    equalsVal(right: Expression<any>): boolean{
+        throw new Error("Cannot call equals directly on binary operations");
+    }
+
     newLine() : boolean {
         return false;
     }

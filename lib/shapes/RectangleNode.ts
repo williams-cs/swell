@@ -27,6 +27,10 @@ export class RectangleNode implements Expression<RectangleNode> {
         return this;
     }
 
+    equalsVal(right: Expression<any>): boolean{
+        throw new Error("Cannot call equals directly on shape");
+    }
+
     move(): void{}
 
     get width(): Expression<NumberNode>{

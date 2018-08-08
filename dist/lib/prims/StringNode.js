@@ -17,6 +17,12 @@ class StringNode {
         let e = new StringEffect_1.StringEffect(this);
         e.draw(context, dims, ast);
     }
+    equalsVal(right) {
+        if (right instanceof StringNode) {
+            return this.val === right.val;
+        }
+        return false;
+    }
     toString() {
         return this._ws + '\"' + this._str + '\"';
     }

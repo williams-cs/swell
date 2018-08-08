@@ -14,10 +14,6 @@ export class AssignOp<T> extends BinaryOperation<T>{
         }
     }
 
-    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
-    
-    }
-    
     eval(context: Scope): T{
         if(this.left instanceof VariableNode){
             //let left2: VariableNode = this.left as VariableNode;
@@ -33,6 +29,15 @@ export class AssignOp<T> extends BinaryOperation<T>{
     toString() :string {
         return this.left.toString() + ' = ' + this.right.toString();
     }
+
+    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
+        throw new Error("Not implemented");
+    }
+
+    equalsVal(right: Expression<any>): boolean{
+        throw new Error("Cannot call equals directly on binary operations");
+    }
+    
     newLine() : boolean {
         return false;
     }

@@ -93,7 +93,11 @@ export class Conditional implements Expression<any>{
     }
     */
 
-    draw(){
+    draw(): void {
+        throw new Error("Not implemented");
+    }
 
+    equalsVal(right: Expression<any>): boolean{
+        throw new Error("Cannot call equals directly on conditionals");
     }
 }

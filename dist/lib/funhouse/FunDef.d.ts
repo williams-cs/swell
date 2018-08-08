@@ -12,6 +12,7 @@ export declare class FunDef<T> implements Expression<T> {
     newLine(): boolean;
     toString(): string;
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
+    equalsVal(right: Expression<any>): boolean;
     readonly name: string;
     readonly body: Expression<T>;
     readonly args: string[];

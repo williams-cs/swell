@@ -392,11 +392,20 @@ class StringEffect {
     get selected() {
         return this._isSelected;
     }
+    get str() {
+        return this._str.val;
+    }
     toSelString() {
         return " " + this._str.val + " at " + this.x + ", " + this.y;
     }
     toDragString() {
         return (this._str.val + " from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
+    }
+    equalsVal(right) {
+        if (right instanceof StringEffect) {
+            return this.str === right.str;
+        }
+        return false;
     }
 }
 exports.StringEffect = StringEffect;

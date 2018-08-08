@@ -10,6 +10,7 @@ export declare class SequenceNode implements Expression<void> {
     newLine(): boolean;
     constructor(left: Expression<any>, right: Expression<any>);
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
+    equalsVal(right: Expression<any>): boolean;
     toString(): string;
     eval(context: Scope): void;
     left: Expression<any>;

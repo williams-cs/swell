@@ -9,10 +9,6 @@ export class PlusOp extends BinaryOperation<NumberNode>{
     constructor(left: Expression<NumberNode>, right: Expression<NumberNode>){
         super(left,right);
     }
-
-    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
-    
-    }
     
     eval(context: Scope): NumberNode {
         let l = this.left;
@@ -21,6 +17,15 @@ export class PlusOp extends BinaryOperation<NumberNode>{
         let re = r.eval(new Scope(context));
         return new NumberNode(le.val + re.val);
     }
+
+    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
+        throw new Error("Not implemented");
+    }
+
+    equalsVal(right: Expression<any>): boolean{
+        throw new Error("Cannot call equals directly on binary operations");
+    }
+
 
     toString() : string {
         return this.left.toString() + ' + ' + this.right.toString();

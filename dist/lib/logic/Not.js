@@ -21,7 +21,11 @@ class Not {
             throw new Error("The argument to the ! operator must be boolean.");
         }
     }
+    equalsVal(right) {
+        throw new Error("Cannot call equals on logical ops");
+    }
     draw() {
+        throw new Error("Cannot call draw on logical ops");
     }
     get expr() {
         return this._expr;

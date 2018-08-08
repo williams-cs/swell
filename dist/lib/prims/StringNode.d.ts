@@ -8,6 +8,7 @@ export declare class StringNode implements Expression<StringNode> {
     constructor(str: string, ws: string);
     eval(context: Scope): StringNode;
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
+    equalsVal(right: Expression<any>): boolean;
     toString(): string;
     str: string;
     readonly val: string;

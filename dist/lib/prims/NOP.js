@@ -11,6 +11,9 @@ class NOP {
     toString() {
         return "";
     }
+    equalsVal(right) {
+        return false;
+    }
     newLine() {
         return this._newLine;
     }

@@ -61,7 +61,10 @@ class FunApp {
         return fundef.body.eval(child);
     }
     draw(context, dims, ast) {
-        // this will have to do something
+        throw new Error("Not implemented");
+    }
+    equalsVal(right) {
+        throw new Error("Cannot call equals directly on functions");
     }
     get name() {
         return this._name;

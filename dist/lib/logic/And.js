@@ -23,7 +23,11 @@ class And {
     newLine() {
         return this._newLine;
     }
+    equalsVal(right) {
+        throw new Error("Cannot call equals on logical ops");
+    }
     draw() {
+        throw new Error("Cannot call draw on logical ops");
     }
     get left() {
         return this._left;

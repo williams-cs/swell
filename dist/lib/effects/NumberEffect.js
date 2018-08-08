@@ -63,6 +63,9 @@ class NumberEffect {
     toDragString() {
         return "are we even using this?";
     }
+    equalsVal(right) {
+        return false;
+    }
 }
 exports.NumberEffect = NumberEffect;
 //# sourceMappingURL=NumberEffect.js.map

@@ -21,7 +21,10 @@ export class VariableNode implements Expression<any>{
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
     
     }
-    // add get/set
+
+    equalsVal(right: Expression<any>): boolean{
+        throw new Error("Cannot directly compare vars, eval first");
+    }
 
     toString() : string {
         return this._name;

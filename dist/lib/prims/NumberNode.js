@@ -15,6 +15,12 @@ class NumberNode {
     }
     draw(context, dims, ast) {
     }
+    equalsVal(right) {
+        if (right instanceof NumberNode) {
+            return this.val === right.val;
+        }
+        return false;
+    }
     toString() {
         return this._ws + this._val;
     }

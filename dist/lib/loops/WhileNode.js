@@ -36,7 +36,11 @@ class WhileNode {
         //this._body.eval(context);
         //}
     }
+    equalsVal(right) {
+        throw new Error("Cannot call equals on While loop");
+    }
     draw(context, dims, ast) {
+        return "Cannot call draw on While loop";
     }
     toString() {
         return this._ws + "while(" + this._cond.toString() + ") {\n " + this._body.toString() + "}";

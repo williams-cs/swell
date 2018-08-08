@@ -9,7 +9,8 @@ export declare class PrintNode implements Expression<any> {
     private _ws;
     constructor(toPrint: Expression<any>, ws: string, dimensions?: Dimensions);
     toString(): string;
-    draw(context: Scope, dims: Dimensions, ast: PrintNode): void;
+    equalsVal(right: Expression<any>): boolean;
+    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
     eval(context: Scope): any;
     readonly toPrint: Expression<any>;
     readonly dims: Dimensions;

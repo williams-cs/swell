@@ -36,8 +36,12 @@ export class LessThan implements Expression<BooleanNode>{
         
     }
 
-    draw(){
+    equalsVal(right: Expression<any>): boolean{
+        throw new Error("Cannot call equals on logical ops");
+    }
 
+    draw(){
+        throw new Error("Cannot call draw on logical ops");
     }
 
     get left(): Expression<any>{

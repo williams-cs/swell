@@ -11,8 +11,6 @@ class DeclareOp extends BinaryOperation_1.BinaryOperation {
             throw new Error("The left hand side of the assignment must be a variable.");
         }
     }
-    draw(context, dims, ast) {
-    }
     toString() {
         return "var " + this.left.toString() + ' = ' + this.right.toString();
     }
@@ -25,6 +23,12 @@ class DeclareOp extends BinaryOperation_1.BinaryOperation {
             return r;
         }
         throw new Error("HALP (in DeclareOp)");
+    }
+    draw(context, dims, ast) {
+        throw new Error("Not implemented");
+    }
+    equalsVal(right) {
+        throw new Error("Cannot call equals directly on binary operations");
     }
     newLine() {
         return false;

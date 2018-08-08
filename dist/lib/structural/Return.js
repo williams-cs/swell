@@ -13,6 +13,9 @@ class Return {
         throw new ReturnError_1.ReturnError(result, context.retIDLookup());
         //return this._expr.eval(context); // will need typechecking at some point
     }
+    equalsVal(right) {
+        throw new Error("Cannot call equals on Return");
+    }
     toString() {
         return "return " + this._expr.toString();
     }

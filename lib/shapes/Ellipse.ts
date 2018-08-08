@@ -19,6 +19,10 @@ export class Ellipse {
 
     draw(){};
 
+    equalsVal(right: Expression<any>): boolean{
+        throw new Error("Cannot call equals directly on shape");
+    }
+
     ast(): Expression<any>{
         return null;
     };

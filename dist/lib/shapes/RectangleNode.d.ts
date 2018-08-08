@@ -10,6 +10,7 @@ export declare class RectangleNode implements Expression<RectangleNode> {
     constructor(width: Expression<NumberNode>, height: Expression<NumberNode>, ws: string);
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
     eval(context: Scope): RectangleNode;
+    equalsVal(right: Expression<any>): boolean;
     move(): void;
     width: Expression<NumberNode>;
     height: Expression<NumberNode>;

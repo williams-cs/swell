@@ -14,6 +14,9 @@ class EllipseNode {
         let e = new EllipseEffect_1.EllipseEffect(this);
         e.draw(context, dims, ast);
     }
+    equalsVal(right) {
+        throw new Error("Cannot call equals directly on shape");
+    }
     eval(context) {
         return this;
     }

@@ -62,4 +62,5 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
     readonly isDragging: boolean;
     toSelString(): string;
     toDragString(): string;
+    equalsVal(right: Effect<any>): boolean;
 }

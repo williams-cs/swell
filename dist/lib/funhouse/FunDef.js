@@ -36,7 +36,10 @@ class FunDef {
         return "fun " + this._name + "(" + argsList + ')' + ' {\n ' + this._body.toString() + '}';
     }
     draw(context, dims, ast) {
-        //NO
+        throw new Error("Not implemented");
+    }
+    equalsVal(right) {
+        throw new Error("Cannot call equals directly on functions");
     }
     // Get methods
     get name() {

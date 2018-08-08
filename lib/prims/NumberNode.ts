@@ -24,6 +24,13 @@ export class NumberNode implements Expression <NumberNode>{
     
     }
 
+    equalsVal(right: Expression<any>): boolean{
+        if(right instanceof NumberNode){
+            return this.val === right.val;
+        }
+        return false;
+    }
+
     toString() : string {
         return this._ws + this._val;
     }

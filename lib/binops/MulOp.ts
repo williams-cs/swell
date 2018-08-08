@@ -8,10 +8,6 @@ export class MulOp extends BinaryOperation<NumberNode>{
     constructor(left: Expression<NumberNode>, right: Expression<NumberNode>){
         super(left,right);
     }
-
-    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
-    
-    }
     
     eval(context: Scope): NumberNode {
         return new NumberNode(this.left.eval(new Scope(context)).eval(context).val * this.right.eval(new Scope(context)).eval(context).val);
@@ -20,6 +16,15 @@ export class MulOp extends BinaryOperation<NumberNode>{
     toString() : string {
         return this.left.toString() + ' * ' + this.right.toString();
     }
+
+    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
+        throw new Error("Not implemented");
+    }
+
+    equalsVal(right: Expression<any>): boolean{
+        throw new Error("Cannot call equals directly on binary operations");
+    }
+
     newLine() : boolean {
         return false;
     }

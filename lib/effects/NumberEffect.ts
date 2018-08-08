@@ -93,4 +93,7 @@ export class NumberEffect implements Effect<NumberNode> {
     toDragString(): string {
         return "are we even using this?";
     }
+    equalsVal(right: Effect<any>): boolean{
+        return false;
+    }
 }

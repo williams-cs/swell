@@ -6,8 +6,9 @@ export declare class Decrement implements Expression<any> {
     private innerRep;
     private expr;
     constructor(variable: Expression<any>);
-    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
     eval(context: Scope): NumberNode;
     toString(): string;
+    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
+    equalsVal(right: Expression<any>): boolean;
     newLine(): boolean;
 }

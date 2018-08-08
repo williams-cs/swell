@@ -9,6 +9,9 @@ export abstract class BinaryOperation<T> implements Expression<T> {
     abstract eval(context: Scope): T;
 
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {}
+    equalsVal(right: Expression<any>): boolean {
+        throw new Error("Cannot call equals directly on BinOp");
+    }
 
     toString() : string {return ""};
 

@@ -7,6 +7,7 @@ export declare class VariableNode implements Expression<any> {
     constructor(name: string);
     eval(context: Scope): any;
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
+    equalsVal(right: Expression<any>): boolean;
     toString(): string;
     readonly name: string;
     newLine(): boolean;

@@ -46,7 +46,11 @@ export class FunDef<T> implements Expression<T>{
     }
 
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
-        //NO
+        throw new Error("Not implemented");
+    }
+
+    equalsVal(right: Expression<any>): boolean{
+        throw new Error("Cannot call equals directly on functions");
     }
 
     // Get methods

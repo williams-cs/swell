@@ -11,8 +11,6 @@ class AssignOp extends BinaryOperation_1.BinaryOperation {
             throw new Error("The left hand side of the assignment must be a variable.");
         }
     }
-    draw(context, dims, ast) {
-    }
     eval(context) {
         if (this.left instanceof VariableNode_1.VariableNode) {
             //let left2: VariableNode = this.left as VariableNode;
@@ -24,6 +22,12 @@ class AssignOp extends BinaryOperation_1.BinaryOperation {
     }
     toString() {
         return this.left.toString() + ' = ' + this.right.toString();
+    }
+    draw(context, dims, ast) {
+        throw new Error("Not implemented");
+    }
+    equalsVal(right) {
+        throw new Error("Cannot call equals directly on binary operations");
     }
     newLine() {
         return false;

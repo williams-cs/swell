@@ -8,6 +8,7 @@ export declare class ColorNode implements Expression<string> {
     private _newLine;
     constructor(red: number, green: number, blue: number);
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
+    equalsVal(right: Expression<any>): boolean;
     toString(): string;
     eval(context: Scope): string;
     red: number;

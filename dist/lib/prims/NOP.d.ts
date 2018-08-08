@@ -6,5 +6,6 @@ export declare class NOP implements Expression<NOP> {
     eval(context: Scope): NOP;
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
     toString(): string;
+    equalsVal(right: Expression<any>): boolean;
     newLine(): boolean;
 }

@@ -6,8 +6,9 @@ export declare class Increment implements Expression<any> {
     private innerRep;
     private expr;
     constructor(variable: Expression<any>);
-    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
     eval(context: Scope): NumberNode;
+    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
+    equalsVal(right: Expression<any>): boolean;
     toString(): string;
     newLine(): boolean;
 }

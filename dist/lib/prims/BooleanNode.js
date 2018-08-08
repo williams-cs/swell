@@ -12,6 +12,13 @@ class BooleanNode {
         return this;
     }
     draw(context, dims, ast) {
+        throw new Error("Not implemented");
+    }
+    equalsVal(right) {
+        if (right instanceof BooleanNode) {
+            return this.val === right.val;
+        }
+        return false;
     }
     toString() {
         return this._ws + this._val;

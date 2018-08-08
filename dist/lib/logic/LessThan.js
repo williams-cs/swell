@@ -29,7 +29,11 @@ class LessThan {
             throw new Error("Arguments to less than must produce numeric values.");
         }
     }
+    equalsVal(right) {
+        throw new Error("Cannot call equals on logical ops");
+    }
     draw() {
+        throw new Error("Cannot call draw on logical ops");
     }
     get left() {
         return this._left;

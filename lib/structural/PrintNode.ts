@@ -20,7 +20,11 @@ export class PrintNode implements Expression<any>{
         return this._ws + "print(" + this.toPrint.toString() + ", " + this.dims.toString() + ")";
     }
 
-    draw(context: Scope, dims: Dimensions, ast: PrintNode): void {
+    equalsVal(right: Expression<any>): boolean{
+        throw new Error("Cannot call equals on PrintNode");
+    }
+
+    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
         throw new Error("Cannot call draw() on printOp");
     }
 

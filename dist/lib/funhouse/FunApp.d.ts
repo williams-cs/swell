@@ -12,6 +12,7 @@ export declare class FunApp<T> implements Expression<T> {
     newLine(): boolean;
     eval(context: Scope): any;
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
+    equalsVal(right: Expression<any>): boolean;
     readonly name: string;
     readonly args: Expression<{}>[];
 }

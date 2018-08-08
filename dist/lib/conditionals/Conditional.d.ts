@@ -12,4 +12,5 @@ export declare class Conditional implements Expression<any> {
     readonly falseBranch: Expression<any>;
     newLine(): boolean;
     draw(): void;
+    equalsVal(right: Expression<any>): boolean;
 }

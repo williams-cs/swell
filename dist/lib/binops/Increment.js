@@ -14,10 +14,14 @@ class Increment {
             this.innerRep = new PlusOp_1.PlusOp(variable, new NumberNode_1.NumberNode(1));
         }
     }
-    draw(context, dims, ast) {
-    }
     eval(context) {
         return this.innerRep.eval(context);
+    }
+    draw(context, dims, ast) {
+        throw new Error("Not implemented");
+    }
+    equalsVal(right) {
+        throw new Error("Cannot call equals directly on binary operations");
     }
     toString() {
         return this.expr.toString() + "++";

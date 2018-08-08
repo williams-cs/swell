@@ -14,13 +14,17 @@ class Decrement {
             this.innerRep = new MinusOp_1.MinusOp(variable, new NumberNode_1.NumberNode(1));
         }
     }
-    draw(context, dims, ast) {
-    }
     eval(context) {
         return this.innerRep.eval(context);
     }
     toString() {
         return this.expr.toString() + "--";
+    }
+    draw(context, dims, ast) {
+        throw new Error("Not implemented");
+    }
+    equalsVal(right) {
+        throw new Error("Cannot call equals directly on binary operations");
     }
     newLine() {
         return false;

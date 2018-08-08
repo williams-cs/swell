@@ -13,6 +13,10 @@ export class NOP implements Expression<NOP>{
         return "";
     }
 
+    equalsVal(right: Expression<any>): boolean{
+        return false;
+    }
+
     newLine() : boolean {
         return this._newLine;
     }

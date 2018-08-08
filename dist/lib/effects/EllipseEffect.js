@@ -494,6 +494,12 @@ class EllipseEffect {
     toDragString() {
         return ("ellipse from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
     }
+    equalsVal(right) {
+        if (right instanceof EllipseEffect) {
+            return (this.w === right.w && this.h === right.h);
+        }
+        return false;
+    }
 }
 exports.EllipseEffect = EllipseEffect;
 //allows us to get the mouse position in relation to the canvas!

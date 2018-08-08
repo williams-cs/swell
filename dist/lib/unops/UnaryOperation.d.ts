@@ -8,5 +8,6 @@ export declare abstract class UnaryOperation<T> implements Expression<T> {
     abstract eval(context?: Scope): T;
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
     val: Expression<T>;
+    equalsVal(right: Expression<any>): boolean;
     newLine(): boolean;
 }

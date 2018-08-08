@@ -76,7 +76,11 @@ export class FunApp<T> implements Expression<T>{
     }
 
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
-        // this will have to do something
+        throw new Error("Not implemented");
+    }
+
+    equalsVal(right: Expression<any>): boolean{
+        throw new Error("Cannot call equals directly on functions");
     }
 
 

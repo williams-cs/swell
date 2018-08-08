@@ -571,6 +571,12 @@ class RectangleEffect {
     toDragString() {
         return ("rectangle from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
     }
+    equalsVal(right) {
+        if (right instanceof RectangleEffect) {
+            return (this.w === right.w && this.h === right.h);
+        }
+        return false;
+    }
 }
 exports.RectangleEffect = RectangleEffect;
 //allows us to get the mouse position in relation to the canvas!

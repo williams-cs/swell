@@ -8,14 +8,18 @@ class PlusOp extends BinaryOperation_1.BinaryOperation {
     constructor(left, right) {
         super(left, right);
     }
-    draw(context, dims, ast) {
-    }
     eval(context) {
         let l = this.left;
         let r = this.right;
         let le = l.eval(new Scope_1.Scope(context));
         let re = r.eval(new Scope_1.Scope(context));
         return new NumberNode_1.NumberNode(le.val + re.val);
+    }
+    draw(context, dims, ast) {
+        throw new Error("Not implemented");
+    }
+    equalsVal(right) {
+        throw new Error("Cannot call equals directly on binary operations");
     }
     toString() {
         return this.left.toString() + ' + ' + this.right.toString();

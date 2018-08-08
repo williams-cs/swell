@@ -29,4 +29,5 @@ export declare class NumberEffect implements Effect<NumberNode> {
     setJustDragged(val: boolean): void;
     toSelString(): string;
     toDragString(): string;
+    equalsVal(right: Effect<any>): boolean;
 }

@@ -27,6 +27,13 @@ export class StringNode implements Expression<StringNode>{
         let e = new StringEffect(this);
         e.draw(context, dims, ast);
     }
+
+    equalsVal(right: Expression<any>): boolean{
+        if(right instanceof StringNode){
+            return this.val === right.val;
+        }
+        return false;
+    }
     
     toString() : string {
         return this._ws + '\"' + this._str + '\"';
