@@ -7,7 +7,8 @@ export declare class FunDef<T> implements Expression<T> {
     private _args;
     private _funScope;
     private _newLine;
-    constructor(name: string, body: Expression<T>, args?: string[]);
+    private _ws;
+    constructor(name: string, body: Expression<T>, args?: string[], ws?: string);
     eval(context: Scope): any;
     newLine(): boolean;
     toString(): string;

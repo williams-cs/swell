@@ -2,11 +2,15 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Scope_1 = require("../structural/Scope");
 class FunDef {
-    constructor(name, body, args) {
+    constructor(name, body, args, ws) {
         this._newLine = true;
         this._name = name;
         this._body = body;
         this._args = args;
+        this._ws = ws;
+        if (ws == undefined) {
+            this._ws = "";
+        }
     }
     ;
     // Binds args in context of definition; no values
@@ -33,7 +37,7 @@ class FunDef {
             argsList += this._args[i] + ", ";
         }
         argsList += this._args[this._args.length - 1];
-        return "fun " + this._name + "(" + argsList + ')' + ' {\n ' + this._body.toString() + '}';
+        return this._ws + "fun " + this._name + "(" + argsList + ')' + ' {\n ' + this._body.toString() + '}';
     }
     draw(context, dims, ast) {
         //NO
