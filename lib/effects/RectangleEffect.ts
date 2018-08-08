@@ -29,6 +29,8 @@ export class RectangleEffect implements Effect<RectangleNode> {
     private _isChangingDims: boolean = false;
     private _isSelectingMultiple: boolean = false;
 
+    private _justDragged = false;
+
     private _x1: number; // used to save coords for logging
     private _y1: number;
     private _size1: number; // saves size for logging
@@ -427,12 +429,16 @@ export class RectangleEffect implements Effect<RectangleNode> {
      * @param contains 
      */
     modifyState(guideContains: number, contains: boolean): void {
-        let x: number = this._dims.x.eval(this._context).val;
-        let y: number = this._dims.y.eval(this._context).val;
+        this._justDragged = false;
+
+        let x: number = this.x;
+        let y: number = this.y;
         let w: number = this._dims.width.eval(this._context).val;
         let h: number = this._dims.height.eval(this._context).val;
         if (this._isSelectingMultiple) {
             if (contains) {
+                this._x1 = this.x;
+                this._y1 = this.y;
                 this._isSelected = true;
                 this._isDragging = true;
                 this._dragoffx = this._mouse.x - x;
@@ -527,7 +533,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
         if(this._isDragging && this._isSelected){
             this._isDragging = false;
             if(Math.abs(this._x1 - this._dims.x.eval(this._context).val) > 1 || Math.abs(this._y1 - this._dims.y.eval(this._context).val) > 1) {
-                //this._context.eventLog.push(this.logMove());
+                this._justDragged = true;
             }
         } else if (this._isResizing && this._isSelected){
             this._isResizing = false;
@@ -587,7 +593,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
     }
 
     logClick(): LogEvent<any>{
-        return new ClickEvent("rectangle at ", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+        return new ClickEvent("rectangle", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
 
     ast(): Expression<RectangleNode> {
@@ -613,12 +619,23 @@ export class RectangleEffect implements Effect<RectangleNode> {
         return this._isSelected;
     }
 
+    get justDragged(): boolean {
+        return this._justDragged;
+    }
+    set justDragged(val: boolean) {
+        this._justDragged = val;
+    }
+
+    get isDragging(): boolean {
+        return this._isDragging;
+    }
+
     toSelString(): string{
         return " rectangle at " + this.x + ", " + this.y;
     }
 
-    toDragString(): string {
-        return "Boo";
+    toDragString(): string{
+        return("rectangle from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
     }
 }
 

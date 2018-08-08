@@ -22,6 +22,7 @@ export declare class StringEffect implements Effect<StringNode> {
     private _isDragging;
     private _isResizing;
     private _isSelectingMultiple;
+    private _justDragged;
     private _dragoffx;
     private _dragoffy;
     private _initDistance;
@@ -57,6 +58,8 @@ export declare class StringEffect implements Effect<StringNode> {
     readonly x: number;
     readonly y: number;
     readonly dims: Dimensions;
+    justDragged: boolean;
+    readonly isDragging: boolean;
     readonly selected: boolean;
     toSelString(): string;
     toDragString(): string;

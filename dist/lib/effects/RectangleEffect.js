@@ -12,6 +12,7 @@ class RectangleEffect {
         this._isResizing = false;
         this._isChangingDims = false;
         this._isSelectingMultiple = false;
+        this._justDragged = false;
         this._ratio = 0;
         this._dragoffx = 0;
         this._dragoffy = 0;
@@ -382,12 +383,15 @@ class RectangleEffect {
      * @param contains
      */
     modifyState(guideContains, contains) {
-        let x = this._dims.x.eval(this._context).val;
-        let y = this._dims.y.eval(this._context).val;
+        this._justDragged = false;
+        let x = this.x;
+        let y = this.y;
         let w = this._dims.width.eval(this._context).val;
         let h = this._dims.height.eval(this._context).val;
         if (this._isSelectingMultiple) {
             if (contains) {
+                this._x1 = this.x;
+                this._y1 = this.y;
                 this._isSelected = true;
                 this._isDragging = true;
                 this._dragoffx = this._mouse.x - x;
@@ -474,7 +478,7 @@ class RectangleEffect {
         if (this._isDragging && this._isSelected) {
             this._isDragging = false;
             if (Math.abs(this._x1 - this._dims.x.eval(this._context).val) > 1 || Math.abs(this._y1 - this._dims.y.eval(this._context).val) > 1) {
-                //this._context.eventLog.push(this.logMove());
+                this._justDragged = true;
             }
         }
         else if (this._isResizing && this._isSelected) {
@@ -526,7 +530,7 @@ class RectangleEffect {
         return new ResizeEvent_1.ResizeEvent("rectangle", this._size1, this._dims.width.eval(this._context).val);
     }
     logClick() {
-        return new ClickEvent_1.ClickEvent("rectangle at ", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+        return new ClickEvent_1.ClickEvent("rectangle", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
     ast() {
         throw new Error("Not implemented");
@@ -546,11 +550,20 @@ class RectangleEffect {
     get selected() {
         return this._isSelected;
     }
+    get justDragged() {
+        return this._justDragged;
+    }
+    set justDragged(val) {
+        this._justDragged = val;
+    }
+    get isDragging() {
+        return this._isDragging;
+    }
     toSelString() {
         return " rectangle at " + this.x + ", " + this.y;
     }
     toDragString() {
-        return "Boo";
+        return ("rectangle from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
     }
 }
 exports.RectangleEffect = RectangleEffect;

@@ -15,6 +15,7 @@ class StringEffect {
         this._isDragging = false;
         this._isResizing = false;
         this._isSelectingMultiple = false;
+        this._justDragged = false; // Has this object just been dragged?
         //private _log: string[];
         this._dragoffx = 0;
         this._dragoffy = 0;
@@ -203,9 +204,13 @@ class StringEffect {
             this._initDistance = newDistance;
         }
     }
+    // on mouse down
     modifyState(guideContains, contains) {
+        this._justDragged = false;
         if (this._isSelectingMultiple) {
             if (contains) {
+                this._x1 = this.x;
+                this._y1 = this.y;
                 this._isSelected = true;
                 this._isDragging = true;
                 this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
@@ -236,8 +241,8 @@ class StringEffect {
             this._size1 = this._fontSize; // saving old font size
         }
         else if (contains) {
-            this._x1 = this._dims.x.eval(this._context).val; // Saving original x and y
-            this._y1 = this._dims.y.eval(this._context).val;
+            this._x1 = this.x; // Saving original x and y
+            this._y1 = this.y;
             this._isSelected = true;
             this._context.eventLog.push(this.logClick());
             //console.log(this._str.val + "is selected?" + this._selected);
@@ -262,6 +267,7 @@ class StringEffect {
             //console.log(this._str.val + " logging drag");
             this._isDragging = false;
             if (Math.abs(this._x1 - this._dims.x.eval(this._context).val) > 1 || Math.abs(this._y1 - this._dims.y.eval(this._context).val) > 1) {
+                this._justDragged = true;
                 //this._context.eventLog.push(this.logMove());
             }
         }
@@ -374,6 +380,15 @@ class StringEffect {
     get dims() {
         return this._dims;
     }
+    get justDragged() {
+        return this._justDragged;
+    }
+    set justDragged(val) {
+        this._justDragged = val;
+    }
+    get isDragging() {
+        return this._isDragging;
+    }
     get selected() {
         return this._isSelected;
     }
@@ -381,7 +396,7 @@ class StringEffect {
         return " " + this._str.val + " at " + this.x + ", " + this.y;
     }
     toDragString() {
-        return "Boo you";
+        return (this._str.val + " from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
     }
 }
 exports.StringEffect = StringEffect;
