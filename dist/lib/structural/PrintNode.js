@@ -1,14 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class PrintNode {
-    constructor(toPrint, dimensions) {
+    constructor(toPrint, ws, dimensions) {
         this._scale = 1;
         this._newLine = false;
         this._toPrint = toPrint;
+        this._ws = ws;
         this._dims = dimensions || null;
     }
     toString() {
-        return "print(" + this.toPrint.toString() + ", " + this.dims.toString() + ")";
+        return this._ws + "print(" + this.toPrint.toString() + ", " + this.dims.toString() + ")";
     }
     draw(context, dims, ast) {
         throw new Error("Cannot call draw() on printOp");
