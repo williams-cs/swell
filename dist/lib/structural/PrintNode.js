@@ -6,6 +6,9 @@ class PrintNode {
         this._newLine = false;
         this._toPrint = toPrint;
         this._ws = ws;
+        if (ws == undefined) {
+            this._ws = "";
+        }
         this._dims = dimensions || null;
     }
     toString() {

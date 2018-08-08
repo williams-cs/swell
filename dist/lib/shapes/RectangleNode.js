@@ -8,6 +8,9 @@ class RectangleNode {
         this._width = width;
         this._height = height;
         this._ws = ws;
+        if (ws == undefined) {
+            this._ws = "";
+        }
     }
     draw(context, dims, ast) {
         dims.width = new NumberNode_1.NumberNode(this._width.eval(context).val, "");

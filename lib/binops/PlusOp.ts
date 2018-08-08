@@ -19,7 +19,7 @@ export class PlusOp extends BinaryOperation<NumberNode>{
         let r = this.right;
         let le = l.eval(new Scope(context));
         let re = r.eval(new Scope(context));
-        return new NumberNode(le.val + re.val, "");
+        return new NumberNode(le.val + re.val);
     }
 
     toString() : string {

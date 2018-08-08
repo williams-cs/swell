@@ -11,6 +11,9 @@ class FunApp {
         this._args = args;
         this._defaultValue = defaultValue;
         this._ws = ws;
+        if (ws == undefined) {
+            this._ws = "";
+        }
     }
     toString() {
         let argsList = '';

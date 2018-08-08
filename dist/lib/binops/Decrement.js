@@ -8,10 +8,10 @@ class Decrement {
     constructor(variable) {
         this.expr = variable;
         if (variable instanceof VariableNode_1.VariableNode) {
-            this.innerRep = new AssignOp_1.AssignOp(variable, new MinusOp_1.MinusOp(variable, new NumberNode_1.NumberNode(1, "")));
+            this.innerRep = new AssignOp_1.AssignOp(variable, new MinusOp_1.MinusOp(variable, new NumberNode_1.NumberNode(1)));
         }
         else {
-            this.innerRep = new MinusOp_1.MinusOp(variable, new NumberNode_1.NumberNode(1, ""));
+            this.innerRep = new MinusOp_1.MinusOp(variable, new NumberNode_1.NumberNode(1));
         }
     }
     draw(context, dims, ast) {
