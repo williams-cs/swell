@@ -12,13 +12,13 @@ export class FunApp<T> implements Expression<T>{
     private _newLine : boolean = false;
     private _ws : string;
 
-    constructor(name: string, ws?: string, args?: any[], defaultValue?: T){
+    constructor(name: string, args?: any[],  ws?: string, defaultValue?: T){
         this._name = name;
         this._args = args;
         this._defaultValue = defaultValue;
         this._ws = ws;
         if (ws == undefined) {
-            this._ws= "";
+            this._ws = "";
         }
     }
 
