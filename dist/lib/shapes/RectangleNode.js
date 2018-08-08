@@ -3,10 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const NumberNode_1 = require("../prims/NumberNode");
 const RectangleEffect_1 = require("../effects/RectangleEffect");
 class RectangleNode {
-    constructor(width, height) {
+    constructor(width, height, ws) {
         this._newLine = false;
         this._width = width;
         this._height = height;
+        this._ws = ws;
     }
     draw(context, dims, ast) {
         dims.width = new NumberNode_1.NumberNode(this._width.eval(context).val);
@@ -34,7 +35,7 @@ class RectangleNode {
         return this._newLine;
     }
     toString() {
-        return "rect(" + this._width.toString() + ", " + this._height.toString() + ")";
+        return this._ws + "rect(" + this._width.toString() + ", " + this._height.toString() + ")";
     }
 }
 exports.RectangleNode = RectangleNode;

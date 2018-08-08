@@ -8,10 +8,12 @@ export class RectangleNode implements Expression<RectangleNode> {
     private _width: Expression<NumberNode>;
     private _height: Expression<NumberNode>; 
     private _newLine : boolean = false;
+    private _ws : string;
     
-    constructor(width: Expression<NumberNode>, height: Expression<NumberNode>){
+    constructor(width: Expression<NumberNode>, height: Expression<NumberNode>, ws : string){
         this._width = width;
         this._height = height;
+        this._ws = ws;
     }
 
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
@@ -46,7 +48,7 @@ export class RectangleNode implements Expression<RectangleNode> {
     }
 
     toString() : string {
-        return "rect(" + this._width.toString() + ", " + this._height.toString() + ")";
+        return this._ws + "rect(" + this._width.toString() + ", " + this._height.toString() + ")";
     }
     // get methods? 
 }
