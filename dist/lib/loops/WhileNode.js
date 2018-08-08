@@ -3,10 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Scope_1 = require("../structural/Scope");
 const BooleanNode_1 = require("../prims/BooleanNode");
 class WhileNode {
-    constructor(cond, body) {
+    constructor(cond, body, ws) {
         this._newLine = true;
         this._cond = cond;
         this._body = body;
+        this._ws = ws;
     }
     eval(context) {
         let childCtx = new Scope_1.Scope(context);
@@ -38,7 +39,7 @@ class WhileNode {
     draw(context, dims, ast) {
     }
     toString() {
-        return "while(" + this._cond.toString() + ") {\n " + this._body.toString() + "}";
+        return this._ws + "while(" + this._cond.toString() + ") {\n " + this._body.toString() + "}";
     }
     newLine() {
         return this._newLine;
