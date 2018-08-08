@@ -433,8 +433,8 @@ export class RectangleEffect implements Effect<RectangleNode> {
 
         let x: number = this.x;
         let y: number = this.y;
-        let w: number = this._dims.width.eval(this._context).val;
-        let h: number = this._dims.height.eval(this._context).val;
+        let w: number = this.w;
+        let h: number = this.h;
         if (this._isSelectingMultiple) {
             if (contains) {
                 this._x1 = this.x;
@@ -457,6 +457,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
             this._context.eventLog.push(this.logClick());
 
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
+            this._size1 = Math.sqrt(Math.pow(w,2) + Math.pow(h,2)); // size is diagonal length
             
             switch (this._corner) {
                 case 1: 
@@ -481,8 +482,6 @@ export class RectangleEffect implements Effect<RectangleNode> {
                 break;
             }
             //this._initDistance = distance(this._mouse.x, this._mouse.y, x + w / 2, y + h / 2);
-
-            this._size1 = Math.sqrt(w^2 + h^2); // size is diagonal length
         }
         else if(guideContains > 4){ //changing shape dimensions
             this._isSelected = true;
@@ -532,12 +531,12 @@ export class RectangleEffect implements Effect<RectangleNode> {
     modifyReset(): void {
         if(this._isDragging && this._isSelected){
             this._isDragging = false;
-            if(Math.abs(this._x1 - this._dims.x.eval(this._context).val) > 1 || Math.abs(this._y1 - this._dims.y.eval(this._context).val) > 1) {
+            if(Math.abs(this._x1 - this.x) > 1 || Math.abs(this._y1 - this.y) > 1) {
                 this._justDragged = true;
             }
         } else if (this._isResizing && this._isSelected){
             this._isResizing = false;
-            let size2 = Math.sqrt(Math.pow(this._dims.width.eval(this._context).val,2) + Math.pow(this._dims.height.eval(this._context).val,2)); 
+            let size2 = Math.sqrt(Math.pow(this.w,2) + Math.pow(this.h,2)); 
             if(Math.abs(this._size1 - size2) > 0){
                 this._context.eventLog.push(this.logResize());
             }
@@ -609,6 +608,12 @@ export class RectangleEffect implements Effect<RectangleNode> {
     }
     get y(): number {
         return this._dims.y.eval(this._context).val;
+    }
+    get w(): number {
+        return this._dims.width.eval(this._context).val;
+    }
+    get h(): number {
+        return this._dims.height.eval(this._context).val;
     }
 
     get dims(): Dimensions {
