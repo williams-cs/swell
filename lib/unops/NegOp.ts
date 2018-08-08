@@ -5,8 +5,13 @@ import { NumberNode } from '../prims/NumberNode';
 import { Dimensions } from '../structural/Dimensions';
 
 export class NegOp extends UnaryOperation<NumberNode>{
-    constructor(val: Expression<NumberNode>){
+    private _ws : string;
+    constructor(val: Expression<NumberNode>, ws? : string){
         super(val);
+        this._ws = ws;
+        if (ws == undefined){
+            this._ws= "";
+        }
     }
 
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
@@ -19,7 +24,7 @@ export class NegOp extends UnaryOperation<NumberNode>{
     }
 
     toString() : string {
-        return "-" + this.val;
+        return this._ws + "-" + this.val;
     }
 
     newLine() : boolean {
