@@ -20,7 +20,7 @@ class NegOp extends UnaryOperation_1.UnaryOperation {
         return this._ws + "-" + this.val;
     }
     newLine() {
-        return this.newLine();
+        return false;
     }
 }
 exports.NegOp = NegOp;

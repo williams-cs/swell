@@ -28,7 +28,7 @@ export class NegOp extends UnaryOperation<NumberNode>{
     }
 
     newLine() : boolean {
-        return this.newLine();
+        return false;
     }
 
     // put in UnaryOp class
