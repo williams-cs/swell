@@ -9,10 +9,6 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
     private _rect;
     private _dims;
     private _ast;
-    private _x;
-    private _y;
-    private _w;
-    private _h;
     private _ctx;
     private _canvas;
     private _corner;
