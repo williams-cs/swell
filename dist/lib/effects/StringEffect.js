@@ -396,10 +396,10 @@ class StringEffect {
     get str() {
         return this._str.val;
     }
-    get id() {
+    getID() {
         return this.idObj._id;
     }
-    get setID() {
+    getSetID() {
         return this.idObj.setID;
     }
     toSelString() {

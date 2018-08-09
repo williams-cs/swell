@@ -82,6 +82,14 @@ export class NumberEffect implements Effect<NumberNode> {
     get selected(): boolean {
         return this._isSelected;
     }
+
+    getID(): number{
+        return this.idObj._id;
+    }
+    getSetID(): boolean{
+        return this.idObj.setID;
+    }
+    
     getJustDragged(): boolean {
         return this._justDragged;
     }

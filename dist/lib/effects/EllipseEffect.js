@@ -484,10 +484,10 @@ class EllipseEffect {
     get selected() {
         return this._isSelected;
     }
-    get id() {
+    getID() {
         return this.idObj._id;
     }
-    get setID() {
+    getSetID() {
         return this.idObj.setID;
     }
     getJustDragged() {

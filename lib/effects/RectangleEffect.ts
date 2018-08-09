@@ -625,10 +625,10 @@ export class RectangleEffect implements Effect<RectangleNode> {
         return this._isSelected;
     }
 
-    get id(): number{
+    getID(): number{
         return this.idObj._id;
     }
-    get setID(): boolean{
+    getSetID(): boolean{
         return this.idObj.setID;
     }
 

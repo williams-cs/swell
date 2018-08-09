@@ -469,10 +469,10 @@ export class StringEffect implements Effect<StringNode> {
         return this._str.val;
     }
 
-    get id(): number{
+    getID(): number{
         return this.idObj._id;
     }
-    get setID(): boolean{
+    getSetID(): boolean{
         return this.idObj.setID;
     }
 

@@ -76,8 +76,8 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
     readonly h: number;
     readonly dims: Dimensions;
     readonly selected: boolean;
-    readonly id: number;
-    readonly setID: boolean;
+    getID(): number;
+    getSetID(): boolean;
     getJustDragged(): boolean;
     setJustDragged(val: boolean): void;
     readonly isDragging: boolean;
