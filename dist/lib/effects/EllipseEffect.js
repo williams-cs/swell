@@ -408,11 +408,11 @@ class EllipseEffect {
                 //this._context.eventLog.push(this.logMove());
             }
         }
-        else if (this._isResizing && this._isSelected) {
-            console.log("resizing ellipse");
+        else if ((this._isResizing || this._isChangingDims) && this._isSelected) {
+            //console.log("resizing ellipse");
             this._isResizing = false;
             let size2 = Math.sqrt(Math.pow(this.w, 2) + Math.pow(this.h, 2));
-            console.log("Size diff: " + Math.abs(this._size1 - size2));
+            //console.log("Size diff: " + Math.abs(this._size1 - size2));
             if (Math.abs(this._size1 - size2) > 0) {
                 this._context.eventLog.push(this.logResize());
             }

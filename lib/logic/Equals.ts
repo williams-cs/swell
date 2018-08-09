@@ -24,7 +24,7 @@ export class Equals implements Expression<BooleanNode>{
     eval(context: Scope): BooleanNode {
         let lhs = this._left.eval(context);
         let rhs = this._right.eval(context);
-        return lhs.equalsVal(rhs);
+        return new BooleanNode(lhs.equalsVal(rhs));
     }
 
     equalsVal(right: Expression<any>): boolean{
