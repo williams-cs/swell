@@ -111,8 +111,8 @@ var ResizeEvent_1 = require("./lib/logging/ResizeEvent");
 exports.ResizeEvent = ResizeEvent_1.ResizeEvent;
 var SelectEvent_1 = require("./lib/logging/SelectEvent");
 exports.SelectEvent = SelectEvent_1.SelectEvent;
-var MulSel_1 = require("./lib/logging/MulSel");
-exports.MulSel = MulSel_1.MulSel;
+var IDEvent_1 = require("./lib/logging/IDEvent");
+exports.IDEvent = IDEvent_1.IDEvent;
 /* MODULES */
 var CircleMod_1 = require("./lib/modules/CircleMod");
 exports.CircleMod = CircleMod_1.CircleMod;

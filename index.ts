@@ -69,7 +69,7 @@ export {DragEvent} from './lib/logging/DragEvent';
 export {PaintEvent} from './lib/logging/PaintEvent';
 export {ResizeEvent} from './lib/logging/ResizeEvent';
 export {SelectEvent} from './lib/logging/SelectEvent';
-export {MulSel} from './lib/logging/MulSel';
+export {IDEvent} from './lib/logging/IDEvent';
 
 /* MODULES */
 export {CircleMod} from './lib/modules/CircleMod';
