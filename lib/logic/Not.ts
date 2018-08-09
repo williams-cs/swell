@@ -16,7 +16,7 @@ export class Not implements Expression<BooleanNode>{
     }
 
     toString() :string {
-        return this._ws + "not " + this._expr.toString();
+        return this._ws + "not" + this._expr.toString();
     }
 
     newLine() : boolean {

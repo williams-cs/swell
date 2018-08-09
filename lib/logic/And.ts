@@ -18,7 +18,7 @@ export class And implements Expression<any>{
     }
 
     toString() :string {
-        return this._ws + this._left.toString() + ' and ' + this._right.toString();
+        return this._ws + this._left.toString() + ' and' + this._right.toString();
     }
     eval(context: Scope): BooleanNode{
         let lhs = this._left.eval(context);
