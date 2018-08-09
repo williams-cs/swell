@@ -351,8 +351,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
                 this._circle.height = new NumberNode(Math.round(this._dims.height.eval(this._context).val));
                 this._initDistance = newDistance;
                 this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
-            }
-            else {
+            } else {
                 this._dims.height.eval(this._context).val = 14;
                 this._circle.height = new NumberNode(14);
                 this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
@@ -363,15 +362,13 @@ export class EllipseEffect implements Effect<EllipseNode> {
                     this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
                 }
             }
-        }
-        else {
+        } else {
             if (!widthTooSmall) {
                 this._dims.width.eval(this._context).val += (newDistance - this._initDistance) * 2;
                 this._circle.width = new NumberNode(Math.round(this._dims.width.eval(this._context).val));
                 this._initDistance = newDistance;
                 this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;       
-            }
-            else {
+            } else {
                 this._dims.width.eval(this._context).val = 14;
                 this._circle.width = new NumberNode(14);
                 this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
@@ -382,6 +379,10 @@ export class EllipseEffect implements Effect<EllipseNode> {
                     this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
                 }
             }
+        }
+        let size2 = Math.sqrt(Math.pow(this.w,2) + Math.pow(this.h,2));
+        if(Math.abs(this._size1 - size2) > 0){
+            this._context.eventLog.push(this.logResize());
         }
     }
 
@@ -455,10 +456,10 @@ export class EllipseEffect implements Effect<EllipseNode> {
                 //this._context.eventLog.push(this.logMove());
             } 
         } else if (this._isResizing && this._isSelected){
-            console.log("resizing ellipse");
+            //console.log("resizing ellipse");
             this._isResizing = false;
             let size2 = Math.sqrt(Math.pow(this.w,2) + Math.pow(this.h,2));
-            console.log("Size diff: " + Math.abs(this._size1 - size2));
+            //console.log("Size diff: " + Math.abs(this._size1 - size2));
             if(Math.abs(this._size1 - size2) > 0){
                 this._context.eventLog.push(this.logResize());
             }
