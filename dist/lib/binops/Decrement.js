@@ -5,7 +5,7 @@ const MinusOp_1 = require("./MinusOp");
 const AssignOp_1 = require("./AssignOp");
 const VariableNode_1 = require("../vars/VariableNode");
 class Decrement {
-    constructor(variable) {
+    constructor(variable, ws) {
         this.expr = variable;
         if (variable instanceof VariableNode_1.VariableNode) {
             this.innerRep = new AssignOp_1.AssignOp(variable, new MinusOp_1.MinusOp(variable, new NumberNode_1.NumberNode(1)));
@@ -13,12 +13,16 @@ class Decrement {
         else {
             this.innerRep = new MinusOp_1.MinusOp(variable, new NumberNode_1.NumberNode(1));
         }
+        this._ws = ws;
+        if (ws == undefined) {
+            this._ws = "";
+        }
     }
     eval(context) {
         return this.innerRep.eval(context);
     }
     toString() {
-        return this.expr.toString() + "--";
+        return this._ws + this.expr.toString() + "--";
     }
     draw(context, dims, ast) {
         throw new Error("Not implemented");

@@ -10,13 +10,18 @@ import { VariableNode } from '../vars/VariableNode';
 export class Increment implements Expression<any>{
     private innerRep : Expression<any>;
     private expr : Expression<any>;
-    constructor(variable : Expression<any>){
+    private _ws : string;
+    constructor(variable : Expression<any>, ws? : string){
         this.expr= variable;
         if(variable instanceof VariableNode){
             this.innerRep= new AssignOp(variable, new PlusOp(variable, new NumberNode(1)));
         }
         else {
             this.innerRep = new PlusOp(variable, new NumberNode(1, ""));
+        }
+        this._ws = ws;
+        if (ws == undefined){
+            this._ws= "";
         }
     }
 
@@ -33,7 +38,7 @@ export class Increment implements Expression<any>{
     }
     
     toString() : string {
-        return this.expr.toString() + "++";
+        return this._ws + this.expr.toString() + "++";
     }
     newLine() : boolean {
         return false;
