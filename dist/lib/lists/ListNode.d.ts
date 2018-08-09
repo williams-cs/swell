@@ -3,7 +3,8 @@ import { Scope } from "../structural/Scope";
 export declare class ListNode implements Expression<ListNode> {
     private _list;
     private _newLine;
-    constructor(list: Expression<any>[]);
+    private _ws;
+    constructor(list: Expression<any>[], ws?: string);
     eval(context: Scope): ListNode;
     toString(): string;
     equalsVal(right: Expression<any>): boolean;
