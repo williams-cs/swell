@@ -25,6 +25,7 @@ export declare class NumberEffect implements Effect<NumberNode> {
     logPaint(): LogEvent<any>;
     ast(): Expression<NumberNode>;
     updateAST(): Expression<NumberNode>;
+    initID(id: number): void;
     readonly x: number;
     readonly y: number;
     readonly dims: Dimensions;

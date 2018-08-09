@@ -532,6 +532,10 @@ class RectangleEffect {
     logClick() {
         return new ClickEvent_1.ClickEvent("rectangle", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
+    initID(id) {
+        if (!this.idObj.setID)
+            this.idObj = { _id: id, setID: true };
+    }
     ast() {
         throw new Error("Not implemented");
     }

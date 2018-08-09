@@ -424,13 +424,17 @@ export class StringEffect implements Effect<StringNode> {
         return new ClickEvent(this._str.val, this.x, this.y);
     }
 
-    logSelected(): LogEvent<any>{
-        console.log("Logging selected!!");
-        return new SelectEvent(this._context.mulSelArray);
-    }
+    // logSelected(): LogEvent<any>{
+    //     //console.log("Logging selected!!");
+    //     return new SelectEvent(this._context.mulSelArray);
+    // }
 
     ast(): Expression<StringNode> {
         return this._ast;
+    }
+
+    initID(id: number){
+        if(!this.idObj.setID) this.idObj = {_id: id, setID: true};
     }
 
     get canvas(): HTMLCanvasElement {

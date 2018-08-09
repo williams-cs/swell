@@ -68,6 +68,10 @@ export class NumberEffect implements Effect<NumberNode> {
         throw new Error("Not implemented");
     }
 
+    initID(id: number){
+        if(!this.idObj.setID) this.idObj = {_id: id, setID: true};
+    }
+
     get x(): number {
         return this._x;
     }
@@ -89,7 +93,7 @@ export class NumberEffect implements Effect<NumberNode> {
     getSetID(): boolean{
         return this.idObj.setID;
     }
-    
+
     getJustDragged(): boolean {
         return this._justDragged;
     }

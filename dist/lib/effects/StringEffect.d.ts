@@ -56,8 +56,8 @@ export declare class StringEffect implements Effect<StringNode> {
     logPaint(): LogEvent<any>;
     logResize(): LogEvent<any>;
     logClick(): LogEvent<any>;
-    logSelected(): LogEvent<any>;
     ast(): Expression<StringNode>;
+    initID(id: number): void;
     canvas: HTMLCanvasElement;
     readonly x: number;
     readonly y: number;

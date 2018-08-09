@@ -39,6 +39,10 @@ class NumberEffect {
     updateAST() {
         throw new Error("Not implemented");
     }
+    initID(id) {
+        if (!this.idObj.setID)
+            this.idObj = { _id: id, setID: true };
+    }
     get x() {
         return this._x;
     }
