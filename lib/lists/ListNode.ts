@@ -5,9 +5,14 @@ import { Scope } from "../structural/Scope";
 export class ListNode implements Expression<ListNode>{
     private _list: Expression<any>[];
     private _newLine : boolean = false;
+    private _ws : string;
 
-    constructor(list: Expression<any>[]){
+    constructor(list: Expression<any>[], ws? : string){
         this._list = list;
+        this._ws = ws;
+        if (ws == undefined){
+            this._ws = "";
+        }
     }
 
     eval(context: Scope): ListNode {
@@ -24,7 +29,7 @@ export class ListNode implements Expression<ListNode>{
             list += this._list[i].toString() + ", ";
         }
         list += this._list[this._list.length-1].toString();
-        return '[' + list + ']';
+        return this._ws + '[' + list + ']';
     }
 
     equalsVal(right: Expression<any>): boolean{

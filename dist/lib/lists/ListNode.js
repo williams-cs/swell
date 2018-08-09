@@ -2,9 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 //import { ListHead } from "./ListHead";
 class ListNode {
-    constructor(list) {
+    constructor(list, ws) {
         this._newLine = false;
         this._list = list;
+        this._ws = ws;
+        if (ws == undefined) {
+            this._ws = "";
+        }
     }
     eval(context) {
         let evalList = [];
@@ -19,7 +23,7 @@ class ListNode {
             list += this._list[i].toString() + ", ";
         }
         list += this._list[this._list.length - 1].toString();
-        return '[' + list + ']';
+        return this._ws + '[' + list + ']';
     }
     equalsVal(right) {
         if (right instanceof ListNode) {

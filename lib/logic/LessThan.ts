@@ -19,7 +19,7 @@ export class LessThan implements Expression<BooleanNode>{
     }
 
     toString() :string {
-        return this._left.toString() + ' <' + this._right.toString();
+        return this._left.toString() + ' < ' + this._right.toString();
     }
     newLine() : boolean {
         return this._newLine;

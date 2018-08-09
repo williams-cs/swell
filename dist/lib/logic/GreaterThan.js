@@ -13,7 +13,7 @@ class GreaterThan {
         }
     }
     toString() {
-        return this._ws + this._left.toString() + " >" + this._right.toString();
+        return this._ws + this._left.toString() + " > " + this._right.toString();
     }
     newLine() {
         return this._newLine;

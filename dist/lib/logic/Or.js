@@ -12,7 +12,7 @@ class Or {
         }
     }
     toString() {
-        return this._ws + this._left.toString() + ' or' + this._right.toString();
+        return this._ws + this._left.toString() + ' or ' + this._right.toString();
     }
     newLine() {
         return this._newLine;
