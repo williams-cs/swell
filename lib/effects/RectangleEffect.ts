@@ -645,11 +645,11 @@ export class RectangleEffect implements Effect<RectangleNode> {
     }
 
     toSelString(): string{
-        return " rectangle at " + this.x + ", " + this.y;
+        return " rectangle with ID " + this.getID().toString() + " at " + this.x + ", " + this.y;
     }
 
     toDragString(): string{
-        return("rectangle from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
+        return("rectangle with ID " + this.getID().toString() + " from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
     }
 
     toIDString(): string {

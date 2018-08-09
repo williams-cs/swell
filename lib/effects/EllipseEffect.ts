@@ -557,11 +557,11 @@ export class EllipseEffect implements Effect<EllipseNode> {
     }
 
     toSelString(): string {
-        return (" ellipse at " + this.x + ", " + this.y);
+        return (" ellipse with ID " + this.getID().toString() + " at " + this.x + ", " + this.y);
     }
 
     toDragString(): string {
-        return("ellipse from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
+        return("ellipse with ID " + this.getID().toString() + " from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
     }
 
     toIDString(): string {

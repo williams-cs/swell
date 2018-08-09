@@ -495,10 +495,10 @@ class EllipseEffect {
         return this._isDragging;
     }
     toSelString() {
-        return (" ellipse at " + this.x + ", " + this.y);
+        return (" ellipse with ID " + this.getID().toString() + " at " + this.x + ", " + this.y);
     }
     toDragString() {
-        return ("ellipse from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
+        return ("ellipse with ID " + this.getID().toString() + " from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
     }
     toIDString() {
         return (this.idObj._id.toString() + " to ellipse at " + this.x + ", " + this.y);

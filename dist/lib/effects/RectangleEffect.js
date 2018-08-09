@@ -572,10 +572,10 @@ class RectangleEffect {
         return this._isDragging;
     }
     toSelString() {
-        return " rectangle at " + this.x + ", " + this.y;
+        return " rectangle with ID " + this.getID().toString() + " at " + this.x + ", " + this.y;
     }
     toDragString() {
-        return ("rectangle from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
+        return ("rectangle with ID " + this.getID().toString() + " from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
     }
     toIDString() {
         return (this.idObj._id.toString() + " to rectangle at " + this.x + ", " + this.y);
