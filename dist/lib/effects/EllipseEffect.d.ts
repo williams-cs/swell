@@ -19,7 +19,8 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
     private _justDragged;
     private _x1;
     private _y1;
-    private _size1;
+    private _width1;
+    private _height1;
     idObj: {
         readonly _id: number;
     };

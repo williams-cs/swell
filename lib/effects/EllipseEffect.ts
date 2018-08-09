@@ -29,7 +29,8 @@ export class EllipseEffect implements Effect<EllipseNode> {
 
     private _x1: number; // used to save coords for logging
     private _y1: number;
-    private _size1: number; // saves size for logging
+    private _width1: number; // saves size for logging
+    private _height1: number;
 
     idObj: {readonly _id: number};
 
@@ -417,7 +418,9 @@ export class EllipseEffect implements Effect<EllipseNode> {
             this._dragoffy = this._dims.y.eval(this._context).val;
             this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
 
-            this._size1 = Math.sqrt(Math.pow(this.w,2) + Math.pow(this.h,2)); // saving old size
+            this._width1 = this.w;
+            this._height1 = this.h;
+            //this._size1 = Math.sqrt(Math.pow(this.w,2) + Math.pow(this.h,2)); // saving old size
         }
         else if(guideContains > 4){ //changing shape dimensions
             this._isSelected = true;
@@ -456,9 +459,9 @@ export class EllipseEffect implements Effect<EllipseNode> {
         } else if((this._isResizing || this._isChangingDims) && this._isSelected){
             //console.log("resizing ellipse");
             this._isResizing = false;
-            let size2 = Math.sqrt(Math.pow(this.w,2) + Math.pow(this.h,2));
+            //let size2 = Math.sqrt(Math.pow(this.w,2) + Math.pow(this.h,2));
             //console.log("Size diff: " + Math.abs(this._size1 - size2));
-            if(Math.abs(this._size1 - size2) > 0){
+            if((Math.abs(this._width1 - this.w) > 0) || (Math.abs(this._height1 - this.h) > 0)){
                 this._context.eventLog.push(this.logResize());
             }
         } 
@@ -505,7 +508,8 @@ export class EllipseEffect implements Effect<EllipseNode> {
     // }
 
     logResize(): LogEvent<any> {
-        return new ResizeEvent("ellipse with ID " + this.getID().toString(), Math.round(this._size1*100)/100, Math.round((Math.sqrt(Math.pow(this.w,2) + Math.pow(this.h,2))*100))/100);
+        return new ResizeEvent("ellipse with ID " + this.getID().toString(), this._width1, this._height1, this.w, this.h);
+        //Math.round(this._size1*100)/100, Math.round((Math.sqrt(Math.pow(this.w,2) + Math.pow(this.h,2))*100))/100);
     }
 
     logClick(): LogEvent<any>{
