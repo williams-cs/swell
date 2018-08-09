@@ -31,6 +31,8 @@ export class EllipseEffect implements Effect<EllipseNode> {
     private _y1: number;
     private _size1: number; // saves size for logging
 
+    idObj: {readonly _id: number};
+
     private _context: Scope;
 
     private _ratio: number = 0;
@@ -514,6 +516,10 @@ export class EllipseEffect implements Effect<EllipseNode> {
         throw new Error("Not implemented");
     }
 
+    initID(id: number){
+        this.idObj = {_id: id};
+    }
+
     get x(): number {
         return this._dims.x.eval(this._context).val;
     }
@@ -533,6 +539,10 @@ export class EllipseEffect implements Effect<EllipseNode> {
     
     get selected(): boolean {
         return this._isSelected;
+    }
+
+    get id(): number{
+        return this.idObj._id;
     }
 
     getJustDragged(): boolean {

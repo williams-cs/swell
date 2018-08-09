@@ -9,6 +9,9 @@ export interface Effect<T> {
     toDragString(): string;
     x: number;
     y: number;
+    idObj: {
+        readonly _id: number;
+    };
     dims: Dimensions;
     selected: boolean;
     getJustDragged(): boolean;

@@ -461,6 +461,9 @@ class EllipseEffect {
     updateAST() {
         throw new Error("Not implemented");
     }
+    initID(id) {
+        this.idObj = { _id: id };
+    }
     get x() {
         return this._dims.x.eval(this._context).val;
     }
@@ -478,6 +481,9 @@ class EllipseEffect {
     }
     get selected() {
         return this._isSelected;
+    }
+    get id() {
+        return this.idObj._id;
     }
     getJustDragged() {
         return this._justDragged;
