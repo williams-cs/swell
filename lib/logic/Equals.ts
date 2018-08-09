@@ -19,7 +19,7 @@ export class Equals implements Expression<BooleanNode>{
     }
 
     toString() :string {
-        return this._ws + this._left.toString() + ' equals ' + this._right.toString();
+        return this._ws + this._left.toString() + ' equals' + this._right.toString();
     }
 
     newLine() : boolean {

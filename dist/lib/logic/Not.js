@@ -11,7 +11,7 @@ class Not {
         }
     }
     toString() {
-        return this._ws + "not " + this._expr.toString();
+        return this._ws + "not" + this._expr.toString();
     }
     newLine() {
         return this._newLine;
