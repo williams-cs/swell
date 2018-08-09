@@ -401,10 +401,10 @@ class StringEffect {
         return this.idObj._id;
     }
     toSelString() {
-        return " " + this._str.val + "with ID " + this.getID().toString() + " at " + this.x + ", " + this.y;
+        return " " + this._str.val + " with ID " + this.getID().toString() + " at " + this.x + ", " + this.y;
     }
     toDragString() {
-        return (" " + this._str.val + "with ID " + this.getID().toString() + " from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
+        return (this._str.val + " with ID " + this.getID().toString() + " from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
     }
     toIDString() {
         return (this.idObj._id.toString() + " to " + this._str.val + " at " + this.x + ", " + this.y);
