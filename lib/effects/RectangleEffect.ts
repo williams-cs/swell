@@ -15,10 +15,6 @@ export class RectangleEffect implements Effect<RectangleNode> {
     private _rect: RectangleNode;
     private _dims: Dimensions;
     private _ast: Expression<any>;
-    private _x: number;
-    private _y: number;
-    private _w: number;
-    private _h: number;
     private _ctx: CanvasRenderingContext2D;
     private _canvas: HTMLCanvasElement;
     private _corner: number = 0;
