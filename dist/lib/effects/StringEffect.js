@@ -346,13 +346,13 @@ class StringEffect {
         this._ctx.stroke();
     }
     logPaint() {
-        return new PaintEvent_1.PaintEvent(this._str.val, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+        return new PaintEvent_1.PaintEvent(this._str.val, this.x, this.y);
     }
     // logMove(): LogEvent<any> {
     //     return new DragEvent(this._str.val, this._x1, this._y1, this.x, this.y);
     // }
     logResize() {
-        return new ResizeEvent_1.ResizeEvent(this._str.val + " with ID " + this.getID().toString(), this._size1, this._fontSize);
+        return new ResizeEvent_1.ResizeEvent(this._str.val + " with ID " + this.getID().toString(), Math.round(this._size1 * 100) / 100, Math.round(this._fontSize * 100) / 100);
     }
     logClick() {
         return new ClickEvent_1.ClickEvent(this._str.val + " with ID " + this.getID().toString(), this.x, this.y);

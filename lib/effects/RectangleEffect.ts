@@ -589,7 +589,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
     // }
 
     logResize(): LogEvent<any> {
-        return new ResizeEvent("rectangle with ID " + this.getID().toString(), this._size1, Math.sqrt(Math.pow(this.w,2) + Math.pow(this.h,2)));
+        return new ResizeEvent("rectangle with ID " + this.getID().toString(), Math.round(this._size1*100)/100, Math.round((Math.sqrt(Math.pow(this.w,2) + Math.pow(this.h,2))*100))/100);
     }
 
     logClick(): LogEvent<any>{
