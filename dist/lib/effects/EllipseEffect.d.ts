@@ -62,7 +62,8 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
     readonly h: number;
     readonly dims: Dimensions;
     readonly selected: boolean;
-    readonly id: number;
+    getID(): number;
+    getSetID(): boolean;
     getJustDragged(): boolean;
     setJustDragged(val: boolean): void;
     readonly isDragging: boolean;

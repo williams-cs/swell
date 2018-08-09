@@ -18,5 +18,7 @@ export interface Effect<T>{
     selected: boolean;
     getJustDragged(): boolean;
     setJustDragged(val: boolean): void;
+    getID(): number;
+    getSetID(): boolean;
     equalsVal(right: Expression<any> | Effect<any>): boolean;
 }

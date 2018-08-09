@@ -469,6 +469,13 @@ export class StringEffect implements Effect<StringNode> {
         return this._str.val;
     }
 
+    getID(): number{
+        return this.idObj._id;
+    }
+    getSetID(): boolean{
+        return this.idObj.setID;
+    }
+
     toSelString(): string {
         return " " + this._str.val + " at " + this.x + ", " + this.y;
     }

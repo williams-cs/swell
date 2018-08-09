@@ -542,8 +542,11 @@ export class EllipseEffect implements Effect<EllipseNode> {
         return this._isSelected;
     }
 
-    get id(): number{
+    getID(): number{
         return this.idObj._id;
+    }
+    getSetID(): boolean{
+        return this.idObj.setID;
     }
 
     getJustDragged(): boolean {

@@ -396,6 +396,12 @@ class StringEffect {
     get str() {
         return this._str.val;
     }
+    getID() {
+        return this.idObj._id;
+    }
+    getSetID() {
+        return this.idObj.setID;
+    }
     toSelString() {
         return " " + this._str.val + " at " + this.x + ", " + this.y;
     }

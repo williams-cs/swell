@@ -29,6 +29,8 @@ export declare class NumberEffect implements Effect<NumberNode> {
     readonly y: number;
     readonly dims: Dimensions;
     readonly selected: boolean;
+    getID(): number;
+    getSetID(): boolean;
     getJustDragged(): boolean;
     setJustDragged(val: boolean): void;
     toSelString(): string;

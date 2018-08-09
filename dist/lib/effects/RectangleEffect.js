@@ -556,6 +556,12 @@ class RectangleEffect {
     get selected() {
         return this._isSelected;
     }
+    getID() {
+        return this.idObj._id;
+    }
+    getSetID() {
+        return this.idObj.setID;
+    }
     getJustDragged() {
         return this._justDragged;
     }
