@@ -40,8 +40,7 @@ class NumberEffect {
         throw new Error("Not implemented");
     }
     initID(id) {
-        if (!this.idObj.setID)
-            this.idObj = { _id: id, setID: true };
+        this.idObj = { _id: id };
     }
     get x() {
         return this._x;
@@ -57,9 +56,6 @@ class NumberEffect {
     }
     getID() {
         return this.idObj._id;
-    }
-    getSetID() {
-        return this.idObj.setID;
     }
     getJustDragged() {
         return this._justDragged;

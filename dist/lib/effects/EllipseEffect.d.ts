@@ -22,7 +22,6 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
     private _size1;
     idObj: {
         readonly _id: number;
-        setID: boolean;
     };
     private _context;
     private _ratio;
@@ -63,7 +62,6 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
     readonly dims: Dimensions;
     readonly selected: boolean;
     getID(): number;
-    getSetID(): boolean;
     getJustDragged(): boolean;
     setJustDragged(val: boolean): void;
     readonly isDragging: boolean;

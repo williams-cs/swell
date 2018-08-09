@@ -533,8 +533,7 @@ class RectangleEffect {
         return new ClickEvent_1.ClickEvent("rectangle", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
     initID(id) {
-        if (!this.idObj.setID)
-            this.idObj = { _id: id, setID: true };
+        this.idObj = { _id: id };
     }
     ast() {
         throw new Error("Not implemented");
@@ -562,9 +561,6 @@ class RectangleEffect {
     }
     getID() {
         return this.idObj._id;
-    }
-    getSetID() {
-        return this.idObj.setID;
     }
     getJustDragged() {
         return this._justDragged;

@@ -22,7 +22,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
     private _ctx: CanvasRenderingContext2D;
     private _canvas: HTMLCanvasElement;
     private _corner: number = 0;
-    idObj: {readonly _id: number, setID: boolean};
+    idObj: {readonly _id: number};
 
     private _isSelected: boolean = false; // private bools
     private _isDragging: boolean = false;
@@ -597,7 +597,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
     }
 
     initID(id: number){
-        if(!this.idObj.setID) this.idObj = {_id: id, setID: true};
+        this.idObj = {_id: id};
     }
 
     ast(): Expression<RectangleNode> {
@@ -631,9 +631,6 @@ export class RectangleEffect implements Effect<RectangleNode> {
 
     getID(): number{
         return this.idObj._id;
-    }
-    getSetID(): boolean{
-        return this.idObj.setID;
     }
 
     getJustDragged(): boolean {

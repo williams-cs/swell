@@ -32,7 +32,6 @@ class StringEffect {
             cursorPos: 0
         };
         this._str = str;
-        this.idObj.setID = false;
     }
     draw(context, dims, ast) {
         if (context.canvas.isDefined()) {
@@ -366,8 +365,7 @@ class StringEffect {
         return this._ast;
     }
     initID(id) {
-        if (!this.idObj.setID)
-            this.idObj = { _id: id, setID: true };
+        this.idObj = { _id: id, };
     }
     get canvas() {
         return this._canvas;
@@ -401,9 +399,6 @@ class StringEffect {
     }
     getID() {
         return this.idObj._id;
-    }
-    getSetID() {
-        return this.idObj.setID;
     }
     toSelString() {
         return " " + this._str.val + " at " + this.x + ", " + this.y;
