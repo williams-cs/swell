@@ -487,6 +487,9 @@ class EllipseEffect {
     get id() {
         return this.idObj._id;
     }
+    get setID() {
+        return this.idObj.setID;
+    }
     getJustDragged() {
         return this._justDragged;
     }
