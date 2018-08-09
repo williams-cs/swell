@@ -7,7 +7,7 @@ import { Dimensions } from '../structural/Dimensions';
 // left and right are both expressions
 export class PlusOp extends BinaryOperation<NumberNode>{
     private _ws : string;
-    constructor(left: Expression<NumberNode>, right: Expression<NumberNode>, ws? : undefined){
+    constructor(left: Expression<NumberNode>, right: Expression<NumberNode>, ws? : string){
         super(left,right);
         this._ws = ws;
         if(ws == undefined){
