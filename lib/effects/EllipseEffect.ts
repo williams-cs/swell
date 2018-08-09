@@ -380,10 +380,6 @@ export class EllipseEffect implements Effect<EllipseNode> {
                 }
             }
         }
-        let size2 = Math.sqrt(Math.pow(this.w,2) + Math.pow(this.h,2));
-        if(Math.abs(this._size1 - size2) > 0){
-            this._context.eventLog.push(this.logResize());
-        }
     }
 
     // on mouse down
@@ -455,11 +451,16 @@ export class EllipseEffect implements Effect<EllipseNode> {
                 this._justDragged = true;
                 //this._context.eventLog.push(this.logMove());
             } 
-        } else if (this._isResizing && this._isSelected){
+        } else if(this._isResizing && this._isSelected){
             //console.log("resizing ellipse");
             this._isResizing = false;
             let size2 = Math.sqrt(Math.pow(this.w,2) + Math.pow(this.h,2));
             //console.log("Size diff: " + Math.abs(this._size1 - size2));
+            if(Math.abs(this._size1 - size2) > 0){
+                this._context.eventLog.push(this.logResize());
+            }
+        } else if(this._isChangingDims && this._isSelected){
+            let size2 = Math.sqrt(Math.pow(this.w,2) + Math.pow(this.h,2));
             if(Math.abs(this._size1 - size2) > 0){
                 this._context.eventLog.push(this.logResize());
             }

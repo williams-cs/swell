@@ -344,10 +344,6 @@ class EllipseEffect {
                 }
             }
         }
-        let size2 = Math.sqrt(Math.pow(this.w, 2) + Math.pow(this.h, 2));
-        if (Math.abs(this._size1 - size2) > 0) {
-            this._context.eventLog.push(this.logResize());
-        }
     }
     // on mouse down
     modifyState(guideContains, contains) {
@@ -417,6 +413,12 @@ class EllipseEffect {
             this._isResizing = false;
             let size2 = Math.sqrt(Math.pow(this.w, 2) + Math.pow(this.h, 2));
             //console.log("Size diff: " + Math.abs(this._size1 - size2));
+            if (Math.abs(this._size1 - size2) > 0) {
+                this._context.eventLog.push(this.logResize());
+            }
+        }
+        else if (this._isChangingDims && this._isSelected) {
+            let size2 = Math.sqrt(Math.pow(this.w, 2) + Math.pow(this.h, 2));
             if (Math.abs(this._size1 - size2) > 0) {
                 this._context.eventLog.push(this.logResize());
             }
