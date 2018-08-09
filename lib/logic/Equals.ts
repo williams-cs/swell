@@ -7,14 +7,19 @@ export class Equals implements Expression<BooleanNode>{
     private _left: Expression<any>;
     private _right: Expression<any>;
     private _newLine : boolean = false;
+    private _ws : string;
 
-    constructor(left: Expression<any>, right: Expression<any>){
+    constructor(left: Expression<any>, right: Expression<any>, ws? : string){
         this._left = left;
         this._right = right;
+        this._ws = ws;
+        if (ws == undefined){
+            this._ws = "";
+        }
     }
 
     toString() :string {
-        return this._left.toString() + ' equals ' + this._right.toString();
+        return this._ws + this._left.toString() + ' equals ' + this._right.toString();
     }
 
     newLine() : boolean {

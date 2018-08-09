@@ -2,13 +2,17 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const BooleanNode_1 = require("../prims/BooleanNode");
 class Equals {
-    constructor(left, right) {
+    constructor(left, right, ws) {
         this._newLine = false;
         this._left = left;
         this._right = right;
+        this._ws = ws;
+        if (ws == undefined) {
+            this._ws = "";
+        }
     }
     toString() {
-        return this._left.toString() + ' equals ' + this._right.toString();
+        return this._ws + this._left.toString() + ' equals ' + this._right.toString();
     }
     newLine() {
         return this._newLine;

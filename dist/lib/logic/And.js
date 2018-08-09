@@ -2,13 +2,17 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const BooleanNode_1 = require("../prims/BooleanNode");
 class And {
-    constructor(left, right) {
+    constructor(left, right, ws) {
         this._newLine = false;
         this._left = left;
         this._right = right;
+        this._ws = ws;
+        if (ws == undefined) {
+            this._ws = "";
+        }
     }
     toString() {
-        return this._left.toString() + ' and ' + this._right.toString();
+        return this._ws + this._left.toString() + ' and ' + this._right.toString();
     }
     eval(context) {
         let lhs = this._left.eval(context);

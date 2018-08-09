@@ -5,13 +5,18 @@ import { BooleanNode } from "../prims/BooleanNode";
 export class Not implements Expression<BooleanNode>{
     private _expr: Expression<any>;
     private _newLine : boolean = false;
+    private _ws : string;
 
-    constructor(expr: Expression<any>){
+    constructor(expr: Expression<any>, ws? : string){
         this._expr = expr;
+        this._ws = ws;
+        if (ws == undefined){
+            this._ws = "";
+        }
     }
 
     toString() :string {
-        return "not " + this._expr.toString();
+        return this._ws + "not " + this._expr.toString();
     }
 
     newLine() : boolean {
