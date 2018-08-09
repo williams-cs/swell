@@ -82,5 +82,6 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
     readonly isDragging: boolean;
     toSelString(): string;
     toDragString(): string;
+    toIDString(): string;
     equalsVal(right: Effect<any>): boolean;
 }

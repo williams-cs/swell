@@ -652,6 +652,10 @@ export class RectangleEffect implements Effect<RectangleNode> {
         return("rectangle from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
     }
 
+    toIDString(): string {
+        return (this.idObj._id.toString() + " to rectangle at " + this.x + ", " + this.y);
+    }
+
     equalsVal(right: Effect<any>): boolean{
         if(right instanceof RectangleEffect){
             return (this.w === right.w && this.h === right.h);

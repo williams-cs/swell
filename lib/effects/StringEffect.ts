@@ -484,6 +484,10 @@ export class StringEffect implements Effect<StringNode> {
         return(this._str.val + " from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
     }
 
+    toIDString(): string {
+        return (this.idObj._id.toString() + " to " + this._str.val + " at " + this.x + ", " + this.y);
+    }
+
     equalsVal(right: Effect<any>): boolean{
         if(right instanceof StringEffect){
             return this.str === right.str;

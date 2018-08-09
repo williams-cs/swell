@@ -7,6 +7,7 @@ export interface Effect<T> {
     update(): void;
     toSelString(): string;
     toDragString(): string;
+    toIDString(): string;
     x: number;
     y: number;
     idObj: {

@@ -577,6 +577,9 @@ class RectangleEffect {
     toDragString() {
         return ("rectangle from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
     }
+    toIDString() {
+        return (this.idObj._id.toString() + " to rectangle at " + this.x + ", " + this.y);
+    }
     equalsVal(right) {
         if (right instanceof RectangleEffect) {
             return (this.w === right.w && this.h === right.h);

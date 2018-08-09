@@ -69,5 +69,6 @@ export declare class StringEffect implements Effect<StringNode> {
     getID(): number;
     toSelString(): string;
     toDragString(): string;
+    toIDString(): string;
     equalsVal(right: Effect<any>): boolean;
 }

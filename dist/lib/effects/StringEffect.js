@@ -406,6 +406,9 @@ class StringEffect {
     toDragString() {
         return (this._str.val + " from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
     }
+    toIDString() {
+        return (this.idObj._id.toString() + " to " + this._str.val + " at " + this.x + ", " + this.y);
+    }
     equalsVal(right) {
         if (right instanceof StringEffect) {
             return this.str === right.str;
