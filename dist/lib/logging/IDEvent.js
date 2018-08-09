@@ -5,11 +5,16 @@ class IDEvent extends LogEvent_1.LogEvent {
     constructor(toLog) {
         super(toLog);
         this.tag = "ID";
+        this._toPrint = this.assembleString();
+    }
+    assembleString() {
+        this._toPrint = this.toLog.toIDString();
+        return this._toPrint;
     }
     // message should be of form "Assigned ID # to obj at x, y"
     assembleLog() {
-        let toPrint = "Assigned ID " + this.toLog;
-        return this.logItem(toPrint);
+        let print = "Assigned ID " + this._toPrint;
+        return this.logItem(print);
     }
 }
 exports.IDEvent = IDEvent;

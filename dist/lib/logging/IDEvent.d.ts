@@ -1,5 +1,8 @@
 import { LogEvent } from './LogEvent';
+import { Effect } from '../effects/Effect';
 export declare class IDEvent extends LogEvent<any> {
-    constructor(toLog: string);
+    private _toPrint;
+    constructor(toLog: Effect<any>);
+    assembleString(): string;
     assembleLog(): string;
 }
