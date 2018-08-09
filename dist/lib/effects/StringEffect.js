@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const PaintEvent_1 = require("../logging/PaintEvent");
 const ResizeEvent_1 = require("../logging/ResizeEvent");
 const ClickEvent_1 = require("../logging/ClickEvent");
-const SelectEvent_1 = require("../logging/SelectEvent");
 class StringEffect {
     constructor(str) {
         this._fontSize = 20;
@@ -33,7 +32,6 @@ class StringEffect {
             cursorPos: 0
         };
         this._str = str;
-        this.idObj.setID = false;
     }
     draw(context, dims, ast) {
         if (context.canvas.isDefined()) {
@@ -359,12 +357,15 @@ class StringEffect {
     logClick() {
         return new ClickEvent_1.ClickEvent(this._str.val, this.x, this.y);
     }
-    logSelected() {
-        console.log("Logging selected!!");
-        return new SelectEvent_1.SelectEvent(this._context.mulSelArray);
-    }
+    // logSelected(): LogEvent<any>{
+    //     //console.log("Logging selected!!");
+    //     return new SelectEvent(this._context.mulSelArray);
+    // }
     ast() {
         return this._ast;
+    }
+    initID(id) {
+        this.idObj = { _id: id, };
     }
     get canvas() {
         return this._canvas;
@@ -398,9 +399,6 @@ class StringEffect {
     }
     getID() {
         return this.idObj._id;
-    }
-    getSetID() {
-        return this.idObj.setID;
     }
     toSelString() {
         return " " + this._str.val + " at " + this.x + ", " + this.y;

@@ -17,7 +17,6 @@ export declare class NumberEffect implements Effect<NumberNode> {
     private _justDragged;
     idObj: {
         readonly _id: number;
-        setID: boolean;
     };
     constructor(num: NumberNode);
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
@@ -25,12 +24,12 @@ export declare class NumberEffect implements Effect<NumberNode> {
     logPaint(): LogEvent<any>;
     ast(): Expression<NumberNode>;
     updateAST(): Expression<NumberNode>;
+    initID(id: number): void;
     readonly x: number;
     readonly y: number;
     readonly dims: Dimensions;
     readonly selected: boolean;
     getID(): number;
-    getSetID(): boolean;
     getJustDragged(): boolean;
     setJustDragged(val: boolean): void;
     toSelString(): string;

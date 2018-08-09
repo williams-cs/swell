@@ -18,7 +18,6 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
     private _corner;
     idObj: {
         readonly _id: number;
-        setID: boolean;
     };
     private _isSelected;
     private _isDragging;
@@ -68,6 +67,7 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
     logPaint(): LogEvent<any>;
     logResize(): LogEvent<any>;
     logClick(): LogEvent<any>;
+    initID(id: number): void;
     ast(): Expression<RectangleNode>;
     updateAST(): Expression<NumberNode>;
     readonly x: number;
@@ -77,7 +77,6 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
     readonly dims: Dimensions;
     readonly selected: boolean;
     getID(): number;
-    getSetID(): boolean;
     getJustDragged(): boolean;
     setJustDragged(val: boolean): void;
     readonly isDragging: boolean;

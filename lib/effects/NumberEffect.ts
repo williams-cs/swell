@@ -21,7 +21,7 @@ export class NumberEffect implements Effect<NumberNode> {
     private _isSelected: boolean;
     private _justDragged: boolean;
 
-    idObj: {readonly _id: number, setID: boolean};
+    idObj: {readonly _id: number};
 
     constructor(num: NumberNode) {
         this._num = num;
@@ -68,6 +68,10 @@ export class NumberEffect implements Effect<NumberNode> {
         throw new Error("Not implemented");
     }
 
+    initID(id: number){
+        this.idObj = {_id: id};
+    }
+
     get x(): number {
         return this._x;
     }
@@ -86,10 +90,7 @@ export class NumberEffect implements Effect<NumberNode> {
     getID(): number{
         return this.idObj._id;
     }
-    getSetID(): boolean{
-        return this.idObj.setID;
-    }
-    
+
     getJustDragged(): boolean {
         return this._justDragged;
     }

@@ -22,7 +22,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
     private _ctx: CanvasRenderingContext2D;
     private _canvas: HTMLCanvasElement;
     private _corner: number = 0;
-    idObj: {readonly _id: number, setID: boolean};
+    idObj: {readonly _id: number};
 
     private _isSelected: boolean = false; // private bools
     private _isDragging: boolean = false;
@@ -596,6 +596,10 @@ export class RectangleEffect implements Effect<RectangleNode> {
         return new ClickEvent("rectangle", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
 
+    initID(id: number){
+        this.idObj = {_id: id};
+    }
+
     ast(): Expression<RectangleNode> {
         throw new Error("Not implemented");
     }
@@ -627,9 +631,6 @@ export class RectangleEffect implements Effect<RectangleNode> {
 
     getID(): number{
         return this.idObj._id;
-    }
-    getSetID(): boolean{
-        return this.idObj.setID;
     }
 
     getJustDragged(): boolean {

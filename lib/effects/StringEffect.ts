@@ -25,7 +25,7 @@ export class StringEffect implements Effect<StringNode> {
     private _size1: number; // Original scale for resize logging
     //private _size2: number;
     private _corner: number = 0;
-    idObj: {readonly _id: number, setID: boolean};
+    idObj: {readonly _id: number};
     
 
 
@@ -69,7 +69,6 @@ export class StringEffect implements Effect<StringNode> {
 
     constructor(str: StringNode) {
         this._str = str;
-        this.idObj.setID = false;
     }
 
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
@@ -424,13 +423,17 @@ export class StringEffect implements Effect<StringNode> {
         return new ClickEvent(this._str.val, this.x, this.y);
     }
 
-    logSelected(): LogEvent<any>{
-        console.log("Logging selected!!");
-        return new SelectEvent(this._context.mulSelArray);
-    }
+    // logSelected(): LogEvent<any>{
+    //     //console.log("Logging selected!!");
+    //     return new SelectEvent(this._context.mulSelArray);
+    // }
 
     ast(): Expression<StringNode> {
         return this._ast;
+    }
+
+    initID(id: number){
+        this.idObj = {_id: id,};
     }
 
     get canvas(): HTMLCanvasElement {
@@ -471,9 +474,6 @@ export class StringEffect implements Effect<StringNode> {
 
     getID(): number{
         return this.idObj._id;
-    }
-    getSetID(): boolean{
-        return this.idObj.setID;
     }
 
     toSelString(): string {
