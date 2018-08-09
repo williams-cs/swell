@@ -481,7 +481,7 @@ class RectangleEffect {
                 this._justDragged = true;
             }
         }
-        else if (this._isResizing && this._isSelected) {
+        else if ((this._isResizing || this._isChangingDims) && this._isSelected) {
             this._isResizing = false;
             let size2 = Math.sqrt(Math.pow(this.w, 2) + Math.pow(this.h, 2));
             if (Math.abs(this._size1 - size2) > 0) {
