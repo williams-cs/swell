@@ -22,7 +22,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
     private _ctx: CanvasRenderingContext2D;
     private _canvas: HTMLCanvasElement;
     private _corner: number = 0;
-    idObj: {readonly _id: number};
+    idObj: {readonly _id: number, setID: boolean};
 
     private _isSelected: boolean = false; // private bools
     private _isDragging: boolean = false;

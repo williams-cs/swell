@@ -11,6 +11,7 @@ export interface Effect<T> {
     y: number;
     idObj: {
         readonly _id: number;
+        setID: boolean;
     };
     dims: Dimensions;
     selected: boolean;

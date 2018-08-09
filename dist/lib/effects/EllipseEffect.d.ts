@@ -22,6 +22,7 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
     private _size1;
     idObj: {
         readonly _id: number;
+        setID: boolean;
     };
     private _context;
     private _ratio;

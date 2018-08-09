@@ -18,6 +18,7 @@ export declare class StringEffect implements Effect<StringNode> {
     private _corner;
     idObj: {
         readonly _id: number;
+        setID: boolean;
     };
     private _isSelected;
     private _isEditing;

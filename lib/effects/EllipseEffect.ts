@@ -31,7 +31,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
     private _y1: number;
     private _size1: number; // saves size for logging
 
-    idObj: {readonly _id: number};
+    idObj: {readonly _id: number, setID: boolean};
 
     private _context: Scope;
 
@@ -49,6 +49,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
 
     constructor(circle: EllipseNode) {
         this._circle = circle;
+        this.idObj.setID = false;
     }
 
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
@@ -517,7 +518,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
     }
 
     initID(id: number){
-        this.idObj = {_id: id};
+        if(!this.idObj.setID) this.idObj = {_id: id, setID: true};
     }
 
     get x(): number {

@@ -23,6 +23,7 @@ class EllipseEffect {
             y: 0
         };
         this._circle = circle;
+        this.idObj.setID = false;
     }
     draw(context, dims, ast) {
         if (context.canvas.isDefined()) {
@@ -462,7 +463,8 @@ class EllipseEffect {
         throw new Error("Not implemented");
     }
     initID(id) {
-        this.idObj = { _id: id };
+        if (!this.idObj.setID)
+            this.idObj = { _id: id, setID: true };
     }
     get x() {
         return this._dims.x.eval(this._context).val;

@@ -25,7 +25,8 @@ export class StringEffect implements Effect<StringNode> {
     private _size1: number; // Original scale for resize logging
     //private _size2: number;
     private _corner: number = 0;
-    idObj: {readonly _id: number};
+    idObj: {readonly _id: number, setID: boolean};
+    
 
 
     private _isSelected: boolean = false; // Private bools
@@ -68,6 +69,7 @@ export class StringEffect implements Effect<StringNode> {
 
     constructor(str: StringNode) {
         this._str = str;
+        this.idObj.setID = false;
     }
 
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
