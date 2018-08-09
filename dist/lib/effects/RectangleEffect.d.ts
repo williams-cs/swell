@@ -23,7 +23,8 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
     private _justDragged;
     private _x1;
     private _y1;
-    private _size1;
+    private _width1;
+    private _height1;
     private _context;
     private _ratio;
     private _dragoffx;

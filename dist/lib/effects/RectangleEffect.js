@@ -408,7 +408,9 @@ class RectangleEffect {
             this._isResizing = true;
             this._context.eventLog.push(this.logClick());
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
-            this._size1 = Math.sqrt(Math.pow(w, 2) + Math.pow(h, 2)); // size is diagonal length
+            this._height1 = this.h;
+            this._width1 = this.w;
+            //this._size1 = Math.sqrt(Math.pow(w,2) + Math.pow(h,2)); // size is diagonal length
             switch (this._corner) {
                 case 1:
                     this._initDistance = distance(this._mouse.x, this._mouse.y, x + w, y + h);
@@ -484,7 +486,7 @@ class RectangleEffect {
         else if ((this._isResizing || this._isChangingDims) && this._isSelected) {
             this._isResizing = false;
             let size2 = Math.sqrt(Math.pow(this.w, 2) + Math.pow(this.h, 2));
-            if (Math.abs(this._size1 - size2) > 0) {
+            if ((Math.abs(this._width1 - this.w) > 0) || (Math.abs(this._height1 - this.h) > 0)) {
                 this._context.eventLog.push(this.logResize());
             }
         }
@@ -527,7 +529,7 @@ class RectangleEffect {
     //     return new DragEvent("rectangle", this._x1, this._y1, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     // }
     logResize() {
-        return new ResizeEvent_1.ResizeEvent("rectangle with ID " + this.getID().toString(), Math.round(this._size1 * 100) / 100, Math.round((Math.sqrt(Math.pow(this.w, 2) + Math.pow(this.h, 2)) * 100)) / 100);
+        return new ResizeEvent_1.ResizeEvent("rectangle with ID " + this.getID().toString(), Math.round(this._width1 * 100) / 100, Math.round(this._height1 * 100) / 100, Math.round(this.w * 100) / 100, Math.round(this.h * 100) / 100);
     }
     logClick() {
         return new ClickEvent_1.ClickEvent("rectangle with ID " + this.getID().toString(), this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);

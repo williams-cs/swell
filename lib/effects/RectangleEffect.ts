@@ -30,7 +30,8 @@ export class RectangleEffect implements Effect<RectangleNode> {
 
     private _x1: number; // used to save coords for logging
     private _y1: number;
-    private _size1: number; // saves size for logging
+    private _width1: number; // saves size for logging
+    private _height1: number;
 
     private _context: Scope;
 
@@ -454,7 +455,9 @@ export class RectangleEffect implements Effect<RectangleNode> {
             this._context.eventLog.push(this.logClick());
 
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
-            this._size1 = Math.sqrt(Math.pow(w,2) + Math.pow(h,2)); // size is diagonal length
+            this._height1 = this.h;
+            this._width1 = this.w;
+            //this._size1 = Math.sqrt(Math.pow(w,2) + Math.pow(h,2)); // size is diagonal length
             
             switch (this._corner) {
                 case 1: 
@@ -534,7 +537,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
         } else if ((this._isResizing || this._isChangingDims) && this._isSelected){
             this._isResizing = false;
             let size2 = Math.sqrt(Math.pow(this.w,2) + Math.pow(this.h,2)); 
-            if(Math.abs(this._size1 - size2) > 0){
+            if((Math.abs(this._width1 - this.w) > 0) || (Math.abs(this._height1 - this.h) > 0)){
                 this._context.eventLog.push(this.logResize());
             }
         } 
@@ -585,7 +588,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
     // }
 
     logResize(): LogEvent<any> {
-        return new ResizeEvent("rectangle with ID " + this.getID().toString(), Math.round(this._size1*100)/100, Math.round((Math.sqrt(Math.pow(this.w,2) + Math.pow(this.h,2))*100))/100);
+        return new ResizeEvent("rectangle with ID " + this.getID().toString(), Math.round(this._width1*100)/100, Math.round(this._height1*100)/100, Math.round(this.w*100)/100, Math.round(this.h*100)/100);
     }
 
     logClick(): LogEvent<any>{
