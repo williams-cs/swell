@@ -12,7 +12,7 @@ class Equals {
         }
     }
     toString() {
-        return this._ws + this._left.toString() + ' equals' + this._right.toString();
+        return this._ws + this._left.toString() + ' equals ' + this._right.toString();
     }
     newLine() {
         return this._newLine;

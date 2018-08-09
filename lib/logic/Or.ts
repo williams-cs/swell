@@ -18,7 +18,7 @@ export class Or implements Expression<any>{
     }
 
     toString() :string {
-        return this._ws + this._left.toString() + ' or' + this._right.toString();
+        return this._ws + this._left.toString() + ' or ' + this._right.toString();
     }
 
     newLine() : boolean {
