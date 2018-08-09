@@ -2,12 +2,16 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const BooleanNode_1 = require("../prims/BooleanNode");
 class Not {
-    constructor(expr) {
+    constructor(expr, ws) {
         this._newLine = false;
         this._expr = expr;
+        this._ws = ws;
+        if (ws == undefined) {
+            this._ws = "";
+        }
     }
     toString() {
-        return "not " + this._expr.toString();
+        return this._ws + "not " + this._expr.toString();
     }
     newLine() {
         return this._newLine;

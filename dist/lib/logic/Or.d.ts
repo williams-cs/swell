@@ -5,7 +5,8 @@ export declare class Or implements Expression<any> {
     private _left;
     private _right;
     private _newLine;
-    constructor(left: Expression<any>, right: Expression<any>);
+    private _ws;
+    constructor(left: Expression<any>, right: Expression<any>, ws?: string);
     toString(): string;
     newLine(): boolean;
     eval(context: Scope): BooleanNode;
