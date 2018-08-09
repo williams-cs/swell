@@ -505,11 +505,11 @@ export class EllipseEffect implements Effect<EllipseNode> {
     // }
 
     logResize(): LogEvent<any> {
-        return new ResizeEvent("ellipse", this._size1, Math.sqrt(Math.pow(this.w,2) + Math.pow(this.h,2)));
+        return new ResizeEvent("ellipse with ID " + this.getID().toString(), this._size1, Math.sqrt(Math.pow(this.w,2) + Math.pow(this.h,2)));
     }
 
     logClick(): LogEvent<any>{
-        return new ClickEvent("ellipse", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+        return new ClickEvent("ellipse with ID " + this.getID().toString(), this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
 
     updateAST(): Expression<EllipseNode> {

@@ -416,11 +416,11 @@ export class StringEffect implements Effect<StringNode> {
     // }
 
     logResize(): LogEvent<any> {
-        return new ResizeEvent(this._str.val, this._size1, this._fontSize);
+        return new ResizeEvent(this._str.val + " with ID " + this.getID().toString(), this._size1, this._fontSize);
     }
 
     logClick(): LogEvent<any>{
-        return new ClickEvent(this._str.val, this.x, this.y);
+        return new ClickEvent(this._str.val + " with ID " + this.getID().toString(), this.x, this.y);
     }
 
     // logSelected(): LogEvent<any>{

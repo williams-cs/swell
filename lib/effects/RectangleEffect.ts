@@ -589,11 +589,11 @@ export class RectangleEffect implements Effect<RectangleNode> {
     // }
 
     logResize(): LogEvent<any> {
-        return new ResizeEvent("rectangle", this._size1, Math.sqrt(Math.pow(this.w,2) + Math.pow(this.h,2)));
+        return new ResizeEvent("rectangle with ID " + this.getID().toString(), this._size1, Math.sqrt(Math.pow(this.w,2) + Math.pow(this.h,2)));
     }
 
     logClick(): LogEvent<any>{
-        return new ClickEvent("rectangle", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+        return new ClickEvent("rectangle with ID " + this.getID().toString(), this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
 
     initID(id: number){

@@ -352,10 +352,10 @@ class StringEffect {
     //     return new DragEvent(this._str.val, this._x1, this._y1, this.x, this.y);
     // }
     logResize() {
-        return new ResizeEvent_1.ResizeEvent(this._str.val, this._size1, this._fontSize);
+        return new ResizeEvent_1.ResizeEvent(this._str.val + " with ID " + this.getID().toString(), this._size1, this._fontSize);
     }
     logClick() {
-        return new ClickEvent_1.ClickEvent(this._str.val, this.x, this.y);
+        return new ClickEvent_1.ClickEvent(this._str.val + " with ID " + this.getID().toString(), this.x, this.y);
     }
     // logSelected(): LogEvent<any>{
     //     //console.log("Logging selected!!");
