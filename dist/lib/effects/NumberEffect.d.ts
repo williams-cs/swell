@@ -15,6 +15,10 @@ export declare class NumberEffect implements Effect<NumberNode> {
     private _h;
     private _isSelected;
     private _justDragged;
+    idObj: {
+        readonly _id: number;
+        setID: boolean;
+    };
     constructor(num: NumberNode);
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
     update(): void;

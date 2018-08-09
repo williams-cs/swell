@@ -13,6 +13,7 @@ export interface Effect<T>{
     //log(): string;
     x: number;
     y: number;
+    idObj: {readonly _id: number, setID: boolean}; // the ID of the effect
     dims: Dimensions;
     selected: boolean;
     getJustDragged(): boolean;

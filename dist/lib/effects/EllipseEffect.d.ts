@@ -20,6 +20,10 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
     private _x1;
     private _y1;
     private _size1;
+    idObj: {
+        readonly _id: number;
+        setID: boolean;
+    };
     private _context;
     private _ratio;
     private _dragoffx;
@@ -51,12 +55,14 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
     logResize(): LogEvent<any>;
     logClick(): LogEvent<any>;
     updateAST(): Expression<EllipseNode>;
+    initID(id: number): void;
     readonly x: number;
     readonly y: number;
     readonly w: number;
     readonly h: number;
     readonly dims: Dimensions;
     readonly selected: boolean;
+    readonly id: number;
     getJustDragged(): boolean;
     setJustDragged(val: boolean): void;
     readonly isDragging: boolean;

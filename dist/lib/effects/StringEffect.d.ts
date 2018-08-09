@@ -16,6 +16,10 @@ export declare class StringEffect implements Effect<StringNode> {
     private _y1;
     private _size1;
     private _corner;
+    idObj: {
+        readonly _id: number;
+        setID: boolean;
+    };
     private _isSelected;
     private _isEditing;
     private _isListening;

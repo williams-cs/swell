@@ -16,6 +16,10 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
     private _ctx;
     private _canvas;
     private _corner;
+    idObj: {
+        readonly _id: number;
+        setID: boolean;
+    };
     private _isSelected;
     private _isDragging;
     private _isResizing;

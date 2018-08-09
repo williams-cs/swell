@@ -33,6 +33,7 @@ class StringEffect {
             cursorPos: 0
         };
         this._str = str;
+        this.idObj.setID = false;
     }
     draw(context, dims, ast) {
         if (context.canvas.isDefined()) {
