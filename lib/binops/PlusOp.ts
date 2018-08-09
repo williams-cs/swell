@@ -6,8 +6,13 @@ import { Dimensions } from '../structural/Dimensions';
 
 // left and right are both expressions
 export class PlusOp extends BinaryOperation<NumberNode>{
-    constructor(left: Expression<NumberNode>, right: Expression<NumberNode>){
+    private _ws : string;
+    constructor(left: Expression<NumberNode>, right: Expression<NumberNode>, ws? : undefined){
         super(left,right);
+        this._ws = ws;
+        if(ws == undefined){
+            this._ws = "";
+        }
     }
     
     eval(context: Scope): NumberNode {
@@ -28,7 +33,7 @@ export class PlusOp extends BinaryOperation<NumberNode>{
 
 
     toString() : string {
-        return this.left.toString() + ' + ' + this.right.toString();
+        return this._ws + this.left.toString() + ' + ' + this.right.toString();
     }
     newLine() : boolean {
         return false;

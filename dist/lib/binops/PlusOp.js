@@ -5,8 +5,12 @@ const Scope_1 = require("../structural/Scope");
 const NumberNode_1 = require("../prims/NumberNode");
 // left and right are both expressions
 class PlusOp extends BinaryOperation_1.BinaryOperation {
-    constructor(left, right) {
+    constructor(left, right, ws) {
         super(left, right);
+        this._ws = ws;
+        if (ws == undefined) {
+            this._ws = "";
+        }
     }
     eval(context) {
         let l = this.left;
@@ -22,7 +26,7 @@ class PlusOp extends BinaryOperation_1.BinaryOperation {
         throw new Error("Cannot call equals directly on binary operations");
     }
     toString() {
-        return this.left.toString() + ' + ' + this.right.toString();
+        return this._ws + this.left.toString() + ' + ' + this.right.toString();
     }
     newLine() {
         return false;

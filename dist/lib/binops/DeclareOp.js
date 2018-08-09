@@ -5,14 +5,18 @@ const VariableNode_1 = require("../vars/VariableNode");
 // left side is variable, right side is val
 // Declares new val
 class DeclareOp extends BinaryOperation_1.BinaryOperation {
-    constructor(left, right) {
+    constructor(left, right, ws) {
         super(left, right);
         if (!(left instanceof VariableNode_1.VariableNode)) {
             throw new Error("The left hand side of the assignment must be a variable.");
         }
+        this._ws = ws;
+        if (ws == undefined) {
+            this._ws = "";
+        }
     }
     toString() {
-        return "var " + this.left.toString() + ' = ' + this.right.toString();
+        return this._ws + "var " + this.left.toString() + ' = ' + this.right.toString();
     }
     eval(context) {
         if (this.left instanceof VariableNode_1.VariableNode) {

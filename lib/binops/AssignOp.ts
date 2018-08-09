@@ -7,10 +7,15 @@ import { Dimensions } from '../structural/Dimensions';
 // left side is variable, right side is val
 // Reassign new value to var
 export class AssignOp<T> extends BinaryOperation<T>{
-    constructor(left: Expression<T>, right: Expression<T>){
+    private _ws : string;
+    constructor(left: Expression<T>, right: Expression<T>, ws? : string){
         super(left,right);
         if(!(left instanceof VariableNode)){
             throw new Error("The left hand side of the assignment must be a variable.");
+        }
+        this._ws = ws;
+        if(ws == undefined){
+            this._ws = "";
         }
     }
 
@@ -27,7 +32,7 @@ export class AssignOp<T> extends BinaryOperation<T>{
     }
     
     toString() :string {
-        return this.left.toString() + ' = ' + this.right.toString();
+        return this._ws + this.left.toString() + ' = ' + this.right.toString();
     }
 
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
