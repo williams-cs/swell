@@ -8,7 +8,8 @@ export interface Effect<T>{
     ast(): Expression<T>; // returns expression that created obj
     update(): void;
     toSelString(): string; // returns string for selection logging
-    toDragString(): string; // returns string for dragging
+    toDragString(): string; // returns string for drag logging
+    toIDString(): string; // returns string for ID logging
     //updateAST(): Expression<T>; // returns a new expression after manipulation
     //log(): string;
     x: number;

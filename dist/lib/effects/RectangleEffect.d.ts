@@ -9,10 +9,6 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
     private _rect;
     private _dims;
     private _ast;
-    private _x;
-    private _y;
-    private _w;
-    private _h;
     private _ctx;
     private _canvas;
     private _corner;
@@ -27,7 +23,8 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
     private _justDragged;
     private _x1;
     private _y1;
-    private _size1;
+    private _width1;
+    private _height1;
     private _context;
     private _ratio;
     private _dragoffx;
@@ -82,5 +79,6 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
     readonly isDragging: boolean;
     toSelString(): string;
     toDragString(): string;
+    toIDString(): string;
     equalsVal(right: Effect<any>): boolean;
 }

@@ -408,7 +408,7 @@ export class StringEffect implements Effect<StringNode> {
     }
 
     logPaint(): LogEvent<any> {
-        return new PaintEvent(this._str.val, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+        return new PaintEvent(this._str.val, this.x, this.y);
     }
     
     // logMove(): LogEvent<any> {
@@ -416,11 +416,11 @@ export class StringEffect implements Effect<StringNode> {
     // }
 
     logResize(): LogEvent<any> {
-        return new ResizeEvent(this._str.val, this._size1, this._fontSize);
+        return new ResizeEvent(this._str.val + " with ID " + this.getID().toString(), Math.round(this._size1*100)/100, Math.round(this._fontSize*100)/100);
     }
 
     logClick(): LogEvent<any>{
-        return new ClickEvent(this._str.val, this.x, this.y);
+        return new ClickEvent(this._str.val + " with ID " + this.getID().toString(), this.x, this.y);
     }
 
     // logSelected(): LogEvent<any>{
@@ -477,11 +477,15 @@ export class StringEffect implements Effect<StringNode> {
     }
 
     toSelString(): string {
-        return " " + this._str.val + " at " + this.x + ", " + this.y;
+        return " " + this._str.val + " with ID " + this.getID().toString() + " at " + this.x + ", " + this.y;
     }
 
     toDragString(): string{
-        return(this._str.val + " from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
+        return(this._str.val + " with ID " + this.getID().toString() + " from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
+    }
+
+    toIDString(): string {
+        return (this.idObj._id.toString() + " to " + this._str.val + " at " + this.x + ", " + this.y);
     }
 
     equalsVal(right: Effect<any>): boolean{

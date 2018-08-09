@@ -69,6 +69,9 @@ class NumberEffect {
     toDragString() {
         return "are we even using this?";
     }
+    toIDString() {
+        return "nope";
+    }
     equalsVal(right) {
         return false;
     }

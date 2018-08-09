@@ -375,7 +375,9 @@ class EllipseEffect {
             this._dragoffx = this._dims.x.eval(this._context).val;
             this._dragoffy = this._dims.y.eval(this._context).val;
             this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
-            this._size1 = Math.sqrt(Math.pow(this.w, 2) + Math.pow(this.h, 2)); // saving old size
+            this._width1 = this.w;
+            this._height1 = this.h;
+            //this._size1 = Math.sqrt(Math.pow(this.w,2) + Math.pow(this.h,2)); // saving old size
         }
         else if (guideContains > 4) { //changing shape dimensions
             this._isSelected = true;
@@ -411,9 +413,9 @@ class EllipseEffect {
         else if ((this._isResizing || this._isChangingDims) && this._isSelected) {
             //console.log("resizing ellipse");
             this._isResizing = false;
-            let size2 = Math.sqrt(Math.pow(this.w, 2) + Math.pow(this.h, 2));
+            //let size2 = Math.sqrt(Math.pow(this.w,2) + Math.pow(this.h,2));
             //console.log("Size diff: " + Math.abs(this._size1 - size2));
-            if (Math.abs(this._size1 - size2) > 0) {
+            if ((Math.abs(this._width1 - this.w) > 0) || (Math.abs(this._height1 - this.h) > 0)) {
                 this._context.eventLog.push(this.logResize());
             }
         }
@@ -453,10 +455,11 @@ class EllipseEffect {
     //     return new DragEvent("ellipse", this._x1, this._y1, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     // }
     logResize() {
-        return new ResizeEvent_1.ResizeEvent("ellipse", this._size1, Math.sqrt(Math.pow(this.w, 2) + Math.pow(this.h, 2)));
+        return new ResizeEvent_1.ResizeEvent("ellipse with ID " + this.getID().toString(), Math.round(this._width1 * 100) / 100, Math.round(this._height1 * 100) / 100, Math.round(this.w * 100) / 100, Math.round(this.h * 100) / 100);
+        //Math.round(this._size1*100)/100, Math.round((Math.sqrt(Math.pow(this.w,2) + Math.pow(this.h,2))*100))/100);
     }
     logClick() {
-        return new ClickEvent_1.ClickEvent("ellipse", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+        return new ClickEvent_1.ClickEvent("ellipse with ID " + this.getID().toString(), this.x, this.y);
     }
     updateAST() {
         throw new Error("Not implemented");
@@ -495,10 +498,13 @@ class EllipseEffect {
         return this._isDragging;
     }
     toSelString() {
-        return (" ellipse at " + this.x + ", " + this.y);
+        return (" ellipse with ID " + this.getID().toString() + " at " + this.x + ", " + this.y);
     }
     toDragString() {
-        return ("ellipse from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
+        return ("ellipse with ID " + this.getID().toString() + " from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
+    }
+    toIDString() {
+        return (this.idObj._id.toString() + " to ellipse at " + this.x + ", " + this.y);
     }
     equalsVal(right) {
         if (right instanceof EllipseEffect) {

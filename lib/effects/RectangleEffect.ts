@@ -15,10 +15,6 @@ export class RectangleEffect implements Effect<RectangleNode> {
     private _rect: RectangleNode;
     private _dims: Dimensions;
     private _ast: Expression<any>;
-    private _x: number;
-    private _y: number;
-    private _w: number;
-    private _h: number;
     private _ctx: CanvasRenderingContext2D;
     private _canvas: HTMLCanvasElement;
     private _corner: number = 0;
@@ -34,7 +30,8 @@ export class RectangleEffect implements Effect<RectangleNode> {
 
     private _x1: number; // used to save coords for logging
     private _y1: number;
-    private _size1: number; // saves size for logging
+    private _width1: number; // saves size for logging
+    private _height1: number;
 
     private _context: Scope;
 
@@ -458,7 +455,9 @@ export class RectangleEffect implements Effect<RectangleNode> {
             this._context.eventLog.push(this.logClick());
 
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
-            this._size1 = Math.sqrt(Math.pow(w,2) + Math.pow(h,2)); // size is diagonal length
+            this._height1 = this.h;
+            this._width1 = this.w;
+            //this._size1 = Math.sqrt(Math.pow(w,2) + Math.pow(h,2)); // size is diagonal length
             
             switch (this._corner) {
                 case 1: 
@@ -538,7 +537,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
         } else if ((this._isResizing || this._isChangingDims) && this._isSelected){
             this._isResizing = false;
             let size2 = Math.sqrt(Math.pow(this.w,2) + Math.pow(this.h,2)); 
-            if(Math.abs(this._size1 - size2) > 0){
+            if((Math.abs(this._width1 - this.w) > 0) || (Math.abs(this._height1 - this.h) > 0)){
                 this._context.eventLog.push(this.logResize());
             }
         } 
@@ -589,11 +588,11 @@ export class RectangleEffect implements Effect<RectangleNode> {
     // }
 
     logResize(): LogEvent<any> {
-        return new ResizeEvent("rectangle", this._size1, Math.sqrt(Math.pow(this.w,2) + Math.pow(this.h,2)));
+        return new ResizeEvent("rectangle with ID " + this.getID().toString(), Math.round(this._width1*100)/100, Math.round(this._height1*100)/100, Math.round(this.w*100)/100, Math.round(this.h*100)/100);
     }
 
     logClick(): LogEvent<any>{
-        return new ClickEvent("rectangle", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+        return new ClickEvent("rectangle with ID " + this.getID().toString(), this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
     }
 
     initID(id: number){
@@ -645,11 +644,15 @@ export class RectangleEffect implements Effect<RectangleNode> {
     }
 
     toSelString(): string{
-        return " rectangle at " + this.x + ", " + this.y;
+        return " rectangle with ID " + this.getID().toString() + " at " + this.x + ", " + this.y;
     }
 
     toDragString(): string{
-        return("rectangle from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
+        return("rectangle with ID " + this.getID().toString() + " from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
+    }
+
+    toIDString(): string {
+        return (this.idObj._id.toString() + " to rectangle at " + this.x + ", " + this.y);
     }
 
     equalsVal(right: Effect<any>): boolean{
