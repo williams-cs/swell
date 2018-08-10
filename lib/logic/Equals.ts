@@ -6,8 +6,8 @@ import { NumberNode } from "../prims/NumberNode";
 export class Equals implements Expression<BooleanNode>{
     private _left: Expression<any>;
     private _right: Expression<any>;
-    private _newLine : boolean = false;
-    private _ws : string;
+    private _newLine: boolean = false;
+    private _ws: string;
 
     constructor(left: Expression<any>, right: Expression<any>, ws? : string){
         this._left = left;
@@ -18,11 +18,11 @@ export class Equals implements Expression<BooleanNode>{
         }
     }
 
-    toString() :string {
+    toString(): string {
         return this._ws + this._left.toString() + ' equals ' + this._right.toString();
     }
 
-    newLine() : boolean {
+    newLine(): boolean {
         return this._newLine;
     }
 
