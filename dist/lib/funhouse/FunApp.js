@@ -33,6 +33,7 @@ class FunApp {
         let fundef = context.lookup(this._name, context); // looking up function
         //let child = new Scope(fundef.scope); // avoiding overwrite; need to toss after returning
         let child = fundef.scope.copy(); // Copying definition scope
+        // **************
         if (this._args != null) {
             for (let i = 0; i < this._args.length; i++) { //lookups?
                 //child.declare(this._funct.args[i]); // redeclare?

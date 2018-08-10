@@ -23,8 +23,8 @@ export class FunDef<T> implements Expression<T>{
     // Binds args in context of definition; no values
     // Binds name to parent context (cur context is new context)
     eval(context: Scope): any{
-        this._funScope = new Scope(context);
-        
+        this._funScope = new Scope(context); // ************* copy????
+        this._funScope.canvas = context.canvas;
         /*
         if(this._args != null){
             for(let entry of this._args){
