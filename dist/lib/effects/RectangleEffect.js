@@ -356,7 +356,7 @@ class RectangleEffect {
                 break;
             case 6:
                 this._dims.width.eval(this._context).val += newDistance - this._initDistance;
-                this._rect.width = new NumberNode_1.NumberNode(Math.round(this._dims.height.eval(this._context).val));
+                this._rect.width = new NumberNode_1.NumberNode(Math.round(this._dims.width.eval(this._context).val));
                 this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
                 this._initDistance = newDistance;
                 break;
@@ -371,7 +371,7 @@ class RectangleEffect {
                     this._dims.x.eval(this._context).val -= Math.round(newDistance - this._initDistance);
                 }
                 this._dims.width.eval(this._context).val += newDistance - this._initDistance;
-                this._rect.width = new NumberNode_1.NumberNode(Math.round(this._dims.height.eval(this._context).val));
+                this._rect.width = new NumberNode_1.NumberNode(Math.round(this._dims.width.eval(this._context).val));
                 this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
                 this._initDistance = newDistance;
                 break;
