@@ -25,6 +25,8 @@ export class FunDef<T> implements Expression<T>{
     eval(context: Scope): any{
         this._funScope = new Scope(context); // ************* copy????
         this._funScope.canvas = context.canvas;
+        this._funScope.eventLog = context.eventLog;
+        this._funScope.effects = context.effects;
         /*
         if(this._args != null){
             for(let entry of this._args){

@@ -18,6 +18,8 @@ class FunDef {
     eval(context) {
         this._funScope = new Scope_1.Scope(context); // ************* copy????
         this._funScope.canvas = context.canvas;
+        this._funScope.eventLog = context.eventLog;
+        this._funScope.effects = context.effects;
         /*
         if(this._args != null){
             for(let entry of this._args){
