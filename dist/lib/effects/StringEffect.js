@@ -34,7 +34,7 @@ class StringEffect {
         this._str = str;
     }
     draw(context, dims, ast) {
-        if (context.canvas.isDefined()) {
+        if (context.canvas != undefined) {
             this._ast = ast;
             this._context = context;
             this._canvas = context.canvas.get();

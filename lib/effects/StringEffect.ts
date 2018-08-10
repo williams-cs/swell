@@ -72,7 +72,7 @@ export class StringEffect implements Effect<StringNode> {
     }
 
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
-        if (context.canvas.isDefined()) {
+        if (context.canvas != undefined) {
             this._ast = ast;
             this._context = context;
             this._canvas = context.canvas.get();
