@@ -22,7 +22,10 @@ class RectangleNode {
         return this;
     }
     equalsVal(right) {
-        throw new Error("Cannot call equals directly on shape");
+        if (right instanceof RectangleNode) {
+            return (this.width === right.width && this.height === right.height);
+        }
+        return false;
     }
     move() { }
     get width() {

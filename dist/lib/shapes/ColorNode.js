@@ -11,7 +11,10 @@ class ColorNode {
     draw(context, dims, ast) {
     }
     equalsVal(right) {
-        throw new Error("Cannot call equals directly on shape");
+        if (right instanceof ColorNode) {
+            return (this.red === right.red && this.green === right.green && this.blue === right.blue);
+        }
+        return false;
     }
     toString() {
         return "";

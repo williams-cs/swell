@@ -31,7 +31,10 @@ export class RectangleNode implements Expression<RectangleNode> {
     }
 
     equalsVal(right: Expression<any>): boolean{
-        throw new Error("Cannot call equals directly on shape");
+        if(right instanceof RectangleNode){
+            return (this.width === right.width && this.height === right.height);
+        }
+        return false;
     }
 
     move(): void{}

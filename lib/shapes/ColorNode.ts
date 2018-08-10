@@ -19,7 +19,10 @@ export class ColorNode implements Expression<string>{
     }
 
     equalsVal(right: Expression<any>): boolean{
-        throw new Error("Cannot call equals directly on shape");
+        if(right instanceof ColorNode){
+            return (this.red === right.red && this.green === right.green && this.blue === right.blue);
+        }
+        return false;
     }
 
     toString() :string {
