@@ -14,7 +14,6 @@ export class RectangleEffect implements Effect<RectangleNode> {
 
     private _rect: RectangleNode;
     private _dims: Dimensions;
-    private _ast: Expression<any>;
     private _ctx: CanvasRenderingContext2D;
     private _canvas: HTMLCanvasElement;
     private _corner: number = 0;
@@ -54,12 +53,11 @@ export class RectangleEffect implements Effect<RectangleNode> {
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
         if (context.canvas.isDefined()) {
             this._dims = dims;
-            this._ast = ast;
             this._canvas = context.canvas.get();
             this._context = context;
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
-            this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
+            this._ratio = this.w / this.h;
             this.update();
         }
         this._context.eventLog.push(this.logPaint());
@@ -68,10 +66,10 @@ export class RectangleEffect implements Effect<RectangleNode> {
     }
 
     update(): void {
-        let x = this._dims.x.eval(this._context).val;
-        let y = this._dims.y.eval(this._context).val;
-        let width = this._dims.width.eval(this._context).val;
-        let height = this._dims.height.eval(this._context).val;
+        let x = this.x;
+        let y = this.y;
+        let width = this.w;
+        let height = this.h;
         this._ctx.beginPath();
         this._ctx.rect(x, y, width, height);
         this._ctx.strokeStyle = "black";
@@ -93,10 +91,10 @@ export class RectangleEffect implements Effect<RectangleNode> {
     }
 
     contains(mx: number, my: number): boolean {
-        let x = this._dims.x.eval(this._context).val;
-        let y = this._dims.y.eval(this._context).val;
-        let w = this._dims.width.eval(this._context).val;
-        let h = this._dims.height.eval(this._context).val;
+        let x: number = this.x;
+        let y: number = this.y;
+        let w: number = this.w;
+        let h: number = this.h;
         if(mx > x && mx < x+w && my > y && my < y+h) {
             return true;
         }
@@ -104,10 +102,10 @@ export class RectangleEffect implements Effect<RectangleNode> {
     }
 
     guideContains(mx: number, my: number): number {
-        let x: number = this._dims.x.eval(this._context).val;
-        let y: number = this._dims.y.eval(this._context).val;
-        let w: number = this._dims.width.eval(this._context).val;
-        let h: number = this._dims.height.eval(this._context).val;
+        let x: number = this.x;
+        let y: number = this.y;
+        let w: number = this.w;
+        let h: number = this.h;
         let xdif: number = mx - x;
         let ydif: number = my - y;
         /* Corner Guides */
@@ -272,10 +270,10 @@ export class RectangleEffect implements Effect<RectangleNode> {
             this.modifyDrag();
         }
         else if(this._isResizing && this._isSelected) {
-            this.modifyResize(this._dims.width.eval(this._context).val < 10, this._dims.height.eval(this._context).val < 10);
+            this.modifyResize(this.w < 10, this.h < 10);
         }
         else if(this._isChangingDims && this._isSelected) {
-            this.modifyChangeDims(this._dims.width.eval(this._context).val < 10, this._dims.height.eval(this._context).val < 10);
+            this.modifyChangeDims(this.w < 10, this.h < 10);
         }
     }
 
@@ -338,7 +336,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
     }
 
     modifyResizeHelper(newDistance: number): void {
-        if(this._dims.width.eval(this._context).val > 10 && this._dims.height.eval(this._context).val > 10) {
+        if(this.w > 10 && this.h > 10) {
             switch (this._corner) {
                 case 1:
                     this._dims.y.eval(this._context).val -= Math.round((newDistance - this._initDistance) / this._ratio);
@@ -353,9 +351,9 @@ export class RectangleEffect implements Effect<RectangleNode> {
             }
         }
         this._dims.width.eval(this._context).val += newDistance - this._initDistance;
-        this._rect.width = new NumberNode(Math.round(this._dims.width.eval(this._context).val));
+        this._rect.width = new NumberNode(Math.round(this.w));
         this._dims.height.eval(this._context).val += (newDistance - this._initDistance) / this._ratio;
-        this._rect.height = new NumberNode(Math.round(this._dims.height.eval(this._context).val));
+        this._rect.height = new NumberNode(Math.round(this.h));
         this._initDistance = newDistance;
         
     }
@@ -365,8 +363,6 @@ export class RectangleEffect implements Effect<RectangleNode> {
         if(widthTooSmall) {
             this._dims.width.eval(this._context).val = 10;
             this._rect.width = new NumberNode(10);
-            //this._dims.height.eval(this._context).val = 10 / this._ratio;
-            //this._rect.height = new NumberNode(Math.round(10 / this._ratio));
             if(newDistance - this._initDistance > 0){
                 this.modifyChangeDimsHelper();
             }
@@ -374,8 +370,6 @@ export class RectangleEffect implements Effect<RectangleNode> {
         if(heightTooSmall) {
             this._dims.height.eval(this._context).val = 10;
             this._rect.height = new NumberNode(10);
-            //this._dims.width.eval(this._context).val = 10 * this._ratio;
-            //this._rect.width = new NumberNode(Math.round(10 * this._ratio));
             if(newDistance - this._initDistance > 0){
                 this.modifyChangeDimsHelper();
             }
@@ -389,38 +383,38 @@ export class RectangleEffect implements Effect<RectangleNode> {
         let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
         switch (this._corner) {
             case 5:
-                if(this._dims.width.eval(this._context).val > 10 && this._dims.height.eval(this._context).val > 10) {
+                if(this.w > 10 && this.h > 10) {
                     this._dims.y.eval(this._context).val -= Math.round(newDistance - this._initDistance);
                 }
                 this._dims.height.eval(this._context).val += newDistance - this._initDistance;
-                this._rect.height = new NumberNode(Math.round(this._dims.height.eval(this._context).val));
-                this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
+                this._rect.height = new NumberNode(Math.round(this.h));
+                this._ratio = this.w / this.h;
                 this._initDistance = newDistance;
             break;
             case 6:
                 this._dims.width.eval(this._context).val += newDistance - this._initDistance;
-                this._rect.width = new NumberNode(Math.round(this._dims.width.eval(this._context).val));
-                this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
+                this._rect.width = new NumberNode(Math.round(this.w));
+                this._ratio = this.w / this.h;
                 this._initDistance = newDistance;
             break;
             case 7:
                 this._dims.height.eval(this._context).val += newDistance - this._initDistance;
-                this._rect.height = new NumberNode(Math.round(this._dims.height.eval(this._context).val));
-                this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
+                this._rect.height = new NumberNode(Math.round(this.h));
+                this._ratio = this.w / this.h;
                 this._initDistance = newDistance;
             break;
             case 8:
-                if(this._dims.width.eval(this._context).val > 10 && this._dims.height.eval(this._context).val > 10) {
+                if(this.w > 10 && this.h > 10) {
                     this._dims.x.eval(this._context).val -= Math.round(newDistance - this._initDistance);
                 }
                 this._dims.width.eval(this._context).val += newDistance - this._initDistance;
-                this._rect.width = new NumberNode(Math.round(this._dims.width.eval(this._context).val));
-                this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
+                this._rect.width = new NumberNode(Math.round(this.w));
+                this._ratio = this.w / this.h;
                 this._initDistance = newDistance;
             break;
         }
-
     }
+
     /**
      * 
      * @param guideContains 
@@ -564,35 +558,16 @@ export class RectangleEffect implements Effect<RectangleNode> {
         }
     }
 
-    /*logPaint(): LogEvent<any> {
-        //return new PaintEvent(this._str);
-    }*/
-
-    // logMove(): string {
-    //     let moveStr = new DragEvent(this._str, this._x1, this._y1, this._dims.x, this._dims.y);
-    //     return moveStr.assembleLog();
-    // }
-
-    // logResize(): string {
-    //     let sizeStr = new ResizeEvent(this._str, this._size1, this._fontSize);
-    //     return sizeStr.assembleLog();
-    // }
-
     logPaint(): LogEvent<any> {
-        return new PaintEvent("rectangle", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+        return new PaintEvent("rectangle", this.x, this.y);
     }
-
-    // logMove(): LogEvent<any> {
-    //     //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);
-    //     return new DragEvent("rectangle", this._x1, this._y1, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
-    // }
 
     logResize(): LogEvent<any> {
         return new ResizeEvent("rectangle with ID " + this.getID().toString(), Math.round(this._width1*100)/100, Math.round(this._height1*100)/100, Math.round(this.w*100)/100, Math.round(this.h*100)/100);
     }
 
     logClick(): LogEvent<any>{
-        return new ClickEvent("rectangle with ID " + this.getID().toString(), this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+        return new ClickEvent("rectangle with ID " + this.getID().toString(), this.x, this.y);
     }
 
     initID(id: number){

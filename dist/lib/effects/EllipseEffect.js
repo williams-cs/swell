@@ -32,7 +32,7 @@ class EllipseEffect {
             this._context = context;
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
-            this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
+            this._ratio = this.w / this.h;
             this.update();
         }
         // logging
@@ -41,10 +41,10 @@ class EllipseEffect {
         this.addEventListeners();
     }
     update() {
-        let x = this._dims.x.eval(this._context).val;
-        let y = this._dims.y.eval(this._context).val;
-        let w = this._dims.width.eval(this._context).val;
-        let h = this._dims.height.eval(this._context).val;
+        let x = this.x;
+        let y = this.y;
+        let w = this.w;
+        let h = this.h;
         this._ctx.beginPath();
         this._ctx.ellipse(x, y, w / 2, h / 2, 0, 0, Math.PI * 2, false);
         this._ctx.strokeStyle = "black";
@@ -64,17 +64,17 @@ class EllipseEffect {
         this._canvas.addEventListener('selectstart', function (e) { e.preventDefault(); return false; }, false);
     }
     contains(mx, my) {
-        let x = this._dims.x.eval(this._context).val;
-        let y = this._dims.y.eval(this._context).val;
-        let w = this._dims.width.eval(this._context).val;
-        let h = this._dims.height.eval(this._context).val;
+        let x = this.x;
+        let y = this.y;
+        let w = this.w;
+        let h = this.h;
         return Math.pow(mx - x, 2) / Math.pow(w / 2, 2) + Math.pow(my - y, 2) / Math.pow(h / 2, 2) <= 1;
     }
     guideContains(mx, my) {
-        let x = this._dims.x.eval(this._context).val;
-        let y = this._dims.y.eval(this._context).val;
-        let w = this._dims.width.eval(this._context).val;
-        let h = this._dims.height.eval(this._context).val;
+        let x = this.x;
+        let y = this.y;
+        let w = this.w;
+        let h = this.h;
         let xdif = mx - (x - w / 2);
         let ydif = my - (y - h / 2);
         /* Corner Guides */
@@ -237,10 +237,10 @@ class EllipseEffect {
             this.modifyDrag();
         }
         else if (this._isResizing && this._isSelected) {
-            this.modifyResize(this._dims.width.eval(this._context).val < 14, this._dims.height.eval(this._context).val < 14);
+            this.modifyResize(this.w < 14, this.h < 14);
         }
         else if (this._isChangingDims && this._isSelected) {
-            this.modifyChangeDims(this._dims.width.eval(this._context).val < 14, this._dims.height.eval(this._context).val < 14);
+            this.modifyChangeDims(this.w < 14, this.h < 14);
         }
     }
     onMouseDown(event) {
@@ -275,9 +275,9 @@ class EllipseEffect {
             let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
             if (newDistance - this._initDistance > 0) {
                 this._dims.width.eval(this._context).val += (newDistance - this._initDistance) * 2;
-                this._circle.width = new NumberNode_1.NumberNode(Math.round(this._dims.width.eval(this._context).val));
+                this._circle.width = new NumberNode_1.NumberNode(Math.round(this.w));
                 this._dims.height.eval(this._context).val += (newDistance - this._initDistance) * 2 / this._ratio;
-                this._circle.height = new NumberNode_1.NumberNode(Math.round(this._dims.height.eval(this._context).val));
+                this._circle.height = new NumberNode_1.NumberNode(Math.round(this.h));
                 this._initDistance = newDistance;
             }
         }
@@ -289,18 +289,18 @@ class EllipseEffect {
             let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
             if (newDistance - this._initDistance > 0) {
                 this._dims.width.eval(this._context).val += (newDistance - this._initDistance) * 2;
-                this._circle.width = new NumberNode_1.NumberNode(Math.round(this._dims.width.eval(this._context).val));
+                this._circle.width = new NumberNode_1.NumberNode(Math.round(this.w));
                 this._dims.height.eval(this._context).val += (newDistance - this._initDistance) * 2 / this._ratio;
-                this._circle.height = new NumberNode_1.NumberNode(Math.round(this._dims.height.eval(this._context).val));
+                this._circle.height = new NumberNode_1.NumberNode(Math.round(this.h));
                 this._initDistance = newDistance;
             }
         }
         else {
             let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
             this._dims.width.eval(this._context).val += (newDistance - this._initDistance) * 2;
-            this._circle.width = new NumberNode_1.NumberNode(Math.round(this._dims.width.eval(this._context).val));
+            this._circle.width = new NumberNode_1.NumberNode(Math.round(this.w));
             this._dims.height.eval(this._context).val += (newDistance - this._initDistance) * 2 / this._ratio;
-            this._circle.height = new NumberNode_1.NumberNode(Math.round(this._dims.height.eval(this._context).val));
+            this._circle.height = new NumberNode_1.NumberNode(Math.round(this.h));
             this._initDistance = newDistance;
         }
     }
@@ -309,38 +309,38 @@ class EllipseEffect {
         if (this._corner == 5 || this._corner == 7) {
             if (!heightTooSmall) {
                 this._dims.height.eval(this._context).val += (newDistance - this._initDistance) * 2 / this._ratio;
-                this._circle.height = new NumberNode_1.NumberNode(Math.round(this._dims.height.eval(this._context).val));
+                this._circle.height = new NumberNode_1.NumberNode(Math.round(this.h));
                 this._initDistance = newDistance;
-                this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
+                this._ratio = this.w / this.h;
             }
             else {
                 this._dims.height.eval(this._context).val = 14;
                 this._circle.height = new NumberNode_1.NumberNode(14);
-                this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
+                this._ratio = this.w / this.h;
                 if (newDistance - this._initDistance > 0) {
                     this._dims.height.eval(this._context).val += (newDistance - this._initDistance) * 2 / this._ratio;
-                    this._circle.height = new NumberNode_1.NumberNode(Math.round(this._dims.height.eval(this._context).val));
+                    this._circle.height = new NumberNode_1.NumberNode(Math.round(this.h));
                     this._initDistance = newDistance;
-                    this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
+                    this._ratio = this.w / this.h;
                 }
             }
         }
         else {
             if (!widthTooSmall) {
                 this._dims.width.eval(this._context).val += (newDistance - this._initDistance) * 2;
-                this._circle.width = new NumberNode_1.NumberNode(Math.round(this._dims.width.eval(this._context).val));
+                this._circle.width = new NumberNode_1.NumberNode(Math.round(this.w));
                 this._initDistance = newDistance;
-                this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
+                this._ratio = this.w / this.h;
             }
             else {
                 this._dims.width.eval(this._context).val = 14;
                 this._circle.width = new NumberNode_1.NumberNode(14);
-                this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
+                this._ratio = this.w / this.h;
                 if (newDistance - this._initDistance > 0) {
                     this._dims.width.eval(this._context).val += (newDistance - this._initDistance) * 2;
-                    this._circle.width = new NumberNode_1.NumberNode(Math.round(this._dims.width.eval(this._context).val));
+                    this._circle.width = new NumberNode_1.NumberNode(Math.round(this.w));
                     this._initDistance = newDistance;
-                    this._ratio = this._dims.width.eval(this._context).val / this._dims.height.eval(this._context).val;
+                    this._ratio = this.w / this.h;
                 }
             }
         }
@@ -354,27 +354,23 @@ class EllipseEffect {
                 this._y1 = this.y;
                 this._isSelected = true;
                 this._isDragging = true;
-                this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
-                this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
+                this._dragoffx = this._mouse.x - this.x;
+                this._dragoffy = this._mouse.y - this.y;
             }
             else {
-                this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
-                this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
+                this._dragoffx = this._mouse.x - this.x;
+                this._dragoffy = this._mouse.y - this.y;
                 this._isDragging = true;
             }
-            // this._isSelected = true;
-            // this._isDragging = true; // originally had if else with if(contains), but they were the same except for isSelected
-            // this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
-            // this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
         }
         else if (guideContains > 0 && guideContains <= 4) { //resizing
             this._isSelected = true;
             this._isResizing = true;
             this._context.eventLog.push(this.logClick());
             this._corner = guideContains;
-            this._dragoffx = this._dims.x.eval(this._context).val;
-            this._dragoffy = this._dims.y.eval(this._context).val;
-            this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+            this._dragoffx = this.x;
+            this._dragoffy = this.y;
+            this._initDistance = distance(this._mouse.x, this._mouse.y, this.x, this.y);
             this._width1 = this.w;
             this._height1 = this.h;
             //this._size1 = Math.sqrt(Math.pow(this.w,2) + Math.pow(this.h,2)); // saving old size
@@ -383,9 +379,9 @@ class EllipseEffect {
             this._isSelected = true;
             this._isChangingDims = true;
             this._corner = guideContains;
-            this._dragoffx = this._dims.x.eval(this._context).val;
-            this._dragoffy = this._dims.y.eval(this._context).val;
-            this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+            this._dragoffx = this.x;
+            this._dragoffy = this.y;
+            this._initDistance = distance(this._mouse.x, this._mouse.y, this.x, this.y);
         }
         else if (contains) { //simply selecting the shape
             this._x1 = this.x; // Saving original x and y
@@ -393,8 +389,8 @@ class EllipseEffect {
             this._isSelected = true;
             this._isDragging = true;
             this._context.eventLog.push(this.logClick());
-            this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
-            this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
+            this._dragoffx = this._mouse.x - this.x;
+            this._dragoffy = this._mouse.y - this.y;
         }
         else if (!this._isSelectingMultiple) {
             this._isSelected = false;
@@ -405,7 +401,7 @@ class EllipseEffect {
     modifyReset() {
         if (this._isDragging && this._isSelected) { // probs only need dragging but oh well | isSel || selMul?
             this._isDragging = false;
-            if (Math.abs(this._x1 - this._dims.x.eval(this._context).val) > 1 || Math.abs(this._y1 - this._dims.y.eval(this._context).val) > 1) {
+            if (Math.abs(this._x1 - this.x) > 1 || Math.abs(this._y1 - this.y) > 1) {
                 this._justDragged = true;
                 //this._context.eventLog.push(this.logMove());
             }
@@ -420,7 +416,7 @@ class EllipseEffect {
             }
         }
         // if(this._isSelectingMultiple){
-        //     if(Math.abs(this._x1 - this._dims.x.eval(this._context).val) > 1 || Math.abs(this._y1 - this._dims.y.eval(this._context).val) > 1) {
+        //     if(Math.abs(this._x1 - this.x) > 1 || Math.abs(this._y1 - this.y) > 1) {
         //         this._context.eventLog.push(this.logMove());
         //     }
         // }
@@ -448,11 +444,11 @@ class EllipseEffect {
         return this._ast;
     }
     logPaint() {
-        return new PaintEvent_1.PaintEvent("ellipse", this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+        return new PaintEvent_1.PaintEvent("ellipse", this.x, this.y);
     }
     // logMove(): LogEvent<any> {
     //     //console.log("x1,y1,x,y: " + this._x1 + " " + this._y1 + " " + this._dims.x + " " + this._dims.y);
-    //     return new DragEvent("ellipse", this._x1, this._y1, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+    //     return new DragEvent("ellipse", this._x1, this._y1, this.x, this.y);
     // }
     logResize() {
         return new ResizeEvent_1.ResizeEvent("ellipse with ID " + this.getID().toString(), Math.round(this._width1 * 100) / 100, Math.round(this._height1 * 100) / 100, Math.round(this.w * 100) / 100, Math.round(this.h * 100) / 100);
