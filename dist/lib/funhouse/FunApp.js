@@ -17,10 +17,12 @@ class FunApp {
     }
     toString() {
         let argsList = '';
-        for (let i = 0; i < this._args.length - 1; i++) {
-            argsList += this._args[i].toString() + ", ";
+        if (this._args.length > 0) {
+            for (let i = 0; i < this._args.length - 1; i++) {
+                argsList += this._args[i].toString() + ", ";
+            }
+            argsList += this._args[this._args.length - 1].toString();
         }
-        argsList += this._args[this._args.length - 1].toString();
         return this._ws + this.name + '(' + argsList + ")";
     }
     newLine() {

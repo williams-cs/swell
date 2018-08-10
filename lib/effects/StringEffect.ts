@@ -97,14 +97,14 @@ export class StringEffect implements Effect<StringNode> {
         let fontDeets: string = this._fontSize + "px Courier New";
         this._ctx.font = fontDeets;
         this._ctx.fillStyle = 'black';
-        this._ctx.fillText(this._str.val, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+        this._ctx.fillText(this._str.val, this.x, this.y);
         let textDims = this._ctx.measureText(this._str.val);
         this._textMetrics.width = textDims.width;
         this._textMetrics.height = this._fontSize;
         this._textMetrics.str = this._str.val;
         this._textMetrics.interval = this._textMetrics.width / this._textMetrics.str.length;
         if(this._isSelected) {
-            this.drawTextGuides(this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val - this._fontSize, this._textMetrics.width, this._textMetrics.height, this._corner);
+            this.drawTextGuides(this.x, this.y - this._fontSize, this._textMetrics.width, this._textMetrics.height, this._corner);
         }
         if(this._isEditing) {
             this.modifyTextCursor();
@@ -178,7 +178,7 @@ export class StringEffect implements Effect<StringNode> {
     }
 
     modifyTextCursor(): void {
-        let leftWall: number = this._dims.x.eval(this._context).val;
+        let leftWall: number = this.x;
         let xDif: number = this._textMetrics.initMousePos - leftWall;
         let interval: number = this._textMetrics.interval;
         let moveFactor: number = 0;
@@ -198,8 +198,8 @@ export class StringEffect implements Effect<StringNode> {
             moveFactor = leftWall + interval * Math.floor(xDif / interval);
             this._textMetrics.cursorPos = interval * Math.floor(xDif / interval);
         }
-        this._ctx.moveTo(moveFactor, this._dims.y.eval(this._context).val - this._fontSize);
-        this._ctx.lineTo(moveFactor, this._dims.y.eval(this._context).val);
+        this._ctx.moveTo(moveFactor, this.y - this._fontSize);
+        this._ctx.lineTo(moveFactor, this.y);
         this._ctx.strokeStyle = "grey";
         this._ctx.stroke();
     }
@@ -211,11 +211,11 @@ export class StringEffect implements Effect<StringNode> {
             let breakPoint: number = this._textMetrics.cursorPos / this._textMetrics.interval;
             firstHalf = this._str.val.substring(0, breakPoint);
             secondHalf = this._str.val.substring(breakPoint);
-            if(event.keyCode == 37 && this._textMetrics.initMousePos > this._dims.x.eval(this._context).val + this._textMetrics.interval / 2) {
+            if(event.keyCode == 37 && this._textMetrics.initMousePos > this.x + this._textMetrics.interval / 2) {
                 this._textMetrics.initMousePos -= this._textMetrics.interval;
                 this.modifyTextCursor();
             }
-            else if(event.keyCode == 39 && this._textMetrics.initMousePos < this._dims.x.eval(this._context).val + this._textMetrics.width) {
+            else if(event.keyCode == 39 && this._textMetrics.initMousePos < this.x + this._textMetrics.width) {
                 this._textMetrics.initMousePos += this._textMetrics.interval;
                 this.modifyTextCursor();
             }
@@ -264,11 +264,11 @@ export class StringEffect implements Effect<StringNode> {
                 this._y1 = this.y;
                 this._isSelected = true;
                 this._isDragging = true;
-                this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
-                this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
+                this._dragoffx = this._mouse.x - this.x;
+                this._dragoffy = this._mouse.y - this.y;
             } else {
-                this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
-                this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
+                this._dragoffx = this._mouse.x - this.x;
+                this._dragoffy = this._mouse.y - this.y;
                 this._isDragging = true;
             }
 
@@ -287,9 +287,9 @@ export class StringEffect implements Effect<StringNode> {
             //console.log(this._str.val + "is selected?" + this._selected);
             //console.log("state selection is " + this._str.val);
 
-            this._dragoffx = this._dims.x.eval(this._context).val;
-            this._dragoffy = this._dims.y.eval(this._context).val;
-            this._initDistance = distance(this._mouse.x, this._mouse.y, this._dims.x.eval(this._context).val, this._dims.y.eval(this._context).val);
+            this._dragoffx = this.x;
+            this._dragoffy = this.y;
+            this._initDistance = distance(this._mouse.x, this._mouse.y, this.x, this.y);
             this._isResizing = true;
             this._size1 = this._fontSize; // saving old font size
         } else if (contains) {
@@ -302,8 +302,8 @@ export class StringEffect implements Effect<StringNode> {
             //console.log(this._str.val + "is selected?" + this._selected);
             //console.log("state selection is " + this._str.val);
 
-            this._dragoffx = this._mouse.x - this._dims.x.eval(this._context).val;
-            this._dragoffy = this._mouse.y - this._dims.y.eval(this._context).val;
+            this._dragoffx = this._mouse.x - this.x;
+            this._dragoffy = this._mouse.y - this.y;
             if(!this._isEditing){
                 this._isDragging = true;
                 //console.log(this._str.val + " is dragging? " + this._isDragging);
@@ -321,7 +321,7 @@ export class StringEffect implements Effect<StringNode> {
         if(this._isDragging && this._isSelected){
             //console.log(this._str.val + " logging drag");
             this._isDragging = false;
-            if(Math.abs(this._x1 - this._dims.x.eval(this._context).val) > 1 || Math.abs(this._y1 - this._dims.y.eval(this._context).val) > 1) {
+            if(Math.abs(this._x1 - this.x) > 1 || Math.abs(this._y1 - this.y) > 1) {
                 this._justDragged = true;
                 //this._context.eventLog.push(this.logMove());
             }
@@ -367,13 +367,13 @@ export class StringEffect implements Effect<StringNode> {
     }
 
     contains(mx: number, my: number): boolean {
-        return  (this._dims.x.eval(this._context).val <= mx) && (this._dims.x.eval(this._context).val + this._textMetrics.width >= mx) &&
-          (this._dims.y.eval(this._context).val - this._fontSize <= my) && (this._dims.y.eval(this._context).val >= my);
+        return  (this.x <= mx) && (this.x + this._textMetrics.width >= mx) &&
+          (this.y - this._fontSize <= my) && (this.y >= my);
     }
 
     guideContains(mx: number, my: number): number {
-        let xdif = mx - (this._dims.x.eval(this._context).val + this._textMetrics.width);
-        let ydif = my - (this._dims.y.eval(this._context).val - this._fontSize);
+        let xdif = mx - (this.x + this._textMetrics.width);
+        let ydif = my - (this.y - this._fontSize);
         if(Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5){
             this._isEditing = false;
             return 2;

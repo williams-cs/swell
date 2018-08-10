@@ -33,10 +33,12 @@ class FunDef {
     }
     toString() {
         let argsList = '';
-        for (let i = 0; i < this._args.length - 1; i++) {
-            argsList += this._args[i] + ", ";
+        if (this._args.length > 0) {
+            for (let i = 0; i < this._args.length - 1; i++) {
+                argsList += this._args[i] + ", ";
+            }
+            argsList += this._args[this._args.length - 1];
         }
-        argsList += this._args[this._args.length - 1];
         return this._ws + "fun " + this._name + "(" + argsList + ')' + ' {\n ' + this._body.toString() + '}';
     }
     draw(context, dims, ast) {

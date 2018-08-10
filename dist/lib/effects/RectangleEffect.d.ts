@@ -8,7 +8,6 @@ import { LogEvent } from "../logging/LogEvent";
 export declare class RectangleEffect implements Effect<RectangleNode> {
     private _rect;
     private _dims;
-    private _ast;
     private _ctx;
     private _canvas;
     private _corner;
