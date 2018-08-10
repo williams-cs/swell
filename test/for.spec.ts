@@ -25,10 +25,8 @@ describe('A for loop', () => {
 
         const i = new VariableNode("i");
         const decl1 = new DeclareOp(i, new NumberNode(0));
-        //const initi = new AssignOp(i, new NumberNode(0));
         const adj1 = new AssignOp(i, new PlusOp(i,new NumberNode(1)));
         const cond1 = new LessThan(i,new NumberNode(10));
-        //const cond1 = new LessThan(i,new NumberNode(10));
 
         const for1 = new ForNode(decl1,cond1,adj1,body1);
         const seq1 = new SequenceNode(xvar,for1);

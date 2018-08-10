@@ -32,7 +32,7 @@ export class RectangleNode implements Expression<RectangleNode> {
 
     equalsVal(right: Expression<any>): boolean{
         if(right instanceof RectangleNode){
-            return (this.width === right.width && this.height === right.height);
+            return (this.width.equalsVal(right.width) && this.height.equalsVal(right.height));
         }
         return false;
     }

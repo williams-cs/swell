@@ -72,9 +72,6 @@ class NumberEffect {
     toIDString() {
         return "nope";
     }
-    equalsVal(right) {
-        return false;
-    }
 }
 exports.NumberEffect = NumberEffect;
 //# sourceMappingURL=NumberEffect.js.map

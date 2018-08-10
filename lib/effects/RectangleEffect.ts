@@ -655,12 +655,12 @@ export class RectangleEffect implements Effect<RectangleNode> {
         return (this.idObj._id.toString() + " to rectangle at " + this.x + ", " + this.y);
     }
 
-    equalsVal(right: Effect<any>): boolean{
-        if(right instanceof RectangleEffect){
-            return (this.w === right.w && this.h === right.h);
-        }
-        return false;
-    }
+    // equalsVal(right: Effect<any>): boolean{
+    //     if(right instanceof RectangleEffect){
+    //         return (this.w === right.w && this.h === right.h);
+    //     }
+    //     return false;
+    // }
 }
 
 //allows us to get the mouse position in relation to the canvas!

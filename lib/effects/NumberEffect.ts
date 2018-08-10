@@ -107,7 +107,7 @@ export class NumberEffect implements Effect<NumberNode> {
     toIDString(): string {
         return "nope";
     }
-    equalsVal(right: Effect<any>): boolean{
-        return false;
-    }
+    // equalsVal(right: Effect<any>): boolean{
+    //     return false;
+    // }
 }

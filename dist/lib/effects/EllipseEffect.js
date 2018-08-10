@@ -506,12 +506,6 @@ class EllipseEffect {
     toIDString() {
         return (this.idObj._id.toString() + " to ellipse at " + this.x + ", " + this.y);
     }
-    equalsVal(right) {
-        if (right instanceof EllipseEffect) {
-            return (this.w === right.w && this.h === right.h);
-        }
-        return false;
-    }
 }
 exports.EllipseEffect = EllipseEffect;
 //allows us to get the mouse position in relation to the canvas!

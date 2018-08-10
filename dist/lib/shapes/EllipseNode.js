@@ -19,11 +19,7 @@ class EllipseNode {
     }
     equalsVal(right) {
         if (right instanceof EllipseNode) {
-            console.log(this.width + " " + this.height + " equals? " + right.width + " " + right.height);
-            let bool1 = (this.width === right.width);
-            let bool2 = (this.height === right.height);
-            console.log("width: " + bool1.toString() + " height: " + bool2.toString());
-            return (this.width === right.width && this.height === right.height);
+            return (this.width.equalsVal(right.width) && this.height.equalsVal(right.height));
         }
         return false;
     }

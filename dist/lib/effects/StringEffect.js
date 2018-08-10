@@ -409,12 +409,6 @@ class StringEffect {
     toIDString() {
         return (this.idObj._id.toString() + " to " + this._str.val + " at " + this.x + ", " + this.y);
     }
-    equalsVal(right) {
-        if (right instanceof StringEffect) {
-            return this.str === right.str;
-        }
-        return false;
-    }
 }
 exports.StringEffect = StringEffect;
 //allows us to get the mouse position in relation to the canvas!

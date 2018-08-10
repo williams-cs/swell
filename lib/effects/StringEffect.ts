@@ -488,12 +488,12 @@ export class StringEffect implements Effect<StringNode> {
         return (this.idObj._id.toString() + " to " + this._str.val + " at " + this.x + ", " + this.y);
     }
 
-    equalsVal(right: Effect<any>): boolean{
-        if(right instanceof StringEffect){
-            return this.str === right.str;
-        }
-        return false;
-    }
+    // equalsVal(right: Effect<any>): boolean{
+    //     if(right instanceof StringEffect){
+    //         return this.str === right.str;
+    //     }
+    //     return false;
+    // }
 }
 
 //allows us to get the mouse position in relation to the canvas!

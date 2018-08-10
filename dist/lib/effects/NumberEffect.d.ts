@@ -35,5 +35,4 @@ export declare class NumberEffect implements Effect<NumberNode> {
     toSelString(): string;
     toDragString(): string;
     toIDString(): string;
-    equalsVal(right: Effect<any>): boolean;
 }

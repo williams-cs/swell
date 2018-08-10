@@ -582,12 +582,6 @@ class RectangleEffect {
     toIDString() {
         return (this.idObj._id.toString() + " to rectangle at " + this.x + ", " + this.y);
     }
-    equalsVal(right) {
-        if (right instanceof RectangleEffect) {
-            return (this.w === right.w && this.h === right.h);
-        }
-        return false;
-    }
 }
 exports.RectangleEffect = RectangleEffect;
 //allows us to get the mouse position in relation to the canvas!
