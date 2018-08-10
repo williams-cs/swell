@@ -5,7 +5,8 @@ import { Dimensions } from '../structural/Dimensions';
 export declare class Increment implements Expression<any> {
     private innerRep;
     private expr;
-    constructor(variable: Expression<any>);
+    private _ws;
+    constructor(variable: Expression<any>, ws?: string);
     eval(context: Scope): NumberNode;
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
     equalsVal(right: Expression<any>): boolean;

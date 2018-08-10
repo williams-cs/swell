@@ -5,10 +5,14 @@ const VariableNode_1 = require("../vars/VariableNode");
 // left side is variable, right side is val
 // Reassign new value to var
 class AssignOp extends BinaryOperation_1.BinaryOperation {
-    constructor(left, right) {
+    constructor(left, right, ws) {
         super(left, right);
         if (!(left instanceof VariableNode_1.VariableNode)) {
             throw new Error("The left hand side of the assignment must be a variable.");
+        }
+        this._ws = ws;
+        if (ws == undefined) {
+            this._ws = "";
         }
     }
     eval(context) {
@@ -21,7 +25,7 @@ class AssignOp extends BinaryOperation_1.BinaryOperation {
         throw new Error("HALP (in AssignOp)");
     }
     toString() {
-        return this.left.toString() + ' = ' + this.right.toString();
+        return this._ws + this.left.toString() + ' = ' + this.right.toString();
     }
     draw(context, dims, ast) {
         throw new Error("Not implemented");

@@ -4,7 +4,8 @@ import { Scope } from '../structural/Scope';
 import { NumberNode } from '../prims/NumberNode';
 import { Dimensions } from '../structural/Dimensions';
 export declare class MulOp extends BinaryOperation<NumberNode> {
-    constructor(left: Expression<NumberNode>, right: Expression<NumberNode>);
+    private _ws;
+    constructor(left: Expression<NumberNode>, right: Expression<NumberNode>, ws?: string);
     eval(context: Scope): NumberNode;
     toString(): string;
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
