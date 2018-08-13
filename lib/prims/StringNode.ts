@@ -8,7 +8,7 @@ import { PrintNode } from '../structural/PrintNode';
 // Nodes representing strings
 // Should abstract Node class implement Expression?
 
-export class StringNode implements Expression<StringNode>{
+export class StringNode implements Expression<StringNode> {
 
     private _str: string;
     private _newLine : boolean = false;

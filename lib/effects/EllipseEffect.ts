@@ -17,9 +17,9 @@ export class EllipseEffect implements Effect<EllipseNode> {
     private _ast: Expression<any>;
     private _ctx: CanvasRenderingContext2D;
     private _canvas: HTMLCanvasElement;
+
     private _corner: number = 0;
     private _isSelected: boolean = false; // Private bools
-    //private _isListening: boolean = false;
     private _isDragging: boolean = false;
     private _isResizing: boolean = false;
     private _isChangingDims: boolean = false;
@@ -51,7 +51,15 @@ export class EllipseEffect implements Effect<EllipseNode> {
     constructor(circle: EllipseNode) {
         this._circle = circle;
     }
-
+    
+    /** 
+     * The method that is called when evaluating nodes (StringNode, EllipseNode, etc)
+     * This method assigns all params to private variables and draws the initial object to the canvas
+     * by calling update()
+     * @param context The parent Scope that contains the canvas among other things
+     * @param dims The object's dimensions including x and y position
+     * @param ast Unnecessary now, used to be the parent AST
+     */
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
         if (context.canvas.isDefined()) {
             this._dims = dims;
@@ -70,6 +78,9 @@ export class EllipseEffect implements Effect<EllipseNode> {
         
     }
 
+    /**
+     * This method is called in order to draw and redraw the object when manipulations are made
+     */
     update(): void {
         let x: number = this.x;
         let y: number = this.y;
@@ -84,8 +95,11 @@ export class EllipseEffect implements Effect<EllipseNode> {
         }
     }
 
+    /**
+     * Adds all the necessary event listeners in one fell swoop
+     */
     addEventListeners(): void {
-        this._canvas.addEventListener('mousemove', this.onMouseMove.bind(this));
+        this._canvas.addEventListener('mousemove', this.onMouseMove.bind(this)); // bind in order to maintain the meaning of 'this'
         this._canvas.addEventListener('mousedown', this.onMouseDown.bind(this));
         this._canvas.addEventListener('mouseup', this.onMouseUp.bind(this));
         window.addEventListener('keydown', this.onShiftDown.bind(this));
@@ -95,6 +109,11 @@ export class EllipseEffect implements Effect<EllipseNode> {
         this._canvas.addEventListener('selectstart', function(e) { e.preventDefault(); return false; }, false);
     }
 
+    /**
+     * Returns true if the mouse is inside of the object's bounding rectangle, false if otherwise
+     * @param mx the mouse x coordinate
+     * @param my the mouse y coordinate
+     */
     contains(mx: number, my: number): boolean {
         let x: number = this.x;
         let y: number = this.y;
@@ -103,6 +122,13 @@ export class EllipseEffect implements Effect<EllipseNode> {
         return Math.pow(mx - x, 2)/Math.pow(w/2, 2) + Math.pow(my - y, 2)/Math.pow(h/2, 2) <= 1;
     }
 
+    /**
+     * Returns a number > 0 if the mouse is inside one of the corner/side guides, returns 0 if not
+     * The corner guides are numbered 1-4 with 1 being the top left, 2 being the top right, and so on.
+     * The middle guides are numbered 5-8, with 5 being the top middle, 6 being the right middle, and so on.
+     * @param mx the mouse x coordinate
+     * @param my the mouse y coordinate
+     */
     guideContains(mx: number, my: number): number {
         let x: number = this.x;
         let y: number = this.y;
@@ -151,7 +177,15 @@ export class EllipseEffect implements Effect<EllipseNode> {
         else return 0;
     }
     
-    //draws the guides for different objects
+    /**
+     * Draws the bounding rectangle and guides for the object when the object is selected
+     * If one of the guides is selected, it colors that guide blue
+     * @param x the x coordinate for where the rectangle will originate from (top left corner)
+     * @param y the y coordinate for where the rectangle will originate from (top left corner)
+     * @param w the width of the bounding rectangle
+     * @param h the height of the bounding rectangle
+     * @param corner the number of the corner to be colored blue (if any at all, if 0, all are white)
+     */
     drawGuides(x: number, y: number, w: number, h: number, corner: number) { //corner is 1,2,3 or 4 for corner guides, 5,6,7 or 8 for side guides
         this._ctx.beginPath();
         this._ctx.rect(x, y, w, h);
@@ -257,6 +291,14 @@ export class EllipseEffect implements Effect<EllipseNode> {
         }
     }
 
+    /**
+     * Simple method that draws a rectangle
+     * @param x x coordinate for the top left corner of the rectangle
+     * @param y y coordinate for the top left corner of the rectangle
+     * @param w width of the rectangle
+     * @param h height of the rectangle
+     * @param color color of the rectangle's fill
+     */
     drawSquare(x: number, y: number, w: number, h: number, color: string) {
         this._ctx.beginPath();
         this._ctx.fillStyle = color;
@@ -266,6 +308,11 @@ export class EllipseEffect implements Effect<EllipseNode> {
         this._ctx.stroke();
     }
 
+    /**
+     * Called whenever the mouse moves within the canvas.
+     * Gets the mouse position, calls the modify methods if the booleans satisfy them.
+     * @param event the mousemove event
+     */
     onMouseMove(event: any): void {
         this.getMousePosition();
         if(this._isDragging && this._isSelected){
@@ -279,21 +326,41 @@ export class EllipseEffect implements Effect<EllipseNode> {
         }
     }
 
+    /**
+     * Called whenever the mouse clicks inside the canvas.
+     * Modifies the state depending on whether the guides contain the mouse or the bounding rect contains the mouse.
+     * @param event the mousedown event
+     */
     onMouseDown(event: any): void {
         this.modifyState(this.guideContains(this._mouse.x, this._mouse.y), this.contains(this._mouse.x, this._mouse.y));
     }
 
+    /**
+     * Called whenever the mouse unclicks.
+     * Calls modifyReset to reset dragging and resizing booleans among others.
+     * @param event the mouseup event
+     */
     onMouseUp(event: any) {
         //console.log("I'm an ellipse!");
         this.modifyReset();
     }
 
+    /**
+     * Called whenever a key is pressed down
+     * Toggles the isSelectingMultiple boolean if the key pressed is the shift key
+     * @param event the keydown event
+     */
     onShiftDown(event: any) {
         if(event.keyCode == "16") { //shift keycode
             this._isSelectingMultiple = true;
         }
     }
 
+    /**
+     * Called whenever a key is released
+     * Toggles the isSelectingMultiple boolean if the key released is the shift key
+     * @param event the keydown event
+     */
     onShiftUp(event: any) {
         if(event.keyCode == "16") { //shift keycode
             this._isSelectingMultiple = false;
@@ -301,16 +368,28 @@ export class EllipseEffect implements Effect<EllipseNode> {
     }
 
     /* Modification functions */
+
+    /**
+     * Changes the x and y coordinates of the object in order to drag the object.
+     */
     modifyDrag(): void {
         //console.log("ellipse dragoffx: " + this._dragoffx);
         this._dims.x.eval(this._context).val = this._mouse.x - this._dragoffx;
         this._dims.y.eval(this._context).val = this._mouse.y - this._dragoffy;
     }
 
+    /**
+     * Changes the size of the object when called (when a corner guide is clicked and dragged).
+     * 
+     * If any of width or height is too small, it sets them equal to 14 and the other equal to 
+     * 10 divided or multiplied by the ratio of width/height to keep it the same.
+     * @param widthTooSmall true if the width dimension is < 14
+     * @param heightTooSmall true if the height dimension is < 14
+     */
     modifyResize(widthTooSmall: boolean, heightTooSmall: boolean): void {
         if(widthTooSmall){
             this._dims.width.eval(this._context).val = 14;
-            this._circle.width = new NumberNode(14);
+            this._circle.width = new NumberNode(14); // set for the prodirect manipulation
             this._dims.height.eval(this._context).val = 14 / this._ratio;
             this._circle.height = new NumberNode(Math.round(14 / this._ratio));
             let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
@@ -324,7 +403,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
         }
         if(heightTooSmall) {
             this._dims.height.eval(this._context).val = 14;
-            this._circle.height = new NumberNode(14);
+            this._circle.height = new NumberNode(14); // set for the prodirect manipulation
             this._dims.width.eval(this._context).val = 14 * this._ratio;
             this._circle.width = new NumberNode(Math.round(14 * this._ratio));
             let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
@@ -346,14 +425,20 @@ export class EllipseEffect implements Effect<EllipseNode> {
         }
     }
 
+    /**
+     * Changes the dimensions of the object when called.
+     * If any of width or height is too small, it sets them equal to 10.
+     * @param widthTooSmall true if the width dimension is < 10
+     * @param heightTooSmall true if the height dimension is < 10
+     */
     modifyChangeDims(widthTooSmall: boolean, heightTooSmall: boolean): void {
         let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
-        if (this._corner == 5 || this._corner == 7) {
+        if (this._corner == 5 || this._corner == 7) { // if modifying height
             if (!heightTooSmall) {
                 this._dims.height.eval(this._context).val += (newDistance - this._initDistance) * 2 / this._ratio;
                 this._circle.height = new NumberNode(Math.round(this.h));
                 this._initDistance = newDistance;
-                this._ratio = this.w / this.h;
+                this._ratio = this.w / this.h; // setting width/height ratio = to the new ratio
             } else {
                 this._dims.height.eval(this._context).val = 14;
                 this._circle.height = new NumberNode(14);
@@ -365,7 +450,8 @@ export class EllipseEffect implements Effect<EllipseNode> {
                     this._ratio = this.w / this.h;
                 }
             }
-        } else {
+        } 
+        else { // modifying width
             if (!widthTooSmall) {
                 this._dims.width.eval(this._context).val += (newDistance - this._initDistance) * 2;
                 this._circle.width = new NumberNode(Math.round(this.w));
@@ -385,11 +471,16 @@ export class EllipseEffect implements Effect<EllipseNode> {
         }
     }
 
-    // on mouse down
+    /**
+     * Toggles all of the private booleans depending on the mouse position when called (onMouseDown)
+     * e.g. if the mouse is within the bounding rectangle when this is called, isSelected = true
+     * @param guideContains 
+     * @param contains 
+     */
     modifyState(guideContains: number, contains: boolean): void {
         this._justDragged = false;
 
-        if (this._isSelectingMultiple) {
+        if (this._isSelectingMultiple) { //prepares the object for dragging whether it is personally selected or not
             if (contains) {
                 this._x1 = this.x;
                 this._y1 = this.y;
@@ -426,7 +517,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
             this._dragoffy = this.y;
             this._initDistance = distance(this._mouse.x, this._mouse.y, this.x, this.y);
         }
-        else if (contains) { //simply selecting the shape
+        else if (contains) { //simply selecting the shape or dragging
             this._x1 = this.x; // Saving original x and y
             this._y1 = this.y;
             this._isSelected = true;
@@ -444,7 +535,9 @@ export class EllipseEffect implements Effect<EllipseNode> {
         }
     }
 
-    // on mouse up
+    /**
+     * Resets all of the private booleans to false (like dragging, resizing, etc) when the mouse is released
+     */
     modifyReset(): void {
         if(this._isDragging && this._isSelected){ // probs only need dragging but oh well | isSel || selMul?
             this._isDragging = false;
@@ -473,11 +566,18 @@ export class EllipseEffect implements Effect<EllipseNode> {
         this._corner = 0;
     }
 
+    /**
+     * Gets the current x and y coordinates of the mouse
+     */
     getMousePosition(): void {
         this._mouse.x = getMousePos(this._canvas, event).x;
         this._mouse.y = getMousePos(this._canvas, event).y;
     }
 
+    /**
+     * Sets isDragging, isResizing, isChangingDims, and isSelected to false if the mouse clicks outside of the canvas
+     * @param event the mousedown event
+     */
     isMouseOutside(event: any): void {
         let mouseX = event.clientX;
         let mouseY = event.clientY;
@@ -520,6 +620,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
         this.idObj = {_id: id};
     }
 
+    /* Getters for x, y, width, height, dims, and isSelected */
     get x(): number {
         return this._dims.x.eval(this._context).val;
     }
@@ -576,8 +677,11 @@ export class EllipseEffect implements Effect<EllipseNode> {
     // }
 }
 
-//allows us to get the mouse position in relation to the canvas!
-//see mousemove event listener
+/**
+ * Get's the mouse x and y coordinates in relation to the canvas
+ * @param canvas the canvas object
+ * @param event the mousemove event
+ */
 function getMousePos(canvas: any, event: any): {x: number, y: number} {
     let rect = canvas.getBoundingClientRect();
     return {
@@ -586,7 +690,13 @@ function getMousePos(canvas: any, event: any): {x: number, y: number} {
     };
 }
 
-//computes the distance between two points
+/**
+ * Computes the distance between two points
+ * @param x1 x coordinate of first point
+ * @param y1 y coordinate of first point
+ * @param x2 x coordinate of second point
+ * @param y2 y coordinate of second point
+ */
 function distance(x1: number, y1: number, x2: number, y2: number) {
     return Math.sqrt(Math.pow(x1 - x2,2) + Math.pow(y1 - y2,2));
 }

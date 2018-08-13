@@ -33,9 +33,16 @@ class StringEffect {
         };
         this._str = str;
     }
+    /**
+     * The method that is called when evaluating nodes (StringNode, EllipseNode, etc)
+     * This method assigns all params to private variables and draws the initial object to the canvas
+     * by calling update()
+     * @param context The parent Scope that contains the canvas among other things
+     * @param dims The object's dimensions including x and y position
+     * @param ast Unnecessary now, used to be the parent AST
+     */
     draw(context, dims, ast) {
         if (context.canvas != undefined) {
-            this._ast = ast;
             this._context = context;
             this._canvas = context.canvas.get();
             this._dims = dims;
@@ -51,6 +58,9 @@ class StringEffect {
             console.log("canvas is NOT defined");
         }
     }
+    /**
+     * This method is called in order to draw and redraw the object when manipulations are made
+     */
     update() {
         let fontDeets = this._fontSize + "px Courier New";
         this._ctx.font = fontDeets;
@@ -68,8 +78,11 @@ class StringEffect {
             this.modifyTextCursor();
         }
     }
+    /**
+     * Adds all the necessary event listeners in one fell swoop
+     */
     addEventListeners() {
-        this._canvas.addEventListener('mousemove', this.onMouseMove.bind(this));
+        this._canvas.addEventListener('mousemove', this.onMouseMove.bind(this)); // bind in order to maintain the meaning of 'this'
         this._canvas.addEventListener('mousedown', this.onMouseDown.bind(this));
         this._canvas.addEventListener('mouseup', this.onMouseUp.bind(this));
         window.addEventListener('keydown', this.onShiftDown.bind(this));
@@ -78,7 +91,79 @@ class StringEffect {
         //makes it so that double clicking doesn't select text on the page
         this._canvas.addEventListener('selectstart', function (e) { e.preventDefault(); return false; }, false);
     }
+    /**
+     * Returns true if the mouse is inside of the object's bounding rectangle, false if otherwise
+     * @param mx the mouse x coordinate
+     * @param my the mouse y coordinate
+     */
+    contains(mx, my) {
+        return (this.x <= mx) && (this.x + this._textMetrics.width >= mx) &&
+            (this.y - this._fontSize <= my) && (this.y >= my);
+    }
+    /**
+     * Returns a number > 0 if the mouse is inside one of the corner/side guides, returns 0 if not
+     * The corner guides are numbered 1-4 with 1 being the top left, 2 being the top right, and so on.
+     * The middle guides are numbered 5-8, with 5 being the top middle, 6 being the right middle, and so on.
+     * @param mx the mouse x coordinate
+     * @param my the mouse y coordinate
+     */
+    guideContains(mx, my) {
+        let xdif = mx - (this.x + this._textMetrics.width);
+        let ydif = my - (this.y - this._fontSize);
+        if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) {
+            this._isEditing = false;
+            return 2;
+        }
+        else
+            return 0;
+    }
+    /**
+     * Draws the bounding rectangle and guides for the object when the object is selected
+     * If one of the guides is selected, it colors that guide blue
+     * @param x the x coordinate for where the rectangle will originate from (top left corner)
+     * @param y the y coordinate for where the rectangle will originate from (top left corner)
+     * @param w the width of the bounding rectangle
+     * @param h the height of the bounding rectangle
+     * @param corner the number of the corner to be colored blue (if any at all, if 0, all are white)
+     */
+    drawTextGuides(x, y, w, h, corner) {
+        this._ctx.beginPath();
+        this._ctx.rect(x, y, w, h);
+        this._ctx.strokeStyle = 'gray';
+        this._ctx.stroke();
+        if (corner !== 0) {
+            switch (corner) { //colors the guide blue if selected
+                case 2:
+                    this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'blue');
+                    break;
+            }
+        }
+        else {
+            this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'white');
+        }
+    }
+    /**
+     * Simple method that draws a rectangle
+     * @param x x coordinate for the top left corner of the rectangle
+     * @param y y coordinate for the top left corner of the rectangle
+     * @param w width of the rectangle
+     * @param h height of the rectangle
+     * @param color color of the rectangle's fill
+     */
+    drawSquare(x, y, w, h, color) {
+        this._ctx.beginPath();
+        this._ctx.fillStyle = color;
+        this._ctx.fillRect(x, y, w, h);
+        this._ctx.rect(x, y, w, h);
+        this._ctx.strokeStyle = 'gray';
+        this._ctx.stroke();
+    }
     /* Event listener functions */
+    /**
+     * Called whenever the mouse moves within the canvas.
+     * Gets the mouse position, calls the modify methods if the booleans satisfy them.
+     * @param event the mousemove event
+     */
     onMouseMove(event) {
         this.getMousePosition();
         if (this._isSelected && this._isDragging) {
@@ -89,6 +174,11 @@ class StringEffect {
             this.modifyResize(this._fontSize < 15);
         }
     }
+    /**
+     * Called whenever the mouse clicks inside the canvas.
+     * Modifies the state depending on whether the guides contain the mouse or the bounding rect contains the mouse.
+     * @param event the mousedown event
+     */
     onMouseDown(event) {
         if (!this._isSelectingMultiple && this._isSelected && this.contains(this._mouse.x, this._mouse.y)) { //text editing
             if (!this._isListening) {
@@ -110,29 +200,50 @@ class StringEffect {
         }
         this.modifyState(this.guideContains(this._mouse.x, this._mouse.y) > 0, this.contains(this._mouse.x, this._mouse.y));
     }
+    /**
+     * Called whenever the mouse unclicks.
+     * Calls modifyReset to reset dragging and resizing booleans among others.
+     * @param event the mouseup event
+     */
     onMouseUp(event) {
         this.modifyReset();
     }
+    /**
+     * Called whenever a key is pressed down
+     * Toggles the isSelectingMultiple boolean if the key pressed is the shift key
+     * @param event the keydown event
+     */
     onShiftDown(event) {
         if (event.keyCode == "16") { //shift keycode
             this._isSelectingMultiple = true;
         }
     }
+    /**
+     * Called whenever a key is released
+     * Toggles the isSelectingMultiple boolean if the key released is the shift key
+     * @param event the keydown event
+     */
     onShiftUp(event) {
         if (event.keyCode == "16") { //shift keycode
             this._isSelectingMultiple = false;
         }
     }
     /* Modification functions */
+    /**
+     * Changes the x and y coordinates of the object in order to drag the object.
+     */
     modifyDrag() {
         //("string dragoffx: " + this._dragoffx);
         this._dims.x.eval(this._context).val = this._mouse.x - this._dragoffx;
         this._dims.y.eval(this._context).val = this._mouse.y - this._dragoffy;
     }
+    /**
+     * Creates and moves the text edit cursor based on where the mouse is clicked
+     */
     modifyTextCursor() {
-        let leftWall = this.x;
-        let xDif = this._textMetrics.initMousePos - leftWall;
-        let interval = this._textMetrics.interval;
+        let leftWall = this.x; // the x position of the left most side of the bounding rectangle
+        let xDif = this._textMetrics.initMousePos - leftWall; // difference between mouse x and left wall
+        let interval = this._textMetrics.interval; // the text width divided by the length of the string
         let moveFactor = 0;
         if (xDif >= interval / 2 && xDif <= interval) {
             moveFactor = leftWall + interval;
@@ -155,6 +266,10 @@ class StringEffect {
         this._ctx.strokeStyle = "grey";
         this._ctx.stroke();
     }
+    /**
+     * This edits the string when editing text
+     * @param event keydown event
+     */
     modifyText(event) {
         if (this._isEditing) {
             let firstHalf;
@@ -175,7 +290,6 @@ class StringEffect {
                 this._str.str = firstHalf + secondHalf;
                 this._textMetrics.initMousePos -= this._textMetrics.interval;
                 this.modifyTextCursor();
-                console.log("backspace");
             }
             else {
                 let keyName = event.key;
@@ -188,6 +302,11 @@ class StringEffect {
             }
         }
     }
+    /**
+     * Modifies the font size of the text
+     * If the text font is smaller than 15pt, it set's it equal to 15pt
+     * @param isTooSmall true if the font size is < 15
+     */
     modifyResize(isTooSmall) {
         if (isTooSmall) {
             this._fontSize = 15;
@@ -203,10 +322,15 @@ class StringEffect {
             this._initDistance = newDistance;
         }
     }
-    // on mouse down
+    /**
+     * Toggles all of the private booleans depending on the mouse position when called (onMouseDown)
+     * e.g. if the mouse is within the bounding rectangle when this is called, isSelected = true
+     * @param guideContains
+     * @param contains
+     */
     modifyState(guideContains, contains) {
         this._justDragged = false;
-        if (this._isSelectingMultiple) {
+        if (this._isSelectingMultiple) { //prepares the object for dragging whether it is personally selected or not
             if (contains) {
                 this._x1 = this.x;
                 this._y1 = this.y;
@@ -259,6 +383,9 @@ class StringEffect {
             this._isEditing = false;
         }
     }
+    /**
+     * Resets all of the private booleans to false (like dragging, resizing, etc) when the mouse is released
+     */
     modifyReset() {
         //console.log(this._str.val + " just released");
         //console.log(this._str.val + " is dragging? " + this._myState.dragging);
@@ -291,10 +418,17 @@ class StringEffect {
         // }
         // //this._context.eventLog.push(this.logMove());
     }
+    /**
+     * Gets the current x and y coordinates of the mouse
+     */
     getMousePosition() {
         this._mouse.x = getMousePos(this._canvas, event).x;
         this._mouse.y = getMousePos(this._canvas, event).y;
     }
+    /**
+     * Sets isDragging, isResizing, isChangingDims, and isSelected to false if the mouse clicks outside of the canvas
+     * @param event the mousedown event
+     */
     isMouseOutside(event) {
         let mouseX = event.clientX;
         let mouseY = event.clientY;
@@ -306,44 +440,6 @@ class StringEffect {
             this._isEditing = false;
             this._corner = 0;
         }
-    }
-    contains(mx, my) {
-        return (this.x <= mx) && (this.x + this._textMetrics.width >= mx) &&
-            (this.y - this._fontSize <= my) && (this.y >= my);
-    }
-    guideContains(mx, my) {
-        let xdif = mx - (this.x + this._textMetrics.width);
-        let ydif = my - (this.y - this._fontSize);
-        if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) {
-            this._isEditing = false;
-            return 2;
-        }
-        else
-            return 0;
-    }
-    drawTextGuides(x, y, w, h, corner) {
-        this._ctx.beginPath();
-        this._ctx.rect(x, y, w, h);
-        this._ctx.strokeStyle = 'gray';
-        this._ctx.stroke();
-        if (corner !== 0) {
-            switch (corner) { //colors the guide blue if selected
-                case 2:
-                    this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'blue');
-                    break;
-            }
-        }
-        else {
-            this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'white');
-        }
-    }
-    drawSquare(x, y, w, h, color) {
-        this._ctx.beginPath();
-        this._ctx.fillStyle = color;
-        this._ctx.fillRect(x, y, w, h);
-        this._ctx.rect(x, y, w, h);
-        this._ctx.strokeStyle = 'gray';
-        this._ctx.stroke();
     }
     logPaint() {
         return new PaintEvent_1.PaintEvent(this._str.val, this.x, this.y);
@@ -411,8 +507,11 @@ class StringEffect {
     }
 }
 exports.StringEffect = StringEffect;
-//allows us to get the mouse position in relation to the canvas!
-//see mousemove event listener
+/**
+ * Get's the mouse x and y coordinates in relation to the canvas
+ * @param canvas the canvas object
+ * @param event the mousemove event
+ */
 function getMousePos(canvas, event) {
     let rect = canvas.getBoundingClientRect();
     return {
@@ -420,7 +519,13 @@ function getMousePos(canvas, event) {
         y: event.clientY - rect.top
     };
 }
-//computes the distance between two points
+/**
+ * Computes the distance between two points
+ * @param x1 x coordinate of first point
+ * @param y1 y coordinate of first point
+ * @param x2 x coordinate of second point
+ * @param y2 y coordinate of second point
+ */
 function distance(x1, y1, x2, y2) {
     return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
 }
