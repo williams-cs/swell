@@ -31,7 +31,7 @@ export class BooleanNode implements Expression<BooleanNode>{
         return false;
     }
     
-    toString() : string {
+    toString(): string {
         return this._ws + this._val;
     }
 
@@ -41,7 +41,7 @@ export class BooleanNode implements Expression<BooleanNode>{
     set val(value: boolean){
         this._val = value;
     }
-    newLine() : boolean {
+    newLine(): boolean {
         return this._newLine;
     }
     

@@ -8,10 +8,10 @@ export class ForNode implements Expression<any>{
     private _cond: Expression<any>;
     private _post: Expression<any>;
     private _body: Expression<any>;
-    private _ws : string;
+    private _ws: string;
     private _newLine : boolean = true;
 
-    constructor(init: Expression<any>, cond: Expression<BooleanNode>, post: Expression<any>, body: Expression<any>, ws? : string){
+    constructor(init: Expression<any>, cond: Expression<BooleanNode>, post: Expression<any>, body: Expression<any>, ws?: string){
         this._init = init;
         this._cond = cond;
         this._post = post;
@@ -63,12 +63,12 @@ export class ForNode implements Expression<any>{
         return "Cannot call draw on For loop";
     }
 
-    toString() :string {
+    toString(): string {
         return this._ws + 'for(' + this._init.toString() + ", " + this._cond.toString() + ", " + this._post.toString() + ") {\n " 
             + this._body.toString() + "}";
     }
 
-    newLine() : boolean {
+    newLine(): boolean {
         return this._newLine;
     }
 }

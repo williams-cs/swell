@@ -7,10 +7,10 @@ export class PrintNode implements Expression<any>{
     private _toPrint: Expression<any>;
     private _scale: number = 1;
     private _dims: Dimensions;
-    private _newLine : boolean = false;
-    private _ws : string;
+    private _newLine: boolean = false;
+    private _ws: string;
 
-    constructor(toPrint: Expression<any>, dimensions?: Dimensions, ws? : string){
+    constructor(toPrint: Expression<any>, dimensions?: Dimensions, ws?: string){
         this._toPrint = toPrint;
         this._ws = ws;
         if (ws == undefined) {
@@ -19,7 +19,7 @@ export class PrintNode implements Expression<any>{
         this._dims = dimensions || null;
     }
 
-    toString() : string {
+    toString(): string {
         return this._ws + "print(" + this.toPrint.toString() + ", " + this.dims.toString() + ")";
     }
 
@@ -45,7 +45,7 @@ export class PrintNode implements Expression<any>{
         return this._dims;
     }
 
-    newLine() : boolean {
+    newLine(): boolean {
         return this._newLine;
     }
 }

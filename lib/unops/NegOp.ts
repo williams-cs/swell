@@ -5,8 +5,8 @@ import { NumberNode } from '../prims/NumberNode';
 import { Dimensions } from '../structural/Dimensions';
 
 export class NegOp extends UnaryOperation<NumberNode>{
-    private _ws : string;
-    constructor(val: Expression<NumberNode>, ws? : string){
+    private _ws: string;
+    constructor(val: Expression<NumberNode>, ws?: string){
         super(val);
         this._ws = ws;
         if (ws == undefined){
@@ -27,11 +27,11 @@ export class NegOp extends UnaryOperation<NumberNode>{
         throw new Error("Cannot call equals on NegOp");
     }
 
-    toString() : string {
+    toString(): string {
         return this._ws + "-" + this.val;
     }
 
-    newLine() : boolean {
+    newLine(): boolean {
         return false;
     }
 

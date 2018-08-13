@@ -7,10 +7,10 @@ import { Dimensions } from '../structural/Dimensions';
 export class RectangleNode implements Expression<RectangleNode> {
     private _width: Expression<NumberNode>;
     private _height: Expression<NumberNode>; 
-    private _newLine : boolean = false;
-    private _ws : string;
+    private _newLine: boolean = false;
+    private _ws: string;
     
-    constructor(width: Expression<NumberNode>, height: Expression<NumberNode>, ws? : string){
+    constructor(width: Expression<NumberNode>, height: Expression<NumberNode>, ws?: string){
         this._width = width;
         this._height = height;
         this._ws = ws;
@@ -53,11 +53,11 @@ export class RectangleNode implements Expression<RectangleNode> {
         this._height = height;
     }
 
-    newLine() : boolean {
+    newLine(): boolean {
         return this._newLine;
     }
 
-    toString() : string {
+    toString(): string {
         return this._ws + "rect(" + this._width.toString() + ", " + this._height.toString() + ")";
     }
     // get methods? 

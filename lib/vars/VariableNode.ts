@@ -5,10 +5,10 @@ import { Dimensions } from '../structural/Dimensions';
 
 export class VariableNode implements Expression<any>{
     private _name: string;
-    private _newLine : boolean = false;
-    private _ws : string;
+    private _newLine: boolean = false;
+    private _ws: string;
     //private _val: Expression<any>;
-    constructor(name: string, ws? : string){
+    constructor(name: string, ws?: string){
         this._name = name;
         //this._val = val;
         this._ws = ws;
@@ -31,7 +31,7 @@ export class VariableNode implements Expression<any>{
         throw new Error("Cannot directly compare vars, eval first");
     }
 
-    toString() : string {
+    toString(): string {
         return this._ws + this._name;
     }
     
@@ -39,7 +39,7 @@ export class VariableNode implements Expression<any>{
         return this._name;
     }
 
-    newLine() : boolean {
+    newLine(): boolean {
         return this._newLine;
     }
 

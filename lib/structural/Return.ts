@@ -5,9 +5,9 @@ import { Dimensions } from "./Dimensions";
 
 export class Return implements Expression<any>{
     private _expr: Expression<any>;
-    private _newLine : boolean = false;
-    private _ws : string;
-    constructor(expr: Expression<any>, ws? : string){
+    private _newLine: boolean = false;
+    private _ws: string;
+    constructor(expr: Expression<any>, ws?: string){
         this._expr = expr;
         this._ws = ws;
         if (ws == undefined){
@@ -27,11 +27,11 @@ export class Return implements Expression<any>{
         throw new Error("Cannot call equals on Return");
     }
     
-    toString() :string {
+    toString(): string {
         return this._ws + "return " + this._expr.toString();
     }
 
-    newLine() : boolean {
+    newLine(): boolean {
         return this._newLine;
     }
 

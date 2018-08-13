@@ -10,10 +10,10 @@ import { PrintNode } from '../structural/PrintNode';
 export class EllipseNode implements Expression<EllipseNode> {
     private _width: Expression<NumberNode>;
     private _height: Expression<NumberNode>; 
-    private _newLine : boolean = false;
-    private _ws : string;
+    private _newLine: boolean = false;
+    private _ws: string;
     
-    constructor(width: Expression<NumberNode>, height: Expression<NumberNode>, ws? : string){
+    constructor(width: Expression<NumberNode>, height: Expression<NumberNode>, ws?: string){
         this._width = width;
         this._height = height;
         this._ws = ws;
@@ -56,11 +56,11 @@ export class EllipseNode implements Expression<EllipseNode> {
         this._height = height;
     }
 
-    newLine() : boolean {
+    newLine(): boolean {
         return this._newLine;
     }
 
-    toString() : string {
+    toString(): string {
         return this._ws + "ellipse(" + this._width.toString() + ", " + this._height.toString() + ")"
     }
     // get methods? 

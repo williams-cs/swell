@@ -8,9 +8,9 @@ export class FunDef<T> implements Expression<T>{
     private _args: string[];
     private _funScope: Scope;
     private _newLine : boolean = true;
-    private _ws : string;
+    private _ws: string;
 
-    constructor(name: string, body: Expression<T>, args?: string[], ws? : string){
+    constructor(name: string, body: Expression<T>, args?: string[], ws?: string){
         this._name = name;
         this._body = body;
         this._args = args;
@@ -39,11 +39,11 @@ export class FunDef<T> implements Expression<T>{
         return null;
     }
 
-    newLine() : boolean {
+    newLine(): boolean {
         return this._newLine;
     }
 
-    toString() : string {
+    toString(): string {
         let argsList= ''
         if(this._args.length > 0){
             for (let i =0 ; i < this._args.length-1; i++) {

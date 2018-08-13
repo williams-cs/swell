@@ -16,7 +16,7 @@ export class Dimensions {
         this._radius = radius || new NumberNode(30, "");
     }
 
-    toString() : string {
+    toString(): string {
         return this.x.toString() + ", " + this.y.toString();
     }
 

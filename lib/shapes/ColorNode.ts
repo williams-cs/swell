@@ -6,7 +6,7 @@ export class ColorNode implements Expression<string>{
     private _red: number;
     private _green: number;
     private _blue: number;
-    private _newLine : boolean = false;
+    private _newLine: boolean = false;
 
     constructor(red: number, green: number, blue: number){
         this._red = red;
@@ -25,7 +25,7 @@ export class ColorNode implements Expression<string>{
         return false;
     }
 
-    toString() :string {
+    toString(): string {
         return "";
     }
 
@@ -54,7 +54,7 @@ export class ColorNode implements Expression<string>{
         this._blue = blue;
     }
 
-    newLine() : boolean {
+    newLine(): boolean {
         return this._newLine;
     }
 }

@@ -7,9 +7,9 @@ export class WhileNode implements Expression<any>{
     private _cond: Expression<any>;
     private _body: Expression<any>;
     private _newLine : boolean = true;
-    private _ws : string;
+    private _ws: string;
 
-    constructor(cond: Expression<any>, body: Expression<any>, ws? : string){
+    constructor(cond: Expression<any>, body: Expression<any>, ws?: string){
         this._cond = cond;
         this._body = body; 
         this._ws = ws;
@@ -56,10 +56,10 @@ export class WhileNode implements Expression<any>{
         return "Cannot call draw on While loop";
     }
 
-    toString() :string {
+    toString(): string {
         return this._ws + "while(" + this._cond.toString() + ") {\n " + this._body.toString() + "}";
     }
-    newLine() : boolean {
+    newLine(): boolean {
         return this._newLine;
     }
 }

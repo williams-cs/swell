@@ -1,7 +1,6 @@
 import {Option, Some, None} from 'space-lift';
 import { Effect } from '../effects/Effect';
 import { LogEvent } from '../logging/LogEvent';
-import { MulSel } from '../logging/MulSel';
 
 export class Scope{
     private _varBindings: Map<string, Option<any>>; 
@@ -20,7 +19,7 @@ export class Scope{
     };
 
     //private _mulSelected: {val: boolean} = {val: false};
-    private _mulSelected: MulSel;
+    //private _mulSelected: MulSel;
     private _mulSelArray: Effect<any>[];
 
     private _eventLog: LogEvent<any>[] = [];
@@ -34,7 +33,7 @@ export class Scope{
         this._effects = effects || null;
         this._myState = myState || null;
         this._eventLog = eventLog;
-        this._mulSelected = new MulSel;
+        //this._mulSelected = new MulSel;
         //this._mulSelected.mulSel = false;
         if(this._parent != null && this._parent._hadFunEval) this._hadFunEval = true; // copy function eval flag from parent
     }
@@ -134,9 +133,9 @@ export class Scope{
         this._eventLog = update;
     }
 
-    get mulSelected(): MulSel {
-        return this._mulSelected;
-    }
+    // get mulSelected(): MulSel {
+    //     return this._mulSelected;
+    // }
     // set mulSelected(update: boolean){
     //     this._mulSelected.val = update;
     // }

@@ -9,7 +9,7 @@ export class NOP implements Expression<NOP>{
     }
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {}
 
-    toString() : string {
+    toString(): string {
         return "";
     }
 
@@ -17,7 +17,7 @@ export class NOP implements Expression<NOP>{
         return false;
     }
 
-    newLine() : boolean {
+    newLine(): boolean {
         return this._newLine;
     }
 }

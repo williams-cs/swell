@@ -8,10 +8,10 @@ import { Dimensions } from '../structural/Dimensions';
 
 export class NumberNode implements Expression <NumberNode>{
     private _val: number;
-    private _newLine : boolean = false;
+    private _newLine: boolean = false;
     private _ws :  string;
 
-    constructor(val: number, ws? : string){
+    constructor(val: number, ws?: string){
         //super(parent);
         this._val = val;
         this._ws = ws;
@@ -35,14 +35,14 @@ export class NumberNode implements Expression <NumberNode>{
         return false;
     }
 
-    toString() : string {
+    toString(): string {
         return this._ws + this._val;
     }
 
     get val(): number{
         return this._val;
     }
-    newLine() : boolean {
+    newLine(): boolean {
         return this._newLine;
     }
     set val(value: number){
