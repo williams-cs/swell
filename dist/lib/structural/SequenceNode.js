@@ -18,7 +18,7 @@ class SequenceNode {
      * @param context The current program context
      */
     eval(context) {
-        let leftScope = new Scope_1.Scope(context, context.effects, context.myState, context.eventLog);
+        let leftScope = new Scope_1.Scope(context, context.effects, context.eventLog);
         leftScope.canvas = space_lift_1.Some(context.canvas.get());
         //throwing away after evaling
         this._leftVal = this._left.eval(leftScope);

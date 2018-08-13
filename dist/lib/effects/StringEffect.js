@@ -387,8 +387,6 @@ class StringEffect {
      * Resets all of the private booleans to false (like dragging, resizing, etc) when the mouse is released
      */
     modifyReset() {
-        //console.log(this._str.val + " just released");
-        //console.log(this._str.val + " is dragging? " + this._myState.dragging);
         if (this._isDragging && this._isSelected) {
             //console.log(this._str.val + " logging drag");
             this._isDragging = false;

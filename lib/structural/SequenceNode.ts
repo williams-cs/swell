@@ -25,7 +25,7 @@ export class SequenceNode implements Expression<void>{
      * @param context The current program context
      */
     eval(context: Scope): void {
-        let leftScope = new Scope(context, context.effects, context.myState, context.eventLog);
+        let leftScope = new Scope(context, context.effects, context.eventLog);
         leftScope.canvas = Some(context.canvas.get());
         //throwing away after evaling
         this._leftVal = this._left.eval(leftScope);
