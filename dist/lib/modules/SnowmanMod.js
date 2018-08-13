@@ -1,10 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class SnowmanMod {
+    /**
+     * Constructor for the Snowman module
+     */
     constructor() {
         this._name = "Do You Want to Build a Snowman?";
         this._instructions = "Draw three ellipses to make a snowman!";
     }
+    /**
+     * Checks goals and returns true if fulfilled, false otherwise
+     * Goals: Three ellipses, circular, not too far away
+     * @param document
+     */
     checkGoal(document) {
         let inputbox = document.getElementById('input');
         let inputtext = inputbox.value;
@@ -21,8 +29,14 @@ class SnowmanMod {
                 goal2 = true; // If dist between top and bottom
         }
         return (goal1 && goal2);
-        // if math works out
     }
+    /**
+     * Returns the distance between two (x,y) points
+     * @param x1 The first point x coordinate
+     * @param y1 The first point y coordinate
+     * @param x2 The second point x coordinate
+     * @param y2 The second point y coordinate
+     */
     dist(x1, y1, x2, y2) {
         return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
     }

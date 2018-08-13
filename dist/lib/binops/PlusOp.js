@@ -5,6 +5,12 @@ const Scope_1 = require("../structural/Scope");
 const NumberNode_1 = require("../prims/NumberNode");
 // left and right are both expressions
 class PlusOp extends BinaryOperation_1.BinaryOperation {
+    /**
+     * Constructor for the addition operation
+     * @param left The first addend
+     * @param right The second addend
+     * @param ws Preceding whitespace
+     */
     constructor(left, right, ws) {
         super(left, right);
         this._ws = ws;
@@ -12,22 +18,38 @@ class PlusOp extends BinaryOperation_1.BinaryOperation {
             this._ws = "";
         }
     }
+    /**
+     * Performs the addition and returns a single NumberNode
+     * @param context The current program context
+     */
     eval(context) {
-        let l = this.left;
-        let r = this.right;
-        let le = l.eval(new Scope_1.Scope(context));
-        let re = r.eval(new Scope_1.Scope(context));
-        return new NumberNode_1.NumberNode(le.val + re.val);
+        return new NumberNode_1.NumberNode(this.left.eval(new Scope_1.Scope(context)).eval(context).val + this.right.eval(new Scope_1.Scope(context)).eval(context).val);
     }
+    /**
+     * Addition ops cannot be drawn directly
+     * @param context
+     * @param dims
+     * @param ast
+     */
     draw(context, dims, ast) {
         throw new Error("Not implemented");
     }
+    /**
+     * Equals cannot be called directly on an addition op
+     * @param right
+     */
     equalsVal(right) {
         throw new Error("Cannot call equals directly on binary operations");
     }
+    /**
+     * Returns a string representation of the addition op
+     */
     toString() {
         return this._ws + this.left.toString() + ' + ' + this.right.toString();
     }
+    /**
+     * Returns whether the element is terminated by a newline (true) or semicolon (false)
+     */
     newLine() {
         return false;
     }

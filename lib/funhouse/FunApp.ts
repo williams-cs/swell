@@ -9,9 +9,16 @@ export class FunApp<T> implements Expression<T>{
     private _name: string;
     private _args: Expression<{}>[];
     private _defaultValue: T = undefined;
-    private _newLine : boolean = false;
-    private _ws : string;
+    private _newLine: boolean = false;
+    private _ws: string;
 
+    /**
+     * The constructor for a function application
+     * @param name The name of the function
+     * @param args Function arguments, if applicable
+     * @param ws Preceding whitespace
+     * @param defaultValue The default return value of the function, if any
+     */
     constructor(name: string, args?: any[],  ws?: string, defaultValue?: T){
         this._name = name;
         this._args = args;
@@ -22,45 +29,27 @@ export class FunApp<T> implements Expression<T>{
         }
     }
 
-    toString() : string {
-        let argsList= '';
-        if(this._args.length > 0) {
-            for (let i =0 ; i < this._args.length-1; i++) {
-                argsList += this._args[i].toString() + ", ";
-            }
-            argsList += this._args[this._args.length-1].toString();
-        }
-        return this._ws + this.name + '(' + argsList + ")";
-    }
-
-    newLine() : boolean {
-        return this._newLine;
-    }
-
-    // Assigns args to values in new context
+    /**
+     * Evaluates the function application 
+     * @param context 
+     */
     eval(context: Scope): any{
         let fundef = context.lookup(this._name,context); // looking up function
         //let child = new Scope(fundef.scope); // avoiding overwrite; need to toss after returning
         let child = fundef.scope.copy(); // Copying definition scope
-        // **************
         
+        // Assigns arg values to definition arguments
         if(this._args != null){
             for(let i = 0; i < this._args.length; i++){ //lookups?
                 //child.declare(this._funct.args[i]); // redeclare?
                 child.assign(fundef.args[i],this._args[i]); 
             }
         }
-        
-        // the ID of the return value
-        //let id = v5("warp-lab.williams.edu",v5.DNS); // generate a unique ID for this function application
-        //let id2 = v5("warp-lab.williams.edu",v5.DNS);
 
-        //let id = v4();
-        let id = context.globalFunID;
+        let id = context.globalFunID; // Assigns an ID to the function
         context.globalFunID++;
 
         child.retValID = Some(id); // new method
-        //console.log(child.retValID.get());
 
         // we only return a value with function application
         // if it is explicitly returned using a return statement;
@@ -81,18 +70,55 @@ export class FunApp<T> implements Expression<T>{
         return fundef.body.eval(child);
     }
 
+    /**
+     * Returns a string representation of the function application
+     */
+    toString(): string {
+        let argsList = '';
+        if(this._args.length > 0) {
+            for (let i = 0 ; i < this._args.length-1; i++) {
+                argsList += this._args[i].toString() + ", ";
+            }
+            argsList += this._args[this._args.length-1].toString();
+        }
+        return this._ws + this.name + '(' + argsList + ")";
+    }
+
+    /**
+     * Returns whether the element is terminated by a newline (true) or semicolon (false)
+     */
+    newLine(): boolean {
+        return this._newLine;
+    }
+
+    /**
+     * Function applications cannot be drawn directly
+     * @param context 
+     * @param dims 
+     * @param ast 
+     */
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
         throw new Error("Not implemented");
     }
 
+    /**
+     * Equals cannot be called directly on a function application
+     * @param right 
+     */
     equalsVal(right: Expression<any>): boolean{
         throw new Error("Cannot call equals directly on functions");
     }
 
-
+    /**
+     * Returns the name of the function
+     */
     get name(): string {
         return this._name;
     }
+
+    /**
+     * Returns the arguments of the function
+     */
     get args(): Expression<{}>[] {
         return this._args;
     }

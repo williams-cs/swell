@@ -5,6 +5,11 @@ const MinusOp_1 = require("./MinusOp");
 const AssignOp_1 = require("./AssignOp");
 const VariableNode_1 = require("../vars/VariableNode");
 class Decrement {
+    /**
+     * Constructor for the decrement operation
+     * @param variable The expression to be decremented
+     * @param ws Preceding whitespace
+     */
     constructor(variable, ws) {
         this.expr = variable;
         if (variable instanceof VariableNode_1.VariableNode) {
@@ -18,18 +23,38 @@ class Decrement {
             this._ws = "";
         }
     }
+    /**
+     * Evaluates the decrement op to a NumberNode
+     * @param context The current program context
+     */
     eval(context) {
         return this.innerRep.eval(context);
     }
+    /**
+     * Returns a string representation of the decrement op
+     */
     toString() {
         return this._ws + this.expr.toString() + "--";
     }
+    /**
+     * Decrement ops can't be drawn directly
+     * @param context
+     * @param dims
+     * @param ast
+     */
     draw(context, dims, ast) {
         throw new Error("Not implemented");
     }
+    /**
+     * Equals can't be called directly on decrement
+     * @param right
+     */
     equalsVal(right) {
         throw new Error("Cannot call equals directly on binary operations");
     }
+    /**
+     * Returns whether the element is terminated by a newline (true) or semicolon (false)
+     */
     newLine() {
         return false;
     }

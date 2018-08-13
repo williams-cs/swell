@@ -6,8 +6,15 @@ import { Dimensions } from '../structural/Dimensions';
 
 // left and right are both expressions
 export class PlusOp extends BinaryOperation<NumberNode>{
-    private _ws : string;
-    constructor(left: Expression<NumberNode>, right: Expression<NumberNode>, ws? : string){
+    private _ws: string;
+
+    /**
+     * Constructor for the addition operation
+     * @param left The first addend
+     * @param right The second addend
+     * @param ws Preceding whitespace
+     */
+    constructor(left: Expression<NumberNode>, right: Expression<NumberNode>, ws?: string){
         super(left,right);
         this._ws = ws;
         if(ws == undefined){
@@ -15,27 +22,43 @@ export class PlusOp extends BinaryOperation<NumberNode>{
         }
     }
     
+    /**
+     * Performs the addition and returns a single NumberNode
+     * @param context The current program context
+     */
     eval(context: Scope): NumberNode {
-        let l = this.left;
-        let r = this.right;
-        let le = l.eval(new Scope(context));
-        let re = r.eval(new Scope(context));
-        return new NumberNode(le.val + re.val);
+        return new NumberNode(this.left.eval(new Scope(context)).eval(context).val + this.right.eval(new Scope(context)).eval(context).val);
     }
 
+    /**
+     * Addition ops cannot be drawn directly
+     * @param context 
+     * @param dims 
+     * @param ast 
+     */
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
         throw new Error("Not implemented");
     }
 
+    /**
+     * Equals cannot be called directly on an addition op
+     * @param right 
+     */
     equalsVal(right: Expression<any>): boolean{
         throw new Error("Cannot call equals directly on binary operations");
     }
 
-
-    toString() : string {
+    /**
+     * Returns a string representation of the addition op
+     */
+    toString(): string {
         return this._ws + this.left.toString() + ' + ' + this.right.toString();
     }
-    newLine() : boolean {
+
+    /**
+     * Returns whether the element is terminated by a newline (true) or semicolon (false)
+     */
+    newLine(): boolean {
         return false;
     }
 }

@@ -8,11 +8,17 @@ import { AssignOp } from './AssignOp';
 import { VariableNode } from '../vars/VariableNode';
 
 export class Decrement implements Expression<any>{
-    private innerRep : Expression<any>;
-    private expr : Expression<any>;
-    private _ws : string;
-    constructor(variable : Expression<any>, ws? : string){
-        this.expr= variable;
+    private innerRep: Expression<any>;
+    private expr: Expression<any>;
+    private _ws: string;
+
+    /**
+     * Constructor for the decrement operation
+     * @param variable The expression to be decremented
+     * @param ws Preceding whitespace
+     */
+    constructor(variable: Expression<any>, ws?: string){
+        this.expr = variable;
         if(variable instanceof VariableNode){
             this.innerRep= new AssignOp(variable, new MinusOp(variable, new NumberNode(1)));
         }
@@ -25,23 +31,43 @@ export class Decrement implements Expression<any>{
         }
     }
     
+    /**
+     * Evaluates the decrement op to a NumberNode
+     * @param context The current program context
+     */
     eval(context: Scope): NumberNode {
         return this.innerRep.eval(context);
     }
 
-    toString() : string {
+    /**
+     * Returns a string representation of the decrement op
+     */
+    toString(): string {
         return this._ws + this.expr.toString() + "--";
     }
 
+    /**
+     * Decrement ops can't be drawn directly
+     * @param context 
+     * @param dims 
+     * @param ast 
+     */
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
         throw new Error("Not implemented");
     }
 
+    /**
+     * Equals can't be called directly on decrement
+     * @param right 
+     */
     equalsVal(right: Expression<any>): boolean{
         throw new Error("Cannot call equals directly on binary operations");
     }
     
-    newLine() : boolean {
+    /**
+     * Returns whether the element is terminated by a newline (true) or semicolon (false)
+     */
+    newLine(): boolean {
         return false;
     }
 }

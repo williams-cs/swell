@@ -8,11 +8,17 @@ import { AssignOp } from './AssignOp';
 import { VariableNode } from '../vars/VariableNode';
 
 export class Increment implements Expression<any>{
-    private innerRep : Expression<any>;
-    private expr : Expression<any>;
-    private _ws : string;
-    constructor(variable : Expression<any>, ws? : string){
-        this.expr= variable;
+    private innerRep: Expression<any>;
+    private expr: Expression<any>;
+    private _ws: string;
+
+    /**
+     * Constructor for Increment
+     * @param variable The expression to increment
+     * @param ws Tracks preceding whitespace
+     */
+    constructor(variable: Expression<any>, ws?: string){
+        this.expr = variable;
         if(variable instanceof VariableNode){
             this.innerRep= new AssignOp(variable, new PlusOp(variable, new NumberNode(1)));
         }
@@ -25,22 +31,43 @@ export class Increment implements Expression<any>{
         }
     }
 
+    /**
+     * Evaluates increment into a number node
+     * @param context The function scope
+     */
     eval(context: Scope): NumberNode {
         return this.innerRep.eval(context);
     }
 
+    /**
+     * Increments cannot be drawn
+     * @param context 
+     * @param dims 
+     * @param ast 
+     */
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
         throw new Error("Not implemented");
     }
 
+    /**
+     * Cannot call equals directly on binops
+     * @param right 
+     */
     equalsVal(right: Expression<any>): boolean{
         throw new Error("Cannot call equals directly on binary operations");
     }
     
-    toString() : string {
+    /**
+     * Returns a string representation of the increment expression
+     */
+    toString(): string {
         return this._ws + this.expr.toString() + "++";
     }
-    newLine() : boolean {
+
+    /**
+     * Returns whether the element is terminated by a newline (true) or semicolon (false)
+     */
+    newLine(): boolean {
         return false;
     }
 }
