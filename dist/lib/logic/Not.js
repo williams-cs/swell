@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const BooleanNode_1 = require("../prims/BooleanNode");
 class Not {
     /**
-     * Constructor for the Not (!) operation
-     * @param expr The expression to be negated (must be a BooleanNode)
+     * Constructor for the logical Not (!) operation
+     * @param expr The expression to be operated on (must be a BooleanNode)
      * @param ws Preceding whitespace
      */
     constructor(expr, ws) {
@@ -54,7 +54,7 @@ class Not {
         throw new Error("Cannot call draw on logical ops");
     }
     /**
-     * Returns expression to be negated
+     * Returns expression to be operated on
      */
     get expr() {
         return this._expr;

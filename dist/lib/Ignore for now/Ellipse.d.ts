@@ -1,4 +1,4 @@
-import { ColorNode } from './ColorNode';
+import { ColorNode } from '../shapes/ColorNode';
 import { Expression } from '../Expression';
 import { NumberNode } from '../prims/NumberNode';
 export declare class Ellipse {

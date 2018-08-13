@@ -74,14 +74,10 @@ exports.ForNode = ForNode_1.ForNode;
 /* BUILTIN FUNCTIONS */
 var ColorNode_1 = require("./lib/shapes/ColorNode");
 exports.ColorNode = ColorNode_1.ColorNode;
-var Ellipse_1 = require("./lib/shapes/Ellipse");
-exports.Ellipse = Ellipse_1.Ellipse;
 var EllipseNode_1 = require("./lib/shapes/EllipseNode");
 exports.EllipseNode = EllipseNode_1.EllipseNode;
 var RectangleNode_1 = require("./lib/shapes/RectangleNode");
 exports.RectangleNode = RectangleNode_1.RectangleNode;
-var Shape_1 = require("./lib/shapes/Shape");
-exports.Shape = Shape_1.Shape;
 var PrintNode_1 = require("./lib/structural/PrintNode");
 exports.PrintNode = PrintNode_1.PrintNode;
 var Return_1 = require("./lib/structural/Return");

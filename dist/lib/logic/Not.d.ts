@@ -6,8 +6,8 @@ export declare class Not implements Expression<BooleanNode> {
     private _newLine;
     private _ws;
     /**
-     * Constructor for the Not (!) operation
-     * @param expr The expression to be negated (must be a BooleanNode)
+     * Constructor for the logical Not (!) operation
+     * @param expr The expression to be operated on (must be a BooleanNode)
      * @param ws Preceding whitespace
      */
     constructor(expr: Expression<any>, ws?: string);
@@ -34,7 +34,7 @@ export declare class Not implements Expression<BooleanNode> {
      */
     draw(): void;
     /**
-     * Returns expression to be negated
+     * Returns expression to be operated on
      */
     readonly expr: Expression<any>;
 }

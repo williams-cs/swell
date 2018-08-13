@@ -4,10 +4,17 @@ export class SnowmanMod implements Module {
     readonly _name: string = "Do You Want to Build a Snowman?";
     readonly _goal: any;
     readonly _instructions: string = "Draw three ellipses to make a snowman!";
-    constructor(){
+    
+    /**
+     * Constructor for the Snowman module
+     */
+    constructor(){}
 
-    }
-
+    /**
+     * Checks goals and returns true if fulfilled, false otherwise
+     * Goals: Three ellipses, circular, not too far away
+     * @param document 
+     */
     checkGoal(document: Document): boolean {
         let inputbox = document.getElementById('input') as HTMLInputElement;
         let inputtext = inputbox.value;
@@ -22,9 +29,15 @@ export class SnowmanMod implements Module {
             if (dist1 && dist2) goal2 = true; // If dist between top and bottom
         }
         return(goal1 && goal2);
-        // if math works out
     }
 
+    /**
+     * Returns the distance between two (x,y) points
+     * @param x1 The first point x coordinate
+     * @param y1 The first point y coordinate
+     * @param x2 The second point x coordinate
+     * @param y2 The second point y coordinate
+     */
     dist(x1: number, y1: number, x2: number, y2: number) {
         return Math.sqrt(Math.pow(x1 - x2,2) + Math.pow(y1 - y2,2));
     }

@@ -8,8 +8,8 @@ export class Not implements Expression<BooleanNode>{
     private _ws: string;
 
     /**
-     * Constructor for the Not (!) operation
-     * @param expr The expression to be negated (must be a BooleanNode)
+     * Constructor for the logical Not (!) operation
+     * @param expr The expression to be operated on (must be a BooleanNode)
      * @param ws Preceding whitespace
      */
     constructor(expr: Expression<any>, ws?: string){
@@ -63,7 +63,7 @@ export class Not implements Expression<BooleanNode>{
     }
 
     /**
-     * Returns expression to be negated
+     * Returns expression to be operated on
      */
     get expr(): Expression<any>{
         return this._expr;

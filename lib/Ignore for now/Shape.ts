@@ -1,8 +1,14 @@
-import {ColorNode} from './ColorNode';
+import {ColorNode} from '../shapes/ColorNode';
 import { NumberNode } from '../prims/NumberNode';
 import { Expression } from '../Expression';
 
 export abstract class Shape{
+    /**
+     * Abstract class constructor for a Shape
+     * @param _color The shape color
+     * @param _xPos The x coordinate of the shape
+     * @param _yPos The y coordinate of the shape
+     */
     constructor(private _color: ColorNode, private _xPos: Expression<NumberNode>, private _yPos: Expression<NumberNode>){}
     get color(): ColorNode{
         return this._color;

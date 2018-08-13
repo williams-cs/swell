@@ -7,6 +7,12 @@ export class Return implements Expression<any>{
     private _expr: Expression<any>;
     private _newLine: boolean = false;
     private _ws: string;
+
+    /**
+     * Constructor for a Return object, representing something to be returned in a function
+     * @param expr The expression to be returned
+     * @param ws Preceding whitespace
+     */
     constructor(expr: Expression<any>, ws?: string){
         this._expr = expr;
         this._ws = ws;
@@ -15,25 +21,45 @@ export class Return implements Expression<any>{
         }
     }
 
+    /**
+     * Evaluates the expression to be returned and returns via a ReturnErro
+     * @param context The current program context
+     */
     eval(context: Scope){
         // If return val is a var, returns that var's value
         let result = this._expr.eval(context); 
-        console.log("return result: " + result);
         throw new ReturnError(result,context.retIDLookup());
-        //return this._expr.eval(context); // will need typechecking at some point
     }
 
+    /**
+     * Equals cannot be called directly on Return nodes
+     * @param right 
+     */
     equalsVal(right: Expression<any>): boolean{
         throw new Error("Cannot call equals on Return");
     }
     
+    /**
+     * Returns a string representation of the Return node
+     */
     toString(): string {
         return this._ws + "return " + this._expr.toString();
     }
 
+    /**
+     * Returns whether the element is terminated by a newline (true) or semicolon (false)
+     */
     newLine(): boolean {
         return this._newLine;
     }
 
-    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {}
+    /**
+     * Return nodes cannot be drawn directly
+     * @param context 
+     * @param dims 
+     * @param ast 
+     */
+    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
+        throw new Error("Cannot call draw on Return");
+    }
 }

@@ -6,7 +6,11 @@ export class CircleMod implements Module {
     readonly _instructions: string = "Draw a circle in the middle of the screen!";
     constructor(){}
 
-    // goals: width = height and x and y are between 150 and 350
+    /**
+     * A module to draw a circle
+     * goals: width = height and x and y are between 150 and 350
+     * @param document The HTML document
+     */
     checkGoal(document: Document): boolean {
         let inputbox = document.getElementById('input') as HTMLInputElement;
         let inputtext = inputbox.value;
@@ -32,16 +36,28 @@ export class CircleMod implements Module {
                 }
             return(goal1 && goal2);
         }
-        // if math works out
     }
 
+    /**
+     * Returns the distance between two (x,y) points
+     * @param x1 The first point x coordinate
+     * @param y1 The first point y coordinate
+     * @param x2 The second point x coordinate
+     * @param y2 The second point y coordinate
+     */
     dist(x1: number, y1: number, x2: number, y2: number) {
         return Math.sqrt(Math.pow(x1 - x2,2) + Math.pow(y1 - y2,2));
     }
 
+    /**
+     * Returns the module name
+     */
     get name(): string {
         return this._name;
     }
+    /**
+     * Returns the module instructions
+     */
     get instructions(): string {
         return this._instructions;
     }

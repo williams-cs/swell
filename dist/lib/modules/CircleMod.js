@@ -5,7 +5,11 @@ class CircleMod {
         this._name = "The Circle";
         this._instructions = "Draw a circle in the middle of the screen!";
     }
-    // goals: width = height and x and y are between 150 and 350
+    /**
+     * A module to draw a circle
+     * goals: width = height and x and y are between 150 and 350
+     * @param document The HTML document
+     */
     checkGoal(document) {
         let inputbox = document.getElementById('input');
         let inputtext = inputbox.value;
@@ -31,14 +35,26 @@ class CircleMod {
             }
             return (goal1 && goal2);
         }
-        // if math works out
     }
+    /**
+     * Returns the distance between two (x,y) points
+     * @param x1 The first point x coordinate
+     * @param y1 The first point y coordinate
+     * @param x2 The second point x coordinate
+     * @param y2 The second point y coordinate
+     */
     dist(x1, y1, x2, y2) {
         return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
     }
+    /**
+     * Returns the module name
+     */
     get name() {
         return this._name;
     }
+    /**
+     * Returns the module instructions
+     */
     get instructions() {
         return this._instructions;
     }
