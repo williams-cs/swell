@@ -53,7 +53,7 @@ class EphNode {
      * Returns a string representation of the EphNode
      */
     toString() {
-        return this._ws + "DEMONCOW(" + this._width.toString() + ", " + this._height.toString() + ")";
+        return this._ws + "eph(" + this._width.toString() + ", " + this._height.toString() + ")";
     }
     /**
      * Returns the image associated with the EphNode
