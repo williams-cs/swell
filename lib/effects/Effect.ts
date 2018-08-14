@@ -5,7 +5,6 @@ import { PrintNode } from "../structural/PrintNode";
 
 export interface Effect<T>{
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void; // draws object
-    ast(): Expression<T>; // returns expression that created obj
     update(): void;
     toSelString(): string; // returns string for selection logging
     toDragString(): string; // returns string for drag logging

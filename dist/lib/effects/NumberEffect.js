@@ -33,12 +33,6 @@ class NumberEffect {
     //     let sizeStr = new ResizeEvent(this._str, this._size1, this._fontSize);
     //     return sizeStr.assembleLog();
     // }
-    ast() {
-        throw new Error("Not implemented");
-    }
-    updateAST() {
-        throw new Error("Not implemented");
-    }
     initID(id) {
         this.idObj = { _id: id };
     }

@@ -63,7 +63,6 @@ export class EllipseEffect implements Effect<EllipseNode> {
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
         if (context.canvas.isDefined()) {
             this._dims = dims;
-            this._ast = ast;
             this._canvas = context.canvas.get();
             this._context = context;
             let ctx = context.canvas.get().getContext("2d");
@@ -591,13 +590,6 @@ export class EllipseEffect implements Effect<EllipseNode> {
     }
 
     /**
-     * Returns the AST
-     */
-    ast(): Expression<EllipseNode> {
-        return this._ast;
-    }
-
-    /**
      * Logs a paint event
      */
     logPaint(): LogEvent<any> {
@@ -617,10 +609,6 @@ export class EllipseEffect implements Effect<EllipseNode> {
      */
     logClick(): LogEvent<any>{
         return new ClickEvent("ellipse with ID " + this.getID().toString(), this.x, this.y);
-    }
-
-    updateAST(): Expression<EllipseNode> {
-        throw new Error("Not implemented");
     }
 
     /**

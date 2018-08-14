@@ -152,10 +152,6 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
      */
     isMouseOutside(event: any): void;
     /**
-     * Returns the AST
-     */
-    ast(): Expression<EllipseNode>;
-    /**
      * Logs a paint event
      */
     logPaint(): LogEvent<any>;
@@ -167,7 +163,6 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
      * Logs a click event
      */
     logClick(): LogEvent<any>;
-    updateAST(): Expression<EllipseNode>;
     /**
      * Initializes and assigns an ID to an object
      * @param id The ID to be assigned

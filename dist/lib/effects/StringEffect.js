@@ -458,12 +458,6 @@ class StringEffect {
         return new ClickEvent_1.ClickEvent(this._str.val + " with ID " + this.getID().toString(), this.x, this.y);
     }
     /**
-     * Returns the AST
-     */
-    ast() {
-        return this._ast;
-    }
-    /**
      * Initializes and assigns an ID to an object
      * @param id The ID to be assigned
      */

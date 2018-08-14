@@ -527,13 +527,6 @@ export class StringEffect implements Effect<StringNode> {
     }
 
     /**
-     * Returns the AST
-     */
-    ast(): Expression<StringNode> {
-        return this._ast;
-    }
-
-    /**
      * Initializes and assigns an ID to an object
      * @param id The ID to be assigned
      */

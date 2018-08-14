@@ -695,14 +695,6 @@ export class RectangleEffect implements Effect<RectangleNode> {
         this.idObj = {_id: id};
     }
 
-    ast(): Expression<RectangleNode> {
-        throw new Error("Not implemented");
-    }
-
-    updateAST(): Expression<NumberNode> {
-        throw new Error("Not implemented");
-    }
-
     /**
      * Returns the x position of the ellipse
      */

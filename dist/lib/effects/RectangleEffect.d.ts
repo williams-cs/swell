@@ -1,5 +1,4 @@
 import { Effect } from "./Effect";
-import { NumberNode } from "../prims/NumberNode";
 import { RectangleNode } from "../shapes/RectangleNode";
 import { Expression } from "../Expression";
 import { Scope } from "../structural/Scope";
@@ -188,8 +187,6 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
      * @param id The ID to be assigned
      */
     initID(id: number): void;
-    ast(): Expression<RectangleNode>;
-    updateAST(): Expression<NumberNode>;
     /**
      * Returns the x position of the ellipse
      */

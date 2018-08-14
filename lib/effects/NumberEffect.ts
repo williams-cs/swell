@@ -60,14 +60,6 @@ export class NumberEffect implements Effect<NumberNode> {
     //     return sizeStr.assembleLog();
     // }
 
-    ast(): Expression<NumberNode> {
-        throw new Error("Not implemented");
-    }
-
-    updateAST(): Expression<NumberNode> {
-        throw new Error("Not implemented");
-    }
-
     initID(id: number){
         this.idObj = {_id: id};
     }

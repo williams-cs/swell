@@ -639,12 +639,6 @@ class RectangleEffect {
     initID(id) {
         this.idObj = { _id: id };
     }
-    ast() {
-        throw new Error("Not implemented");
-    }
-    updateAST() {
-        throw new Error("Not implemented");
-    }
     /**
      * Returns the x position of the ellipse
      */

@@ -164,10 +164,6 @@ export declare class StringEffect implements Effect<StringNode> {
      */
     logClick(): LogEvent<any>;
     /**
-     * Returns the AST
-     */
-    ast(): Expression<StringNode>;
-    /**
      * Initializes and assigns an ID to an object
      * @param id The ID to be assigned
      */
