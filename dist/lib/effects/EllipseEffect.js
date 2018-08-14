@@ -34,7 +34,6 @@ class EllipseEffect {
     draw(context, dims, ast) {
         if (context.canvas.isDefined()) {
             this._dims = dims;
-            this._ast = ast;
             this._canvas = context.canvas.get();
             this._context = context;
             let ctx = context.canvas.get().getContext("2d");
@@ -537,9 +536,6 @@ class EllipseEffect {
             this._corner = 0;
         }
     }
-    ast() {
-        return this._ast;
-    }
     logPaint() {
         return new PaintEvent_1.PaintEvent("ellipse", this.x, this.y);
     }
@@ -553,9 +549,6 @@ class EllipseEffect {
     }
     logClick() {
         return new ClickEvent_1.ClickEvent("ellipse with ID " + this.getID().toString(), this.x, this.y);
-    }
-    updateAST() {
-        throw new Error("Not implemented");
     }
     initID(id) {
         this.idObj = { _id: id };

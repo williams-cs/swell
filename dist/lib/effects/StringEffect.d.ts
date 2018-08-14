@@ -154,7 +154,6 @@ export declare class StringEffect implements Effect<StringNode> {
     logPaint(): LogEvent<any>;
     logResize(): LogEvent<any>;
     logClick(): LogEvent<any>;
-    ast(): Expression<StringNode>;
     initID(id: number): void;
     canvas: HTMLCanvasElement;
     readonly x: number;

@@ -455,9 +455,6 @@ class StringEffect {
     //     //console.log("Logging selected!!");
     //     return new SelectEvent(this._context.mulSelArray);
     // }
-    ast() {
-        return this._ast;
-    }
     initID(id) {
         this.idObj = { _id: id, };
     }

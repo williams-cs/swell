@@ -526,10 +526,6 @@ export class StringEffect implements Effect<StringNode> {
     //     return new SelectEvent(this._context.mulSelArray);
     // }
 
-    ast(): Expression<StringNode> {
-        return this._ast;
-    }
-
     initID(id: number){
         this.idObj = {_id: id,};
     }

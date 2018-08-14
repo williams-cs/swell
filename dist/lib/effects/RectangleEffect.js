@@ -626,12 +626,6 @@ class RectangleEffect {
     initID(id) {
         this.idObj = { _id: id };
     }
-    ast() {
-        throw new Error("Not implemented");
-    }
-    updateAST() {
-        throw new Error("Not implemented");
-    }
     /* Getters for x, y, width, height, dims, and isSelected */
     get x() {
         return this._dims.x.eval(this._context).val;

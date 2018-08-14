@@ -1,5 +1,4 @@
 import { Effect } from "./Effect";
-import { NumberNode } from "../prims/NumberNode";
 import { RectangleNode } from "../shapes/RectangleNode";
 import { Expression } from "../Expression";
 import { Scope } from "../structural/Scope";
@@ -175,8 +174,6 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
     logResize(): LogEvent<any>;
     logClick(): LogEvent<any>;
     initID(id: number): void;
-    ast(): Expression<RectangleNode>;
-    updateAST(): Expression<NumberNode>;
     readonly x: number;
     readonly y: number;
     readonly w: number;

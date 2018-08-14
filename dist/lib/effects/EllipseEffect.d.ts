@@ -151,11 +151,9 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
      * @param event the mousedown event
      */
     isMouseOutside(event: any): void;
-    ast(): Expression<EllipseNode>;
     logPaint(): LogEvent<any>;
     logResize(): LogEvent<any>;
     logClick(): LogEvent<any>;
-    updateAST(): Expression<EllipseNode>;
     initID(id: number): void;
     readonly x: number;
     readonly y: number;

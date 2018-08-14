@@ -682,14 +682,6 @@ export class RectangleEffect implements Effect<RectangleNode> {
         this.idObj = {_id: id};
     }
 
-    ast(): Expression<RectangleNode> {
-        throw new Error("Not implemented");
-    }
-
-    updateAST(): Expression<NumberNode> {
-        throw new Error("Not implemented");
-    }
-
     /* Getters for x, y, width, height, dims, and isSelected */
     get x(): number {
         return this._dims.x.eval(this._context).val;
