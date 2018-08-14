@@ -187,6 +187,9 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
      * @param id The ID to be assigned
      */
     initID(id: number): void;
+    /**
+     * Returns the x position of the ellipse
+     */
     readonly x: number;
     /**
      * Returns the y position of the ellipse

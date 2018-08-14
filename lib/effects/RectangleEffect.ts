@@ -695,21 +695,9 @@ export class RectangleEffect implements Effect<RectangleNode> {
         this.idObj = {_id: id};
     }
 
-<<<<<<< HEAD
-    /* Getters for x, y, width, height, dims, and isSelected */
-=======
-    ast(): Expression<RectangleNode> {
-        throw new Error("Not implemented");
-    }
-
-    updateAST(): Expression<NumberNode> {
-        throw new Error("Not implemented");
-    }
-
     /**
      * Returns the x position of the ellipse
      */
->>>>>>> a51224757ca04348ff067c6e7925667491512273
     get x(): number {
         return this._dims.x.eval(this._context).val;
     }

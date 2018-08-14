@@ -639,6 +639,9 @@ class RectangleEffect {
     initID(id) {
         this.idObj = { _id: id };
     }
+    /**
+     * Returns the x position of the ellipse
+     */
     get x() {
         return this._dims.x.eval(this._context).val;
     }
