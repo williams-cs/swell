@@ -614,15 +614,28 @@ class RectangleEffect {
             this._corner = 0;
         }
     }
+    /**
+     * Logs a rectangle paint event
+     */
     logPaint() {
         return new PaintEvent_1.PaintEvent("rectangle", this.x, this.y);
     }
+    /**
+     * Logs a rectangle resize event
+     */
     logResize() {
         return new ResizeEvent_1.ResizeEvent("rectangle with ID " + this.getID().toString(), Math.round(this._width1 * 100) / 100, Math.round(this._height1 * 100) / 100, Math.round(this.w * 100) / 100, Math.round(this.h * 100) / 100);
     }
+    /**
+     * Logs a rectangle click event
+     */
     logClick() {
         return new ClickEvent_1.ClickEvent("rectangle with ID " + this.getID().toString(), this.x, this.y);
     }
+    /**
+     * Initializes and assigns an ID to an object
+     * @param id The ID to be assigned
+     */
     initID(id) {
         this.idObj = { _id: id };
     }
@@ -632,43 +645,82 @@ class RectangleEffect {
     updateAST() {
         throw new Error("Not implemented");
     }
-    /* Getters for x, y, width, height, dims, and isSelected */
+    /**
+     * Returns the x position of the ellipse
+     */
     get x() {
         return this._dims.x.eval(this._context).val;
     }
+    /**
+     * Returns the y position of the ellipse
+     */
     get y() {
         return this._dims.y.eval(this._context).val;
     }
+    /**
+     * Returns the width of the ellipse
+     */
     get w() {
         return this._dims.width.eval(this._context).val;
     }
+    /**
+     * Returns the height of the ellipse
+     */
     get h() {
         return this._dims.height.eval(this._context).val;
     }
+    /**
+     * Returns the Dimensions object
+     */
     get dims() {
         return this._dims;
     }
+    /**
+     * Returns whether or not the ellipse is selected
+     */
     get selected() {
         return this._isSelected;
     }
+    /**
+     * Returns the ID of the ellipse
+     */
     getID() {
         return this.idObj._id;
     }
+    /**
+     * Returns whether or not the ellipse has just been dragged
+     */
     getJustDragged() {
         return this._justDragged;
     }
+    /**
+     * Sets whether or not the ellipse has just been dragged
+     * @param val The value to be assigned
+     */
     setJustDragged(val) {
         this._justDragged = val;
     }
+    /**
+     * Returns whether or not the ellipse is dragging
+     */
     get isDragging() {
         return this._isDragging;
     }
+    /**
+     * Assembles a string for selection events
+     */
     toSelString() {
         return " rectangle with ID " + this.getID().toString() + " at " + this.x + ", " + this.y;
     }
+    /**
+    * Assembles a string for drag events
+    */
     toDragString() {
         return ("rectangle with ID " + this.getID().toString() + " from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
     }
+    /**
+     * Assembles a string for ID assignment events
+     */
     toIDString() {
         return (this.idObj._id.toString() + " to rectangle at " + this.x + ", " + this.y);
     }
