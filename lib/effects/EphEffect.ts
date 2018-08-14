@@ -66,8 +66,8 @@ export class EphEffect implements Effect<EphNode> {
             this._context = context;
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
-            this._ephImg = new Image();
-            this._ephImg.src = './pics/demoncow.png';
+            // this._ephImg = new Image();
+            // this._ephImg.src = './pics/demoncow.png';
             this._ratio = this.w / this.h;
             this.update();
         }
@@ -85,10 +85,17 @@ export class EphEffect implements Effect<EphNode> {
         let width = this.w;
         let height = this.h;
         this._ctx.beginPath();
+        //var imgObj = new Image();
+        //let ctx = this._canvas.getContext('2d');
+        // this._ephImg = new Image();
+        // this._ephImg.src = './pics/demoncow.png';
+        //imgObj.onload = function(){
         //this._ephImg.onload = function(){
-        this._ctx.drawImage(this._ephImg, this.x, this.y)
-        this._ephImg.width = 40;
-        this._ephImg.height = 40;
+            this._ctx.drawImage(this._ephImg, this.x, this.y, width,height);
+            //this._ephImg.onload = function(){
+            // this._ephImg.width = width;
+            // this._ephImg.height = height;
+        //}
         //}
         if(this._isSelected) {
             this.drawGuides(x, y, width, height, this._corner);
