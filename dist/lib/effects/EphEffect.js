@@ -39,7 +39,7 @@ class EphEffect {
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
             this._ephImg = new Image();
-            this._ephImg.src = '../pics/demoncow.png';
+            this._ephImg.src = '../../pics/demoncow.png';
             this._ratio = this.w / this.h;
             this.update();
         }
