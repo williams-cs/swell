@@ -84,10 +84,11 @@ export class EphEffect implements Effect<EphNode> {
         let y = this.y;
         let width = this.w;
         let height = this.h;
+        this._ctx.beginPath();
         //this._ephImg.onload = function(){
         this._ctx.drawImage(this._ephImg, this.x, this.y)
-        this._ephImg.width = width;
-        this._ephImg.height = height;
+        this._ephImg.width = 40;
+        this._ephImg.height = 40;
         //}
         if(this._isSelected) {
             this.drawGuides(x, y, width, height, this._corner);
