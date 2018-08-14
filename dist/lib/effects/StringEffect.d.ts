@@ -151,21 +151,78 @@ export declare class StringEffect implements Effect<StringNode> {
      * @param event the mousedown event
      */
     isMouseOutside(event: any): void;
+    /**
+     * Logs a paint event
+     */
     logPaint(): LogEvent<any>;
+    /**
+     * Logs a resize event
+     */
     logResize(): LogEvent<any>;
+    /**
+     * Logs a click event
+     */
     logClick(): LogEvent<any>;
+    /**
+     * Initializes and assigns an ID to an object
+     * @param id The ID to be assigned
+     */
     initID(id: number): void;
+    /**
+     * Returns the canvas
+     */
+    /**
+    * Sets the canvas
+    * @param canvas The canvas to be assigned
+    */
     canvas: HTMLCanvasElement;
+    /**
+     * Returns the x position of the ellipse
+     */
     readonly x: number;
+    /**
+     * Returns the y position of the ellipse
+     */
     readonly y: number;
+    /**
+     * Returns the Dimensions object
+     */
     readonly dims: Dimensions;
+    /**
+    * Returns whether or not the ellipse has just been dragged
+    */
     getJustDragged(): boolean;
+    /**
+     * Sets whether or not the ellipse has just been dragged
+     * @param val The value to be assigned
+     */
     setJustDragged(val: boolean): void;
+    /**
+     * Returns whether or not the ellipse is dragging
+     */
     readonly isDragging: boolean;
+    /**
+     * Returns whether or not this is selected
+     */
     readonly selected: boolean;
+    /**
+     * Returns the string
+     */
     readonly str: string;
+    /**
+     * Returns the object ID
+     */
     getID(): number;
+    /**
+     * Assembles a string for selection events
+     */
     toSelString(): string;
+    /**
+    * Assembles a string for drag events
+    */
     toDragString(): string;
+    /**
+     * Assembles a string for ID assignment events
+     */
     toIDString(): string;
 }

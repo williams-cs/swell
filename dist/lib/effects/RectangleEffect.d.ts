@@ -170,21 +170,71 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
      * @param event the mousedown event
      */
     isMouseOutside(event: any): void;
+    /**
+     * Logs a rectangle paint event
+     */
     logPaint(): LogEvent<any>;
+    /**
+     * Logs a rectangle resize event
+     */
     logResize(): LogEvent<any>;
+    /**
+     * Logs a rectangle click event
+     */
     logClick(): LogEvent<any>;
+    /**
+     * Initializes and assigns an ID to an object
+     * @param id The ID to be assigned
+     */
     initID(id: number): void;
     readonly x: number;
+    /**
+     * Returns the y position of the ellipse
+     */
     readonly y: number;
+    /**
+     * Returns the width of the ellipse
+     */
     readonly w: number;
+    /**
+     * Returns the height of the ellipse
+     */
     readonly h: number;
+    /**
+     * Returns the Dimensions object
+     */
     readonly dims: Dimensions;
+    /**
+     * Returns whether or not the ellipse is selected
+     */
     readonly selected: boolean;
+    /**
+     * Returns the ID of the ellipse
+     */
     getID(): number;
+    /**
+     * Returns whether or not the ellipse has just been dragged
+     */
     getJustDragged(): boolean;
+    /**
+     * Sets whether or not the ellipse has just been dragged
+     * @param val The value to be assigned
+     */
     setJustDragged(val: boolean): void;
+    /**
+     * Returns whether or not the ellipse is dragging
+     */
     readonly isDragging: boolean;
+    /**
+     * Assembles a string for selection events
+     */
     toSelString(): string;
+    /**
+    * Assembles a string for drag events
+    */
     toDragString(): string;
+    /**
+     * Assembles a string for ID assignment events
+     */
     toIDString(): string;
 }

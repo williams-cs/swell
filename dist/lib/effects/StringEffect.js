@@ -439,64 +439,114 @@ class StringEffect {
             this._corner = 0;
         }
     }
+    /**
+     * Logs a paint event
+     */
     logPaint() {
         return new PaintEvent_1.PaintEvent(this._str.val, this.x, this.y);
     }
-    // logMove(): LogEvent<any> {
-    //     return new DragEvent(this._str.val, this._x1, this._y1, this.x, this.y);
-    // }
+    /**
+     * Logs a resize event
+     */
     logResize() {
         return new ResizeEvent_1.ResizeEvent(this._str.val + " with ID " + this.getID().toString(), Math.round(this._size1 * 100) / 100, Math.round(this._fontSize * 100) / 100);
     }
+    /**
+     * Logs a click event
+     */
     logClick() {
         return new ClickEvent_1.ClickEvent(this._str.val + " with ID " + this.getID().toString(), this.x, this.y);
     }
-    // logSelected(): LogEvent<any>{
-    //     //console.log("Logging selected!!");
-    //     return new SelectEvent(this._context.mulSelArray);
-    // }
+    /**
+     * Initializes and assigns an ID to an object
+     * @param id The ID to be assigned
+     */
     initID(id) {
         this.idObj = { _id: id, };
     }
+    /**
+     * Returns the canvas
+     */
     get canvas() {
         return this._canvas;
     }
+    /**
+     * Sets the canvas
+     * @param canvas The canvas to be assigned
+     */
     set canvas(canvas) {
         this._canvas = canvas;
     }
+    /**
+     * Returns the x position of the ellipse
+     */
     get x() {
         return this._dims.x.eval(this._context).val;
     }
+    /**
+     * Returns the y position of the ellipse
+     */
     get y() {
         return this._dims.y.eval(this._context).val;
     }
+    /**
+     * Returns the Dimensions object
+     */
     get dims() {
         return this._dims;
     }
+    /**
+    * Returns whether or not the ellipse has just been dragged
+    */
     getJustDragged() {
         return this._justDragged;
     }
+    /**
+     * Sets whether or not the ellipse has just been dragged
+     * @param val The value to be assigned
+     */
     setJustDragged(val) {
         this._justDragged = val;
     }
+    /**
+     * Returns whether or not the ellipse is dragging
+     */
     get isDragging() {
         return this._isDragging;
     }
+    /**
+     * Returns whether or not this is selected
+     */
     get selected() {
         return this._isSelected;
     }
+    /**
+     * Returns the string
+     */
     get str() {
         return this._str.val;
     }
+    /**
+     * Returns the object ID
+     */
     getID() {
         return this.idObj._id;
     }
+    /**
+     * Assembles a string for selection events
+     */
     toSelString() {
         return " " + this._str.val + " with ID " + this.getID().toString() + " at " + this.x + ", " + this.y;
     }
+    /**
+    * Assembles a string for drag events
+    */
     toDragString() {
         return (this._str.val + " with ID " + this.getID().toString() + " from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
     }
+    /**
+     * Assembles a string for ID assignment events
+     */
     toIDString() {
         return (this.idObj._id.toString() + " to " + this._str.val + " at " + this.x + ", " + this.y);
     }
