@@ -73,47 +73,177 @@ export declare class EphEffect implements Effect<EphNode> {
      * @param corner the number of the corner to be colored blue (if any at all, if 0, all are white)
      */
     drawGuides(x: number, y: number, w: number, h: number, corner: number): void;
+    /**
+     * Simple method that draws a rectangle
+     * @param x x coordinate for the top left corner of the rectangle
+     * @param y y coordinate for the top left corner of the rectangle
+     * @param w width of the rectangle
+     * @param h height of the rectangle
+     * @param color color of the rectangle's fill
+     */
     drawSquare(x: number, y: number, w: number, h: number, color: string): void;
+    /**
+     * Called whenever the mouse moves within the canvas.
+     * Gets the mouse position, calls the modify methods if the booleans satisfy them.
+     * @param event the mousemove event
+     */
     onMouseMove(event: any): void;
+    /**
+     * Called whenever the mouse clicks inside the canvas.
+     * Modifies the state depending on whether the guides contain the mouse or the bounding rect contains the mouse.
+     * @param event the mousedown event
+     */
     onMouseDown(event: any): void;
+    /**
+     * Called whenever the mouse unclicks.
+     * Calls modifyReset to reset dragging and resizing booleans among others.
+     * @param event the mouseup event
+     */
     onMouseUp(event: any): void;
+    /**
+     * Called whenever a key is pressed down
+     * Toggles the isSelectingMultiple boolean if the key pressed is the shift key
+     * @param event the keydown event
+     */
     onShiftDown(event: any): void;
     /**
      * @param event
      */
     onShiftUp(event: any): void;
+    /**
+     * Changes the x and y coordinates of the object in order to drag the object.
+     */
     modifyDrag(): void;
+    /**
+     * Changes the size of the object when called (when a corner guide is clicked and dragged).
+     *
+     * If any of width or height is too small, it sets them equal to 10 and the other equal to
+     * 10 divided or multiplied by the ratio of width/height to keep it the same.
+     *
+     * The work of changing the size is done by calling the helper method modifyResizeHelper.
+     * @param widthTooSmall true if the width dimension is < 10
+     * @param heightTooSmall true if the height dimension is < 10
+     */
     modifyResize(widthTooSmall: boolean, heightTooSmall: boolean): void;
+    /**
+     * Does the work of changing the size of the object.
+     *
+     * Since the rectangle originates from the top left corner and not the center,
+     * it changes the x and y coordinates as well if guides 1, 2, or 4 are selected
+     *
+     * @param newDistance the distance between the mouse and the location opposite to it
+     * (if top right guide is clicked, the distance between that and the bottom left guide is newDistance)
+     */
     modifyResizeHelper(newDistance: number): void;
+    /**
+     * Changes the dimensions of the object when called.
+     * If any of width or height is too small, it sets them equal to 10.
+     * Calls modifyChangeDimsHelper to actually do the work
+     * @param widthTooSmall true if the width dimension is < 10
+     * @param heightTooSmall true if the height dimension is < 10
+     */
     modifyChangeDims(widthTooSmall: boolean, heightTooSmall: boolean): void;
+    /**
+     * Does the work of changing the size of the object.
+     *
+     * Since the rectangle originates from the top left corner and not the center,
+     * it changes the x and y coordinates as well if guides 5 or 8 are selected
+     */
     modifyChangeDimsHelper(): void;
     /**
-     *
+     * Toggles all of the private booleans depending on the mouse position when called (onMouseDown)
+     * e.g. if the mouse is within the bounding rectangle when this is called, isSelected = true
      * @param guideContains
      * @param contains
      */
     modifyState(guideContains: number, contains: boolean): void;
+    /**
+     * Resets all of the private booleans to false (like dragging, resizing, etc) when the mouse is released
+     */
     modifyReset(): void;
+    /**
+     * Gets the current x and y coordinates of the mouse
+     */
     getMousePosition(): void;
+    /**
+     * Sets isDragging, isResizing, isChangingDims, and isSelected to false if the mouse clicks outside of the canvas
+     * @param event the mousedown event
+     */
     isMouseOutside(event: any): void;
+    /**
+     * Logs an eph paint event
+     */
     logPaint(): LogEvent<any>;
+    /**
+     * Logs an eph resize event
+     */
     logResize(): LogEvent<any>;
+    /**
+     * Logs an eph click event
+     */
     logClick(): LogEvent<any>;
+    /**
+     * Initializes and assigns an ID to an object
+     * @param id The ID to be assigned
+     */
     initID(id: number): void;
     ast(): Expression<EphNode>;
     updateAST(): Expression<NumberNode>;
+    /**
+     * Returns the x position of the eph
+     */
     readonly x: number;
+    /**
+     * Returns the y position of the eph
+     */
     readonly y: number;
+    /**
+     * Returns the width of the eph
+     */
     readonly w: number;
+    /**
+     * Returns the height of the eph
+     */
     readonly h: number;
+    /**
+     * Returns the Dimensions object
+     */
     readonly dims: Dimensions;
+    /**
+     * Returns whether or not the eph is selected
+     */
     readonly selected: boolean;
+    /**
+     * Returns the image
+     */
     readonly image: HTMLImageElement;
+    /**
+     * Returns the ID of the eph
+     */
     getID(): number;
+    /**
+     * Returns whether or not the eph has just been dragged
+     */
     getJustDragged(): boolean;
+    /**
+     * Sets whether or not the eph has just been dragged
+     * @param val The value to be assigned
+     */
     setJustDragged(val: boolean): void;
+    /**
+     * Returns whether or not the eph is dragging
+     */
     readonly isDragging: boolean;
+    /**
+     * Assembles a string for selection events
+     */
     toSelString(): string;
+    /**
+    * Assembles a string for drag events
+    */
     toDragString(): string;
+    /**
+     * Assembles a string for ID assignment events
+     */
     toIDString(): string;
 }

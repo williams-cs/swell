@@ -305,7 +305,6 @@ class RectangleEffect {
      * @param event the mouseup event
      */
     onMouseUp(event) {
-        //console.log("I'm an ellipse!");
         this.modifyReset();
     }
     /**
@@ -643,25 +642,25 @@ class RectangleEffect {
         throw new Error("Method not implemented.");
     }
     /**
-     * Returns the x position of the ellipse
+     * Returns the x position of the rect
      */
     get x() {
         return this._dims.x.eval(this._context).val;
     }
     /**
-     * Returns the y position of the ellipse
+     * Returns the y position of the rect
      */
     get y() {
         return this._dims.y.eval(this._context).val;
     }
     /**
-     * Returns the width of the ellipse
+     * Returns the width of the rect
      */
     get w() {
         return this._dims.width.eval(this._context).val;
     }
     /**
-     * Returns the height of the ellipse
+     * Returns the height of the rect
      */
     get h() {
         return this._dims.height.eval(this._context).val;
@@ -673,32 +672,32 @@ class RectangleEffect {
         return this._dims;
     }
     /**
-     * Returns whether or not the ellipse is selected
+     * Returns whether or not the rect is selected
      */
     get selected() {
         return this._isSelected;
     }
     /**
-     * Returns the ID of the ellipse
+     * Returns the ID of the rect
      */
     getID() {
         return this.idObj._id;
     }
     /**
-     * Returns whether or not the ellipse has just been dragged
+     * Returns whether or not the rect has just been dragged
      */
     getJustDragged() {
         return this._justDragged;
     }
     /**
-     * Sets whether or not the ellipse has just been dragged
+     * Sets whether or not the rect has just been dragged
      * @param val The value to be assigned
      */
     setJustDragged(val) {
         this._justDragged = val;
     }
     /**
-     * Returns whether or not the ellipse is dragging
+     * Returns whether or not the rect is dragging
      */
     get isDragging() {
         return this._isDragging;
@@ -724,7 +723,7 @@ class RectangleEffect {
 }
 exports.RectangleEffect = RectangleEffect;
 /**
- * Get's the mouse x and y coordinates in relation to the canvas
+ * Gets the mouse x and y coordinates in relation to the canvas
  * @param canvas the canvas object
  * @param event the mousemove event
  */

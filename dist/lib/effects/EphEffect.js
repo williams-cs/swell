@@ -269,6 +269,14 @@ class EphEffect {
             this.drawSquare(x - 2.5, (y + h / 2) - 2.5, 5, 5, 'white'); // middle left
         }
     }
+    /**
+     * Simple method that draws a rectangle
+     * @param x x coordinate for the top left corner of the rectangle
+     * @param y y coordinate for the top left corner of the rectangle
+     * @param w width of the rectangle
+     * @param h height of the rectangle
+     * @param color color of the rectangle's fill
+     */
     drawSquare(x, y, w, h, color) {
         this._ctx.beginPath();
         this._ctx.fillStyle = color;
@@ -277,6 +285,11 @@ class EphEffect {
         this._ctx.strokeStyle = 'gray';
         this._ctx.stroke();
     }
+    /**
+     * Called whenever the mouse moves within the canvas.
+     * Gets the mouse position, calls the modify methods if the booleans satisfy them.
+     * @param event the mousemove event
+     */
     onMouseMove(event) {
         this.getMousePosition();
         if (this._isDragging && this._isSelected) {
@@ -289,13 +302,27 @@ class EphEffect {
             this.modifyChangeDims(this.w < 10, this.h < 10);
         }
     }
+    /**
+     * Called whenever the mouse clicks inside the canvas.
+     * Modifies the state depending on whether the guides contain the mouse or the bounding rect contains the mouse.
+     * @param event the mousedown event
+     */
     onMouseDown(event) {
         this.modifyState(this.guideContains(this._mouse.x, this._mouse.y), this.contains(this._mouse.x, this._mouse.y));
     }
+    /**
+     * Called whenever the mouse unclicks.
+     * Calls modifyReset to reset dragging and resizing booleans among others.
+     * @param event the mouseup event
+     */
     onMouseUp(event) {
-        //console.log("I'm an ellipse!");
         this.modifyReset();
     }
+    /**
+     * Called whenever a key is pressed down
+     * Toggles the isSelectingMultiple boolean if the key pressed is the shift key
+     * @param event the keydown event
+     */
     onShiftDown(event) {
         if (event.keyCode == "16") { //shift keycode
             this._isSelectingMultiple = true;
@@ -310,11 +337,24 @@ class EphEffect {
         }
     }
     /* Modification functions */
+    /**
+     * Changes the x and y coordinates of the object in order to drag the object.
+     */
     modifyDrag() {
         //console.log("ephangle dragoffx: " + this._dragoffx);
         this._dims.x.eval(this._context).val = this._mouse.x - this._dragoffx;
         this._dims.y.eval(this._context).val = this._mouse.y - this._dragoffy;
     }
+    /**
+     * Changes the size of the object when called (when a corner guide is clicked and dragged).
+     *
+     * If any of width or height is too small, it sets them equal to 10 and the other equal to
+     * 10 divided or multiplied by the ratio of width/height to keep it the same.
+     *
+     * The work of changing the size is done by calling the helper method modifyResizeHelper.
+     * @param widthTooSmall true if the width dimension is < 10
+     * @param heightTooSmall true if the height dimension is < 10
+     */
     modifyResize(widthTooSmall, heightTooSmall) {
         if (widthTooSmall) {
             this._dims.width.eval(this._context).val = 10;
@@ -341,6 +381,15 @@ class EphEffect {
             this.modifyResizeHelper(newDistance);
         }
     }
+    /**
+     * Does the work of changing the size of the object.
+     *
+     * Since the rectangle originates from the top left corner and not the center,
+     * it changes the x and y coordinates as well if guides 1, 2, or 4 are selected
+     *
+     * @param newDistance the distance between the mouse and the location opposite to it
+     * (if top right guide is clicked, the distance between that and the bottom left guide is newDistance)
+     */
     modifyResizeHelper(newDistance) {
         if (this.w > 10 && this.h > 10) {
             switch (this._corner) {
@@ -362,6 +411,13 @@ class EphEffect {
         this._eph.height = new NumberNode_1.NumberNode(Math.round(this.h));
         this._initDistance = newDistance;
     }
+    /**
+     * Changes the dimensions of the object when called.
+     * If any of width or height is too small, it sets them equal to 10.
+     * Calls modifyChangeDimsHelper to actually do the work
+     * @param widthTooSmall true if the width dimension is < 10
+     * @param heightTooSmall true if the height dimension is < 10
+     */
     modifyChangeDims(widthTooSmall, heightTooSmall) {
         let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
         if (widthTooSmall) {
@@ -382,6 +438,12 @@ class EphEffect {
             this.modifyChangeDimsHelper();
         }
     }
+    /**
+     * Does the work of changing the size of the object.
+     *
+     * Since the rectangle originates from the top left corner and not the center,
+     * it changes the x and y coordinates as well if guides 5 or 8 are selected
+     */
     modifyChangeDimsHelper() {
         let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
         switch (this._corner) {
@@ -418,7 +480,8 @@ class EphEffect {
         }
     }
     /**
-     *
+     * Toggles all of the private booleans depending on the mouse position when called (onMouseDown)
+     * e.g. if the mouse is within the bounding rectangle when this is called, isSelected = true
      * @param guideContains
      * @param contains
      */
@@ -516,6 +579,9 @@ class EphEffect {
             this._isDragging = false;
         }
     }
+    /**
+     * Resets all of the private booleans to false (like dragging, resizing, etc) when the mouse is released
+     */
     modifyReset() {
         if (this._isDragging && this._isSelected) {
             this._isDragging = false;
@@ -535,10 +601,17 @@ class EphEffect {
         this._isChangingDims = false;
         this._corner = 0;
     }
+    /**
+     * Gets the current x and y coordinates of the mouse
+     */
     getMousePosition() {
         this._mouse.x = getMousePos(this._canvas, event).x;
         this._mouse.y = getMousePos(this._canvas, event).y;
     }
+    /**
+     * Sets isDragging, isResizing, isChangingDims, and isSelected to false if the mouse clicks outside of the canvas
+     * @param event the mousedown event
+     */
     isMouseOutside(event) {
         let mouseX = event.clientX;
         let mouseY = event.clientY;
@@ -550,15 +623,28 @@ class EphEffect {
             this._corner = 0;
         }
     }
+    /**
+     * Logs an eph paint event
+     */
     logPaint() {
         return new PaintEvent_1.PaintEvent("eph", this.x, this.y);
     }
+    /**
+     * Logs an eph resize event
+     */
     logResize() {
         return new ResizeEvent_1.ResizeEvent("eph with ID " + this.getID().toString(), Math.round(this._width1 * 100) / 100, Math.round(this._height1 * 100) / 100, Math.round(this.w * 100) / 100, Math.round(this.h * 100) / 100);
     }
+    /**
+     * Logs an eph click event
+     */
     logClick() {
         return new ClickEvent_1.ClickEvent("eph with ID " + this.getID().toString(), this.x, this.y);
     }
+    /**
+     * Initializes and assigns an ID to an object
+     * @param id The ID to be assigned
+     */
     initID(id) {
         this.idObj = { _id: id };
     }
@@ -568,52 +654,98 @@ class EphEffect {
     updateAST() {
         throw new Error("Not implemented");
     }
+    /**
+     * Returns the x position of the eph
+     */
     get x() {
         return this._dims.x.eval(this._context).val;
     }
+    /**
+     * Returns the y position of the eph
+     */
     get y() {
         return this._dims.y.eval(this._context).val;
     }
+    /**
+     * Returns the width of the eph
+     */
     get w() {
         return this._dims.width.eval(this._context).val;
     }
+    /**
+     * Returns the height of the eph
+     */
     get h() {
         return this._dims.height.eval(this._context).val;
     }
+    /**
+     * Returns the Dimensions object
+     */
     get dims() {
         return this._dims;
     }
+    /**
+     * Returns whether or not the eph is selected
+     */
     get selected() {
         return this._isSelected;
     }
+    /**
+     * Returns the image
+     */
     get image() {
         return this._ephImg;
     }
+    /**
+     * Returns the ID of the eph
+     */
     getID() {
         return this.idObj._id;
     }
+    /**
+     * Returns whether or not the eph has just been dragged
+     */
     getJustDragged() {
         return this._justDragged;
     }
+    /**
+     * Sets whether or not the eph has just been dragged
+     * @param val The value to be assigned
+     */
     setJustDragged(val) {
         this._justDragged = val;
     }
+    /**
+     * Returns whether or not the eph is dragging
+     */
     get isDragging() {
         return this._isDragging;
     }
+    /**
+     * Assembles a string for selection events
+     */
     toSelString() {
         return " eph with ID " + this.getID().toString() + " at " + this.x + ", " + this.y;
     }
+    /**
+    * Assembles a string for drag events
+    */
     toDragString() {
         return ("eph with ID " + this.getID().toString() + " from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
     }
+    /**
+     * Assembles a string for ID assignment events
+     */
     toIDString() {
         return (this.idObj._id.toString() + " to eph at " + this.x + ", " + this.y);
     }
 }
 exports.EphEffect = EphEffect;
-//allows us to get the mouse position in relation to the canvas!
-//see mousemove event listener
+/**
+ * Gets the mouse x and y coordinates in relation to the canvas
+ * @param canvas the canvas object
+ * @param event the mousemove event
+ */
 function getMousePos(canvas, event) {
     let eph = canvas.getBoundingClientRect();
     return {
@@ -621,7 +753,13 @@ function getMousePos(canvas, event) {
         y: event.clientY - eph.top
     };
 }
-//computes the distance between two points
+/**
+ * Computes the distance between two points
+ * @param x1 x coordinate of first point
+ * @param y1 y coordinate of first point
+ * @param x2 x coordinate of second point
+ * @param y2 y coordinate of second point
+ */
 function distance(x1, y1, x2, y2) {
     return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
 }

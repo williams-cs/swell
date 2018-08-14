@@ -339,7 +339,6 @@ export class RectangleEffect implements Effect<RectangleNode> {
      * @param event the mouseup event
      */
     onMouseUp(event: any) {
-        //console.log("I'm an ellipse!");
         this.modifyReset();
     }
 
@@ -700,25 +699,25 @@ export class RectangleEffect implements Effect<RectangleNode> {
     }
 
     /**
-     * Returns the x position of the ellipse
+     * Returns the x position of the rect
      */
     get x(): number {
         return this._dims.x.eval(this._context).val;
     }
     /**
-     * Returns the y position of the ellipse
+     * Returns the y position of the rect
      */
     get y(): number {
         return this._dims.y.eval(this._context).val;
     }
     /**
-     * Returns the width of the ellipse
+     * Returns the width of the rect
      */
     get w(): number {
         return this._dims.width.eval(this._context).val;
     }
     /**
-     * Returns the height of the ellipse
+     * Returns the height of the rect
      */
     get h(): number {
         return this._dims.height.eval(this._context).val;
@@ -732,27 +731,27 @@ export class RectangleEffect implements Effect<RectangleNode> {
     }
     
     /**
-     * Returns whether or not the ellipse is selected
+     * Returns whether or not the rect is selected
      */
     get selected(): boolean {
         return this._isSelected;
     }
 
     /**
-     * Returns the ID of the ellipse
+     * Returns the ID of the rect
      */
     getID(): number {
         return this.idObj._id;
     }
 
     /**
-     * Returns whether or not the ellipse has just been dragged
+     * Returns whether or not the rect has just been dragged
      */
     getJustDragged(): boolean {
         return this._justDragged;
     }
     /**
-     * Sets whether or not the ellipse has just been dragged
+     * Sets whether or not the rect has just been dragged
      * @param val The value to be assigned
      */
     setJustDragged(val: boolean) {
@@ -760,7 +759,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
     }
 
     /**
-     * Returns whether or not the ellipse is dragging
+     * Returns whether or not the rect is dragging
      */
     get isDragging(): boolean {
         return this._isDragging;
@@ -789,7 +788,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
 }
 
 /**
- * Get's the mouse x and y coordinates in relation to the canvas
+ * Gets the mouse x and y coordinates in relation to the canvas
  * @param canvas the canvas object
  * @param event the mousemove event
  */

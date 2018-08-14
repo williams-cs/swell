@@ -189,19 +189,19 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
     initID(id: number): void;
     ast(): Expression<RectangleNode>;
     /**
-     * Returns the x position of the ellipse
+     * Returns the x position of the rect
      */
     readonly x: number;
     /**
-     * Returns the y position of the ellipse
+     * Returns the y position of the rect
      */
     readonly y: number;
     /**
-     * Returns the width of the ellipse
+     * Returns the width of the rect
      */
     readonly w: number;
     /**
-     * Returns the height of the ellipse
+     * Returns the height of the rect
      */
     readonly h: number;
     /**
@@ -209,24 +209,24 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
      */
     readonly dims: Dimensions;
     /**
-     * Returns whether or not the ellipse is selected
+     * Returns whether or not the rect is selected
      */
     readonly selected: boolean;
     /**
-     * Returns the ID of the ellipse
+     * Returns the ID of the rect
      */
     getID(): number;
     /**
-     * Returns whether or not the ellipse has just been dragged
+     * Returns whether or not the rect has just been dragged
      */
     getJustDragged(): boolean;
     /**
-     * Sets whether or not the ellipse has just been dragged
+     * Sets whether or not the rect has just been dragged
      * @param val The value to be assigned
      */
     setJustDragged(val: boolean): void;
     /**
-     * Returns whether or not the ellipse is dragging
+     * Returns whether or not the rect is dragging
      */
     readonly isDragging: boolean;
     /**
