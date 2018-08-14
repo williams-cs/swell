@@ -7,6 +7,7 @@ import { Dimensions } from "../structural/Dimensions";
 import { LogEvent } from "../logging/LogEvent";
 export declare class EphEffect implements Effect<EphNode> {
     private _eph;
+    private _ephImg;
     private _dims;
     private _ctx;
     private _canvas;
@@ -107,6 +108,7 @@ export declare class EphEffect implements Effect<EphNode> {
     readonly h: number;
     readonly dims: Dimensions;
     readonly selected: boolean;
+    readonly image: HTMLImageElement;
     getID(): number;
     getJustDragged(): boolean;
     setJustDragged(val: boolean): void;

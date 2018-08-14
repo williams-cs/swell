@@ -13,6 +13,7 @@ import { ClickEvent } from "../logging/ClickEvent";
 export class EphEffect implements Effect<EphNode> {
 
     private _eph: EphNode;
+    private _ephImg: HTMLImageElement;
     private _dims: Dimensions;
     private _ctx: CanvasRenderingContext2D;
     private _canvas: HTMLCanvasElement;
@@ -65,6 +66,8 @@ export class EphEffect implements Effect<EphNode> {
             this._context = context;
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
+            this._ephImg = new Image();
+            this._ephImg.src = '../../pics/demoncow.png';
             this._ratio = this.w / this.h;
             this.update();
         }
@@ -81,11 +84,11 @@ export class EphEffect implements Effect<EphNode> {
         let y = this.y;
         let width = this.w;
         let height = this.h;
-        this._ctx.beginPath();
-        //this._ctx.rect(x, y, width, height);
-        //this._ctx.createElement("img");
-        this._ctx.strokeStyle = "black";
-        this._ctx.stroke();
+        //this._ephImg.onload = function(){
+        this._ctx.drawImage(this._ephImg, this.x, this.y)
+        this._ephImg.width = width;
+        this._ephImg.height = height;
+        //}
         if(this._isSelected) {
             this.drawGuides(x, y, width, height, this._corner);
         }
@@ -636,6 +639,10 @@ export class EphEffect implements Effect<EphNode> {
 
     get selected(): boolean {
         return this._isSelected;
+    }
+
+    get image(): HTMLImageElement {
+        return this._ephImg;
     }
 
     getID(): number{

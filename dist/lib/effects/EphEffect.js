@@ -38,6 +38,8 @@ class EphEffect {
             this._context = context;
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
+            this._ephImg = new Image();
+            this._ephImg.src = '../../pics/demoncow.png';
             this._ratio = this.w / this.h;
             this.update();
         }
@@ -53,11 +55,11 @@ class EphEffect {
         let y = this.y;
         let width = this.w;
         let height = this.h;
-        this._ctx.beginPath();
-        //this._ctx.rect(x, y, width, height);
-        //this._ctx.createElement("img");
-        this._ctx.strokeStyle = "black";
-        this._ctx.stroke();
+        //this._ephImg.onload = function(){
+        this._ctx.drawImage(this._ephImg, this.x, this.y);
+        this._ephImg.width = width;
+        this._ephImg.height = height;
+        //}
         if (this._isSelected) {
             this.drawGuides(x, y, width, height, this._corner);
         }
@@ -575,6 +577,9 @@ class EphEffect {
     }
     get selected() {
         return this._isSelected;
+    }
+    get image() {
+        return this._ephImg;
     }
     getID() {
         return this.idObj._id;
