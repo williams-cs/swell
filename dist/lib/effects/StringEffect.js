@@ -477,6 +477,9 @@ class StringEffect {
     set canvas(canvas) {
         this._canvas = canvas;
     }
+    ast() {
+        throw new Error("Method not implemented.");
+    }
     /**
      * Returns the x position of the ellipse
      */

@@ -548,6 +548,10 @@ export class StringEffect implements Effect<StringNode> {
         this._canvas = canvas;
     }
 
+    ast(): Expression<StringNode> {
+        throw new Error("Method not implemented.");
+    }
+
     /**
      * Returns the x position of the ellipse
      */

@@ -619,6 +619,10 @@ export class EllipseEffect implements Effect<EllipseNode> {
         this.idObj = {_id: id};
     }
 
+    ast(): Expression<EllipseNode> {
+        throw new Error("Method not implemented.");
+    }
+    
     /**
      * Returns the x position of the ellipse
      */

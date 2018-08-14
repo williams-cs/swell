@@ -168,6 +168,7 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
      * @param id The ID to be assigned
      */
     initID(id: number): void;
+    ast(): Expression<EllipseNode>;
     /**
      * Returns the x position of the ellipse
      */

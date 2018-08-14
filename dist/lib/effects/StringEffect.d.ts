@@ -176,6 +176,7 @@ export declare class StringEffect implements Effect<StringNode> {
     * @param canvas The canvas to be assigned
     */
     canvas: HTMLCanvasElement;
+    ast(): Expression<StringNode>;
     /**
      * Returns the x position of the ellipse
      */
