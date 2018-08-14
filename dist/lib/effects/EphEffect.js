@@ -23,6 +23,14 @@ class EphEffect {
         };
         this._eph = eph;
     }
+    /**
+     * The method that is called when evaluating nodes (StringNode, EllipseNode, etc)
+     * This method assigns all params to private variables and draws the initial object to the canvas
+     * by calling update()
+     * @param context The parent Scope that contains the canvas among other things
+     * @param dims The object's dimensions including x and y position
+     * @param ast Unnecessary now, used to be the parent AST
+     */
     draw(context, dims, ast) {
         if (context.canvas.isDefined()) {
             this._dims = dims;
@@ -37,6 +45,9 @@ class EphEffect {
         context.effects.push(this);
         this.addEventListeners();
     }
+    /**
+     * This method is called in order to draw and redraw the object when manipulations are made
+     */
     update() {
         let x = this.x;
         let y = this.y;
@@ -51,6 +62,9 @@ class EphEffect {
             this.drawGuides(x, y, width, height, this._corner);
         }
     }
+    /**
+     * Adds all the necessary event listeners in one fell swoop
+     */
     addEventListeners() {
         this._canvas.addEventListener('mousemove', this.onMouseMove.bind(this));
         this._canvas.addEventListener('mousedown', this.onMouseDown.bind(this));
@@ -61,6 +75,11 @@ class EphEffect {
         //makes it so that double clicking doesn't select text on the page
         this._canvas.addEventListener('selectstart', function (e) { e.preventDefault(); return false; }, false);
     }
+    /**
+     * Returns true if the mouse is inside of the object's bounding rectangle, false if otherwise
+     * @param mx the mouse x coordinate
+     * @param my the mouse y coordinate
+     */
     contains(mx, my) {
         let x = this.x;
         let y = this.y;
@@ -72,6 +91,13 @@ class EphEffect {
         else
             return false;
     }
+    /**
+     * Returns a number > 0 if the mouse is inside one of the corner/side guides, returns 0 if not
+     * The corner guides are numbered 1-4 with 1 being the top left, 2 being the top right, and so on.
+     * The middle guides are numbered 5-8, with 5 being the top middle, 6 being the right middle, and so on.
+     * @param mx the mouse x coordinate
+     * @param my the mouse y coordinate
+     */
     guideContains(mx, my) {
         let x = this.x;
         let y = this.y;
@@ -120,7 +146,15 @@ class EphEffect {
         else
             return 0;
     }
-    //draws the guides for different objects
+    /**
+     * Draws the bounding rectangle and guides for the object when the object is selected
+     * If one of the guides is selected, it colors that guide blue
+     * @param x the x coordinate for where the rectangle will originate from (top left corner)
+     * @param y the y coordinate for where the rectangle will originate from (top left corner)
+     * @param w the width of the bounding rectangle
+     * @param h the height of the bounding rectangle
+     * @param corner the number of the corner to be colored blue (if any at all, if 0, all are white)
+     */
     drawGuides(x, y, w, h, corner) {
         this._ctx.beginPath();
         this._ctx.rect(x, y, w, h);
