@@ -3,7 +3,6 @@ import { Scope } from '../structural/Scope';
 import { NumberNode } from '../prims/NumberNode';
 import { Dimensions } from '../structural/Dimensions';
 export declare class EphNode implements Expression<EphNode> {
-    private _image;
     private _width;
     private _height;
     private _newLine;
@@ -14,7 +13,7 @@ export declare class EphNode implements Expression<EphNode> {
      * @param height The height of the EphNode
      * @param ws Preceding whitespace
      */
-    constructor(image: HTMLImageElement, width: Expression<NumberNode>, height: Expression<NumberNode>, ws?: string);
+    constructor(width: Expression<NumberNode>, height: Expression<NumberNode>, ws?: string);
     /**
      * Returns this RectangleNode
      * @param context The current program context
@@ -40,7 +39,6 @@ export declare class EphNode implements Expression<EphNode> {
     /**
      * Returns the image associated with the EphNode
      */
-    readonly image: HTMLImageElement;
     /**
      * Returns the width of the EphNode
      */

@@ -6,7 +6,7 @@ import { Dimensions } from '../structural/Dimensions';
 import { EphEffect } from '../effects/EphEffect';
 
 export class EphNode implements Expression<EphNode> {
-    private _image: HTMLImageElement;
+    //private _image: HTMLImageElement;
     private _width: Expression<NumberNode>;
     private _height: Expression<NumberNode>; 
     private _newLine: boolean = false;
@@ -18,8 +18,8 @@ export class EphNode implements Expression<EphNode> {
      * @param height The height of the EphNode
      * @param ws Preceding whitespace
      */
-    constructor(image: HTMLImageElement, width: Expression<NumberNode>, height: Expression<NumberNode>, ws?: string){
-        this._image = image;
+    constructor(width: Expression<NumberNode>, height: Expression<NumberNode>, ws?: string){
+        //this._image = image;
         this._width = width;
         this._height = height;
         this._ws = ws;
@@ -72,9 +72,9 @@ export class EphNode implements Expression<EphNode> {
     /**
      * Returns the image associated with the EphNode
      */
-    get image(): HTMLImageElement{
-        return this._image;
-    }
+    // get image(): HTMLImageElement{
+    //     return this._image;
+    // }
 
     /**
      * Returns the width of the EphNode

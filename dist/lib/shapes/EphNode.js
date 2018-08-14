@@ -9,9 +9,9 @@ class EphNode {
      * @param height The height of the EphNode
      * @param ws Preceding whitespace
      */
-    constructor(image, width, height, ws) {
+    constructor(width, height, ws) {
         this._newLine = false;
-        this._image = image;
+        //this._image = image;
         this._width = width;
         this._height = height;
         this._ws = ws;
@@ -58,9 +58,9 @@ class EphNode {
     /**
      * Returns the image associated with the EphNode
      */
-    get image() {
-        return this._image;
-    }
+    // get image(): HTMLImageElement{
+    //     return this._image;
+    // }
     /**
      * Returns the width of the EphNode
      */
