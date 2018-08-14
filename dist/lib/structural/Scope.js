@@ -9,7 +9,7 @@ class Scope {
      * @param myState The scope state
      * @param eventLog The log of events that occurred
      */
-    constructor(parent, effects, myState, eventLog) {
+    constructor(parent, effects, eventLog) {
         this._retValID = space_lift_1.None;
         this._canvas = space_lift_1.None;
         this._eventLog = []; // The event log
@@ -19,7 +19,6 @@ class Scope {
         this._varBindings = new Map();
         this._parent = parent;
         this._effects = effects || null;
-        this._myState = myState || null;
         this._eventLog = eventLog;
         if (this._parent != null && this._parent._hadFunEval)
             this._hadFunEval = true; // copy function eval flag from parent
@@ -28,7 +27,7 @@ class Scope {
      * Copies information from this Scope into another Scope and returns the new Scope
      */
     copy() {
-        let s = new Scope(this._parent, this._effects, this._myState, this._eventLog);
+        let s = new Scope(this._parent, this._effects, this._eventLog);
         s.varBindings = new Map(this._varBindings);
         s.canvas = this.canvas;
         s.eventLog = this.eventLog;
@@ -137,18 +136,6 @@ class Scope {
      */
     set effects(arr) {
         this._effects = arr;
-    }
-    /**
-     * Returns the Scope state
-     */
-    get myState() {
-        return this._myState;
-    }
-    /**
-     * Sets the Scope state
-     */
-    set myState(state) {
-        this._myState = state;
     }
     /**
      * Returns the event log

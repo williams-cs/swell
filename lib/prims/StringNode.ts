@@ -3,7 +3,8 @@ import {Scope} from '../structural/Scope';
 import { StringEffect } from '../effects/StringEffect';
 import { Dimensions } from '../structural/Dimensions';
 
-export class StringNode implements Expression<StringNode>{
+export class StringNode implements Expression<StringNode> {
+
     private _str: string;
     private _newLine: boolean = false;
     private _ws: string;

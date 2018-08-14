@@ -7,7 +7,6 @@ export declare class Scope {
     private _retValID;
     private _canvas;
     private _effects;
-    private _myState;
     private _mulSelArray;
     private _eventLog;
     private _hadFunEval;
@@ -19,14 +18,7 @@ export declare class Scope {
      * @param myState The scope state
      * @param eventLog The log of events that occurred
      */
-    constructor(parent: Scope, effects?: Effect<any>[], myState?: {
-        dragoffx: number;
-        dragoffy: number;
-        initDistance: number;
-        selection: any;
-        dragging: boolean;
-        resizing: boolean;
-    }, eventLog?: LogEvent<any>[]);
+    constructor(parent: Scope, effects?: Effect<any>[], eventLog?: LogEvent<any>[]);
     /**
      * Copies information from this Scope into another Scope and returns the new Scope
      */
@@ -84,13 +76,6 @@ export declare class Scope {
     * Sets the effects array
     */
     effects: Effect<any>[];
-    /**
-     * Returns the Scope state
-     */
-    /**
-    * Sets the Scope state
-    */
-    myState: any;
     /**
      * Returns the event log
      */
