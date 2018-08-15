@@ -106,7 +106,22 @@
 <a name='L58'></a><a href='#L58'>58</a>
 <a name='L59'></a><a href='#L59'>59</a>
 <a name='L60'></a><a href='#L60'>60</a>
-<a name='L61'></a><a href='#L61'>61</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -166,11 +181,22 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { EllipseEffect } from './lib/effects/EllipseEffect';
-&nbsp;
-//import { ListNode } from './lib/lists/ListNode';
-&nbsp;
-/* CORE */
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/* CORE */
 export {Expression} from './lib/Expression';
 export {Scope} from './lib/structural/Scope';
 &nbsp;
@@ -190,6 +216,8 @@ export {And} from './lib/logic/And';
 export {Or} from './lib/logic/Or';
 export {Equals} from './lib/logic/Equals';
 export {NotEqual} from './lib/logic/NotEqual';
+export {Increment} from './lib/binops/Increment';
+export {Decrement} from './lib/binops/Decrement';
 &nbsp;
 /* UNARY OPS */
 export {UnaryOperation} from './lib/unops/UnaryOperation';
@@ -201,6 +229,7 @@ export {ListNode} from './lib/lists/ListNode';
 export {NumberNode} from './lib/prims/NumberNode';
 export {StringNode} from './lib/prims/StringNode';
 export {BooleanNode} from './lib/prims/BooleanNode';
+export {NOP} from './lib/prims/NOP';
 &nbsp;
 /* VARIABLES */
 export {VariableNode} from './lib/vars/VariableNode';
@@ -215,24 +244,40 @@ export {ForNode} from './lib/loops/ForNode';
 &nbsp;
 /* BUILTIN FUNCTIONS */
 export {ColorNode} from './lib/shapes/ColorNode';
-export {Ellipse} from './lib/shapes/Ellipse';
 export {EllipseNode} from './lib/shapes/EllipseNode';
-export {Shape} from './lib/shapes/Shape';
+export {RectangleNode} from './lib/shapes/RectangleNode';
+export {EphNode} from './lib/shapes/EphNode';
 export {PrintNode} from './lib/structural/PrintNode';
 export {Return} from './lib/structural/Return';
 export {ReturnError} from './lib/structural/ReturnError';
 &nbsp;
-/* Effects */
+/* EFFECTS */
 export {Effect} from './lib/effects/Effect';
 export {EllipseEffect} from './lib/effects/EllipseEffect';
 export {NumberEffect} from './lib/effects/NumberEffect';
-export {StringEffect} from './lib/effects/StringEffect';</pre></td></tr>
+export {StringEffect} from './lib/effects/StringEffect';
+export {Dimensions} from './lib/structural/Dimensions';
+export {RectangleEffect} from './lib/effects/RectangleEffect';
+export {EphEffect} from './lib/effects/EphEffect';
+&nbsp;
+/* EVENTS */
+export {LogEvent} from './lib/logging/LogEvent';
+export {ClearEvent} from './lib/logging/ClearEvent';
+export {DragEvent} from './lib/logging/DragEvent';
+export {PaintEvent} from './lib/logging/PaintEvent';
+export {ResizeEvent} from './lib/logging/ResizeEvent';
+export {SelectEvent} from './lib/logging/SelectEvent';
+export {IDEvent} from './lib/logging/IDEvent';
+&nbsp;
+/* MODULES */
+export {CircleMod} from './lib/modules/CircleMod';
+export {SnowmanMod} from './lib/modules/SnowmanMod';</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Jul 16 2018 15:42:54 GMT-0400 (EDT)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Aug 15 2018 14:50:10 GMT-0400 (EDT)
 </div>
 </div>
 <script src="../prettify.js"></script>

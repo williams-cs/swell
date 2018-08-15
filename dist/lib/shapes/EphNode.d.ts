@@ -15,12 +15,12 @@ export declare class EphNode implements Expression<EphNode> {
      */
     constructor(width: Expression<NumberNode>, height: Expression<NumberNode>, ws?: string);
     /**
-     * Returns this RectangleNode
+     * Returns this EphNode
      * @param context The current program context
      */
     eval(context: Scope): EphNode;
     /**
-     * Draws the rectangle using RectangleEffect
+     * Draws the rectangle using EphEffect
      * @param context The current program context
      * @param dims The rectangle dimensions
      * @param ast The program AST
@@ -28,7 +28,7 @@ export declare class EphNode implements Expression<EphNode> {
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
     /**
      * Returns whether this EphNode equals another (if their widths and heights are equal)
-     * @param right The right side of the equality (must be a RectangleNode)
+     * @param right The right side of the equality (must be an EphNode)
      */
     equalsVal(right: Expression<any>): boolean;
     move(): void;
@@ -36,9 +36,6 @@ export declare class EphNode implements Expression<EphNode> {
      * Returns a string representation of the EphNode
      */
     toString(): string;
-    /**
-     * Returns the image associated with the EphNode
-     */
     /**
      * Returns the width of the EphNode
      */

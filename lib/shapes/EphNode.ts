@@ -29,7 +29,7 @@ export class EphNode implements Expression<EphNode> {
     }
 
     /**
-     * Returns this RectangleNode
+     * Returns this EphNode
      * @param context The current program context
      */
     eval(context: Scope): EphNode {
@@ -37,7 +37,7 @@ export class EphNode implements Expression<EphNode> {
     }
 
     /**
-     * Draws the rectangle using RectangleEffect
+     * Draws the rectangle using EphEffect
      * @param context The current program context
      * @param dims The rectangle dimensions
      * @param ast The program AST
@@ -51,7 +51,7 @@ export class EphNode implements Expression<EphNode> {
 
     /**
      * Returns whether this EphNode equals another (if their widths and heights are equal)
-     * @param right The right side of the equality (must be a RectangleNode)
+     * @param right The right side of the equality (must be an EphNode)
      */
     equalsVal(right: Expression<any>): boolean{
         if(right instanceof EphNode){
@@ -68,13 +68,6 @@ export class EphNode implements Expression<EphNode> {
     toString(): string {
         return this._ws + "eph(" + this._width.toString() + ", " + this._height.toString() + ")";
     }
-
-    /**
-     * Returns the image associated with the EphNode
-     */
-    // get image(): HTMLImageElement{
-    //     return this._image;
-    // }
 
     /**
      * Returns the width of the EphNode

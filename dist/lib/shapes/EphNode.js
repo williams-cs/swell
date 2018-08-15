@@ -20,14 +20,14 @@ class EphNode {
         }
     }
     /**
-     * Returns this RectangleNode
+     * Returns this EphNode
      * @param context The current program context
      */
     eval(context) {
         return this;
     }
     /**
-     * Draws the rectangle using RectangleEffect
+     * Draws the rectangle using EphEffect
      * @param context The current program context
      * @param dims The rectangle dimensions
      * @param ast The program AST
@@ -40,7 +40,7 @@ class EphNode {
     }
     /**
      * Returns whether this EphNode equals another (if their widths and heights are equal)
-     * @param right The right side of the equality (must be a RectangleNode)
+     * @param right The right side of the equality (must be an EphNode)
      */
     equalsVal(right) {
         if (right instanceof EphNode) {
@@ -55,12 +55,6 @@ class EphNode {
     toString() {
         return this._ws + "eph(" + this._width.toString() + ", " + this._height.toString() + ")";
     }
-    /**
-     * Returns the image associated with the EphNode
-     */
-    // get image(): HTMLImageElement{
-    //     return this._image;
-    // }
     /**
      * Returns the width of the EphNode
      */
