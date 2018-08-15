@@ -41,7 +41,7 @@ export class Conditional implements Expression<any>{
      * Returns a string representation of the conditional statement
      */
     toString(): string {
-        let res = 'if(' +this._test.toString() + ") {\n " + this._trueBranch.toString() + "}";
+        let res = 'if(' + this._test.toString() + ") {\n " + this._trueBranch.toString() + "}";
         if(this._falseBranch !== undefined){
             res += '\nelse {\n ' + this._falseBranch.toString() + '}'
         }

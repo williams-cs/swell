@@ -32,7 +32,7 @@ class Not {
      * Returns a string representation of the operation
      */
     toString() {
-        return this._ws + "not" + this._expr.toString();
+        return this._ws + "not " + this._expr.toString();
     }
     /**
      * Returns whether the element is terminated by a newline (true) or semicolon (false)

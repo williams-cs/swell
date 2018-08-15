@@ -37,7 +37,7 @@ export class Not implements Expression<BooleanNode>{
      * Returns a string representation of the operation
      */
     toString(): string {
-        return this._ws + "not" + this._expr.toString();
+        return this._ws + "not " + this._expr.toString();
     }
 
     /**
