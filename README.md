@@ -1,14 +1,21 @@
 [Link to documentation](https://williams-cs.github.io/swell/)
-## about
+## About
 This is an evaluator for SWELL. It is responsible for managing the program AST and provides a link between the parser and UI that helps manage ProDirect Manipulation. 
 
-## building
-Type `make` in the terminal and hit enter. 'make' will install the npm modules if necessary, remove the compiled files, recompile, and generate documentation.
+## Building
+Type `make` in the terminal and hit enter. `make` will, if necessary, install the npm modules, remove the compiled files, recompile, and generate documentation.
+
 `make clean` will remove all the compiled files, documentation, and npm modules. If you're having any sort of issues, run this and then `make`. 
+
 If you're still having issues and you're using VSC, close VSC, `make clean`, then `make`. 
 If you're still having issues, Google.
 
-## modules
+## Testing
+`make test` will compile and run all tests. Currently, two tests (both called *A draw test should evaluate to an error*) should evaluate to errors. All others should pass.
+
+Note that module and UI tests must be written in the UI test folder. The UI can be tested manually or with Selenium Webdriver. To use the debugger, Webdriver is best... if you can get it to work.
+
+## Modules
 **How to Build a Module**
 1. Come up with a goal: draw a circle, write text, make a scene, etc, and a clever name for the module.
 2. Figure out how to check if these goals are complete. This will be the `checkGoal()` method in the module. 

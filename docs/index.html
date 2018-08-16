@@ -63,14 +63,17 @@
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
 				<p><a href="https://williams-cs.github.io/swell/">Link to documentation</a></p>
-				<h2 id="about">about</h2>
+				<h2 id="about">About</h2>
 				<p>This is an evaluator for SWELL. It is responsible for managing the program AST and provides a link between the parser and UI that helps manage ProDirect Manipulation. </p>
-				<h2 id="building">building</h2>
-				<p>Type <code>make</code> in the terminal and hit enter. &#39;make&#39; will install the npm modules if necessary, remove the compiled files, recompile, and generate documentation.
-					<code>make clean</code> will remove all the compiled files, documentation, and npm modules. If you&#39;re having any sort of issues, run this and then <code>make</code>.
-					If you&#39;re still having issues and you&#39;re using VSC, close VSC, <code>make clean</code>, then <code>make</code>.
+				<h2 id="building">Building</h2>
+				<p>Type <code>make</code> in the terminal and hit enter. <code>make</code> will, if necessary, install the npm modules, remove the compiled files, recompile, and generate documentation.</p>
+				<p><code>make clean</code> will remove all the compiled files, documentation, and npm modules. If you&#39;re having any sort of issues, run this and then <code>make</code>. </p>
+				<p>If you&#39;re still having issues and you&#39;re using VSC, close VSC, <code>make clean</code>, then <code>make</code>.
 				If you&#39;re still having issues, Google.</p>
-				<h2 id="modules">modules</h2>
+				<h2 id="testing">Testing</h2>
+				<p><code>make test</code> will compile and run all tests. Currently, two tests (both called <em>A draw test should evaluate to an error</em>) should evaluate to errors. All others should pass.</p>
+				<p>Note that module and UI tests must be written in the UI test folder. The UI can be tested manually or with Selenium Webdriver. To use the debugger, Webdriver is best... if you can get it to work.</p>
+				<h2 id="modules">Modules</h2>
 				<p><strong>How to Build a Module</strong></p>
 				<ol>
 					<li>Come up with a goal: draw a circle, write text, make a scene, etc, and a clever name for the module.</li>
