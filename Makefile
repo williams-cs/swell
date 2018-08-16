@@ -1,6 +1,7 @@
 build: node_modules
 	rm -rf dist
 	tsc
+	typedoc --out docs
 	
 clean:
 	rm -rf dist

@@ -56,7 +56,7 @@ class FunApp {
             // error was not intended for us; rethrow
             throw e;
         }
-        return fundef.body.eval(child);
+        //return fundef.body.eval(child);
     }
     /**
      * Returns a string representation of the function application

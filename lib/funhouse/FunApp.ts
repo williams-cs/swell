@@ -67,7 +67,7 @@ export class FunApp<T> implements Expression<T>{
             throw e;
         }
 
-        return fundef.body.eval(child);
+        //return fundef.body.eval(child);
     }
 
     /**
