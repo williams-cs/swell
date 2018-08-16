@@ -91,7 +91,7 @@ export class EphEffect implements Effect<EphNode> {
         // this._ephImg.src = './pics/demoncow.png';
         //imgObj.onload = function(){
         //this._ephImg.onload = function(){
-            this._ctx.drawImage(this._ephImg, this.x, this.y, width,height);
+        this._ctx.drawImage(this._ephImg, this.x, this.y, width,height);
             //this._ephImg.onload = function(){
             // this._ephImg.width = width;
             // this._ephImg.height = height;

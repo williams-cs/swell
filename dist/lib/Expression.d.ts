@@ -1,5 +1,9 @@
 import { Scope } from './structural/Scope';
 import { Dimensions } from './structural/Dimensions';
+/**
+ * Expressions are one of the main building blocks of the AST.
+ * Whether a logical or mathematical statement, Expressions generally evaluate to a primitive.
+ */
 export interface Expression<T> {
     /**
      * Interface evaluation method for Expressions

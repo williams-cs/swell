@@ -63,6 +63,29 @@
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
 				<p><a href="https://williams-cs.github.io/swell/">Link to documentation</a></p>
+				<h2 id="about">about</h2>
+				<p>This is an evaluator for SWELL. It is responsible for managing the program AST and provides a link between the parser and UI that helps manage ProDirect Manipulation. </p>
+				<h2 id="building">building</h2>
+				<p>Type <code>make</code> in the terminal and hit enter. &#39;make&#39; will install the npm modules if necessary, remove the compiled files, recompile, and generate documentation.
+					<code>make clean</code> will remove all the compiled files, documentation, and npm modules. If you&#39;re having any sort of issues, run this and then <code>make</code>.
+					If you&#39;re still having issues and you&#39;re using VSC, close VSC, <code>make clean</code>, then <code>make</code>.
+				If you&#39;re still having issues, Google.</p>
+				<h2 id="modules">modules</h2>
+				<p><strong>How to Build a Module</strong></p>
+				<ol>
+					<li>Come up with a goal: draw a circle, write text, make a scene, etc, and a clever name for the module.</li>
+					<li>Figure out how to check if these goals are complete. This will be the <code>checkGoal()</code> method in the module. <ul>
+							<li>Since there&#39;s no way to check what is on the canvas, this will mainly involve regex parsing of the input text, which you can read from the &#39;input&#39; element of the document.</li>
+							<li>You will likely have multiple components to check; each of these will be their own goal boolean</li>
+							<li><code>checkGoal()</code> should be run when the Run button is pressed, but you may need to incorporate a delay, since for the Circle module it verifies it when the button is hit but before it actually paints anything.</li>
+						</ul>
+					</li>
+					<li>Develop instructions and/or starter code.<ul>
+							<li>Currently this shows up in a prompt at the beginning of the module, but if you decide to include starter code you may want to work out how to put it somewhere in the UI so the students can reference it... or print it directly in the input space!</li>
+						</ul>
+					</li>
+					<li><code>checkGoal()</code> is the bulk of the module, but you may want additional helper methods based on how complicated the goal is to check. <a href="./lib/modules/CircleMod.ts">CircleMod</a> can provide a good reference for a basic goal check. </li>
+				</ol>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
