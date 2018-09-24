@@ -15,3 +15,16 @@ All `eval()` methods in other nodes take a `Scope` parameter. `Scope` maintains 
 */lib/effects/*
 
 */lib/logging/*
+
+***Other Notes***
+
+*Option*
+Option is abstract type that provides Some<T> and None. The parser returns an Option type; if the returned value is parseable, a Some<T> is returned where we need to unpack the result using .get() after checking for null value using .isDefined(). If this check returns True, we can unpack the result; if it is false, the result is None.
+
+*Dependencies*
+swell-parser is a parser combinator. Read Hutton & Meijer until page 13.
+space-lift <- swell
+swell <- swell-parser
+pants <- swell-parser
+swell <- swell-ui
+swell-parser <- swell-ui

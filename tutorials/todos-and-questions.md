@@ -3,24 +3,32 @@
 2. Sketch road map for learning modules.
 
 **Week 2: September 17**
+1. ~~Understand how swell, swell-ui and swell-parser fit.~~
+2. Find papers on (i) good intro programming syllabus, (ii) learning analytics. (Tip: Use `Google Scholar: source:` to locate papers from same conference).
+
+**Week 3: September 24**
 1. Fix at least 1 bug.
 2. Write 1 module template.
-3. Understand how swell, swell-ui and swell-parser fit.
-4. Find papers on (i) good intro programming syllabus, (ii) learning analytics.
+3. Continue literature review.
+4. Read up for skill map too.
+
+**End of Semester**
+1. Done with all softwares.
+2. Figure out how to inspect ast tree and debug specific line of SWELL code.  (Use the printing of number as an example.)
 
 **Auxiliary Tasks**
-1. List doesn't seem to work?
 2. `lib/logic/` seems like a bunch of binary and unary operations.
 3. `lib/modules`???
 4. ~~Are `shapes` full-on classes?~~ `shapes` are functions.
 5. Actually, do we have a way to define class?
-6. Need to understand how functions are parsed/evaluated. What is `Return.ts` for??
 7. `Expression.equalsVal(right)`: returns true if the Expression equals the arg Expression (this seems like it could be handled by an 'equal' node?)
 8. What is `retValID` in `Scope.ts`?
 9. How to format links like in F# Cheatsheet?
-10. How to draw a number? (`s = "9"; print(s)`)
 11. What's going on with the different `ExpressionParser`s in `swell-parser`?
-12. PDM doesn't modify actual arguments of a function call.
-13. Seems like we don't need the `var` keyword to declare variables, i.e. `x = 9` is still a valid declaration.
-14. Add in rotation function.
-15. Add in depth parameter.
+14. Add rotation function.
+15. Does loop work?
+16. Named arguments!
+17. Standardized parameters for library functions (good  coding practice).
+18. Search for papers on UIST and PLDI.
+19. Look for papers in learning analytics.
+20. oopsla.
