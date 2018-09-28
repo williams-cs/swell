@@ -1,5 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const StringNode_1 = require("./StringNode");
+const StringEffect_1 = require("../effects/StringEffect");
 //import{Node} from './Node';
 // Nodes representing numbers
 // Should abstract Node class implement Expression?
@@ -32,7 +34,8 @@ class NumberNode {
      * @param ast
      */
     draw(context, dims, ast) {
-        throw new Error("Numbers cannot be drawn directly.");
+        let e = new StringEffect_1.StringEffect(new StringNode_1.StringNode('' + this._val));
+        e.draw(context, dims, ast);
     }
     /**
      * Returns whether this NumberNode equals another NumberNode

@@ -1,6 +1,8 @@
 import {Expression} from '../Expression';
 import {Scope} from '../structural/Scope';
-import { Dimensions } from '../structural/Dimensions';
+import {Dimensions} from '../structural/Dimensions';
+import {StringNode} from './StringNode';
+import {StringEffect} from '../effects/StringEffect';
 //import{Node} from './Node';
 
 // Nodes representing numbers
