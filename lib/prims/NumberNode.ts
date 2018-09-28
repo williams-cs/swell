@@ -23,7 +23,7 @@ export class NumberNode implements Expression <NumberNode>{
             this._ws= "";
         }
     };
-    
+
     /**
      * Returns this NumberNode
      * @param context The current program context
@@ -34,12 +34,13 @@ export class NumberNode implements Expression <NumberNode>{
 
     /**
      * NumberNodes cannot be drawn directly
-     * @param context 
-     * @param dims 
-     * @param ast 
+     * @param context
+     * @param dims
+     * @param ast
      */
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
-        throw new Error("Numbers cannot be drawn directly.");
+      let e = new StringEffect(new StringNode('' + this._val));
+      e.draw(context, dims, ast);
     }
 
     /**
