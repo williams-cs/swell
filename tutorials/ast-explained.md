@@ -1,6 +1,6 @@
 ***AST Explained***
 
-This document is for the benefit of Quan as he tries to understand where each piece in `/lib` fits in the AST (Abstract Syntax Tree).
+This document is for the benefit of Quan as he tries to understand where each piece in `/lib` fits in the AST (Abstract Syntax Tree). In general, when an AST tree consisting of `Node`s is evaluated, the `eval()` method of each node is called.
 
 **Note:** AST is evaluated in a depth-first, post-order traversal.
 
@@ -23,8 +23,9 @@ Option is abstract type that provides Some<T> and None. The parser returns an Op
 
 *Dependencies*
 swell-parser is a parser combinator. Read Hutton & Meijer until page 13.
+
 space-lift <- swell
-swell <- swell-parser
-pants <- swell-parser
-swell <- swell-ui
-swell-parser <- swell-ui
+
+{swell; pants} <- swell-parser
+
+{swell; swell-parser} <- swell-ui

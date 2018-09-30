@@ -15,13 +15,16 @@ s = "Hello World"
 
 **Numbers & Operations**
 Numbers are implemented with typescript's `number` type, which represents floating point values.
-Numbers cannot be drawn, i.e. passed as an argument to `print()`.
+Numbers can now be drawn, i.e. passed as an argument to `print()`.
 
 ```
 n = 413
 x = n + 15
 y = (n + x) * 2 //This doesn't seem to work
+
 z = -10
+print(z)
+
 x++ //Increment/decrement doesn't work either
 ```
 
