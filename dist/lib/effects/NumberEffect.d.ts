@@ -208,9 +208,9 @@ export declare class NumberEffect implements Effect<NumberNode> {
      */
     readonly selected: boolean;
     /**
-     * Returns the string
+     * Returns the number
      */
-    readonly str: string;
+    readonly num: number;
     /**
      * Returns the object ID
      */

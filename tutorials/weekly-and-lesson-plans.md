@@ -13,10 +13,9 @@
 3. ~~Continue literature review.~~
 
 ## Week 4: October 1
-1. Lay out lesson plan.
-- Should we wireframe the interface first?
-- How long will the session be?
+1. Lay out lesson plan - ~40 minutes.
 2. Make interface + UI frame for a module.
+- Have a common vocab for the UI pieces: text box, canvas, palette, etc.
 4. Continue compiling literature review regarding DPM in learning.
 - Sources: Chugh's paper, CHI, UIST, PLDI.
 - Also look for papers that outline skill map.
@@ -72,10 +71,10 @@ Thanksgiving week.
 18. Colors?
 19. StringEffect and NumberEffect share many methods. Maybe superclass them?
 
-# Lesson Plan
+# Lesson/Module Plan
 **NOTE:** Still unsure what the mode of instruction should be. Textual for now, but maybe should consider videos.
 
-## Module 1
+## Sub-Module 1
 
 **Goal:** Learn about `print()` method, and primitive types - String and number (int?).
 
@@ -86,7 +85,7 @@ Thanksgiving week.
 4. String values can also be manipulated directly.
 5. Maybe a final game-like challenge for each module?
 
-## Module 2
+## Sub-Module 2
 
 **Goal:** Learn about variables and binary operations.
 
@@ -97,18 +96,18 @@ Thanksgiving week.
 4. Re-assignment, and some interesting syntax (eg. `a = a + 1`).
 4. PDM effect on binary operation with variables.
 
-## Module 3
+## Sub-Module 3
 
 **Goal:** Learn about shapes and sequence.
 
-## Module 4
+## Sub-Module 4
 
 **Goal:** Learn about function. Maybe list also.
 
-## Module 5
+## Sub-Module 5
 
 **Goal:** Learn about boolean, conditional, loop.
 
-## Module 6
+## Sub-Module 6
 
 **Goal:** Final project.

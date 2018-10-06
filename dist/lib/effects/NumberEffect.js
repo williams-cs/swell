@@ -28,7 +28,6 @@ class NumberEffect {
             cursorPos: 0
         };
         this._num = num;
-        this._str = "" + num.val;
     }
     /**
      * The method that is called when evaluating nodes (StringNode, EllipseNode, etc)
@@ -62,11 +61,12 @@ class NumberEffect {
         let fontDeets = this._fontSize + "px Courier New";
         this._ctx.font = fontDeets;
         this._ctx.fillStyle = 'black';
-        this._ctx.fillText(this._str, this.x, this.y);
-        let numberDims = this._ctx.measureText(this._str);
+        let str = this._num.toString();
+        this._ctx.fillText(str, this.x, this.y);
+        let numberDims = this._ctx.measureText(str);
         this._numberMetrics.width = numberDims.width;
         this._numberMetrics.height = this._fontSize;
-        this._numberMetrics.str = this._str;
+        this._numberMetrics.str = str;
         this._numberMetrics.interval = this._numberMetrics.width / this._numberMetrics.str.length;
         if (this._isSelected) {
             this.drawTextGuides(this.x, this.y - this._fontSize, this._numberMetrics.width, this._numberMetrics.height, this._corner);
@@ -164,7 +164,6 @@ class NumberEffect {
     onMouseMove(event) {
         this.getMousePosition();
         if (this._isSelected && this._isDragging) {
-            //console.log(this._str + " is being dragged.");
             this.modifyDrag();
         }
         else if (this._isResizing && this._isSelected) {
@@ -184,7 +183,6 @@ class NumberEffect {
             this._isListening = true;
             this._isEditing = true;
             this._isDragging = false;
-            //console.log(this._str + " is setting dragging to false");
             this._numberMetrics.initMousePos = this._mouse.x;
             this.modifyTextCursor();
         }
@@ -271,9 +269,10 @@ class NumberEffect {
         if (this._isEditing) {
             let firstHalf;
             let secondHalf;
+            let str = this._num.toString();
             let breakPoint = this._numberMetrics.cursorPos / this._numberMetrics.interval;
-            firstHalf = this._str.substring(0, breakPoint);
-            secondHalf = this._str.substring(breakPoint);
+            firstHalf = str.substring(0, breakPoint);
+            secondHalf = str.substring(breakPoint);
             if (event.keyCode == 37 && this._numberMetrics.initMousePos > this.x + this._numberMetrics.interval / 2) {
                 this._numberMetrics.initMousePos -= this._numberMetrics.interval;
                 this.modifyTextCursor();
@@ -282,9 +281,10 @@ class NumberEffect {
                 this._numberMetrics.initMousePos += this._numberMetrics.interval;
                 this.modifyTextCursor();
             }
-            else if (event.keyCode == 8 && this._str.length > 0) {
+            else if (event.keyCode == 8 && str.length > 0) {
                 firstHalf = firstHalf.substring(0, firstHalf.length - 1);
-                this._str = firstHalf + secondHalf;
+                str = firstHalf + secondHalf;
+                this._num.val = Number(str);
                 this._numberMetrics.initMousePos -= this._numberMetrics.interval;
                 this.modifyTextCursor();
             }
@@ -292,7 +292,8 @@ class NumberEffect {
                 let keyName = event.key;
                 if (keyName.length == 1) {
                     firstHalf += keyName;
-                    this._str = firstHalf + secondHalf;
+                    str = firstHalf + secondHalf;
+                    this._num.val = Number(str);
                     this._numberMetrics.initMousePos += this._numberMetrics.interval;
                     this.modifyTextCursor();
                 }
@@ -352,8 +353,6 @@ class NumberEffect {
             this._isSelected = true;
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
             this._context.eventLog.push(this.logClick());
-            //console.log(this._str + "is selected?" + this._selected);
-            //console.log("state selection is " + this._str);
             this._dragoffx = this.x;
             this._dragoffy = this.y;
             this._initDistance = distance(this._mouse.x, this._mouse.y, this.x, this.y);
@@ -365,13 +364,10 @@ class NumberEffect {
             this._y = this.y;
             this._isSelected = true;
             this._context.eventLog.push(this.logClick());
-            //console.log(this._str + "is selected?" + this._selected);
-            //console.log("state selection is " + this._str);
             this._dragoffx = this._mouse.x - this.x;
             this._dragoffy = this._mouse.y - this.y;
             if (!this._isEditing) {
                 this._isDragging = true;
-                //console.log(this._str + " is dragging? " + this._isDragging);
             }
         }
         else if (!this._isSelectingMultiple) {
@@ -385,7 +381,6 @@ class NumberEffect {
      */
     modifyReset() {
         if (this._isDragging && this._isSelected) {
-            //console.log(this._str + " logging drag");
             this._isDragging = false;
             if (Math.abs(this._x - this.x) > 1 || Math.abs(this._y - this.y) > 1) {
                 this._justDragged = true;
@@ -393,7 +388,6 @@ class NumberEffect {
             }
         }
         else if (this._isResizing && this._isSelected) {
-            //console.log(this._str + " logging resize");
             this._isResizing = false;
             if (Math.abs(this._size1 - this._fontSize) > 0) {
                 this._context.eventLog.push(this.logResize());
@@ -440,19 +434,19 @@ class NumberEffect {
      * Logs a paint event
      */
     logPaint() {
-        return new PaintEvent_1.PaintEvent(this._str, this.x, this.y);
+        return new PaintEvent_1.PaintEvent(this._num.toString(), this.x, this.y);
     }
     /**
      * Logs a resize event
      */
     logResize() {
-        return new ResizeEvent_1.ResizeEvent(this._str + " with ID " + this.getID().toString(), Math.round(this._size1 * 100) / 100, Math.round(this._fontSize * 100) / 100);
+        return new ResizeEvent_1.ResizeEvent(this._num.toString() + " with ID " + this.getID().toString(), Math.round(this._size1 * 100) / 100, Math.round(this._fontSize * 100) / 100);
     }
     /**
      * Logs a click event
      */
     logClick() {
-        return new ClickEvent_1.ClickEvent(this._str + " with ID " + this.getID().toString(), this.x, this.y);
+        return new ClickEvent_1.ClickEvent(this._num.toString() + " with ID " + this.getID().toString(), this.x, this.y);
     }
     /**
      * Initializes and assigns an ID to an object
@@ -521,10 +515,10 @@ class NumberEffect {
         return this._isSelected;
     }
     /**
-     * Returns the string
+     * Returns the number
      */
-    get str() {
-        return this._str;
+    get num() {
+        return this._num.val;
     }
     /**
      * Returns the object ID
@@ -536,19 +530,19 @@ class NumberEffect {
      * Assembles a string for selection events
      */
     toSelString() {
-        return " " + this._str + " with ID " + this.getID().toString() + " at " + this.x + ", " + this.y;
+        return " " + this._num.toString() + " with ID " + this.getID().toString() + " at " + this.x + ", " + this.y;
     }
     /**
     * Assembles a string for drag events
     */
     toDragString() {
-        return (this._str + " with ID " + this.getID().toString() + " from " + this._x + ", " + this._y + " to " + this.x + ", " + this.y);
+        return (this._num.toString() + " with ID " + this.getID().toString() + " from " + this._x + ", " + this._y + " to " + this.x + ", " + this.y);
     }
     /**
      * Assembles a string for ID assignment events
      */
     toIDString() {
-        return (this.idObj._id.toString() + " to " + this._str + " at " + this.x + ", " + this.y);
+        return (this.idObj._id.toString() + " to " + this._num.toString() + " at " + this.x + ", " + this.y);
     }
 }
 exports.NumberEffect = NumberEffect;
