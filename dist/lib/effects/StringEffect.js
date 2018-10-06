@@ -351,7 +351,7 @@ class StringEffect {
             //     //this.logSelected();
             // }
         }
-        else if (guideContains) { //if the corner guides contain the mouse we are resizing 
+        else if (guideContains) { //if the corner guides contain the mouse we are resizing
             this._isSelected = true;
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
             this._context.eventLog.push(this.logClick());
