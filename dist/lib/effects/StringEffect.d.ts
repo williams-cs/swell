@@ -16,9 +16,6 @@ export declare class StringEffect implements Effect<StringNode> {
     private _y1;
     private _size1;
     private _corner;
-    idObj: {
-        readonly _id: number;
-    };
     private _isSelected;
     private _isEditing;
     private _isListening;
@@ -29,6 +26,9 @@ export declare class StringEffect implements Effect<StringNode> {
     private _dragoffx;
     private _dragoffy;
     private _initDistance;
+    idObj: {
+        readonly _id: number;
+    };
     private _mouse;
     private _textMetrics;
     constructor(str: StringNode);

@@ -3,7 +3,8 @@ import {Scope} from '../structural/Scope';
 import {Dimensions} from '../structural/Dimensions';
 import {StringNode} from './StringNode';
 import {StringEffect} from '../effects/StringEffect';
-//import{Node} from './Node';
+import {NumberEffect} from '../effects/NumberEffect';
+
 
 // Nodes representing numbers
 // Should abstract Node class implement Expression?
@@ -41,7 +42,7 @@ export class NumberNode implements Expression <NumberNode>{
      * @param ast
      */
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
-      let e = new StringEffect(new StringNode('' + this._val));
+      let e = new NumberEffect(this);
       e.draw(context, dims, ast);
     }
 
