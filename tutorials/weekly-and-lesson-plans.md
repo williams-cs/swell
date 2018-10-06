@@ -21,7 +21,7 @@
 - Sources: Chugh's paper, CHI, UIST, PLDI.
 - Also look for papers that outline skill map.
 5. Implement NumberEffect.
-- Document steps on how to make
+- Document steps on how to make it.
 
 To read this week:
 - Hutton and Meijer.
@@ -61,7 +61,7 @@ Thanksgiving week.
 2. Find ways to implement analytics.
 
 ## End of Semester
-1. Implement modules to teach programming through SWELL = interface + predicate checker + progress record + analytics.
+1. Implement modules to teach programming through SWELL = interface + predicate checker + instructions + analytics.
 2. Implement error messages that specify which parts of the environment causes the problem.
 
 ## Auxiliary Ideas
@@ -70,6 +70,7 @@ Thanksgiving week.
 16. Named arguments!
 17. Khan Academy's 'talk-through' is cool - video on top of interactive coding env.
 18. Colors?
+19. StringEffect and NumberEffect share many methods. Maybe superclass them?
 
 # Lesson Plan
 **NOTE:** Still unsure what the mode of instruction should be. Textual for now, but maybe should consider videos.

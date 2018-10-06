@@ -19,13 +19,13 @@ export class StringEffect implements Effect<StringNode> {
     private _canvas: HTMLCanvasElement;
     private _str: StringNode;
     private _dims: Dimensions;
+
     private _fontSize: number = 20;
     private _x1: number; // Original position for drag logging
     private _y1: number;
     private _size1: number; // Original scale for resize logging
     //private _size2: number;
     private _corner: number = 0;
-    idObj: {readonly _id: number};
 
     private _isSelected: boolean = false; // Private bools
     private _isEditing: boolean = false;
@@ -42,6 +42,8 @@ export class StringEffect implements Effect<StringNode> {
     private _dragoffy: number = 0;
     private _initDistance: number = 0;
 
+    idObj: {readonly _id: number};
+
     private _mouse: {
         x: number,
         y: number
@@ -49,6 +51,7 @@ export class StringEffect implements Effect<StringNode> {
         x: 0,
         y: 0
     };
+
     private _textMetrics: { // all the details of the text on the canvas
         width: number,
         height: number,
@@ -69,7 +72,7 @@ export class StringEffect implements Effect<StringNode> {
         this._str = str;
     }
 
-    /** 
+    /**
      * The method that is called when evaluating nodes (StringNode, EllipseNode, etc)
      * This method assigns all params to private variables and draws the initial object to the canvas
      * by calling update()
@@ -85,12 +88,12 @@ export class StringEffect implements Effect<StringNode> {
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
             this.update();
-            
+
             // logging
             this._context.eventLog.push(this.logPaint()); // this.context or context?
-            
+
             context.effects.push(this);
-            
+
             this.addEventListeners();
         }
         else {
@@ -105,6 +108,7 @@ export class StringEffect implements Effect<StringNode> {
         let fontDeets: string = this._fontSize + "px Courier New";
         this._ctx.font = fontDeets;
         this._ctx.fillStyle = 'black';
+        
         this._ctx.fillText(this._str.val, this.x, this.y);
         let textDims = this._ctx.measureText(this._str.val);
         this._textMetrics.width = textDims.width;
@@ -296,7 +300,7 @@ export class StringEffect implements Effect<StringNode> {
         let xDif: number = this._textMetrics.initMousePos - leftWall; // difference between mouse x and left wall
         let interval: number = this._textMetrics.interval; // the text width divided by the length of the string
         let moveFactor: number = 0;
-        if(xDif >= interval / 2 && xDif <= interval){ 
+        if(xDif >= interval / 2 && xDif <= interval){
             moveFactor = leftWall + interval;
             this._textMetrics.cursorPos = interval;
         }
@@ -379,8 +383,8 @@ export class StringEffect implements Effect<StringNode> {
     /**
      * Toggles all of the private booleans depending on the mouse position when called (onMouseDown)
      * e.g. if the mouse is within the bounding rectangle when this is called, isSelected = true
-     * @param guideContains 
-     * @param contains 
+     * @param guideContains
+     * @param contains
      */
     modifyState(guideContains: boolean, contains: boolean): void {
         this._justDragged = false;
@@ -393,7 +397,7 @@ export class StringEffect implements Effect<StringNode> {
                 this._isDragging = true;
                 this._dragoffx = this._mouse.x - this.x;
                 this._dragoffy = this._mouse.y - this.y;
-            } 
+            }
             else {
                 this._dragoffx = this._mouse.x - this.x;
                 this._dragoffy = this._mouse.y - this.y;
@@ -406,8 +410,8 @@ export class StringEffect implements Effect<StringNode> {
             //     this._context.eventLog.push(this.logSelected());
             //     //this.logSelected();
             // }
-        } 
-        else if (guideContains) { //if the corner guides contain the mouse we are resizing 
+        }
+        else if (guideContains) { //if the corner guides contain the mouse we are resizing
             this._isSelected = true;
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
 
@@ -421,7 +425,7 @@ export class StringEffect implements Effect<StringNode> {
             this._initDistance = distance(this._mouse.x, this._mouse.y, this.x, this.y);
             this._isResizing = true;
             this._size1 = this._fontSize; // saving old font size
-        } 
+        }
         else if (contains) {
             this._x1 = this.x; // Saving original x and y
             this._y1 = this.y;
@@ -438,7 +442,7 @@ export class StringEffect implements Effect<StringNode> {
                 this._isDragging = true;
                 //console.log(this._str.val + " is dragging? " + this._isDragging);
             }
-        } 
+        }
         else if (!this._isSelectingMultiple) {
             this._isSelected = false;
             this._isDragging = false;
@@ -586,7 +590,7 @@ export class StringEffect implements Effect<StringNode> {
     setJustDragged(val: boolean) {
         this._justDragged = val;
     }
-    
+
     /**
      * Returns whether or not the ellipse is dragging
      */
