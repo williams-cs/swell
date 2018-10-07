@@ -14,12 +14,11 @@
 
 ## Week 4: October 1
 1. Lay out lesson plan - ~40 minutes.
-2. Make interface + UI frame for a module.
-- Have a common vocab for the UI pieces: text box, canvas, palette, etc.
+2. ~~Make interface + UI frame for a module.~~
 4. Continue compiling literature review regarding DPM in learning.
 - Sources: Chugh's paper, CHI, UIST, PLDI.
 - Also look for papers that outline skill map.
-5. Implement NumberEffect.
+5. ~~Implement NumberEffect.~~
 - Document steps on how to make it.
 
 To read this week:
@@ -30,9 +29,15 @@ To read this week:
 
 ## Week 5: October 8
 Reading period, so perhaps meet on a different day?
-1. Create module 1.
-2. Clean up `swell-ui` and document it.
+1. Code up UI.
+- Have a common vocab for the UI pieces: text box, canvas, palette, etc.
+- For the UI, should we gamify/abstract away the coding aspect?
+2. Design abstract classes for predicate checker.
+3. Clean up `swell-ui` and document it.
 - Refactor `drawGuides()`.
+4. Fix loop nodes.
+5. Continue lit review.
+6. Find a way to do make clean/make for all 3 pieces in 1 go.
 
 ## Week 6: October 15
 1. Create module 2.
@@ -76,7 +81,7 @@ Thanksgiving week.
 
 ## Sub-Module 1
 
-**Goal:** Learn about `print()` method, and primitive types - String and number (int?).
+**Goal:** Learn about `print()` method, shapes and String.
 
 **Checkpoints:**
 1. How to use `print()` statement and pass a number as an argument.
