@@ -343,4 +343,5 @@ test/**/*.js
 
 # tutorial files
 *.pdf
+!wireframes/*.pdf
 !swellskillmap.pdf
