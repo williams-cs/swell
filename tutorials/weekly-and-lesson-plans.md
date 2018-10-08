@@ -13,34 +13,36 @@
 3. ~~Continue literature review.~~
 
 ## Week 4: October 1
-1. Lay out lesson plan - ~40 minutes.
+1. ~~Lay out lesson plan - ~40 minutes.~~
 2. ~~Make interface + UI frame for a module.~~
-4. Continue compiling literature review regarding DPM in learning.
-- Sources: Chugh's paper, CHI, UIST, PLDI.
-- Also look for papers that outline skill map.
+4. ~~Continue compiling literature review regarding DPM in learning.~~
 5. ~~Implement NumberEffect.~~
-- Document steps on how to make it.
 
 To read this week:
-- Hutton and Meijer.
-- [Chugh et al (2018)](http://lara.epfl.ch/~kuncak/papers/MayerETAL18BidirectionalEvaluation.pdf)
-- [Scott et al (2014)](https://groups.csail.mit.edu/mug/pubs/Scott2014DirectManipulation.pdf)
-- [Hundhausen et al (2009)](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.128.4081&rep=rep1&type=pdf)
+- [~~Hundhausen et al (2009)~~](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.128.4081&rep=rep1&type=pdf)
 
 ## Week 5: October 8
-Reading period, so perhaps meet on a different day?
 1. Code up UI.
 - Have a common vocab for the UI pieces: text box, canvas, palette, etc.
 - For the UI, should we gamify/abstract away the coding aspect?
+- eg. CodeMonkey.
 2. Design abstract classes for predicate checker.
 3. Clean up `swell-ui` and document it.
 - Refactor `drawGuides()`.
 4. Fix loop nodes.
+- Document how Node and Effect are connected.
 5. Continue lit review.
+- Find an up-to-date overview of existing envi. for novice programmers. Something like [this](http://delivery.acm.org/10.1145/1090000/1089734/p83-kelleher.pdf?ip=137.165.175.14&id=1089734&acc=ACTIVE%20SERVICE&key=73B3886B1AEFC4BB%2E2C072D704A936475%2E4D4702B0C3E38B35%2E4D4702B0C3E38B35&__acm__=1539013178_cbeccd13d1bb1204dcc0d387fff1b47e), but more recent and not quite as large-scaled.
+- Sources: CHI, UIST, PLDI.
 6. Find a way to do make clean/make for all 3 pieces in 1 go.
 
+To read this week:
+- [Chugh et al (2018)](http://lara.epfl.ch/~kuncak/papers/MayerETAL18BidirectionalEvaluation.pdf)
+- [Scott et al (2014)](https://groups.csail.mit.edu/mug/pubs/Scott2014DirectManipulation.pdf)
+- Hutton and Meijer.
+
 ## Week 6: October 15
-1. Create module 2.
+1. Lay out lesson plans.
 
 ## Week 7: October 22
 1. Create module 3.
@@ -70,29 +72,31 @@ Thanksgiving week.
 
 ## Auxiliary Ideas
 1. ~~Are `shapes` full-on classes?~~ `shapes` are functions.
+21. COLOR-CODE TEXT!
 14. Add rotation function.
 16. Named arguments!
 17. Khan Academy's 'talk-through' is cool - video on top of interactive coding env.
 18. Colors?
 19. StringEffect and NumberEffect share many methods. Maybe superclass them?
+20. Highlight connected code and canvas components.
 
 # Lesson/Module Plan
-**NOTE:** Still unsure what the mode of instruction should be. Textual for now, but maybe should consider videos.
+**NOTE:** Still unsure what the mode of instruction should be. Textual for now, but should consider videos.
 
 ## Sub-Module 1
 
 **Goal:** Learn about `print()` method, shapes and String.
 
 **Checkpoints:**
-1. How to use `print()` statement and pass a number as an argument.
-2. PDM.
-3. How to use String value.
-4. String values can also be manipulated directly.
-5. Maybe a final game-like challenge for each module?
+1. Use `print()` statement and pass a String as an argument.
+2. PDM. Explain parameters of `print()`.
+3. Pass shapes to `print()`.
+4. PDM. Parameters of shapes.
+5. Game Challenge.
 
 ## Sub-Module 2
 
-**Goal:** Learn about variables and binary operations.
+**Goal:** Learn about numbers, variables and binary operations.
 
 **Checkpoints:**
 1. Declare number and string variables, and print them.
