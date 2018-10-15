@@ -13,7 +13,7 @@
 3. ~~Continue literature review.~~
 
 ## Week 4: October 1
-1. ~~Lay out lesson plan - ~40 minutes.~~
+1. ~~Lay out lesson plan~~ - ~~40 minutes.~~
 2. ~~Make interface + UI frame for a module.~~
 4. ~~Continue compiling literature review regarding DPM in learning.~~
 5. ~~Implement NumberEffect.~~
@@ -22,30 +22,36 @@ To read this week:
 - [~~Hundhausen et al (2009)~~](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.128.4081&rep=rep1&type=pdf)
 
 ## Week 5: October 8
-1. Code up UI.
-- Have a common vocab for the UI pieces: text box, canvas, palette, etc.
-- For the UI, should we gamify/abstract away the coding aspect?
-- eg. CodeMonkey.
-2. Design abstract classes for predicate checker.
-3. Clean up `swell-ui` and document it.
-- Refactor `drawGuides()`.
-4. Fix loop nodes.
-- Document how Node and Effect are connected.
-5. Continue lit review.
-- Find an up-to-date overview of existing envi. for novice programmers. Something like [this](http://delivery.acm.org/10.1145/1090000/1089734/p83-kelleher.pdf?ip=137.165.175.14&id=1089734&acc=ACTIVE%20SERVICE&key=73B3886B1AEFC4BB%2E2C072D704A936475%2E4D4702B0C3E38B35%2E4D4702B0C3E38B35&__acm__=1539013178_cbeccd13d1bb1204dcc0d387fff1b47e), but more recent and not quite as large-scaled.
-- Sources: CHI, UIST, PLDI.
-6. Find a way to do make clean/make for all 3 pieces in 1 go.
-
-To read this week:
-- [Chugh et al (2018)](http://lara.epfl.ch/~kuncak/papers/MayerETAL18BidirectionalEvaluation.pdf)
-- [Scott et al (2014)](https://groups.csail.mit.edu/mug/pubs/Scott2014DirectManipulation.pdf)
-- Hutton and Meijer.
+1. ~~Code up UI.~~
+- ~~Have a common vocab for the UI pieces: text box, canvas, palette, etc.~~
 
 ## Week 6: October 15
 1. Lay out lesson plans.
+- Retake Khan's HOC to get an idea of good checkpoints.
+2. Create classes/functions for a single sub-module.
+- Navigating through a sub-module.
+3. Design abstract classes for predicate/completion checker.
+4. For the UI, should we gamify/abstract away the coding aspect?
+- eg. CodeMonkey.
+- Creating games by placing constraint (can only make one method, can only have a certain number of lines, only use `rect()` once).
+5. Continue lit review.
+- Sources: CHI, UIST, PLDI.
+
+To read this week:
+- [Dan Ingalls](https://www.youtube.com/watch?v=QTJRwKOFddc&feature=youtu.be)
+- [Chugh et al (2018)](http://lara.epfl.ch/~kuncak/papers/MayerETAL18BidirectionalEvaluation.pdf)
+- [Scott et al (2014)](https://groups.csail.mit.edu/mug/pubs/Scott2014DirectManipulation.pdf)
 
 ## Week 7: October 22
 1. Create module 3.
+2. Clean up `swell-ui` and document it.
+- Refactor `drawGuides()`.
+- Write tests for `NumberEffect`.
+3. Fix loop nodes.
+- Document how Node and Effect are connected.
+
+To read this week:
+- Hutton and Meijer.
 
 ## Week 8: October 29
 1. Create module 4.
