@@ -118,4 +118,6 @@ var CircleMod_1 = require("./lib/modules/CircleMod");
 exports.CircleMod = CircleMod_1.CircleMod;
 var SnowmanMod_1 = require("./lib/modules/SnowmanMod");
 exports.SnowmanMod = SnowmanMod_1.SnowmanMod;
+var LessonOneCpOne_1 = require("./lib/modules/LessonOneCpOne");
+exports.LessonOneCpOne = LessonOneCpOne_1.LessonOneCpOne;
 //# sourceMappingURL=index.js.map

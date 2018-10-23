@@ -55,3 +55,4 @@ export { SelectEvent } from './lib/logging/SelectEvent';
 export { IDEvent } from './lib/logging/IDEvent';
 export { CircleMod } from './lib/modules/CircleMod';
 export { SnowmanMod } from './lib/modules/SnowmanMod';
+export { LessonOneCpOne } from './lib/modules/LessonOneCpOne';
