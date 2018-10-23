@@ -74,3 +74,4 @@ export {IDEvent} from './lib/logging/IDEvent';
 /* MODULES */
 export {CircleMod} from './lib/modules/CircleMod';
 export {SnowmanMod} from './lib/modules/SnowmanMod';
+export {LessonOneCpOne} from './lib/modules/LessonOneCpOne';
