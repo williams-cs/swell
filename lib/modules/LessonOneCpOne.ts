@@ -1,9 +1,12 @@
 import { Module } from "./Module";
 
-export class CircleMod implements Module {
-    readonly _name: string = "The Circle";
+export class LessonOneCpOne implements Module {
+    readonly _name: string = "Saying Hi";
     readonly _goal: any;
-    readonly _instructions: string = "Draw a circle in the middle of the screen!";
+    readonly _instructions: string =
+    `To begin, let’s tell the computer to write something on the CANVAS!\n
+    ………\n
+    HINT: write in the CODE box print("Hello, world!")`;
     constructor(){}
 
     /**
