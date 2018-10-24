@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const StringEffect_1 = require("../effects/StringEffect");
-class LessonOneCpOne {
+class LessonOneCpTwo {
     constructor() {
-        this._name = "Lesson 1 Checkpoint 1: Saying Hi";
+        this._name = "Lesson 1 Checkpoint 2: Changing Text";
         this._lesson = 1;
-        this._instructions = `<p> To begin, let’s tell the computer to write something on the CANVAS! </p>
-    <p> GOAL: write on the CANVAS. </p>
-    <p> HINT: type in the CODE box: print("Hello, world!"), then hit the RUN button. </p>`;
+        this._instructions = `<p> Congratulations! You just told the computer to create words on the CANVAS!
+    Now let's do something more interesting: click on the words you just created, and move it to the top left of the screen.</p>
+    <p> GOAL: Move the words you just created to the center of the screen. </p>`;
     }
     /**
      * A lesson to print a string
@@ -18,7 +18,9 @@ class LessonOneCpOne {
         for (let effect of effects) {
             if (effect instanceof StringEffect_1.StringEffect) {
                 if (effect.str !== "") {
-                    return true;
+                    if (effect.x < 10 && effect.y < 70) {
+                        return true;
+                    }
                 }
             }
         }
@@ -37,5 +39,5 @@ class LessonOneCpOne {
         return this._instructions;
     }
 }
-exports.LessonOneCpOne = LessonOneCpOne;
-//# sourceMappingURL=LessonOneCpOne.js.map
+exports.LessonOneCpTwo = LessonOneCpTwo;
+//# sourceMappingURL=LessonOneCpTwo.js.map

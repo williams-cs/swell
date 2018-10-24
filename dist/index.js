@@ -119,4 +119,6 @@ var SnowmanMod_1 = require("./lib/modules/SnowmanMod");
 exports.SnowmanMod = SnowmanMod_1.SnowmanMod;
 var LessonOneCpOne_1 = require("./lib/modules/LessonOneCpOne");
 exports.LessonOneCpOne = LessonOneCpOne_1.LessonOneCpOne;
+var LessonOneCpTwo_1 = require("./lib/modules/LessonOneCpTwo");
+exports.LessonOneCpTwo = LessonOneCpTwo_1.LessonOneCpTwo;
 //# sourceMappingURL=index.js.map

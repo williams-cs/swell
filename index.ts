@@ -76,3 +76,4 @@ export {Module} from './lib/modules/Module';
 export {CircleMod} from './lib/modules/CircleMod';
 export {SnowmanMod} from './lib/modules/SnowmanMod';
 export {LessonOneCpOne} from './lib/modules/LessonOneCpOne';
+export {LessonOneCpTwo} from './lib/modules/LessonOneCpTwo';

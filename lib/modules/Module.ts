@@ -2,6 +2,7 @@ import { Effect } from "../effects/Effect";
 
 export interface Module {
     readonly _name: string; // Module name
+    readonly _lesson: number; // Lesson that this checkpoint belongs to
     readonly _goal: any; // What needs to be completed?
     readonly _instructions: string; // Instructions for student
     readonly _starterCode?: string; // Optional starter code
@@ -10,6 +11,5 @@ export interface Module {
      * Checks if the module goals are fulfilled
      * @param document The HTML document
      */
-    checkGoal(document: Document): boolean; // Check if module is complete
-    checkGoal2(document: Document, effects: Effect<any>[]): boolean;
+    checkGoal(document: Document, effects: Effect<any>[]): boolean;
 }

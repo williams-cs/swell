@@ -2,14 +2,14 @@ import { Module } from "./Module";
 import { Effect } from "../effects/Effect";
 import { StringEffect } from "../effects/StringEffect";
 
-export class LessonOneCpOne implements Module {
-    readonly _name: string = "Lesson 1 Checkpoint 1: Saying Hi";
+export class LessonOneCpTwo implements Module {
+    readonly _name: string = "Lesson 1 Checkpoint 2: Changing Text";
     readonly _lesson: number = 1;
     readonly _goal: any;
     readonly _instructions: string =
-    `<p> To begin, let’s tell the computer to write something on the CANVAS! </p>
-    <p> GOAL: write on the CANVAS. </p>
-    <p> HINT: type in the CODE box: print("Hello, world!"), then hit the RUN button. </p>`;
+    `<p> Congratulations! You just told the computer to create words on the CANVAS!
+    Now let's do something more interesting: click on the words you just created, and move it to the top left of the screen.</p>
+    <p> GOAL: Move the words you just created to the center of the screen. </p>`;
 
     constructor(){
     }
@@ -23,7 +23,9 @@ export class LessonOneCpOne implements Module {
         for (let effect of effects) {
           if (effect instanceof StringEffect) {
             if (effect.str !== "") {
-              return true;
+              if (effect.x < 10 && effect.y < 70) {
+                return true;
+              }
             }
           }
         }

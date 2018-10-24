@@ -3,20 +3,17 @@ import { Effect } from "../effects/Effect";
 
 export class CircleMod implements Module {
     readonly _name: string = "The Circle";
+    readonly _lesson: number = 0;
     readonly _goal: any;
     readonly _instructions: string = "Draw a circle in the middle of the screen!";
     constructor(){}
-
-    checkGoal2(document: Document, effects: Effect<any>[]): boolean {
-      return false;
-    }
 
     /**
      * A module to draw a circle
      * goals: width = height and x and y are between 150 and 350
      * @param document The HTML document
      */
-    checkGoal(document: Document): boolean {
+    checkGoal(document: Document, effects: Effect<any>[]): boolean {
         let inputbox = document.getElementById('input') as HTMLInputElement;
         let inputtext = inputbox.value;
         let goal1: boolean = false;
