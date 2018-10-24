@@ -15,6 +15,7 @@ class LessonOneCpOne {
      */
     checkGoal2(document, effects) {
         console.log("checkGoal2 called");
+        console.log("legnth of effects: " + effects.length);
         for (let effect of effects) {
             console.log("Checking: " + effect.getID());
             console.log(effect instanceof StringEffect_1.StringEffect);
