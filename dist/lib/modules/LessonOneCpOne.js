@@ -1,20 +1,36 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const StringEffect_1 = require("../effects/StringEffect");
 class LessonOneCpOne {
     constructor() {
-        this._name = "Saying Hi";
-        this._instructions = `To begin, let’s tell the computer to write something on the CANVAS!\n
-    ………\n
-    HINT: write in the CODE box print("Hello, world!")`;
+        this._name = "Lesson 1 Checkpoint 1: Saying Hi";
+        this._instructions = `<p> To begin, let’s tell the computer to write something on the CANVAS! </p>
+    <p> ……… </p>
+    <p> HINT: write in the CODE box print("Hello, world!") </p>`;
     }
     /**
-     * A module to draw a circle
-     * goals: width = height and x and y are between 150 and 350
+     * A lesson to print a string
+     * goals: write any string on canvas
+     * @param document The HTML document
+     */
+    checkGoal2(document, effects) {
+        for (let effect of effects) {
+            if (effect instanceof StringEffect_1.StringEffect) {
+                if (effect.str !== "") {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    /**
+     * A lesson to print a string
+     * goals: write any string on canvas
      * @param document The HTML document
      */
     checkGoal(document) {
-        let inputbox = document.getElementById('input');
-        let inputtext = inputbox.value;
+        let input = document.getElementById('input');
+        let inputtext = input.value;
         let goal1 = false;
         let goal2 = false;
         let numbers;
@@ -37,16 +53,6 @@ class LessonOneCpOne {
             }
             return (goal1 && goal2);
         }
-    }
-    /**
-     * Returns the distance between two (x,y) points
-     * @param x1 The first point x coordinate
-     * @param y1 The first point y coordinate
-     * @param x2 The second point x coordinate
-     * @param y2 The second point y coordinate
-     */
-    dist(x1, y1, x2, y2) {
-        return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
     }
     /**
      * Returns the module name

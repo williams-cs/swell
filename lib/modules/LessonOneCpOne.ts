@@ -1,22 +1,42 @@
 import { Module } from "./Module";
+import { Effect } from "../effects/Effect";
+import { StringEffect } from "../effects/StringEffect";
 
 export class LessonOneCpOne implements Module {
-    readonly _name: string = "Saying Hi";
+    readonly _name: string = "Lesson 1 Checkpoint 1: Saying Hi";
     readonly _goal: any;
     readonly _instructions: string =
-    `To begin, let’s tell the computer to write something on the CANVAS!\n
-    ………\n
-    HINT: write in the CODE box print("Hello, world!")`;
-    constructor(){}
+    `<p> To begin, let’s tell the computer to write something on the CANVAS! </p>
+    <p> ……… </p>
+    <p> HINT: write in the CODE box print("Hello, world!") </p>`;
+
+    constructor(){
+    }
 
     /**
-     * A module to draw a circle
-     * goals: width = height and x and y are between 150 and 350
+     * A lesson to print a string
+     * goals: write any string on canvas
+     * @param document The HTML document
+     */
+    checkGoal2(document: Document, effects: Effect<any>[]): boolean {
+        for (let effect of effects) {
+          if (effect instanceof StringEffect) {
+            if (effect.str !== "") {
+              return true;
+            }
+          }
+        }
+        return false;
+    }
+
+    /**
+     * A lesson to print a string
+     * goals: write any string on canvas
      * @param document The HTML document
      */
     checkGoal(document: Document): boolean {
-        let inputbox = document.getElementById('input') as HTMLInputElement;
-        let inputtext = inputbox.value;
+        let input = document.getElementById('input') as HTMLInputElement;
+        let inputtext = input.value;
         let goal1: boolean = false;
         let goal2: boolean = false;
         let numbers;
@@ -39,17 +59,6 @@ export class LessonOneCpOne implements Module {
                 }
             return(goal1 && goal2);
         }
-    }
-
-    /**
-     * Returns the distance between two (x,y) points
-     * @param x1 The first point x coordinate
-     * @param y1 The first point y coordinate
-     * @param x2 The second point x coordinate
-     * @param y2 The second point y coordinate
-     */
-    dist(x1: number, y1: number, x2: number, y2: number) {
-        return Math.sqrt(Math.pow(x1 - x2,2) + Math.pow(y1 - y2,2));
     }
 
     /**
