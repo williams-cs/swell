@@ -14,6 +14,7 @@ class LessonOneCpOne {
      * @param document The HTML document
      */
     checkGoal2(document, effects) {
+        console.log("checkGoal2 called");
         for (let effect of effects) {
             console.log("Checking: " + effect.getID());
             console.log(effect instanceof StringEffect_1.StringEffect);

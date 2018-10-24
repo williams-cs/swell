@@ -19,6 +19,7 @@ export class LessonOneCpOne implements Module {
      * @param document The HTML document
      */
     checkGoal2(document: Document, effects: Effect<any>[]): boolean {
+        console.log("checkGoal2 called");
         for (let effect of effects) {
           console.log("Checking: " + effect.getID());
           console.log(effect instanceof StringEffect);
