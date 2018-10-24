@@ -6,6 +6,7 @@ class SnowmanMod {
      */
     constructor() {
         this._name = "Do You Want to Build a Snowman?";
+        this._lesson = 0;
         this._instructions = "Draw three ellipses to make a snowman!";
     }
     /**
@@ -13,7 +14,7 @@ class SnowmanMod {
      * Goals: Three ellipses, circular, not too far away
      * @param document
      */
-    checkGoal(document) {
+    checkGoal(document, effects) {
         let inputbox = document.getElementById('input');
         let inputtext = inputbox.value;
         let goal1 = false;

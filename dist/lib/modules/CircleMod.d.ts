@@ -1,6 +1,8 @@
 import { Module } from "./Module";
+import { Effect } from "../effects/Effect";
 export declare class CircleMod implements Module {
     readonly _name: string;
+    readonly _lesson: number;
     readonly _goal: any;
     readonly _instructions: string;
     constructor();
@@ -9,7 +11,7 @@ export declare class CircleMod implements Module {
      * goals: width = height and x and y are between 150 and 350
      * @param document The HTML document
      */
-    checkGoal(document: Document): boolean;
+    checkGoal(document: Document, effects: Effect<any>[]): boolean;
     /**
      * Returns the distance between two (x,y) points
      * @param x1 The first point x coordinate

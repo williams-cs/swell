@@ -113,9 +113,12 @@ var SelectEvent_1 = require("./lib/logging/SelectEvent");
 exports.SelectEvent = SelectEvent_1.SelectEvent;
 var IDEvent_1 = require("./lib/logging/IDEvent");
 exports.IDEvent = IDEvent_1.IDEvent;
-/* MODULES */
 var CircleMod_1 = require("./lib/modules/CircleMod");
 exports.CircleMod = CircleMod_1.CircleMod;
 var SnowmanMod_1 = require("./lib/modules/SnowmanMod");
 exports.SnowmanMod = SnowmanMod_1.SnowmanMod;
+var LessonOneCpOne_1 = require("./lib/modules/LessonOneCpOne");
+exports.LessonOneCpOne = LessonOneCpOne_1.LessonOneCpOne;
+var LessonOneCpTwo_1 = require("./lib/modules/LessonOneCpTwo");
+exports.LessonOneCpTwo = LessonOneCpTwo_1.LessonOneCpTwo;
 //# sourceMappingURL=index.js.map

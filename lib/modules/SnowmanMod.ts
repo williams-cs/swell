@@ -1,21 +1,23 @@
 import { Module } from "./Module";
+import { Effect } from "../effects/Effect";
 
 export class SnowmanMod implements Module {
     readonly _name: string = "Do You Want to Build a Snowman?";
+    readonly _lesson: number = 0;
     readonly _goal: any;
     readonly _instructions: string = "Draw three ellipses to make a snowman!";
-    
+
     /**
      * Constructor for the Snowman module
      */
     constructor(){}
-
+    
     /**
      * Checks goals and returns true if fulfilled, false otherwise
      * Goals: Three ellipses, circular, not too far away
-     * @param document 
+     * @param document
      */
-    checkGoal(document: Document): boolean {
+    checkGoal(document: Document, effects: Effect<any>[]): boolean {
         let inputbox = document.getElementById('input') as HTMLInputElement;
         let inputtext = inputbox.value;
         let goal1: boolean = false;

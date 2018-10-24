@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class CircleMod {
     constructor() {
         this._name = "The Circle";
+        this._lesson = 0;
         this._instructions = "Draw a circle in the middle of the screen!";
     }
     /**
@@ -10,7 +11,7 @@ class CircleMod {
      * goals: width = height and x and y are between 150 and 350
      * @param document The HTML document
      */
-    checkGoal(document) {
+    checkGoal(document, effects) {
         let inputbox = document.getElementById('input');
         let inputtext = inputbox.value;
         let goal1 = false;
