@@ -7,9 +7,9 @@ export class LessonOneCpTwo implements Module {
     readonly _lesson: number = 1;
     readonly _goal: any;
     readonly _instructions: string =
-    `<p> Congratulations! You just told the computer to create words on the CANVAS!
-    Now let's do something more interesting: click on the words you just created, and move it to the top left of the screen.</p>
-    <p> GOAL: Move the words you just created to the center of the screen. </p>`;
+    `Congratulations! You just told the computer to create words on the CANVAS!
+    Now let's do something more interesting: click on the words you just created, and move it to the top left of the screen.\n
+    GOAL: Move the words you just created to the center of the screen.`;
 
     constructor(){
     }
