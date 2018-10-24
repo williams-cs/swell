@@ -1,3 +1,4 @@
+import { Effect } from "../effects/Effect";
 export interface Module {
     readonly _name: string;
     readonly _goal: any;
@@ -8,4 +9,5 @@ export interface Module {
      * @param document The HTML document
      */
     checkGoal(document: Document): boolean;
+    checkGoal2(document: Document, effects: Effect<any>[]): boolean;
 }

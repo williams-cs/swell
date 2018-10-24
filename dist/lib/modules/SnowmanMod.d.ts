@@ -1,4 +1,5 @@
 import { Module } from "./Module";
+import { Effect } from "../effects/Effect";
 export declare class SnowmanMod implements Module {
     readonly _name: string;
     readonly _goal: any;
@@ -7,6 +8,7 @@ export declare class SnowmanMod implements Module {
      * Constructor for the Snowman module
      */
     constructor();
+    checkGoal2(document: Document, effects: Effect<any>[]): boolean;
     /**
      * Checks goals and returns true if fulfilled, false otherwise
      * Goals: Three ellipses, circular, not too far away

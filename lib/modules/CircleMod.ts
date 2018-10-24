@@ -1,10 +1,15 @@
 import { Module } from "./Module";
+import { Effect } from "../effects/Effect";
 
 export class CircleMod implements Module {
     readonly _name: string = "The Circle";
     readonly _goal: any;
     readonly _instructions: string = "Draw a circle in the middle of the screen!";
     constructor(){}
+
+    checkGoal2(document: Document, effects: Effect<any>[]): boolean {
+      return false;
+    }
 
     /**
      * A module to draw a circle

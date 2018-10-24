@@ -1,3 +1,5 @@
+import { Effect } from "../effects/Effect";
+
 export interface Module {
     readonly _name: string; // Module name
     readonly _goal: any; // What needs to be completed?
@@ -9,5 +11,5 @@ export interface Module {
      * @param document The HTML document
      */
     checkGoal(document: Document): boolean; // Check if module is complete
-
-} 
+    checkGoal2(document: Document, effects: Effect<any>[]): boolean;
+}

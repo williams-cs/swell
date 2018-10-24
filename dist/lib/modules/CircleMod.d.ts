@@ -1,9 +1,11 @@
 import { Module } from "./Module";
+import { Effect } from "../effects/Effect";
 export declare class CircleMod implements Module {
     readonly _name: string;
     readonly _goal: any;
     readonly _instructions: string;
     constructor();
+    checkGoal2(document: Document, effects: Effect<any>[]): boolean;
     /**
      * A module to draw a circle
      * goals: width = height and x and y are between 150 and 350

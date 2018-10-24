@@ -5,6 +5,9 @@ class CircleMod {
         this._name = "The Circle";
         this._instructions = "Draw a circle in the middle of the screen!";
     }
+    checkGoal2(document, effects) {
+        return false;
+    }
     /**
      * A module to draw a circle
      * goals: width = height and x and y are between 150 and 350
