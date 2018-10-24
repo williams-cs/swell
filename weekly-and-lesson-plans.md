@@ -26,32 +26,31 @@ To read this week:
 - ~~Have a common vocab for the UI pieces: text box, canvas, palette, etc.~~
 
 ## Week 6: October 15
-1. Lay out lesson plans.
-- Retake Khan's HOC to get an idea of good checkpoints.
-2. Create classes/functions for a single sub-module.
-- Navigating through a sub-module.
-3. Design abstract classes for predicate/completion checker.
-4. For the UI, should we gamify/abstract away the coding aspect?
-- eg. CodeMonkey.
-- Creating games by placing constraint (can only make one method, can only have a certain number of lines, only use `rect()` once).
+2. ~~Create classes/functions for a single sub-module.~~
+- ~~Navigating through a sub-module.~~
+3. ~~Design abstract classes for predicate/completion checker.~~
+4. ~~For the UI, should we gamify/abstract away the coding aspect?~~ NO.
+- ~~eg. CodeMonkey.~~
 5. Continue lit review.
 - Sources: CHI, UIST, PLDI.
 
 To read this week:
 - [Dan Ingalls](https://www.youtube.com/watch?v=QTJRwKOFddc&feature=youtu.be)
-- [Chugh et al (2018)](http://lara.epfl.ch/~kuncak/papers/MayerETAL18BidirectionalEvaluation.pdf)
-- [Scott et al (2014)](https://groups.csail.mit.edu/mug/pubs/Scott2014DirectManipulation.pdf)
 
 ## Week 7: October 22
-1. Create module 3.
-2. Clean up `swell-ui` and document it.
+1. Continue working on modules.
+2. Lay out lesson plans.
+- Retake Khan's HOC to get an idea of good checkpoints.
+- Creating games by placing constraint (can only make one method, can only have a certain number of lines, only use `rect()` once).
+3. Clean up `swell-ui` and document it.
 - Refactor `drawGuides()`.
-- Write tests for `NumberEffect`.
-3. Fix loop nodes.
+4. Fix loop nodes.
 - Document how Node and Effect are connected.
 
 To read this week:
 - Hutton and Meijer.
+- [Chugh et al (2018)](http://lara.epfl.ch/~kuncak/papers/MayerETAL18BidirectionalEvaluation.pdf)
+- [Scott et al (2014)](https://groups.csail.mit.edu/mug/pubs/Scott2014DirectManipulation.pdf)
 
 ## Week 8: October 29
 1. Create module 4.
@@ -75,6 +74,9 @@ Thanksgiving week.
 ## End of Semester
 1. Implement modules to teach programming through SWELL = interface + predicate checker + instructions + analytics.
 2. Implement error messages that specify which parts of the environment causes the problem.
+
+## UI Changes
+- Gives font hierarchy to instruction text.
 
 ## Auxiliary Ideas
 1. ~~Are `shapes` full-on classes?~~ `shapes` are functions.
