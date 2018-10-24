@@ -15,8 +15,11 @@ class LessonOneCpOne {
      */
     checkGoal2(document, effects) {
         for (let effect of effects) {
+            console.log("Checking: " + effect.getID());
+            console.log(effect instanceof StringEffect_1.StringEffect);
             if (effect instanceof StringEffect_1.StringEffect) {
                 if (effect.str !== "") {
+                    console.log("goal checked!");
                     return true;
                 }
             }

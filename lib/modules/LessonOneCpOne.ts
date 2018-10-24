@@ -20,8 +20,11 @@ export class LessonOneCpOne implements Module {
      */
     checkGoal2(document: Document, effects: Effect<any>[]): boolean {
         for (let effect of effects) {
+          console.log("Checking: " + effect.getID());
+          console.log(effect instanceof StringEffect);
           if (effect instanceof StringEffect) {
             if (effect.str !== "") {
+              console.log("goal checked!");
               return true;
             }
           }
