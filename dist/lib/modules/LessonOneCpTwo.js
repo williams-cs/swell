@@ -4,10 +4,10 @@ const StringEffect_1 = require("../effects/StringEffect");
 class LessonOneCpTwo {
     constructor() {
         this._name = "Lesson 1 Checkpoint 2: Changing Text";
-        this._lesson = 1;
-        this._instructions = `<p> Congratulations! You just told the computer to create words on the CANVAS!
-    Now let's do something more interesting: click on the words you just created, and move it to the top left of the screen.</p>
-    <p> GOAL: Move the words you just created to the center of the screen. </p>`;
+        this._nextModule = '';
+        this._instructions = `Congratulations! You just told the computer to create words on the CANVAS!
+    Now let's do something more interesting: click on the words you just created, and move it to the top left of the screen.\n
+    GOAL: Move the words you just created to the center of the screen.`;
     }
     /**
      * A lesson to print a string

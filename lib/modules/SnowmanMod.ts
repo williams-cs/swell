@@ -3,7 +3,7 @@ import { Effect } from "../effects/Effect";
 
 export class SnowmanMod implements Module {
     readonly _name: string = "Do You Want to Build a Snowman?";
-    readonly _lesson: number = 0;
+    readonly _nextModule: string = '';
     readonly _goal: any;
     readonly _instructions: string = "Draw three ellipses to make a snowman!";
 
@@ -11,7 +11,7 @@ export class SnowmanMod implements Module {
      * Constructor for the Snowman module
      */
     constructor(){}
-    
+
     /**
      * Checks goals and returns true if fulfilled, false otherwise
      * Goals: Three ellipses, circular, not too far away

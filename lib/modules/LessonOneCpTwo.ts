@@ -4,7 +4,7 @@ import { StringEffect } from "../effects/StringEffect";
 
 export class LessonOneCpTwo implements Module {
     readonly _name: string = "Lesson 1 Checkpoint 2: Changing Text";
-    readonly _lesson: number = 1;
+    readonly _nextModule: string = '';
     readonly _goal: any;
     readonly _instructions: string =
     `Congratulations! You just told the computer to create words on the CANVAS!
