@@ -5,7 +5,8 @@ class LessonOneCpOne {
     constructor() {
         this._name = "Lesson 1 Checkpoint 1: Saying Hi";
         this._nextModule = 'l1c2';
-        this._instructions = `<p> To begin, let’s tell the computer to write something on the CANVAS! </p>
+        this._constraint = 'none';
+        this._instructions = `<p> To begin, let’s tell the computer to write something on the CANVAS. </p>
     <p> GOAL: write on the CANVAS. </p>
     <p> HINT: type in the CODE box: print("Hello, world!"), then hit the RUN button. </p>`;
     }

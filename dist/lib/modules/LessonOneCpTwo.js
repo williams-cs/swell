@@ -4,14 +4,15 @@ const StringEffect_1 = require("../effects/StringEffect");
 class LessonOneCpTwo {
     constructor() {
         this._name = "Lesson 1 Checkpoint 2: Changing Text";
-        this._nextModule = '';
-        this._instructions = `Congratulations! You just told the computer to create words on the CANVAS!
-    Now let's do something more interesting: click on the words you just created, and move it to the top left of the screen.\n
-    GOAL: Move the words you just created to the center of the screen.`;
+        this._nextModule = 'l1c3';
+        this._constraint = 'code';
+        this._instructions = `<p> You just told the computer to create words on the CANVAS! </p>
+    <p> Now let's do something more interesting: click on the words on the CANVAS, then move it to the top left of the screen. Observe what happens to your code. </p>
+    <p> GOAL: Move the words you just created to the top left of the screen. </p>`;
     }
     /**
      * A lesson to print a string
-     * goals: write any string on canvas
+     * goals: moving the text and observe the code
      * @param document The HTML document
      */
     checkGoal(document, effects) {

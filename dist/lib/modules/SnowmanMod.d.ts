@@ -4,6 +4,7 @@ export declare class SnowmanMod implements Module {
     readonly _name: string;
     readonly _nextModule: string;
     readonly _goal: any;
+    readonly _constraint: string;
     readonly _instructions: string;
     /**
      * Constructor for the Snowman module

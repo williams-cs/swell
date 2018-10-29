@@ -5,6 +5,7 @@ export class CircleMod implements Module {
     readonly _name: string = "The Circle";
     readonly _nextModule: string = '';
     readonly _goal: any;
+    readonly _constraint: string = 'none';
     readonly _instructions: string = "Draw a circle in the middle of the screen!";
     constructor(){}
 
