@@ -4,19 +4,20 @@ import { StringEffect } from "../effects/StringEffect";
 
 export class LessonOneCpTwo implements Module {
     readonly _name: string = "Lesson 1 Checkpoint 2: Changing Text";
-    readonly _lesson: number = 1;
+    readonly _nextModule: string = 'l1c3';
     readonly _goal: any;
+    readonly _constraint: string = 'code';
     readonly _instructions: string =
-    `Congratulations! You just told the computer to create words on the CANVAS!
-    Now let's do something more interesting: click on the words you just created, and move it to the top left of the screen.\n
-    GOAL: Move the words you just created to the center of the screen.`;
+    `<p> You just told the computer to create words on the CANVAS! </p>
+    <p> Now let's do something more interesting: click on the words on the CANVAS, then move it to the top left of the screen. Observe what happens to your code. </p>
+    <p> GOAL: Move the words you just created to the top left of the screen. </p>`;
 
     constructor(){
     }
 
     /**
      * A lesson to print a string
-     * goals: write any string on canvas
+     * goals: moving the text and observe the code
      * @param document The HTML document
      */
     checkGoal(document: Document, effects: Effect<any>[]): boolean {

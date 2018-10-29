@@ -6,7 +6,8 @@ class SnowmanMod {
      */
     constructor() {
         this._name = "Do You Want to Build a Snowman?";
-        this._lesson = 0;
+        this._nextModule = '';
+        this._constraint = 'none';
         this._instructions = "Draw three ellipses to make a snowman!";
     }
     /**

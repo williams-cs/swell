@@ -1,8 +1,9 @@
 import { Effect } from "../effects/Effect";
 export interface Module {
     readonly _name: string;
-    readonly _lesson: number;
+    readonly _nextModule: string;
     readonly _goal: any;
+    readonly _constraint: string;
     readonly _instructions: string;
     readonly _starterCode?: string;
     /**

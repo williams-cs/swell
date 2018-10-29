@@ -4,8 +4,9 @@ const StringEffect_1 = require("../effects/StringEffect");
 class LessonOneCpOne {
     constructor() {
         this._name = "Lesson 1 Checkpoint 1: Saying Hi";
-        this._lesson = 1;
-        this._instructions = `<p> To begin, let’s tell the computer to write something on the CANVAS! </p>
+        this._nextModule = 'l1c2';
+        this._constraint = 'none';
+        this._instructions = `<p> To begin, let’s tell the computer to write something on the CANVAS. </p>
     <p> GOAL: write on the CANVAS. </p>
     <p> HINT: type in the CODE box: print("Hello, world!"), then hit the RUN button. </p>`;
     }

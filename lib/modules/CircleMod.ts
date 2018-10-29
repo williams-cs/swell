@@ -3,8 +3,9 @@ import { Effect } from "../effects/Effect";
 
 export class CircleMod implements Module {
     readonly _name: string = "The Circle";
-    readonly _lesson: number = 0;
+    readonly _nextModule: string = '';
     readonly _goal: any;
+    readonly _constraint: string = 'none';
     readonly _instructions: string = "Draw a circle in the middle of the screen!";
     constructor(){}
 

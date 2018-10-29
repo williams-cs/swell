@@ -3,7 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class CircleMod {
     constructor() {
         this._name = "The Circle";
-        this._lesson = 0;
+        this._nextModule = '';
+        this._constraint = 'none';
         this._instructions = "Draw a circle in the middle of the screen!";
     }
     /**

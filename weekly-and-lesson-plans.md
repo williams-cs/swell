@@ -91,31 +91,36 @@ Thanksgiving week.
 # Lesson/Module Plan
 **NOTE:** Still unsure what the mode of instruction should be. Textual for now, but should consider videos.
 
-## Sub-Module 1
+## Lesson 1
 
-**Goal:** Learn about `print()` method, shapes and String.
+**Goal:** `print()` method, String, and Shape.
 
 **Checkpoints:**
 1. Use `print()` statement and pass a String as an argument.
 2. PDM. Explain parameters of `print()`.
-3. Pass shapes to `print()`.
-4. PDM. Parameters of shapes.
-5. Game Challenge.
+3. Non-PDM changing parameters of `print()`.
+4. Print a circle.
 
-## Sub-Module 2
+## Lesson 2
 
-**Goal:** Learn about numbers, variables and binary operations.
+**Goal:** Shapes, Sequence, and Variables.
 
 **Checkpoints:**
-1. Declare number and string variables, and print them.
+1. PDM for dimensions of ellipses.
+2. Multiple statements.
+3.
+4. Draw rectangle.
+5. Make a face.
+
+## Lesson 3
+
+**Goal:** Sequence and Variables.
+
+**Checkpoints:**
 2. PDM effect on declaration.
 3. Binary operations. String concatenation. string + num.
 4. Re-assignment, and some interesting syntax (eg. `a = a + 1`).
 4. PDM effect on binary operation with variables.
-
-## Sub-Module 3
-
-**Goal:** Learn about shapes and sequence.
 
 ## Sub-Module 4
 

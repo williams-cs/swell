@@ -2,8 +2,9 @@ import { Module } from "./Module";
 import { Effect } from "../effects/Effect";
 export declare class SnowmanMod implements Module {
     readonly _name: string;
-    readonly _lesson: number;
+    readonly _nextModule: string;
     readonly _goal: any;
+    readonly _constraint: string;
     readonly _instructions: string;
     /**
      * Constructor for the Snowman module
