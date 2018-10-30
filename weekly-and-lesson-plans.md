@@ -38,22 +38,24 @@ To read this week:
 - [Dan Ingalls](https://www.youtube.com/watch?v=QTJRwKOFddc&feature=youtu.be)
 
 ## Week 7: October 22
-1. Continue working on modules.
-2. Lay out lesson plans.
-- Retake Khan's HOC to get an idea of good checkpoints.
-- Creating games by placing constraint (can only make one method, can only have a certain number of lines, only use `rect()` once).
-3. Clean up `swell-ui` and document it.
+1. ~~Continue working on modules.~~
+2. ~~Lay out lesson plans.~~
+- ~~Retake Khan's HOC to get an idea of good checkpoints.~~
+
+## Week 8: October 29
+1. Work on predicates for lessons 1 & 2.
+2. Allow freezing screen.
+3. Persistence for all modules.
+6. Work on FireFox.
+4. Clean up `swell-ui` and document it.
 - Refactor `drawGuides()`.
-4. Fix loop nodes.
+5. Fix loop nodes.
 - Document how Node and Effect are connected.
 
 To read this week:
 - Hutton and Meijer.
 - [Chugh et al (2018)](http://lara.epfl.ch/~kuncak/papers/MayerETAL18BidirectionalEvaluation.pdf)
 - [Scott et al (2014)](https://groups.csail.mit.edu/mug/pubs/Scott2014DirectManipulation.pdf)
-
-## Week 8: October 29
-1. Create module 4.
 
 ## Week 9: Nov 5
 1. Create module 5.
@@ -77,6 +79,7 @@ Thanksgiving week.
 
 ## UI Changes
 - Gives font hierarchy to instruction text.
+- Creating games by placing constraint (can only make one method, can only have a certain number of lines, only use `rect()` once).
 
 ## Auxiliary Ideas
 1. ~~Are `shapes` full-on classes?~~ `shapes` are functions.
@@ -93,7 +96,7 @@ Thanksgiving week.
 
 ## Lesson 1
 
-**Goal:** `print()` method, String, and Shape.
+**Goal:** `print()` method, String, and Shapes.
 
 **Checkpoints:**
 1. Use `print()` statement and pass a String as an argument.
@@ -103,7 +106,7 @@ Thanksgiving week.
 
 ## Lesson 2
 
-**Goal:** Shapes, Sequence, and Variables.
+**Goal:** Variables and Sequence.
 
 **Checkpoints:**
 1. PDM for dimensions of ellipses.
