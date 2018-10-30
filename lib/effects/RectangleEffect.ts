@@ -49,7 +49,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
     constructor(rect: RectangleNode) {
         this._rect = rect;
     }
-    
+
     /**
      * The method that is called when evaluating nodes (StringNode, EllipseNode, etc)
      * This method assigns all params to private variables and draws the initial object to the canvas
@@ -102,6 +102,12 @@ export class RectangleEffect implements Effect<RectangleNode> {
         window.addEventListener('mousedown', this.isMouseOutside.bind(this));
         //makes it so that double clicking doesn't select text on the page
         this._canvas.addEventListener('selectstart', function(e) { e.preventDefault(); return false; }, false);
+    }
+
+    /**
+     * Removes all the necessary event listeners in another fell swoop
+     */
+    removeEventListeners(): void {
     }
 
     /**
@@ -376,10 +382,10 @@ export class RectangleEffect implements Effect<RectangleNode> {
 
     /**
      * Changes the size of the object when called (when a corner guide is clicked and dragged).
-     * 
-     * If any of width or height is too small, it sets them equal to 10 and the other equal to 
+     *
+     * If any of width or height is too small, it sets them equal to 10 and the other equal to
      * 10 divided or multiplied by the ratio of width/height to keep it the same.
-     * 
+     *
      * The work of changing the size is done by calling the helper method modifyResizeHelper.
      * @param widthTooSmall true if the width dimension is < 10
      * @param heightTooSmall true if the height dimension is < 10
@@ -413,10 +419,10 @@ export class RectangleEffect implements Effect<RectangleNode> {
 
     /**
      * Does the work of changing the size of the object.
-     * 
+     *
      * Since the rectangle originates from the top left corner and not the center,
      * it changes the x and y coordinates as well if guides 1, 2, or 4 are selected
-     * 
+     *
      * @param newDistance the distance between the mouse and the location opposite to it
      * (if top right guide is clicked, the distance between that and the bottom left guide is newDistance)
      */
@@ -472,7 +478,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
 
     /**
      * Does the work of changing the size of the object.
-     * 
+     *
      * Since the rectangle originates from the top left corner and not the center,
      * it changes the x and y coordinates as well if guides 5 or 8 are selected
      */
@@ -515,8 +521,8 @@ export class RectangleEffect implements Effect<RectangleNode> {
     /**
      * Toggles all of the private booleans depending on the mouse position when called (onMouseDown)
      * e.g. if the mouse is within the bounding rectangle when this is called, isSelected = true
-     * @param guideContains 
-     * @param contains 
+     * @param guideContains
+     * @param contains
      */
     modifyState(guideContains: number, contains: boolean): void {
         this._justDragged = false;
@@ -549,7 +555,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
             this._height1 = this.h;
             this._width1 = this.w;
             //this._size1 = Math.sqrt(Math.pow(w,2) + Math.pow(h,2)); // size is diagonal length
-            
+
             switch (this._corner) { // sets the offsets depending on which corner is selected
                 case 1: // top left
                     this._initDistance = distance(this._mouse.x, this._mouse.y, x + w, y + h);
@@ -561,12 +567,12 @@ export class RectangleEffect implements Effect<RectangleNode> {
                     this._dragoffx = x;
                     this._dragoffy = y + h; // offset is bottom left, etc
                 break;
-                case 3: 
+                case 3:
                     this._initDistance = distance(this._mouse.x, this._mouse.y, x, y);
                     this._dragoffx = x;
                     this._dragoffy = y;
                 break;
-                case 4: 
+                case 4:
                     this._initDistance = distance(this._mouse.x, this._mouse.y, x + w, y);
                     this._dragoffx = x + w;
                     this._dragoffy = y;
@@ -577,7 +583,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
             this._isSelected = true;
             this._isChangingDims = true;
             this._corner = guideContains;
-            
+
             switch (this._corner) { // sets the offsets depending on which middle guide is selected
                 case 5: // top middle
                     this._initDistance = distance(this._mouse.x, this._mouse.y, x + w / 2, y + h);
@@ -589,12 +595,12 @@ export class RectangleEffect implements Effect<RectangleNode> {
                     this._dragoffx = x;
                     this._dragoffy = y + h / 2; // offset is left middle etc
                 break;
-                case 7: 
+                case 7:
                     this._initDistance = distance(this._mouse.x, this._mouse.y, x + w / 2, y);
                     this._dragoffx = x + w / 2;
                     this._dragoffy = y;
                 break;
-                case 8: 
+                case 8:
                     this._initDistance = distance(this._mouse.x, this._mouse.y, x + w, y + h / 2);
                     this._dragoffx = x + w;
                     this._dragoffy = y + h / 2;
@@ -629,11 +635,11 @@ export class RectangleEffect implements Effect<RectangleNode> {
             }
         } else if ((this._isResizing || this._isChangingDims) && this._isSelected){
             this._isResizing = false;
-            let size2 = Math.sqrt(Math.pow(this.w,2) + Math.pow(this.h,2)); 
+            let size2 = Math.sqrt(Math.pow(this.w,2) + Math.pow(this.h,2));
             if((Math.abs(this._width1 - this.w) > 0) || (Math.abs(this._height1 - this.h) > 0)){
                 this._context.eventLog.push(this.logResize());
             }
-        } 
+        }
         this._isDragging = false;
         this._isResizing = false;
         this._isChangingDims = false;
@@ -729,7 +735,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
     get dims(): Dimensions {
         return this._dims;
     }
-    
+
     /**
      * Returns whether or not the rect is selected
      */

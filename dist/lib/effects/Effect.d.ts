@@ -68,4 +68,6 @@ export interface Effect<T> {
      * Returns the object ID
      */
     getID(): number;
+    addEventListeners(): void;
+    removeEventListeners(): void;
 }

@@ -45,7 +45,7 @@ To read this week:
 ## Week 8: October 29
 1. Work on predicates for lessons 1 & 2.
 2. Allow freezing screen.
-3. Persistence for all modules.
+3. Persistence for all modules: Download CouchDB.
 6. Work on FireFox.
 4. Clean up `swell-ui` and document it.
 - Refactor `drawGuides()`.
