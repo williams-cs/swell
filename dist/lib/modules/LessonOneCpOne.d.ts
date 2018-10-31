@@ -9,8 +9,9 @@ export declare class LessonOneCpOne implements Module {
     constructor();
     /**
      * A lesson to print a string
-     * goals: write any string on canvas
-     * @param document The HTML document
+     * goals: write any string on CANVAS
+     * @param document: The HTML document
+     * @param effects: the list of effects currently on the CANVAS
      */
     checkGoal(document: Document, effects: Effect<any>[]): boolean;
     /**

@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const StringEffect_1 = require("../effects/StringEffect");
 class LessonOneCpOne {
     constructor() {
-        this._name = "Lesson 1 Checkpoint 1: Saying Hi";
+        this._name = "l1c1";
         this._nextModule = 'l1c2';
         this._constraint = 'none';
         this._instructions = `<p> To begin, let’s tell the computer to write something on the CANVAS. </p>
@@ -12,8 +12,9 @@ class LessonOneCpOne {
     }
     /**
      * A lesson to print a string
-     * goals: write any string on canvas
-     * @param document The HTML document
+     * goals: write any string on CANVAS
+     * @param document: The HTML document
+     * @param effects: the list of effects currently on the CANVAS
      */
     checkGoal(document, effects) {
         for (let effect of effects) {
