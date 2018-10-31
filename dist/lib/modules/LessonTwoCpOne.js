@@ -32,7 +32,7 @@ class LessonTwoCpOne {
         if (code != null) {
             let regex = /print\s*\(\s*ellipse\s*\(\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\)\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\)\s*;/;
             let match = code.match(regex);
-            if (match.length > 0) {
+            if (match != null && match.length > 0) {
                 console.log(match);
                 codeIsCorrect = true;
             }
