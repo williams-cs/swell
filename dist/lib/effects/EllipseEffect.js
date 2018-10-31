@@ -75,10 +75,29 @@ class EllipseEffect {
         //makes it so that double clicking doesn't select text on the page
         this._canvas.addEventListener('selectstart', function (e) { e.preventDefault(); return false; }, false);
     }
+    /*
+        handleEvent(event: any) {
+          if (event instanceof MouseEvent) {
+            switch (event.type) {
+              case 'mousemove': {
+                this.onMouseMove(event);
+              }
+              case 'mousedown': {
+                this.onMouseDown(event);
+                this.isMouseOutside(event);
+              }
+              case 'mouseup': {
+                this.onMouseUp(event);
+              }
+            }
+          }
+        }
+    */
     /**
      * Removes all the necessary event listeners in another fell swoop
      */
     removeEventListeners() {
+        console.log("removing EventListners");
         this._canvas.removeEventListener('mousemove', this.onMouseMove.bind(this)); // bind in order to maintain the meaning of 'this'
         this._canvas.removeEventListener('mousedown', this.onMouseDown.bind(this));
         this._canvas.removeEventListener('mouseup', this.onMouseUp.bind(this));
