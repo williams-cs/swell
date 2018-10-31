@@ -30,7 +30,9 @@ class LessonTwoCpOne {
         let codeIsCorrect = false;
         let code = document.getElementById("input").value;
         if (code != null) {
-            let regex = /print\s*\(\s*ellipse\s*\(\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\)\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\)\s*;/;
+            console.log("CODE: " + code);
+            //let regex: RegExp = /print\s*\(\s*ellipse\s*\(\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\)\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\)\s*;/;
+            let regex = /print\s*\(/;
             let match = code.match(regex);
             if (match != null && match.length > 0) {
                 console.log(match);
