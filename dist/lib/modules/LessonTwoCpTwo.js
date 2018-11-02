@@ -26,7 +26,7 @@ class LessonTwoCpTwo {
     checkGoal(document, effects) {
         for (let effect of effects) {
             if (effect instanceof EllipseEffect_1.EllipseEffect) {
-                if (effect.w > 200 && effect.h < 50) {
+                if (effect.w > 200 && effect.h < 80) {
                     return true;
                 }
             }

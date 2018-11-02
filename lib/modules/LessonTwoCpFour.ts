@@ -14,7 +14,9 @@ export class LessonTwoCpFour implements Module {
     <p> For example, take a look at the code above. Change the a in the print statement to b, and observe what happened on the CANVAS. </p>
     <p> GOAL: Change a to b in the print statement. </p>`;
 
-    readonly _starterCode = `a = "moo moo";\nb = ellipse(100, 100);\nprint(a, 50, 70);`;
+    readonly _starterCode = `a = "moo moo";
+    b = ellipse(100, 100);
+    print(a, 50, 70);`;
 
     constructor(){
     }

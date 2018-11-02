@@ -20,7 +20,7 @@ class LessonOneCpFour {
     checkGoal(document, effects) {
         for (let effect of effects) {
             if (effect instanceof StringEffect_1.StringEffect && effect.str === "moo") {
-                if ((effect.x > 200 || effect.x < 240) && (effect.y > 230 || effect.y < 300)) {
+                if ((effect.x > 200 && effect.x < 240) && (effect.y > 230 && effect.y < 300)) {
                     return true;
                 }
             }
