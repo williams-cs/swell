@@ -1,6 +1,6 @@
 import { Module } from "./Module";
 import { Effect } from "../effects/Effect";
-export declare class LessonTwoCpFive implements Module {
+export declare class LessonTwoCpSeven implements Module {
     readonly _name: string;
     readonly _nextModule: string;
     readonly _goal: any;

@@ -133,4 +133,6 @@ var LessonTwoCpFive_1 = require("./lib/modules/LessonTwoCpFive");
 exports.LessonTwoCpFive = LessonTwoCpFive_1.LessonTwoCpFive;
 var LessonTwoCpSix_1 = require("./lib/modules/LessonTwoCpSix");
 exports.LessonTwoCpSix = LessonTwoCpSix_1.LessonTwoCpSix;
+var LessonTwoCpSeven_1 = require("./lib/modules/LessonTwoCpSeven");
+exports.LessonTwoCpSeven = LessonTwoCpSeven_1.LessonTwoCpSeven;
 //# sourceMappingURL=index.js.map

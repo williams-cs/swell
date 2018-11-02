@@ -83,3 +83,4 @@ export {LessonTwoCpThree} from './lib/modules/LessonTwoCpThree';
 export {LessonTwoCpFour} from './lib/modules/LessonTwoCpFour';
 export {LessonTwoCpFive} from './lib/modules/LessonTwoCpFive';
 export {LessonTwoCpSix} from './lib/modules/LessonTwoCpSix';
+export {LessonTwoCpSeven} from './lib/modules/LessonTwoCpSeven';

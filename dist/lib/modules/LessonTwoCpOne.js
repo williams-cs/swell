@@ -16,7 +16,7 @@ class LessonTwoCpOne {
     /**
      * A lesson to print a string
      * goals: moving the text and observe the code
-     * @param document The HTML document
+     * @param document: The HTML document
      * @param effects: the list of effects currently on the CANVAS
      */
     checkGoal(document, effects) {
@@ -24,17 +24,9 @@ class LessonTwoCpOne {
         let codeIsCorrect = false;
         let code = document.getElementById("input").value;
         if (code != null) {
-            console.log("CODE: " + code);
-            //let regex: RegExp = /print\s*\(\s*ellipse\s*\(\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\)\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\)\s*;/;
             let regex = /print\s*\(\s*ellipse\s*\(\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\)\s*,\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\);/;
             let match = code.match(regex);
-            console.log("Match: " + match);
             codeIsCorrect = match != null && match.length > 0;
-            /*
-            var nums = inputtext.match(/\d+/g)
-            if(nums != null) {
-                numbers = nums.map(Number);
-            */
         }
         //check for correct CANVAS effects
         let canvasIsCorrect = true;
