@@ -1,28 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const StringEffect_1 = require("../effects/StringEffect");
+const EllipseEffect_1 = require("../effects/EllipseEffect");
 class LessonTwoCpSix {
     constructor() {
-        this._name = "Lesson 2 Checkpoint 6: Drawing Caterpillar";
-        this._nextModule = 'l2c6';
+        this._name = "l2c6";
+        this._nextModule = 'l2c7';
         this._constraint = 'code';
-        this._instructions = `<p> Changing one circle changes c, which will then in turn change the other circle! </p>
-    <p> Now let's put all we have learned to practice. </p>
-    <p> Create a caterpillar in the shape of the given outlines. </p>
-    <p> GOAL: Create a caterpillar. </p>`;
+        this._instructions = `<p> Now that you have drawn 2 circles both are called c, let's see what happens when you try to modify one of them. </p>
+    <p> Click on one of the circles on the CANVAS, and try make it bigger. Observe what happens to your declaration of c. </p>
+    <p> GOAL: Enlarge one of the circles referred to by c on the CANVAS. </p>`;
     }
     /**
      * A lesson to print a string
      * goals: moving the text and observe the code
-     * @param document The HTML document
+     * @param document: The HTML document
+     * @param effects: the list of effects currently on the CANVAS
      */
     checkGoal(document, effects) {
         for (let effect of effects) {
-            if (effect instanceof StringEffect_1.StringEffect) {
-                if (effect.str !== "") {
-                    if (effect.x < 10 && effect.y < 70) {
-                        return true;
-                    }
+            if (effect instanceof EllipseEffect_1.EllipseEffect) {
+                if (effect.w > 250 && effect.h > 250) {
+                    return true;
                 }
             }
         }
