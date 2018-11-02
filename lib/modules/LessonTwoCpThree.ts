@@ -24,8 +24,8 @@ export class LessonTwoCpThree implements Module {
      * @param effects: the list of effects currently on the CANVAS
      */
     checkGoal(document: Document, effects: Effect<any>[]): boolean {
-        let circleCount = 0;
         let stringExists = false;
+        let circleCount = 0;
 
         for (let effect of effects) {
           if (!stringExists) {

@@ -19,8 +19,8 @@ class LessonTwoCpThree {
      * @param effects: the list of effects currently on the CANVAS
      */
     checkGoal(document, effects) {
-        let circleCount = 0;
         let stringExists = false;
+        let circleCount = 0;
         for (let effect of effects) {
             if (!stringExists) {
                 stringExists = effect instanceof StringEffect_1.StringEffect && effect.str !== "";

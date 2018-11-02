@@ -2,13 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const EllipseEffect_1 = require("../effects/EllipseEffect");
 class LessonTwoCpFour {
-    /*
-    `<p> Did you see the words on the CANVAS changed? </p>
-    <p> In our code, we make the variable a refer to the words "moo moo", and the variable b refer an ellipse(100, 100). </p>
-    <p> As a result, when we tell the computer to print a, it will print "moo moo", and when we tell the computer to print b, it will print the circle. </p>
-    <p> Let's take this one step further: Create a new variable c, and make it refer to ellipse(100, 100). Then write 2 statements to print c. What do you think would happen? </p>
-    <p> GOAL: Create a variable c referring to an ellipse(100, 100), then write 2 statements to print c. </p>`;
-*/
     constructor() {
         this._name = "l2c4";
         this._nextModule = 'l2c5';
