@@ -6,7 +6,7 @@ export class LessonTwoCpFive implements Module {
     readonly _name: string = "l2c5";
     readonly _nextModule: string = 'l2c6';
     readonly _goal: any;
-    readonly _constraint: string = 'code';
+    readonly _constraint: string = 'none';
     readonly _instructions: string =
     `<p> Did you see the words on the CANVAS changed? </p>
     <p> In our code, we make variable a refer to the words "moo moo", and variable b refer to an ellipse(100, 100). </p>

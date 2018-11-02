@@ -10,7 +10,7 @@ class LessonTwoCpFive {
     constructor() {
         this._name = "l2c5";
         this._nextModule = 'l2c6';
-        this._constraint = 'code';
+        this._constraint = 'none';
         this._instructions = `<p> Did you see the words on the CANVAS changed? </p>
     <p> In our code, we make variable a refer to the words "moo moo", and variable b refer to an ellipse(100, 100). </p>
     <p> As a result, when we tell the computer to print a, it will print "moo moo", and when we tell the computer to print b, it will print a circle. </p>
