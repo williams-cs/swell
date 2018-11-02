@@ -3,7 +3,7 @@ import { Effect } from "../effects/Effect";
 import { StringEffect } from "../effects/StringEffect";
 
 export class LessonOneCpOne implements Module {
-    readonly _name: string = "Lesson 1 Checkpoint 1: Saying Hi";
+    readonly _name: string = "l1c1";
     readonly _nextModule: string = 'l1c2';
     readonly _goal: any;
     readonly _constraint: string = 'none';
@@ -17,8 +17,9 @@ export class LessonOneCpOne implements Module {
 
     /**
      * A lesson to print a string
-     * goals: write any string on canvas
-     * @param document The HTML document
+     * goals: write any string on CANVAS
+     * @param document: The HTML document
+     * @param effects: the list of effects currently on the CANVAS
      */
     checkGoal(document: Document, effects: Effect<any>[]): boolean {
         for (let effect of effects) {

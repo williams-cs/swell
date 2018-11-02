@@ -3,10 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const StringEffect_1 = require("../effects/StringEffect");
 class LessonOneCpTwo {
     constructor() {
-        this._name = "Lesson 1 Checkpoint 2: Changing Text";
+        this._name = "l1c2";
         this._nextModule = 'l1c3';
         this._constraint = 'code';
-        this._instructions = `<p> You just told the computer to create words on the CANVAS! </p>
+        this._instructions = `<p> You just told the computer to write words on the CANVAS! </p>
     <p> Now let's do something more interesting: click on the words on the CANVAS, then move it to the top left of the screen. Observe what happens to your code. </p>
     <p> GOAL: Move the words you just created to the top left of the screen. </p>`;
     }
@@ -14,14 +14,13 @@ class LessonOneCpTwo {
      * A lesson to print a string
      * goals: moving the text and observe the code
      * @param document The HTML document
+     * @param effects: the list of effects currently on the CANVAS
      */
     checkGoal(document, effects) {
         for (let effect of effects) {
-            if (effect instanceof StringEffect_1.StringEffect) {
-                if (effect.str !== "") {
-                    if (effect.x < 10 && effect.y < 70) {
-                        return true;
-                    }
+            if (effect instanceof StringEffect_1.StringEffect && effect.str !== "") {
+                if (effect.x < 10 && effect.y < 70) {
+                    return true;
                 }
             }
         }

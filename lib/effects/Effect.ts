@@ -23,18 +23,18 @@ export interface Effect<T>{
     /**
      * Returns string for selection logging
      */
-    toSelString(): string; 
+    toSelString(): string;
 
     /**
      * returns string for drag logging
      */
-    toDragString(): string; 
+    toDragString(): string;
 
     /**
      * // returns string for ID assignment logging
      */
-    toIDString(): string; 
-    
+    toIDString(): string;
+
     /**
      * The x position
      */
@@ -47,7 +47,7 @@ export interface Effect<T>{
     /**
      * The ID of the object
      */
-    idObj: {readonly _id: number}; 
+    idObj: {readonly _id: number};
 
     /**
      * The object dimensions
@@ -79,4 +79,7 @@ export interface Effect<T>{
      * Returns the object ID
      */
     getID(): number;
+
+    addEventListeners(): void;
+    removeEventListeners(): void;
 }

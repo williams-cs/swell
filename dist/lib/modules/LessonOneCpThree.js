@@ -3,10 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const StringEffect_1 = require("../effects/StringEffect");
 class LessonOneCpThree {
     constructor() {
-        this._name = "Lesson 1 Checkpoint 3: Use Code to Move Text";
+        this._name = "l1c3";
         this._nextModule = 'l1c4';
         this._constraint = 'canvas';
-        this._instructions = `<p> Yep! Moving the words actually change numbers in your CODE. </p>
+        this._instructions = `<p> Yep! Moving the words actually change the numbers in your CODE. </p>
     <p> Now the CANVAS has been frozen! Try changing your CODE to see if you can move the words to the bottom right corner. </p>
     <p> GOAL: Move the words to the bottom right of the CANVAS. </p>
     <p> HINT: Change one of the 2 numbers at a time, then click RUN to see how that changes the CANVAS.`;
@@ -15,14 +15,13 @@ class LessonOneCpThree {
      * A lesson to print a string
      * goals: moving the text and observe the code
      * @param document The HTML document
+     * @param effects: the list of effects currently on the CANVAS
      */
     checkGoal(document, effects) {
         for (let effect of effects) {
-            if (effect instanceof StringEffect_1.StringEffect) {
-                if (effect.str !== "") {
-                    if (effect.x < 10 && effect.y < 70) {
-                        return true;
-                    }
+            if (effect instanceof StringEffect_1.StringEffect && effect.str !== "") {
+                if (effect.x > 470 && effect.y > 530) {
+                    return true;
                 }
             }
         }

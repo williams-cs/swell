@@ -48,6 +48,10 @@ export declare class RectangleEffect implements Effect<RectangleNode> {
      */
     addEventListeners(): void;
     /**
+     * Removes all the necessary event listeners in another fell swoop
+     */
+    removeEventListeners(): void;
+    /**
      * Returns true if the mouse is inside of the object's bounding rectangle, false if otherwise
      * @param mx the mouse x coordinate
      * @param my the mouse y coordinate
