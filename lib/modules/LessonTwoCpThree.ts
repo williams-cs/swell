@@ -51,9 +51,7 @@ export class LessonTwoCpThree implements Module {
           }
         }
 
-
-
-        return stringExists && circleCount > 2;
+        return stringExists && circleCount >= 2;
     }
 
     /**

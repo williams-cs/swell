@@ -42,7 +42,7 @@ class LessonTwoCpThree {
                 circleCount += 1;
             }
         }
-        return stringExists && circleCount > 2;
+        return stringExists && circleCount >= 2;
     }
     /**
      * Returns the module name
