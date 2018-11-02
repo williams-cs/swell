@@ -10,7 +10,7 @@ export declare class LessonTwoCpThree implements Module {
     /**
      * A lesson to print a string
      * goals: moving the text and observe the code
-     * @param document The HTML document
+     * @param document: The HTML document
      * @param effects: the list of effects currently on the CANVAS
      */
     checkGoal(document: Document, effects: Effect<any>[]): boolean;
