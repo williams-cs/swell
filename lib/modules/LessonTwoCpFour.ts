@@ -1,6 +1,6 @@
 import { Module } from "./Module";
 import { Effect } from "../effects/Effect";
-import { StringEffect } from "../effects/StringEffect";
+import { EllipseEffect } from "../effects/EllipseEffect";
 
 export class LessonTwoCpFour implements Module {
     readonly _name: string = "l2c4";
@@ -14,10 +14,7 @@ export class LessonTwoCpFour implements Module {
     <p> For example, take a look at the code above. Change the a in the print statement to b, and observe what happened on the CANVAS. </p>
     <p> GOAL: Change a to b in the print statement. </p>`;
 
-    readonly _starterCode = `
-    a = "moo moo";
-    b = ellipse(100, 100);
-    print(a, 50, 70);`;
+    readonly _starterCode = `a = "moo moo";\nb = ellipse(100, 100);\nprint(a, 50, 70);`;
 
     /*
     `<p> Did you see the words on the CANVAS changed? </p>
@@ -36,16 +33,25 @@ export class LessonTwoCpFour implements Module {
      * @param effects: the list of effects currently on the CANVAS
      */
     checkGoal(document: Document, effects: Effect<any>[]): boolean {
-        for (let effect of effects) {
-          if (effect instanceof StringEffect) {
-            if (effect.str !== "") {
-              if (effect.x < 10 && effect.y < 70) {
-                return true;
-              }
-            }
-          }
+      //check for correct CODE
+      let codeIsCorrect = false;
+      let code = (document.getElementById("input") as HTMLInputElement).value;
+      if (code != null) {
+          let regex: RegExp = /print\s*\(\s*b\s*,\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\);/;
+          let match = code.match(regex);
+          codeIsCorrect = match != null && match.length > 0;
+      }
+
+      //check for correct CANVAS effects
+      let canvasIsCorrect = true;
+      for (let effect of effects) {
+        if (!canvasIsCorrect && effect instanceof EllipseEffect) {
+          canvasIsCorrect = true;
+          break;
         }
-        return false;
+      }
+
+      return codeIsCorrect && canvasIsCorrect;
     }
 
     /**

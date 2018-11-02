@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const StringEffect_1 = require("../effects/StringEffect");
+const EllipseEffect_1 = require("../effects/EllipseEffect");
 class LessonTwoCpFour {
     /*
     `<p> Did you see the words on the CANVAS changed? </p>
@@ -18,10 +18,7 @@ class LessonTwoCpFour {
     <p> Variables are simply names you give to the things that you draw. </p>
     <p> For example, take a look at the code above. Change the a in the print statement to b, and observe what happened on the CANVAS. </p>
     <p> GOAL: Change a to b in the print statement. </p>`;
-        this._starterCode = `
-    a = "moo moo";
-    b = ellipse(100, 100);
-    print(a, 50, 70);`;
+        this._starterCode = `a = "moo moo";\nb = ellipse(100, 100);\nprint(a, 50, 70);`;
     }
     /**
      * A lesson to print a string
@@ -30,16 +27,23 @@ class LessonTwoCpFour {
      * @param effects: the list of effects currently on the CANVAS
      */
     checkGoal(document, effects) {
+        //check for correct CODE
+        let codeIsCorrect = false;
+        let code = document.getElementById("input").value;
+        if (code != null) {
+            let regex = /print\s*\(\s*b\s*,\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\);/;
+            let match = code.match(regex);
+            codeIsCorrect = match != null && match.length > 0;
+        }
+        //check for correct CANVAS effects
+        let canvasIsCorrect = true;
         for (let effect of effects) {
-            if (effect instanceof StringEffect_1.StringEffect) {
-                if (effect.str !== "") {
-                    if (effect.x < 10 && effect.y < 70) {
-                        return true;
-                    }
-                }
+            if (!canvasIsCorrect && effect instanceof EllipseEffect_1.EllipseEffect) {
+                canvasIsCorrect = true;
+                break;
             }
         }
-        return false;
+        return codeIsCorrect && canvasIsCorrect;
     }
     /**
      * Returns the module name
