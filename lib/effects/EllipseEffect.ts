@@ -94,48 +94,40 @@ export class EllipseEffect implements Effect<EllipseNode> {
         }
     }
 
+    private mouseMove: EventListenerOrEventListenerObject = this.onMouseMove.bind(this);
+    private mouseDown: EventListenerOrEventListenerObject = this.onMouseDown.bind(this);
+    private mouseUp: EventListenerOrEventListenerObject = this.onMouseUp.bind(this);
+    private shiftDown: EventListenerOrEventListenerObject = this.onShiftDown.bind(this);
+    private shiftUp: EventListenerOrEventListenerObject = this.onShiftUp.bind(this);
+    private mouseOutside: EventListenerOrEventListenerObject = this.isMouseOutside.bind(this);
+    private selectStart: EventListenerOrEventListenerObject = function(e) { e.preventDefault(); return false; };
     /**
      * Adds all the necessary event listeners in one fell swoop
      */
     addEventListeners(): void {
-        this._canvas.addEventListener('mousemove', this.onMouseMove.bind(this)); // bind in order to maintain the meaning of 'this'
-        this._canvas.addEventListener('mousedown', this.onMouseDown.bind(this));
-        this._canvas.addEventListener('mouseup', this.onMouseUp.bind(this));
-        window.addEventListener('keydown', this.onShiftDown.bind(this));
-        window.addEventListener('keyup', this.onShiftUp.bind(this));
-        window.addEventListener('mousedown', this.isMouseOutside.bind(this));
+        this._canvas.addEventListener('mousemove', this.mouseMove); // bind in order to maintain the meaning of 'this'
+        this._canvas.addEventListener('mousedown', this.mouseDown);
+        this._canvas.addEventListener('mouseup', this.mouseUp);
+        window.addEventListener('keydown', this.shiftDown);
+        window.addEventListener('keyup', this.shiftUp);
+        window.addEventListener('mousedown', this.mouseOutside);
         //makes it so that double clicking doesn't select text on the page
-        this._canvas.addEventListener('selectstart', function(e) { e.preventDefault(); return false; }, false);
+        this._canvas.addEventListener('selectstart', this.selectStart, false);
     }
-/*
-    handleEvent(event: any) {
-      if (event instanceof MouseEvent) {
-        switch (event.type) {
-          case 'mousemove': {
-            this.onMouseMove(event);
-          }
-          case 'mousedown': {
-            this.onMouseDown(event);
-            this.isMouseOutside(event);
-          }
-          case 'mouseup': {
-            this.onMouseUp(event);
-          }
-        }
-      }
-    }
-*/
+
     /**
      * Removes all the necessary event listeners in another fell swoop
      */
     removeEventListeners(): void {
       console.log("removing EventListners");
-        this._canvas.removeEventListener('mousemove', this.onMouseMove.bind(this)); // bind in order to maintain the meaning of 'this'
-        this._canvas.removeEventListener('mousedown', this.onMouseDown.bind(this));
-        this._canvas.removeEventListener('mouseup', this.onMouseUp.bind(this));
-        window.removeEventListener('keydown', this.onShiftDown.bind(this));
-        window.removeEventListener('keyup', this.onShiftUp.bind(this));
-        window.removeEventListener('mousedown', this.isMouseOutside.bind(this));
+        this._canvas.removeEventListener('mousemove', this.mouseMove); // bind in order to maintain the meaning of 'this'
+        this._canvas.removeEventListener('mousedown', this.mouseDown);
+        this._canvas.removeEventListener('mouseup', this.mouseUp);
+        window.removeEventListener('keydown', this.shiftDown);
+        window.removeEventListener('keyup', this.shiftUp);
+        window.removeEventListener('mousedown', this.mouseOutside);
+        //makes it so that double clicking doesn't select text on the page
+        this._canvas.removeEventListener('selectstart', this.selectStart, false);
     }
 
     /**
