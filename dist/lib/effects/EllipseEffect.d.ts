@@ -44,6 +44,13 @@ export declare class EllipseEffect implements Effect<EllipseNode> {
      * This method is called in order to draw and redraw the object when manipulations are made
      */
     update(): void;
+    private mouseMove;
+    private mouseDown;
+    private mouseUp;
+    private shiftDown;
+    private shiftUp;
+    private mouseOutside;
+    private selectStart;
     /**
      * Adds all the necessary event listeners in one fell swoop
      */
