@@ -73,7 +73,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
         // logging
         this._context.eventLog.push(this.logPaint());
         context.effects.push(this);
-        this.addEventListeners();
+        //this.addEventListeners();
 
     }
 

@@ -51,7 +51,7 @@ class EllipseEffect {
         // logging
         this._context.eventLog.push(this.logPaint());
         context.effects.push(this);
-        this.addEventListeners();
+        //this.addEventListeners();
     }
     /**
      * This method is called in order to draw and redraw the object when manipulations are made
