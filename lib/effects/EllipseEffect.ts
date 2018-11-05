@@ -73,7 +73,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
         // logging
         this._context.eventLog.push(this.logPaint());
         context.effects.push(this);
-        //this.addEventListeners();
+        this.addEventListeners();
 
     }
 
@@ -93,7 +93,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
             this.drawGuides(x - w/2, y - h/2, w, h, this._corner);
         }
     }
-
+/*
     private mouseMove = this.onMouseMove.bind(this);
     private mouseDown = this.onMouseDown.bind(this);
     private mouseUp = this.onMouseUp.bind(this);
@@ -101,41 +101,22 @@ export class EllipseEffect implements Effect<EllipseNode> {
     private shiftUp = this.onShiftUp.bind(this);
     private mouseOutside = this.isMouseOutside.bind(this);
     private selectStart = function(e:any) { e.preventDefault(); return false; };
-
+*/
     /**
      * Adds all the necessary event listeners in one fell swoop
      */
     addEventListeners(): void {
-        this._canvas.addEventListener('mousemove', this.mouseMove); // bind in order to maintain the meaning of 'this'
-        this._canvas.addEventListener('mousedown', this.mouseDown);
-        this._canvas.addEventListener('mouseup', this.mouseUp);
-        window.addEventListener('keydown', this.shiftDown);
-        window.addEventListener('keyup', this.shiftUp);
-        window.addEventListener('mousedown', this.mouseOutside);
+        this._canvas.addEventListener('mousemove', this.onMouseMove.bind(this)); // bind in order to maintain the meaning of 'this'
+        this._canvas.addEventListener('mousedown', this.onMouseDown.bind(this));
+        this._canvas.addEventListener('mouseup', this.onMouseUp.bind(this));
+        window.addEventListener('keydown', this.onShiftDown.bind(this));
+        window.addEventListener('keyup', this.onShiftUp.bind(this));
+        window.addEventListener('mousedown', this.isMouseOutside.bind(this));
         //makes it so that double clicking doesn't select text on the page
-        this._canvas.addEventListener('selectstart', this.selectStart, false);
+        this._canvas.addEventListener('selectstart', function(e:any) { e.preventDefault(); return false; }, false);
     }
+
 /*
-    handleEvent(event: any) {
-      if (event instanceof MouseEvent) {
-        switch (event.type) {
-          case 'mousemove': {
-            this.onMouseMove(event);
-          }
-          case 'mousedown': {
-            this.onMouseDown(event);
-            this.isMouseOutside(event);
-          }
-          case 'mouseup': {
-            this.onMouseUp(event);
-          }
-        }
-      }
-    }
-*/
-    /**
-     * Removes all the necessary event listeners in another fell swoop
-     */
     removeEventListeners(): void {
       console.log("removing EventListners");
         this._canvas.removeEventListener('mousemove', this.mouseMove); // bind in order to maintain the meaning of 'this'
@@ -148,6 +129,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
         this._canvas.removeEventListener('selectstart', this.selectStart, false);
     }
 
+*/
     /**
      * Returns true if the mouse is inside of the object's bounding rectangle, false if otherwise
      * @param mx the mouse x coordinate
