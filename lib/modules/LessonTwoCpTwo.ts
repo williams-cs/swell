@@ -30,7 +30,7 @@ export class LessonTwoCpTwo implements Module {
     checkGoal(document: Document, effects: Effect<any>[]): boolean {
         for (let effect of effects) {
           if (effect instanceof EllipseEffect) {
-            if (effect.w > 200 && effect.h  < 50) {
+            if (effect.w > 200 && effect.h < 80) {
               return true;
             }
           }

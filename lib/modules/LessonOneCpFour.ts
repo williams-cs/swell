@@ -25,7 +25,7 @@ export class LessonOneCpFour implements Module {
     checkGoal(document: Document, effects: Effect<any>[]): boolean {
         for (let effect of effects) {
           if (effect instanceof StringEffect && effect.str === "moo") {
-            if ((effect.x > 200 || effect.x < 240) && (effect.y > 230 || effect.y < 300)) {
+            if ((effect.x > 200 && effect.x < 240) && (effect.y > 230 && effect.y < 300)) {
               return true;
             }
           }
