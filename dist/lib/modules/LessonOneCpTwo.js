@@ -10,6 +10,12 @@ class LessonOneCpTwo {
     <p> Now let's do something more interesting: click on the words on the CANVAS, then move it to the top left of the screen. Observe what happens to your code. </p>
     <p> GOAL: Move the words you just created to the top left of the screen. </p>`;
     }
+    drawGuides(context) {
+        context.beginPath();
+        context.rect(188, 50, 200, 100);
+        context.strokeStyle = 'black';
+        context.stroke();
+    }
     /**
      * A lesson to print a string
      * goals: moving the text and observe the code

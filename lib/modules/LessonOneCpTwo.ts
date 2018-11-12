@@ -15,6 +15,13 @@ export class LessonOneCpTwo implements Module {
     constructor(){
     }
 
+    drawGuides(context: CanvasRenderingContext2D): void {
+      context.beginPath();
+      context.rect(188, 50, 200, 100);
+      context.strokeStyle = 'black';
+      context.stroke();
+    }
+
     /**
      * A lesson to print a string
      * goals: moving the text and observe the code
