@@ -78,6 +78,8 @@ var EllipseNode_1 = require("./lib/shapes/EllipseNode");
 exports.EllipseNode = EllipseNode_1.EllipseNode;
 var RectangleNode_1 = require("./lib/shapes/RectangleNode");
 exports.RectangleNode = RectangleNode_1.RectangleNode;
+var LineNode_1 = require("./lib/shapes/LineNode");
+exports.LineNode = LineNode_1.LineNode;
 var EphNode_1 = require("./lib/shapes/EphNode");
 exports.EphNode = EphNode_1.EphNode;
 var PrintNode_1 = require("./lib/structural/PrintNode");
@@ -96,6 +98,8 @@ var Dimensions_1 = require("./lib/structural/Dimensions");
 exports.Dimensions = Dimensions_1.Dimensions;
 var RectangleEffect_1 = require("./lib/effects/RectangleEffect");
 exports.RectangleEffect = RectangleEffect_1.RectangleEffect;
+var LineEffect_1 = require("./lib/effects/LineEffect");
+exports.LineEffect = LineEffect_1.LineEffect;
 var EphEffect_1 = require("./lib/effects/EphEffect");
 exports.EphEffect = EphEffect_1.EphEffect;
 /* EVENTS */

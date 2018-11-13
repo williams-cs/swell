@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>EphEffect | swell</title>
+	<title>LineEffect | swell</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,13 +54,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_lib_effects_epheffect_.html">&quot;lib/effects/EphEffect&quot;</a>
+					<a href="../modules/_lib_effects_lineeffect_.html">&quot;lib/effects/LineEffect&quot;</a>
 				</li>
 				<li>
-					<a href="_lib_effects_epheffect_.epheffect.html">EphEffect</a>
+					<a href="_lib_effects_lineeffect_.lineeffect.html">LineEffect</a>
 				</li>
 			</ul>
-			<h1>Class EphEffect</h1>
+			<h1>Class LineEffect</h1>
 		</div>
 	</div>
 </header>
@@ -71,14 +71,14 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">EphEffect</span>
+						<span class="target">LineEffect</span>
 					</li>
 				</ul>
 			</section>
 			<section class="tsd-panel">
 				<h3>Implements</h3>
 				<ul class="tsd-hierarchy">
-					<li><a href="../interfaces/_lib_effects_effect_.effect.html" class="tsd-signature-type">Effect</a><span class="tsd-signature-symbol">&lt;</span><a href="_lib_shapes_ephnode_.ephnode.html" class="tsd-signature-type">EphNode</a><span class="tsd-signature-symbol">&gt;</span></li>
+					<li><a href="../interfaces/_lib_effects_effect_.effect.html" class="tsd-signature-type">Effect</a><span class="tsd-signature-symbol">&lt;</span><a href="_lib_shapes_linenode_.linenode.html" class="tsd-signature-type">LineNode</a><span class="tsd-signature-symbol">&gt;</span></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -88,92 +88,89 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_epheffect_.epheffect.html#_canvas" class="tsd-kind-icon">_canvas</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_epheffect_.epheffect.html#_context" class="tsd-kind-icon">_context</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_epheffect_.epheffect.html#_corner" class="tsd-kind-icon">_corner</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_epheffect_.epheffect.html#_ctx" class="tsd-kind-icon">_ctx</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_epheffect_.epheffect.html#_dims" class="tsd-kind-icon">_dims</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_epheffect_.epheffect.html#_dragoffx" class="tsd-kind-icon">_dragoffx</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_epheffect_.epheffect.html#_dragoffy" class="tsd-kind-icon">_dragoffy</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_epheffect_.epheffect.html#_eph" class="tsd-kind-icon">_eph</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_epheffect_.epheffect.html#_ephimg" class="tsd-kind-icon">_eph<wbr>Img</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_epheffect_.epheffect.html#_height1" class="tsd-kind-icon">_height1</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_epheffect_.epheffect.html#_initdistance" class="tsd-kind-icon">_init<wbr>Distance</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_epheffect_.epheffect.html#_ischangingdims" class="tsd-kind-icon">_is<wbr>Changing<wbr>Dims</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_epheffect_.epheffect.html#_isdragging" class="tsd-kind-icon">_is<wbr>Dragging</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_epheffect_.epheffect.html#_isresizing" class="tsd-kind-icon">_is<wbr>Resizing</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_epheffect_.epheffect.html#_isselected" class="tsd-kind-icon">_is<wbr>Selected</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_epheffect_.epheffect.html#_isselectingmultiple" class="tsd-kind-icon">_is<wbr>Selecting<wbr>Multiple</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_epheffect_.epheffect.html#_justdragged" class="tsd-kind-icon">_just<wbr>Dragged</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_epheffect_.epheffect.html#_ratio" class="tsd-kind-icon">_ratio</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_epheffect_.epheffect.html#_width1" class="tsd-kind-icon">_width1</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_epheffect_.epheffect.html#_x1" class="tsd-kind-icon">_x1</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_epheffect_.epheffect.html#_y1" class="tsd-kind-icon">_y1</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#idobj" class="tsd-kind-icon">id<wbr>Obj</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_lineeffect_.lineeffect.html#_canvas" class="tsd-kind-icon">_canvas</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_lineeffect_.lineeffect.html#_context" class="tsd-kind-icon">_context</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_lineeffect_.lineeffect.html#_corner" class="tsd-kind-icon">_corner</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_lineeffect_.lineeffect.html#_ctx" class="tsd-kind-icon">_ctx</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_lineeffect_.lineeffect.html#_dims" class="tsd-kind-icon">_dims</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_lineeffect_.lineeffect.html#_dragoffx" class="tsd-kind-icon">_dragoffx</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_lineeffect_.lineeffect.html#_dragoffy" class="tsd-kind-icon">_dragoffy</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_lineeffect_.lineeffect.html#_height1" class="tsd-kind-icon">_height1</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_lineeffect_.lineeffect.html#_initdistance" class="tsd-kind-icon">_init<wbr>Distance</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_lineeffect_.lineeffect.html#_ischangingdims" class="tsd-kind-icon">_is<wbr>Changing<wbr>Dims</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_lineeffect_.lineeffect.html#_isdragging" class="tsd-kind-icon">_is<wbr>Dragging</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_lineeffect_.lineeffect.html#_isresizing" class="tsd-kind-icon">_is<wbr>Resizing</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_lineeffect_.lineeffect.html#_isselected" class="tsd-kind-icon">_is<wbr>Selected</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_lineeffect_.lineeffect.html#_isselectingmultiple" class="tsd-kind-icon">_is<wbr>Selecting<wbr>Multiple</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_lineeffect_.lineeffect.html#_justdragged" class="tsd-kind-icon">_just<wbr>Dragged</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_lineeffect_.lineeffect.html#_line" class="tsd-kind-icon">_line</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_lineeffect_.lineeffect.html#_ratio" class="tsd-kind-icon">_ratio</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_lineeffect_.lineeffect.html#_width1" class="tsd-kind-icon">_width1</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_lineeffect_.lineeffect.html#_x1" class="tsd-kind-icon">_x1</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_lineeffect_.lineeffect.html#_y1" class="tsd-kind-icon">_y1</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#idobj" class="tsd-kind-icon">id<wbr>Obj</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#dims" class="tsd-kind-icon">dims</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#h" class="tsd-kind-icon">h</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#image" class="tsd-kind-icon">image</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#isdragging" class="tsd-kind-icon">is<wbr>Dragging</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#selected" class="tsd-kind-icon">selected</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#w" class="tsd-kind-icon">w</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#x" class="tsd-kind-icon">x</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#y" class="tsd-kind-icon">y</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#dims" class="tsd-kind-icon">dims</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#h" class="tsd-kind-icon">h</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#isdragging" class="tsd-kind-icon">is<wbr>Dragging</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#selected" class="tsd-kind-icon">selected</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#w" class="tsd-kind-icon">w</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#x" class="tsd-kind-icon">x</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#y" class="tsd-kind-icon">y</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#addeventlisteners" class="tsd-kind-icon">add<wbr>Event<wbr>Listeners</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#ast" class="tsd-kind-icon">ast</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#contains" class="tsd-kind-icon">contains</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#draw" class="tsd-kind-icon">draw</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#drawguides" class="tsd-kind-icon">draw<wbr>Guides</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#drawsquare" class="tsd-kind-icon">draw<wbr>Square</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#getid" class="tsd-kind-icon">getID</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#getjustdragged" class="tsd-kind-icon">get<wbr>Just<wbr>Dragged</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#getmouseposition" class="tsd-kind-icon">get<wbr>Mouse<wbr>Position</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#guidecontains" class="tsd-kind-icon">guide<wbr>Contains</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#initid" class="tsd-kind-icon">initID</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#ismouseoutside" class="tsd-kind-icon">is<wbr>Mouse<wbr>Outside</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#logclick" class="tsd-kind-icon">log<wbr>Click</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#logpaint" class="tsd-kind-icon">log<wbr>Paint</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#logresize" class="tsd-kind-icon">log<wbr>Resize</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#modifychangedims" class="tsd-kind-icon">modify<wbr>Change<wbr>Dims</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#modifychangedimshelper" class="tsd-kind-icon">modify<wbr>Change<wbr>Dims<wbr>Helper</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#modifydrag" class="tsd-kind-icon">modify<wbr>Drag</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#modifyreset" class="tsd-kind-icon">modify<wbr>Reset</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#modifyresize" class="tsd-kind-icon">modify<wbr>Resize</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#modifyresizehelper" class="tsd-kind-icon">modify<wbr>Resize<wbr>Helper</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#modifystate" class="tsd-kind-icon">modify<wbr>State</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#onmousedown" class="tsd-kind-icon">on<wbr>Mouse<wbr>Down</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#onmousemove" class="tsd-kind-icon">on<wbr>Mouse<wbr>Move</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#onmouseup" class="tsd-kind-icon">on<wbr>Mouse<wbr>Up</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#onshiftdown" class="tsd-kind-icon">on<wbr>Shift<wbr>Down</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#onshiftup" class="tsd-kind-icon">on<wbr>Shift<wbr>Up</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#removeeventlisteners" class="tsd-kind-icon">remove<wbr>Event<wbr>Listeners</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#setjustdragged" class="tsd-kind-icon">set<wbr>Just<wbr>Dragged</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#todragstring" class="tsd-kind-icon">to<wbr>Drag<wbr>String</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#toidstring" class="tsd-kind-icon">toIDString</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#toselstring" class="tsd-kind-icon">to<wbr>Sel<wbr>String</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#update" class="tsd-kind-icon">update</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_epheffect_.epheffect.html#updateast" class="tsd-kind-icon">updateAST</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#addeventlisteners" class="tsd-kind-icon">add<wbr>Event<wbr>Listeners</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#ast" class="tsd-kind-icon">ast</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#contains" class="tsd-kind-icon">contains</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#draw" class="tsd-kind-icon">draw</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#drawguides" class="tsd-kind-icon">draw<wbr>Guides</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#drawsquare" class="tsd-kind-icon">draw<wbr>Square</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#getid" class="tsd-kind-icon">getID</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#getjustdragged" class="tsd-kind-icon">get<wbr>Just<wbr>Dragged</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#getmouseposition" class="tsd-kind-icon">get<wbr>Mouse<wbr>Position</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#guidecontains" class="tsd-kind-icon">guide<wbr>Contains</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#initid" class="tsd-kind-icon">initID</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#ismouseoutside" class="tsd-kind-icon">is<wbr>Mouse<wbr>Outside</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#logclick" class="tsd-kind-icon">log<wbr>Click</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#logpaint" class="tsd-kind-icon">log<wbr>Paint</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#logresize" class="tsd-kind-icon">log<wbr>Resize</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#modifychangedims" class="tsd-kind-icon">modify<wbr>Change<wbr>Dims</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#modifychangedimshelper" class="tsd-kind-icon">modify<wbr>Change<wbr>Dims<wbr>Helper</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#modifydrag" class="tsd-kind-icon">modify<wbr>Drag</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#modifyreset" class="tsd-kind-icon">modify<wbr>Reset</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#modifyresize" class="tsd-kind-icon">modify<wbr>Resize</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#modifyresizehelper" class="tsd-kind-icon">modify<wbr>Resize<wbr>Helper</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#modifystate" class="tsd-kind-icon">modify<wbr>State</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#onmousedown" class="tsd-kind-icon">on<wbr>Mouse<wbr>Down</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#onmousemove" class="tsd-kind-icon">on<wbr>Mouse<wbr>Move</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#onmouseup" class="tsd-kind-icon">on<wbr>Mouse<wbr>Up</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#onshiftdown" class="tsd-kind-icon">on<wbr>Shift<wbr>Down</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#onshiftup" class="tsd-kind-icon">on<wbr>Shift<wbr>Up</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#removeeventlisteners" class="tsd-kind-icon">remove<wbr>Event<wbr>Listeners</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#setjustdragged" class="tsd-kind-icon">set<wbr>Just<wbr>Dragged</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#todragstring" class="tsd-kind-icon">to<wbr>Drag<wbr>String</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#toidstring" class="tsd-kind-icon">toIDString</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#toselstring" class="tsd-kind-icon">to<wbr>Sel<wbr>String</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_effects_lineeffect_.lineeffect.html#update" class="tsd-kind-icon">update</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-private tsd-is-private-protected">
 							<h3>Object literals</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-object-literal tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_epheffect_.epheffect.html#_mouse" class="tsd-kind-icon">_mouse</a></li>
+								<li class="tsd-kind-object-literal tsd-parent-kind-class tsd-is-private"><a href="_lib_effects_lineeffect_.lineeffect.html#_mouse" class="tsd-kind-icon">_mouse</a></li>
 							</ul>
 						</section>
 					</div>
@@ -185,22 +182,22 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Eph<wbr>Effect<span class="tsd-signature-symbol">(</span>eph<span class="tsd-signature-symbol">: </span><a href="_lib_shapes_ephnode_.ephnode.html" class="tsd-signature-type">EphNode</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_lib_effects_epheffect_.epheffect.html" class="tsd-signature-type">EphEffect</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Line<wbr>Effect<span class="tsd-signature-symbol">(</span>line<span class="tsd-signature-symbol">: </span><a href="_lib_shapes_linenode_.linenode.html" class="tsd-signature-type">LineNode</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_lib_effects_lineeffect_.lineeffect.html" class="tsd-signature-type">LineEffect</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L48">lib/effects/EphEffect.ts:48</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:47</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>eph: <a href="_lib_shapes_ephnode_.ephnode.html" class="tsd-signature-type">EphNode</a></h5>
+									<h5>line: <a href="_lib_shapes_linenode_.linenode.html" class="tsd-signature-type">LineNode</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="_lib_effects_epheffect_.epheffect.html" class="tsd-signature-type">EphEffect</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="_lib_effects_lineeffect_.lineeffect.html" class="tsd-signature-type">LineEffect</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -213,7 +210,7 @@
 					<div class="tsd-signature tsd-kind-icon">_canvas<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">HTMLCanvasElement</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L19">lib/effects/EphEffect.ts:19</a></li>
+							<li>Defined in lib/effects/LineEffect.ts:18</li>
 						</ul>
 					</aside>
 				</section>
@@ -223,7 +220,7 @@
 					<div class="tsd-signature tsd-kind-icon">_context<span class="tsd-signature-symbol">:</span> <a href="_lib_structural_scope_.scope.html" class="tsd-signature-type">Scope</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L36">lib/effects/EphEffect.ts:36</a></li>
+							<li>Defined in lib/effects/LineEffect.ts:35</li>
 						</ul>
 					</aside>
 				</section>
@@ -233,7 +230,7 @@
 					<div class="tsd-signature tsd-kind-icon">_corner<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L20">lib/effects/EphEffect.ts:20</a></li>
+							<li>Defined in lib/effects/LineEffect.ts:19</li>
 						</ul>
 					</aside>
 				</section>
@@ -243,7 +240,7 @@
 					<div class="tsd-signature tsd-kind-icon">_ctx<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CanvasRenderingContext2D</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L18">lib/effects/EphEffect.ts:18</a></li>
+							<li>Defined in lib/effects/LineEffect.ts:17</li>
 						</ul>
 					</aside>
 				</section>
@@ -253,7 +250,7 @@
 					<div class="tsd-signature tsd-kind-icon">_dims<span class="tsd-signature-symbol">:</span> <a href="_lib_structural_dimensions_.dimensions.html" class="tsd-signature-type">Dimensions</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L17">lib/effects/EphEffect.ts:17</a></li>
+							<li>Defined in lib/effects/LineEffect.ts:16</li>
 						</ul>
 					</aside>
 				</section>
@@ -263,7 +260,7 @@
 					<div class="tsd-signature tsd-kind-icon">_dragoffx<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L39">lib/effects/EphEffect.ts:39</a></li>
+							<li>Defined in lib/effects/LineEffect.ts:38</li>
 						</ul>
 					</aside>
 				</section>
@@ -273,27 +270,7 @@
 					<div class="tsd-signature tsd-kind-icon">_dragoffy<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L40">lib/effects/EphEffect.ts:40</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="_eph" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _eph</h3>
-					<div class="tsd-signature tsd-kind-icon">_eph<span class="tsd-signature-symbol">:</span> <a href="_lib_shapes_ephnode_.ephnode.html" class="tsd-signature-type">EphNode</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L15">lib/effects/EphEffect.ts:15</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="_ephimg" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _eph<wbr>Img</h3>
-					<div class="tsd-signature tsd-kind-icon">_eph<wbr>Img<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">HTMLImageElement</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L16">lib/effects/EphEffect.ts:16</a></li>
+							<li>Defined in lib/effects/LineEffect.ts:39</li>
 						</ul>
 					</aside>
 				</section>
@@ -303,7 +280,7 @@
 					<div class="tsd-signature tsd-kind-icon">_height1<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L34">lib/effects/EphEffect.ts:34</a></li>
+							<li>Defined in lib/effects/LineEffect.ts:33</li>
 						</ul>
 					</aside>
 				</section>
@@ -313,7 +290,7 @@
 					<div class="tsd-signature tsd-kind-icon">_init<wbr>Distance<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L41">lib/effects/EphEffect.ts:41</a></li>
+							<li>Defined in lib/effects/LineEffect.ts:40</li>
 						</ul>
 					</aside>
 				</section>
@@ -323,7 +300,7 @@
 					<div class="tsd-signature tsd-kind-icon">_is<wbr>Changing<wbr>Dims<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L26">lib/effects/EphEffect.ts:26</a></li>
+							<li>Defined in lib/effects/LineEffect.ts:25</li>
 						</ul>
 					</aside>
 				</section>
@@ -333,7 +310,7 @@
 					<div class="tsd-signature tsd-kind-icon">_is<wbr>Dragging<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L24">lib/effects/EphEffect.ts:24</a></li>
+							<li>Defined in lib/effects/LineEffect.ts:23</li>
 						</ul>
 					</aside>
 				</section>
@@ -343,7 +320,7 @@
 					<div class="tsd-signature tsd-kind-icon">_is<wbr>Resizing<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L25">lib/effects/EphEffect.ts:25</a></li>
+							<li>Defined in lib/effects/LineEffect.ts:24</li>
 						</ul>
 					</aside>
 				</section>
@@ -353,7 +330,7 @@
 					<div class="tsd-signature tsd-kind-icon">_is<wbr>Selected<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L23">lib/effects/EphEffect.ts:23</a></li>
+							<li>Defined in lib/effects/LineEffect.ts:22</li>
 						</ul>
 					</aside>
 				</section>
@@ -363,7 +340,7 @@
 					<div class="tsd-signature tsd-kind-icon">_is<wbr>Selecting<wbr>Multiple<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L27">lib/effects/EphEffect.ts:27</a></li>
+							<li>Defined in lib/effects/LineEffect.ts:26</li>
 						</ul>
 					</aside>
 				</section>
@@ -373,7 +350,17 @@
 					<div class="tsd-signature tsd-kind-icon">_just<wbr>Dragged<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L29">lib/effects/EphEffect.ts:29</a></li>
+							<li>Defined in lib/effects/LineEffect.ts:28</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="_line" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _line</h3>
+					<div class="tsd-signature tsd-kind-icon">_line<span class="tsd-signature-symbol">:</span> <a href="_lib_shapes_linenode_.linenode.html" class="tsd-signature-type">LineNode</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in lib/effects/LineEffect.ts:15</li>
 						</ul>
 					</aside>
 				</section>
@@ -383,7 +370,7 @@
 					<div class="tsd-signature tsd-kind-icon">_ratio<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L38">lib/effects/EphEffect.ts:38</a></li>
+							<li>Defined in lib/effects/LineEffect.ts:37</li>
 						</ul>
 					</aside>
 				</section>
@@ -393,7 +380,7 @@
 					<div class="tsd-signature tsd-kind-icon">_width1<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L33">lib/effects/EphEffect.ts:33</a></li>
+							<li>Defined in lib/effects/LineEffect.ts:32</li>
 						</ul>
 					</aside>
 				</section>
@@ -403,7 +390,7 @@
 					<div class="tsd-signature tsd-kind-icon">_x1<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L31">lib/effects/EphEffect.ts:31</a></li>
+							<li>Defined in lib/effects/LineEffect.ts:30</li>
 						</ul>
 					</aside>
 				</section>
@@ -413,7 +400,7 @@
 					<div class="tsd-signature tsd-kind-icon">_y1<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L32">lib/effects/EphEffect.ts:32</a></li>
+							<li>Defined in lib/effects/LineEffect.ts:31</li>
 						</ul>
 					</aside>
 				</section>
@@ -424,7 +411,7 @@
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/_lib_effects_effect_.effect.html">Effect</a>.<a href="../interfaces/_lib_effects_effect_.effect.html#idobj">idObj</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L21">lib/effects/EphEffect.ts:21</a></li>
+							<li>Defined in lib/effects/LineEffect.ts:20</li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -449,7 +436,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L752">lib/effects/EphEffect.ts:752</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:736</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -471,37 +458,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L745">lib/effects/EphEffect.ts:745</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:729</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Returns the height of the eph</p>
+									<p>Returns the height of the rect</p>
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
-					<a name="image" class="tsd-anchor"></a>
-					<h3>image</h3>
-					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> image<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">HTMLImageElement</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L766">lib/effects/EphEffect.ts:766</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Returns the image</p>
-								</div>
-							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">HTMLImageElement</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -515,12 +480,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L794">lib/effects/EphEffect.ts:794</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:771</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Returns whether or not the eph is dragging</p>
+									<p>Returns whether or not the rect is dragging</p>
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -537,12 +502,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L759">lib/effects/EphEffect.ts:759</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:743</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Returns whether or not the eph is selected</p>
+									<p>Returns whether or not the rect is selected</p>
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -559,12 +524,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L739">lib/effects/EphEffect.ts:739</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:723</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Returns the width of the eph</p>
+									<p>Returns the width of the rect</p>
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -581,12 +546,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L727">lib/effects/EphEffect.ts:727</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:711</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Returns the x position of the eph</p>
+									<p>Returns the x position of the rect</p>
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -603,12 +568,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L733">lib/effects/EphEffect.ts:733</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:717</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Returns the y position of the eph</p>
+									<p>Returns the y position of the rect</p>
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -629,7 +594,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/_lib_effects_effect_.effect.html">Effect</a>.<a href="../interfaces/_lib_effects_effect_.effect.html#addeventlisteners">addEventListeners</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L108">lib/effects/EphEffect.ts:108</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:97</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -645,16 +610,16 @@
 					<a name="ast" class="tsd-anchor"></a>
 					<h3>ast</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">ast<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_lib_expression_.expression.html" class="tsd-signature-type">Expression</a><span class="tsd-signature-symbol">&lt;</span><a href="_lib_shapes_ephnode_.ephnode.html" class="tsd-signature-type">EphNode</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">ast<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_lib_expression_.expression.html" class="tsd-signature-type">Expression</a><span class="tsd-signature-symbol">&lt;</span><a href="_lib_shapes_linenode_.linenode.html" class="tsd-signature-type">LineNode</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L716">lib/effects/EphEffect.ts:716</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:704</li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_lib_expression_.expression.html" class="tsd-signature-type">Expression</a><span class="tsd-signature-symbol">&lt;</span><a href="_lib_shapes_ephnode_.ephnode.html" class="tsd-signature-type">EphNode</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_lib_expression_.expression.html" class="tsd-signature-type">Expression</a><span class="tsd-signature-symbol">&lt;</span><a href="_lib_shapes_linenode_.linenode.html" class="tsd-signature-type">LineNode</a><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -668,7 +633,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L130">lib/effects/EphEffect.ts:130</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:119</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -706,7 +671,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/_lib_effects_effect_.effect.html">Effect</a>.<a href="../interfaces/_lib_effects_effect_.effect.html#draw">draw</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L62">lib/effects/EphEffect.ts:62</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:61</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -751,7 +716,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L205">lib/effects/EphEffect.ts:205</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:194</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -807,7 +772,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L318">lib/effects/EphEffect.ts:318</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:307</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -863,12 +828,12 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/_lib_effects_effect_.effect.html">Effect</a>.<a href="../interfaces/_lib_effects_effect_.effect.html#getid">getID</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L773">lib/effects/EphEffect.ts:773</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:750</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Returns the ID of the eph</p>
+									<p>Returns the ID of the rect</p>
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -886,12 +851,12 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/_lib_effects_effect_.effect.html">Effect</a>.<a href="../interfaces/_lib_effects_effect_.effect.html#getjustdragged">getJustDragged</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L780">lib/effects/EphEffect.ts:780</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:757</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Returns whether or not the eph has just been dragged</p>
+									<p>Returns whether or not the rect has just been dragged</p>
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -908,7 +873,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L666">lib/effects/EphEffect.ts:666</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:653</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -930,7 +895,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L148">lib/effects/EphEffect.ts:148</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:137</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -970,7 +935,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/_lib_effects_effect_.effect.html">Effect</a>.<a href="../interfaces/_lib_effects_effect_.effect.html#initid">initID</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L712">lib/effects/EphEffect.ts:712</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:700</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1001,7 +966,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L675">lib/effects/EphEffect.ts:675</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:662</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1032,12 +997,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L704">lib/effects/EphEffect.ts:704</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:692</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Logs an eph click event</p>
+									<p>Logs a rectangle click event</p>
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <a href="_lib_logging_logevent_.logevent.html" class="tsd-signature-type">LogEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1054,12 +1019,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L690">lib/effects/EphEffect.ts:690</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:678</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Logs an eph paint event</p>
+									<p>Logs a rectangle paint event</p>
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <a href="_lib_logging_logevent_.logevent.html" class="tsd-signature-type">LogEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1076,12 +1041,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L697">lib/effects/EphEffect.ts:697</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:685</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Logs an eph resize event</p>
+									<p>Logs a rectangle resize event</p>
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <a href="_lib_logging_logevent_.logevent.html" class="tsd-signature-type">LogEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1098,7 +1063,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L470">lib/effects/EphEffect.ts:470</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:459</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1137,7 +1102,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L497">lib/effects/EphEffect.ts:497</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:486</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1161,7 +1126,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L388">lib/effects/EphEffect.ts:388</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:379</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1183,7 +1148,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L644">lib/effects/EphEffect.ts:644</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:631</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1205,7 +1170,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L404">lib/effects/EphEffect.ts:404</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:394</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1245,7 +1210,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L440">lib/effects/EphEffect.ts:440</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:430</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1279,7 +1244,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L539">lib/effects/EphEffect.ts:539</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:528</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1313,7 +1278,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L350">lib/effects/EphEffect.ts:350</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:339</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1345,7 +1310,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L332">lib/effects/EphEffect.ts:332</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:321</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1377,7 +1342,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L359">lib/effects/EphEffect.ts:359</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:348</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1409,7 +1374,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L368">lib/effects/EphEffect.ts:368</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:357</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1441,16 +1406,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L377">lib/effects/EphEffect.ts:377</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:368</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Called whenever a key is released
+									Toggles the isSelectingMultiple boolean if the key released is the shift key</p>
+								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>event: <span class="tsd-signature-type">any</span></h5>
 									<div class="tsd-comment tsd-typography">
+										<p>the keydown event</p>
 									</div>
 								</li>
 							</ul>
@@ -1469,7 +1439,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/_lib_effects_effect_.effect.html">Effect</a>.<a href="../interfaces/_lib_effects_effect_.effect.html#removeeventlisteners">removeEventListeners</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L122">lib/effects/EphEffect.ts:122</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:111</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1492,12 +1462,12 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/_lib_effects_effect_.effect.html">Effect</a>.<a href="../interfaces/_lib_effects_effect_.effect.html#setjustdragged">setJustDragged</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L787">lib/effects/EphEffect.ts:787</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:764</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Sets whether or not the eph has just been dragged</p>
+									<p>Sets whether or not the rect has just been dragged</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1524,7 +1494,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/_lib_effects_effect_.effect.html">Effect</a>.<a href="../interfaces/_lib_effects_effect_.effect.html#todragstring">toDragString</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L808">lib/effects/EphEffect.ts:808</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:785</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1547,7 +1517,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/_lib_effects_effect_.effect.html">Effect</a>.<a href="../interfaces/_lib_effects_effect_.effect.html#toidstring">toIDString</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L815">lib/effects/EphEffect.ts:815</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:792</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1570,7 +1540,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/_lib_effects_effect_.effect.html">Effect</a>.<a href="../interfaces/_lib_effects_effect_.effect.html#toselstring">toSelString</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L801">lib/effects/EphEffect.ts:801</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:778</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1593,7 +1563,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/_lib_effects_effect_.effect.html">Effect</a>.<a href="../interfaces/_lib_effects_effect_.effect.html#update">update</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L82">lib/effects/EphEffect.ts:82</a></li>
+									<li>Defined in lib/effects/LineEffect.ts:79</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1602,23 +1572,6 @@
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="updateast" class="tsd-anchor"></a>
-					<h3>updateAST</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">updateAST<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_lib_expression_.expression.html" class="tsd-signature-type">Expression</a><span class="tsd-signature-symbol">&lt;</span><a href="_lib_prims_numbernode_.numbernode.html" class="tsd-signature-type">NumberNode</a><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L720">lib/effects/EphEffect.ts:720</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_lib_expression_.expression.html" class="tsd-signature-type">Expression</a><span class="tsd-signature-symbol">&lt;</span><a href="_lib_prims_numbernode_.numbernode.html" class="tsd-signature-type">NumberNode</a><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -1631,7 +1584,7 @@
 					<div class="tsd-signature tsd-kind-icon">_mouse<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L42">lib/effects/EphEffect.ts:42</a></li>
+							<li>Defined in lib/effects/LineEffect.ts:41</li>
 						</ul>
 					</aside>
 					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -1640,7 +1593,7 @@
 						<div class="tsd-signature tsd-kind-icon">x<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L46">lib/effects/EphEffect.ts:46</a></li>
+								<li>Defined in lib/effects/LineEffect.ts:45</li>
 							</ul>
 						</aside>
 					</section>
@@ -1650,7 +1603,7 @@
 						<div class="tsd-signature tsd-kind-icon">y<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/williams-cs/swell/blob/88ff385/lib/effects/EphEffect.ts#L47">lib/effects/EphEffect.ts:47</a></li>
+								<li>Defined in lib/effects/LineEffect.ts:46</li>
 							</ul>
 						</aside>
 					</section>
@@ -1664,7 +1617,7 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class="current tsd-kind-external-module">
-						<a href="../modules/_lib_effects_epheffect_.html">"lib/effects/<wbr>Eph<wbr>Effect"</a>
+						<a href="../modules/_lib_effects_lineeffect_.html">"lib/effects/<wbr>Line<wbr>Effect"</a>
 					</li>
 				</ul>
 			</nav>
@@ -1673,215 +1626,206 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_lib_effects_epheffect_.epheffect.html" class="tsd-kind-icon">Eph<wbr>Effect</a>
+						<a href="_lib_effects_lineeffect_.lineeffect.html" class="tsd-kind-icon">Line<wbr>Effect</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_lib_effects_epheffect_.epheffect.html#_canvas" class="tsd-kind-icon">_canvas</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#_canvas" class="tsd-kind-icon">_canvas</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_lib_effects_epheffect_.epheffect.html#_context" class="tsd-kind-icon">_context</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#_context" class="tsd-kind-icon">_context</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_lib_effects_epheffect_.epheffect.html#_corner" class="tsd-kind-icon">_corner</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#_corner" class="tsd-kind-icon">_corner</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_lib_effects_epheffect_.epheffect.html#_ctx" class="tsd-kind-icon">_ctx</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#_ctx" class="tsd-kind-icon">_ctx</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_lib_effects_epheffect_.epheffect.html#_dims" class="tsd-kind-icon">_dims</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#_dims" class="tsd-kind-icon">_dims</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_lib_effects_epheffect_.epheffect.html#_dragoffx" class="tsd-kind-icon">_dragoffx</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#_dragoffx" class="tsd-kind-icon">_dragoffx</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_lib_effects_epheffect_.epheffect.html#_dragoffy" class="tsd-kind-icon">_dragoffy</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#_dragoffy" class="tsd-kind-icon">_dragoffy</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_lib_effects_epheffect_.epheffect.html#_eph" class="tsd-kind-icon">_eph</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#_height1" class="tsd-kind-icon">_height1</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_lib_effects_epheffect_.epheffect.html#_ephimg" class="tsd-kind-icon">_eph<wbr>Img</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#_initdistance" class="tsd-kind-icon">_init<wbr>Distance</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_lib_effects_epheffect_.epheffect.html#_height1" class="tsd-kind-icon">_height1</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#_ischangingdims" class="tsd-kind-icon">_is<wbr>Changing<wbr>Dims</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_lib_effects_epheffect_.epheffect.html#_initdistance" class="tsd-kind-icon">_init<wbr>Distance</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#_isdragging" class="tsd-kind-icon">_is<wbr>Dragging</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_lib_effects_epheffect_.epheffect.html#_ischangingdims" class="tsd-kind-icon">_is<wbr>Changing<wbr>Dims</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#_isresizing" class="tsd-kind-icon">_is<wbr>Resizing</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_lib_effects_epheffect_.epheffect.html#_isdragging" class="tsd-kind-icon">_is<wbr>Dragging</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#_isselected" class="tsd-kind-icon">_is<wbr>Selected</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_lib_effects_epheffect_.epheffect.html#_isresizing" class="tsd-kind-icon">_is<wbr>Resizing</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#_isselectingmultiple" class="tsd-kind-icon">_is<wbr>Selecting<wbr>Multiple</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_lib_effects_epheffect_.epheffect.html#_isselected" class="tsd-kind-icon">_is<wbr>Selected</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#_justdragged" class="tsd-kind-icon">_just<wbr>Dragged</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_lib_effects_epheffect_.epheffect.html#_isselectingmultiple" class="tsd-kind-icon">_is<wbr>Selecting<wbr>Multiple</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#_line" class="tsd-kind-icon">_line</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_lib_effects_epheffect_.epheffect.html#_justdragged" class="tsd-kind-icon">_just<wbr>Dragged</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#_ratio" class="tsd-kind-icon">_ratio</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_lib_effects_epheffect_.epheffect.html#_ratio" class="tsd-kind-icon">_ratio</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#_width1" class="tsd-kind-icon">_width1</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_lib_effects_epheffect_.epheffect.html#_width1" class="tsd-kind-icon">_width1</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#_x1" class="tsd-kind-icon">_x1</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_lib_effects_epheffect_.epheffect.html#_x1" class="tsd-kind-icon">_x1</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_lib_effects_epheffect_.epheffect.html#_y1" class="tsd-kind-icon">_y1</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#_y1" class="tsd-kind-icon">_y1</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#idobj" class="tsd-kind-icon">id<wbr>Obj</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#idobj" class="tsd-kind-icon">id<wbr>Obj</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#dims" class="tsd-kind-icon">dims</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#dims" class="tsd-kind-icon">dims</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#h" class="tsd-kind-icon">h</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#h" class="tsd-kind-icon">h</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#image" class="tsd-kind-icon">image</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#isdragging" class="tsd-kind-icon">is<wbr>Dragging</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#isdragging" class="tsd-kind-icon">is<wbr>Dragging</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#selected" class="tsd-kind-icon">selected</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#selected" class="tsd-kind-icon">selected</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#w" class="tsd-kind-icon">w</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#w" class="tsd-kind-icon">w</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#x" class="tsd-kind-icon">x</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#x" class="tsd-kind-icon">x</a>
-							</li>
-							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#y" class="tsd-kind-icon">y</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#y" class="tsd-kind-icon">y</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#addeventlisteners" class="tsd-kind-icon">add<wbr>Event<wbr>Listeners</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#addeventlisteners" class="tsd-kind-icon">add<wbr>Event<wbr>Listeners</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#ast" class="tsd-kind-icon">ast</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#ast" class="tsd-kind-icon">ast</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#contains" class="tsd-kind-icon">contains</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#contains" class="tsd-kind-icon">contains</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#draw" class="tsd-kind-icon">draw</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#draw" class="tsd-kind-icon">draw</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#drawguides" class="tsd-kind-icon">draw<wbr>Guides</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#drawguides" class="tsd-kind-icon">draw<wbr>Guides</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#drawsquare" class="tsd-kind-icon">draw<wbr>Square</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#drawsquare" class="tsd-kind-icon">draw<wbr>Square</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#getid" class="tsd-kind-icon">getID</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#getid" class="tsd-kind-icon">getID</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#getjustdragged" class="tsd-kind-icon">get<wbr>Just<wbr>Dragged</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#getjustdragged" class="tsd-kind-icon">get<wbr>Just<wbr>Dragged</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#getmouseposition" class="tsd-kind-icon">get<wbr>Mouse<wbr>Position</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#getmouseposition" class="tsd-kind-icon">get<wbr>Mouse<wbr>Position</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#guidecontains" class="tsd-kind-icon">guide<wbr>Contains</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#guidecontains" class="tsd-kind-icon">guide<wbr>Contains</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#initid" class="tsd-kind-icon">initID</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#initid" class="tsd-kind-icon">initID</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#ismouseoutside" class="tsd-kind-icon">is<wbr>Mouse<wbr>Outside</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#ismouseoutside" class="tsd-kind-icon">is<wbr>Mouse<wbr>Outside</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#logclick" class="tsd-kind-icon">log<wbr>Click</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#logclick" class="tsd-kind-icon">log<wbr>Click</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#logpaint" class="tsd-kind-icon">log<wbr>Paint</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#logpaint" class="tsd-kind-icon">log<wbr>Paint</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#logresize" class="tsd-kind-icon">log<wbr>Resize</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#logresize" class="tsd-kind-icon">log<wbr>Resize</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#modifychangedims" class="tsd-kind-icon">modify<wbr>Change<wbr>Dims</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#modifychangedims" class="tsd-kind-icon">modify<wbr>Change<wbr>Dims</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#modifychangedimshelper" class="tsd-kind-icon">modify<wbr>Change<wbr>Dims<wbr>Helper</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#modifychangedimshelper" class="tsd-kind-icon">modify<wbr>Change<wbr>Dims<wbr>Helper</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#modifydrag" class="tsd-kind-icon">modify<wbr>Drag</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#modifydrag" class="tsd-kind-icon">modify<wbr>Drag</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#modifyreset" class="tsd-kind-icon">modify<wbr>Reset</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#modifyreset" class="tsd-kind-icon">modify<wbr>Reset</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#modifyresize" class="tsd-kind-icon">modify<wbr>Resize</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#modifyresize" class="tsd-kind-icon">modify<wbr>Resize</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#modifyresizehelper" class="tsd-kind-icon">modify<wbr>Resize<wbr>Helper</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#modifyresizehelper" class="tsd-kind-icon">modify<wbr>Resize<wbr>Helper</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#modifystate" class="tsd-kind-icon">modify<wbr>State</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#modifystate" class="tsd-kind-icon">modify<wbr>State</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#onmousedown" class="tsd-kind-icon">on<wbr>Mouse<wbr>Down</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#onmousedown" class="tsd-kind-icon">on<wbr>Mouse<wbr>Down</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#onmousemove" class="tsd-kind-icon">on<wbr>Mouse<wbr>Move</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#onmousemove" class="tsd-kind-icon">on<wbr>Mouse<wbr>Move</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#onmouseup" class="tsd-kind-icon">on<wbr>Mouse<wbr>Up</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#onmouseup" class="tsd-kind-icon">on<wbr>Mouse<wbr>Up</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#onshiftdown" class="tsd-kind-icon">on<wbr>Shift<wbr>Down</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#onshiftdown" class="tsd-kind-icon">on<wbr>Shift<wbr>Down</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#onshiftup" class="tsd-kind-icon">on<wbr>Shift<wbr>Up</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#onshiftup" class="tsd-kind-icon">on<wbr>Shift<wbr>Up</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#removeeventlisteners" class="tsd-kind-icon">remove<wbr>Event<wbr>Listeners</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#removeeventlisteners" class="tsd-kind-icon">remove<wbr>Event<wbr>Listeners</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#setjustdragged" class="tsd-kind-icon">set<wbr>Just<wbr>Dragged</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#setjustdragged" class="tsd-kind-icon">set<wbr>Just<wbr>Dragged</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#todragstring" class="tsd-kind-icon">to<wbr>Drag<wbr>String</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#todragstring" class="tsd-kind-icon">to<wbr>Drag<wbr>String</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#toidstring" class="tsd-kind-icon">toIDString</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#toidstring" class="tsd-kind-icon">toIDString</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#toselstring" class="tsd-kind-icon">to<wbr>Sel<wbr>String</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#toselstring" class="tsd-kind-icon">to<wbr>Sel<wbr>String</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#update" class="tsd-kind-icon">update</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_lib_effects_epheffect_.epheffect.html#updateast" class="tsd-kind-icon">updateAST</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#update" class="tsd-kind-icon">update</a>
 							</li>
 							<li class=" tsd-kind-object-literal tsd-parent-kind-class tsd-is-private">
-								<a href="_lib_effects_epheffect_.epheffect.html#_mouse" class="tsd-kind-icon">_mouse</a>
+								<a href="_lib_effects_lineeffect_.lineeffect.html#_mouse" class="tsd-kind-icon">_mouse</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
 					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../modules/_lib_effects_epheffect_.html#distance" class="tsd-kind-icon">distance</a>
+						<a href="../modules/_lib_effects_lineeffect_.html#distance" class="tsd-kind-icon">distance</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../modules/_lib_effects_epheffect_.html#getmousepos" class="tsd-kind-icon">get<wbr>Mouse<wbr>Pos</a>
+						<a href="../modules/_lib_effects_lineeffect_.html#getmousepos" class="tsd-kind-icon">get<wbr>Mouse<wbr>Pos</a>
 					</li>
 				</ul>
 			</nav>

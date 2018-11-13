@@ -6,10 +6,10 @@ import { Dimensions } from '../structural/Dimensions';
 
 export class RectangleNode implements Expression<RectangleNode> {
     private _width: Expression<NumberNode>;
-    private _height: Expression<NumberNode>; 
+    private _height: Expression<NumberNode>;
     private _newLine: boolean = false;
     private _ws: string;
-    
+
     /**
      * Constructor for a RectangleNode, a node representing a rectangle
      * @param width The width of the rectangle
