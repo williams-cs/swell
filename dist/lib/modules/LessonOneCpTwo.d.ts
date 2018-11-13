@@ -7,6 +7,8 @@ export declare class LessonOneCpTwo implements Module {
     readonly _constraint: string;
     readonly _instructions: string;
     constructor();
+    x: number;
+    y: number;
     drawGuides(ctx: CanvasRenderingContext2D): void;
     /**
      * A lesson to print a string

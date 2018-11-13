@@ -15,9 +15,12 @@ export class LessonOneCpTwo implements Module {
     constructor(){
     }
 
+    x: number = 390;
+    y: number = 10;
+
     drawGuides(ctx: CanvasRenderingContext2D): void {
       ctx.beginPath();
-      ctx.rect(390, 10, 100, 100);
+      ctx.rect(this.x, this.y, 100, 100);
       ctx.strokeStyle = '#6C6C6C';
       ctx.stroke();
 
@@ -36,7 +39,7 @@ export class LessonOneCpTwo implements Module {
     checkGoal(document: Document, effects: Effect<any>[]): boolean {
         for (let effect of effects) {
           if (effect instanceof StringEffect && effect.str !== "") {
-            if (effect.x < 10 && effect.y < 70) {
+            if (effect.x > this.x && effect.y > this.y) {
               return true;
             }
           }

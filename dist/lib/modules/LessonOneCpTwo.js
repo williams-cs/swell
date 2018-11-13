@@ -9,10 +9,12 @@ class LessonOneCpTwo {
         this._instructions = `<p> You just told the computer to write words on the CANVAS! </p>
     <p> Now let's do something more interesting: click on the words on the CANVAS, then drag it inside the box at the top-right corner. Observe what happens to your code. </p>
     <p> GOAL: Move the words you just created inside the top-right box. </p>`;
+        this.x = 390;
+        this.y = 10;
     }
     drawGuides(ctx) {
         ctx.beginPath();
-        ctx.rect(390, 10, 100, 100);
+        ctx.rect(this.x, this.y, 100, 100);
         ctx.strokeStyle = '#6C6C6C';
         ctx.stroke();
         ctx.font = 20 + "px Courier New";
@@ -29,7 +31,7 @@ class LessonOneCpTwo {
     checkGoal(document, effects) {
         for (let effect of effects) {
             if (effect instanceof StringEffect_1.StringEffect && effect.str !== "") {
-                if (effect.x < 10 && effect.y < 70) {
+                if (effect.x > this.x && effect.y > this.y) {
                     return true;
                 }
             }
