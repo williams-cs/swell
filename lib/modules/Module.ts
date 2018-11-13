@@ -17,5 +17,5 @@ export interface Module {
      * Create guides to help lesson instructions
      * @param ctx: the canvas 2D context
      */
-    drawGuides?(context: CanvasRenderingContext2D): void;
+    drawGuides?(ctx: CanvasRenderingContext2D): void;
 }

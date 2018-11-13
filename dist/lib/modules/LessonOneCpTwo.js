@@ -7,14 +7,18 @@ class LessonOneCpTwo {
         this._nextModule = 'l1c3';
         this._constraint = 'code';
         this._instructions = `<p> You just told the computer to write words on the CANVAS! </p>
-    <p> Now let's do something more interesting: click on the words on the CANVAS, then move it to the top left of the screen. Observe what happens to your code. </p>
-    <p> GOAL: Move the words you just created to the top left of the screen. </p>`;
+    <p> Now let's do something more interesting: click on the words on the CANVAS, then drag it inside the box at the top-right corner. Observe what happens to your code. </p>
+    <p> GOAL: Move the words you just created inside the top-right box. </p>`;
     }
-    drawGuides(context) {
-        context.beginPath();
-        context.rect(188, 50, 200, 100);
-        context.strokeStyle = 'black';
-        context.stroke();
+    drawGuides(ctx) {
+        ctx.beginPath();
+        ctx.rect(390, 10, 100, 100);
+        ctx.strokeStyle = '#6C6C6C';
+        ctx.stroke();
+        ctx.font = 20 + "px Courier New";
+        ctx.fillStyle = '#6C6C6C';
+        ctx.fillText("Put text", 390, 130);
+        ctx.fillText("in here", 390, 150);
     }
     /**
      * A lesson to print a string
