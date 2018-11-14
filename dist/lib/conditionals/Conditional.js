@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Scope_1 = require("../structural/Scope");
 const BooleanNode_1 = require("../prims/BooleanNode");
+const space_lift_1 = require("space-lift");
 class Conditional {
     /**
      * The constructor for conditionals (if, else if, and else statements)
@@ -21,6 +22,7 @@ class Conditional {
      */
     eval(context) {
         let childCtx = new Scope_1.Scope(context);
+        childCtx.canvas = space_lift_1.Some(context.canvas.get());
         let res = this._test.eval(childCtx);
         if (!(res instanceof BooleanNode_1.BooleanNode)) {
             throw new Error("The condition must be a boolean expression.");

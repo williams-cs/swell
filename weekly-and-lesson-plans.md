@@ -51,7 +51,7 @@ To read this week:
 - CODE should only be checked after hitting RUN.
 - Make the next cp only clickable if the previous was completed.
 2. Implement Curves.
-3. Put in CODE, CANVAS, INSTRUCTION labels.
+3. ~~Put in CODE, CANVAS, INSTRUCTION labels.~~
 4. Fix Firefox compatibility.
 
 ## Week 10: Nov 12

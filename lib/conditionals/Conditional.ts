@@ -1,13 +1,14 @@
 import { Expression } from "../Expression";
-import {Scope} from '../structural/Scope'; 
+import {Scope} from '../structural/Scope';
 import { BooleanNode } from "../prims/BooleanNode";
+import { Some } from "space-lift";
 
 export class Conditional implements Expression<any>{
     private _test: Expression<any>;
     private _trueBranch: Expression<any>;
     private _falseBranch: Expression<any>;
     private _newLine : boolean = true;
-    
+
     /**
      * The constructor for conditionals (if, else if, and else statements)
      * @param test The condition of the statement
@@ -26,10 +27,11 @@ export class Conditional implements Expression<any>{
      */
     eval(context: Scope){
         let childCtx = new Scope(context);
+        childCtx.canvas = Some(context.canvas.get());
         let res = this._test.eval(childCtx);
         if(!(res instanceof BooleanNode)){
             throw new Error("The condition must be a boolean expression.");
-        } 
+        }
         if(res.val){
             return this._trueBranch.eval(childCtx);
         } else if(this._falseBranch != null) { // check if else/else if is null or undefined
@@ -78,7 +80,7 @@ export class Conditional implements Expression<any>{
 
     /**
      * Equals cannot be called directly on a conditional
-     * @param right 
+     * @param right
      */
     equalsVal(right: Expression<any>): boolean{
         throw new Error("Cannot call equals directly on conditionals");
