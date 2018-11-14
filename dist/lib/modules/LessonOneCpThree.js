@@ -10,7 +10,7 @@ class LessonOneCpThree {
     <p> Now the CANVAS has been frozen! Try changing your CODE to see if you can move the words to the bottom right corner. </p>
     <p> GOAL: Move the words to the bottom right of the CANVAS. </p>
     <p> HINT: Change one of the 2 numbers at a time, then click RUN to see how that changes the CANVAS.`;
-        this.x = 390;
+        this.x = 10;
         this.y = 430;
     }
     drawGuides(ctx) {
@@ -20,8 +20,8 @@ class LessonOneCpThree {
         ctx.stroke();
         ctx.font = 20 + "px Courier New";
         ctx.fillStyle = '#6C6C6C';
-        ctx.fillText("Put text", 390, 390);
-        ctx.fillText("in here", 390, 410);
+        ctx.fillText("Put text", this.x, 390);
+        ctx.fillText("in here", this.x, 410);
     }
     /**
      * A lesson to print a string

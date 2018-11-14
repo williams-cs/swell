@@ -16,7 +16,7 @@ export class LessonOneCpThree implements Module {
     constructor(){
     }
 
-    x: number = 390;
+    x: number = 10;
     y: number = 430;
 
     drawGuides(ctx: CanvasRenderingContext2D): void {
@@ -27,8 +27,8 @@ export class LessonOneCpThree implements Module {
 
       ctx.font = 20 + "px Courier New";
       ctx.fillStyle = '#6C6C6C';
-      ctx.fillText("Put text", 390, 390);
-      ctx.fillText("in here", 390, 410);
+      ctx.fillText("Put text", this.x, 390);
+      ctx.fillText("in here", this.x, 410);
     }
 
     /**
