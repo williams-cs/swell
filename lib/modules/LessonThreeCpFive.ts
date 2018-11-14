@@ -1,6 +1,6 @@
 import { Module } from "./Module";
 import { Effect } from "../effects/Effect";
-import { EllipseEffect } from "../effects/EllipseEffect";
+import { StringEffect } from "../effects/StringEffect";
 
 export class LessonThreeCpFive implements Module {
     readonly _name: string = "l3c5";
@@ -9,10 +9,10 @@ export class LessonThreeCpFive implements Module {
     readonly _constraint: string = 'none';
     readonly _instructions: string =
     `<p> So we print a message to the CANVAS anytime c is exactly equal to 8. </p>
-    <p> What if we want to print another message, "c is not equal to 8" any time c is not equal to 8. </p>
+    <p> What if we want to print another message, "c is not equal to 8" any time c is not equal to 8? </p>
     <p> We do so by using an else statement. Observe the CODE above. </p>
-    <p> When the condition inside the if() statement is satisfied, the code block inside the {} immediately after it would run. </p>
-    <p> When that condition is not satisfied, the code block inside the {} after else statement would run. </p>
+    <p> When the condition inside the if() statement is satisfied, the code block inside the {} right after it would run. </p>
+    <p> When that condition is not satisfied, the code block inside the {} after the else statement would run. </p>
     <p> GOAL: Change the value of c so that the line "c is NOT equal to 8." is printed on the CANVAS. </p>`;
 
     readonly _starterCode: string =
@@ -37,16 +37,17 @@ if(c == 8) {
         let codeIsCorrect = false;
         let code = (document.getElementById("input") as HTMLInputElement).value;
         if (code != null) {
-            let regex: RegExp = /print\s*\(\s*ellipse\s*\(\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\)\s*,\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\);/;
+            let regex: RegExp = /c\s*=\s*[^8]\s*/;
             let match = code.match(regex);
             codeIsCorrect = match != null && match.length > 0;
         }
 
         //check for correct CANVAS effects
-        let canvasIsCorrect = true;
+        let canvasIsCorrect = false;
         for (let effect of effects) {
-          if (effect instanceof EllipseEffect) {
-
+          if (effect instanceof StringEffect && effect.str === "c is NOT equal to 8.") {
+            canvasIsCorrect = true;
+            break;
           }
         }
 

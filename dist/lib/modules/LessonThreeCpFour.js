@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const EllipseEffect_1 = require("../effects/EllipseEffect");
+const StringEffect_1 = require("../effects/StringEffect");
 class LessonThreeCpFour {
     constructor() {
         this._name = "l3c4";
@@ -26,14 +26,16 @@ if(c == 8) {
         let codeIsCorrect = false;
         let code = document.getElementById("input").value;
         if (code != null) {
-            let regex = /print\s*\(\s*ellipse\s*\(\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\)\s*,\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\);/;
+            let regex = /c\s*=\s*8\s*/;
             let match = code.match(regex);
             codeIsCorrect = match != null && match.length > 0;
         }
         //check for correct CANVAS effects
-        let canvasIsCorrect = true;
+        let canvasIsCorrect = false;
         for (let effect of effects) {
-            if (effect instanceof EllipseEffect_1.EllipseEffect) {
+            if (effect instanceof StringEffect_1.StringEffect && effect.str === "c is equal to 8.") {
+                canvasIsCorrect = true;
+                break;
             }
         }
         return codeIsCorrect && canvasIsCorrect;

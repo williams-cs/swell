@@ -1,6 +1,6 @@
 import { Module } from "./Module";
 import { Effect } from "../effects/Effect";
-import { EllipseEffect } from "../effects/EllipseEffect";
+import { StringEffect } from "../effects/StringEffect";
 
 export class LessonThreeCpFour implements Module {
     readonly _name: string = "l3c4";
@@ -29,22 +29,23 @@ if(c == 8) {
      * @param effects: the list of effects currently on the CANVAS
      */
     checkGoal(document: Document, effects: Effect<any>[]): boolean {
-        //check for correct CODE
-        let codeIsCorrect = false;
-        let code = (document.getElementById("input") as HTMLInputElement).value;
-        if (code != null) {
-            let regex: RegExp = /print\s*\(\s*ellipse\s*\(\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\)\s*,\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\);/;
-            let match = code.match(regex);
-            codeIsCorrect = match != null && match.length > 0;
-        }
+      //check for correct CODE
+      let codeIsCorrect = false;
+      let code = (document.getElementById("input") as HTMLInputElement).value;
+      if (code != null) {
+          let regex: RegExp = /c\s*=\s*8\s*/;
+          let match = code.match(regex);
+          codeIsCorrect = match != null && match.length > 0;
+      }
 
-        //check for correct CANVAS effects
-        let canvasIsCorrect = true;
-        for (let effect of effects) {
-          if (effect instanceof EllipseEffect) {
-
-          }
+      //check for correct CANVAS effects
+      let canvasIsCorrect = false;
+      for (let effect of effects) {
+        if (effect instanceof StringEffect && effect.str === "c is equal to 8.") {
+          canvasIsCorrect = true;
+          break;
         }
+      }
 
         return codeIsCorrect && canvasIsCorrect;
     }
