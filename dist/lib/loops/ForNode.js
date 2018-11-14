@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Scope_1 = require("../structural/Scope");
 const BooleanNode_1 = require("../prims/BooleanNode");
+const space_lift_1 = require("space-lift");
 class ForNode {
     /**
      * Constructor for a For loop
@@ -27,7 +28,8 @@ class ForNode {
      * @param context The current program context
      */
     eval(context) {
-        let childCtx = new Scope_1.Scope(context);
+        let childCtx = new Scope_1.Scope(context, context.effects, context.eventLog);
+        childCtx.canvas = space_lift_1.Some(context.canvas.get());
         this._init.eval(childCtx); // initialize var
         let res = this._cond.eval(childCtx);
         if (!(res instanceof BooleanNode_1.BooleanNode)) {

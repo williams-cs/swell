@@ -31,8 +31,8 @@ To read this week:
 3. ~~Design abstract classes for predicate/completion checker.~~
 4. ~~For the UI, should we gamify/abstract away the coding aspect?~~ NO.
 - ~~eg. CodeMonkey.~~
-5. Continue lit review.
-- Sources: CHI, UIST, PLDI.
+5. ~~Continue lit review.~~
+- ~~Sources: CHI, UIST, PLDI.~~
 
 To read this week:
 - [Dan Ingalls](https://www.youtube.com/watch?v=QTJRwKOFddc&feature=youtu.be)
@@ -43,25 +43,32 @@ To read this week:
 - ~~Retake Khan's HOC to get an idea of good checkpoints.~~
 
 ## Week 8: October 29
-1. Work on predicates for lessons 1 & 2.
-2. Allow freezing screen.
-3. Persistence for all modules: Download CouchDB.
-6. Work on FireFox.
-4. Clean up `swell-ui` and document it.
-- Refactor `drawGuides()`.
-5. Fix loop nodes.
+1. ~~Work on predicates for lessons 1 & 2.~~
+2. ~~Allow freezing screen.~~
+
+## Week 9: Nov 5
+1. Create lesson 3 and Final Challenge - Working full lessons by next week.
+- CODE should only be checked after hitting RUN.
+- Make the next cp only clickable if the previous was completed.
+2. ~~Implement Curves.~~
+3. ~~Put in CODE, CANVAS, INSTRUCTION labels.~~
+4. Fix Firefox compatibility.
+5. ~~Fix Conditional.~~
+
+## Week 10: Nov 12
+1. Create lesson 4.
+- Have an on-boarding mini-module!
+- When the window starts, click NEXT to begin.
+2. Fix conditional nodes.
 - Document how Node and Effect are connected.
+3. Put in Palette items.
+4. Persistence for all modules: Download CouchDB.
+- Unique identifier for each session - use uuid.
 
 To read this week:
 - Hutton and Meijer.
 - [Chugh et al (2018)](http://lara.epfl.ch/~kuncak/papers/MayerETAL18BidirectionalEvaluation.pdf)
 - [Scott et al (2014)](https://groups.csail.mit.edu/mug/pubs/Scott2014DirectManipulation.pdf)
-
-## Week 9: Nov 5
-1. Create module 5.
-
-## Week 10: Nov 12
-1. Create module 6.
 
 ## Week 11: Nov 19
 Thanksgiving week.
@@ -77,47 +84,48 @@ Thanksgiving week.
 1. Implement modules to teach programming through SWELL = interface + predicate checker + instructions + analytics.
 2. Implement error messages that specify which parts of the environment causes the problem.
 
-## UI Changes
-- Gives font hierarchy to instruction text.
-- Creating games by placing constraint (can only make one method, can only have a certain number of lines, only use `rect()` once).
+## Winter Study
+1. Write pre-tests and post-tests.
+
+## UI Fixes
+- Gives font hierarchy to instruction text - also make code text look different.
+- Make 1/30 star tracker work.
+- Indicate on sidebar where you are.
 
 ## Auxiliary Ideas
-1. ~~Are `shapes` full-on classes?~~ `shapes` are functions.
-21. COLOR-CODE TEXT!
-14. Add rotation function.
-16. Named arguments!
-17. Khan Academy's 'talk-through' is cool - video on top of interactive coding env.
-18. Colors?
-19. StringEffect and NumberEffect share many methods. Maybe superclass them?
-20. Highlight connected code and canvas components.
+- Creating games by placing constraint (can only make one method, can only have a certain number of lines, only use `rect()` once).
+- Add rotation function.
+- Named arguments.
 
 # Lesson/Module Plan
 **NOTE:** Still unsure what the mode of instruction should be. Textual for now, but should consider videos.
 
 ## Lesson 1
 
-**Goal:** `print()` method, String, and Shapes.
+**Goal:** `print()` method and String.
 
 **Checkpoints:**
-1. Use `print()` statement and pass a String as an argument.
+1. Pass a String as an argument to a `print()` statement.
 2. PDM. Explain parameters of `print()`.
 3. Non-PDM changing parameters of `print()`.
-4. Print a circle.
+4. Print a word at the center of CANVAS.
 
 ## Lesson 2
 
 **Goal:** Variables and Sequence.
 
 **Checkpoints:**
-1. PDM for dimensions of ellipses.
-2. Multiple statements.
-3.
-4. Draw rectangle.
-5. Make a face.
+1. Print a circle.
+2. PDM the circle.
+3. Multiple print statements.
+4. Use variables.
+5. More variables.
+6. PDM with variables.
+7. Create caterpillar/circle with dimensions.
 
 ## Lesson 3
 
-**Goal:** Sequence and Variables.
+**Goal:** Sequence and Function.
 
 **Checkpoints:**
 2. PDM effect on declaration.
@@ -127,12 +135,8 @@ Thanksgiving week.
 
 ## Sub-Module 4
 
-**Goal:** Learn about function. Maybe list also.
-
-## Sub-Module 5
-
 **Goal:** Learn about boolean, conditional, loop.
 
-## Sub-Module 6
+## Sub-Module 5
 
 **Goal:** Final project.

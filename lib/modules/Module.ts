@@ -13,4 +13,9 @@ export interface Module {
      * @param document The HTML document
      */
     checkGoal(document: Document, effects: Effect<any>[]): boolean;
+    /**
+     * Create guides to help lesson instructions
+     * @param ctx: the canvas 2D context
+     */
+    drawGuides?(ctx: CanvasRenderingContext2D): void;
 }

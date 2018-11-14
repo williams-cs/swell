@@ -16,6 +16,21 @@ export class LessonOneCpThree implements Module {
     constructor(){
     }
 
+    x: number = 10;
+    y: number = 430;
+
+    drawGuides(ctx: CanvasRenderingContext2D): void {
+      ctx.beginPath();
+      ctx.rect(this.x, this.y, 100, 100);
+      ctx.strokeStyle = '#6C6C6C';
+      ctx.stroke();
+
+      ctx.font = 20 + "px Courier New";
+      ctx.fillStyle = '#6C6C6C';
+      ctx.fillText("Put text", this.x, 390);
+      ctx.fillText("in here", this.x, 410);
+    }
+
     /**
      * A lesson to print a string
      * goals: moving the text and observe the code
@@ -25,7 +40,7 @@ export class LessonOneCpThree implements Module {
     checkGoal(document: Document, effects: Effect<any>[]): boolean {
         for (let effect of effects) {
           if (effect instanceof StringEffect && effect.str !== "") {
-            if (effect.x > 470 && effect.y > 530) {
+            if (effect.x > this.x && effect.x < this.x + 100 && effect.y > this.y && effect.y < this.y + 100) {
               return true;
             }
           }

@@ -29,9 +29,11 @@ class LessonTwoCpOne {
             codeIsCorrect = match != null && match.length > 0;
         }
         //check for correct CANVAS effects
-        let canvasIsCorrect = true;
+        let canvasIsCorrect = false;
         for (let effect of effects) {
             if (effect instanceof EllipseEffect_1.EllipseEffect) {
+                canvasIsCorrect = true;
+                break;
             }
         }
         return codeIsCorrect && canvasIsCorrect;

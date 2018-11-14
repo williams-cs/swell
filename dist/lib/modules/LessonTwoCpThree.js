@@ -7,7 +7,7 @@ class LessonTwoCpThree {
         this._name = "l2c3";
         this._nextModule = 'l2c4';
         this._constraint = 'none';
-        this._instructions = `<p> So we can draw a circle and change it. But what if we want to draw both a circle and a word? </p>
+        this._instructions = `<p> So we can draw a circle and change it. But what if we want to draw both circles and words? </p>
     <p> Well, simple! Just write more print statements in the CODE area! </p>
     <p> GOAL: Draw 2 circles and a word on the CANVAS. </p>
     <p> HINT: Remember that the numbers right inside the ellipse(_,_) statement change the circle's sizes.`;

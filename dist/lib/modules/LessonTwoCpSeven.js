@@ -7,9 +7,21 @@ class LessonTwoCpSeven {
         this._constraint = 'none';
         this._instructions = `<p> Changing one circle changes c, which will then in turn change the other circle! </p>
     <p> Now let's put all we have learned to practice. </p>
-    <p> Create a caterpillar in the shape of the given outlines. </p>
-    <p> CHALLENGE: Create a caterpillar. </p>
-    <p> HINT: Remember to use variables to print a lot of identical circles quickly! </p>`;
+    <p> Create a circle, and print out the size of that circle in the given box. </p>
+    <p> IF we ever change the circle, we want the number in the box to change, too! </p>
+    <p> CHALLENGE: Create a circle and print its size in the given box. </p>`;
+        this.x = 10;
+        this.y = 430;
+    }
+    drawGuides(ctx) {
+        ctx.beginPath();
+        ctx.rect(this.x, this.y, 100, 100);
+        ctx.strokeStyle = '#6C6C6C';
+        ctx.stroke();
+        ctx.font = 20 + "px Courier New";
+        ctx.fillStyle = '#6C6C6C';
+        ctx.fillText("Put circle's size", this.x, 390);
+        ctx.fillText("in here", this.x, 410);
     }
     /**
      * A lesson to print a string
