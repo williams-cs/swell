@@ -21,7 +21,7 @@ class Conditional {
      * @param context The current program context
      */
     eval(context) {
-        let childCtx = new Scope_1.Scope(context);
+        let childCtx = new Scope_1.Scope(context, context.effects, context.eventLog);
         childCtx.canvas = space_lift_1.Some(context.canvas.get());
         let res = this._test.eval(childCtx);
         if (!(res instanceof BooleanNode_1.BooleanNode)) {

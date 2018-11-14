@@ -26,7 +26,7 @@ export class Conditional implements Expression<any>{
      * @param context The current program context
      */
     eval(context: Scope){
-        let childCtx = new Scope(context);
+        let childCtx = new Scope(context, context.effects, context.eventLog);
         childCtx.canvas = Some(context.canvas.get());
         let res = this._test.eval(childCtx);
         if(!(res instanceof BooleanNode)){
