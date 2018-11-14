@@ -31,7 +31,7 @@ class LessonOneCpTwo {
     checkGoal(document, effects) {
         for (let effect of effects) {
             if (effect instanceof StringEffect_1.StringEffect && effect.str !== "") {
-                if (effect.x > this.x && effect.y > this.y) {
+                if (effect.x > this.x && effect.x < this.x + 100 && effect.y > this.y && effect.y < this.y + 100) {
                     return true;
                 }
             }
