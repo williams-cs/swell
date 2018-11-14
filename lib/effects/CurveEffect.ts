@@ -86,7 +86,7 @@ export class CurveEffect implements Effect<CurveNode> {
         this._ctx.beginPath();
         this._ctx.moveTo(x, y);
         let v = this.perpendicularVector(width, height);
-        this._ctx.quadraticCurveTo((x + width) + curvature * v[0], (y + height) + curvature * v[1], x + width, y + height);
+        this._ctx.quadraticCurveTo((x + width/2) + curvature * v[0], (y + height/2) + curvature * v[1], x + width, y + height);
         this._ctx.strokeStyle = "black";
         this._ctx.stroke();
         if(this._isSelected) {
@@ -96,6 +96,13 @@ export class CurveEffect implements Effect<CurveNode> {
 
     //a * w + b * h = 0
     perpendicularVector(w: number, h: number): [number,number] {
+      if (w == 0 && h == 0) {
+        return [0,0];
+      } else if (w == 0) {
+        return [1,0];
+      } else if (h == 0) {
+        return [0,1];
+      }
       return [1, (-w)/h];
     }
 
