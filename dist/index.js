@@ -80,6 +80,8 @@ var RectangleNode_1 = require("./lib/shapes/RectangleNode");
 exports.RectangleNode = RectangleNode_1.RectangleNode;
 var LineNode_1 = require("./lib/shapes/LineNode");
 exports.LineNode = LineNode_1.LineNode;
+var CurveNode_1 = require("./lib/shapes/CurveNode");
+exports.CurveNode = CurveNode_1.CurveNode;
 var EphNode_1 = require("./lib/shapes/EphNode");
 exports.EphNode = EphNode_1.EphNode;
 var PrintNode_1 = require("./lib/structural/PrintNode");
@@ -100,6 +102,8 @@ var RectangleEffect_1 = require("./lib/effects/RectangleEffect");
 exports.RectangleEffect = RectangleEffect_1.RectangleEffect;
 var LineEffect_1 = require("./lib/effects/LineEffect");
 exports.LineEffect = LineEffect_1.LineEffect;
+var CurveEffect_1 = require("./lib/effects/CurveEffect");
+exports.CurveEffect = CurveEffect_1.CurveEffect;
 var EphEffect_1 = require("./lib/effects/EphEffect");
 exports.EphEffect = EphEffect_1.EphEffect;
 /* EVENTS */

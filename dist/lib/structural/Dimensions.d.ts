@@ -7,6 +7,7 @@ export declare class Dimensions {
     private _scale;
     private _width;
     private _height;
+    private _curvature?;
     /**
      * Constructor for Dimensions, which stores object dimensions
      * @param x The x coordinate of the object
@@ -61,4 +62,11 @@ export declare class Dimensions {
     * Sets the height of the object
     */
     height: Expression<NumberNode>;
+    /**
+     * Returns the curvature of the object
+     */
+    /**
+    * Sets the curvature of the object
+    */
+    curvature: Expression<NumberNode>;
 }

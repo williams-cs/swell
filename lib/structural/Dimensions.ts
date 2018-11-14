@@ -8,6 +8,7 @@ export class Dimensions {
     private _scale: Expression<NumberNode>;
     private _width: Expression<NumberNode>;
     private _height: Expression<NumberNode>;
+    private _curvature?: Expression<NumberNode>;
 
     /**
      * Constructor for Dimensions, which stores object dimensions
@@ -106,5 +107,18 @@ export class Dimensions {
      */
     set height(val: Expression<NumberNode>) {
         this._height = val;
+    }
+
+    /**
+     * Returns the curvature of the object
+     */
+    get curvature(): Expression<NumberNode> {
+        return this._curvature;
+    }
+    /**
+     * Sets the curvature of the object
+     */
+    set curvature(val: Expression<NumberNode>) {
+        this._curvature = val;
     }
 }

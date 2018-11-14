@@ -93,6 +93,18 @@ class Dimensions {
     set height(val) {
         this._height = val;
     }
+    /**
+     * Returns the curvature of the object
+     */
+    get curvature() {
+        return this._curvature;
+    }
+    /**
+     * Sets the curvature of the object
+     */
+    set curvature(val) {
+        this._curvature = val;
+    }
 }
 exports.Dimensions = Dimensions;
 //# sourceMappingURL=Dimensions.js.map
