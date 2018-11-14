@@ -36,13 +36,14 @@ export class LessonTwoCpOne implements Module {
         }
 
         //check for correct CANVAS effects
-        let canvasIsCorrect = true;
+        let canvasIsCorrect = false;
         for (let effect of effects) {
           if (effect instanceof EllipseEffect) {
-
+            canvasIsCorrect = true;
+            break;
           }
         }
-        
+
         return codeIsCorrect && canvasIsCorrect;
     }
 
