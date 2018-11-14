@@ -1,6 +1,6 @@
 import { Module } from "./Module";
 import { Effect } from "../effects/Effect";
-import { EllipseEffect } from "../effects/EllipseEffect";
+import { StringEffect } from "../effects/StringEffect";
 
 export class LessonThreeCpOne implements Module {
     readonly _name: string = "l3c1";
@@ -41,8 +41,9 @@ print("a is less than 10", 103, 143);`;
         //check for correct CANVAS effects
         let canvasIsCorrect = true;
         for (let effect of effects) {
-          if (effect instanceof EllipseEffect) {
-
+          if (effect instanceof StringEffect && effect.str === "a is less than 10") {
+            //canvasIsCorrect = true;
+            //break;
           }
         }
 

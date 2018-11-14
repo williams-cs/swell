@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const EllipseEffect_1 = require("../effects/EllipseEffect");
+const StringEffect_1 = require("../effects/StringEffect");
 class LessonThreeCpOne {
     constructor() {
         this._name = "l3c1";
@@ -33,7 +33,9 @@ print("a is less than 10", 103, 143);`;
         //check for correct CANVAS effects
         let canvasIsCorrect = true;
         for (let effect of effects) {
-            if (effect instanceof EllipseEffect_1.EllipseEffect) {
+            if (effect instanceof StringEffect_1.StringEffect && effect.str === "a is less than 10") {
+                //canvasIsCorrect = true;
+                //break;
             }
         }
         return codeIsCorrect && canvasIsCorrect;

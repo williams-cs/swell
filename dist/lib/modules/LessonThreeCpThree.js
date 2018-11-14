@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const EllipseEffect_1 = require("../effects/EllipseEffect");
+const StringEffect_1 = require("../effects/StringEffect");
 class LessonThreeCpThree {
     constructor() {
         this._name = "l3c3";
         this._nextModule = 'l3c4';
         this._constraint = 'none';
-        this._instructions = `<p> Yes! The claim disappears once you put in the check. if statements allow you to perform a block of code inside the curly braces {} ONLY when the condition inside the if() clause is true. </p>
-    <p> Let's have a quick challenge: obser the CODE above. Make it so that the line "b is greater than 20" is only printed on the CANVAS when b is actually greater than 20. </p>
+        this._instructions = `<p> if statements allow you to run a block of code inside the curly braces {} ONLY when the condition inside the if() clause is true. </p>
+    <p> Let's have a quick challenge: observe the CODE above. Make it so that the line "b is greater than 20" is only printed on the CANVAS when b is actually greater than 20. </p>
     <p> GOAL: Make the line "b is greater than 20" only be printed on the CANVAS when b is actually greater than 20. </p>`;
         this._starterCode = `b = 8;
 if(b < 10) {
@@ -25,14 +25,16 @@ if(b < 10) {
         let codeIsCorrect = false;
         let code = document.getElementById("input").value;
         if (code != null) {
-            let regex = /print\s*\(\s*ellipse\s*\(\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\)\s*,\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\);/;
+            let regex = /if\s*\(\s*b\s*>\s*20\s*\)/;
             let match = code.match(regex);
             codeIsCorrect = match != null && match.length > 0;
         }
         //check for correct CANVAS effects
-        let canvasIsCorrect = true;
+        let canvasIsCorrect = false;
         for (let effect of effects) {
-            if (effect instanceof EllipseEffect_1.EllipseEffect) {
+            if (effect instanceof StringEffect_1.StringEffect && effect.str === "b is greater than 20.") {
+                canvasIsCorrect = true;
+                break;
             }
         }
         return codeIsCorrect && canvasIsCorrect;
