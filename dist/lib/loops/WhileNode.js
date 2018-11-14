@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Scope_1 = require("../structural/Scope");
 const BooleanNode_1 = require("../prims/BooleanNode");
+const space_lift_1 = require("space-lift");
 class WhileNode {
     /**
      * Constructor for a While loop
@@ -23,7 +24,8 @@ class WhileNode {
      * @param context
      */
     eval(context) {
-        let childCtx = new Scope_1.Scope(context);
+        let childCtx = new Scope_1.Scope(context, context.effects, context.eventLog);
+        childCtx.canvas = space_lift_1.Some(context.canvas.get());
         let res = this._cond.eval(childCtx);
         if (!(res instanceof BooleanNode_1.BooleanNode)) {
             throw new Error("The condition must be a boolean expression.");

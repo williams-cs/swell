@@ -1,7 +1,8 @@
 import { Expression } from "../Expression";
-import {Scope} from '../structural/Scope'; 
+import {Scope} from '../structural/Scope';
 import {BooleanNode} from '../prims/BooleanNode';
 import { Dimensions } from "../structural/Dimensions";
+import { Some } from "space-lift";
 
 export class WhileNode implements Expression<any>{
     private _cond: Expression<any>;
@@ -17,7 +18,7 @@ export class WhileNode implements Expression<any>{
      */
     constructor(cond: Expression<any>, body: Expression<any>, ws?: string){
         this._cond = cond;
-        this._body = body; 
+        this._body = body;
         this._ws = ws;
         if(ws == undefined) {
             this._ws = "";
@@ -26,27 +27,27 @@ export class WhileNode implements Expression<any>{
 
     /**
      * Evaluates the body of the loop while the condition is true
-     * @param context 
+     * @param context
      */
     eval(context: Scope){
-        let childCtx = new Scope(context);
-
+        let childCtx = new Scope(context, context.effects, context.eventLog);
+        childCtx.canvas = Some(context.canvas.get());
         let res = this._cond.eval(childCtx);
         if(!(res instanceof BooleanNode)){
             throw new Error("The condition must be a boolean expression.");
-        } 
+        }
 
         let ret;
         while(res.val){
             ret = this._body.eval(childCtx);
             res = this._cond.eval(childCtx);
-        } 
+        }
         return ret;
     }
 
     /**
      * Equals cannot be called directly on WhileNodes
-     * @param right 
+     * @param right
      */
     equalsVal(right: Expression<any>): boolean{
         throw new Error("Cannot call equals on While loop");
@@ -54,9 +55,9 @@ export class WhileNode implements Expression<any>{
 
     /**
      * WhileNodes cannot be drawn directly
-     * @param context 
-     * @param dims 
-     * @param ast 
+     * @param context
+     * @param dims
+     * @param ast
      */
     draw(context: Scope, dims: Dimensions, ast: Expression<any>){
         return "Cannot call draw on While loop";

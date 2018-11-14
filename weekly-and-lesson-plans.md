@@ -53,6 +53,7 @@ To read this week:
 2. Implement Curves.
 3. ~~Put in CODE, CANVAS, INSTRUCTION labels.~~
 4. Fix Firefox compatibility.
+5. ~~Fix Conditional.~~
 
 ## Week 10: Nov 12
 1. Create lesson 4.

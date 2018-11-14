@@ -1,7 +1,8 @@
 import { Expression } from "../Expression";
-import {Scope} from '../structural/Scope'; 
+import {Scope} from '../structural/Scope';
 import {BooleanNode} from '../prims/BooleanNode';
 import { Dimensions } from "../structural/Dimensions";
+import { Some } from "space-lift";
 
 export class ForNode implements Expression<any>{
     private _init: Expression<any>;
@@ -23,7 +24,7 @@ export class ForNode implements Expression<any>{
         this._init = init;
         this._cond = cond;
         this._post = post;
-        this._body = body; 
+        this._body = body;
         this._ws = ws;
         if(ws == undefined) {
             this._ws = "";
@@ -35,27 +36,27 @@ export class ForNode implements Expression<any>{
      * @param context The current program context
      */
     eval(context: Scope){
-        let childCtx = new Scope(context);
-
+        let childCtx = new Scope(context, context.effects, context.eventLog);
+        childCtx.canvas = Some(context.canvas.get());
         this._init.eval(childCtx); // initialize var
 
         let res = this._cond.eval(childCtx);
         if(!(res instanceof BooleanNode)){
             throw new Error("The condition must be a boolean expression.");
-        } 
+        }
 
         let ret;
         while(res.val){
             ret = this._body.eval(childCtx);
             this._post.eval(childCtx);
             res = this._cond.eval(childCtx);
-        } 
+        }
         return ret;
     }
 
     /**
      * Equals cannot be called directly on ForNode
-     * @param right 
+     * @param right
      */
     equalsVal(right: Expression<any>): boolean{
         throw new Error("Cannot call equals on For loop");
@@ -63,9 +64,9 @@ export class ForNode implements Expression<any>{
 
     /**
      * ForNodes cannot be drawn directly
-     * @param context 
-     * @param dims 
-     * @param ast 
+     * @param context
+     * @param dims
+     * @param ast
      */
     draw(context: Scope, dims: Dimensions, ast: Expression<any>){
         return "Cannot call draw on For loop";
@@ -75,7 +76,7 @@ export class ForNode implements Expression<any>{
      * Returns a string representation of the for loop
      */
     toString(): string {
-        return this._ws + 'for(' + this._init.toString() + ", " + this._cond.toString() + ", " + this._post.toString() + ") {\n " 
+        return this._ws + 'for(' + this._init.toString() + ", " + this._cond.toString() + ", " + this._post.toString() + ") {\n "
             + this._body.toString() + "}";
     }
 
