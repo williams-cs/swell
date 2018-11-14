@@ -50,7 +50,7 @@ To read this week:
 1. Create lesson 3 and Final Challenge - Working full lessons by next week.
 - CODE should only be checked after hitting RUN.
 - Make the next cp only clickable if the previous was completed.
-2. Implement Curves.
+2. ~~Implement Curves.~~
 3. ~~Put in CODE, CANVAS, INSTRUCTION labels.~~
 4. Fix Firefox compatibility.
 5. ~~Fix Conditional.~~
