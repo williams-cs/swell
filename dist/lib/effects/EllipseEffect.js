@@ -58,6 +58,12 @@ class EllipseEffect {
         this._ctx.ellipse(x, y, w / 2, h / 2, 0, 0, Math.PI * 2, false);
         this._ctx.strokeStyle = "black";
         this._ctx.stroke();
+        this._ctx.fillStyle = "#673AB7";
+        this._ctx.shadowColor = "#6C6C6C";
+        this._ctx.shadowBlur = 15;
+        this._ctx.shadowOffsetX = 5;
+        this._ctx.shadowOffsetY = 5;
+        this._ctx.fill();
         if (this._isSelected) {
             this.drawGuides(x - w / 2, y - h / 2, w, h, this._corner);
         }
