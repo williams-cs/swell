@@ -107,7 +107,7 @@ export class StringEffect implements Effect<StringNode> {
     update(): void {
         let fontDeets: string = this._fontSize + "px Courier New";
         this._ctx.font = fontDeets;
-        this._ctx.fillStyle = "#673AB7";
+        this._ctx.fillStyle = "#9C27B0";
 
         this._ctx.fillText(this._str.val, this.x, this.y);
         let textDims = this._ctx.measureText(this._str.val);

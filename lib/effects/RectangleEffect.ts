@@ -85,7 +85,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
         this._ctx.rect(x, y, width, height);
         //this._ctx.strokeStyle = "black";
         //this._ctx.stroke();
-        this._ctx.fillStyle = "#673AB7";
+        this._ctx.fillStyle = "#9C27B0";
         this._ctx.shadowColor = "#6C6C6C";
         this._ctx.shadowBlur = 15;
         //this._ctx.shadowOffsetX = 2;

@@ -58,7 +58,7 @@ class CurveEffect {
         this._ctx.moveTo(x, y);
         let v = this.perpendicularVector(width, height);
         this._ctx.quadraticCurveTo((x + width / 2) + curvature * v[0], (y + height / 2) + curvature * v[1], x + width, y + height);
-        this._ctx.strokeStyle = "#673AB7";
+        this._ctx.strokeStyle = "#9C27B0";
         this._ctx.stroke();
         if (this._isSelected) {
             this.drawGuides(x, y, width, height, this._corner);
