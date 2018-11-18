@@ -83,8 +83,14 @@ export class RectangleEffect implements Effect<RectangleNode> {
         let height = this.h;
         this._ctx.beginPath();
         this._ctx.rect(x, y, width, height);
-        this._ctx.strokeStyle = "black";
-        this._ctx.stroke();
+        //this._ctx.strokeStyle = "black";
+        //this._ctx.stroke();
+        this._ctx.fillStyle = "#673AB7";
+        //this._ctx.shadowColor = "#6C6C6C";
+        //this._ctx.shadowBlur = 15;
+        //this._ctx.shadowOffsetX = 2;
+        //this._ctx.shadowOffsetY = 2;
+        this._ctx.fill();
         if(this._isSelected) {
             this.drawGuides(x, y, width, height, this._corner);
         }
