@@ -107,7 +107,7 @@ export class NumberEffect implements Effect<NumberNode> {
     update(): void {
       let fontDeets: string = this._fontSize + "px Courier New";
       this._ctx.font = fontDeets;
-      this._ctx.fillStyle = "#d5b8ff";
+      this._ctx.fillStyle = "#673AB7";
       let str: string = this._num.toString();
 
       this._ctx.fillText(str, this.x, this.y);
