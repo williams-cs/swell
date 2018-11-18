@@ -56,7 +56,7 @@ class LineEffect {
         this._ctx.beginPath();
         this._ctx.moveTo(x, y);
         this._ctx.lineTo(x + width, y + height);
-        this._ctx.strokeStyle = "#9C27B0";
+        this._ctx.strokeStyle = "#d5b8ff";
         this._ctx.stroke();
         if (this._isSelected) {
             this.drawGuides(x, y, width, height, this._corner);
