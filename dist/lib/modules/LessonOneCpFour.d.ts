@@ -2,6 +2,7 @@ import { Module } from "./Module";
 import { Effect } from "../effects/Effect";
 export declare class LessonOneCpFour implements Module {
     readonly _name: string;
+    readonly _prevModule: string;
     readonly _nextModule: string;
     readonly _goal: any;
     readonly _constraint: string;

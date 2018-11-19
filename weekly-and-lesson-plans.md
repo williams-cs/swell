@@ -47,23 +47,23 @@ To read this week:
 2. ~~Allow freezing screen.~~
 
 ## Week 9: Nov 5
-1. Create lesson 3 and Final Challenge - Working full lessons by next week.
-- CODE should only be checked after hitting RUN.
-- Make the next cp only clickable if the previous was completed.
+1. ~~Create lesson 3 and Final Challenge - Working full lessons by next week.~~
 2. ~~Implement Curves.~~
 3. ~~Put in CODE, CANVAS, INSTRUCTION labels.~~
-4. Fix Firefox compatibility.
-5. ~~Fix Conditional.~~
+4. ~~Fix Conditional.~~
 
 ## Week 10: Nov 12
 1. Create lesson 4.
 - Have an on-boarding mini-module!
 - When the window starts, click NEXT to begin.
-2. Fix conditional nodes.
+- CODE should only be checked after hitting RUN.
+- Make the next cp only clickable if the previous was completed.
+2. ~~Fix conditional nodes.~~
 - Document how Node and Effect are connected.
 3. Put in Palette items.
 4. Persistence for all modules: Download CouchDB.
 - Unique identifier for each session - use uuid.
+5. Fix Firefox compatibility.
 
 To read this week:
 - Hutton and Meijer.

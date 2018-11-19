@@ -60,7 +60,7 @@ class NumberEffect {
     update() {
         let fontDeets = this._fontSize + "px Courier New";
         this._ctx.font = fontDeets;
-        this._ctx.fillStyle = 'black';
+        this._ctx.fillStyle = "#673AB7";
         let str = this._num.toString();
         this._ctx.fillText(str, this.x, this.y);
         let numberDims = this._ctx.measureText(str);

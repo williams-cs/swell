@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class LessonTwoCpSeven {
     constructor() {
         this._name = "l2c7";
-        this._nextModule = 'l2c7';
+        this._nextModule = 'l3c1';
         this._constraint = 'none';
         this._instructions = `<p> Changing one circle changes c, which will then in turn change the other circle! </p>
     <p> Now let's put all we have learned to practice. </p>
