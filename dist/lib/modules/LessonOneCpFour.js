@@ -4,6 +4,7 @@ const StringEffect_1 = require("../effects/StringEffect");
 class LessonOneCpFour {
     constructor() {
         this._name = "l1c4";
+        this._prevModule = 'l1c2';
         this._nextModule = 'l2c1';
         this._constraint = 'canvas';
         this._instructions = `<p> Note that changing the first number in the print statement moves the words left or right, while changing the second number move them up or down. </p>

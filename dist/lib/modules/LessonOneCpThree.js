@@ -4,6 +4,7 @@ const StringEffect_1 = require("../effects/StringEffect");
 class LessonOneCpThree {
     constructor() {
         this._name = "l1c3";
+        this._prevModule = 'l1c2';
         this._nextModule = 'l1c4';
         this._constraint = 'canvas';
         this._instructions = `<p> Yep! Moving the words actually change the numbers in your CODE. </p>
