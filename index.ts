@@ -96,3 +96,6 @@ export {LessonThreeCpFive} from './lib/modules/LessonThreeCpFive';
 export {LessonThreeCpSix} from './lib/modules/LessonThreeCpSix';
 export {LessonFourCpOne} from './lib/modules/LessonFourCpOne';
 export {LessonFourCpTwo} from './lib/modules/LessonFourCpTwo';
+
+/* PARSER */
+export {Parser} from './lib/parser/parser';

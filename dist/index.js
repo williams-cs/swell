@@ -159,4 +159,7 @@ var LessonFourCpOne_1 = require("./lib/modules/LessonFourCpOne");
 exports.LessonFourCpOne = LessonFourCpOne_1.LessonFourCpOne;
 var LessonFourCpTwo_1 = require("./lib/modules/LessonFourCpTwo");
 exports.LessonFourCpTwo = LessonFourCpTwo_1.LessonFourCpTwo;
+/* PARSER */
+var parser_1 = require("./lib/parser/parser");
+exports.Parser = parser_1.Parser;
 //# sourceMappingURL=index.js.map
