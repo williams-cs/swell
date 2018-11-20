@@ -1,0 +1,319 @@
+html {
+  font-family: 'Roboto Mono', monospace;
+}
+
+:root {
+  --purple: #673AB7;
+  --yellow: #DFB534;
+  --white: #EBEBEB;
+  --gray: #D8D8D8;
+  --mid-gray: #C0C0C0;
+  --dark-gray: #6C6C6C;
+  --nav-width: 140px;
+}
+
+textarea::-webkit-input-placeholder {
+color: var(--gray);
+}
+
+textarea:-moz-placeholder { /* Firefox 18- */
+color: var(--gray);
+}
+
+textarea::-moz-placeholder {  /* Firefox 19+ */
+color: var(--gray);
+}
+
+textarea:-ms-input-placeholder {
+color: var(--gray);
+}
+
+h1 {
+  color: black;
+  text-align: center;
+  line-height: 15px;
+}
+
+h4 {
+  text-align: center;
+  line-height: 15px;
+}
+
+.main {
+  margin-left: var(--nav-width);
+  background-color: var(--gray);
+}
+
+.logo-container {
+  height: 75px;
+  width: var(--nav-width);
+  position: relative;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: var(--purple);
+}
+
+.logo {
+  position: relative;
+  float: left;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--white);
+  font-size: 25px;
+}
+
+.label-container {
+  margin: 10px 0px 0px 20px;
+  position: relative;
+  z-index: 1;
+  top: 0;
+  left: 0;
+}
+
+.label {
+  padding: 5px;
+  display: inline-block;
+  top: 0;
+  left: 0;
+  background-color: var(--purple);
+  color: var(--white);
+  font-size: 15px;
+}
+
+.achievement-container {
+  height: 50px;
+  width: var(--nav-width);
+  position: relative;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: var(--dark-gray);
+}
+
+.icon {
+  position: relative;
+  float: left;
+  top: 50%;
+  transform: translate( 20%, -50%);
+}
+
+.achievement {
+  position: relative;
+  top: 50%;
+  left: 7%;
+  transform: translate(0, -50%);
+  color: var(--white);
+  font-size: 15px;
+}
+
+.sidenav {
+  height: 100%;
+  width: var(--nav-width);
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: var(--white);
+  overflow-x: hidden;
+}
+
+/* The navigation menu links */
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  color: white;
+  display: block;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+  color: gold;
+}
+
+button {
+  background-color: var(--purple);
+  border-radius: 29px;
+  color: var(--white);
+  padding: 10px 20px;
+  text-align: center;
+  display: inline-block;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+button:focus {
+  outline: none !important;
+  box-shadow: 0 0 10px gold;
+}
+
+.drop-button {
+  border-radius: 0;
+  width: var(--nav-width);
+  height: 50px;
+  font-size: 20px;
+  background-color: var(--purple);
+  color: var(--white);
+  display: block;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: relative;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+  color: gold;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .drop-button {
+  color: gold;
+}
+
+.checkpoint {
+  padding: 12px 16px;
+  border-radius: 0;
+  width: var(--nav-width);
+  height: 50px;
+  font-size: 15px;
+  background-color: var(--white);
+  color: black;
+  display: block;
+}
+
+.inputbox {
+  margin: 0px 20px 0px 20px;
+  width: 400px;
+  height: 300px;
+  resize: horizontal;
+  font-size: 15px;
+  font-family: 'Courier New', Courier, monospace;
+  color: var(--white);
+  background-color: var(--dark-gray);
+}
+
+.inputbox:focus {
+  outline: none !important;
+}
+
+.instruction-container {
+  margin: 0px 20px 20px 20px;
+  height: 200px;
+  width: 405px;
+  position: relative;
+  background-color: var(--mid-gray);
+}
+
+.instruction {
+  position: relative;
+  float: left;
+  top: 10px;
+  left: 10px;
+  font-size: 15px;
+  height: 160px;
+  padding: 0px 0px 0px 0px;
+  overflow: auto;
+}
+
+.goal-container {
+  margin: 5px 0px 20px 0px;
+  height: 200px;
+  width: 140px;
+
+  position: relative;
+}
+
+.goal-met {
+  margin: 34px 0px 20px 0px;
+  height: 200px;
+  width: 140px;
+
+  position: relative;
+  background-color: var(--purple);
+}
+
+.goal {
+  position: relative;
+  text-align: center;
+  top: 10px;
+  font-size: 12px;
+}
+
+.goal-star {
+  display : block;
+  margin : 40px auto auto auto;
+}
+
+.next {
+  background-color: var(--yellow);
+  margin : 30px auto auto auto;
+}
+
+.outputbox {
+  margin: 0px 20px 20px 20px;
+  background-color: var(--white);
+}
+
+.logo {
+  position: relative;
+  float: left;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--white);
+  font-size: 25px;
+}
+
+.column {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  flex: 50%;
+}
+
+.col-item {
+  display: inline;
+  position: relative;
+  text-align: center;
+  margin: 20px 0px -10px 0px;
+}
+
+.row {
+  display: flex;
+}
+
+.popup-message {
+  display: none;
+  position: absolute;
+  top: 25%;
+  left: 10%;
+  width: 70%;
+  height: 30%;
+  padding: 5px;
+  border: 5px solid #673AB7;
+  background-color: white;
+  z-index: 1002;
+  overflow: auto;
+}
