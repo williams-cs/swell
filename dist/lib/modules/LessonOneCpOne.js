@@ -18,23 +18,45 @@ class LessonOneCpOne {
         content = 'Notice that what you typed causes the computer to print the world "Hello" on the CANVAS here. Congratulations! You just wrote your first line of code!';
         this._instrBoxes.push(new Instruction_1.Instruction('canvas', content));
     }
+    nextInstruction(document) {
+        this._instrIndex = (this._instrIndex + 1 < this._instrBoxes.length) ? this._instrIndex + 1 : this._instrIndex;
+        this.renderInstruction(document);
+    }
+    prevInstruction(document) {
+        this._instrIndex = (this._instrIndex - 1 >= 0) ? this._instrIndex - 1 : this._instrIndex;
+        this.renderInstruction(document);
+    }
     /**
      * render the current instruction of this checkpoint
      * @param document The HTML document
      */
     renderInstruction(document) {
+        let curInstruction = document.getElementById("instruction");
+        if (curInstruction != null) {
+            curInstruction.remove();
+        }
         let instruction = this._instrBoxes[this._instrIndex];
         let instrDiv = document.createElement("div");
         instrDiv.className = "instruction";
+        instrDiv.id = 'instruction';
         instrDiv.innerText = instruction._content;
         instrDiv.style.display = "block";
         let prevInstr = document.createElement("button");
         prevInstr.id = 'previous-instruction';
         prevInstr.innerText = "<";
+        let thisModule = this;
+        prevInstr.onclick = function () {
+            console.log("instrIndex" + thisModule._instrIndex);
+            thisModule.prevInstruction(document);
+        };
         instrDiv.appendChild(prevInstr);
         let nextInstr = document.createElement("button");
         nextInstr.id = 'next-instruction';
-        nextInstr.innerText = "<";
+        nextInstr.innerText = ">";
+        nextInstr.onclick = function () {
+            console.log("instrIndex" + thisModule._instrIndex);
+            thisModule.nextInstruction(document);
+        };
         instrDiv.appendChild(nextInstr);
         document.getElementById(instruction._location).appendChild(instrDiv);
     }

@@ -10,6 +10,8 @@ export declare class LessonOneCpOne implements Module {
     readonly _instrBoxes: Instruction[];
     _instrIndex: number;
     constructor();
+    nextInstruction(document: Document): void;
+    prevInstruction(document: Document): void;
     /**
      * render the current instruction of this checkpoint
      * @param document The HTML document
