@@ -1,4 +1,5 @@
 import { Module } from "./Module";
+import { Instruction } from "./Instruction";
 import { Effect } from "../effects/Effect";
 export declare class LessonOneCpOne implements Module {
     readonly _name: string;
@@ -6,7 +7,14 @@ export declare class LessonOneCpOne implements Module {
     readonly _goal: any;
     readonly _constraint: string;
     readonly _instructions: string;
+    readonly _instrBoxes: Instruction[];
+    _instrIndex: number;
     constructor();
+    /**
+     * render the current instruction of this checkpoint
+     * @param document The HTML document
+     */
+    renderInstruction(document: Document): void;
     /**
      * A lesson to print a string
      * goals: write any string on CANVAS

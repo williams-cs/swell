@@ -14,7 +14,7 @@
       </div>
       <div class="achievement-container">
           <img src="pics/star.svg" class="icon" alt="yellow star" height="25px" width="25px" />
-          <div class="achievement"> 1/30 Found! </div>
+          <div class="achievement"> 1/30 </div>
       </div>
       <div class="dropdown">
         <button class="drop-button"> Lesson 1 </button>
@@ -62,17 +62,17 @@
 
     <div class="main">
       <div class='row'>
-        <div class='column'>
+        <div id='code' class='column'>
           <div class="label-container">
             <div class="label"> CODE </div>
           </div>
           <textarea id='input' class='inputbox' placeholder='//code goes here' wrap="off"></textarea>
 
           <div class="label-container">
-            <div id="instr-label" class="label"> INSTRUCTIONS </div>
+            <div id="instr-label" class="label"> INFO </div>
           </div>
-          <div class="instruction-container">
-            <div id='instructions' class='instruction'>
+          <div class="goal-container">
+            <div id='goal' class='goal'>
               Welcome to Swell! Let's learn how to code!
             </div>
           </div>
@@ -101,20 +101,20 @@
             <button id='curve'> Curve </button>
           </div>
           <div class='col-item'>
-            <div id='goal-container' class='goal-container' style='background:#C0C0C0'>
-              <div id='goal-text' class='goal'> Complete goal to earn a star! </div>
-              <img id='goal-image' src="pics/greystar.svg" class="goal-star" alt="a star to be earned" height="50px" width="50px" />
+            <div id='reward-container' class='reward-container' style='background:#C0C0C0'>
+              <div id='reward-text' class='reward'> Complete goal to earn a star! </div>
+              <img id='reward-image' src="pics/greystar.svg" class="star" alt="a star to be earned" height="50px" width="50px" />
               <button id='next' class='next' style='display:none'> Next </button>
             </div>
           </div>
         </div>
 
-        <div class='column'>
+        <div id='canvas' class='column'>
           <div class="label-container">
             <div class="label"> CANVAS </div>
           </div>
           <canvas id ='output' class='outputbox' width='500px' height='545px'></canvas>
-          <div id='popup' class='popup-message'>
+          <div id='popup' class='instruction'>
             <p> You need to complete the goal using only the CODE area to the left! </p>
             <p> Don't remember how? Refresh your memory by going back to the last checkpoint:
             <button id='prev'> Last Checkpoint </button>

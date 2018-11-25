@@ -11,6 +11,7 @@ let canvas = document.querySelector('canvas');
 let ctx = canvas.getContext("2d");
 let inputBox = document.getElementById('input');
 let lastWorkingInputText = "";
+let starCount = 0;
 //the effects array that holds all the text, ellipses, and rectangles
 let effects = [];
 let ast;
@@ -271,8 +272,8 @@ function printNewNode(buttonName) {
     }
     inputBox.value += printLine;
 }
-let instructions = document.getElementById('instructions');
-let goalBox = document.getElementById('goal-container');
+let instructions = document.getElementById('goal');
+let rewardBox = document.getElementById('reward-container');
 let instrLabel = document.getElementById('instr-label');
 //Map maintaining code last used at a checkpoint
 let cpCode = new Map([
@@ -389,20 +390,23 @@ function initCheckpoint(cp) {
         }
         //set up the instruction and goal boxes
         if (cpCompletion.get(cp)) {
-            updateGoalBox();
+            updateRewardBox();
         }
         else {
             if (checkpoint._starterCode != null) {
                 textBoxSelected = true;
                 inputBox.value = checkpoint._starterCode;
             }
-            goalBox.style.background = '#C0C0C0';
-            let goalText = document.getElementById('goal-text');
-            goalText.style.color = 'black';
-            goalText.innerHTML = 'Complete goal to earn a star!';
-            let goalImg = document.getElementById('goal-image');
-            goalImg.src = 'pics/greystar.svg';
-            goalImg.alt = 'a star to be earned';
+            if (checkpoint._name === "l1c1") {
+                checkpoint.renderInstruction(document);
+            }
+            rewardBox.style.background = '#C0C0C0';
+            let reward = document.getElementById('reward-text');
+            reward.style.color = 'black';
+            reward.innerHTML = 'Complete goal to earn a star!';
+            let rewardImg = document.getElementById('reward-image');
+            rewardImg.src = 'pics/greystar.svg';
+            rewardImg.alt = 'a star to be earned';
             let nextBtn = document.getElementById('next');
             nextBtn.style.display = 'none';
             instructions.scrollTop = 0;
@@ -412,19 +416,19 @@ function initCheckpoint(cp) {
 }
 function checkpointChecksGoal() {
     if (checkpoint.checkGoal(document, effects)) {
-        updateGoalBox();
+        updateRewardBox();
         cpCompletion.set(checkpoint._name, true);
     }
 }
-function updateGoalBox() {
-    goalBox.style.background = '#673AB7';
+function updateRewardBox() {
+    rewardBox.style.background = '#673AB7';
     console.log(document);
-    let goalText = document.getElementById('goal-text');
-    goalText.style.color = '#D8D8D8';
-    goalText.innerHTML = 'Goal met!';
-    let goalImg = document.getElementById('goal-image');
-    goalImg.src = 'pics/star.svg';
-    goalImg.alt = 'star earned';
+    let rewardText = document.getElementById('reward-text');
+    rewardText.style.color = '#D8D8D8';
+    rewardText.innerHTML = 'Goal met!';
+    let rewardImg = document.getElementById('reward-image');
+    rewardImg.src = 'pics/star.svg';
+    rewardImg.alt = 'star earned';
     let nextBtn = document.getElementById('next');
     nextBtn.style.display = 'block';
     instructions.innerHTML += "\nHooray! Goal met! Click 'Next' to proceed to next checkpoint!";

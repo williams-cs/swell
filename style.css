@@ -103,7 +103,7 @@ h4 {
   position: relative;
   top: 50%;
   left: 7%;
-  transform: translate(0, -50%);
+  transform: translate(20%, -50%);
   color: var(--white);
   font-size: 15px;
 }
@@ -206,7 +206,7 @@ button:focus {
 .inputbox {
   margin: 0px 20px 0px 20px;
   width: 400px;
-  height: 300px;
+  height: 400px;
   resize: horizontal;
   font-size: 15px;
   font-family: 'Courier New', Courier, monospace;
@@ -218,15 +218,15 @@ button:focus {
   outline: none !important;
 }
 
-.instruction-container {
+.goal-container {
   margin: 0px 20px 20px 20px;
-  height: 200px;
+  height: 100px;
   width: 405px;
   position: relative;
   background-color: var(--mid-gray);
 }
 
-.instruction {
+.goal {
   position: relative;
   float: left;
   top: 10px;
@@ -237,7 +237,7 @@ button:focus {
   overflow: auto;
 }
 
-.goal-container {
+.reward-container {
   margin: 5px 0px 20px 0px;
   height: 200px;
   width: 140px;
@@ -245,7 +245,7 @@ button:focus {
   position: relative;
 }
 
-.goal-met {
+.reward-met {
   margin: 34px 0px 20px 0px;
   height: 200px;
   width: 140px;
@@ -254,14 +254,14 @@ button:focus {
   background-color: var(--purple);
 }
 
-.goal {
+.reward {
   position: relative;
   text-align: center;
   top: 10px;
   font-size: 12px;
 }
 
-.goal-star {
+.star {
   display : block;
   margin : 40px auto auto auto;
 }
@@ -304,7 +304,7 @@ button:focus {
   display: flex;
 }
 
-.popup-message {
+.instruction {
   display: none;
   position: absolute;
   top: 25%;
