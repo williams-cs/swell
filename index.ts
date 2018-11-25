@@ -76,7 +76,8 @@ export {SelectEvent} from './lib/logging/SelectEvent';
 export {IDEvent} from './lib/logging/IDEvent';
 
 /* MODULES */
-export {Module} from './lib/modules/Module';
+export {Module} from './lib/modules/Module'
+export {ModuleGenerator} from './lib/modules/ModuleGenerator';
 export {LessonOneCpOne} from './lib/modules/LessonOneCpOne';
 export {LessonOneCpTwo} from './lib/modules/LessonOneCpTwo';
 export {LessonOneCpThree} from './lib/modules/LessonOneCpThree';

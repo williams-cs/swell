@@ -330,78 +330,84 @@ let checkpoints = new Map([
     ['l4c1', () => new index_6.LessonFourCpOne()],
     ['l4c2', () => new index_6.LessonFourCpTwo()]
 ]);
-for (let cp of checkpoints.keys()) {
+let cpNames = [
+    'l1c1', 'l1c2', 'l1c3', 'l1c4',
+    'l2c1', 'l2c2', 'l2c3', 'l2c4', 'l2c4', 'l2c5', 'l2c6', 'l2c7',
+    'l3c1', 'l3c2', 'l3c3', 'l3c4', 'l3c4', 'l3c5', 'l3c6',
+    'l4c1', 'l4c2'
+];
+for (let cp of cpNames) {
     let cpButton = document.getElementById(cp);
     cpButton.onclick = function () {
         initCheckpoint(cp);
     };
 }
+let modGen = new index_2.ModuleGenerator();
 /**
  * Creates a module corresponding to a checkpoint passed in.
  * Sets up the instruction, CODE area, and goal box accordingly.
  * @param cp: the name of the checkpoint
  */
 function initCheckpoint(cp) {
-    if (checkpoints.has(cp)) {
-        if (checkpoint != null) {
-            cpCode.set(checkpoint._name, inputBox.value);
-        }
-        console.log("Initiating checkpoint " + cp);
-        checkpoint = checkpoints.get(cp)();
-        instrLabel.innerHTML = cp + " - INSTRUCTIONS";
-        instructions.innerHTML = checkpoint._instructions;
-        //set up the CODE and CANVAS areas
-        if (checkpoint._constraint == 'code') {
-            inputBox.setAttribute('disabled', 'disabled');
-            inputBox.style.opacity = '0.5';
-            canvas.style.pointerEvents = "auto";
-            canvas.style.background = '#EBEBEB';
-            canvasIsDisabled = false;
-        }
-        else if (checkpoint._constraint == 'canvas') {
-            inputBox.removeAttribute('disabled');
-            inputBox.style.opacity = '1.0';
-            canvas.style.pointerEvents = "none";
-            canvas.style.background = '#C0C0C0';
-            canvasIsDisabled = true;
-        }
-        else {
-            inputBox.removeAttribute('disabled');
-            inputBox.style.opacity = '1.0';
-            canvas.style.pointerEvents = "auto";
-            canvas.style.background = '#EBEBEB';
-            canvasIsDisabled = false;
-        }
-        let popUp = document.getElementById('popup');
-        popUp.style.display = 'none';
-        if (cpCode.get(checkpoint._name) !== "") {
+    //store CODE of old checkpoint
+    if (checkpoint != null) {
+        cpCode.set(checkpoint._name, inputBox.value);
+    }
+    console.log("Initiating checkpoint " + cp);
+    checkpoint = modGen.generateCheckpoint(cp);
+    instrLabel.innerHTML = cp + " - INSTRUCTIONS";
+    instructions.innerHTML = checkpoint._instructions;
+    //set up the CODE and CANVAS areas
+    if (checkpoint._constraint == 'code') {
+        inputBox.setAttribute('disabled', 'disabled');
+        inputBox.style.opacity = '0.5';
+        canvas.style.pointerEvents = "auto";
+        canvas.style.background = '#EBEBEB';
+        canvasIsDisabled = false;
+    }
+    else if (checkpoint._constraint == 'canvas') {
+        inputBox.removeAttribute('disabled');
+        inputBox.style.opacity = '1.0';
+        canvas.style.pointerEvents = "none";
+        canvas.style.background = '#C0C0C0';
+        canvasIsDisabled = true;
+    }
+    else {
+        inputBox.removeAttribute('disabled');
+        inputBox.style.opacity = '1.0';
+        canvas.style.pointerEvents = "auto";
+        canvas.style.background = '#EBEBEB';
+        canvasIsDisabled = false;
+    }
+    let popUp = document.getElementById('popup');
+    popUp.style.display = 'none';
+    if (cpCode.get(checkpoint._name) !== "") {
+        textBoxSelected = true;
+        inputBox.value = cpCode.get(checkpoint._name);
+    }
+    //set up the instruction and goal boxes
+    if (cpCompletion.get(cp)) {
+        updateRewardBox();
+    }
+    else {
+        if (checkpoint._starterCode != null) {
             textBoxSelected = true;
-            inputBox.value = cpCode.get(checkpoint._name);
+            inputBox.value = checkpoint._starterCode;
         }
-        //set up the instruction and goal boxes
-        if (cpCompletion.get(cp)) {
-            updateRewardBox();
+        if (checkpoint._name === "l1c1") {
+            checkpoint.renderInstruction(document);
         }
-        else {
-            if (checkpoint._starterCode != null) {
-                textBoxSelected = true;
-                inputBox.value = checkpoint._starterCode;
-            }
-            if (checkpoint._name === "l1c1") {
-                checkpoint.renderInstruction(document);
-            }
-            rewardBox.style.background = '#C0C0C0';
-            let reward = document.getElementById('reward-text');
-            reward.style.color = 'black';
-            reward.innerHTML = 'Complete goal to earn a star!';
-            let rewardImg = document.getElementById('reward-image');
-            rewardImg.src = 'pics/greystar.svg';
-            rewardImg.alt = 'a star to be earned';
-            let nextBtn = document.getElementById('next');
-            nextBtn.style.display = 'none';
-            instructions.scrollTop = 0;
-            checkpointIsActive = true;
-        }
+        rewardBox.style.background = '#C0C0C0';
+        let reward = document.getElementById('reward-text');
+        reward.style.color = 'black';
+        reward.innerHTML = 'Complete goal to earn a star!';
+        let rewardImg = document.getElementById('reward-image');
+        rewardImg.src = 'pics/greystar.svg';
+        rewardImg.alt = 'a star to be earned';
+        let nextBtn = document.getElementById('next');
+        nextBtn.style.display = 'none';
+        instructions.scrollTop = 0;
+        checkpointIsActive = true;
     }
 }
 function checkpointChecksGoal() {

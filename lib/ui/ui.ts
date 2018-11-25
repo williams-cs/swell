@@ -1,5 +1,5 @@
 import { Parser } from '../../index';
-import { Effect, Expression, Scope, ClearEvent, LogEvent, DragEvent, SelectEvent, IDEvent, EphEffect, Module } from '../../index';
+import { Effect, Expression, Scope, ClearEvent, LogEvent, DragEvent, SelectEvent, IDEvent, EphEffect, Module, ModuleGenerator } from '../../index';
 import { LessonOneCpOne, LessonOneCpTwo, LessonOneCpThree, LessonOneCpFour } from '../../index';
 import { LessonTwoCpOne, LessonTwoCpTwo, LessonTwoCpThree, LessonTwoCpFour, LessonTwoCpFive, LessonTwoCpSix, LessonTwoCpSeven } from '../../index';
 import { LessonThreeCpOne, LessonThreeCpTwo, LessonThreeCpThree, LessonThreeCpFour, LessonThreeCpFive, LessonThreeCpSix } from '../../index';
@@ -23,10 +23,10 @@ let showDebug = true; // flag to show or hide debug button
 let masterLog: LogEvent<any>[] = [];
 let selectedElems: Effect<any>[] = [];
 
-let textBoxSelected: boolean; //sees if the text box is selected
-
-let checkpointIsActive: boolean = false;
 let checkpoint: Module = null;
+let modGen = new ModuleGenerator();
+let checkpointIsActive: boolean = false;
+let textBoxSelected: boolean; //sees if the text box is selected
 let canvasIsDisabled: boolean = false;
 
 let selected: number = 0; //the number of selected effects if multiply selecting
@@ -347,29 +347,14 @@ let cpCompletion: Map<string, boolean> = new Map([
   ['l4c2', false]
 ]);
 
-let checkpoints: Map<string, () => Module> = new Map([
-  ['l1c1', () => new LessonOneCpOne()],
-  ['l1c2', () => new LessonOneCpTwo()],
-  ['l1c3', () => new LessonOneCpThree()],
-  ['l1c4', () => new LessonOneCpFour()],
-  ['l2c1', () => new LessonTwoCpOne()],
-  ['l2c2', () => new LessonTwoCpTwo()],
-  ['l2c3', () => new LessonTwoCpThree()],
-  ['l2c4', () => new LessonTwoCpFour()],
-  ['l2c5', () => new LessonTwoCpFive()],
-  ['l2c6', () => new LessonTwoCpSix()],
-  ['l2c7', () => new LessonTwoCpSeven()],
-  ['l3c1', () => new LessonThreeCpOne()],
-  ['l3c2', () => new LessonThreeCpTwo()],
-  ['l3c3', () => new LessonThreeCpThree()],
-  ['l3c4', () => new LessonThreeCpFour()],
-  ['l3c5', () => new LessonThreeCpFive()],
-  ['l3c6', () => new LessonThreeCpSix()],
-  ['l4c1', () => new LessonFourCpOne()],
-  ['l4c2', () => new LessonFourCpTwo()]
-]);
+let cpNames: string[] = [
+  'l1c1', 'l1c2', 'l1c3', 'l1c4',
+  'l2c1', 'l2c2', 'l2c3', 'l2c4', 'l2c4', 'l2c5', 'l2c6', 'l2c7',
+  'l3c1', 'l3c2', 'l3c3', 'l3c4', 'l3c4', 'l3c5', 'l3c6',
+  'l4c1', 'l4c2'
+];
 
-for (let cp of checkpoints.keys()) {
+for (let cp of cpNames) {
   let cpButton = document.getElementById(cp);
   cpButton.onclick = function() {
     initCheckpoint(cp);
@@ -382,14 +367,13 @@ for (let cp of checkpoints.keys()) {
  * @param cp: the name of the checkpoint
  */
 function initCheckpoint(cp: string) {
-
-  if (checkpoints.has(cp)) {
+    //store CODE of old checkpoint
     if (checkpoint != null) {
       cpCode.set(checkpoint._name, inputBox.value);
     }
 
     console.log("Initiating checkpoint " + cp);
-    checkpoint = checkpoints.get(cp)();
+    checkpoint = modGen.generateCheckpoint(cp);
     instrLabel.innerHTML = cp + " - INSTRUCTIONS";
     instructions.innerHTML = checkpoint._instructions;
 
@@ -451,7 +435,6 @@ function initCheckpoint(cp: string) {
       instructions.scrollTop = 0;
       checkpointIsActive = true;
     }
-  }
 }
 
 function checkpointChecksGoal() {
