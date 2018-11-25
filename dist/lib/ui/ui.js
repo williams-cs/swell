@@ -20,7 +20,6 @@ let showDebug = true; // flag to show or hide debug button
 let masterLog = [];
 let selectedElems = [];
 let textBoxSelected; //sees if the text box is selected
-let isPainting; //tests to see if you're painting to the canvas
 let checkpointIsActive = false;
 let checkpoint = null;
 let canvasIsDisabled = false;
@@ -92,6 +91,32 @@ resetButton.onclick = function () {
     //logEvent.push(clearEvt.assembleLog());
     //console.log("Log: " + logEvent);
 };
+let timer = null;
+inputBox.onkeydown = function () {
+    if (timer != null) {
+        clearTimeout(timer);
+    }
+    timer = setTimeout(parse, 200);
+};
+function parse() {
+    effects.length = 0; // slightly sketch clearing method to maintain reference to original array
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let inputText = inputBox.value;
+    let astOpt = index_1.Parser.parse(inputText);
+    if (astOpt.isDefined()) {
+        ast = astOpt.get();
+        context = new index_2.Scope(null, effects, masterLog);
+        context.canvas = space_lift_1.Some(canvas);
+        ast.eval(context); //this is where we draw the objects to the screen
+        lastWorkingInputText = inputText;
+    }
+    //let paintEvt = new PaintEvent(inputText); // will need to get from ast when that's implemented
+    // Adding context log to master log
+    //logEvent.push(paintEvt.assembleLog());
+    printLog();
+    //event1.logItem();
+    // }
+}
 /**
  * The animation function that basically recursively calls itself, clearing and
  * redrawing to the canvas at 60fps.
@@ -132,31 +157,7 @@ function animate() {
         alreadyLogged = true;
     }
     //This does the prodirect manipulation, passing the new strings to the text box
-    let inputText = inputBox.value;
-    if (textBoxSelected && inputText !== lastWorkingInputText) {
-        effects.length = 0; // slightly sketch clearing method to maintain reference to original array
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        //isPainting = true;
-        //let inputText = inputBox.value;
-        let astOpt = index_1.Parser.parse(inputText);
-        if (astOpt.isDefined()) {
-            ast = astOpt.get();
-            context = new index_2.Scope(null, effects, masterLog);
-            context.canvas = space_lift_1.Some(canvas);
-            ast.eval(context); //this is where we draw the objects to the screen
-            lastWorkingInputText = inputText;
-        } /*else {
-            let error = "error text";
-            alert("Quan: so something with this syntax error: " + error);
-        }*/
-        //let paintEvt = new PaintEvent(inputText); // will need to get from ast when that's implemented
-        // Adding context log to master log
-        //logEvent.push(paintEvt.assembleLog());
-        printLog();
-        //event1.logItem();
-        // }
-    }
-    else if (ast != undefined && !textBoxSelected /* && !isPainting */) {
+    if (ast != undefined && !textBoxSelected) {
         let newInput = ast.toString();
         inputBox.value = newInput;
     }
@@ -194,20 +195,9 @@ function isInputBoxSelected(event) {
     let mouseY = event.clientY;
     let rect = inputBox.getBoundingClientRect();
     if (mouseX > rect.left && mouseX < rect.right && mouseY > rect.top && mouseY < rect.bottom) {
-        //isPainting = false;
         textBoxSelected = true;
     }
     else {
-        /*
-          let paintButton = document.getElementById('paint');
-          rect = paintButton.getBoundingClientRect();
-          if(mouseX > rect.left && mouseX < rect.right && mouseY > rect.top && mouseY < rect.bottom) {
-              isPainting = true;
-          }
-          else {
-              isPainting = false;
-          }
-          */
         textBoxSelected = false;
     }
 }
@@ -451,18 +441,4 @@ prevButton.onclick = function () {
 };
 //call to animate
 animate();
-//--------------------------------------------------------------
-/* test lines of S.W.E.L.L. code
-
-print("hello world", 180, 421);
-print(ellipse(75, 50), 100, 100);
-print(rect(60, 70), 250, 250);
-
-print("hello");
-print("world");
-
-Our sample program
-print("hello world");
-print(ellipse(130, 100));
-*/
 //# sourceMappingURL=ui.js.map

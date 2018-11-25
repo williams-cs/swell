@@ -24,7 +24,6 @@ let masterLog: LogEvent<any>[] = [];
 let selectedElems: Effect<any>[] = [];
 
 let textBoxSelected: boolean; //sees if the text box is selected
-let isPainting: boolean; //tests to see if you're painting to the canvas
 
 let checkpointIsActive: boolean = false;
 let checkpoint: Module = null;
@@ -107,6 +106,38 @@ resetButton!.onclick = function () {
     //console.log("Log: " + logEvent);
 };
 
+let timer: any = null;
+inputBox.onkeydown = function() {
+  if (timer != null) {
+    clearTimeout(timer);
+  }
+  timer = setTimeout(parse, 200);
+};
+
+function parse() {
+  effects.length = 0; // slightly sketch clearing method to maintain reference to original array
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  let inputText = inputBox.value;
+  let astOpt = Parser.parse(inputText);
+  if(astOpt.isDefined()){
+      ast = astOpt.get();
+      context = new Scope(null, effects, masterLog);
+      context.canvas = Some(canvas);
+      ast.eval(context); //this is where we draw the objects to the screen
+      lastWorkingInputText = inputText;
+  }
+
+  //let paintEvt = new PaintEvent(inputText); // will need to get from ast when that's implemented
+
+  // Adding context log to master log
+  //logEvent.push(paintEvt.assembleLog());
+  printLog();
+  //event1.logItem();
+  // }
+
+}
+
 /**
  * The animation function that basically recursively calls itself, clearing and
  * redrawing to the canvas at 60fps.
@@ -151,35 +182,7 @@ function animate() {
     }
 
     //This does the prodirect manipulation, passing the new strings to the text box
-    let inputText = inputBox.value;
-    if (textBoxSelected && inputText !== lastWorkingInputText) {
-      effects.length = 0; // slightly sketch clearing method to maintain reference to original array
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      //isPainting = true;
-      //let inputText = inputBox.value;
-
-      let astOpt = Parser.parse(inputText);
-      if(astOpt.isDefined()){
-          ast = astOpt.get();
-          context = new Scope(null, effects, masterLog);
-          context.canvas = Some(canvas);
-          ast.eval(context); //this is where we draw the objects to the screen
-          lastWorkingInputText = inputText;
-      } /*else {
-          let error = "error text";
-          alert("Quan: so something with this syntax error: " + error);
-      }*/
-
-      //let paintEvt = new PaintEvent(inputText); // will need to get from ast when that's implemented
-
-      // Adding context log to master log
-      //logEvent.push(paintEvt.assembleLog());
-      printLog();
-      //event1.logItem();
-      // }
-
-    } else if (ast != undefined && !textBoxSelected /* && !isPainting */){
+    if (ast != undefined && !textBoxSelected){
         let newInput: string = ast.toString();
         inputBox.value = newInput;
     }
@@ -222,19 +225,8 @@ function isInputBoxSelected(event: any) {
     let mouseY = event.clientY;
     let rect = inputBox.getBoundingClientRect();
     if(mouseX > rect.left && mouseX < rect.right && mouseY > rect.top && mouseY < rect.bottom) {
-        //isPainting = false;
         textBoxSelected = true;
     } else {
-      /*
-        let paintButton = document.getElementById('paint');
-        rect = paintButton.getBoundingClientRect();
-        if(mouseX > rect.left && mouseX < rect.right && mouseY > rect.top && mouseY < rect.bottom) {
-            isPainting = true;
-        }
-        else {
-            isPainting = false;
-        }
-        */
         textBoxSelected = false;
     }
 }
@@ -504,18 +496,3 @@ prevButton.onclick = function() {
 
 //call to animate
 animate();
-
-//--------------------------------------------------------------
-/* test lines of S.W.E.L.L. code
-
-print("hello world", 180, 421);
-print(ellipse(75, 50), 100, 100);
-print(rect(60, 70), 250, 250);
-
-print("hello");
-print("world");
-
-Our sample program
-print("hello world");
-print(ellipse(130, 100));
-*/
