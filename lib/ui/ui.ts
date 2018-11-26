@@ -418,6 +418,11 @@ function initCheckpoint(cp: string) {
         inputBox.value = checkpoint._starterCode;
       }
 
+      let curInstruction = document.getElementById("instruction");
+      if (curInstruction != null) {
+        curInstruction.remove();
+      }
+
       if (checkpoint._name === "l1c1") {
         checkpoint.renderInstruction(document);
       }
