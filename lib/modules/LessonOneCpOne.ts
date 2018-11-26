@@ -20,7 +20,7 @@ export class LessonOneCpOne implements Module {
       this._instrBoxes.push(new Instruction('code', content, "50%", "10%"));
       content = 'Now type `print("Hello")` in this CODE box.';
       this._instrBoxes.push(new Instruction('code', content, "50%", "10%"));
-      content = 'Notice that what you typed causes the computer to print the world "Hello" on the CANVAS here. Congratulations! You just wrote your first line of code!';
+      content = 'Notice that what you typed causes the computer to print the word "Hello" on the CANVAS here. Congratulations! You just wrote your first line of code!';
       this._instrBoxes.push(new Instruction('canvas', content, "65%", "10%"));
     }
 
