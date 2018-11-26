@@ -2,10 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const index_1 = require("../../index");
 const index_2 = require("../../index");
-const index_3 = require("../../index");
-const index_4 = require("../../index");
-const index_5 = require("../../index");
-const index_6 = require("../../index");
 const space_lift_1 = require("space-lift");
 let canvas = document.querySelector('canvas');
 let ctx = canvas.getContext("2d");
@@ -19,9 +15,10 @@ let context;
 let showDebug = true; // flag to show or hide debug button
 let masterLog = [];
 let selectedElems = [];
-let textBoxSelected; //sees if the text box is selected
-let checkpointIsActive = false;
 let checkpoint = null;
+let modGen = new index_2.ModuleGenerator();
+let checkpointIsActive = false;
+let textBoxSelected; //sees if the text box is selected
 let canvasIsDisabled = false;
 let selected = 0; //the number of selected effects if multiply selecting
 let alreadyLogged = false;
@@ -309,27 +306,6 @@ let cpCompletion = new Map([
     ['l4c1', false],
     ['l4c2', false]
 ]);
-let checkpoints = new Map([
-    ['l1c1', () => new index_3.LessonOneCpOne()],
-    ['l1c2', () => new index_3.LessonOneCpTwo()],
-    ['l1c3', () => new index_3.LessonOneCpThree()],
-    ['l1c4', () => new index_3.LessonOneCpFour()],
-    ['l2c1', () => new index_4.LessonTwoCpOne()],
-    ['l2c2', () => new index_4.LessonTwoCpTwo()],
-    ['l2c3', () => new index_4.LessonTwoCpThree()],
-    ['l2c4', () => new index_4.LessonTwoCpFour()],
-    ['l2c5', () => new index_4.LessonTwoCpFive()],
-    ['l2c6', () => new index_4.LessonTwoCpSix()],
-    ['l2c7', () => new index_4.LessonTwoCpSeven()],
-    ['l3c1', () => new index_5.LessonThreeCpOne()],
-    ['l3c2', () => new index_5.LessonThreeCpTwo()],
-    ['l3c3', () => new index_5.LessonThreeCpThree()],
-    ['l3c4', () => new index_5.LessonThreeCpFour()],
-    ['l3c5', () => new index_5.LessonThreeCpFive()],
-    ['l3c6', () => new index_5.LessonThreeCpSix()],
-    ['l4c1', () => new index_6.LessonFourCpOne()],
-    ['l4c2', () => new index_6.LessonFourCpTwo()]
-]);
 let cpNames = [
     'l1c1', 'l1c2', 'l1c3', 'l1c4',
     'l2c1', 'l2c2', 'l2c3', 'l2c4', 'l2c4', 'l2c5', 'l2c6', 'l2c7',
@@ -342,7 +318,6 @@ for (let cp of cpNames) {
         initCheckpoint(cp);
     };
 }
-let modGen = new index_2.ModuleGenerator();
 /**
  * Creates a module corresponding to a checkpoint passed in.
  * Sets up the instruction, CODE area, and goal box accordingly.
@@ -355,7 +330,7 @@ function initCheckpoint(cp) {
     }
     console.log("Initiating checkpoint " + cp);
     checkpoint = modGen.generateCheckpoint(cp);
-    instrLabel.innerHTML = cp + " - INSTRUCTIONS";
+    instrLabel.innerHTML = cp + " - GOAL";
     instructions.innerHTML = checkpoint._instructions;
     //set up the CODE and CANVAS areas
     if (checkpoint._constraint == 'code') {

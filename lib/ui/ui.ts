@@ -374,7 +374,7 @@ function initCheckpoint(cp: string) {
 
     console.log("Initiating checkpoint " + cp);
     checkpoint = modGen.generateCheckpoint(cp);
-    instrLabel.innerHTML = cp + " - INSTRUCTIONS";
+    instrLabel.innerHTML = cp + " - GOAL";
     instructions.innerHTML = checkpoint._instructions;
 
     //set up the CODE and CANVAS areas
@@ -449,14 +449,13 @@ function updateRewardBox() {
   console.log(document);
   let rewardText = document.getElementById('reward-text');
   rewardText.style.color = '#D8D8D8';
-  rewardText.innerHTML = 'Goal met!';
+  rewardText.innerHTML = "Goal met! Click 'Next' to go to next checkpoint!";
   let rewardImg: HTMLImageElement = document.getElementById('reward-image') as HTMLImageElement;
   rewardImg.src = 'pics/star.svg';
   rewardImg.alt = 'star earned';
   let nextBtn = document.getElementById('next');
   nextBtn.style.display = 'block';
 
-  instructions.innerHTML += "\nHooray! Goal met! Click 'Next' to proceed to next checkpoint!";
   instructions.scrollTop = instructions.scrollHeight;
   checkpointIsActive = false;
 }

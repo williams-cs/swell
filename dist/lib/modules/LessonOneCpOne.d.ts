@@ -9,14 +9,8 @@ export declare class LessonOneCpOne implements Module {
     readonly _instructions: string;
     readonly _instrBoxes: Instruction[];
     _instrIndex: number;
+    _latestInstrIndex: number;
     constructor();
-    nextInstruction(document: Document): void;
-    prevInstruction(document: Document): void;
-    /**
-     * render the current instruction of this checkpoint
-     * @param document The HTML document
-     */
-    renderInstruction(document: Document): void;
     /**
      * A lesson to print a string
      * goals: write any string on CANVAS
@@ -24,6 +18,13 @@ export declare class LessonOneCpOne implements Module {
      * @param effects: the list of effects currently on the CANVAS
      */
     checkGoal(document: Document, effects: Effect<any>[]): boolean;
+    nextInstruction(document: Document): void;
+    prevInstruction(document: Document): void;
+    /**
+     * render the current instruction of this checkpoint
+     * @param document The HTML document
+     */
+    renderInstruction(document: Document): void;
     /**
      * Returns the module name
      */
