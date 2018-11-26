@@ -295,6 +295,7 @@ function printNewNode(buttonName: string) {
       console.log("Problem with " + buttonName)
   }
   inputBox.value += printLine;
+  parse();
 }
 
 let instructions = document.getElementById('goal');
@@ -416,6 +417,7 @@ function initCheckpoint(cp: string) {
       if (checkpoint._starterCode != null) {
         textBoxSelected = true;
         inputBox.value = checkpoint._starterCode;
+        parse();
       }
 
       let curInstruction = document.getElementById("instruction");

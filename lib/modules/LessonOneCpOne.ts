@@ -17,9 +17,9 @@ export class LessonOneCpOne implements Module {
 
     constructor() {
       let content = "First, let's tell the computer to print something on the CANVAS. Click on the CODE box.";
-      this._instrBoxes.push(new Instruction('code', content, "50%", "10%"));
+      this._instrBoxes.push(new Instruction('code', content, "30%", "10%"));
       content = 'Now type `print("Hello")` in this CODE box.';
-      this._instrBoxes.push(new Instruction('code', content, "50%", "10%"));
+      this._instrBoxes.push(new Instruction('code', content, "30%", "10%"));
       content = 'Notice that what you typed causes the computer to print the word "Hello" on the CANVAS here. Congratulations! You just wrote your first line of code!';
       this._instrBoxes.push(new Instruction('canvas', content, "65%", "10%"));
     }

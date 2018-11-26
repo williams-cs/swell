@@ -206,7 +206,7 @@ button:focus {
 .inputbox {
   margin: 0px 20px 0px 20px;
   width: 400px;
-  height: 400px;
+  height: 300px;
   resize: horizontal;
   font-size: 15px;
   font-family: 'Courier New', Courier, monospace;
@@ -220,7 +220,7 @@ button:focus {
 
 .goal-container {
   margin: 0px 20px 20px 20px;
-  height: 100px;
+  height: 200px;
   width: 405px;
   position: relative;
   background-color: var(--mid-gray);
