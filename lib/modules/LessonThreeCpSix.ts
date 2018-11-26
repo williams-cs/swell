@@ -38,7 +38,7 @@ print("Circle A is smaller than circle B.", 45, 453);
         let codeIsCorrect = false;
         let code = (document.getElementById("input") as HTMLInputElement).value;
         if (code != null) {
-            let regex: RegExp = /print\s*\(\s*ellipse\s*\(\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\)\s*,\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\);/;
+            let regex: RegExp = /if/;
             let match = code.match(regex);
             codeIsCorrect = match != null && match.length > 0;
         }

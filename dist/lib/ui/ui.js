@@ -91,6 +91,32 @@ resetButton.onclick = function () {
     //logEvent.push(clearEvt.assembleLog());
     //console.log("Log: " + logEvent);
 };
+let timer = null;
+inputBox.onkeydown = function () {
+    if (timer != null) {
+        clearTimeout(timer);
+    }
+    timer = setTimeout(parse, 200);
+};
+function parse() {
+    effects.length = 0; // slightly sketch clearing method to maintain reference to original array
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let inputText = inputBox.value;
+    let astOpt = index_1.Parser.parse(inputText);
+    if (astOpt.isDefined()) {
+        ast = astOpt.get();
+        context = new index_2.Scope(null, effects, masterLog);
+        context.canvas = space_lift_1.Some(canvas);
+        ast.eval(context); //this is where we draw the objects to the screen
+        lastWorkingInputText = inputText;
+    }
+    //let paintEvt = new PaintEvent(inputText); // will need to get from ast when that's implemented
+    // Adding context log to master log
+    //logEvent.push(paintEvt.assembleLog());
+    printLog();
+    //event1.logItem();
+    // }
+}
 /**
  * The animation function that basically recursively calls itself, clearing and
  * redrawing to the canvas at 60fps.
@@ -133,21 +159,23 @@ function animate() {
     //This does the prodirect manipulation, passing the new strings to the text box
     let inputText = inputBox.value;
     if (textBoxSelected && inputText !== lastWorkingInputText) {
-        effects.length = 0; // slightly sketch clearing method to maintain reference to original array
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        //isPainting = true;
-        //let inputText = inputBox.value;
-        let astOpt = index_1.Parser.parse(inputText);
-        if (astOpt.isDefined()) {
-            ast = astOpt.get();
-            context = new index_2.Scope(null, effects, masterLog);
-            context.canvas = space_lift_1.Some(canvas);
-            ast.eval(context); //this is where we draw the objects to the screen
-            lastWorkingInputText = inputText;
-        } /*else {
-            let error = "error text";
-            alert("Quan: so something with this syntax error: " + error);
-        }*/
+        /*      effects.length = 0; // slightly sketch clearing method to maintain reference to original array
+              ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+              //isPainting = true;
+              //let inputText = inputBox.value;
+        
+              let astOpt = Parser.parse(inputText);
+              if(astOpt.isDefined()){
+                  ast = astOpt.get();
+                  context = new Scope(null, effects, masterLog);
+                  context.canvas = Some(canvas);
+                  ast.eval(context); //this is where we draw the objects to the screen
+                  lastWorkingInputText = inputText;
+              } /*else {
+                  let error = "error text";
+                  alert("Quan: so something with this syntax error: " + error);
+              }*/
         //let paintEvt = new PaintEvent(inputText); // will need to get from ast when that's implemented
         // Adding context log to master log
         //logEvent.push(paintEvt.assembleLog());
@@ -270,6 +298,7 @@ function printNewNode(buttonName) {
             console.log("Problem with " + buttonName);
     }
     inputBox.value += printLine;
+    parse();
 }
 let instructions = document.getElementById('instructions');
 let goalBox = document.getElementById('goal-container');

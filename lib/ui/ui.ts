@@ -105,6 +105,38 @@ resetButton!.onclick = function () {
     //console.log("Log: " + logEvent);
 };
 
+let timer: any = null;
+inputBox.onkeydown = function() {
+  if (timer != null) {
+    clearTimeout(timer);
+  }
+  timer = setTimeout(parse, 200);
+};
+
+function parse() {
+  effects.length = 0; // slightly sketch clearing method to maintain reference to original array
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  let inputText = inputBox.value;
+  let astOpt = Parser.parse(inputText);
+  if(astOpt.isDefined()){
+      ast = astOpt.get();
+      context = new Scope(null, effects, masterLog);
+      context.canvas = Some(canvas);
+      ast.eval(context); //this is where we draw the objects to the screen
+      lastWorkingInputText = inputText;
+  }
+
+  //let paintEvt = new PaintEvent(inputText); // will need to get from ast when that's implemented
+
+  // Adding context log to master log
+  //logEvent.push(paintEvt.assembleLog());
+  printLog();
+  //event1.logItem();
+  // }
+
+}
+
 /**
  * The animation function that basically recursively calls itself, clearing and
  * redrawing to the canvas at 60fps.
@@ -151,7 +183,7 @@ function animate() {
     //This does the prodirect manipulation, passing the new strings to the text box
     let inputText = inputBox.value;
     if (textBoxSelected && inputText !== lastWorkingInputText) {
-      effects.length = 0; // slightly sketch clearing method to maintain reference to original array
+/*      effects.length = 0; // slightly sketch clearing method to maintain reference to original array
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       //isPainting = true;
@@ -301,6 +333,7 @@ function printNewNode(buttonName: string) {
       console.log("Problem with " + buttonName)
   }
   inputBox.value += printLine;
+  parse();
 }
 
 let instructions = document.getElementById('instructions');
@@ -438,6 +471,7 @@ function initCheckpoint(cp: string) {
       if (checkpoint._starterCode != null) {
         textBoxSelected = true;
         inputBox.value = checkpoint._starterCode;
+        parse();
       }
 
       goalBox.style.background = '#C0C0C0';
