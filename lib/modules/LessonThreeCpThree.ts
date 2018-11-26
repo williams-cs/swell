@@ -10,7 +10,7 @@ export class LessonThreeCpThree implements Module {
     readonly _instructions: string =
     `<p> if statements allow you to run a block of code inside the curly braces {} ONLY when the condition inside the if() clause is true. </p>
     <p> Let's have a quick challenge: observe the CODE above. Make it so that the line "b is greater than 20" is only printed on the CANVAS when b is actually greater than 20. </p>
-    <p> GOAL: Make the line "b is greater than 20" only be printed on the CANVAS when b is actually greater than 20. </p>`;
+    <p> GOAL: Make the line "b is greater than 20" only be printed on the CANVAS when b is actually greater than 20. Change b to test the if() statement. </p>`;
 
     readonly _starterCode: string =
     `b = 8;

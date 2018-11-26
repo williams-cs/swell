@@ -1,3 +1,4 @@
+import { Instruction } from "./Instruction";
 import { Effect } from "../effects/Effect";
 
 export interface Module {
@@ -9,6 +10,9 @@ export interface Module {
     readonly _instructions: string; // Instructions for student
     readonly _starterCode?: string; // Optional starter code
 
+    readonly _instrBoxes?: Instruction[];
+    _instrIndex?: number;
+
     /**
      * Checks if the module goals are fulfilled
      * @param document The HTML document
@@ -19,4 +23,11 @@ export interface Module {
      * @param ctx: the canvas 2D context
      */
     drawGuides?(ctx: CanvasRenderingContext2D): void;
+    /**
+     * render the current instruction of this checkpoint
+     * @param document The HTML document
+     */
+    renderInstruction?(document: Document): void;
+    nextInstruction?(document: Document): any;
+    prevInstruction?(document: Document): any;
 }

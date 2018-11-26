@@ -1,5 +1,6 @@
 import { Module } from "./Module";
 import { Effect } from "../effects/Effect";
+import { NumberEffect } from "../effects/NumberEffect";
 import { EllipseEffect } from "../effects/EllipseEffect";
 
 export class LessonTwoCpSeven implements Module {
@@ -39,6 +40,18 @@ export class LessonTwoCpSeven implements Module {
      * @param effects: the list of effects currently on the CANVAS
      */
     checkGoal(document: Document, effects: Effect<any>[]): boolean {
+      for (let effect of effects) {
+        if (effect instanceof NumberEffect && effect.num != null) {
+          if (effect.x > this.x && effect.x < this.x + 100 && effect.y > this.y && effect.y < this.y + 100) {
+            let val = effect.num;
+            for (let effect2 of effects) {
+              if (effect2 instanceof EllipseEffect && (val == effect2.w || val == effect2.h)) {
+                return true;
+              }
+            }
+          }
+        }
+      }
       return false;
     }
 

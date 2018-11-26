@@ -1,5 +1,5 @@
 import { Parser } from '../../index';
-import { Effect, Expression, Scope, ClearEvent, LogEvent, DragEvent, SelectEvent, IDEvent, EphEffect, Module } from '../../index';
+import { Effect, Expression, Scope, ClearEvent, LogEvent, DragEvent, SelectEvent, IDEvent, EphEffect, Module, ModuleGenerator } from '../../index';
 import { LessonOneCpOne, LessonOneCpTwo, LessonOneCpThree, LessonOneCpFour } from '../../index';
 import { LessonTwoCpOne, LessonTwoCpTwo, LessonTwoCpThree, LessonTwoCpFour, LessonTwoCpFive, LessonTwoCpSix, LessonTwoCpSeven } from '../../index';
 import { LessonThreeCpOne, LessonThreeCpTwo, LessonThreeCpThree, LessonThreeCpFour, LessonThreeCpFive, LessonThreeCpSix } from '../../index';
@@ -11,6 +11,8 @@ let ctx = canvas.getContext("2d");
 let inputBox = document.getElementById('input') as HTMLInputElement;
 let lastWorkingInputText = "";
 
+let starCount = 0;
+
 //the effects array that holds all the text, ellipses, and rectangles
 let effects: Effect<any>[] = [];
 let ast: Expression<any>;
@@ -21,11 +23,10 @@ let showDebug = true; // flag to show or hide debug button
 let masterLog: LogEvent<any>[] = [];
 let selectedElems: Effect<any>[] = [];
 
-let textBoxSelected: boolean; //sees if the text box is selected
-let isPainting: boolean; //tests to see if you're painting to the canvas
-
-let checkpointIsActive: boolean = false;
 let checkpoint: Module = null;
+let modGen = new ModuleGenerator();
+let checkpointIsActive: boolean = false;
+let textBoxSelected: boolean; //sees if the text box is selected
 let canvasIsDisabled: boolean = false;
 
 let selected: number = 0; //the number of selected effects if multiply selecting
@@ -105,6 +106,38 @@ resetButton!.onclick = function () {
     //console.log("Log: " + logEvent);
 };
 
+let timer: any = null;
+inputBox.onkeydown = function() {
+  if (timer != null) {
+    clearTimeout(timer);
+  }
+  timer = setTimeout(parse, 200);
+};
+
+function parse() {
+  effects.length = 0; // slightly sketch clearing method to maintain reference to original array
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  let inputText = inputBox.value;
+  let astOpt = Parser.parse(inputText);
+  if(astOpt.isDefined()){
+      ast = astOpt.get();
+      context = new Scope(null, effects, masterLog);
+      context.canvas = Some(canvas);
+      ast.eval(context); //this is where we draw the objects to the screen
+      lastWorkingInputText = inputText;
+  }
+
+  //let paintEvt = new PaintEvent(inputText); // will need to get from ast when that's implemented
+
+  // Adding context log to master log
+  //logEvent.push(paintEvt.assembleLog());
+  printLog();
+  //event1.logItem();
+  // }
+
+}
+
 /**
  * The animation function that basically recursively calls itself, clearing and
  * redrawing to the canvas at 60fps.
@@ -149,35 +182,7 @@ function animate() {
     }
 
     //This does the prodirect manipulation, passing the new strings to the text box
-    let inputText = inputBox.value;
-    if (textBoxSelected && inputText !== lastWorkingInputText) {
-      effects.length = 0; // slightly sketch clearing method to maintain reference to original array
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      //isPainting = true;
-      //let inputText = inputBox.value;
-
-      let astOpt = Parser.parse(inputText);
-      if(astOpt.isDefined()){
-          ast = astOpt.get();
-          context = new Scope(null, effects, masterLog);
-          context.canvas = Some(canvas);
-          ast.eval(context); //this is where we draw the objects to the screen
-          lastWorkingInputText = inputText;
-      } /*else {
-          let error = "error text";
-          alert("Quan: so something with this syntax error: " + error);
-      }*/
-
-      //let paintEvt = new PaintEvent(inputText); // will need to get from ast when that's implemented
-
-      // Adding context log to master log
-      //logEvent.push(paintEvt.assembleLog());
-      printLog();
-      //event1.logItem();
-      // }
-
-    } else if (ast != undefined && !textBoxSelected /* && !isPainting */){
+    if (ast != undefined && !textBoxSelected){
         let newInput: string = ast.toString();
         inputBox.value = newInput;
     }
@@ -220,19 +225,8 @@ function isInputBoxSelected(event: any) {
     let mouseY = event.clientY;
     let rect = inputBox.getBoundingClientRect();
     if(mouseX > rect.left && mouseX < rect.right && mouseY > rect.top && mouseY < rect.bottom) {
-        //isPainting = false;
         textBoxSelected = true;
     } else {
-      /*
-        let paintButton = document.getElementById('paint');
-        rect = paintButton.getBoundingClientRect();
-        if(mouseX > rect.left && mouseX < rect.right && mouseY > rect.top && mouseY < rect.bottom) {
-            isPainting = true;
-        }
-        else {
-            isPainting = false;
-        }
-        */
         textBoxSelected = false;
     }
 }
@@ -301,10 +295,11 @@ function printNewNode(buttonName: string) {
       console.log("Problem with " + buttonName)
   }
   inputBox.value += printLine;
+  parse();
 }
 
-let instructions = document.getElementById('instructions');
-let goalBox = document.getElementById('goal-container');
+let instructions = document.getElementById('goal');
+let rewardBox = document.getElementById('reward-container');
 let instrLabel = document.getElementById('instr-label');
 
 //Map maintaining code last used at a checkpoint
@@ -353,29 +348,14 @@ let cpCompletion: Map<string, boolean> = new Map([
   ['l4c2', false]
 ]);
 
-let checkpoints: Map<string, () => Module> = new Map([
-  ['l1c1', () => new LessonOneCpOne()],
-  ['l1c2', () => new LessonOneCpTwo()],
-  ['l1c3', () => new LessonOneCpThree()],
-  ['l1c4', () => new LessonOneCpFour()],
-  ['l2c1', () => new LessonTwoCpOne()],
-  ['l2c2', () => new LessonTwoCpTwo()],
-  ['l2c3', () => new LessonTwoCpThree()],
-  ['l2c4', () => new LessonTwoCpFour()],
-  ['l2c5', () => new LessonTwoCpFive()],
-  ['l2c6', () => new LessonTwoCpSix()],
-  ['l2c7', () => new LessonTwoCpSeven()],
-  ['l3c1', () => new LessonThreeCpOne()],
-  ['l3c2', () => new LessonThreeCpTwo()],
-  ['l3c3', () => new LessonThreeCpThree()],
-  ['l3c4', () => new LessonThreeCpFour()],
-  ['l3c5', () => new LessonThreeCpFive()],
-  ['l3c6', () => new LessonThreeCpSix()],
-  ['l4c1', () => new LessonFourCpOne()],
-  ['l4c2', () => new LessonFourCpTwo()]
-]);
+let cpNames: string[] = [
+  'l1c1', 'l1c2', 'l1c3', 'l1c4',
+  'l2c1', 'l2c2', 'l2c3', 'l2c4', 'l2c4', 'l2c5', 'l2c6', 'l2c7',
+  'l3c1', 'l3c2', 'l3c3', 'l3c4', 'l3c4', 'l3c5', 'l3c6',
+  'l4c1', 'l4c2'
+];
 
-for (let cp of checkpoints.keys()) {
+for (let cp of cpNames) {
   let cpButton = document.getElementById(cp);
   cpButton.onclick = function() {
     initCheckpoint(cp);
@@ -388,15 +368,14 @@ for (let cp of checkpoints.keys()) {
  * @param cp: the name of the checkpoint
  */
 function initCheckpoint(cp: string) {
-
-  if (checkpoints.has(cp)) {
+    //store CODE of old checkpoint
     if (checkpoint != null) {
       cpCode.set(checkpoint._name, inputBox.value);
     }
 
     console.log("Initiating checkpoint " + cp);
-    checkpoint = checkpoints.get(cp)();
-    instrLabel.innerHTML = cp + " - INSTRUCTIONS";
+    checkpoint = modGen.generateCheckpoint(cp);
+    instrLabel.innerHTML = cp + " - GOAL";
     instructions.innerHTML = checkpoint._instructions;
 
     //set up the CODE and CANVAS areas
@@ -432,50 +411,58 @@ function initCheckpoint(cp: string) {
 
     //set up the instruction and goal boxes
     if (cpCompletion.get(cp)) {
-      updateGoalBox();
+      updateRewardBox();
 
     } else {
       if (checkpoint._starterCode != null) {
         textBoxSelected = true;
         inputBox.value = checkpoint._starterCode;
+        parse();
       }
 
-      goalBox.style.background = '#C0C0C0';
-      let goalText = document.getElementById('goal-text');
-      goalText.style.color = 'black';
-      goalText.innerHTML = 'Complete goal to earn a star!';
-      let goalImg: HTMLImageElement = document.getElementById('goal-image') as HTMLImageElement;
-      goalImg.src = 'pics/greystar.svg';
-      goalImg.alt = 'a star to be earned';
+      let curInstruction = document.getElementById("instruction");
+      if (curInstruction != null) {
+        curInstruction.remove();
+      }
+
+      if (checkpoint._name === "l1c1") {
+        checkpoint.renderInstruction(document);
+      }
+
+      rewardBox.style.background = '#C0C0C0';
+      let reward = document.getElementById('reward-text');
+      reward.style.color = 'black';
+      reward.innerHTML = 'Complete goal to earn a star!';
+      let rewardImg: HTMLImageElement = document.getElementById('reward-image') as HTMLImageElement;
+      rewardImg.src = 'pics/greystar.svg';
+      rewardImg.alt = 'a star to be earned';
       let nextBtn = document.getElementById('next');
       nextBtn.style.display = 'none';
 
       instructions.scrollTop = 0;
       checkpointIsActive = true;
     }
-  }
 }
 
 function checkpointChecksGoal() {
   if (checkpoint.checkGoal(document, effects)) {
-    updateGoalBox();
+    updateRewardBox();
     cpCompletion.set(checkpoint._name, true);
   }
 }
 
-function updateGoalBox() {
-  goalBox.style.background = '#673AB7';
+function updateRewardBox() {
+  rewardBox.style.background = '#673AB7';
   console.log(document);
-  let goalText = document.getElementById('goal-text');
-  goalText.style.color = '#D8D8D8';
-  goalText.innerHTML = 'Goal met!';
-  let goalImg: HTMLImageElement = document.getElementById('goal-image') as HTMLImageElement;
-  goalImg.src = 'pics/star.svg';
-  goalImg.alt = 'star earned';
+  let rewardText = document.getElementById('reward-text');
+  rewardText.style.color = '#D8D8D8';
+  rewardText.innerHTML = "Goal met! Click 'Next' to go to next checkpoint!";
+  let rewardImg: HTMLImageElement = document.getElementById('reward-image') as HTMLImageElement;
+  rewardImg.src = 'pics/star.svg';
+  rewardImg.alt = 'star earned';
   let nextBtn = document.getElementById('next');
   nextBtn.style.display = 'block';
 
-  instructions.innerHTML += "\nHooray! Goal met! Click 'Next' to proceed to next checkpoint!";
   instructions.scrollTop = instructions.scrollHeight;
   checkpointIsActive = false;
 }
@@ -498,18 +485,3 @@ prevButton.onclick = function() {
 
 //call to animate
 animate();
-
-//--------------------------------------------------------------
-/* test lines of S.W.E.L.L. code
-
-print("hello world", 180, 421);
-print(ellipse(75, 50), 100, 100);
-print(rect(60, 70), 250, 250);
-
-print("hello");
-print("world");
-
-Our sample program
-print("hello world");
-print(ellipse(130, 100));
-*/
