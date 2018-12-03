@@ -351,8 +351,8 @@ let cpCompletion: Map<string, boolean> = new Map([
 let cpNames: string[] = [
   'l1c1', 'l1c2', 'l1c3', 'l1c4',
   'l2c1', 'l2c2', 'l2c3', 'l2c4', 'l2c5', 'l2c6', 'l2c7',
-  'l3c1', 'l3c2', 'l3c3', 'l3c4', 'l3c5', 'l3c6',
-  'l4c1', 'l4c2'
+  'l3c1', 'l3c2', 'l3c3', 'l3c4', 'l3c5', 'l3c6'/*,
+  'l4c1', 'l4c2'*/
 ];
 
 for (let cp of cpNames) {
