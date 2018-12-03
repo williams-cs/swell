@@ -30,4 +30,7 @@ export interface Module {
     renderInstruction?(document: Document): void;
     nextInstruction?(document: Document): any;
     prevInstruction?(document: Document): any;
+
+    //instrBoxes(): Instruction[];
+    //instrIndex(): number;
 }

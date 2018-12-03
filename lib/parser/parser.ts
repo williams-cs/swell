@@ -76,6 +76,8 @@ export namespace Parser {
 
     let id = (x: any) => x
 
+    //let effects: Effect<any>[] = [];
+
     /**
      * parse is a function that wraps the input text in a CharStream
      * and passes it to the upper-level parse function
@@ -83,6 +85,8 @@ export namespace Parser {
      */
     export function parse(program: string): Option<Expression<any>>{
         program += "\n";
+        //printOffset = -1;
+        //this.effects = effects;
         let o= ExpressionParser(new CharUtil.CharStream(program));
         switch(o.tag){
             case "success":
@@ -527,6 +531,12 @@ export namespace Parser {
     }
 
     let printOffset = -1;
+    let boundingRects = [];
+
+    //TODO
+    export function getNonOverlappingCoords(): [number, number] {
+      return[0,0];
+    }
 
     /**
      * funApp parses valid function applications in the form "functionName(argsList)" and returns a funApp node
@@ -541,9 +551,11 @@ export namespace Parser {
             switch(fname){
                 case "print":
                     if (tup[1].length == 3) {
+                            //boundingRects.push([tup[1][0].width, tup[1][0].height, tup[1][1], tup[1][2]]);
                             return new PrintNode(tup[1][0], new Dimensions(tup[1][1] , tup[1][2], new NumberNode(1)), ws);
                     }
                     printOffset = (printOffset + 1) % 12;
+                    console.log("printOffset: " + printOffset);
                     return new PrintNode(tup[1][0], new Dimensions(new NumberNode(100 + 100*(printOffset % 3)) , new NumberNode(100 + 100*(printOffset / 4)), new NumberNode(1)), ws);
                 case "ellipse":
                     if(tup[1].length == 2){
