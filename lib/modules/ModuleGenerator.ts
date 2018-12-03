@@ -5,7 +5,8 @@ import { LessonThreeCpOne, LessonThreeCpTwo, LessonThreeCpThree, LessonThreeCpFo
 import { LessonFourCpOne, LessonFourCpTwo } from '../../index';
 
 export class ModuleGenerator {
-    readonly checkpointConstructors: Map<string, () => Module> = new Map([
+    curConstructors: Map<string, () => Module>;
+    readonly dmConstructors: Map<string, () => Module> = new Map([
       ['l1c1', () => new LessonOneCpOne()],
       ['l1c2', () => new LessonOneCpTwo()],
       ['l1c3', () => new LessonOneCpThree()],
@@ -17,6 +18,24 @@ export class ModuleGenerator {
       ['l2c5', () => new LessonTwoCpFive()],
       ['l2c6', () => new LessonTwoCpSix()],
       ['l2c7', () => new LessonTwoCpSeven()],
+      ['l3c1', () => new LessonThreeCpOne()],
+      ['l3c2', () => new LessonThreeCpTwo()],
+      ['l3c3', () => new LessonThreeCpThree()],
+      ['l3c4', () => new LessonThreeCpFour()],
+      ['l3c5', () => new LessonThreeCpFive()],
+      ['l3c6', () => new LessonThreeCpSix()],
+      ['l4c1', () => new LessonFourCpOne()],
+      ['l4c2', () => new LessonFourCpTwo()]
+    ]);
+    readonly nonDmConstructors: Map<string, () => Module> = new Map([
+      ['l1c1', () => new LessonOneCpOne()],
+      ['l1c2', () => new LessonOneCpThree()],
+      ['l1c3', () => new LessonOneCpFour()],
+      ['l2c1', () => new LessonTwoCpOne()],
+      ['l2c2', () => new LessonTwoCpThree()],
+      ['l2c3', () => new LessonTwoCpFour()],
+      ['l2c4', () => new LessonTwoCpFive()],
+      ['l2c5', () => new LessonTwoCpSeven()],
       ['l3c1', () => new LessonThreeCpOne()],
       ['l3c2', () => new LessonThreeCpTwo()],
       ['l3c3', () => new LessonThreeCpThree()],
@@ -48,7 +67,12 @@ export class ModuleGenerator {
       ['l4c2', null]
     ]);
 
-    constructor() {
+    constructor(isDM: boolean) {
+      if (isDM) {
+        this.curConstructors = this.dmConstructors;
+      } else {
+        this.curConstructors = this.nonDmConstructors;
+      }
     }
 
     generateCheckpoint(cp: string): Module {
@@ -57,7 +81,7 @@ export class ModuleGenerator {
         return checkpoint;
       }
 
-      checkpoint = this.checkpointConstructors.get(cp)();
+      checkpoint = this.curConstructors.get(cp)();
       this.checkpoints.set(cp, checkpoint);
       return checkpoint;
     }

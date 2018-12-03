@@ -24,7 +24,7 @@ let masterLog: LogEvent<any>[] = [];
 let selectedElems: Effect<any>[] = [];
 
 let checkpoint: Module = null;
-let modGen = new ModuleGenerator();
+let modGen = new ModuleGenerator(true);
 let checkpointIsActive: boolean = false;
 let textBoxSelected: boolean; //sees if the text box is selected
 let canvasIsDisabled: boolean = false;
@@ -350,8 +350,8 @@ let cpCompletion: Map<string, boolean> = new Map([
 
 let cpNames: string[] = [
   'l1c1', 'l1c2', 'l1c3', 'l1c4',
-  'l2c1', 'l2c2', 'l2c3', 'l2c4', 'l2c4', 'l2c5', 'l2c6', 'l2c7',
-  'l3c1', 'l3c2', 'l3c3', 'l3c4', 'l3c4', 'l3c5', 'l3c6',
+  'l2c1', 'l2c2', 'l2c3', 'l2c4', 'l2c5', 'l2c6', 'l2c7',
+  'l3c1', 'l3c2', 'l3c3', 'l3c4', 'l3c5', 'l3c6',
   'l4c1', 'l4c2'
 ];
 
