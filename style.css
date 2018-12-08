@@ -316,3 +316,7 @@ button:focus {
   z-index: 1002;
   overflow: auto;
 }
+
+.code-font {
+  font-family: 'Courier New';
+}

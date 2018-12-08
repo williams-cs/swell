@@ -6,7 +6,10 @@ class LessonOneCpOne {
         this._name = "l1c1";
         this._nextModule = 'l1c2';
         this._constraint = 'none';
-        this._instructions = `<p> Write 'Hello' on the CANVAS. </p>`;
+        this._instructions = `<p> Computers can do wonderful things, but they unfortunately don't understand English. </p>
+    <p> However, they understand computer code, so let's learn how to write code that instruct the computer to do things! </p>
+    <p> On the CODE area above, write print("Hello") </p>
+    <p> GOAL: Write 'Hello' on the CANVAS. </p>`;
         this._instrBoxes = [];
         this._instrIndex = 0;
         this._latestInstrIndex = 0;
@@ -25,29 +28,41 @@ class LessonOneCpOne {
      */
     checkGoal(document, effects) {
         let input = document.getElementById('input');
-        console.log("instrIndex in checkGoal: " + this._instrIndex);
-        switch (this._instrIndex) {
-            case 0:
-                if (document.activeElement === input && this._latestInstrIndex == 0) {
-                    this._latestInstrIndex++;
-                    this.nextInstruction(document);
-                }
-                return false;
-                break;
-            case 1:
-                let regex = /print\s*\(\s*\"Hello\"\s*\)/;
-                let match = input.value.match(regex);
-                if (match != null && match.length > 0 && this._latestInstrIndex == 1) {
-                    this._latestInstrIndex++;
-                    this.nextInstruction(document);
-                }
-                return false;
-                break;
-            default:
-                return true;
-                break;
+        let regex = /print\s*\(\s*\"Hello\"\s*\)/;
+        let match = input.value.match(regex);
+        if (match != null && match.length > 0) {
+            return true;
         }
         return false;
+        /*
+        console.log("instrIndex in checkGoal: " + this._instrIndex);
+        switch(this._instrIndex) {
+
+          case 0:
+            if (document.activeElement === input && this._latestInstrIndex == 0) {
+              this._latestInstrIndex++;
+              this.nextInstruction(document);
+            }
+            return false;
+            break;
+
+          case 1:
+            let regex: RegExp = /print\s*\(\s*\"Hello\"\s*\)/;
+            let match = input.value.match(regex);
+            if (match != null && match.length > 0 && this._latestInstrIndex == 1) {
+              this._latestInstrIndex++;
+              this.nextInstruction(document);
+            }
+            return false;
+            break;
+
+          default:
+            return true;
+            break;
+        }
+
+        return false;
+        */
     }
     nextInstruction(document) {
         this._instrIndex = (this._instrIndex + 1 < this._instrBoxes.length) ? this._instrIndex + 1 : this._instrIndex;

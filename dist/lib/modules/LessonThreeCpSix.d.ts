@@ -8,6 +8,11 @@ export declare class LessonThreeCpSix implements Module {
     readonly _instructions: string;
     readonly _starterCode: string;
     constructor();
+    xA: number;
+    yA: number;
+    xB: number;
+    yB: number;
+    drawGuides(ctx: CanvasRenderingContext2D): void;
     /**
      * A lesson leading into conditionals
      * goals: moving the text and observe the code

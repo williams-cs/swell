@@ -424,11 +424,11 @@ function initCheckpoint(cp: string) {
       if (curInstruction != null) {
         curInstruction.remove();
       }
-
+/*
       if (checkpoint._name === "l1c1") {
         checkpoint.renderInstruction(document);
       }
-
+*/
       rewardBox.style.background = '#C0C0C0';
       let reward = document.getElementById('reward-text');
       reward.style.color = 'black';

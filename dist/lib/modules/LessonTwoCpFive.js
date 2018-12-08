@@ -23,9 +23,9 @@ class LessonTwoCpFive {
         let codeIsCorrect = false;
         let code = document.getElementById("input").value;
         if (code != null) {
-            let assignment = /c\s*=\s*ellipse\s*\(\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\)\s*;/g;
+            let assignment = /c\s*=\s*ellipse\s*\(\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\)\s*/g;
             let matchAssign = code.match(assignment);
-            let print = /print\s*\(\s*c\s*,\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\);/g;
+            let print = /print\s*\(\s*c\s*,\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\)/g;
             let matchPrint = code.match(print);
             codeIsCorrect = matchAssign != null && matchAssign.length > 0 && matchPrint != null && matchPrint.length >= 2;
         }

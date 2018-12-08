@@ -1,5 +1,5 @@
 import { Instruction } from "./Instruction";
-export declare class Checkpoint {
+export declare abstract class Checkpoint {
     _instrBoxes: Instruction[];
     _instrIndex: number;
     _latestInstrIndex: number;

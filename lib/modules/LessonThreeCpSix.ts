@@ -1,6 +1,7 @@
 import { Module } from "./Module";
 import { Effect } from "../effects/Effect";
 import { EllipseEffect } from "../effects/EllipseEffect";
+import { StringEffect } from "../effects/StringEffect";
 
 export class LessonThreeCpSix implements Module {
     readonly _name: string = "l3c6";
@@ -17,7 +18,7 @@ export class LessonThreeCpSix implements Module {
     readonly _starterCode: string =
     `a = 200;
 print(a, 111, 103);
-print(ellipse(a, a), 132, 287);
+print(ellipse(a, a), 131, 263);
 b = 100;
 print(b, 337, 104);
 print(ellipse(b, b), 371, 248);
@@ -25,6 +26,30 @@ print("Circle A is smaller than circle B.", 45, 453);
 `;
 
     constructor(){
+    }
+
+
+    xA: number = 20;
+    yA: number = 150;
+
+    xB: number = this.xA + 225 + 10;
+    yB: number = 150;
+
+    drawGuides(ctx: CanvasRenderingContext2D): void {
+      ctx.beginPath();
+      ctx.rect(this.xA, this.yA, 225, 225);
+      ctx.strokeStyle = '#6C6C6C';
+      ctx.stroke();
+
+      ctx.font = 20 + "px Courier New";
+      ctx.fillStyle = '#6C6C6C';
+      ctx.fillText("Circle A", this.xA, this.yA - 20);
+
+      ctx.beginPath();
+      ctx.rect(this.xB, this.yB, 225, 225);
+      ctx.stroke();
+
+      ctx.fillText("Circle B", this.xB, this.yB - 20);
     }
 
     /**
@@ -38,18 +63,49 @@ print("Circle A is smaller than circle B.", 45, 453);
         let codeIsCorrect = false;
         let code = (document.getElementById("input") as HTMLInputElement).value;
         if (code != null) {
-            let regex: RegExp = /print\s*\(\s*ellipse\s*\(\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\)\s*,\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\);/;
-            let match = code.match(regex);
-            codeIsCorrect = match != null && match.length > 0;
+          /*
+          if(a < b) {
+            print("Circle A is smaller than circle B.", 45, 453);
+          } else {
+            print("Circle A is bigger than circle B.", 45, 453);
+          }*/
+            let regex1: RegExp = /if\s*\(\s*a\s*[<>]\s*b\s*\)/;
+            let regex2: RegExp = /if\s*\(\s*b\s*[<>]\s*a\s*\)/;
+            let match1 = code.match(regex1);
+            let match2 = code.match(regex2);
+            codeIsCorrect = (match1 != null && match1.length > 0) || (match2 != null && match2.length > 0);
         }
 
         //check for correct CANVAS effects
-        let canvasIsCorrect = true;
+        let canvasIsCorrect = false;
+        let circleA = null;
+        let circleB = null;
+
+        //look for circles A and B
         for (let effect of effects) {
           if (effect instanceof EllipseEffect) {
-
+            if (effect.x > this.xA && effect.x < this.xA + 225 && effect.y > this.yA && effect.y < this.yA + 225) {
+              circleA = effect;
+            } else if (effect.x > this.xB && effect.x < this.xB + 225 && effect.y > this.yB && effect.y < this.yB + 225) {
+              circleB = effect;
+            }
           }
         }
+
+        if (circleA != null && circleB != null) {
+          for (let effect of effects) {
+            if (effect instanceof StringEffect) {
+              let str = effect.str;
+              if ((str === "Circle A is smaller than circle B." && circleA.w < circleB.w && circleA.h < circleB.h)
+                  || (str === "Circle A is bigger than circle B." && circleA.w > circleB.w && circleA.h > circleB.h)) {
+                canvasIsCorrect = true;
+                break;
+              }
+            }
+          }
+        }
+
+
 
         return codeIsCorrect && canvasIsCorrect;
     }

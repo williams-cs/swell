@@ -2,7 +2,7 @@ import { Effect } from "../effects/Effect";
 import { Module } from "./Module";
 import { Instruction } from "./Instruction";
 
-export class Checkpoint {
+export abstract class Checkpoint {
   _instrBoxes: Instruction[] = [];
   _instrIndex = 0;
   _latestInstrIndex = 0;
