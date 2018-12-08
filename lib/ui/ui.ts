@@ -24,7 +24,7 @@ let masterLog: LogEvent<any>[] = [];
 let selectedElems: Effect<any>[] = [];
 
 let checkpoint: Module = null;
-let modGen = new ModuleGenerator();
+let modGen = new ModuleGenerator(true);
 let checkpointIsActive: boolean = false;
 let textBoxSelected: boolean; //sees if the text box is selected
 let canvasIsDisabled: boolean = false;
@@ -115,11 +115,11 @@ inputBox.onkeydown = function() {
 };
 
 function parse() {
-  effects.length = 0; // slightly sketch clearing method to maintain reference to original array
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   let inputText = inputBox.value;
   let astOpt = Parser.parse(inputText);
+  effects.length = 0; // slightly sketch clearing method to maintain reference to original array
   if(astOpt.isDefined()){
       ast = astOpt.get();
       context = new Scope(null, effects, masterLog);
@@ -350,9 +350,9 @@ let cpCompletion: Map<string, boolean> = new Map([
 
 let cpNames: string[] = [
   'l1c1', 'l1c2', 'l1c3', 'l1c4',
-  'l2c1', 'l2c2', 'l2c3', 'l2c4', 'l2c4', 'l2c5', 'l2c6', 'l2c7',
-  'l3c1', 'l3c2', 'l3c3', 'l3c4', 'l3c4', 'l3c5', 'l3c6',
-  'l4c1', 'l4c2'
+  'l2c1', 'l2c2', 'l2c3', 'l2c4', 'l2c5', 'l2c6', 'l2c7',
+  'l3c1', 'l3c2', 'l3c3', 'l3c4', 'l3c5', 'l3c6'/*,
+  'l4c1', 'l4c2'*/
 ];
 
 for (let cp of cpNames) {
@@ -424,11 +424,11 @@ function initCheckpoint(cp: string) {
       if (curInstruction != null) {
         curInstruction.remove();
       }
-
+/*
       if (checkpoint._name === "l1c1") {
         checkpoint.renderInstruction(document);
       }
-
+*/
       rewardBox.style.background = '#C0C0C0';
       let reward = document.getElementById('reward-text');
       reward.style.color = 'black';

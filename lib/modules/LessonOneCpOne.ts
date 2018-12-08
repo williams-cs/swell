@@ -9,7 +9,10 @@ export class LessonOneCpOne implements Module {
     readonly _goal: any;
     readonly _constraint: string = 'none';
     readonly _instructions: string =
-    `<p> Write 'Hello' on the CANVAS. </p>`;
+    `<p> Computers can do wonderful things, but they unfortunately don't understand English. </p>
+    <p> However, they understand computer code, so let's learn how to write code that instruct the computer to do things! </p>
+    <p> On the CODE area above, write print("Hello") </p>
+    <p> GOAL: Write 'Hello' on the CANVAS. </p>`;
 
     readonly _instrBoxes: Instruction[] = [];
     _instrIndex: number = 0;
@@ -32,6 +35,14 @@ export class LessonOneCpOne implements Module {
      */
     checkGoal(document: Document, effects: Effect<any>[]): boolean {
         let input = document.getElementById('input') as HTMLInputElement;
+
+        let regex: RegExp = /print\s*\(\s*\"Hello\"\s*\)/;
+        let match = input.value.match(regex);
+        if (match != null && match.length > 0) {
+          return true;
+        }
+        return false;
+        /*
         console.log("instrIndex in checkGoal: " + this._instrIndex);
         switch(this._instrIndex) {
 
@@ -59,6 +70,7 @@ export class LessonOneCpOne implements Module {
         }
 
         return false;
+        */
     }
 
     nextInstruction(document: Document): void {
