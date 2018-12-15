@@ -383,7 +383,7 @@ function initCheckpoint(cp: string) {
       inputBox.setAttribute('disabled', 'disabled');
       inputBox.style.opacity = '0.5';
       canvas.style.pointerEvents = "auto";
-      canvas.style.background = '#EBEBEB';
+      canvas.style.background = 'white';
       canvasIsDisabled = false;
 
     } else if (checkpoint._constraint == 'canvas') {
@@ -397,7 +397,7 @@ function initCheckpoint(cp: string) {
       inputBox.removeAttribute('disabled');
       inputBox.style.opacity = '1.0';
       canvas.style.pointerEvents = "auto";
-      canvas.style.background = '#EBEBEB';
+      canvas.style.background = 'white';
       canvasIsDisabled = false;
     }
 

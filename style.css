@@ -1,15 +1,21 @@
-html {
-  font-family: 'Roboto Mono', monospace;
-}
-
 :root {
   --purple: #673AB7;
   --yellow: #DFB534;
   --white: #EBEBEB;
   --gray: #D8D8D8;
+  --light-gray: #E8E8E8;
   --mid-gray: #C0C0C0;
   --dark-gray: #6C6C6C;
-  --nav-width: 140px;
+  --code-height: 60vh;
+  --terminal-height: 35vh;
+}
+
+html {
+  font-family: 'Roboto Mono', monospace;
+}
+
+body {
+  background-color: var(--gray);
 }
 
 textarea::-webkit-input-placeholder {
@@ -28,230 +34,131 @@ textarea:-ms-input-placeholder {
 color: var(--gray);
 }
 
-h1 {
-  color: black;
-  text-align: center;
-  line-height: 15px;
+.container-all {
+  height: 100%;
 }
 
-h4 {
-  text-align: center;
-  line-height: 15px;
+.sidenav {
+  overflow-y: auto;
 }
 
-.main {
-  margin-left: var(--nav-width);
-  background-color: var(--gray);
+.main-container {
+  background-color: var(--light-gray);
+  height: 100vh;
 }
 
-.logo-container {
-  height: 75px;
-  width: var(--nav-width);
-  position: relative;
-  z-index: 1;
-  top: 0;
-  left: 0;
+#logo {
   background-color: var(--purple);
-}
-
-.logo {
-  position: relative;
-  float: left;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: var(--white);
-  font-size: 25px;
-}
-
-.label-container {
-  margin: 10px 0px 0px 20px;
-  position: relative;
-  z-index: 1;
-  top: 0;
-  left: 0;
+  color: white;
+  width: 100%;
+  line-height: 75px;
+  text-align: center;
+  font-size: 20px;
+  cursor: default;
 }
 
 .label {
   padding: 5px;
+  margin-top: 15px;
   display: inline-block;
-  top: 0;
-  left: 0;
   background-color: var(--purple);
   color: var(--white);
   font-size: 15px;
+  cursor: default;
 }
 
 .achievement-container {
-  height: 50px;
-  width: var(--nav-width);
-  position: relative;
-  z-index: 1;
-  top: 0;
-  left: 0;
+  height: 75px;
   background-color: var(--dark-gray);
 }
 
 .icon {
   position: relative;
-  float: left;
-  top: 50%;
-  transform: translate( 20%, -50%);
+  top: 30%;
 }
 
-.achievement {
+#achievement {
   position: relative;
-  top: 50%;
-  left: 7%;
-  transform: translate(20%, -50%);
+  top: 30%;
   color: var(--white);
   font-size: 15px;
-}
-
-.sidenav {
-  height: 100%;
-  width: var(--nav-width);
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: var(--white);
-  overflow-x: hidden;
-}
-
-/* The navigation menu links */
-.sidenav a {
-  padding: 6px 8px 6px 16px;
-  text-decoration: none;
-  font-size: 25px;
-  color: white;
-  display: block;
-}
-
-/* When you mouse over the navigation links, change their color */
-.sidenav a:hover {
-  color: gold;
+  cursor: default;
 }
 
 button {
   background-color: var(--purple);
-  border-radius: 29px;
   color: var(--white);
-  padding: 10px 20px;
-  text-align: center;
-  display: inline-block;
   font-size: 17px;
-  cursor: pointer;
 }
 
-button:focus {
+button:hover {
+  color: gold;
+}
+
+.btn:focus, .btn:active {
   outline: none !important;
-  box-shadow: 0 0 10px gold;
+  box-shadow: none !important;
 }
 
-.drop-button {
+.lesson-btn {
   border-radius: 0;
-  width: var(--nav-width);
+  border-bottom-color: black;
   height: 50px;
-  font-size: 20px;
-  background-color: var(--purple);
-  color: var(--white);
-  display: block;
-}
-
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown-content {
-  display: none;
-  position: relative;
-  z-index: 1;
-}
-
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-/* Change color of dropdown links on hover */
-.dropdown-content a:hover {
-  color: gold;
-}
-
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
-/* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown:hover .drop-button {
-  color: gold;
 }
 
 .checkpoint {
-  padding: 12px 16px;
   border-radius: 0;
-  width: var(--nav-width);
-  height: 50px;
   font-size: 15px;
-  background-color: var(--white);
+  background-color: var(--gray);
   color: black;
-  display: block;
 }
 
-.inputbox {
-  margin: 0px 20px 0px 20px;
-  width: 400px;
-  height: 300px;
-  resize: horizontal;
+.checkpoint:hover {
+  background-color: var(--mid-gray);
+  color: black;
+}
+
+#code-canvas-container {
+  height: var(--code-height);
+}
+
+#terminal-container {
+  height: var(--terminal-height);
+}
+
+#input {
+  width: 100%;
+  height: 90%;
+  resize: none;
   font-size: 15px;
   font-family: 'Courier New', Courier, monospace;
   color: var(--white);
   background-color: var(--dark-gray);
 }
 
-.inputbox:focus {
+#input:focus {
   outline: none !important;
 }
 
-.goal-container {
-  margin: 0px 20px 20px 20px;
-  height: 200px;
-  width: 405px;
+#output {
+  background-color: white;
   position: relative;
+  float: left;
+}
+
+.goal-container, .reward-container {
+  height: 90%;
+  position: relative;
+  padding: 3px;
   background-color: var(--mid-gray);
 }
 
 .goal {
   position: relative;
   float: left;
-  top: 10px;
-  left: 10px;
+  padding: 10px;
   font-size: 15px;
-  height: 160px;
-  padding: 0px 0px 0px 0px;
-  overflow: auto;
-}
-
-.reward-container {
-  margin: 5px 0px 20px 0px;
-  height: 200px;
-  width: 140px;
-
-  position: relative;
-}
-
-.reward-met {
-  margin: 34px 0px 20px 0px;
-  height: 200px;
-  width: 140px;
-
-  position: relative;
-  background-color: var(--purple);
+  overflow-y: auto;
 }
 
 .reward {
@@ -262,46 +169,15 @@ button:focus {
 }
 
 .star {
-  display : block;
-  margin : 25px auto auto auto;
+  display: block;
+  margin: 25px auto auto auto;
 }
 
 .next {
   background-color: var(--yellow);
-  margin : 30px auto auto auto;
-}
+  margin: 30px auto auto auto;
+  display: none;
 
-.outputbox {
-  margin: 0px 20px 20px 20px;
-  background-color: var(--white);
-}
-
-.logo {
-  position: relative;
-  float: left;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: var(--white);
-  font-size: 25px;
-}
-
-.column {
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  flex: 50%;
-}
-
-.col-item {
-  display: inline;
-  position: relative;
-  text-align: center;
-  margin: 20px 0px -10px 0px;
-}
-
-.row {
-  display: flex;
 }
 
 .instruction {
@@ -317,6 +193,6 @@ button:focus {
   overflow: auto;
 }
 
-.code-font {
-  font-family: 'Courier New';
+#toolbox-container {
+  padding-top: 20px;
 }
