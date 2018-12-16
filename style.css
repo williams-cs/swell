@@ -128,6 +128,7 @@ button:hover {
 
 #code-editor {
   height: 100%;
+  resize: none;
 }
 
 #code-editor-lines, #input {
@@ -144,12 +145,14 @@ button:hover {
   float: left;
   text-align: right;
 	white-space: nowrap;
-  overflow: hidden;
   padding-left: 0px;
+  overflow: hidden;
 }
 
 #input {
   resize: none;
+  tab-size: 4;
+  -moz-tab-size: 4;
   border: none;
 }
 
