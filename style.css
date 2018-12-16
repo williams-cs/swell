@@ -126,14 +126,31 @@ button:hover {
   height: var(--terminal-height);
 }
 
-#input {
-  width: 100%;
+#code-editor {
+  height: 100%;
+}
+
+#code-editor-lines, #input {
   height: 90%;
-  resize: none;
   font-size: 15px;
   font-family: 'Courier New', Courier, monospace;
   color: var(--white);
   background-color: var(--dark-gray);
+  padding-top: 3px;
+  padding-bottom: 5px;
+}
+
+#code-editor-lines {
+  float: left;
+  text-align: right;
+	white-space: nowrap;
+  overflow: hidden;
+  padding-left: 0px;
+}
+
+#input {
+  resize: none;
+  border: none;
 }
 
 #input:focus {
