@@ -2,7 +2,7 @@ import { Module } from "./Module";
 import { Effect } from "../effects/Effect";
 import { StringEffect } from "../effects/StringEffect";
 
-export class LessonThreeCpFour implements Module {
+export class LessonThreeCpFour extends Module {
     readonly _name: string = "l3c4";
     readonly _nextModule: string = 'l3c5';
     readonly _goal: any;
@@ -14,13 +14,10 @@ export class LessonThreeCpFour implements Module {
     <p> GOAL: Change the value of c so that the line "c is equal to 8." is printed on the CANVAS. </p>`;
 
     readonly _starterCode: string =
-    `c = 100;
+`c = 100;
 if(c == 8) {
-  print("c is equal to 8.", 103, 143);
+\tprint("c is equal to 8.", 103, 143);
 }`;
-
-    constructor(){
-    }
 
     /**
      * A lesson leading into conditionals
@@ -47,19 +44,6 @@ if(c == 8) {
         }
       }
 
-        return codeIsCorrect && canvasIsCorrect;
-    }
-
-    /**
-     * Returns the module name
-     */
-    get name(): string {
-        return this._name;
-    }
-    /**
-     * Returns the module instructions
-     */
-    get instructions(): string {
-        return this._instructions;
+      return codeIsCorrect && canvasIsCorrect;
     }
 }

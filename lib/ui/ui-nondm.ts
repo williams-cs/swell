@@ -24,7 +24,7 @@ let masterLog: LogEvent<any>[] = [];
 let selectedElems: Effect<any>[] = [];
 
 let checkpoint: Module = null;
-let modGen = new ModuleGenerator(false);
+let modGen = new ModuleGenerator(ctx, false);
 let checkpointIsActive: boolean = false;
 let textBoxSelected: boolean; //sees if the text box is selected
 let canvasIsDisabled: boolean = false;
@@ -192,7 +192,7 @@ function animate() {
     }
 
     if (checkpoint != null && checkpoint.drawGuides != null) {
-      checkpoint.drawGuides(ctx);
+      checkpoint.drawGuides();
 /*
       if (checkpoint._name == "l1c3") {
         ctx.beginPath();

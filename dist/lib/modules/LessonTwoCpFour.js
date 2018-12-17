@@ -1,8 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const Module_1 = require("./Module");
 const EllipseEffect_1 = require("../effects/EllipseEffect");
-class LessonTwoCpFour {
+class LessonTwoCpFour extends Module_1.Module {
     constructor() {
+        super(...arguments);
         this._name = "l2c4";
         this._nextModule = 'l2c5';
         this._constraint = 'none';
@@ -11,7 +13,9 @@ class LessonTwoCpFour {
     <p> Variables are simply names you give to the things that you draw. </p>
     <p> For example, take a look at the code above. Change the a in the print statement to b, and observe what happened on the CANVAS. </p>
     <p> GOAL: Change a to b in the print statement. </p>`;
-        this._starterCode = `a = "moo moo";\nb = ellipse(100, 100);\nprint(a, 50, 70);`;
+        this._starterCode = `a = "moo moo";
+b = ellipse(100, 100);
+print(a, 100, 100);`;
     }
     /**
      * A lesson to print a string
@@ -37,18 +41,6 @@ class LessonTwoCpFour {
             }
         }
         return codeIsCorrect && canvasIsCorrect;
-    }
-    /**
-     * Returns the module name
-     */
-    get name() {
-        return this._name;
-    }
-    /**
-     * Returns the module instructions
-     */
-    get instructions() {
-        return this._instructions;
     }
 }
 exports.LessonTwoCpFour = LessonTwoCpFour;

@@ -1,16 +1,20 @@
 import { Module } from "./Module";
 import { Effect } from "../effects/Effect";
-export declare class LessonOneCpThree implements Module {
+export declare class LessonOneCpThree extends Module {
     readonly _name: string;
     readonly _prevModule: string;
     readonly _nextModule: string;
     readonly _goal: any;
     readonly _constraint: string;
     readonly _instructions: string;
-    constructor();
+    readonly _starterCode: string;
+    _latestInstrIndex: number;
     x: number;
     y: number;
-    drawGuides(ctx: CanvasRenderingContext2D): void;
+    square_size: number;
+    font_size: number;
+    constructor(ctx: CanvasRenderingContext2D);
+    drawGuides(): void;
     /**
      * A lesson to print a string
      * goals: moving the text and observe the code
@@ -18,12 +22,4 @@ export declare class LessonOneCpThree implements Module {
      * @param effects: the list of effects currently on the CANVAS
      */
     checkGoal(document: Document, effects: Effect<any>[]): boolean;
-    /**
-     * Returns the module name
-     */
-    readonly name: string;
-    /**
-     * Returns the module instructions
-     */
-    readonly instructions: string;
 }

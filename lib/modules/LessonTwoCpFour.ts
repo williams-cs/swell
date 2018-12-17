@@ -2,7 +2,7 @@ import { Module } from "./Module";
 import { Effect } from "../effects/Effect";
 import { EllipseEffect } from "../effects/EllipseEffect";
 
-export class LessonTwoCpFour implements Module {
+export class LessonTwoCpFour extends Module {
     readonly _name: string = "l2c4";
     readonly _nextModule: string = 'l2c5';
     readonly _goal: any;
@@ -14,10 +14,10 @@ export class LessonTwoCpFour implements Module {
     <p> For example, take a look at the code above. Change the a in the print statement to b, and observe what happened on the CANVAS. </p>
     <p> GOAL: Change a to b in the print statement. </p>`;
 
-    readonly _starterCode = `a = "moo moo";\nb = ellipse(100, 100);\nprint(a, 50, 70);`;
-
-    constructor(){
-    }
+    readonly _starterCode =
+`a = "moo moo";
+b = ellipse(100, 100);
+print(a, 100, 100);`;
 
     /**
      * A lesson to print a string
@@ -45,18 +45,5 @@ export class LessonTwoCpFour implements Module {
       }
 
       return codeIsCorrect && canvasIsCorrect;
-    }
-
-    /**
-     * Returns the module name
-     */
-    get name(): string {
-        return this._name;
-    }
-    /**
-     * Returns the module instructions
-     */
-    get instructions(): string {
-        return this._instructions;
     }
 }

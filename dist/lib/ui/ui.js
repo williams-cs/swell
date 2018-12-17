@@ -6,6 +6,7 @@ const space_lift_1 = require("space-lift");
 let canvas = document.querySelector('canvas');
 let ctx = canvas.getContext("2d");
 let inputBox = document.getElementById('input');
+let codeEditorContainer = document.getElementById("code-editor");
 let lastWorkingInputText = "";
 let starCount = 0;
 //the effects array that holds all the text, ellipses, and rectangles
@@ -16,7 +17,7 @@ let showDebug = true; // flag to show or hide debug button
 let masterLog = [];
 let selectedElems = [];
 let checkpoint = null;
-let modGen = new index_2.ModuleGenerator(true);
+let modGen = new index_2.ModuleGenerator(ctx, true);
 let checkpointIsActive = false;
 let textBoxSelected; //sees if the text box is selected
 let canvasIsDisabled = false;
@@ -35,13 +36,6 @@ bugButton.onclick = function(){
     printLog();
 }
 */
-/**
- * <div class="col-item">
- *  <button id='paint' style="background-color:#DFB534"> Run </button>
- * </div>
- *
- * Put this in html file for Run button's styling
- */
 //let paintButton = document.getElementById('paint');
 /**
  * makes the paint button paint text from the textarea to the canvas!
@@ -162,7 +156,7 @@ function animate() {
         checkpointChecksGoal();
     }
     if (checkpoint != null && checkpoint.drawGuides != null) {
-        checkpoint.drawGuides(ctx);
+        checkpoint.drawGuides();
         /*
               if (checkpoint._name == "l1c3") {
                 ctx.beginPath();
@@ -172,7 +166,7 @@ function animate() {
         
                 ctx.font = 20 + "px Courier New";
                 ctx.fillStyle = '#6C6C6C';
-                ctx.fillText("Put text", 10, 390);
+                ctx.fillText("Put word", 10, 390);
                 ctx.fillText("in here", 10, 410);
               }
         */
@@ -313,6 +307,10 @@ let cpNames = [
     'l3c1', 'l3c2', 'l3c3', 'l3c4', 'l3c5', 'l3c6' /*,
     'l4c1', 'l4c2'*/
 ];
+//this is for testing tutorials
+let workingCp = [
+    'l1c1', 'l1c2', 'l1c3', 'l1c4', 'l2c1'
+];
 for (let cp of cpNames) {
     let cpButton = document.getElementById(cp);
     cpButton.onclick = function () {
@@ -336,23 +334,23 @@ function initCheckpoint(cp) {
     //set up the CODE and CANVAS areas
     if (checkpoint._constraint == 'code') {
         inputBox.setAttribute('disabled', 'disabled');
-        inputBox.style.opacity = '0.5';
+        codeEditorContainer.style.opacity = '0.5';
         canvas.style.pointerEvents = "auto";
-        canvas.style.background = '#EBEBEB';
+        canvas.style.background = 'white';
         canvasIsDisabled = false;
     }
     else if (checkpoint._constraint == 'canvas') {
         inputBox.removeAttribute('disabled');
-        inputBox.style.opacity = '1.0';
+        codeEditorContainer.style.opacity = '1.0';
         canvas.style.pointerEvents = "none";
         canvas.style.background = '#C0C0C0';
         canvasIsDisabled = true;
     }
     else {
         inputBox.removeAttribute('disabled');
-        inputBox.style.opacity = '1.0';
+        codeEditorContainer.style.opacity = '1.0';
         canvas.style.pointerEvents = "auto";
-        canvas.style.background = '#EBEBEB';
+        canvas.style.background = 'white';
         canvasIsDisabled = false;
     }
     let popUp = document.getElementById('popup');
@@ -375,11 +373,9 @@ function initCheckpoint(cp) {
         if (curInstruction != null) {
             curInstruction.remove();
         }
-        /*
-              if (checkpoint._name === "l1c1") {
-                checkpoint.renderInstruction(document);
-              }
-        */
+        if (checkpoint.numInstructions > 0) {
+            checkpoint.renderInstruction(document);
+        }
         rewardBox.style.background = '#C0C0C0';
         let reward = document.getElementById('reward-text');
         reward.style.color = 'black';

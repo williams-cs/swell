@@ -1,8 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const Module_1 = require("./Module");
 const StringEffect_1 = require("../effects/StringEffect");
-class LessonThreeCpOne {
+class LessonThreeCpOne extends Module_1.Module {
     constructor() {
+        super(...arguments);
         this._name = "l3c1";
         this._nextModule = 'l3c2';
         this._constraint = 'none';
@@ -39,18 +41,6 @@ print("a is less than 10", 103, 143);`;
             }
         }
         return codeIsCorrect && canvasIsCorrect;
-    }
-    /**
-     * Returns the module name
-     */
-    get name() {
-        return this._name;
-    }
-    /**
-     * Returns the module instructions
-     */
-    get instructions() {
-        return this._instructions;
     }
 }
 exports.LessonThreeCpOne = LessonThreeCpOne;

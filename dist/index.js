@@ -121,6 +121,9 @@ var SelectEvent_1 = require("./lib/logging/SelectEvent");
 exports.SelectEvent = SelectEvent_1.SelectEvent;
 var IDEvent_1 = require("./lib/logging/IDEvent");
 exports.IDEvent = IDEvent_1.IDEvent;
+/* MODULES */
+var Module_1 = require("./lib/modules/Module");
+exports.Module = Module_1.Module;
 var ModuleGenerator_1 = require("./lib/modules/ModuleGenerator");
 exports.ModuleGenerator = ModuleGenerator_1.ModuleGenerator;
 var LessonOneCpOne_1 = require("./lib/modules/LessonOneCpOne");

@@ -1,9 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const Module_1 = require("./Module");
 const EllipseEffect_1 = require("../effects/EllipseEffect");
 const StringEffect_1 = require("../effects/StringEffect");
-class LessonTwoCpThree {
+class LessonTwoCpThree extends Module_1.Module {
     constructor() {
+        super(...arguments);
         this._name = "l2c3";
         this._nextModule = 'l2c4';
         this._constraint = 'none';
@@ -30,18 +32,6 @@ class LessonTwoCpThree {
             }
         }
         return stringExists && circleCount >= 2;
-    }
-    /**
-     * Returns the module name
-     */
-    get name() {
-        return this._name;
-    }
-    /**
-     * Returns the module instructions
-     */
-    get instructions() {
-        return this._instructions;
     }
 }
 exports.LessonTwoCpThree = LessonTwoCpThree;

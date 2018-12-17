@@ -1,49 +1,84 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const Module_1 = require("./Module");
+const Instruction_1 = require("./Instruction");
 const EllipseEffect_1 = require("../effects/EllipseEffect");
-class LessonTwoCpTwo {
-    /*
-    `<p> So we can draw a circle and change it. But what if we want to draw both a circle and a word? </p>
-    <p> Well, simple! Just write another print statement in the CODE area! </p>
-    <p> GOAL: Draw 2 circles and a word on the CANVAS. </p>
-    <p> HINT: Remember that the numbers right inside the ellipse(_,_) statement change the circle's sizes.`;
-*/
-    constructor() {
+class LessonTwoCpTwo extends Module_1.Module {
+    constructor(ctx) {
+        super(ctx);
         this._name = "l2c2";
         this._nextModule = 'l2c3';
-        this._constraint = 'code';
-        this._instructions = `<p> We can write ellipse(100, 100) in the print statement to draw a circle on the CANVAS. </p>
-    <p> What are the numbers (100, 100) for? I'm glad you asked... </p>
-    <p> Because the CODE area is frozen again! Drag one of the 9 white tips around the circle on the CANVAS to see how the number changes! </p>
-    <p> GOAL: Make the circle wider but shorter. </p>`;
+        this._constraint = 'none';
+        this._instructions = `<p> GOAL: Fit the circle inside the given box. </p>`;
+        this._starterCode = `print(ellipse(100, 100), 120, 150)`;
+        this._latestInstrIndex = 0;
+        this.y = 10;
+        this.rect_h = 50;
+        this.rect_w = 100;
+        this.font_size = 20;
+        this.x = Math.round((ctx.canvas.width - this.rect_w) / 2);
+        let content = "What are the numbers (100, 100) next to ellipse for? Let's find out by first clicking on the circle on the CANVAS.";
+        this._instrBoxes.push(new Instruction_1.Instruction('canvas-container', content, "80%", "10%"));
+        content = "Now drag the 8 tips around the cirlce to resize it, then drag it inside the given box. Observe the CODE above.";
+        this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "50%", "10%"));
+        content = "Yep! Those numbers inside ellipse(_,_) change the dimension of the circle! Note that you can also directly retype these numbers in the CODE area, without touching the CANVAS.";
+        this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "50%", "10%"));
+    }
+    drawGuides() {
+        this.ctx.beginPath();
+        this.ctx.rect(this.x, this.y, this.rect_w, this.rect_h);
+        this.ctx.strokeStyle = '#6C6C6C';
+        this.ctx.stroke();
+        this.ctx.font = this.font_size + "px Courier New";
+        this.ctx.fillStyle = '#6C6C6C';
+        this.ctx.fillText("Fit circle", this.x, this.y - 2 * this.font_size);
+        this.ctx.fillText("in here", this.x, this.y - this.font_size);
     }
     /**
-     * A lesson to print a string
-     * goals: moving the text and observe the code
+     *
      * @param document The HTML document
-     * @param effects: the list of effects currently on the CANVAS
+     * @param effects the list of effects currently on the CANVAS
      */
     checkGoal(document, effects) {
-        for (let effect of effects) {
-            if (effect instanceof EllipseEffect_1.EllipseEffect) {
-                if (effect.w > 200 && effect.h < 80) {
-                    return true;
-                }
+        /*
+          for (let effect of effects) {
+            if (effect instanceof EllipseEffect) {
+              if (effect.w > 200 && effect.h < 80) {
+                return true;
+              }
             }
+          }
+          return false;
+          */
+        //console.log("instrIndex in checkGoal: " + this._instrIndex);
+        switch (this._latestInstrIndex) {
+            case 0:
+                for (let effect of effects) {
+                    if (effect instanceof EllipseEffect_1.EllipseEffect && effect.selected) {
+                        this._latestInstrIndex++;
+                        this.renderLatestInstruction(document);
+                    }
+                }
+                return false;
+                break;
+            case 1:
+                for (let effect of effects) {
+                    if (effect instanceof EllipseEffect_1.EllipseEffect) {
+                        if (effect.x > this.x && effect.x < this.x + this.rect_w
+                            && effect.y > this.y && effect.y < this.y + this.rect_h
+                            && effect.w < this.rect_w && effect.h < this.rect_h) {
+                            this._latestInstrIndex++;
+                            this.renderLatestInstruction(document);
+                        }
+                    }
+                }
+                return false;
+                break;
+            default:
+                return true;
+                break;
         }
         return false;
-    }
-    /**
-     * Returns the module name
-     */
-    get name() {
-        return this._name;
-    }
-    /**
-     * Returns the module instructions
-     */
-    get instructions() {
-        return this._instructions;
     }
 }
 exports.LessonTwoCpTwo = LessonTwoCpTwo;

@@ -5,45 +5,45 @@ const index_2 = require("../../index");
 const index_3 = require("../../index");
 const index_4 = require("../../index");
 class ModuleGenerator {
-    constructor(isDM) {
+    constructor(ctx, isDM) {
         this.dmConstructors = new Map([
-            ['l1c1', () => new index_1.LessonOneCpOne()],
-            ['l1c2', () => new index_1.LessonOneCpTwo()],
-            ['l1c3', () => new index_1.LessonOneCpThree()],
-            ['l1c4', () => new index_1.LessonOneCpFour()],
-            ['l2c1', () => new index_2.LessonTwoCpOne()],
-            ['l2c2', () => new index_2.LessonTwoCpTwo()],
-            ['l2c3', () => new index_2.LessonTwoCpThree()],
-            ['l2c4', () => new index_2.LessonTwoCpFour()],
-            ['l2c5', () => new index_2.LessonTwoCpFive()],
-            ['l2c6', () => new index_2.LessonTwoCpSix()],
-            ['l2c7', () => new index_2.LessonTwoCpSeven()],
-            ['l3c1', () => new index_3.LessonThreeCpOne()],
-            ['l3c2', () => new index_3.LessonThreeCpTwo()],
-            ['l3c3', () => new index_3.LessonThreeCpThree()],
-            ['l3c4', () => new index_3.LessonThreeCpFour()],
-            ['l3c5', () => new index_3.LessonThreeCpFive()],
-            ['l3c6', () => new index_3.LessonThreeCpSix()],
-            ['l4c1', () => new index_4.LessonFourCpOne()],
-            ['l4c2', () => new index_4.LessonFourCpTwo()]
+            ['l1c1', () => new index_1.LessonOneCpOne(this.ctx)],
+            ['l1c2', () => new index_1.LessonOneCpTwo(this.ctx)],
+            ['l1c3', () => new index_1.LessonOneCpThree(this.ctx)],
+            ['l1c4', () => new index_1.LessonOneCpFour(this.ctx)],
+            ['l2c1', () => new index_2.LessonTwoCpOne(this.ctx)],
+            ['l2c2', () => new index_2.LessonTwoCpTwo(this.ctx)],
+            ['l2c3', () => new index_2.LessonTwoCpThree(this.ctx)],
+            ['l2c4', () => new index_2.LessonTwoCpFour(this.ctx)],
+            ['l2c5', () => new index_2.LessonTwoCpFive(this.ctx)],
+            ['l2c6', () => new index_2.LessonTwoCpSix(this.ctx)],
+            ['l2c7', () => new index_2.LessonTwoCpSeven(this.ctx)],
+            ['l3c1', () => new index_3.LessonThreeCpOne(this.ctx)],
+            ['l3c2', () => new index_3.LessonThreeCpTwo(this.ctx)],
+            ['l3c3', () => new index_3.LessonThreeCpThree(this.ctx)],
+            ['l3c4', () => new index_3.LessonThreeCpFour(this.ctx)],
+            ['l3c5', () => new index_3.LessonThreeCpFive(this.ctx)],
+            ['l3c6', () => new index_3.LessonThreeCpSix(this.ctx)],
+            ['l4c1', () => new index_4.LessonFourCpOne(this.ctx)],
+            ['l4c2', () => new index_4.LessonFourCpTwo(this.ctx)]
         ]);
         this.nonDmConstructors = new Map([
-            ['l1c1', () => new index_1.LessonOneCpOne()],
-            ['l1c2', () => new index_1.LessonOneCpThree()],
-            ['l1c3', () => new index_1.LessonOneCpFour()],
-            ['l2c1', () => new index_2.LessonTwoCpOne()],
-            ['l2c2', () => new index_2.LessonTwoCpThree()],
-            ['l2c3', () => new index_2.LessonTwoCpFour()],
-            ['l2c4', () => new index_2.LessonTwoCpFive()],
-            ['l2c5', () => new index_2.LessonTwoCpSeven()],
-            ['l3c1', () => new index_3.LessonThreeCpOne()],
-            ['l3c2', () => new index_3.LessonThreeCpTwo()],
-            ['l3c3', () => new index_3.LessonThreeCpThree()],
-            ['l3c4', () => new index_3.LessonThreeCpFour()],
-            ['l3c5', () => new index_3.LessonThreeCpFive()],
-            ['l3c6', () => new index_3.LessonThreeCpSix()],
-            ['l4c1', () => new index_4.LessonFourCpOne()],
-            ['l4c2', () => new index_4.LessonFourCpTwo()]
+            ['l1c1', () => new index_1.LessonOneCpOne(this.ctx)],
+            ['l1c2', () => new index_1.LessonOneCpThree(this.ctx)],
+            ['l1c3', () => new index_1.LessonOneCpFour(this.ctx)],
+            ['l2c1', () => new index_2.LessonTwoCpOne(this.ctx)],
+            ['l2c2', () => new index_2.LessonTwoCpThree(this.ctx)],
+            ['l2c3', () => new index_2.LessonTwoCpFour(this.ctx)],
+            ['l2c4', () => new index_2.LessonTwoCpFive(this.ctx)],
+            ['l2c5', () => new index_2.LessonTwoCpSeven(this.ctx)],
+            ['l3c1', () => new index_3.LessonThreeCpOne(this.ctx)],
+            ['l3c2', () => new index_3.LessonThreeCpTwo(this.ctx)],
+            ['l3c3', () => new index_3.LessonThreeCpThree(this.ctx)],
+            ['l3c4', () => new index_3.LessonThreeCpFour(this.ctx)],
+            ['l3c5', () => new index_3.LessonThreeCpFive(this.ctx)],
+            ['l3c6', () => new index_3.LessonThreeCpSix(this.ctx)],
+            ['l4c1', () => new index_4.LessonFourCpOne(this.ctx)],
+            ['l4c2', () => new index_4.LessonFourCpTwo(this.ctx)]
         ]);
         this.checkpoints = new Map([
             ['l1c1', null],
@@ -66,6 +66,7 @@ class ModuleGenerator {
             ['l4c1', null],
             ['l4c2', null]
         ]);
+        this.ctx = ctx;
         if (isDM) {
             this.curConstructors = this.dmConstructors;
         }

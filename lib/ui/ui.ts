@@ -9,6 +9,7 @@ import { Option, Some, None } from 'space-lift';
 let canvas = document.querySelector('canvas');
 let ctx = canvas.getContext("2d");
 let inputBox = document.getElementById('input') as HTMLInputElement;
+let codeEditorContainer = document.getElementById("code-editor");
 let lastWorkingInputText = "";
 
 let starCount = 0;
@@ -24,7 +25,7 @@ let masterLog: LogEvent<any>[] = [];
 let selectedElems: Effect<any>[] = [];
 
 let checkpoint: Module = null;
-let modGen = new ModuleGenerator(true);
+let modGen = new ModuleGenerator(ctx, true);
 let checkpointIsActive: boolean = false;
 let textBoxSelected: boolean; //sees if the text box is selected
 let canvasIsDisabled: boolean = false;
@@ -48,14 +49,6 @@ bugButton.onclick = function(){
     printLog();
 }
 */
-
-/**
- * <div class="col-item">
- *  <button id='paint' style="background-color:#DFB534"> Run </button>
- * </div>
- *
- * Put this in html file for Run button's styling
- */
 
 //let paintButton = document.getElementById('paint');
 
@@ -192,7 +185,7 @@ function animate() {
     }
 
     if (checkpoint != null && checkpoint.drawGuides != null) {
-      checkpoint.drawGuides(ctx);
+      checkpoint.drawGuides();
 /*
       if (checkpoint._name == "l1c3") {
         ctx.beginPath();
@@ -202,7 +195,7 @@ function animate() {
 
         ctx.font = 20 + "px Courier New";
         ctx.fillStyle = '#6C6C6C';
-        ctx.fillText("Put text", 10, 390);
+        ctx.fillText("Put word", 10, 390);
         ctx.fillText("in here", 10, 410);
       }
 */
@@ -355,6 +348,11 @@ let cpNames: string[] = [
   'l4c1', 'l4c2'*/
 ];
 
+//this is for testing tutorials
+let workingCp: string[] = [
+  'l1c1', 'l1c2', 'l1c3', 'l1c4', 'l2c1'
+];
+
 for (let cp of cpNames) {
   let cpButton = document.getElementById(cp);
   cpButton.onclick = function() {
@@ -381,23 +379,23 @@ function initCheckpoint(cp: string) {
     //set up the CODE and CANVAS areas
     if (checkpoint._constraint == 'code') {
       inputBox.setAttribute('disabled', 'disabled');
-      inputBox.style.opacity = '0.5';
+      codeEditorContainer.style.opacity = '0.5';
       canvas.style.pointerEvents = "auto";
-      canvas.style.background = '#EBEBEB';
+      canvas.style.background = 'white';
       canvasIsDisabled = false;
 
     } else if (checkpoint._constraint == 'canvas') {
       inputBox.removeAttribute('disabled');
-      inputBox.style.opacity = '1.0';
+      codeEditorContainer.style.opacity = '1.0';
       canvas.style.pointerEvents = "none";
       canvas.style.background = '#C0C0C0';
       canvasIsDisabled = true;
 
     } else {
       inputBox.removeAttribute('disabled');
-      inputBox.style.opacity = '1.0';
+      codeEditorContainer.style.opacity = '1.0';
       canvas.style.pointerEvents = "auto";
-      canvas.style.background = '#EBEBEB';
+      canvas.style.background = 'white';
       canvasIsDisabled = false;
     }
 
@@ -424,11 +422,11 @@ function initCheckpoint(cp: string) {
       if (curInstruction != null) {
         curInstruction.remove();
       }
-/*
-      if (checkpoint._name === "l1c1") {
+
+      if (checkpoint.numInstructions > 0) {
         checkpoint.renderInstruction(document);
       }
-*/
+
       rewardBox.style.background = '#C0C0C0';
       let reward = document.getElementById('reward-text');
       reward.style.color = 'black';

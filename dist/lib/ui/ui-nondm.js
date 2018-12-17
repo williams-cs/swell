@@ -16,7 +16,7 @@ let showDebug = true; // flag to show or hide debug button
 let masterLog = [];
 let selectedElems = [];
 let checkpoint = null;
-let modGen = new index_2.ModuleGenerator(false);
+let modGen = new index_2.ModuleGenerator(ctx, false);
 let checkpointIsActive = false;
 let textBoxSelected; //sees if the text box is selected
 let canvasIsDisabled = false;
@@ -162,7 +162,7 @@ function animate() {
         checkpointChecksGoal();
     }
     if (checkpoint != null && checkpoint.drawGuides != null) {
-        checkpoint.drawGuides(ctx);
+        checkpoint.drawGuides();
         /*
               if (checkpoint._name == "l1c3") {
                 ctx.beginPath();

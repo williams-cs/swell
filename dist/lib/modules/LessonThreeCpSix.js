@@ -1,9 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const Module_1 = require("./Module");
 const EllipseEffect_1 = require("../effects/EllipseEffect");
 const StringEffect_1 = require("../effects/StringEffect");
-class LessonThreeCpSix {
-    constructor() {
+class LessonThreeCpSix extends Module_1.Module {
+    constructor(ctx) {
+        super(ctx);
         this._name = "l3c6";
         this._nextModule = 'l4c1';
         this._constraint = 'none';
@@ -12,31 +14,40 @@ class LessonThreeCpSix {
     <p> However, currently the claim that "Circle A is smaller than circle B." regardless of the circles' actual sizes. </p>
     <p> Create an if/else statement to print "Circle A is smaller than circle B." when it is actually so, and print "Circle A is bigger than circle B" otherwise. </p>
     <p> CHALLENGE: Create an if/else statement to print the correct claim about the sizes of the 2 circles. </p>`;
-        this._starterCode = `a = 200;
-print(a, 111, 103);
-print(ellipse(a, a), 131, 263);
-b = 100;
-print(b, 337, 104);
-print(ellipse(b, b), 371, 248);
-print("Circle A is smaller than circle B.", 45, 453);
-`;
-        this.xA = 20;
-        this.yA = 150;
-        this.xB = this.xA + 225 + 10;
-        this.yB = 150;
+        this.font_size = 20;
+        this.a_size = Math.round(Math.min(ctx.canvas.width, ctx.canvas.height) * 0.4);
+        this.b_size = Math.round(this.a_size / 2);
+        this.square_size = this.a_size + Math.round(Math.min(ctx.canvas.width, ctx.canvas.height) * 0.1);
+        this.yA = Math.round((ctx.canvas.height - this.square_size) / 2);
+        this.yB = this.yA;
+        this.xA = Math.round(ctx.canvas.width / 2) - this.square_size - 10;
+        this.xB = this.xA + this.square_size + 10;
+        let square_mid = Math.round(this.square_size / 2);
+        let circ_xA = this.xA + square_mid;
+        let circ_yA = this.yA + square_mid;
+        let circ_xB = this.xB + square_mid;
+        let circ_yB = this.yB + square_mid;
+        this._starterCode =
+            `a = ${this.a_size};
+print(a, ${this.xA}, ${this.yA - 2 * this.font_size});
+print(ellipse(a, a), ${circ_xA}, ${circ_yA});
+b = ${this.b_size};
+print(b, ${this.xB}, ${this.yA - 2 * this.font_size});
+print(ellipse(b, b), ${circ_xB}, ${circ_yB});
+print("Circle A is smaller than circle B.", ${this.xA}, ${this.yA + this.square_size + this.font_size});`;
     }
-    drawGuides(ctx) {
-        ctx.beginPath();
-        ctx.rect(this.xA, this.yA, 225, 225);
-        ctx.strokeStyle = '#6C6C6C';
-        ctx.stroke();
-        ctx.font = 20 + "px Courier New";
-        ctx.fillStyle = '#6C6C6C';
-        ctx.fillText("Circle A", this.xA, this.yA - 20);
-        ctx.beginPath();
-        ctx.rect(this.xB, this.yB, 225, 225);
-        ctx.stroke();
-        ctx.fillText("Circle B", this.xB, this.yB - 20);
+    drawGuides() {
+        this.ctx.beginPath();
+        this.ctx.rect(this.xA, this.yA, this.square_size, this.square_size);
+        this.ctx.strokeStyle = '#6C6C6C';
+        this.ctx.stroke();
+        this.ctx.font = this.font_size + "px Courier New";
+        this.ctx.fillStyle = '#6C6C6C';
+        this.ctx.fillText("Circle A", this.xA, this.yA - this.font_size);
+        this.ctx.beginPath();
+        this.ctx.rect(this.xB, this.yB, this.square_size, this.square_size);
+        this.ctx.stroke();
+        this.ctx.fillText("Circle B", this.xB, this.yB - this.font_size);
     }
     /**
      * A lesson leading into conditionals
@@ -68,10 +79,10 @@ print("Circle A is smaller than circle B.", 45, 453);
         //look for circles A and B
         for (let effect of effects) {
             if (effect instanceof EllipseEffect_1.EllipseEffect) {
-                if (effect.x > this.xA && effect.x < this.xA + 225 && effect.y > this.yA && effect.y < this.yA + 225) {
+                if (effect.x > this.xA && effect.x < this.xA + this.square_size && effect.y > this.yA && effect.y < this.yA + this.square_size) {
                     circleA = effect;
                 }
-                else if (effect.x > this.xB && effect.x < this.xB + 225 && effect.y > this.yB && effect.y < this.yB + 225) {
+                else if (effect.x > this.xB && effect.x < this.xB + this.square_size && effect.y > this.yB && effect.y < this.yB + this.square_size) {
                     circleB = effect;
                 }
             }
@@ -89,18 +100,6 @@ print("Circle A is smaller than circle B.", 45, 453);
             }
         }
         return codeIsCorrect && canvasIsCorrect;
-    }
-    /**
-     * Returns the module name
-     */
-    get name() {
-        return this._name;
-    }
-    /**
-     * Returns the module instructions
-     */
-    get instructions() {
-        return this._instructions;
     }
 }
 exports.LessonThreeCpSix = LessonThreeCpSix;

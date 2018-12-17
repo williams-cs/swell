@@ -1,25 +1,24 @@
 import { Module } from "./Module";
 import { Effect } from "../effects/Effect";
-export declare class LessonTwoCpTwo implements Module {
+export declare class LessonTwoCpTwo extends Module {
     readonly _name: string;
     readonly _nextModule: string;
     readonly _goal: any;
     readonly _constraint: string;
     readonly _instructions: string;
-    constructor();
+    readonly _starterCode: string;
+    _latestInstrIndex: number;
+    x: number;
+    y: number;
+    rect_h: number;
+    rect_w: number;
+    font_size: number;
+    constructor(ctx: CanvasRenderingContext2D);
+    drawGuides(): void;
     /**
-     * A lesson to print a string
-     * goals: moving the text and observe the code
+     *
      * @param document The HTML document
-     * @param effects: the list of effects currently on the CANVAS
+     * @param effects the list of effects currently on the CANVAS
      */
     checkGoal(document: Document, effects: Effect<any>[]): boolean;
-    /**
-     * Returns the module name
-     */
-    readonly name: string;
-    /**
-     * Returns the module instructions
-     */
-    readonly instructions: string;
 }
