@@ -1,11 +1,13 @@
-import { Module } from "./Module";
+import { Checkpoint } from "./Checkpoint";
 import { Effect } from "../effects/Effect";
-export declare class LessonOneCpTwo implements Module {
+export declare class LessonOneCpTwo extends Checkpoint {
     readonly _name: string;
     readonly _nextModule: string;
     readonly _goal: any;
     readonly _constraint: string;
     readonly _instructions: string;
+    readonly _starterCode: string;
+    _latestInstrIndex: number;
     constructor();
     x: number;
     y: number;

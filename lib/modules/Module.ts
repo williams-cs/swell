@@ -28,8 +28,9 @@ export interface Module {
      * @param document The HTML document
      */
     renderInstruction?(document: Document): void;
-    nextInstruction?(document: Document): any;
-    prevInstruction?(document: Document): any;
+    renderLatestInstruction?(document: Document): any;
+    renderNextInstruction?(document: Document): any;
+    renderPrevInstruction?(document: Document): any;
 
     //instrBoxes(): Instruction[];
     //instrIndex(): number;

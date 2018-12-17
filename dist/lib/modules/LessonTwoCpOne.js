@@ -10,8 +10,7 @@ class LessonTwoCpOne {
     <p> In the print statement, replace "moo" with ellipse(100,100). Hit the RUN button to see what happens. </p>
     <p> GOAL: replace "moo" with ellipse(100,100) in the print statement above. </p>
     <p> HINT: Highlight "moo" - including the double quotes ", and replace that with ellipse(100, 100). KEEP EVERYTHING ELSE THE SAME. </p>`;
-        this._starterCode = `
-    print("moo", 50, 70)`;
+        this._starterCode = `print("moo", 50, 70)`;
     }
     /**
      * A lesson to print a string

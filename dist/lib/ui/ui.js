@@ -35,13 +35,6 @@ bugButton.onclick = function(){
     printLog();
 }
 */
-/**
- * <div class="col-item">
- *  <button id='paint' style="background-color:#DFB534"> Run </button>
- * </div>
- *
- * Put this in html file for Run button's styling
- */
 //let paintButton = document.getElementById('paint');
 /**
  * makes the paint button paint text from the textarea to the canvas!
@@ -313,6 +306,10 @@ let cpNames = [
     'l3c1', 'l3c2', 'l3c3', 'l3c4', 'l3c5', 'l3c6' /*,
     'l4c1', 'l4c2'*/
 ];
+//this is for testing
+let workingCp = [
+    'l1c1', 'l1c2'
+];
 for (let cp of cpNames) {
     let cpButton = document.getElementById(cp);
     cpButton.onclick = function () {
@@ -338,7 +335,7 @@ function initCheckpoint(cp) {
         inputBox.setAttribute('disabled', 'disabled');
         inputBox.style.opacity = '0.5';
         canvas.style.pointerEvents = "auto";
-        canvas.style.background = '#EBEBEB';
+        canvas.style.background = 'white';
         canvasIsDisabled = false;
     }
     else if (checkpoint._constraint == 'canvas') {
@@ -352,7 +349,7 @@ function initCheckpoint(cp) {
         inputBox.removeAttribute('disabled');
         inputBox.style.opacity = '1.0';
         canvas.style.pointerEvents = "auto";
-        canvas.style.background = '#EBEBEB';
+        canvas.style.background = 'white';
         canvasIsDisabled = false;
     }
     let popUp = document.getElementById('popup');
@@ -375,11 +372,9 @@ function initCheckpoint(cp) {
         if (curInstruction != null) {
             curInstruction.remove();
         }
-        /*
-              if (checkpoint._name === "l1c1") {
-                checkpoint.renderInstruction(document);
-              }
-        */
+        if (workingCp.includes(checkpoint._name)) {
+            checkpoint.renderInstruction(document);
+        }
         rewardBox.style.background = '#C0C0C0';
         let reward = document.getElementById('reward-text');
         reward.style.color = 'black';

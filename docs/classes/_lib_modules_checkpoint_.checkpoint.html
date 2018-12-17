@@ -72,6 +72,14 @@
 				<ul class="tsd-hierarchy">
 					<li>
 						<span class="target">Checkpoint</span>
+						<ul class="tsd-hierarchy">
+							<li>
+								<a href="_lib_modules_lessononecpone_.lessononecpone.html" class="tsd-signature-type">LessonOneCpOne</a>
+							</li>
+							<li>
+								<a href="_lib_modules_lessononecptwo_.lessononecptwo.html" class="tsd-signature-type">LessonOneCpTwo</a>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</section>
@@ -90,9 +98,10 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_modules_checkpoint_.checkpoint.html#nextinstruction" class="tsd-kind-icon">next<wbr>Instruction</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_modules_checkpoint_.checkpoint.html#previnstruction" class="tsd-kind-icon">prev<wbr>Instruction</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_modules_checkpoint_.checkpoint.html#renderinstruction" class="tsd-kind-icon">render<wbr>Instruction</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_modules_checkpoint_.checkpoint.html#renderlatestinstruction" class="tsd-kind-icon">render<wbr>Latest<wbr>Instruction</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_modules_checkpoint_.checkpoint.html#rendernextinstruction" class="tsd-kind-icon">render<wbr>Next<wbr>Instruction</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_lib_modules_checkpoint_.checkpoint.html#renderprevinstruction" class="tsd-kind-icon">render<wbr>Prev<wbr>Instruction</a></li>
 							</ul>
 						</section>
 					</div>
@@ -106,7 +115,7 @@
 					<div class="tsd-signature tsd-kind-icon">_instr<wbr>Boxes<span class="tsd-signature-symbol">:</span> <a href="_lib_modules_instruction_.instruction.html" class="tsd-signature-type">Instruction</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/williams-cs/swell/blob/14093f3c/lib/modules/Checkpoint.ts#L6">lib/modules/Checkpoint.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/williams-cs/swell/blob/e7d12dd9/lib/modules/Checkpoint.ts#L6">lib/modules/Checkpoint.ts:6</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -116,7 +125,7 @@
 					<div class="tsd-signature tsd-kind-icon">_instr<wbr>Index<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/williams-cs/swell/blob/14093f3c/lib/modules/Checkpoint.ts#L7">lib/modules/Checkpoint.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/williams-cs/swell/blob/e7d12dd9/lib/modules/Checkpoint.ts#L7">lib/modules/Checkpoint.ts:7</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -126,59 +135,13 @@
 					<div class="tsd-signature tsd-kind-icon">_latest<wbr>Instr<wbr>Index<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/williams-cs/swell/blob/14093f3c/lib/modules/Checkpoint.ts#L8">lib/modules/Checkpoint.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/williams-cs/swell/blob/e7d12dd9/lib/modules/Checkpoint.ts#L8">lib/modules/Checkpoint.ts:8</a></li>
 						</ul>
 					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="nextinstruction" class="tsd-anchor"></a>
-					<h3>next<wbr>Instruction</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">next<wbr>Instruction<span class="tsd-signature-symbol">(</span>document<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Document</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/14093f3c/lib/modules/Checkpoint.ts#L10">lib/modules/Checkpoint.ts:10</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>document: <span class="tsd-signature-type">Document</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="previnstruction" class="tsd-anchor"></a>
-					<h3>prev<wbr>Instruction</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">prev<wbr>Instruction<span class="tsd-signature-symbol">(</span>document<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Document</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/14093f3c/lib/modules/Checkpoint.ts#L15">lib/modules/Checkpoint.ts:15</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>document: <span class="tsd-signature-type">Document</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="renderinstruction" class="tsd-anchor"></a>
 					<h3>render<wbr>Instruction</h3>
@@ -189,7 +152,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/14093f3c/lib/modules/Checkpoint.ts#L24">lib/modules/Checkpoint.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/e7d12dd9/lib/modules/Checkpoint.ts#L29">lib/modules/Checkpoint.ts:29</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -204,6 +167,75 @@
 									<div class="tsd-comment tsd-typography">
 										<p>The HTML document</p>
 									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="renderlatestinstruction" class="tsd-anchor"></a>
+					<h3>render<wbr>Latest<wbr>Instruction</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">render<wbr>Latest<wbr>Instruction<span class="tsd-signature-symbol">(</span>document<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Document</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/e7d12dd9/lib/modules/Checkpoint.ts#L10">lib/modules/Checkpoint.ts:10</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>document: <span class="tsd-signature-type">Document</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="rendernextinstruction" class="tsd-anchor"></a>
+					<h3>render<wbr>Next<wbr>Instruction</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">render<wbr>Next<wbr>Instruction<span class="tsd-signature-symbol">(</span>document<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Document</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/e7d12dd9/lib/modules/Checkpoint.ts#L15">lib/modules/Checkpoint.ts:15</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>document: <span class="tsd-signature-type">Document</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="renderprevinstruction" class="tsd-anchor"></a>
+					<h3>render<wbr>Prev<wbr>Instruction</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">render<wbr>Prev<wbr>Instruction<span class="tsd-signature-symbol">(</span>document<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Document</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/williams-cs/swell/blob/e7d12dd9/lib/modules/Checkpoint.ts#L20">lib/modules/Checkpoint.ts:20</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>document: <span class="tsd-signature-type">Document</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -240,13 +272,16 @@
 								<a href="_lib_modules_checkpoint_.checkpoint.html#_latestinstrindex" class="tsd-kind-icon">_latest<wbr>Instr<wbr>Index</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_lib_modules_checkpoint_.checkpoint.html#nextinstruction" class="tsd-kind-icon">next<wbr>Instruction</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_lib_modules_checkpoint_.checkpoint.html#previnstruction" class="tsd-kind-icon">prev<wbr>Instruction</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_lib_modules_checkpoint_.checkpoint.html#renderinstruction" class="tsd-kind-icon">render<wbr>Instruction</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_lib_modules_checkpoint_.checkpoint.html#renderlatestinstruction" class="tsd-kind-icon">render<wbr>Latest<wbr>Instruction</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_lib_modules_checkpoint_.checkpoint.html#rendernextinstruction" class="tsd-kind-icon">render<wbr>Next<wbr>Instruction</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_lib_modules_checkpoint_.checkpoint.html#renderprevinstruction" class="tsd-kind-icon">render<wbr>Prev<wbr>Instruction</a>
 							</li>
 						</ul>
 					</li>

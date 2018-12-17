@@ -6,11 +6,15 @@ class Checkpoint {
         this._instrIndex = 0;
         this._latestInstrIndex = 0;
     }
-    nextInstruction(document) {
+    renderLatestInstruction(document) {
+        this._instrIndex = this._latestInstrIndex;
+        this.renderInstruction(document);
+    }
+    renderNextInstruction(document) {
         this._instrIndex = (this._instrIndex + 1 < this._instrBoxes.length) ? this._instrIndex + 1 : this._instrIndex;
         this.renderInstruction(document);
     }
-    prevInstruction(document) {
+    renderPrevInstruction(document) {
         this._instrIndex = (this._instrIndex - 1 >= 0) ? this._instrIndex - 1 : this._instrIndex;
         this.renderInstruction(document);
     }
@@ -23,6 +27,7 @@ class Checkpoint {
         if (curInstruction != null) {
             curInstruction.remove();
         }
+        console.log("instrIndex " + this._instrIndex);
         let instruction = this._instrBoxes[this._instrIndex];
         let instrDiv = document.createElement("div");
         instrDiv.className = "instruction";
@@ -36,8 +41,7 @@ class Checkpoint {
         prevInstr.innerText = "<";
         let thisModule = this;
         prevInstr.onclick = function () {
-            console.log("instrIndex " + thisModule._instrIndex);
-            thisModule.prevInstruction(document);
+            thisModule.renderPrevInstruction(document);
         };
         if (this._instrIndex == 0) {
             prevInstr.style.background = "#D8D8D8";
@@ -48,8 +52,7 @@ class Checkpoint {
         nextInstr.id = 'next-instruction';
         nextInstr.innerText = ">";
         nextInstr.onclick = function () {
-            console.log("instrIndex " + thisModule._instrIndex);
-            thisModule.nextInstruction(document);
+            thisModule.renderNextInstruction(document);
         };
         if (this._instrIndex == this._instrBoxes.length || this._instrIndex == this._latestInstrIndex) {
             nextInstr.style.background = "#D8D8D8";

@@ -13,8 +13,7 @@ export class LessonTwoCpOne implements Module {
     <p> GOAL: replace "moo" with ellipse(100,100) in the print statement above. </p>
     <p> HINT: Highlight "moo" - including the double quotes ", and replace that with ellipse(100, 100). KEEP EVERYTHING ELSE THE SAME. </p>`;
 
-    readonly _starterCode: string = `
-    print("moo", 50, 70)`;
+    readonly _starterCode: string = `print("moo", 50, 70)`;
 
     constructor(){
     }

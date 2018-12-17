@@ -49,14 +49,6 @@ bugButton.onclick = function(){
 }
 */
 
-/**
- * <div class="col-item">
- *  <button id='paint' style="background-color:#DFB534"> Run </button>
- * </div>
- *
- * Put this in html file for Run button's styling
- */
-
 //let paintButton = document.getElementById('paint');
 
 /**
@@ -355,6 +347,11 @@ let cpNames: string[] = [
   'l4c1', 'l4c2'*/
 ];
 
+//this is for testing
+let workingCp: string[] = [
+  'l1c1', 'l1c2'
+];
+
 for (let cp of cpNames) {
   let cpButton = document.getElementById(cp);
   cpButton.onclick = function() {
@@ -424,11 +421,11 @@ function initCheckpoint(cp: string) {
       if (curInstruction != null) {
         curInstruction.remove();
       }
-/*
-      if (checkpoint._name === "l1c1") {
+
+      if (workingCp.includes(checkpoint._name)) {
         checkpoint.renderInstruction(document);
       }
-*/
+
       rewardBox.style.background = '#C0C0C0';
       let reward = document.getElementById('reward-text');
       reward.style.color = 'black';
