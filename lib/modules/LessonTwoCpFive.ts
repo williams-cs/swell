@@ -2,7 +2,7 @@ import { Module } from "./Module";
 import { Effect } from "../effects/Effect";
 import { EllipseEffect } from "../effects/EllipseEffect";
 
-export class LessonTwoCpFive implements Module {
+export class LessonTwoCpFive extends Module {
     readonly _name: string = "l2c5";
     readonly _nextModule: string = 'l2c6';
     readonly _goal: any;
@@ -13,9 +13,6 @@ export class LessonTwoCpFive implements Module {
     <p> As a result, when we tell the computer to print a, it will print "moo moo", and when we tell the computer to print b, it will print a circle. </p>
     <p> Let's take this one step further: Create a new variable c, and make it refer to an ellipse(100, 100). Then write 2 statements to print c. What do you think would happen? </p>
     <p> GOAL: Create a variable c referring to an ellipse(100, 100), then write 2 print statements to print c. </p>`;
-
-    constructor(){
-    }
 
     /**
      * A lesson to print a string
@@ -44,18 +41,5 @@ export class LessonTwoCpFive implements Module {
       }
 
       return codeIsCorrect && circleCount >= 2;
-    }
-
-    /**
-     * Returns the module name
-     */
-    get name(): string {
-        return this._name;
-    }
-    /**
-     * Returns the module instructions
-     */
-    get instructions(): string {
-        return this._instructions;
     }
 }

@@ -9,6 +9,7 @@ import { Option, Some, None } from 'space-lift';
 let canvas = document.querySelector('canvas');
 let ctx = canvas.getContext("2d");
 let inputBox = document.getElementById('input') as HTMLInputElement;
+let codeEditorContainer = document.getElementById("code-editor");
 let lastWorkingInputText = "";
 
 let starCount = 0;
@@ -24,7 +25,7 @@ let masterLog: LogEvent<any>[] = [];
 let selectedElems: Effect<any>[] = [];
 
 let checkpoint: Module = null;
-let modGen = new ModuleGenerator(true);
+let modGen = new ModuleGenerator(ctx, true);
 let checkpointIsActive: boolean = false;
 let textBoxSelected: boolean; //sees if the text box is selected
 let canvasIsDisabled: boolean = false;
@@ -192,7 +193,7 @@ function animate() {
     }
 
     if (checkpoint != null && checkpoint.drawGuides != null) {
-      checkpoint.drawGuides(ctx);
+      checkpoint.drawGuides();
 /*
       if (checkpoint._name == "l1c3") {
         ctx.beginPath();
@@ -381,21 +382,21 @@ function initCheckpoint(cp: string) {
     //set up the CODE and CANVAS areas
     if (checkpoint._constraint == 'code') {
       inputBox.setAttribute('disabled', 'disabled');
-      inputBox.style.opacity = '0.5';
+      codeEditorContainer.style.opacity = '0.5';
       canvas.style.pointerEvents = "auto";
       canvas.style.background = 'white';
       canvasIsDisabled = false;
 
     } else if (checkpoint._constraint == 'canvas') {
       inputBox.removeAttribute('disabled');
-      inputBox.style.opacity = '1.0';
+      codeEditorContainer.style.opacity = '1.0';
       canvas.style.pointerEvents = "none";
       canvas.style.background = '#C0C0C0';
       canvasIsDisabled = true;
 
     } else {
       inputBox.removeAttribute('disabled');
-      inputBox.style.opacity = '1.0';
+      codeEditorContainer.style.opacity = '1.0';
       canvas.style.pointerEvents = "auto";
       canvas.style.background = 'white';
       canvasIsDisabled = false;

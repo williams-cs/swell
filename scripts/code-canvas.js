@@ -35,12 +35,14 @@
     }
   });
 
-  // Make canvas responsive based on code area
-  resizeCanvas = function() {
+  // Make code and canvas responsive
+  resizeCodeCanvas = function() {
     let canvas = document.querySelector("canvas");
     canvas.height = parseInt(document.getElementById("input").clientHeight);
     canvas.width = parseInt(document.getElementById("code-editor").clientWidth - 20);
+    linesDiv.height(input.height());
+    lineNo = fillOutLines(codeLinesDiv, linesDiv.height(), lineNo);
   };
-  document.getElementsByTagName("body")[0].onresize = resizeCanvas;
-  resizeCanvas();
+  document.getElementsByTagName("body")[0].onresize = resizeCodeCanvas;
+  resizeCodeCanvas();
 })(jQuery);

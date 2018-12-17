@@ -2,7 +2,7 @@ import { Module } from "./Module";
 import { Effect } from "../effects/Effect";
 import { StringEffect } from "../effects/StringEffect";
 
-export class LessonThreeCpThree implements Module {
+export class LessonThreeCpThree extends Module {
     readonly _name: string = "l3c3";
     readonly _nextModule: string = 'l3c4';
     readonly _goal: any;
@@ -13,13 +13,10 @@ export class LessonThreeCpThree implements Module {
     <p> GOAL: Make the line "b is greater than 20" only be printed on the CANVAS when b is actually greater than 20. Change b to test the if() statement. </p>`;
 
     readonly _starterCode: string =
-    `b = 8;
+`b = 8;
 if(b < 10) {
-  print("b is greater than 20.", 103, 143);
+\tprint("b is greater than 20.", 103, 143);
 }`;
-
-    constructor(){
-    }
 
     /**
      * A lesson leading into conditionals
@@ -47,18 +44,5 @@ if(b < 10) {
         }
 
         return codeIsCorrect && canvasIsCorrect;
-    }
-
-    /**
-     * Returns the module name
-     */
-    get name(): string {
-        return this._name;
-    }
-    /**
-     * Returns the module instructions
-     */
-    get instructions(): string {
-        return this._instructions;
     }
 }

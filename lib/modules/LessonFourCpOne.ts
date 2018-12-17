@@ -2,7 +2,7 @@ import { Module } from "./Module";
 import { Effect } from "../effects/Effect";
 import { EllipseEffect } from "../effects/EllipseEffect";
 
-export class LessonFourCpOne implements Module {
+export class LessonFourCpOne extends Module {
     readonly _name: string = "l4c1";
     readonly _nextModule: string = 'l4c2';
     readonly _goal: any;
@@ -16,9 +16,6 @@ export class LessonFourCpOne implements Module {
     <p> Each of the following challenges will test these concepts. Let's dive right in! </p>
     <p> Print a circle and put its height and width in one of the boxes to the side. Then print a rectangle and put its height and width in the box. </p>
     <p> CHALLENGE: Print a circle and rectangle. Put their respective width and height in the boxes provided. </p>`;
-
-    constructor(){
-    }
 
     /**
      * A lesson leading into conditionals
@@ -45,18 +42,5 @@ export class LessonFourCpOne implements Module {
         }
 
         return codeIsCorrect && canvasIsCorrect;
-    }
-
-    /**
-     * Returns the module name
-     */
-    get name(): string {
-        return this._name;
-    }
-    /**
-     * Returns the module instructions
-     */
-    get instructions(): string {
-        return this._instructions;
     }
 }

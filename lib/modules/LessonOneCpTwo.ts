@@ -2,7 +2,7 @@ import { Module } from "./Module";
 import { Effect } from "../effects/Effect";
 import { StringEffect } from "../effects/StringEffect";
 
-export class LessonOneCpTwo implements Module {
+export class LessonOneCpTwo extends Module {
     readonly _name: string = "l1c2";
     readonly _nextModule: string = 'l1c3';
     readonly _goal: any;
@@ -12,22 +12,26 @@ export class LessonOneCpTwo implements Module {
     <p> Now let's do something more interesting: click on the words on the CANVAS, then drag it inside the box at the top-right corner. Observe what happens to your code. </p>
     <p> GOAL: Move the words you just created inside the top-right box. </p>`;
 
-    constructor(){
+    x: number;
+    y: number = 10;
+    square_size: number = 100;
+    font_size = 20;
+
+    constructor(ctx: CanvasRenderingContext2D) {
+      super(ctx);
+      this.x = ctx.canvas.width - this.square_size - this.y;
     }
 
-    x: number = 390;
-    y: number = 10;
+    drawGuides(): void {
+      this.ctx.beginPath();
+      this.ctx.rect(this.x, this.y, this.square_size, this.square_size);
+      this.ctx.strokeStyle = '#6C6C6C';
+      this.ctx.stroke();
 
-    drawGuides(ctx: CanvasRenderingContext2D): void {
-      ctx.beginPath();
-      ctx.rect(this.x, this.y, 100, 100);
-      ctx.strokeStyle = '#6C6C6C';
-      ctx.stroke();
-
-      ctx.font = 20 + "px Courier New";
-      ctx.fillStyle = '#6C6C6C';
-      ctx.fillText("Put text", 390, 130);
-      ctx.fillText("in here", 390, 150);
+      this.ctx.font = this.font_size + "px Courier New";
+      this.ctx.fillStyle = '#6C6C6C';
+      this.ctx.fillText("Put text", this.x, this.y + this.square_size + this.font_size);
+      this.ctx.fillText("in here", this.x, this.y + this.square_size + 2*this.font_size);
     }
 
     /**
@@ -39,24 +43,11 @@ export class LessonOneCpTwo implements Module {
     checkGoal(document: Document, effects: Effect<any>[]): boolean {
         for (let effect of effects) {
           if (effect instanceof StringEffect && effect.str !== "") {
-            if (effect.x > this.x && effect.x < this.x + 100 && effect.y > this.y && effect.y < this.y + 100) {
+            if (effect.x > this.x && effect.x < this.x + this.square_size && effect.y > this.y && effect.y < this.y + this.square_size) {
               return true;
             }
           }
         }
         return false;
-    }
-
-    /**
-     * Returns the module name
-     */
-    get name(): string {
-        return this._name;
-    }
-    /**
-     * Returns the module instructions
-     */
-    get instructions(): string {
-        return this._instructions;
     }
 }
