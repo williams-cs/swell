@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Checkpoint_1 = require("./Checkpoint");
+const Module_1 = require("./Module");
 const Instruction_1 = require("./Instruction");
-class LessonOneCpOne extends Checkpoint_1.Checkpoint {
-    constructor() {
-        super();
+class LessonOneCpOne extends Module_1.Module {
+    constructor(ctx) {
+        super(ctx);
         this._name = "l1c1";
         this._nextModule = 'l1c2';
         this._constraint = 'none';
@@ -56,18 +56,6 @@ class LessonOneCpOne extends Checkpoint_1.Checkpoint {
                 break;
         }
         return false;
-    }
-    /**
-     * Returns the module name
-     */
-    get name() {
-        return this._name;
-    }
-    /**
-     * Returns the module instructions
-     */
-    get instructions() {
-        return this._instructions;
     }
 }
 exports.LessonOneCpOne = LessonOneCpOne;

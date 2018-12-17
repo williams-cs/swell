@@ -195,7 +195,7 @@ function animate() {
 
         ctx.font = 20 + "px Courier New";
         ctx.fillStyle = '#6C6C6C';
-        ctx.fillText("Put text", 10, 390);
+        ctx.fillText("Put word", 10, 390);
         ctx.fillText("in here", 10, 410);
       }
 */
@@ -348,9 +348,9 @@ let cpNames: string[] = [
   'l4c1', 'l4c2'*/
 ];
 
-//this is for testing
+//this is for testing tutorials
 let workingCp: string[] = [
-  'l1c1', 'l1c2'
+  'l1c1', 'l1c2', 'l1c3', 'l1c4'
 ];
 
 for (let cp of cpNames) {

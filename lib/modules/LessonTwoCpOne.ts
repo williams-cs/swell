@@ -15,7 +15,8 @@ export class LessonTwoCpOne extends Module {
 
     readonly _starterCode: string = `print("moo", 100, 100)`;
 
-    constructor(){
+    constructor(ctx: CanvasRenderingContext2D) {
+      super(ctx);
     }
 
     /**

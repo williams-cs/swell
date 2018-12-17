@@ -1,8 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const Module_1 = require("./Module");
 const StringEffect_1 = require("../effects/StringEffect");
-class LessonThreeCpFive {
+class LessonThreeCpFive extends Module_1.Module {
     constructor() {
+        super(...arguments);
         this._name = "l3c5";
         this._nextModule = 'l3c6';
         this._constraint = 'none';
@@ -14,9 +16,9 @@ class LessonThreeCpFive {
     <p> GOAL: Change the value of c so that the line "c is NOT equal to 8." is printed on the CANVAS. </p>`;
         this._starterCode = `c = 8;
 if(c == 8) {
-  print("c is equal to 8.", 103, 143);
+\tprint("c is equal to 8.", 103, 143);
 } else {
-  print("c is NOT equal to 8.", 103, 143);
+\tprint("c is NOT equal to 8.", 103, 143);
 }`;
     }
     /**
@@ -43,18 +45,6 @@ if(c == 8) {
             }
         }
         return codeIsCorrect && canvasIsCorrect;
-    }
-    /**
-     * Returns the module name
-     */
-    get name() {
-        return this._name;
-    }
-    /**
-     * Returns the module instructions
-     */
-    get instructions() {
-        return this._instructions;
     }
 }
 exports.LessonThreeCpFive = LessonThreeCpFive;

@@ -1,8 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const Module_1 = require("./Module");
 const EllipseEffect_1 = require("../effects/EllipseEffect");
-class LessonFourCpOne {
+class LessonFourCpOne extends Module_1.Module {
     constructor() {
+        super(...arguments);
         this._name = "l4c1";
         this._nextModule = 'l4c2';
         this._constraint = 'none';
@@ -37,18 +39,6 @@ class LessonFourCpOne {
             }
         }
         return codeIsCorrect && canvasIsCorrect;
-    }
-    /**
-     * Returns the module name
-     */
-    get name() {
-        return this._name;
-    }
-    /**
-     * Returns the module instructions
-     */
-    get instructions() {
-        return this._instructions;
     }
 }
 exports.LessonFourCpOne = LessonFourCpOne;

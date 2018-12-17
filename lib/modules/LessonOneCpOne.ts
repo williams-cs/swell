@@ -1,5 +1,4 @@
 import { Module } from "./Module";
-import { Checkpoint } from "./Checkpoint";
 import { Instruction } from "./Instruction";
 import { Effect } from "../effects/Effect";
 import { StringEffect } from "../effects/StringEffect";
@@ -16,7 +15,7 @@ export class LessonOneCpOne extends Module {
 
     constructor(ctx: CanvasRenderingContext2D) {
       super(ctx);
-      
+
       let content = "First, let's tell the computer to print something on the CANVAS. Click on the CODE box.";
       this._instrBoxes.push(new Instruction('code-editor', content, "70%", "10%"));
       content = 'Great! Now type `print("Hello")` in this CODE box.';

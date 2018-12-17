@@ -1,8 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const Module_1 = require("./Module");
 const StringEffect_1 = require("../effects/StringEffect");
-class LessonThreeCpThree {
+class LessonThreeCpThree extends Module_1.Module {
     constructor() {
+        super(...arguments);
         this._name = "l3c3";
         this._nextModule = 'l3c4';
         this._constraint = 'none';
@@ -11,7 +13,7 @@ class LessonThreeCpThree {
     <p> GOAL: Make the line "b is greater than 20" only be printed on the CANVAS when b is actually greater than 20. Change b to test the if() statement. </p>`;
         this._starterCode = `b = 8;
 if(b < 10) {
-  print("b is greater than 20.", 103, 143);
+\tprint("b is greater than 20.", 103, 143);
 }`;
     }
     /**
@@ -38,18 +40,6 @@ if(b < 10) {
             }
         }
         return codeIsCorrect && canvasIsCorrect;
-    }
-    /**
-     * Returns the module name
-     */
-    get name() {
-        return this._name;
-    }
-    /**
-     * Returns the module instructions
-     */
-    get instructions() {
-        return this._instructions;
     }
 }
 exports.LessonThreeCpThree = LessonThreeCpThree;

@@ -1,8 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const Module_1 = require("./Module");
 const EllipseEffect_1 = require("../effects/EllipseEffect");
-class LessonTwoCpOne {
-    constructor() {
+class LessonTwoCpOne extends Module_1.Module {
+    constructor(ctx) {
+        super(ctx);
         this._name = "l2c1";
         this._nextModule = 'l2c2';
         this._constraint = 'none';
@@ -10,7 +12,7 @@ class LessonTwoCpOne {
     <p> In the print statement, replace "moo" with ellipse(100,100). Hit the RUN button to see what happens. </p>
     <p> GOAL: replace "moo" with ellipse(100,100) in the print statement above. </p>
     <p> HINT: Highlight "moo" - including the double quotes ", and replace that with ellipse(100, 100). KEEP EVERYTHING ELSE THE SAME. </p>`;
-        this._starterCode = `print("moo", 50, 70)`;
+        this._starterCode = `print("moo", 100, 100)`;
     }
     /**
      * A lesson to print a string
@@ -36,18 +38,6 @@ class LessonTwoCpOne {
             }
         }
         return codeIsCorrect && canvasIsCorrect;
-    }
-    /**
-     * Returns the module name
-     */
-    get name() {
-        return this._name;
-    }
-    /**
-     * Returns the module instructions
-     */
-    get instructions() {
-        return this._instructions;
     }
 }
 exports.LessonTwoCpOne = LessonTwoCpOne;
