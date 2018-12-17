@@ -4,7 +4,7 @@ import { Instruction } from "./Instruction";
 import { Effect } from "../effects/Effect";
 import { StringEffect } from "../effects/StringEffect";
 
-export class LessonOneCpOne extends Checkpoint {
+export class LessonOneCpOne extends Module {
     readonly _name: string = "l1c1";
     readonly _nextModule: string = 'l1c2';
     readonly _goal: any;
@@ -14,9 +14,9 @@ export class LessonOneCpOne extends Checkpoint {
 
     _latestInstrIndex: number = 0;
 
-    constructor() {
-      super();
-
+    constructor(ctx: CanvasRenderingContext2D) {
+      super(ctx);
+      
       let content = "First, let's tell the computer to print something on the CANVAS. Click on the CODE box.";
       this._instrBoxes.push(new Instruction('code-editor', content, "70%", "10%"));
       content = 'Great! Now type `print("Hello")` in this CODE box.';
@@ -69,18 +69,5 @@ export class LessonOneCpOne extends Checkpoint {
         }
 
         return false;
-    }
-
-    /**
-     * Returns the module name
-     */
-    get name(): string {
-        return this._name;
-    }
-    /**
-     * Returns the module instructions
-     */
-    get instructions(): string {
-        return this._instructions;
     }
 }

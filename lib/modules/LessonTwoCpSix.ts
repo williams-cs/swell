@@ -2,7 +2,7 @@ import { Module } from "./Module";
 import { Effect } from "../effects/Effect";
 import { EllipseEffect } from "../effects/EllipseEffect";
 
-export class LessonTwoCpSix implements Module {
+export class LessonTwoCpSix extends Module {
     readonly _name: string = "l2c6";
     readonly _nextModule: string = 'l2c7';
     readonly _goal: any;
@@ -11,9 +11,6 @@ export class LessonTwoCpSix implements Module {
     `<p> Now that you have drawn 2 circles both are called c, let's see what happens when you try to modify one of them. </p>
     <p> Click on one of the circles on the CANVAS, and try make it bigger. Observe what happens to your declaration of c. </p>
     <p> GOAL: Enlarge one of the circles referred to by c on the CANVAS. </p>`;
-
-    constructor(){
-    }
 
     /**
      * A lesson to print a string
@@ -30,18 +27,5 @@ export class LessonTwoCpSix implements Module {
         }
       }
       return false;
-    }
-
-    /**
-     * Returns the module name
-     */
-    get name(): string {
-        return this._name;
-    }
-    /**
-     * Returns the module instructions
-     */
-    get instructions(): string {
-        return this._instructions;
     }
 }

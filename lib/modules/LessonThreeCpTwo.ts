@@ -2,7 +2,7 @@ import { Module } from "./Module";
 import { Effect } from "../effects/Effect";
 import { StringEffect } from "../effects/StringEffect";
 
-export class LessonThreeCpTwo implements Module {
+export class LessonThreeCpTwo extends Module {
     readonly _name: string = "l3c2";
     readonly _nextModule: string = 'l3c3';
     readonly _goal: any;
@@ -15,14 +15,11 @@ export class LessonThreeCpTwo implements Module {
     <p> GOAL: RUN the CODE with a = 12 or 10 or 8. </p>`;
 
     readonly _starterCode: string =
-    `a = 12;
+`a = 12;
 print(a, 118, 63);
 if(a < 10) {
-  print("a is less than 10", 103, 143);
+\tprint("a is less than 10", 103, 143);
 }`;
-
-    constructor(){
-    }
 
     /**
      * A lesson leading into conditionals
@@ -49,19 +46,6 @@ if(a < 10) {
         }
       }
 
-        return codeIsCorrect && canvasIsCorrect;
-    }
-
-    /**
-     * Returns the module name
-     */
-    get name(): string {
-        return this._name;
-    }
-    /**
-     * Returns the module instructions
-     */
-    get instructions(): string {
-        return this._instructions;
+      return codeIsCorrect && canvasIsCorrect;
     }
 }

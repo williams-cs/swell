@@ -2,7 +2,7 @@ import { Module } from "./Module";
 import { Effect } from "../effects/Effect";
 import { EllipseEffect } from "../effects/EllipseEffect";
 
-export class LessonTwoCpTwo implements Module {
+export class LessonTwoCpTwo extends Module {
     readonly _name: string = "l2c2";
     readonly _nextModule: string = 'l2c3';
     readonly _goal: any;
@@ -18,8 +18,6 @@ export class LessonTwoCpTwo implements Module {
     <p> GOAL: Draw 2 circles and a word on the CANVAS. </p>
     <p> HINT: Remember that the numbers right inside the ellipse(_,_) statement change the circle's sizes.`;
 */
-    constructor(){
-    }
 
     /**
      * A lesson to print a string
@@ -36,18 +34,5 @@ export class LessonTwoCpTwo implements Module {
           }
         }
         return false;
-    }
-
-    /**
-     * Returns the module name
-     */
-    get name(): string {
-        return this._name;
-    }
-    /**
-     * Returns the module instructions
-     */
-    get instructions(): string {
-        return this._instructions;
     }
 }

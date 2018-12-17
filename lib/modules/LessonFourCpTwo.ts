@@ -2,7 +2,7 @@ import { Module } from "./Module";
 import { Effect } from "../effects/Effect";
 import { EllipseEffect } from "../effects/EllipseEffect";
 
-export class LessonFourCpTwo implements Module {
+export class LessonFourCpTwo extends Module {
     readonly _name: string = "l4c2";
     readonly _nextModule: string = 'l4c2';
     readonly _goal: any;
@@ -13,9 +13,6 @@ export class LessonFourCpTwo implements Module {
     <p> Create a pair of if/else statements to print out to the CANVAS a claim of whether the circle is positioned ABOVE or BELOW the rectangle. </p>
     <p> CHALLENGE: Print a claim that states whether circle is ABOVE or BELOW the rectangle. </p>
     <p> HINT: Remember that the numbers in the print() statements determine the position of the shapes being printed. </p>`;
-
-    constructor(){
-    }
 
     /**
      * A lesson leading into conditionals
@@ -42,18 +39,5 @@ export class LessonFourCpTwo implements Module {
         }
 
         return codeIsCorrect && canvasIsCorrect;
-    }
-
-    /**
-     * Returns the module name
-     */
-    get name(): string {
-        return this._name;
-    }
-    /**
-     * Returns the module instructions
-     */
-    get instructions(): string {
-        return this._instructions;
     }
 }

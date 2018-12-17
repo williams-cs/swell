@@ -5,45 +5,46 @@ import { LessonThreeCpOne, LessonThreeCpTwo, LessonThreeCpThree, LessonThreeCpFo
 import { LessonFourCpOne, LessonFourCpTwo } from '../../index';
 
 export class ModuleGenerator {
+    ctx: CanvasRenderingContext2D;
     curConstructors: Map<string, () => Module>;
     readonly dmConstructors: Map<string, () => Module> = new Map([
-      ['l1c1', () => new LessonOneCpOne()],
-      ['l1c2', () => new LessonOneCpTwo()],
-      ['l1c3', () => new LessonOneCpThree()],
-      ['l1c4', () => new LessonOneCpFour()],
-      ['l2c1', () => new LessonTwoCpOne()],
-      ['l2c2', () => new LessonTwoCpTwo()],
-      ['l2c3', () => new LessonTwoCpThree()],
-      ['l2c4', () => new LessonTwoCpFour()],
-      ['l2c5', () => new LessonTwoCpFive()],
-      ['l2c6', () => new LessonTwoCpSix()],
-      ['l2c7', () => new LessonTwoCpSeven()],
-      ['l3c1', () => new LessonThreeCpOne()],
-      ['l3c2', () => new LessonThreeCpTwo()],
-      ['l3c3', () => new LessonThreeCpThree()],
-      ['l3c4', () => new LessonThreeCpFour()],
-      ['l3c5', () => new LessonThreeCpFive()],
-      ['l3c6', () => new LessonThreeCpSix()],
-      ['l4c1', () => new LessonFourCpOne()],
-      ['l4c2', () => new LessonFourCpTwo()]
+      ['l1c1', () => new LessonOneCpOne(this.ctx)],
+      ['l1c2', () => new LessonOneCpTwo(this.ctx)],
+      ['l1c3', () => new LessonOneCpThree(this.ctx)],
+      ['l1c4', () => new LessonOneCpFour(this.ctx)],
+      ['l2c1', () => new LessonTwoCpOne(this.ctx)],
+      ['l2c2', () => new LessonTwoCpTwo(this.ctx)],
+      ['l2c3', () => new LessonTwoCpThree(this.ctx)],
+      ['l2c4', () => new LessonTwoCpFour(this.ctx)],
+      ['l2c5', () => new LessonTwoCpFive(this.ctx)],
+      ['l2c6', () => new LessonTwoCpSix(this.ctx)],
+      ['l2c7', () => new LessonTwoCpSeven(this.ctx)],
+      ['l3c1', () => new LessonThreeCpOne(this.ctx)],
+      ['l3c2', () => new LessonThreeCpTwo(this.ctx)],
+      ['l3c3', () => new LessonThreeCpThree(this.ctx)],
+      ['l3c4', () => new LessonThreeCpFour(this.ctx)],
+      ['l3c5', () => new LessonThreeCpFive(this.ctx)],
+      ['l3c6', () => new LessonThreeCpSix(this.ctx)],
+      ['l4c1', () => new LessonFourCpOne(this.ctx)],
+      ['l4c2', () => new LessonFourCpTwo(this.ctx)]
     ]);
     readonly nonDmConstructors: Map<string, () => Module> = new Map([
-      ['l1c1', () => new LessonOneCpOne()],
-      ['l1c2', () => new LessonOneCpThree()],
-      ['l1c3', () => new LessonOneCpFour()],
-      ['l2c1', () => new LessonTwoCpOne()],
-      ['l2c2', () => new LessonTwoCpThree()],
-      ['l2c3', () => new LessonTwoCpFour()],
-      ['l2c4', () => new LessonTwoCpFive()],
-      ['l2c5', () => new LessonTwoCpSeven()],
-      ['l3c1', () => new LessonThreeCpOne()],
-      ['l3c2', () => new LessonThreeCpTwo()],
-      ['l3c3', () => new LessonThreeCpThree()],
-      ['l3c4', () => new LessonThreeCpFour()],
-      ['l3c5', () => new LessonThreeCpFive()],
-      ['l3c6', () => new LessonThreeCpSix()],
-      ['l4c1', () => new LessonFourCpOne()],
-      ['l4c2', () => new LessonFourCpTwo()]
+      ['l1c1', () => new LessonOneCpOne(this.ctx)],
+      ['l1c2', () => new LessonOneCpThree(this.ctx)],
+      ['l1c3', () => new LessonOneCpFour(this.ctx)],
+      ['l2c1', () => new LessonTwoCpOne(this.ctx)],
+      ['l2c2', () => new LessonTwoCpThree(this.ctx)],
+      ['l2c3', () => new LessonTwoCpFour(this.ctx)],
+      ['l2c4', () => new LessonTwoCpFive(this.ctx)],
+      ['l2c5', () => new LessonTwoCpSeven(this.ctx)],
+      ['l3c1', () => new LessonThreeCpOne(this.ctx)],
+      ['l3c2', () => new LessonThreeCpTwo(this.ctx)],
+      ['l3c3', () => new LessonThreeCpThree(this.ctx)],
+      ['l3c4', () => new LessonThreeCpFour(this.ctx)],
+      ['l3c5', () => new LessonThreeCpFive(this.ctx)],
+      ['l3c6', () => new LessonThreeCpSix(this.ctx)],
+      ['l4c1', () => new LessonFourCpOne(this.ctx)],
+      ['l4c2', () => new LessonFourCpTwo(this.ctx)]
     ]);
     checkpoints: Map<string, Module> = new Map([
       ['l1c1', null],
@@ -67,7 +68,8 @@ export class ModuleGenerator {
       ['l4c2', null]
     ]);
 
-    constructor(isDM: boolean) {
+    constructor(ctx: CanvasRenderingContext2D, isDM: boolean) {
+      this.ctx = ctx;
       if (isDM) {
         this.curConstructors = this.dmConstructors;
       } else {

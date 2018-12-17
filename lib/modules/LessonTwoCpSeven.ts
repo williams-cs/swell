@@ -3,7 +3,7 @@ import { Effect } from "../effects/Effect";
 import { NumberEffect } from "../effects/NumberEffect";
 import { EllipseEffect } from "../effects/EllipseEffect";
 
-export class LessonTwoCpSeven implements Module {
+export class LessonTwoCpSeven extends Module {
     readonly _name: string = "l2c7";
     readonly _nextModule: string = 'l3c1';
     readonly _goal: any;
@@ -15,22 +15,26 @@ export class LessonTwoCpSeven implements Module {
     <p> IF we ever change the circle, we want the number in the box to change, too! </p>
     <p> CHALLENGE: Create a circle and print its size in the given box. </p>`;
 
-    constructor(){
+    x: number = 10;
+    y: number;
+    square_size: number = 100;
+    font_size = 20;
+
+    constructor(ctx: CanvasRenderingContext2D) {
+      super(ctx);
+      this.y = ctx.canvas.height - this.square_size - this.x;
     }
 
-    x: number = 10;
-    y: number = 430;
+    drawGuides(): void {
+      this.ctx.beginPath();
+      this.ctx.rect(this.x, this.y, this.square_size, this.square_size);
+      this.ctx.strokeStyle = '#6C6C6C';
+      this.ctx.stroke();
 
-    drawGuides(ctx: CanvasRenderingContext2D): void {
-      ctx.beginPath();
-      ctx.rect(this.x, this.y, 100, 100);
-      ctx.strokeStyle = '#6C6C6C';
-      ctx.stroke();
-
-      ctx.font = 20 + "px Courier New";
-      ctx.fillStyle = '#6C6C6C';
-      ctx.fillText("Put circle's size", this.x, 390);
-      ctx.fillText("in here", this.x, 410);
+      this.ctx.font = this.font_size + "px Courier New";
+      this.ctx.fillStyle = '#6C6C6C';
+      this.ctx.fillText("Put circle's size", this.x, this.y - 2*this.font_size);
+      this.ctx.fillText("in here", this.x, this.y - this.font_size);
     }
 
     /**
@@ -42,7 +46,7 @@ export class LessonTwoCpSeven implements Module {
     checkGoal(document: Document, effects: Effect<any>[]): boolean {
       for (let effect of effects) {
         if (effect instanceof NumberEffect && effect.num != null) {
-          if (effect.x > this.x && effect.x < this.x + 100 && effect.y > this.y && effect.y < this.y + 100) {
+          if (effect.x > this.x && effect.x < this.x + this.square_size && effect.y > this.y && effect.y < this.y + this.square_size) {
             let val = effect.num;
             for (let effect2 of effects) {
               if (effect2 instanceof EllipseEffect && (val == effect2.w || val == effect2.h)) {
@@ -53,18 +57,5 @@ export class LessonTwoCpSeven implements Module {
         }
       }
       return false;
-    }
-
-    /**
-     * Returns the module name
-     */
-    get name(): string {
-        return this._name;
-    }
-    /**
-     * Returns the module instructions
-     */
-    get instructions(): string {
-        return this._instructions;
     }
 }

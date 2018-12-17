@@ -2,7 +2,7 @@ import { Module } from "./Module";
 import { Effect } from "../effects/Effect";
 import { EllipseEffect } from "../effects/EllipseEffect";
 
-export class LessonTwoCpOne implements Module {
+export class LessonTwoCpOne extends Module {
     readonly _name: string = "l2c1";
     readonly _nextModule: string = 'l2c2';
     readonly _goal: any;
@@ -13,7 +13,7 @@ export class LessonTwoCpOne implements Module {
     <p> GOAL: replace "moo" with ellipse(100,100) in the print statement above. </p>
     <p> HINT: Highlight "moo" - including the double quotes ", and replace that with ellipse(100, 100). KEEP EVERYTHING ELSE THE SAME. </p>`;
 
-    readonly _starterCode: string = `print("moo", 50, 70)`;
+    readonly _starterCode: string = `print("moo", 100, 100)`;
 
     constructor(){
     }
@@ -44,18 +44,5 @@ export class LessonTwoCpOne implements Module {
         }
 
         return codeIsCorrect && canvasIsCorrect;
-    }
-
-    /**
-     * Returns the module name
-     */
-    get name(): string {
-        return this._name;
-    }
-    /**
-     * Returns the module instructions
-     */
-    get instructions(): string {
-        return this._instructions;
     }
 }

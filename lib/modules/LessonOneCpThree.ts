@@ -4,7 +4,7 @@ import { Instruction } from "./Instruction";
 import { Effect } from "../effects/Effect";
 import { StringEffect } from "../effects/StringEffect";
 
-export class LessonOneCpThree extends Checkpoint {
+export class LessonOneCpThree extends Module {
     readonly _name: string = "l1c3";
     readonly _prevModule: string = 'l1c2';
     readonly _nextModule: string = 'l1c4';
@@ -17,8 +17,14 @@ export class LessonOneCpThree extends Checkpoint {
 
     _latestInstrIndex: number = 0;
 
-    constructor(){
-      super();
+    x: number = 10;
+    y: number;
+    square_size = 100;
+    font_size = 20;
+
+    constructor(ctx: CanvasRenderingContext2D) {
+      super(ctx);
+      this.y = ctx.canvas.height - this.square_size - this.x;
 
       let content = "Moving things on the CANVAS changes the CODE. What if we change the CODE? In the print statement above, change the first 100 to 200. Observe the CANVAS.";
       this._instrBoxes.push(new Instruction('code-editor', content, "30%", "10%"));
@@ -28,19 +34,16 @@ export class LessonOneCpThree extends Checkpoint {
       this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
     }
 
-    x: number = 350;
-    y: number = 10;
+    drawGuides(): void {
+      this.ctx.beginPath();
+      this.ctx.rect(this.x, this.y, this.square_size, this.square_size);
+      this.ctx.strokeStyle = '#6C6C6C';
+      this.ctx.stroke();
 
-    drawGuides(ctx: CanvasRenderingContext2D): void {
-      ctx.beginPath();
-      ctx.rect(this.x, this.y, 100, 100);
-      ctx.strokeStyle = '#6C6C6C';
-      ctx.stroke();
-
-      ctx.font = 20 + "px Courier New";
-      ctx.fillStyle = '#6C6C6C';
-      ctx.fillText("Drag word", this.x, this.y + 120);
-      ctx.fillText("in here", this.x, this.y + 140);
+      this.ctx.font = this.font_size + "px Courier New";
+      this.ctx.fillStyle = '#6C6C6C';
+      this.ctx.fillText("Put text", this.x, this.y - 2*this.font_size);
+      this.ctx.fillText("in here", this.x, this.y - this.font_size);
     }
 
     /**
@@ -53,7 +56,7 @@ export class LessonOneCpThree extends Checkpoint {
 /*
         for (let effect of effects) {
           if (effect instanceof StringEffect && effect.str !== "") {
-            if (effect.x > this.x && effect.x < this.x + 100 && effect.y > this.y && effect.y < this.y + 100) {
+            if (effect.x > this.x && effect.x < this.x + this.square_size && effect.y > this.y && effect.y < this.y + this.square_size) {
               return true;
             }
           }
@@ -91,18 +94,5 @@ export class LessonOneCpThree extends Checkpoint {
         }
 
         return false;
-    }
-
-    /**
-     * Returns the module name
-     */
-    get name(): string {
-        return this._name;
-    }
-    /**
-     * Returns the module instructions
-     */
-    get instructions(): string {
-        return this._instructions;
     }
 }

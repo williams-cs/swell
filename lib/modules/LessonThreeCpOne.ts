@@ -2,7 +2,7 @@ import { Module } from "./Module";
 import { Effect } from "../effects/Effect";
 import { StringEffect } from "../effects/StringEffect";
 
-export class LessonThreeCpOne implements Module {
+export class LessonThreeCpOne extends Module {
     readonly _name: string = "l3c1";
     readonly _nextModule: string = 'l3c2';
     readonly _goal: any;
@@ -15,12 +15,9 @@ export class LessonThreeCpOne implements Module {
     <p> HINT: You can do this by changing the line a = 5 in the CODE area, or you can click on the number 5 on the CANVAS. </p>`;
 
     readonly _starterCode: string =
-    `a = 5;
+`a = 5;
 print(a, 118, 63);
 print("a is less than 10", 103, 143);`;
-
-    constructor(){
-    }
 
     /**
      * A lesson leading into conditionals
@@ -48,18 +45,5 @@ print("a is less than 10", 103, 143);`;
         }
 
         return codeIsCorrect && canvasIsCorrect;
-    }
-
-    /**
-     * Returns the module name
-     */
-    get name(): string {
-        return this._name;
-    }
-    /**
-     * Returns the module instructions
-     */
-    get instructions(): string {
-        return this._instructions;
     }
 }
