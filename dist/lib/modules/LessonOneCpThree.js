@@ -66,7 +66,7 @@ class LessonOneCpThree extends Module_1.Module {
             case 1:
                 for (let effect of effects) {
                     if (effect instanceof StringEffect_1.StringEffect && effect.str !== "") {
-                        if (effect.x > this.x && effect.x < this.x + 100 && effect.y > this.y && effect.y < this.y + 100) {
+                        if (effect.x > this.x && effect.x < this.x + this.square_size && effect.y > this.y && effect.y < this.y + this.square_size) {
                             this._latestInstrIndex++;
                             this.renderLatestInstruction(document);
                         }

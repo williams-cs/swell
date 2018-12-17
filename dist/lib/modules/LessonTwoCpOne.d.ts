@@ -7,12 +7,13 @@ export declare class LessonTwoCpOne extends Module {
     readonly _constraint: string;
     readonly _instructions: string;
     readonly _starterCode: string;
+    _latestInstrIndex: number;
     constructor(ctx: CanvasRenderingContext2D);
     /**
-     * A lesson to print a string
-     * goals: moving the text and observe the code
-     * @param document: The HTML document
-     * @param effects: the list of effects currently on the CANVAS
+     *
+     * @param document The HTML document
+     * @param effects the list of effects currently on the CANVAS
      */
     checkGoal(document: Document, effects: Effect<any>[]): boolean;
+    private checkCodeAndCanvasEffect;
 }

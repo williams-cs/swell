@@ -350,7 +350,7 @@ let cpNames: string[] = [
 
 //this is for testing tutorials
 let workingCp: string[] = [
-  'l1c1', 'l1c2', 'l1c3', 'l1c4'
+  'l1c1', 'l1c2', 'l1c3', 'l1c4', 'l2c1'
 ];
 
 for (let cp of cpNames) {
@@ -423,7 +423,7 @@ function initCheckpoint(cp: string) {
         curInstruction.remove();
       }
 
-      if (workingCp.includes(checkpoint._name)) {
+      if (checkpoint.numInstructions > 0) {
         checkpoint.renderInstruction(document);
       }
 

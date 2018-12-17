@@ -68,6 +68,9 @@ class Module {
         instrDiv.appendChild(nextInstr);
         document.getElementById(instruction._location).appendChild(instrDiv);
     }
+    get numInstructions() {
+        return this._instrBoxes.length;
+    }
     /**
      * Returns the module name
      */

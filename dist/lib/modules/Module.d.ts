@@ -31,6 +31,7 @@ export declare abstract class Module {
      * @param document The HTML document
      */
     renderInstruction(document: Document): void;
+    readonly numInstructions: number;
     /**
      * Returns the module name
      */

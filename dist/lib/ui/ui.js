@@ -309,7 +309,7 @@ let cpNames = [
 ];
 //this is for testing tutorials
 let workingCp = [
-    'l1c1', 'l1c2', 'l1c3', 'l1c4'
+    'l1c1', 'l1c2', 'l1c3', 'l1c4', 'l2c1'
 ];
 for (let cp of cpNames) {
     let cpButton = document.getElementById(cp);
@@ -373,7 +373,7 @@ function initCheckpoint(cp) {
         if (curInstruction != null) {
             curInstruction.remove();
         }
-        if (workingCp.includes(checkpoint._name)) {
+        if (checkpoint.numInstructions > 0) {
             checkpoint.renderInstruction(document);
         }
         rewardBox.style.background = '#C0C0C0';

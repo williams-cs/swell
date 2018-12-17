@@ -56,7 +56,7 @@ class LessonOneCpTwo extends Module_1.Module {
           return false;
           */
         let input = document.getElementById('input');
-        console.log("instrIndex in checkGoal: " + this._instrIndex);
+        //console.log("instrIndex in checkGoal: " + this._instrIndex);
         switch (this._latestInstrIndex) {
             case 0:
                 return false;
@@ -73,7 +73,7 @@ class LessonOneCpTwo extends Module_1.Module {
             case 2:
                 for (let effect of effects) {
                     if (effect instanceof StringEffect_1.StringEffect && effect.str !== "") {
-                        if (effect.x > this.x && effect.x < this.x + 100 && effect.y > this.y && effect.y < this.y + 100) {
+                        if (effect.x > this.x && effect.x < this.x + this.square_size && effect.y > this.y && effect.y < this.y + this.square_size) {
                             this.x = 10;
                             this._latestInstrIndex++;
                             this.renderLatestInstruction(document);
@@ -85,7 +85,7 @@ class LessonOneCpTwo extends Module_1.Module {
             case 3:
                 for (let effect of effects) {
                     if (effect instanceof StringEffect_1.StringEffect && effect.str !== "") {
-                        if (effect.x > this.x && effect.x < this.x + 100 && effect.y > this.y && effect.y < this.y + 100) {
+                        if (effect.x > this.x && effect.x < this.x + this.square_size && effect.y > this.y && effect.y < this.y + this.square_size) {
                             this._latestInstrIndex++;
                             this.renderLatestInstruction(document);
                         }

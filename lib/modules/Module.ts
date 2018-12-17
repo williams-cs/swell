@@ -96,6 +96,10 @@ export abstract class Module {
         document.getElementById(instruction._location).appendChild(instrDiv);
     }
 
+    get numInstructions(): number {
+      return this._instrBoxes.length;
+    }
+
     /**
      * Returns the module name
      */
