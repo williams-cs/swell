@@ -45,7 +45,7 @@ class LessonOneCpOne extends Checkpoint_1.Checkpoint {
             case 1:
                 let regex = /print\s*\(\s*\"Hello\"\s*\)/;
                 let match = input.value.match(regex);
-                if (match != null && match.length > 0 && this._latestInstrIndex == 1) {
+                if (match != null && match.length > 0) {
                     this._latestInstrIndex++;
                     this.renderLatestInstruction(document);
                 }

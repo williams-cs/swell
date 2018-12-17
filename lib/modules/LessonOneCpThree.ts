@@ -1,24 +1,35 @@
 import { Module } from "./Module";
+import { Checkpoint } from "./Checkpoint";
+import { Instruction } from "./Instruction";
 import { Effect } from "../effects/Effect";
 import { StringEffect } from "../effects/StringEffect";
 
-export class LessonOneCpThree implements Module {
+export class LessonOneCpThree extends Checkpoint {
     readonly _name: string = "l1c3";
     readonly _prevModule: string = 'l1c2';
     readonly _nextModule: string = 'l1c4';
     readonly _goal: any;
     readonly _constraint: string = 'canvas';
     readonly _instructions: string =
-    `<p> Yep! Moving the words actually change the numbers in your CODE. </p>
-    <p> Now the CANVAS has been frozen! Try changing your CODE to see if you can move the words to the bottom right corner. </p>
-    <p> GOAL: Move the words to the bottom right of the CANVAS. </p>
-    <p> HINT: Change one of the 2 numbers at a time, then click RUN to see how that changes the CANVAS.`;
+    `<p> GOAL: Move the word around the CANVAS by solely changing your CODE. </p>`;
+
+    readonly _starterCode: string = `print("Hello", 100, 100)`;
+
+    _latestInstrIndex: number = 0;
 
     constructor(){
+      super();
+
+      let content = "Moving things on the CANVAS changes the CODE. What if we change the CODE? In the print statement above, change the first 100 to 200. Observe the CANVAS.";
+      this._instrBoxes.push(new Instruction('code-editor', content, "30%", "10%"));
+      content = "Changing those numbers in the CODE moves the word on CANVAS! Now, try move this word inside the top-right box by changing your CODE alone.";
+      this._instrBoxes.push(new Instruction('canvas-container', content, "70%", "10%"));
+      content = "Yay! You've learned how to tell the computer to write for you!";
+      this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
     }
 
-    x: number = 10;
-    y: number = 430;
+    x: number = 350;
+    y: number = 10;
 
     drawGuides(ctx: CanvasRenderingContext2D): void {
       ctx.beginPath();
@@ -28,8 +39,8 @@ export class LessonOneCpThree implements Module {
 
       ctx.font = 20 + "px Courier New";
       ctx.fillStyle = '#6C6C6C';
-      ctx.fillText("Put text", this.x, 390);
-      ctx.fillText("in here", this.x, 410);
+      ctx.fillText("Drag word", this.x, this.y + 120);
+      ctx.fillText("in here", this.x, this.y + 140);
     }
 
     /**
@@ -39,6 +50,7 @@ export class LessonOneCpThree implements Module {
      * @param effects: the list of effects currently on the CANVAS
      */
     checkGoal(document: Document, effects: Effect<any>[]): boolean {
+/*
         for (let effect of effects) {
           if (effect instanceof StringEffect && effect.str !== "") {
             if (effect.x > this.x && effect.x < this.x + 100 && effect.y > this.y && effect.y < this.y + 100) {
@@ -46,6 +58,38 @@ export class LessonOneCpThree implements Module {
             }
           }
         }
+        return false;
+*/
+        let input = document.getElementById('input') as HTMLInputElement;
+        //console.log("instrIndex in checkGoal: " + this._instrIndex);
+        switch(this._latestInstrIndex) {
+          case 0:
+            let regex: RegExp = /print\s*\(\s*\".*\"\s*,\s*200\s*,\s*100\s*\)/;
+            let match = input.value.match(regex);
+            if (match != null && match.length > 0) {
+              this._latestInstrIndex++;
+              this.renderLatestInstruction(document);
+            }
+            return false;
+            break;
+
+          case 1:
+            for (let effect of effects) {
+              if (effect instanceof StringEffect && effect.str !== "") {
+                if (effect.x > this.x && effect.x < this.x + 100 && effect.y > this.y && effect.y < this.y + 100) {
+                  this._latestInstrIndex++;
+                  this.renderLatestInstruction(document);
+                }
+              }
+            }
+            return false;
+            break;
+
+          default:
+            return true;
+            break;
+        }
+
         return false;
     }
 

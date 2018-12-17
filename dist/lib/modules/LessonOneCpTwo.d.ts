@@ -2,6 +2,7 @@ import { Checkpoint } from "./Checkpoint";
 import { Effect } from "../effects/Effect";
 export declare class LessonOneCpTwo extends Checkpoint {
     readonly _name: string;
+    readonly _prevModule: string;
     readonly _nextModule: string;
     readonly _goal: any;
     readonly _constraint: string;
