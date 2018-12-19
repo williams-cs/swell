@@ -119,6 +119,8 @@ function parse() {
       context.canvas = Some(canvas);
       ast.eval(context); //this is where we draw the objects to the screen
       lastWorkingInputText = inputText;
+  } else {
+    ast = undefined;
   }
 
   //let paintEvt = new PaintEvent(inputText); // will need to get from ast when that's implemented
