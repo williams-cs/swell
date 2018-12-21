@@ -126,38 +126,8 @@ button:hover {
   height: var(--terminal-height);
 }
 
-#code-editor {
+#code-editor-container {
   height: 100%;
-  resize: none;
-}
-
-#code-editor-lines, #input {
-  height: 90%;
-  font-size: 15px;
-  font-family: 'Courier New', Courier, monospace;
-  color: var(--white);
-  background-color: var(--dark-gray);
-  padding-top: 3px;
-  padding-bottom: 5px;
-}
-
-#code-editor-lines {
-  float: left;
-  text-align: right;
-	white-space: nowrap;
-  padding-left: 0px;
-  overflow: hidden;
-}
-
-#input {
-  resize: none;
-  tab-size: 4;
-  -moz-tab-size: 4;
-  border: none;
-}
-
-#input:focus {
-  outline: none !important;
 }
 
 #output {
