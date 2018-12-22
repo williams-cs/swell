@@ -8,7 +8,7 @@ import { Option, Some, None } from 'space-lift';
 import { diffChars, IDiffResult } from 'diff';
 
 (function() {
-    let editor = ((e: any) => { return e.CodeMirror })(document.getElementsByClassName("CodeMirror")[0]);
+    let editor = ((e: any) => { return e.CodeMirror })(document.getElementById("input"));
     let editorWrapper = editor.getWrapperElement();
     let canvas = document.querySelector("canvas");
     let ctx = canvas.getContext("2d");
@@ -26,7 +26,7 @@ import { diffChars, IDiffResult } from 'diff';
 
     let isEditorSelected: boolean = false;
     let checkpoint: Module = null;
-    let modGen = new ModuleGenerator(ctx, true);
+    let modGen = new ModuleGenerator();
     let checkpointIsActive: boolean = false;
     let canvasIsDisabled: boolean = false;
 
@@ -205,7 +205,6 @@ import { diffChars, IDiffResult } from 'diff';
     canvas.addEventListener("mousedown", function() {
         lastProgram = editor.getValue();
     });
-
     canvas.addEventListener("mouseup", function() {
         lastProgram = editor.getValue();
     });
@@ -337,6 +336,7 @@ import { diffChars, IDiffResult } from 'diff';
     for (let cp of cpNames) {
         let cpButton = document.getElementById(cp);
         cpButton.onclick = function() {
+            lastProgram = "";
             initCheckpoint(cp);
         }
     }
@@ -353,7 +353,7 @@ import { diffChars, IDiffResult } from 'diff';
         }
 
         console.log("Initiating checkpoint " + cp);
-        checkpoint = modGen.generateCheckpoint(cp);
+        checkpoint = modGen.createModule(cp, ctx, editor as CodeMirror.Editor);
         instrLabel.innerHTML = cp + " - GOAL";
         instructions.innerHTML = checkpoint._instructions;
 

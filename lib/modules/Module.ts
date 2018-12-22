@@ -10,13 +10,15 @@ export abstract class Module {
     readonly _instructions: string; // Instructions for student
     _starterCode?: string; // Optional starter code
     ctx: CanvasRenderingContext2D; // Canvas for drawing
+    editor: CodeMirror.Editor; // Editor
 
     readonly _instrBoxes?: Instruction[] = []; //series of tutorial instructions
     _instrIndex?: number = 0; //index of current instruction being displayed
     _latestInstrIndex: number = 0; //furthest instruction reached within this checkpoint
 
-    constructor(ctx: CanvasRenderingContext2D) {
+    constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) {
       this.ctx = ctx;
+      this.editor = editor;
     }
 
     /**

@@ -1,7 +1,7 @@
 (function($) {
   // Make canvas responsive
   let canvas = document.querySelector("canvas");
-  let editor_container = document.getElementById("code-editor-container");
+  let editor_container = document.getElementById("code-editor");
   let editor = editor_container.getElementsByClassName("CodeMirror")[0];
   resizeCanvas = function() {
     canvas.height = parseInt(editor.clientHeight);

@@ -8,7 +8,7 @@ export class LessonFourCpTwo extends Module {
     readonly _goal: any;
     readonly _constraint: string = 'none';
     readonly _instructions: string =
-    `<p> Yes! You got this! </p>
+        `<p> Yes! You got this! </p>
     <p> Now let's put those skills in if/else statements to work! </p>
     <p> Create a pair of if/else statements to print out to the CANVAS a claim of whether the circle is positioned ABOVE or BELOW the rectangle. </p>
     <p> CHALLENGE: Print a claim that states whether circle is ABOVE or BELOW the rectangle. </p>
@@ -23,19 +23,17 @@ export class LessonFourCpTwo extends Module {
     checkGoal(document: Document, effects: Effect<any>[]): boolean {
         //check for correct CODE
         let codeIsCorrect = false;
-        let code = (document.getElementById("input") as HTMLInputElement).value;
-        if (code != null) {
-            let regex: RegExp = /print\s*\(\s*ellipse\s*\(\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\)\s*,\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\);/;
-            let match = code.match(regex);
-            codeIsCorrect = match != null && match.length > 0;
-        }
+        let code: string = this.editor.getValue();
+        let regex: RegExp = /print\s*\(\s*ellipse\s*\(\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\)\s*,\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\);/;
+        let match = code.match(regex);
+        codeIsCorrect = match != null && match.length > 0;
 
         //check for correct CANVAS effects
         let canvasIsCorrect = true;
         for (let effect of effects) {
-          if (effect instanceof EllipseEffect) {
+            if (effect instanceof EllipseEffect) {
 
-          }
+            }
         }
 
         return codeIsCorrect && canvasIsCorrect;

@@ -110,7 +110,7 @@ button:hover {
     height: var(--terminal-height);
 }
 
-#code-editor-container {
+#code-editor {
     height: 100%;
 }
 

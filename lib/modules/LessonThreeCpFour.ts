@@ -8,13 +8,13 @@ export class LessonThreeCpFour extends Module {
     readonly _goal: any;
     readonly _constraint: string = 'none';
     readonly _instructions: string =
-    `<p> You can put an inequality condition in the if() clause, such as "a < 5" or "b > 20". </p>
+        `<p> You can put an inequality condition in the if() clause, such as "a < 5" or "b > 20". </p>
     <p> You can also use an equality condition. Observe the CODE above with "c == 8". The 2 equal signs mean that you are checking whether c is exactly equal to 8 or not. </p>
     <p> Change the value of c so that the line "c is equal to 8." is printed on the CANVAS. </p>
     <p> GOAL: Change the value of c so that the line "c is equal to 8." is printed on the CANVAS. </p>`;
 
     readonly _starterCode: string =
-`c = 100;
+        `c = 100;
 if(c == 8) {
 \tprint("c is equal to 8.", 103, 143);
 }`;
@@ -26,24 +26,22 @@ if(c == 8) {
      * @param effects: the list of effects currently on the CANVAS
      */
     checkGoal(document: Document, effects: Effect<any>[]): boolean {
-      //check for correct CODE
-      let codeIsCorrect = false;
-      let code = (document.getElementById("input") as HTMLInputElement).value;
-      if (code != null) {
-          let regex: RegExp = /c\s*=\s*8\s*/;
-          let match = code.match(regex);
-          codeIsCorrect = match != null && match.length > 0;
-      }
+        //check for correct CODE
+        let codeIsCorrect = false;
+        let code: string = this.editor.getValue();
+        let regex: RegExp = /c\s*=\s*8\s*/;
+        let match = code.match(regex);
+        codeIsCorrect = match != null && match.length > 0;
 
-      //check for correct CANVAS effects
-      let canvasIsCorrect = false;
-      for (let effect of effects) {
-        if (effect instanceof StringEffect && effect.str === "c is equal to 8.") {
-          canvasIsCorrect = true;
-          break;
+        //check for correct CANVAS effects
+        let canvasIsCorrect = false;
+        for (let effect of effects) {
+            if (effect instanceof StringEffect && effect.str === "c is equal to 8.") {
+                canvasIsCorrect = true;
+                break;
+            }
         }
-      }
 
-      return codeIsCorrect && canvasIsCorrect;
+        return codeIsCorrect && canvasIsCorrect;
     }
 }

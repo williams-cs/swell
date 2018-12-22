@@ -5,47 +5,28 @@ import { LessonThreeCpOne, LessonThreeCpTwo, LessonThreeCpThree, LessonThreeCpFo
 import { LessonFourCpOne, LessonFourCpTwo } from '../../index';
 
 export class ModuleGenerator {
-    ctx: CanvasRenderingContext2D;
-    curConstructors: Map<string, () => Module>;
-    readonly dmConstructors: Map<string, () => Module> = new Map([
-      ['l1c1', () => new LessonOneCpOne(this.ctx)],
-      ['l1c2', () => new LessonOneCpTwo(this.ctx)],
-      ['l1c3', () => new LessonOneCpThree(this.ctx)],
-      ['l1c4', () => new LessonOneCpFour(this.ctx)],
-      ['l2c1', () => new LessonTwoCpOne(this.ctx)],
-      ['l2c2', () => new LessonTwoCpTwo(this.ctx)],
-      ['l2c3', () => new LessonTwoCpThree(this.ctx)],
-      ['l2c4', () => new LessonTwoCpFour(this.ctx)],
-      ['l2c5', () => new LessonTwoCpFive(this.ctx)],
-      ['l2c6', () => new LessonTwoCpSix(this.ctx)],
-      ['l2c7', () => new LessonTwoCpSeven(this.ctx)],
-      ['l3c1', () => new LessonThreeCpOne(this.ctx)],
-      ['l3c2', () => new LessonThreeCpTwo(this.ctx)],
-      ['l3c3', () => new LessonThreeCpThree(this.ctx)],
-      ['l3c4', () => new LessonThreeCpFour(this.ctx)],
-      ['l3c5', () => new LessonThreeCpFive(this.ctx)],
-      ['l3c6', () => new LessonThreeCpSix(this.ctx)],
-      ['l4c1', () => new LessonFourCpOne(this.ctx)],
-      ['l4c2', () => new LessonFourCpTwo(this.ctx)]
+    curConstructors: Map<string, (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => Module> = new Map([
+      ['l1c1', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonOneCpOne(ctx, editor)],
+      ['l1c2', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonOneCpTwo(ctx, editor)],
+      ['l1c3', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonOneCpThree(ctx, editor)],
+      ['l1c4', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonOneCpFour(ctx, editor)],
+      ['l2c1', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonTwoCpOne(ctx, editor)],
+      ['l2c2', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonTwoCpTwo(ctx, editor)],
+      ['l2c3', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonTwoCpThree(ctx, editor)],
+      ['l2c4', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonTwoCpFour(ctx, editor)],
+      ['l2c5', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonTwoCpFive(ctx, editor)],
+      ['l2c6', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonTwoCpSix(ctx, editor)],
+      ['l2c7', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonTwoCpSeven(ctx, editor)],
+      ['l3c1', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonThreeCpOne(ctx, editor)],
+      ['l3c2', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonThreeCpTwo(ctx, editor)],
+      ['l3c3', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonThreeCpThree(ctx, editor)],
+      ['l3c4', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonThreeCpFour(ctx, editor)],
+      ['l3c5', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonThreeCpFive(ctx, editor)],
+      ['l3c6', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonThreeCpSix(ctx, editor)],
+      ['l4c1', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonFourCpOne(ctx, editor)],
+      ['l4c2', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonFourCpTwo(ctx, editor)]
     ]);
-    readonly nonDmConstructors: Map<string, () => Module> = new Map([
-      ['l1c1', () => new LessonOneCpOne(this.ctx)],
-      ['l1c2', () => new LessonOneCpThree(this.ctx)],
-      ['l1c3', () => new LessonOneCpFour(this.ctx)],
-      ['l2c1', () => new LessonTwoCpOne(this.ctx)],
-      ['l2c2', () => new LessonTwoCpThree(this.ctx)],
-      ['l2c3', () => new LessonTwoCpFour(this.ctx)],
-      ['l2c4', () => new LessonTwoCpFive(this.ctx)],
-      ['l2c5', () => new LessonTwoCpSeven(this.ctx)],
-      ['l3c1', () => new LessonThreeCpOne(this.ctx)],
-      ['l3c2', () => new LessonThreeCpTwo(this.ctx)],
-      ['l3c3', () => new LessonThreeCpThree(this.ctx)],
-      ['l3c4', () => new LessonThreeCpFour(this.ctx)],
-      ['l3c5', () => new LessonThreeCpFive(this.ctx)],
-      ['l3c6', () => new LessonThreeCpSix(this.ctx)],
-      ['l4c1', () => new LessonFourCpOne(this.ctx)],
-      ['l4c2', () => new LessonFourCpTwo(this.ctx)]
-    ]);
+    
     checkpoints: Map<string, Module> = new Map([
       ['l1c1', null],
       ['l1c2', null],
@@ -68,22 +49,14 @@ export class ModuleGenerator {
       ['l4c2', null]
     ]);
 
-    constructor(ctx: CanvasRenderingContext2D, isDM: boolean) {
-      this.ctx = ctx;
-      if (isDM) {
-        this.curConstructors = this.dmConstructors;
-      } else {
-        this.curConstructors = this.nonDmConstructors;
-      }
-    }
+    constructor() {}
 
-    generateCheckpoint(cp: string): Module {
+    createModule(cp: string, ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor): Module {
       let checkpoint = this.checkpoints.get(cp);
       if (checkpoint != null) {
         return checkpoint;
       }
-
-      checkpoint = this.curConstructors.get(cp)();
+      checkpoint = this.curConstructors.get(cp)(ctx, editor);
       this.checkpoints.set(cp, checkpoint);
       return checkpoint;
     }
