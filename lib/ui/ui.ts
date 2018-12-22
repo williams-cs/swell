@@ -1,18 +1,19 @@
-import {Parser} from '../../index';
-import {Effect, Expression, Scope, ClearEvent, LogEvent, DragEvent, SelectEvent, IDEvent, Module, ModuleGenerator} from '../../index';
-import {LessonOneCpOne, LessonOneCpTwo, LessonOneCpThree, LessonOneCpFour} from '../../index';
-import {LessonTwoCpOne, LessonTwoCpTwo, LessonTwoCpThree, LessonTwoCpFour,LessonTwoCpFive, LessonTwoCpSix, LessonTwoCpSeven} from '../../index';
-import {LessonThreeCpOne, LessonThreeCpTwo, LessonThreeCpThree, LessonThreeCpFour, LessonThreeCpFive, LessonThreeCpSix} from '../../index';
-import {LessonFourCpOne, LessonFourCpTwo} from '../../index';
-import {Option, Some, None} from 'space-lift';
+import { Parser } from '../../index';
+import { Effect, Expression, Scope, ClearEvent, LogEvent, DragEvent, SelectEvent, IDEvent, Module, ModuleGenerator } from '../../index';
+import { LessonOneCpOne, LessonOneCpTwo, LessonOneCpThree, LessonOneCpFour } from '../../index';
+import { LessonTwoCpOne, LessonTwoCpTwo, LessonTwoCpThree, LessonTwoCpFour, LessonTwoCpFive, LessonTwoCpSix, LessonTwoCpSeven } from '../../index';
+import { LessonThreeCpOne, LessonThreeCpTwo, LessonThreeCpThree, LessonThreeCpFour, LessonThreeCpFive, LessonThreeCpSix } from '../../index';
+import { LessonFourCpOne, LessonFourCpTwo } from '../../index';
+import { Option, Some, None } from 'space-lift';
+import { diffChars, IDiffResult } from 'diff';
 
 (function() {
-    let editor: CodeMirror.Editor = ((e: any) => { return e.CodeMirror })(document.getElementsByClassName("CodeMirror")[0]);
-    let editorDoc: CodeMirror.Doc = editor.getDoc();
+    let editor = ((e: any) => { return e.CodeMirror })(document.getElementsByClassName("CodeMirror")[0]);
     let editorWrapper = editor.getWrapperElement();
     let canvas = document.querySelector("canvas");
     let ctx = canvas.getContext("2d");
-    let lastCursorPos: any = editorDoc.getCursor();
+    let lastCursorPos: any = editor.getCursor();
+    let lastProgram: string = ""; // Used for comparing and highlighting diffs
 
     let effects: Effect<any>[] = [];
     let ast: Expression<any>;
@@ -30,6 +31,8 @@ import {Option, Some, None} from 'space-lift';
     let canvasIsDisabled: boolean = false;
 
     let globalID: number = 1;
+    let highlightTimer: any = null;
+    let parseTimer: any = null;
 
     /* Logging, parsing & rendering */
 
@@ -64,10 +67,8 @@ import {Option, Some, None} from 'space-lift';
         requestAnimationFrame(animate);
         ctx.clearRect(0, 0, canvas.width, canvas.height); //clears canvas
         selected = 0;
-
         for (let i = 0; i < effects.length; i++) {
             effects[i].update();
-
             if (effects[i].selected) {
                 selectedElems.push(effects[i]);
                 selected++;
@@ -87,46 +88,96 @@ import {Option, Some, None} from 'space-lift';
         if (selected != numLogged) { // if selections have changed, should log again
             alreadyLogged = false;
         }
-
         if (!alreadyLogged && selected >= 2) { // logs if hasn't already
             numLogged = selected;
             context.eventLog.push(new SelectEvent(selectedElems));
             masterLog.push(context.eventLog[context.eventLog.length - 1]);
             alreadyLogged = true;
         }
+        selectedElems = [];
 
         //This does the prodirect manipulation, passing the new strings to the text box
         if (ast != undefined && !isEditorSelected) {
-            editor.setValue(ast.toString());
+            updateProgramText();
         }
 
+        // Draw check points
         if (checkpointIsActive) {
             checkpointChecksGoal();
         }
-
         if (checkpoint != null && checkpoint.drawGuides != null) {
             checkpoint.drawGuides();
         }
+    }
 
-        selectedElems = [];
+    /**
+     * Update the program, and highlight all the changes
+    **/
+    function updateProgramText() {
+        let newProgram: string = ast.toString();
+        // Still has to set even if new code equals old, in order to keep selected boxes
+        editor.setValue(newProgram);
+        if (!lastProgram || lastProgram === newProgram) {
+            return;
+        }
+
+        let curLine: number = 0;
+        let curChar: number = 0;
+        diffChars(lastProgram, newProgram).forEach(function(result: IDiffResult) {
+            if (result.removed) {
+                return;
+            }
+            let lines: Array<string> = result.value.split(/\r?\n/g);
+            let endLine: number = curLine + lines.length - 1;
+            let endChar: number = (endLine == curLine ? curChar : 0) + lines[lines.length - 1].length;
+
+            if (result.added) {
+                // Extends the highlighted section all the way to the left
+                let startHighlightChar: number = curChar;
+                let firstLine: string = editor.getLine(curLine);
+                while (startHighlightChar >= 1) {
+                    // Check if alphanumeric
+                    if (!/^[a-z0-9]+$/i.test(firstLine[startHighlightChar - 1])) {
+                        break;
+                    }
+                    startHighlightChar--;
+                }
+
+                // Extends to the right
+                let endHightLightChar: number = endChar;
+                let lastLine: string = editor.getLine(endLine);
+                while (endHightLightChar < lastLine.length) {
+                    if (!/^[a-z0-9]+$/i.test(lastLine[endHightLightChar])) {
+                        break;
+                    }
+                    endHightLightChar++;
+                }
+
+                editor.markText( // Highlight text
+                    { line: curLine, ch: startHighlightChar }, // Starting point
+                    { line: endLine, ch: endHightLightChar }, // Inclusive line, exclusive char
+                    { className: "highlighted-text" }
+                );
+            }
+            curLine = endLine;
+            curChar = endChar;
+        });
     }
 
     /* Event listeners */
-
-    let timer: any = null;
     editor.on("change", function() {
-        if (timer != null) {
-            clearTimeout(timer);
+        if (parseTimer != null) {
+            clearTimeout(parseTimer);
         }
-        timer = setTimeout(parse, 50);
+        parseTimer = setTimeout(parse, 50);
     });
 
     editor.on("blur", function() {
-        lastCursorPos = editorDoc.getCursor();
+        lastCursorPos = editor.getCursor();
     });
 
     // Mousedown event for window element
-    window.addEventListener('mousedown', function (event: any) {
+    window.addEventListener('mousedown', function(event: any) {
         let mouseX = event.clientX;
         let mouseY = event.clientY;
 
@@ -148,6 +199,15 @@ import {Option, Some, None} from 'space-lift';
         } else {
             popUp.style.display = 'none';
         }
+    });
+
+    // Canvas mouse events
+    canvas.addEventListener("mousedown", function() {
+        lastProgram = editor.getValue();
+    });
+
+    canvas.addEventListener("mouseup", function() {
+        lastProgram = editor.getValue();
     });
 
     /* Palette */
@@ -191,11 +251,11 @@ import {Option, Some, None} from 'space-lift';
                 return;
         }
         // Insert a cursor position, update cursor, and refocus editor
-        editorDoc.replaceRange(newNode, lastCursorPos);
+        editor.replaceRange(newNode, lastCursorPos);
         lastCursorPos.line++;
         lastCursorPos.ch = 0;
         editor.focus();
-        editorDoc.setCursor(lastCursorPos);
+        editor.setCursor(lastCursorPos);
         isEditorSelected = true;
     }
 
