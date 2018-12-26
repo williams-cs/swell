@@ -22,9 +22,10 @@ import { diffChars, IDiffResult } from 'diff';
     let alreadyLogged: boolean = false;
     let numLogged: number = 0;
     let selectedElems: Effect<any>[] = [];
-    let selected: number = 0; //the number of selected effects if multiply selecting
+    let selected: number = 0; // the number of selected effects if multiply selecting
 
-    let isEditorSelected: boolean = false;
+    let isCanvasSelected: boolean = false; // Check if mouse is clicked on canvas
+    let isDoingDM: boolean = false; // Check if direct manipulating effects
     let checkpoint: Module = null;
     let modGen = new ModuleGenerator();
     let checkpointIsActive: boolean = false;
@@ -96,10 +97,7 @@ import { diffChars, IDiffResult } from 'diff';
         }
         selectedElems = [];
 
-        //This does the prodirect manipulation, passing the new strings to the text box
-        if (ast != undefined && !isEditorSelected) {
-            updateProgramText();
-        }
+        updateProgramText(); // ProDirect Manipulation
 
         // Draw check points
         if (checkpointIsActive) {
@@ -111,19 +109,31 @@ import { diffChars, IDiffResult } from 'diff';
     }
 
     /**
-     * Update the program, and highlight all the changes
+     * Update the program text and highlight all the changes
     **/
     function updateProgramText() {
-        let newProgram: string = ast.toString();
-        // Still has to set even if new code equals old, in order to keep selected boxes
-        editor.setValue(newProgram);
-        if (!lastProgram || lastProgram === newProgram) {
+        if (!ast || !isDoingDM) {
             return;
         }
+        let newProgram: string = ast.toString();
+        if (lastProgram != newProgram) {
+            editor.setValue(newProgram);
+            highlightDiff(newProgram);
+        } else if (!isCanvasSelected) {
+            isDoingDM = false;
+        }
+    }
 
+    /**
+     * Highlight diffs in editor
+     * @param newProgram New program text to highlight
+     * @param update Whether or not to update last program with new program
+     */
+    function highlightDiff(newProgram: string, update?: boolean) {
         let curLine: number = 0;
         let curChar: number = 0;
-        diffChars(lastProgram, newProgram).forEach(function(result: IDiffResult) {
+
+        diffChars(lastProgram, newProgram).forEach((result: IDiffResult) => {
             if (result.removed) {
                 return;
             }
@@ -162,37 +172,49 @@ import { diffChars, IDiffResult } from 'diff';
             curLine = endLine;
             curChar = endChar;
         });
+
+        // Set the clear highlight timer
+        if (highlightTimer != null) {
+            clearTimeout(highlightTimer);
+        }
+        highlightTimer = setTimeout(function() {
+            editor.getAllMarks().forEach((mark: any) => {
+                mark.clear();
+            });
+        }, 500);
+
+        // Update last program if necessary
+        if (update) {
+            lastProgram = newProgram;
+        }
     }
 
     /* Event listeners */
-    editor.on("change", function() {
+    editor.on("keyup", function() {
+        // Check if editor has been modified, only parses if modified
+        if (editor.isClean()) {
+            return;
+        } else {
+            editor.markClean();
+        }
+
         if (parseTimer != null) {
             clearTimeout(parseTimer);
         }
-        parseTimer = setTimeout(parse, 50);
+        parseTimer = setTimeout(parse, 200);
     });
 
     editor.on("blur", function() {
         lastCursorPos = editor.getCursor();
     });
 
-    // Mousedown event for window element
+    //Mousedown event for window element
     window.addEventListener('mousedown', function(event: any) {
         let mouseX = event.clientX;
         let mouseY = event.clientY;
 
-        // Check if editor is selected
-        let rect = editorWrapper.getBoundingClientRect();
-        if (mouseX > rect.left && mouseX < rect.right &&
-            mouseY > rect.top && mouseY < rect.bottom) {
-            isEditorSelected = true;
-        } else {
-            isEditorSelected = false;
-        }
-
         // Check if canvas is selected
-        rect = canvas.getBoundingClientRect();
-        let popUp = document.getElementById('popup');
+        let rect = canvas.getBoundingClientRect();
         if (canvasIsDisabled && mouseX > rect.left && mouseX < rect.right &&
             mouseY > rect.top && mouseY < rect.bottom) {
             popUp.style.display = 'block';
@@ -202,11 +224,15 @@ import { diffChars, IDiffResult } from 'diff';
     });
 
     // Canvas mouse events
+    let popUp = document.getElementById('popup');
     canvas.addEventListener("mousedown", function() {
         lastProgram = editor.getValue();
+        isCanvasSelected = true;
+        isDoingDM = true;
     });
     canvas.addEventListener("mouseup", function() {
         lastProgram = editor.getValue();
+        isCanvasSelected = false;
     });
 
     /* Palette */
@@ -249,21 +275,26 @@ import { diffChars, IDiffResult } from 'diff';
                 console.log("Problem with " + buttonName);
                 return;
         }
-        // Insert a cursor position, update cursor, and refocus editor
+        // Insert at cursor position & highlight changes
         editor.replaceRange(newNode, lastCursorPos);
+        highlightDiff(editor.getValue(), true);
+
+        // Update cursor & refocus editor
         lastCursorPos.line++;
         lastCursorPos.ch = 0;
         editor.focus();
         editor.setCursor(lastCursorPos);
-        isEditorSelected = true;
+
+        // Parse
+        parse();
     }
 
     //reset checkpoint
     let resetButton = document.getElementById('reset');
     resetButton.onclick = function() {
         if (checkpoint._starterCode != null) {
-            isEditorSelected = true;
             editor.setValue(checkpoint._starterCode);
+            parse();
         }
         context.eventLog.push(new ClearEvent());
         masterLog.push(context.eventLog[context.eventLog.length - 1]); // Does this actually work?
@@ -384,8 +415,8 @@ import { diffChars, IDiffResult } from 'diff';
         popUp.style.display = 'none';
 
         if (cpCode.get(checkpoint._name) !== "") {
-            isEditorSelected = true;
             editor.setValue(cpCode.get(checkpoint._name));
+            parse();
         }
 
         //set up the instruction and goal boxes
@@ -394,8 +425,8 @@ import { diffChars, IDiffResult } from 'diff';
 
         } else {
             if (checkpoint._starterCode != null) {
-                isEditorSelected = true;
                 editor.setValue(checkpoint._starterCode);
+                parse();
             }
 
             let curInstruction = document.getElementById("instruction");
