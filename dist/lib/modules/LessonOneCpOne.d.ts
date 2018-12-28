@@ -1,3 +1,4 @@
+/// <reference types="codemirror" />
 import { Module } from "./Module";
 import { Effect } from "../effects/Effect";
 export declare class LessonOneCpOne extends Module {
@@ -7,7 +8,7 @@ export declare class LessonOneCpOne extends Module {
     readonly _constraint: string;
     readonly _instructions: string;
     _latestInstrIndex: number;
-    constructor(ctx: CanvasRenderingContext2D);
+    constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor);
     /**
      * A lesson to print a string
      * goals: write any string on CANVAS

@@ -1,3 +1,4 @@
+/// <reference types="codemirror" />
 import { Module } from "./Module";
 import { Effect } from "../effects/Effect";
 export declare class LessonThreeCpSix extends Module {
@@ -14,7 +15,7 @@ export declare class LessonThreeCpSix extends Module {
     b_size: number;
     square_size: number;
     font_size: number;
-    constructor(ctx: CanvasRenderingContext2D);
+    constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor);
     drawGuides(): void;
     /**
      * A lesson leading into conditionals

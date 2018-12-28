@@ -6,8 +6,8 @@ const EllipseEffect_1 = require("../effects/EllipseEffect");
 const RectangleEffect_1 = require("../effects/RectangleEffect");
 const LineEffect_1 = require("../effects/LineEffect");
 class LessonTwoCpOne extends Module_1.Module {
-    constructor(ctx) {
-        super(ctx);
+    constructor(ctx, editor) {
+        super(ctx, editor);
         this._name = "l2c1";
         this._nextModule = 'l2c2';
         this._constraint = 'none';
@@ -29,8 +29,7 @@ class LessonTwoCpOne extends Module_1.Module {
      * @param effects the list of effects currently on the CANVAS
      */
     checkGoal(document, effects) {
-        let code = document.getElementById('input').value;
-        //console.log("instrIndex in checkGoal: " + this._instrIndex);
+        let code = this.editor.getValue();
         switch (this._latestInstrIndex) {
             case 0:
                 if (this.checkCodeAndCanvasEffect(code, "ellipse", effects)) {
@@ -38,36 +37,28 @@ class LessonTwoCpOne extends Module_1.Module {
                     this.renderLatestInstruction(document);
                 }
                 return false;
-                break;
             case 1:
                 if (this.checkCodeAndCanvasEffect(code, "rect", effects)) {
                     this._latestInstrIndex++;
                     this.renderLatestInstruction(document);
                 }
                 return false;
-                break;
             case 2:
                 if (this.checkCodeAndCanvasEffect(code, "line", effects)) {
                     this._latestInstrIndex++;
                     this.renderLatestInstruction(document);
                 }
                 return false;
-                break;
             default:
                 return true;
-                break;
         }
-        return false;
     }
     checkCodeAndCanvasEffect(code, f, effects) {
         //check for correct CODE
         let codeIsCorrect = false;
-        if (code != null) {
-            let regex = new RegExp('print\\s*\\(\\s*' + f + '\\s*\\(\\s*[1-9][0-9]*\\s*,\\s*[1-9][0-9]*\\s*\\)\\s*,\\s*[1-9][0-9]*\\s*,\\s*[1-9][0-9]*\\s*\\)');
-            //console.log("regex: " + regex);
-            let match = code.match(regex);
-            codeIsCorrect = match != null && match.length > 0;
-        }
+        let regex = new RegExp('print\\s*\\(\\s*' + f + '\\s*\\(\\s*[1-9][0-9]*\\s*,\\s*[1-9][0-9]*\\s*\\)\\s*,\\s*[1-9][0-9]*\\s*,\\s*[1-9][0-9]*\\s*\\)');
+        let match = code.match(regex);
+        codeIsCorrect = match != null && match.length > 0;
         //check for correct CANVAS effects
         let canvasIsCorrect = false;
         switch (f) {
@@ -95,7 +86,6 @@ class LessonTwoCpOne extends Module_1.Module {
                     }
                 }
                 break;
-            default:
         }
         if (codeIsCorrect && canvasIsCorrect) {
             console.log("moving on to next instruction");

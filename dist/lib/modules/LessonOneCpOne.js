@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Module_1 = require("./Module");
 const Instruction_1 = require("./Instruction");
 class LessonOneCpOne extends Module_1.Module {
-    constructor(ctx) {
-        super(ctx);
+    constructor(ctx, editor) {
+        super(ctx, editor);
         this._name = "l1c1";
         this._nextModule = 'l1c2';
         this._constraint = 'none';
@@ -24,38 +24,24 @@ class LessonOneCpOne extends Module_1.Module {
      * @param effects the list of effects currently on the CANVAS
      */
     checkGoal(document, effects) {
-        let input = document.getElementById('input');
-        /*
-        let regex: RegExp = /print\s*\(\s*\"Hello\"\s*\)/;
-        let match = input.value.match(regex);
-        if (match != null && match.length > 0) {
-          return true;
-        }
-        return false;
-        */
-        console.log("instrIndex in checkGoal: " + this._instrIndex);
         switch (this._latestInstrIndex) {
             case 0:
-                if (document.activeElement === input && this._latestInstrIndex == 0) {
+                if (document.activeElement === this.editor.getInputField() && this._latestInstrIndex == 0) {
                     this._latestInstrIndex++;
                     this.renderLatestInstruction(document);
                 }
                 return false;
-                break;
             case 1:
                 let regex = /print\s*\(\s*\"Hello\"\s*\)/;
-                let match = input.value.match(regex);
+                let match = this.editor.getValue().match(regex);
                 if (match != null && match.length > 0) {
                     this._latestInstrIndex++;
                     this.renderLatestInstruction(document);
                 }
                 return false;
-                break;
             default:
                 return true;
-                break;
         }
-        return false;
     }
 }
 exports.LessonOneCpOne = LessonOneCpOne;

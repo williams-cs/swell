@@ -5,45 +5,27 @@ const index_2 = require("../../index");
 const index_3 = require("../../index");
 const index_4 = require("../../index");
 class ModuleGenerator {
-    constructor(ctx, isDM) {
-        this.dmConstructors = new Map([
-            ['l1c1', () => new index_1.LessonOneCpOne(this.ctx)],
-            ['l1c2', () => new index_1.LessonOneCpTwo(this.ctx)],
-            ['l1c3', () => new index_1.LessonOneCpThree(this.ctx)],
-            ['l1c4', () => new index_1.LessonOneCpFour(this.ctx)],
-            ['l2c1', () => new index_2.LessonTwoCpOne(this.ctx)],
-            ['l2c2', () => new index_2.LessonTwoCpTwo(this.ctx)],
-            ['l2c3', () => new index_2.LessonTwoCpThree(this.ctx)],
-            ['l2c4', () => new index_2.LessonTwoCpFour(this.ctx)],
-            ['l2c5', () => new index_2.LessonTwoCpFive(this.ctx)],
-            ['l2c6', () => new index_2.LessonTwoCpSix(this.ctx)],
-            ['l2c7', () => new index_2.LessonTwoCpSeven(this.ctx)],
-            ['l3c1', () => new index_3.LessonThreeCpOne(this.ctx)],
-            ['l3c2', () => new index_3.LessonThreeCpTwo(this.ctx)],
-            ['l3c3', () => new index_3.LessonThreeCpThree(this.ctx)],
-            ['l3c4', () => new index_3.LessonThreeCpFour(this.ctx)],
-            ['l3c5', () => new index_3.LessonThreeCpFive(this.ctx)],
-            ['l3c6', () => new index_3.LessonThreeCpSix(this.ctx)],
-            ['l4c1', () => new index_4.LessonFourCpOne(this.ctx)],
-            ['l4c2', () => new index_4.LessonFourCpTwo(this.ctx)]
-        ]);
-        this.nonDmConstructors = new Map([
-            ['l1c1', () => new index_1.LessonOneCpOne(this.ctx)],
-            ['l1c2', () => new index_1.LessonOneCpThree(this.ctx)],
-            ['l1c3', () => new index_1.LessonOneCpFour(this.ctx)],
-            ['l2c1', () => new index_2.LessonTwoCpOne(this.ctx)],
-            ['l2c2', () => new index_2.LessonTwoCpThree(this.ctx)],
-            ['l2c3', () => new index_2.LessonTwoCpFour(this.ctx)],
-            ['l2c4', () => new index_2.LessonTwoCpFive(this.ctx)],
-            ['l2c5', () => new index_2.LessonTwoCpSeven(this.ctx)],
-            ['l3c1', () => new index_3.LessonThreeCpOne(this.ctx)],
-            ['l3c2', () => new index_3.LessonThreeCpTwo(this.ctx)],
-            ['l3c3', () => new index_3.LessonThreeCpThree(this.ctx)],
-            ['l3c4', () => new index_3.LessonThreeCpFour(this.ctx)],
-            ['l3c5', () => new index_3.LessonThreeCpFive(this.ctx)],
-            ['l3c6', () => new index_3.LessonThreeCpSix(this.ctx)],
-            ['l4c1', () => new index_4.LessonFourCpOne(this.ctx)],
-            ['l4c2', () => new index_4.LessonFourCpTwo(this.ctx)]
+    constructor() {
+        this.curConstructors = new Map([
+            ['l1c1', (ctx, editor) => new index_1.LessonOneCpOne(ctx, editor)],
+            ['l1c2', (ctx, editor) => new index_1.LessonOneCpTwo(ctx, editor)],
+            ['l1c3', (ctx, editor) => new index_1.LessonOneCpThree(ctx, editor)],
+            ['l1c4', (ctx, editor) => new index_1.LessonOneCpFour(ctx, editor)],
+            ['l2c1', (ctx, editor) => new index_2.LessonTwoCpOne(ctx, editor)],
+            ['l2c2', (ctx, editor) => new index_2.LessonTwoCpTwo(ctx, editor)],
+            ['l2c3', (ctx, editor) => new index_2.LessonTwoCpThree(ctx, editor)],
+            ['l2c4', (ctx, editor) => new index_2.LessonTwoCpFour(ctx, editor)],
+            ['l2c5', (ctx, editor) => new index_2.LessonTwoCpFive(ctx, editor)],
+            ['l2c6', (ctx, editor) => new index_2.LessonTwoCpSix(ctx, editor)],
+            ['l2c7', (ctx, editor) => new index_2.LessonTwoCpSeven(ctx, editor)],
+            ['l3c1', (ctx, editor) => new index_3.LessonThreeCpOne(ctx, editor)],
+            ['l3c2', (ctx, editor) => new index_3.LessonThreeCpTwo(ctx, editor)],
+            ['l3c3', (ctx, editor) => new index_3.LessonThreeCpThree(ctx, editor)],
+            ['l3c4', (ctx, editor) => new index_3.LessonThreeCpFour(ctx, editor)],
+            ['l3c5', (ctx, editor) => new index_3.LessonThreeCpFive(ctx, editor)],
+            ['l3c6', (ctx, editor) => new index_3.LessonThreeCpSix(ctx, editor)],
+            ['l4c1', (ctx, editor) => new index_4.LessonFourCpOne(ctx, editor)],
+            ['l4c2', (ctx, editor) => new index_4.LessonFourCpTwo(ctx, editor)]
         ]);
         this.checkpoints = new Map([
             ['l1c1', null],
@@ -66,20 +48,13 @@ class ModuleGenerator {
             ['l4c1', null],
             ['l4c2', null]
         ]);
-        this.ctx = ctx;
-        if (isDM) {
-            this.curConstructors = this.dmConstructors;
-        }
-        else {
-            this.curConstructors = this.nonDmConstructors;
-        }
     }
-    generateCheckpoint(cp) {
+    createModule(cp, ctx, editor) {
         let checkpoint = this.checkpoints.get(cp);
         if (checkpoint != null) {
             return checkpoint;
         }
-        checkpoint = this.curConstructors.get(cp)();
+        checkpoint = this.curConstructors.get(cp)(ctx, editor);
         this.checkpoints.set(cp, checkpoint);
         return checkpoint;
     }

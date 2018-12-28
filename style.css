@@ -90,6 +90,11 @@ button:hover {
     height: 50px;
 }
 
+.btn-background {
+    background-color: var(--purple);
+    color: var(--white);
+}
+
 .checkpoint {
     border-radius: 0;
     font-size: 15px;

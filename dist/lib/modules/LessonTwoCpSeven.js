@@ -4,8 +4,8 @@ const Module_1 = require("./Module");
 const NumberEffect_1 = require("../effects/NumberEffect");
 const EllipseEffect_1 = require("../effects/EllipseEffect");
 class LessonTwoCpSeven extends Module_1.Module {
-    constructor(ctx) {
-        super(ctx);
+    constructor(ctx, editor) {
+        super(ctx, editor);
         this._name = "l2c7";
         this._nextModule = 'l3c1';
         this._constraint = 'none';

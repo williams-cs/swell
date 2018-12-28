@@ -5,8 +5,9 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "dependencies": {
+    "pants": "github:williams-cs/pants#dev_quan",
     "space-lift": "^0.7.2",
-    "pants": "github:williams-cs/pants#dev_quan"
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "@types/chai": "^4.1.3",

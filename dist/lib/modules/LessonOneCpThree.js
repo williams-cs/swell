@@ -4,8 +4,8 @@ const Module_1 = require("./Module");
 const Instruction_1 = require("./Instruction");
 const StringEffect_1 = require("../effects/StringEffect");
 class LessonOneCpThree extends Module_1.Module {
-    constructor(ctx) {
-        super(ctx);
+    constructor(ctx, editor) {
+        super(ctx, editor);
         this._name = "l1c3";
         this._prevModule = 'l1c2';
         this._nextModule = 'l1c4';
@@ -41,22 +41,10 @@ class LessonOneCpThree extends Module_1.Module {
      * @param effects: the list of effects currently on the CANVAS
      */
     checkGoal(document, effects) {
-        /*
-                for (let effect of effects) {
-                  if (effect instanceof StringEffect && effect.str !== "") {
-                    if (effect.x > this.x && effect.x < this.x + this.square_size && effect.y > this.y && effect.y < this.y + this.square_size) {
-                      return true;
-                    }
-                  }
-                }
-                return false;
-        */
-        let input = document.getElementById('input');
-        //console.log("instrIndex in checkGoal: " + this._instrIndex);
         switch (this._latestInstrIndex) {
             case 0:
                 let regex = /print\s*\(\s*\".*\"\s*,\s*200\s*,\s*100\s*\)/;
-                let match = input.value.match(regex);
+                let match = this.editor.getValue().match(regex);
                 if (match != null && match.length > 0) {
                     this._latestInstrIndex++;
                     this.renderLatestInstruction(document);
