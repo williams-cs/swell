@@ -4,8 +4,8 @@ const Module_1 = require("./Module");
 const Instruction_1 = require("./Instruction");
 const StringEffect_1 = require("../effects/StringEffect");
 class LessonOneCpFour extends Module_1.Module {
-    constructor(ctx) {
-        super(ctx);
+    constructor(ctx, editor) {
+        super(ctx, editor);
         this._name = "l1c4";
         this._prevModule = 'l1c2';
         this._nextModule = 'l2c1';
@@ -44,24 +44,11 @@ class LessonOneCpFour extends Module_1.Module {
      * @param effects: the list of effects currently on the CANVAS
      */
     checkGoal(document, effects) {
-        /*
-        for (let effect of effects) {
-          if (effect instanceof StringEffect && effect.str === "moo") {
-            if ((effect.x > this.x && effect.x < this.x + this.square_size) && (effect.y > this.y && effect.y < this.y + this.square_size)) {
-              return true;
-            }
-          }
-        }
-        return false;
-        */
-        let input = document.getElementById('input');
-        //console.log("instrIndex in checkGoal: " + this._instrIndex);
         switch (this._latestInstrIndex) {
             case 0:
             case 1:
             case 2:
                 return false;
-                break;
             case 3:
                 for (let effect of effects) {
                     if (effect instanceof StringEffect_1.StringEffect && effect.str === "moo") {
@@ -72,12 +59,9 @@ class LessonOneCpFour extends Module_1.Module {
                     }
                 }
                 return false;
-                break;
             default:
                 return true;
-                break;
         }
-        return false;
     }
 }
 exports.LessonOneCpFour = LessonOneCpFour;

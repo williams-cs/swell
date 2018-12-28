@@ -10,7 +10,7 @@ export class LessonOneCpFour extends Module {
     readonly _goal: any;
     readonly _constraint: string = 'canvas';
     readonly _instructions: string =
-    `<p> CHALLENGE: Print the word "moo" on the CANVAS, and put it inside the box at the center of the CANVAS. </p>`;
+        `<p> CHALLENGE: Print the word "moo" on the CANVAS, and put it inside the box at the center of the CANVAS. </p>`;
 
     _latestInstrIndex: number = 3;
 
@@ -19,33 +19,32 @@ export class LessonOneCpFour extends Module {
     square_size: number = 100;
     font_size: number = 20;
 
-    constructor(ctx: CanvasRenderingContext2D) {
-      super(ctx);
-      this.x = Math.round((ctx.canvas.width - this.square_size)/2);
-      this.y = Math.round((ctx.canvas.height - this.square_size)/2);
-
-      let content = "In real life, computer scientists often can only change their CODE to affect the CANVAS, instead of interacting with the CANVAS directly.";
-      this._instrBoxes.push(new Instruction('code-editor', content, "30%", "10%"));
-      content = "Anyone, including you, is cut out to be a computer scientist! Let's have a challenge.";
-      this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-      content = "The CANVAS is temporarily frozen. You can no longer interact with objects drawn on it.";
-      this._instrBoxes.push(new Instruction('code-editor', content, "80%", "10%"));
-      content = "Can you figure out how to write CODE to print the word 'moo' inside the box at the center of the CANVAS?";
-      this._instrBoxes.push(new Instruction('code-editor', content, "80%", "10%"));
-      content = "Congratulations! You finished your first coding challenge!";
-      this._instrBoxes.push(new Instruction('canvas-container', content, "80%", "10%"));
+    constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) {
+        super(ctx, editor);
+        this.x = Math.round((ctx.canvas.width - this.square_size) / 2);
+        this.y = Math.round((ctx.canvas.height - this.square_size) / 2);
+        let content = "In real life, computer scientists often can only change their CODE to affect the CANVAS, instead of interacting with the CANVAS directly.";
+        this._instrBoxes.push(new Instruction('code-editor', content, "30%", "10%"));
+        content = "Anyone, including you, is cut out to be a computer scientist! Let's have a challenge.";
+        this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
+        content = "The CANVAS is temporarily frozen. You can no longer interact with objects drawn on it.";
+        this._instrBoxes.push(new Instruction('code-editor', content, "80%", "10%"));
+        content = "Can you figure out how to write CODE to print the word 'moo' inside the box at the center of the CANVAS?";
+        this._instrBoxes.push(new Instruction('code-editor', content, "80%", "10%"));
+        content = "Congratulations! You finished your first coding challenge!";
+        this._instrBoxes.push(new Instruction('canvas-container', content, "80%", "10%"));
     }
 
     drawGuides(): void {
-      this.ctx.beginPath();
-      this.ctx.rect(this.x, this.y, this.square_size, this.square_size);
-      this.ctx.strokeStyle = '#6C6C6C';
-      this.ctx.stroke();
+        this.ctx.beginPath();
+        this.ctx.rect(this.x, this.y, this.square_size, this.square_size);
+        this.ctx.strokeStyle = '#6C6C6C';
+        this.ctx.stroke();
 
-      this.ctx.font = this.font_size + "px Courier New";
-      this.ctx.fillStyle = '#6C6C6C';
-      this.ctx.fillText("Put word", this.x, this.y - 2*this.font_size);
-      this.ctx.fillText("in here", this.x, this.y - this.font_size);
+        this.ctx.font = this.font_size + "px Courier New";
+        this.ctx.fillStyle = '#6C6C6C';
+        this.ctx.fillText("Put word", this.x, this.y - 2 * this.font_size);
+        this.ctx.fillText("in here", this.x, this.y - this.font_size);
     }
 
     /**
@@ -55,43 +54,25 @@ export class LessonOneCpFour extends Module {
      * @param effects: the list of effects currently on the CANVAS
      */
     checkGoal(document: Document, effects: Effect<any>[]): boolean {
-      /*
-      for (let effect of effects) {
-        if (effect instanceof StringEffect && effect.str === "moo") {
-          if ((effect.x > this.x && effect.x < this.x + this.square_size) && (effect.y > this.y && effect.y < this.y + this.square_size)) {
-            return true;
-          }
+        switch (this._latestInstrIndex) {
+            case 0:
+            case 1:
+            case 2:
+                return false;
+
+            case 3:
+                for (let effect of effects) {
+                    if (effect instanceof StringEffect && effect.str === "moo") {
+                        if ((effect.x > this.x && effect.x < this.x + this.square_size) && (effect.y > this.y && effect.y < this.y + this.square_size)) {
+                            this._latestInstrIndex++;
+                            this.renderLatestInstruction(document);
+                        }
+                    }
+                }
+                return false;
+
+            default:
+                return true;
         }
-      }
-      return false;
-      */
-
-      let input = document.getElementById('input') as HTMLInputElement;
-      //console.log("instrIndex in checkGoal: " + this._instrIndex);
-      switch(this._latestInstrIndex) {
-        case 0:
-        case 1:
-        case 2:
-          return false;
-          break;
-
-        case 3:
-          for (let effect of effects) {
-            if (effect instanceof StringEffect && effect.str === "moo") {
-              if ((effect.x > this.x && effect.x < this.x + this.square_size) && (effect.y > this.y && effect.y < this.y + this.square_size)) {
-                this._latestInstrIndex++;
-                this.renderLatestInstruction(document);
-              }
-            }
-          }
-          return false;
-          break;
-
-        default:
-          return true;
-          break;
-      }
-
-      return false;
     }
 }

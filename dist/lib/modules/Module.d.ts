@@ -1,3 +1,4 @@
+/// <reference types="codemirror" />
 import { Instruction } from "./Instruction";
 import { Effect } from "../effects/Effect";
 export declare abstract class Module {
@@ -9,10 +10,11 @@ export declare abstract class Module {
     readonly _instructions: string;
     _starterCode?: string;
     ctx: CanvasRenderingContext2D;
+    editor: CodeMirror.Editor;
     readonly _instrBoxes?: Instruction[];
     _instrIndex?: number;
     _latestInstrIndex: number;
-    constructor(ctx: CanvasRenderingContext2D);
+    constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor);
     /**
      * Checks if the module goals are fulfilled
      * @param document The HTML document

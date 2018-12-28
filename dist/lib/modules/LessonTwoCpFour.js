@@ -26,12 +26,10 @@ print(a, 100, 100);`;
     checkGoal(document, effects) {
         //check for correct CODE
         let codeIsCorrect = false;
-        let code = document.getElementById("input").value;
-        if (code != null) {
-            let regex = /print\s*\(\s*b\s*,\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\);/;
-            let match = code.match(regex);
-            codeIsCorrect = match != null && match.length > 0;
-        }
+        let code = this.editor.getValue();
+        let regex = /print\s*\(\s*b\s*,\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\);/;
+        let match = code.match(regex);
+        codeIsCorrect = match != null && match.length > 0;
         //check for correct CANVAS effects
         let canvasIsCorrect = true;
         for (let effect of effects) {

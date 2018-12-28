@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class Module {
-    constructor(ctx) {
+    constructor(ctx, editor) {
         this._instrBoxes = []; //series of tutorial instructions
         this._instrIndex = 0; //index of current instruction being displayed
         this._latestInstrIndex = 0; //furthest instruction reached within this checkpoint
         this.ctx = ctx;
+        this.editor = editor;
     }
     /**
      * Create guides to help lesson instructions

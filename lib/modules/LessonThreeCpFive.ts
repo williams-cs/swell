@@ -8,7 +8,7 @@ export class LessonThreeCpFive extends Module {
     readonly _goal: any;
     readonly _constraint: string = 'none';
     readonly _instructions: string =
-    `<p> So we print a message to the CANVAS anytime c is exactly equal to 8. </p>
+        `<p> So we print a message to the CANVAS anytime c is exactly equal to 8. </p>
     <p> What if we want to print another message, "c is not equal to 8" any time c is not equal to 8? </p>
     <p> We do so by using an else statement. Observe the CODE above. </p>
     <p> When the condition inside the if() statement is satisfied, the code block inside the {} right after it would run. </p>
@@ -16,7 +16,7 @@ export class LessonThreeCpFive extends Module {
     <p> GOAL: Change the value of c so that the line "c is NOT equal to 8." is printed on the CANVAS. </p>`;
 
     readonly _starterCode: string =
-`c = 8;
+        `c = 8;
 if(c == 8) {
 \tprint("c is equal to 8.", 103, 143);
 } else {
@@ -32,20 +32,18 @@ if(c == 8) {
     checkGoal(document: Document, effects: Effect<any>[]): boolean {
         //check for correct CODE
         let codeIsCorrect = false;
-        let code = (document.getElementById("input") as HTMLInputElement).value;
-        if (code != null) {
-            let regex: RegExp = /c\s*=\s*[^8]\s*/;
-            let match = code.match(regex);
-            codeIsCorrect = match != null && match.length > 0;
-        }
+        let code: string = this.editor.getValue();
+        let regex: RegExp = /c\s*=\s*[^8]\s*/;
+        let match = code.match(regex);
+        codeIsCorrect = match != null && match.length > 0;
 
         //check for correct CANVAS effects
         let canvasIsCorrect = false;
         for (let effect of effects) {
-          if (effect instanceof StringEffect && effect.str === "c is NOT equal to 8.") {
-            canvasIsCorrect = true;
-            break;
-          }
+            if (effect instanceof StringEffect && effect.str === "c is NOT equal to 8.") {
+                canvasIsCorrect = true;
+                break;
+            }
         }
 
         return codeIsCorrect && canvasIsCorrect;

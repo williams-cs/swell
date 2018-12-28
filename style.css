@@ -1,218 +1,180 @@
 :root {
-  --purple: #673AB7;
-  --yellow: #DFB534;
-  --white: #EBEBEB;
-  --gray: #D8D8D8;
-  --light-gray: #E8E8E8;
-  --mid-gray: #C0C0C0;
-  --dark-gray: #6C6C6C;
-  --code-height: 60vh;
-  --terminal-height: 35vh;
+    --purple: #673AB7;
+    --yellow: #DFB534;
+    --white: #EBEBEB;
+    --gray: #D8D8D8;
+    --light-gray: #E8E8E8;
+    --mid-gray: #C0C0C0;
+    --dark-gray: #6C6C6C;
+    --code-height: 60vh;
+    --terminal-height: 35vh;
 }
 
 html {
-  font-family: 'Roboto Mono', monospace;
+    font-family: 'Roboto Mono', monospace;
 }
 
 body {
-  background-color: var(--gray);
-}
-
-textarea::-webkit-input-placeholder {
-color: var(--gray);
-}
-
-textarea:-moz-placeholder { /* Firefox 18- */
-color: var(--gray);
-}
-
-textarea::-moz-placeholder {  /* Firefox 19+ */
-color: var(--gray);
-}
-
-textarea:-ms-input-placeholder {
-color: var(--gray);
+    background-color: var(--gray);
 }
 
 .container-all {
-  height: 100%;
+    height: 100%;
 }
 
 .sidenav {
-  overflow-y: auto;
+    overflow-y: auto;
 }
 
 .main-container {
-  background-color: var(--light-gray);
-  height: 100vh;
+    background-color: var(--light-gray);
+    height: 100vh;
 }
 
 #logo {
-  background-color: var(--purple);
-  color: white;
-  width: 100%;
-  line-height: 75px;
-  text-align: center;
-  font-size: 20px;
-  cursor: default;
+    background-color: var(--purple);
+    color: white;
+    width: 100%;
+    line-height: 75px;
+    text-align: center;
+    font-size: 20px;
+    cursor: default;
 }
 
 .label {
-  padding: 5px;
-  margin-top: 15px;
-  display: inline-block;
-  background-color: var(--purple);
-  color: var(--white);
-  font-size: 15px;
-  cursor: default;
+    padding: 5px;
+    margin-top: 15px;
+    display: inline-block;
+    background-color: var(--purple);
+    color: var(--white);
+    font-size: 15px;
+    cursor: default;
 }
 
 .achievement-container {
-  height: 75px;
-  background-color: var(--dark-gray);
+    height: 75px;
+    background-color: var(--dark-gray);
 }
 
 .icon {
-  position: relative;
-  top: 30%;
+    position: relative;
+    top: 30%;
 }
 
 #achievement {
-  position: relative;
-  top: 30%;
-  color: var(--white);
-  font-size: 15px;
-  cursor: default;
+    position: relative;
+    top: 30%;
+    color: var(--white);
+    font-size: 15px;
+    cursor: default;
 }
 
 button {
-  background-color: var(--purple);
-  color: var(--white);
-  font-size: 17px;
+    background-color: var(--purple);
+    color: var(--white);
+    font-size: 17px;
 }
 
 button:hover {
-  color: gold;
+    color: gold;
 }
 
 .btn:focus, .btn:active {
-  outline: none !important;
-  box-shadow: none !important;
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 .lesson-btn {
-  border-radius: 0;
-  border-bottom-color: black;
-  height: 50px;
+    border-radius: 0;
+    border-bottom-color: black;
+    height: 50px;
+}
+
+.btn-background {
+    background-color: var(--purple);
+    color: var(--white);
 }
 
 .checkpoint {
-  border-radius: 0;
-  font-size: 15px;
-  background-color: var(--gray);
-  color: black;
+    border-radius: 0;
+    font-size: 15px;
+    background-color: var(--gray);
+    color: black;
 }
 
 .checkpoint:hover {
-  background-color: var(--mid-gray);
-  color: black;
+    background-color: var(--mid-gray);
+    color: black;
 }
 
 #code-canvas-container {
-  height: var(--code-height);
+    height: var(--code-height);
 }
 
 #terminal-container {
-  height: var(--terminal-height);
+    height: var(--terminal-height);
 }
 
 #code-editor {
-  height: 100%;
-  resize: none;
+    height: 100%;
 }
 
-#code-editor-lines, #input {
-  height: 90%;
-  font-size: 15px;
-  font-family: 'Courier New', Courier, monospace;
-  color: var(--white);
-  background-color: var(--dark-gray);
-  padding-top: 3px;
-  padding-bottom: 5px;
-}
-
-#code-editor-lines {
-  float: left;
-  text-align: right;
-	white-space: nowrap;
-  padding-left: 0px;
-  overflow: hidden;
-}
-
-#input {
-  resize: none;
-  tab-size: 4;
-  -moz-tab-size: 4;
-  border: none;
-}
-
-#input:focus {
-  outline: none !important;
+.highlighted-text {
+    background-color: #90EE90;
 }
 
 #output {
-  background-color: white;
-  position: relative;
-  float: left;
+    background-color: white;
+    position: relative;
+    float: left;
 }
 
 .goal-container, .reward-container {
-  height: 90%;
-  position: relative;
-  padding: 3px;
-  background-color: var(--mid-gray);
+    height: 90%;
+    position: relative;
+    padding: 3px;
+    background-color: var(--mid-gray);
 }
 
 .goal {
-  position: relative;
-  float: left;
-  padding: 10px;
-  font-size: 15px;
-  overflow-y: auto;
+    position: relative;
+    float: left;
+    padding: 10px;
+    font-size: 15px;
+    overflow-y: auto;
 }
 
 .reward {
-  position: relative;
-  text-align: center;
-  top: 10px;
-  font-size: 12px;
+    position: relative;
+    text-align: center;
+    top: 10px;
+    font-size: 12px;
 }
 
 .star {
-  display: block;
-  margin: 25px auto auto auto;
+    display: block;
+    margin: 25px auto auto auto;
 }
 
 .next {
-  background-color: var(--yellow);
-  margin: 30px auto auto auto;
-  display: none;
-
+    background-color: var(--yellow);
+    margin: 30px auto auto auto;
+    display: none;
 }
 
 .instruction {
-  display: none;
-  position: absolute;
-  top: 25%;
-  left: 10%;
-  width: 75%;
-  padding: 5px;
-  border: 5px solid #673AB7;
-  background-color: white;
-  z-index: 1002;
-  overflow: auto;
+    display: none;
+    position: absolute;
+    top: 25%;
+    left: 10%;
+    width: 75%;
+    padding: 5px;
+    border: 5px solid #673AB7;
+    background-color: white;
+    z-index: 1002;
+    overflow: auto;
 }
 
 #toolbox-container {
-  padding-top: 20px;
+    padding-top: 20px;
 }

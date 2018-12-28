@@ -9,7 +9,7 @@ export class LessonTwoCpThree extends Module {
     readonly _goal: any;
     readonly _constraint: string = 'none';
     readonly _instructions: string =
-    `<p> So we can draw a circle and change it. But what if we want to draw both circles and words? </p>
+        `<p> So we can draw a circle and change it. But what if we want to draw both circles and words? </p>
     <p> Well, simple! Just write more print statements in the CODE area! </p>
     <p> GOAL: Draw 2 circles and a word on the CANVAS. </p>
     <p> HINT: Remember that the numbers right inside the ellipse(_,_) statement change the circle's sizes.`;
@@ -25,13 +25,13 @@ export class LessonTwoCpThree extends Module {
         let circleCount = 0;
 
         for (let effect of effects) {
-          if (!stringExists) {
-            stringExists = effect instanceof StringEffect && effect.str !== "";
-          }
+            if (!stringExists) {
+                stringExists = effect instanceof StringEffect && effect.str !== "";
+            }
 
-          if (effect instanceof EllipseEffect) {
-            circleCount += 1;
-          }
+            if (effect instanceof EllipseEffect) {
+                circleCount += 1;
+            }
         }
 
         return stringExists && circleCount >= 2;

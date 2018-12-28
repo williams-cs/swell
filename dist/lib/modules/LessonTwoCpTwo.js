@@ -4,8 +4,8 @@ const Module_1 = require("./Module");
 const Instruction_1 = require("./Instruction");
 const EllipseEffect_1 = require("../effects/EllipseEffect");
 class LessonTwoCpTwo extends Module_1.Module {
-    constructor(ctx) {
-        super(ctx);
+    constructor(ctx, editor) {
+        super(ctx, editor);
         this._name = "l2c2";
         this._nextModule = 'l2c3';
         this._constraint = 'none';
@@ -40,17 +40,6 @@ class LessonTwoCpTwo extends Module_1.Module {
      * @param effects the list of effects currently on the CANVAS
      */
     checkGoal(document, effects) {
-        /*
-          for (let effect of effects) {
-            if (effect instanceof EllipseEffect) {
-              if (effect.w > 200 && effect.h < 80) {
-                return true;
-              }
-            }
-          }
-          return false;
-          */
-        //console.log("instrIndex in checkGoal: " + this._instrIndex);
         switch (this._latestInstrIndex) {
             case 0:
                 for (let effect of effects) {
@@ -60,7 +49,6 @@ class LessonTwoCpTwo extends Module_1.Module {
                     }
                 }
                 return false;
-                break;
             case 1:
                 for (let effect of effects) {
                     if (effect instanceof EllipseEffect_1.EllipseEffect) {
@@ -73,12 +61,9 @@ class LessonTwoCpTwo extends Module_1.Module {
                     }
                 }
                 return false;
-                break;
             default:
                 return true;
-                break;
         }
-        return false;
     }
 }
 exports.LessonTwoCpTwo = LessonTwoCpTwo;

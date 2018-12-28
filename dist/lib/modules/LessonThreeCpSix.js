@@ -4,8 +4,8 @@ const Module_1 = require("./Module");
 const EllipseEffect_1 = require("../effects/EllipseEffect");
 const StringEffect_1 = require("../effects/StringEffect");
 class LessonThreeCpSix extends Module_1.Module {
-    constructor(ctx) {
-        super(ctx);
+    constructor(ctx, editor) {
+        super(ctx, editor);
         this._name = "l3c6";
         this._nextModule = 'l4c1';
         this._constraint = 'none';
@@ -58,20 +58,12 @@ print("Circle A is smaller than circle B.", ${this.xA}, ${this.yA + this.square_
     checkGoal(document, effects) {
         //check for correct CODE
         let codeIsCorrect = false;
-        let code = document.getElementById("input").value;
-        if (code != null) {
-            /*
-            if(a < b) {
-              print("Circle A is smaller than circle B.", 45, 453);
-            } else {
-              print("Circle A is bigger than circle B.", 45, 453);
-            }*/
-            let regex1 = /if\s*\(\s*a\s*[<>]\s*b\s*\)/;
-            let regex2 = /if\s*\(\s*b\s*[<>]\s*a\s*\)/;
-            let match1 = code.match(regex1);
-            let match2 = code.match(regex2);
-            codeIsCorrect = (match1 != null && match1.length > 0) || (match2 != null && match2.length > 0);
-        }
+        let code = this.editor.getValue();
+        let regex1 = /if\s*\(\s*a\s*[<>]\s*b\s*\)/;
+        let regex2 = /if\s*\(\s*b\s*[<>]\s*a\s*\)/;
+        let match1 = code.match(regex1);
+        let match2 = code.match(regex2);
+        codeIsCorrect = (match1 != null && match1.length > 0) || (match2 != null && match2.length > 0);
         //check for correct CANVAS effects
         let canvasIsCorrect = false;
         let circleA = null;

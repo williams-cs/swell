@@ -1,3 +1,4 @@
+/// <reference types="codemirror" />
 import { Module } from "./Module";
 import { Effect } from "../effects/Effect";
 export declare class LessonTwoCpOne extends Module {
@@ -8,7 +9,7 @@ export declare class LessonTwoCpOne extends Module {
     readonly _instructions: string;
     readonly _starterCode: string;
     _latestInstrIndex: number;
-    constructor(ctx: CanvasRenderingContext2D);
+    constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor);
     /**
      *
      * @param document The HTML document

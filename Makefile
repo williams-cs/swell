@@ -4,7 +4,6 @@ build: node_modules
 	typedoc --out docs --excludeExternals --readme README.md
 	touch docs/.nojekyll
 	browserify --debug dist/lib/ui/ui.js -o browserui.js
-	browserify --debug dist/lib/ui/ui-nondm.js -o browserui-nondm.js
 
 clean:
 	rm -rf dist
