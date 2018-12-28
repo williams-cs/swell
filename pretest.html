@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title> Swell Pre-test </title>
+  	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Mono' rel='stylesheet'>
+    <link href='style.css' rel='stylesheet' type='text/css'>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  </head>
+
+  <body>
+    <div class="jumbotron">
+      <h5> Swell Survey </h5>
+      <p> Before the fun begins, please answer the following 2 questions! </p>
+
+      <p> 1. How excited are you about programming? </p>
+      <form>
+        <div class="radio">
+          <label><input type="radio" name="excitement" checked> Very excited </label>
+        </div>
+        <div class="radio">
+          <label><input type="radio" name="excitement"> Excited </label>
+        </div>
+        <div class="radio">
+          <label><input type="radio" name="excitement"> Not excited </label>
+        </div>
+      </form>
+
+      <p> 2. Have you programmed before? </p>
+      <form>
+        <div class="radio">
+          <label><input type="radio" name="experience" checked> Yes. I took a class. </label>
+        </div>
+        <div class="radio">
+          <label><input type="radio" name="experience"> Yes. I did an hour of code. </label>
+        </div>
+        <div class="radio">
+          <label><input type="radio" name="experience"> No. </label>
+        </div>
+      </form>
+
+      <a href="index.html" class="btn btn-background" role="button"> Continue </a>
+
+      <p id="uuid"> UUID: </p>
+    </div>
+
+    <script>
+      let uuid_tag = document.getElementById("uuid");
+      let uuid = sessionStorage.getItem("swell_uuid");
+      console.log(uuid);
+      uuid_tag.innerHTML += uuid;
+    </script>
+  </body>
+</html>
