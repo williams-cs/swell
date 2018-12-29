@@ -6,8 +6,6 @@
     --light-gray: #E8E8E8;
     --mid-gray: #C0C0C0;
     --dark-gray: #6C6C6C;
-    --code-height: 60vh;
-    --terminal-height: 35vh;
 }
 
 html {
@@ -16,10 +14,6 @@ html {
 
 body {
     background-color: var(--gray);
-}
-
-.container-all {
-    height: 100%;
 }
 
 .sidenav {
@@ -38,16 +32,6 @@ body {
     line-height: 75px;
     text-align: center;
     font-size: 20px;
-    cursor: default;
-}
-
-.label {
-    padding: 5px;
-    margin-top: 15px;
-    display: inline-block;
-    background-color: var(--purple);
-    color: var(--white);
-    font-size: 15px;
     cursor: default;
 }
 
@@ -108,11 +92,27 @@ button:hover {
 }
 
 #code-canvas-container {
-    height: var(--code-height);
+    height: 54vh;
 }
 
-#terminal-container {
-    height: var(--terminal-height);
+#terminal-reward-container {
+    height: 34vh;
+}
+
+.label-container {
+    height: 6vh;
+}
+
+.label {
+    padding: 5px;
+    display: inline-block;
+    background-color: var(--purple);
+    color: var(--white);
+    font-size: 15px;
+    cursor: default;
+    position: absolute;
+    bottom: 0;
+    z-index: 9999;
 }
 
 #code-editor {
@@ -129,16 +129,14 @@ button:hover {
     float: left;
 }
 
-.goal-container, .reward-container {
-    height: 90%;
-    position: relative;
+.mid-col-2nd-row-container {
+    height: 95%;
+    width: 100%;
     padding: 3px;
     background-color: var(--mid-gray);
 }
 
-.goal {
-    position: relative;
-    float: left;
+#goal {
     padding: 10px;
     font-size: 15px;
     overflow-y: auto;

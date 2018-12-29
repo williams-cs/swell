@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset='utf-8'>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Swell</title>
-  	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=Roboto+Mono' rel='stylesheet'>
     <link rel="stylesheet" href="ui_modules/codemirror/lib/codemirror.css">
     <link href='style.css' rel='stylesheet' type='text/css'>
@@ -17,169 +17,189 @@
     <script src="ui_modules/codemirror/addon/selection/mark-selection.js"></script>
     <script src="ui_modules/codemirror/addon/edit/matchbrackets.js"></script>
     <script src="ui_modules/codemirror/addon/edit/closebrackets.js"></script>
-  </head>
+</head>
 
-  <body>
+<body>
     <div class="container-fluid">
-      <div class="row">
-        <div class="sidenav col-md-1">
-          <div class="row">
-            <span id="logo">SWELL</span>
-          </div>
-          <div class="row achievement-container">
-            <div class="col-4">
-              <img src="pics/star.svg" class="icon" alt="yellow star" height="25px" width="25px" />
-            </div>
-            <div class="col">
-              <span id="achievement">1/30</span>
-            </div>
-          </div>
-          <!-- Lessons -->
-          <div id="lesson-accordion">
-            <div class="row">
-              <button type="button" class="btn btn-block lesson-btn" data-toggle="collapse" data-target="#collapseOne">
-                Lesson 1
-              </button>
-            </div>
-            <div id="collapseOne" class="collapse" data-parent="#lesson-accordion">
-              <div class="row">
-                <button id="l1c1" class="checkpoint btn btn-block">Checkpoint 1</button>
-              </div>
-              <div class="row">
-                <button id="l1c2" class="checkpoint btn btn-block">Checkpoint 2</button>
-              </div>
-              <div class="row">
-                <button id="l1c3" class="checkpoint btn btn-block">Checkpoint 3</button>
-              </div>
-              <div class="row">
-                <button id="l1c4" class="checkpoint btn btn-block">Checkpoint 4</button>
-              </div>
-            </div>
-
-            <div class="row">
-              <button type="button" class="btn btn-block lesson-btn" data-toggle="collapse" data-target="#collapseTwo">
-                Lesson 2
-              </button>
-            </div>
-            <div id="collapseTwo" class="collapse" data-parent="#lesson-accordion">
-              <div class="row">
-                <button id="l2c1" class="checkpoint btn btn-block">Checkpoint 1</button>
-              </div>
-              <div class="row">
-                <button id="l2c2" class="checkpoint btn btn-block">Checkpoint 2</button>
-              </div>
-              <div class="row">
-                <button id="l2c3" class="checkpoint btn btn-block">Checkpoint 3</button>
-              </div>
-              <div class="row">
-                <button id="l2c4" class="checkpoint btn btn-block">Checkpoint 4</button>
-              </div>
-              <div class="row">
-                <button id="l2c5" class="checkpoint btn btn-block">Checkpoint 5</button>
-              </div>
-              <div class="row">
-                <button id="l2c6" class="checkpoint btn btn-block">Checkpoint 6</button>
-              </div>
-              <div class="row">
-                <button id="l2c7" class="checkpoint btn btn-block">Checkpoint 7</button>
-              </div>
-            </div>
-
-            <div class="row">
-              <button type="button" class="btn btn-block lesson-btn" data-toggle="collapse" data-target="#collapseThree">
-                Lesson 3
-              </button>
-            </div>
-            <div id="collapseThree" class="collapse" data-parent="#lesson-accordion">
-              <div class="row">
-                <button id="l3c1" class="checkpoint btn btn-block">Checkpoint 1</button>
-              </div>
-              <div class="row">
-                <button id="l3c2" class="checkpoint btn btn-block">Checkpoint 2</button>
-              </div>
-              <div class="row">
-                <button id="l3c3" class="checkpoint btn btn-block">Checkpoint 3</button>
-              </div>
-              <div class="row">
-                <button id="l3c4" class="checkpoint btn btn-block">Checkpoint 4</button>
-              </div>
-              <div class="row">
-                <button id="l3c5" class="checkpoint btn btn-block">Checkpoint 5</button>
-              </div>
-              <div class="row">
-                <button id="l3c6" class="checkpoint btn btn-block">Checkpoint 6</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="main-container col-md">
-          <div id="code-canvas-container" class="row">
-            <div id="code-container" class="col-md-6">
-              <div class="label">CODE</div>
-              <div id="code-editor">
-                <textarea id="input-textarea" placeholder="//code goes here"></textarea>
-              </div>
-            </div>
-
-            <div id="canvas-container" class="col-md">
-              <div class="label">CANVAS</div>
-              <canvas id='output'></canvas>
-              <div id='popup' class='instruction'>
-                <p> You need to complete the goal using only the CODE area to the left! </p>
-                <p> Don't remember how? Refresh your memory by going back to the last checkpoint:
-                <button id='prev'> Last Checkpoint </button>
-              </div>
-            </div>
-          </div>
-
-          <div id="terminal-container" class="row">
-            <div class="col-md-10">
-              <div id="instr-label" class="label">TERMINAL</div>
-              <div class="goal-container">
-                <div id='goal' class='goal'>
-                  <p> Welcome to Swell! Let's learn how to code! </p>
-                  <p> What is coding? Well, computers can do wonderful things, but they unfortunately don't understand English. </p>
-                  <p> To tell a computer what we want it to do, we need to communicate with it in a language that it understands. </p>
-                  <p> That's basically what coding is: to communicate with computers, by writing in a language they understand! </p>
+        <div class="row">
+            <div class="sidenav col-md-1">
+                <div class="row">
+                    <span id="logo">SWELL</span>
                 </div>
-              </div>
-            </div>
-            <div class='col-md'>
-              <div class="label">MISSION</div>
-              <div id='reward-container' class='reward-container'>
-                <div id='reward-text' class='reward'> Complete goal to earn a star! </div>
-                <img id='reward-image' src="pics/greystar.svg" class="star" alt="a star to be earned" height="50px" width="50px" />
-                <button id='next' class='btn next'>Next</button>
-              </div>
-            </div>
-          </div>
-        </div>
+                <div class="row achievement-container">
+                    <div class="col-4">
+                        <img src="pics/star.svg" class="icon" alt="yellow star" height="25px" width="25px" />
+                    </div>
+                    <div class="col">
+                        <span id="achievement">1/30</span>
+                    </div>
+                </div>
+                <!-- Lessons -->
+                <div id="lesson-accordion">
+                    <div class="row">
+                        <button type="button" class="btn btn-block lesson-btn" data-toggle="collapse" data-target="#collapseOne">
+                            Lesson 1
+                        </button>
+                    </div>
+                    <div id="collapseOne" class="collapse" data-parent="#lesson-accordion">
+                        <div class="row">
+                            <button id="l1c1" class="checkpoint btn btn-block">Checkpoint 1</button>
+                        </div>
+                        <div class="row">
+                            <button id="l1c2" class="checkpoint btn btn-block">Checkpoint 2</button>
+                        </div>
+                        <div class="row">
+                            <button id="l1c3" class="checkpoint btn btn-block">Checkpoint 3</button>
+                        </div>
+                        <div class="row">
+                            <button id="l1c4" class="checkpoint btn btn-block">Checkpoint 4</button>
+                        </div>
+                    </div>
 
-        <div class="sidenav col-md-auto">
-          <div id="toolbox-container">
-            <button type="button" class="btn btn-block btn-sm" id='reset'>Reset</button>
-            <button type="button" class="btn btn-block btn-sm" id='string'>Word</button>
-            <button type="button" class="btn btn-block btn-sm" id='number'>Number</button>
-            <button type="button" class="btn btn-block btn-sm" id='ellipse'>Ellipse</button>
-            <button type="button" class="btn btn-block btn-sm" id='rect'>Rectangle</button>
-            <button type="button" class="btn btn-block btn-sm" id='line'>Line</button>
-            <button type="button" class="btn btn-block btn-sm" id='curve'>Curve</button>
-          </div>
+                    <div class="row">
+                        <button type="button" class="btn btn-block lesson-btn" data-toggle="collapse" data-target="#collapseTwo">
+                            Lesson 2
+                        </button>
+                    </div>
+                    <div id="collapseTwo" class="collapse" data-parent="#lesson-accordion">
+                        <div class="row">
+                            <button id="l2c1" class="checkpoint btn btn-block">Checkpoint 1</button>
+                        </div>
+                        <div class="row">
+                            <button id="l2c2" class="checkpoint btn btn-block">Checkpoint 2</button>
+                        </div>
+                        <div class="row">
+                            <button id="l2c3" class="checkpoint btn btn-block">Checkpoint 3</button>
+                        </div>
+                        <div class="row">
+                            <button id="l2c4" class="checkpoint btn btn-block">Checkpoint 4</button>
+                        </div>
+                        <div class="row">
+                            <button id="l2c5" class="checkpoint btn btn-block">Checkpoint 5</button>
+                        </div>
+                        <div class="row">
+                            <button id="l2c6" class="checkpoint btn btn-block">Checkpoint 6</button>
+                        </div>
+                        <div class="row">
+                            <button id="l2c7" class="checkpoint btn btn-block">Checkpoint 7</button>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <button type="button" class="btn btn-block lesson-btn" data-toggle="collapse" data-target="#collapseThree">
+                            Lesson 3
+                        </button>
+                    </div>
+                    <div id="collapseThree" class="collapse" data-parent="#lesson-accordion">
+                        <div class="row">
+                            <button id="l3c1" class="checkpoint btn btn-block">Checkpoint 1</button>
+                        </div>
+                        <div class="row">
+                            <button id="l3c2" class="checkpoint btn btn-block">Checkpoint 2</button>
+                        </div>
+                        <div class="row">
+                            <button id="l3c3" class="checkpoint btn btn-block">Checkpoint 3</button>
+                        </div>
+                        <div class="row">
+                            <button id="l3c4" class="checkpoint btn btn-block">Checkpoint 4</button>
+                        </div>
+                        <div class="row">
+                            <button id="l3c5" class="checkpoint btn btn-block">Checkpoint 5</button>
+                        </div>
+                        <div class="row">
+                            <button id="l3c6" class="checkpoint btn btn-block">Checkpoint 6</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-container col-md">
+                <div class="row label-container">
+                    <div class="col-md-6">
+                        <div class="label">CODE</div>
+                    </div>
+                    <div class="col-md">
+                        <div class="label">CANVAS</div>
+                    </div>
+                </div>
+                <div id="code-canvas-container" class="row">
+                    <div id="code-editor" class="col-md-6">
+                        <textarea id="input-textarea" placeholder="//code goes here"></textarea>
+                    </div>
+
+                    <div id="canvas-container" class="col-md">
+                        <canvas id='output'></canvas>
+                        <div id='popup' class='instruction'>
+                            <p> You need to complete the goal using only the CODE area to the left! </p>
+                            <p> Don't remember how? Refresh your memory by going back to the last checkpoint:
+                                <button id='prev'> Last Checkpoint </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row label-container">
+                    <div class="col-md-10">
+                        <div id="instr-label" class="label">TERMINAL</div>
+                    </div>
+                    <div class="col-md">
+                        <div class="label">MISSION</div>
+                    </div>
+                </div>
+                <div id="terminal-reward-container" class="row">
+                    <div class="col-md-10">
+                        <div id="goal" class="mid-col-2nd-row-container">
+                            <p>Welcome to Swell! Let's learn how to code!</p>
+                            <p>What is coding? Well, computers can do wonderful things, but they unfortunately don't understand English.</p>
+                            <p>To tell a computer what we want it to do, we need to communicate with it in a language that it understands.</p>
+                            <p>That's basically what coding is: to communicate with computers, by writing in a language they understand!</p>
+                        </div>
+                    </div>
+                    <div class="col-md">
+                        <div id="reward-container" class="mid-col-2nd-row-container">
+                            <div id="reward-text" class="reward"> Complete goal to earn a star! </div>
+                            <img id="reward-image" src="pics/greystar.svg" class="star" alt="a star to be earned" height="50px" width="50px" />
+                            <button id="next" class="btn next">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidenav col-md-auto">
+                <div id="toolbox-container">
+                    <button type="button" class="btn btn-block btn-sm" id='reset'>Reset</button>
+                    <button type="button" class="btn btn-block btn-sm" id='string'>Word</button>
+                    <button type="button" class="btn btn-block btn-sm" id='number'>Number</button>
+                    <button type="button" class="btn btn-block btn-sm" id='ellipse'>Ellipse</button>
+                    <button type="button" class="btn btn-block btn-sm" id='rect'>Rectangle</button>
+                    <button type="button" class="btn btn-block btn-sm" id='line'>Line</button>
+                    <button type="button" class="btn btn-block btn-sm" id='curve'>Curve</button>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
 
     <script>
-      let cm = CodeMirror.fromTextArea(document.getElementById("input-textarea"), {
-        lineNumbers: true,
-        autofocus: true,
-        matchBrackets: true,
-        autoCloseBrackets: true
-      });
-      cm.getWrapperElement().setAttribute("id", "input");
+        (function() {
+            let cm = CodeMirror.fromTextArea(document.getElementById("input-textarea"), {
+                lineNumbers: true,
+                autofocus: true,
+                matchBrackets: true,
+                autoCloseBrackets: true
+            });
+            let editor = cm.getWrapperElement();
+            editor.setAttribute("id", "input");
+
+            // Make canvas responsive
+            let canvas = document.querySelector("canvas");
+            resizeCanvas = function() {
+                canvas.height = parseInt(editor.clientHeight);
+                canvas.width = parseInt(editor.clientWidth * 0.99);
+            };
+            document.getElementsByTagName("body")[0].onresize = resizeCanvas;
+            resizeCanvas();
+        })();
     </script>
     <script src='browserui.js'></script>
-    <script src="ui_modules/code-canvas.js"></script>
-  </body>
+</body>
+
 </html>
