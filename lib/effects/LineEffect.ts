@@ -649,6 +649,8 @@ export class LineEffect implements Effect<LineNode> {
 
     /**
      * Gets the current x and y coordinates of the mouse
+     * NOTE: in Firefox, window.event is not global. Need to be passed in here as a paramater.
+     * @param event the mousedown event
      */
     getMousePosition(event: any): void {
         this._mouse.x = getMousePos(this._canvas, event).x;
