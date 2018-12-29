@@ -193,7 +193,7 @@
             let canvas = document.querySelector("canvas");
             resizeCanvas = function() {
                 canvas.height = parseInt(editor.clientHeight);
-                canvas.width = parseInt(editor.clientWidth * 0.99);
+                canvas.width = parseInt(editor.clientWidth * 0.98);
             };
             document.getElementsByTagName("body")[0].onresize = resizeCanvas;
             resizeCanvas();

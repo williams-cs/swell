@@ -330,7 +330,7 @@ export class EphEffect implements Effect<EphNode> {
      * @param event the mousemove event
      */
     onMouseMove(event: any): void {
-        this.getMousePosition();
+        this.getMousePosition(event);
         if(this._isDragging && this._isSelected) {
             this.modifyDrag();
         }
@@ -663,7 +663,7 @@ export class EphEffect implements Effect<EphNode> {
     /**
      * Gets the current x and y coordinates of the mouse
      */
-    getMousePosition(): void {
+    getMousePosition(event: any): void {
         this._mouse.x = getMousePos(this._canvas, event).x;
         this._mouse.y = getMousePos(this._canvas, event).y;
     }
