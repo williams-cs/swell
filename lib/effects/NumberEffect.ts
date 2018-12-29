@@ -224,7 +224,7 @@ export class NumberEffect implements Effect<NumberNode> {
      * @param event the mousemove event
      */
     onMouseMove(event: any): void {
-        this.getMousePosition();
+        this.getMousePosition(event);
         if(this._isSelected && this._isDragging){
             this.modifyDrag();
         }
@@ -488,8 +488,10 @@ export class NumberEffect implements Effect<NumberNode> {
 
     /**
      * Gets the current x and y coordinates of the mouse
+     * NOTE: in Firefox, window.event is not global. Need to be passed in here as a paramater.
+     * @param event the mousedown event
      */
-    getMousePosition(): void {
+    getMousePosition(event: any): void {
         this._mouse.x = getMousePos(this._canvas, event).x;
         this._mouse.y = getMousePos(this._canvas, event).y;
     }

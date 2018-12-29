@@ -221,7 +221,7 @@ export class StringEffect implements Effect<StringNode> {
      * @param event the mousemove event
      */
     onMouseMove(event: any): void {
-        this.getMousePosition();
+        this.getMousePosition(event);
         if(this._isSelected && this._isDragging){
             //console.log(this._str.val + " is being dragged.");
             this.modifyDrag();
@@ -492,8 +492,10 @@ export class StringEffect implements Effect<StringNode> {
 
     /**
      * Gets the current x and y coordinates of the mouse
+     * NOTE: in Firefox, window.event is not global. Need to be passed in here as a paramater.
+     * @param event the mousedown event
      */
-    getMousePosition(): void {
+    getMousePosition(event: any): void {
         this._mouse.x = getMousePos(this._canvas, event).x;
         this._mouse.y = getMousePos(this._canvas, event).y;
     }

@@ -149,8 +149,10 @@ export declare class NumberEffect implements Effect<NumberNode> {
     modifyReset(): void;
     /**
      * Gets the current x and y coordinates of the mouse
+     * NOTE: in Firefox, window.event is not global. Need to be passed in here as a paramater.
+     * @param event the mousedown event
      */
-    getMousePosition(): void;
+    getMousePosition(event: any): void;
     /**
      * Sets isDragging, isResizing, isChangingDims, and isSelected to false if the mouse clicks outside of the canvas
      * @param event the mousedown event
