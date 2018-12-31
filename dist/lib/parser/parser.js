@@ -506,6 +506,10 @@ var Parser;
                     if (tup[1].length == 2) {
                         return new index_1.EphNode(tup[1][0], tup[1][1], ws);
                     }
+                case "emoji":
+                    if (tup[1].length == 3) {
+                        return new index_1.EmojiNode(tup[1][0], tup[1][1], tup[1][2], ws);
+                    }
             }
             let args = tup[1];
             return new index_1.FunApp(fname, args, ws);

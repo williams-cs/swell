@@ -214,7 +214,8 @@ const diff_1 = require("diff");
     /* Palette */
     let paletteButtons = [
         "ellipse", "rect", "string", "number",
-        "line", "curve"
+        "line", "curve",
+        "happy", "sad", "angry", "cool"
     ];
     for (let buttonName of paletteButtons) {
         let paletteButton = document.getElementById(buttonName);
@@ -243,6 +244,12 @@ const diff_1 = require("diff");
                 break;
             case "curve":
                 newNode = "print(curve(100, 100, 100));\n";
+                break;
+            case "happy":
+            case "sad":
+            case "angry":
+            case "cool":
+                newNode = 'print(emoji("' + buttonName + '", 100, 100));\n';
                 break;
             default:
                 console.log("Problem with " + buttonName);
@@ -337,7 +344,7 @@ const diff_1 = require("diff");
     /**
      * Creates a module corresponding to a checkpoint passed in.
      * Sets up the instruction, CODE area, and goal box accordingly.
-     * @param cp: the name of the checkpoint
+     * @param cp the name of the checkpoint
      */
     function initCheckpoint(cp) {
         //store CODE of old checkpoint

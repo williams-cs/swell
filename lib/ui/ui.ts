@@ -239,7 +239,8 @@ import { diffChars, IDiffResult } from 'diff';
 
     let paletteButtons: string[] = [
         "ellipse", "rect", "string", "number",
-        "line", "curve"
+        "line", "curve",
+        "happy", "sad", "angry", "cool"
     ];
 
     for (let buttonName of paletteButtons) {
@@ -271,6 +272,10 @@ import { diffChars, IDiffResult } from 'diff';
             case "curve":
                 newNode = "print(curve(100, 100, 100));\n";
                 break;
+            case "happy": case "sad": case "angry": case "cool":
+                newNode = 'print(emoji("' + buttonName + '", 100, 100));\n';
+                break;
+
             default:
                 console.log("Problem with " + buttonName);
                 return;
@@ -375,7 +380,7 @@ import { diffChars, IDiffResult } from 'diff';
     /**
      * Creates a module corresponding to a checkpoint passed in.
      * Sets up the instruction, CODE area, and goal box accordingly.
-     * @param cp: the name of the checkpoint
+     * @param cp the name of the checkpoint
      */
     function initCheckpoint(cp: string) {
         //store CODE of old checkpoint
