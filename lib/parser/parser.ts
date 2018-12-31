@@ -1,5 +1,5 @@
 import { Primitives, CharUtil } from 'pants';
-import { NumberNode, StringNode, Expression, BinaryOperation, DeclareOp, PlusOp, MulOp, DivOp, MinusOp, NegOp, VariableNode, AssignOp, UnaryOperation, ListNode, SequenceNode, Return, FunDef, FunApp, BooleanNode, Conditional, WhileNode, PrintNode, Equals, Not, And, GreaterThan, LessThan, GreaterThanEq, LessThanEq, Or, NotEqual, ForNode, Dimensions, Increment, NOP, Decrement, EllipseNode, RectangleNode, LineNode, CurveNode, EphNode } from '../../index';
+import { NumberNode, StringNode, Expression, BinaryOperation, DeclareOp, PlusOp, MulOp, DivOp, MinusOp, NegOp, VariableNode, AssignOp, UnaryOperation, ListNode, SequenceNode, Return, FunDef, FunApp, BooleanNode, Conditional, WhileNode, PrintNode, Equals, Not, And, GreaterThan, LessThan, GreaterThanEq, LessThanEq, Or, NotEqual, ForNode, Dimensions, Increment, NOP, Decrement, EllipseNode, RectangleNode, LineNode, CurveNode, EphNode, EmojiNode } from '../../index';
 import { Option, Some, None } from 'space-lift';
 
 export namespace Parser {
@@ -576,6 +576,10 @@ export namespace Parser {
                 case "eph":
                     if(tup[1].length == 2){
                         return new EphNode(tup[1][0], tup[1][1], ws);
+                    }
+                case "emoji":
+                    if(tup[1].length == 3){
+                        return new EmojiNode(tup[1][0], tup[1][1], tup[1][2], ws);
                     }
             }
             let args: Expression<any>[] = tup[1];

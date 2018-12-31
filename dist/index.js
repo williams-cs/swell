@@ -84,6 +84,8 @@ var CurveNode_1 = require("./lib/shapes/CurveNode");
 exports.CurveNode = CurveNode_1.CurveNode;
 var EphNode_1 = require("./lib/shapes/EphNode");
 exports.EphNode = EphNode_1.EphNode;
+var EmojiNode_1 = require("./lib/shapes/EmojiNode");
+exports.EmojiNode = EmojiNode_1.EmojiNode;
 var PrintNode_1 = require("./lib/structural/PrintNode");
 exports.PrintNode = PrintNode_1.PrintNode;
 var Return_1 = require("./lib/structural/Return");
@@ -106,6 +108,8 @@ var CurveEffect_1 = require("./lib/effects/CurveEffect");
 exports.CurveEffect = CurveEffect_1.CurveEffect;
 var EphEffect_1 = require("./lib/effects/EphEffect");
 exports.EphEffect = EphEffect_1.EphEffect;
+var EmojiEffect_1 = require("./lib/effects/EmojiEffect");
+exports.EmojiEffect = EmojiEffect_1.EmojiEffect;
 /* EVENTS */
 var LogEvent_1 = require("./lib/logging/LogEvent");
 exports.LogEvent = LogEvent_1.LogEvent;
