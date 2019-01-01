@@ -41,6 +41,7 @@ export {Conditional} from './lib/conditionals/Conditional';
 export {FunApp} from './lib/funhouse/FunApp';
 export {FunDef} from './lib/funhouse/FunDef';
 export {SequenceNode} from './lib/structural/SequenceNode';
+export {RepeatNode} from './lib/loops/RepeatNode';
 export {WhileNode} from './lib/loops/WhileNode';
 export {ForNode} from './lib/loops/ForNode';
 

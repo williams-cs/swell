@@ -1,5 +1,5 @@
 import { Primitives, CharUtil } from 'pants';
-import { NumberNode, StringNode, Expression, BinaryOperation, DeclareOp, PlusOp, MulOp, DivOp, MinusOp, NegOp, VariableNode, AssignOp, UnaryOperation, ListNode, SequenceNode, Return, FunDef, FunApp, BooleanNode, Conditional, WhileNode, PrintNode, Equals, Not, And, GreaterThan, LessThan, GreaterThanEq, LessThanEq, Or, NotEqual, ForNode, Dimensions, Increment, NOP, Decrement, EllipseNode, RectangleNode, LineNode, CurveNode, EphNode, EmojiNode } from '../../index';
+import { NumberNode, StringNode, Expression, BinaryOperation, DeclareOp, PlusOp, MulOp, DivOp, MinusOp, NegOp, VariableNode, AssignOp, UnaryOperation, ListNode, SequenceNode, Return, FunDef, FunApp, BooleanNode, Conditional, RepeatNode, WhileNode, PrintNode, Equals, Not, And, GreaterThan, LessThan, GreaterThanEq, LessThanEq, Or, NotEqual, ForNode, Dimensions, Increment, NOP, Decrement, EllipseNode, RectangleNode, LineNode, CurveNode, EphNode, EmojiNode } from '../../index';
 import { Option, Some, None } from 'space-lift';
 
 export namespace Parser {
@@ -87,7 +87,7 @@ export namespace Parser {
         program += "\n";
         //printOffset = -1;
         //this.effects = effects;
-        let o= ExpressionParser(new CharUtil.CharStream(program));
+        let o = ExpressionParser(new CharUtil.CharStream(program));
         switch(o.tag){
             case "success":
                 return Some(o.result);
@@ -131,17 +131,18 @@ export namespace Parser {
         let p3 = Primitives.choice<Expression<any>>(BoolParse())(p2);
         let p4 = Primitives.choice<Expression<any>>(varDecParse())(p3);
         let p5 = Primitives.choice<Expression<any>>(unOpsExpr)(p4);
-        let p6= Primitives.choice<Expression<any>>(Declare())(p5);
-        let p7= Primitives.choice<Expression<any>>(binOpExpr)(p6);
-        let p8= Primitives.choice<Expression<any>> (LogicExpr())(p7);
-        let p9= Primitives.choice<Expression<any>>(ListHead)(p8);
-        let p10= Primitives.choice<Expression<any>>(funApp)(p9);
-        let p11= Primitives.choice<Expression<any>>(returnParser)(p10);
-        let p12= Primitives.choice<Expression<any>>(condParse)(p11);
-        let p13= Primitives.choice<Expression<any>>(WhileLoop)(p12);
-        let p14= Primitives.choice<Expression<any>>(ForLoop)(p13);
-        let p15= Primitives.choice<Expression<any>>(funDef)(p14);
-        return p15(i);
+        let p6 = Primitives.choice<Expression<any>>(Declare())(p5);
+        let p7 = Primitives.choice<Expression<any>>(binOpExpr)(p6);
+        let p8 = Primitives.choice<Expression<any>> (LogicExpr())(p7);
+        let p9 = Primitives.choice<Expression<any>>(ListHead)(p8);
+        let p10 = Primitives.choice<Expression<any>>(funApp)(p9);
+        let p11 = Primitives.choice<Expression<any>>(returnParser)(p10);
+        let p12 = Primitives.choice<Expression<any>>(condParse)(p11);
+        let p13 = Primitives.choice<Expression<any>>(WhileLoop)(p12);
+        let p14 = Primitives.choice<Expression<any>>(ForLoop)(p13);
+        let p15 = Primitives.choice<Expression<any>>(funDef)(p14);
+        let p16 = Primitives.choice<Expression<any>>(loopParse)(p15);
+        return p16(i);
     }
 
     /**
@@ -163,7 +164,8 @@ export namespace Parser {
         let p11= Primitives.choice<Expression<any>>(WhileLoop)(p10);
         let p12= Primitives.choice<Expression<any>>(ForLoop)(p11);
         let p13= Primitives.choice<Expression<any>>(funDef)(p12);
-        return p13(i);
+        let p14 = Primitives.choice<Expression<any>>(loopParse)(p13);
+        return p14(i);
     }
 
     /**
@@ -186,7 +188,8 @@ export namespace Parser {
         let p12= Primitives.choice<Expression<any>>(WhileLoop)(p11);
         let p13= Primitives.choice<Expression<any>>(ForLoop)(p12);
         let p14= Primitives.choice<Expression<any>>(funDef)(p13);
-        return p14(i);
+        let p15 = Primitives.choice<Expression<any>>(loopParse)(p14);
+        return p15(i);
     }
 
     /**
@@ -670,7 +673,7 @@ export namespace Parser {
         let cond= Primitives.between<CharUtil.CharStream[], CharUtil.CharStream, Expression<any>>(p1)(Primitives.char(')'))(expr);
         let curly= Primitives.between<CharUtil.CharStream, CharUtil.CharStream, CharUtil.CharStream>(Primitives.ws())(Primitives.ws())(Primitives.char('{'));
         let body= Primitives.between<CharUtil.CharStream, CharUtil.CharStream, Expression<any>>(curly)(Primitives.char('}'))(bodyParse);
-        return Primitives.seq<Expression<any>, Expression<any>, Expression<any>[]>(cond)(body)(x=> x);
+        return Primitives.seq<Expression<any>, Expression<any>, Expression<any>[]>(cond)(body)(x => x);
     }
 
     /**
@@ -703,8 +706,36 @@ export namespace Parser {
                 return new Conditional(tup[0], tup[1]);
             }
         }
-        return Primitives.appfun<Expression<any>[], Conditional>(Primitives.choice<Expression<any>[]>(IfElseParse())(IfParse()))(f)(i);
+        return Primitives.appfun<Expression<any>[], Conditional>(Primitives.choice<Expression<any>[]>(IfElseParse())(IfParse())) (f)(i);
     }
+
+    /**
+     * RepeatLoop parses valid repeat statement of the form "repeat(n){ body; }"
+     * returns an array where the first elem is number of repeats and the second is the body
+     */
+   export function RepeatLoop() : Primitives.IParser<Expression<any>[]>{
+       let expr = Primitives.between<CharUtil.CharStream, CharUtil.CharStream, Expression<{}>>(Primitives.ws())(Primitives.ws())(ExpressionParserNoSeq);
+       let bodyParse = Primitives.between<CharUtil.CharStream, CharUtil.CharStream, Expression<{}>>(Primitives.ws())(Primitives.ws())(ExpressionParser);
+       let p1 = Primitives.seq<CharUtil.CharStream, CharUtil.CharStream, CharUtil.CharStream[]>(Primitives.str('repeat'))(Primitives.char('('))(x =>x);
+       let n = Primitives.between<CharUtil.CharStream[], CharUtil.CharStream, Expression<any>>(p1)(Primitives.char(')'))(expr);
+       let curly = Primitives.between<CharUtil.CharStream, CharUtil.CharStream, CharUtil.CharStream>(Primitives.ws())(Primitives.ws())(Primitives.char('{'));
+       let body = Primitives.between<CharUtil.CharStream, CharUtil.CharStream, Expression<any>>(curly)(Primitives.char('}'))(bodyParse);
+       return Primitives.seq<Expression<any>, Expression<any>, Expression<any>[]>(n)(body)(x => x);
+   }
+
+   /**
+    * loopParse parses possible loop statements, is a helper for RepeatLoop
+    * returns a RepeatNode
+    * @param i a nonsense parameter used to avoid the bug with eager evaluation
+    */
+   export let loopParse : Primitives.IParser<RepeatNode> = i => {
+       var f = (tup : Expression<any>[]) => {
+           if(tup.length == 2) {
+               return new RepeatNode(tup[0], tup[1]);
+           }
+       }
+       return Primitives.appfun<Expression<any>[], RepeatNode>(RepeatLoop()) (f)(i);
+   }
 
     /**
      * WhileLoop parses valid while loops in the form "while(condition) { body;}"
