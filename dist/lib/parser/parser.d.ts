@@ -1,5 +1,5 @@
 import { Primitives, CharUtil } from 'pants';
-import { StringNode, Expression, DeclareOp, VariableNode, UnaryOperation, ListNode, Return, FunDef, BooleanNode, Conditional, WhileNode, ForNode } from '../../index';
+import { StringNode, Expression, DeclareOp, VariableNode, UnaryOperation, ListNode, Return, FunDef, BooleanNode, Conditional, RepeatNode, WhileNode, ForNode } from '../../index';
 import { Option } from 'space-lift';
 export declare namespace Parser {
     /**
@@ -180,6 +180,17 @@ export declare namespace Parser {
      * @param i a nonsense parameter used to avoid the bug with eager evaluation
      */
     let condParse: Primitives.IParser<Conditional>;
+    /**
+     * RepeatLoop parses valid repeat statement of the form "repeat(n){ body; }"
+     * returns an array where the first elem is number of repeats and the second is the body
+     */
+    function RepeatLoop(): Primitives.IParser<Expression<any>[]>;
+    /**
+     * loopParse parses possible loop statements, is a helper for RepeatLoop
+     * returns a RepeatNode
+     * @param i a nonsense parameter used to avoid the bug with eager evaluation
+     */
+    let loopParse: Primitives.IParser<RepeatNode>;
     /**
      * WhileLoop parses valid while loops in the form "while(condition) { body;}"
      * returns a WhileNode for the AST

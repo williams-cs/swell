@@ -122,7 +122,8 @@ var Parser;
         let p13 = pants_1.Primitives.choice(Parser.WhileLoop)(p12);
         let p14 = pants_1.Primitives.choice(Parser.ForLoop)(p13);
         let p15 = pants_1.Primitives.choice(Parser.funDef)(p14);
-        return p15(i);
+        let p16 = pants_1.Primitives.choice(Parser.loopParse)(p15);
+        return p16(i);
     };
     /**
      * Searches through all possible expressions except for binOp expressions
@@ -143,7 +144,8 @@ var Parser;
         let p11 = pants_1.Primitives.choice(Parser.WhileLoop)(p10);
         let p12 = pants_1.Primitives.choice(Parser.ForLoop)(p11);
         let p13 = pants_1.Primitives.choice(Parser.funDef)(p12);
-        return p13(i);
+        let p14 = pants_1.Primitives.choice(Parser.loopParse)(p13);
+        return p14(i);
     };
     /**
      * Searches through all possible expressions except for logical expressions
@@ -165,7 +167,8 @@ var Parser;
         let p12 = pants_1.Primitives.choice(Parser.WhileLoop)(p11);
         let p13 = pants_1.Primitives.choice(Parser.ForLoop)(p12);
         let p14 = pants_1.Primitives.choice(Parser.funDef)(p13);
-        return p14(i);
+        let p15 = pants_1.Primitives.choice(Parser.loopParse)(p14);
+        return p15(i);
     };
     /**
      * lNumber is used to wrap parsed numbers in NumberNodes for the AST
@@ -632,6 +635,33 @@ var Parser;
             }
         };
         return pants_1.Primitives.appfun(pants_1.Primitives.choice(IfElseParse())(IfParse()))(f)(i);
+    };
+    /**
+     * RepeatLoop parses valid repeat statement of the form "repeat(n){ body; }"
+     * returns an array where the first elem is number of repeats and the second is the body
+     */
+    function RepeatLoop() {
+        let expr = pants_1.Primitives.between(pants_1.Primitives.ws())(pants_1.Primitives.ws())(Parser.ExpressionParserNoSeq);
+        let bodyParse = pants_1.Primitives.between(pants_1.Primitives.ws())(pants_1.Primitives.ws())(Parser.ExpressionParser);
+        let p1 = pants_1.Primitives.seq(pants_1.Primitives.str('repeat'))(pants_1.Primitives.char('('))(x => x);
+        let n = pants_1.Primitives.between(p1)(pants_1.Primitives.char(')'))(expr);
+        let curly = pants_1.Primitives.between(pants_1.Primitives.ws())(pants_1.Primitives.ws())(pants_1.Primitives.char('{'));
+        let body = pants_1.Primitives.between(curly)(pants_1.Primitives.char('}'))(bodyParse);
+        return pants_1.Primitives.seq(n)(body)(x => x);
+    }
+    Parser.RepeatLoop = RepeatLoop;
+    /**
+     * loopParse parses possible loop statements, is a helper for RepeatLoop
+     * returns a RepeatNode
+     * @param i a nonsense parameter used to avoid the bug with eager evaluation
+     */
+    Parser.loopParse = i => {
+        var f = (tup) => {
+            if (tup.length == 2) {
+                return new index_1.RepeatNode(tup[0], tup[1]);
+            }
+        };
+        return pants_1.Primitives.appfun(RepeatLoop())(f)(i);
     };
     /**
      * WhileLoop parses valid while loops in the form "while(condition) { body;}"
