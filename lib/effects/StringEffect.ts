@@ -54,16 +54,12 @@ export class StringEffect implements Effect<StringNode> {
 
     private _textMetrics: { // all the details of the text on the canvas
         width: number,
-        height: number,
         interval: number,
-        str: string,
         initMousePos: number,
         cursorPos: number
     } = {
         width: 0,
-        height: 0,
         interval: 0,
-        str: "",
         initMousePos: 0,
         cursorPos: 0
     }
@@ -108,15 +104,11 @@ export class StringEffect implements Effect<StringNode> {
         let fontDeets: string = this._fontSize + "px Courier New";
         this._ctx.font = fontDeets;
         this._ctx.fillStyle = "#673AB7";
-
         this._ctx.fillText(this._str.val, this.x, this.y);
-        let textDims = this._ctx.measureText(this._str.val);
-        this._textMetrics.width = textDims.width;
-        this._textMetrics.height = this._fontSize;
-        this._textMetrics.str = this._str.val;
-        this._textMetrics.interval = this._textMetrics.width / this._textMetrics.str.length;
+        this._textMetrics.width = this._ctx.measureText(this._str.val).width;
+        this._textMetrics.interval = this._textMetrics.width != 0 ? this._textMetrics.width / this._str.val.length : 0;
         if(this._isSelected) {
-            this.drawTextGuides(this.x, this.y - this._fontSize, this._textMetrics.width, this._textMetrics.height, this._corner);
+            this.drawTextGuides(this.x, this.y - this._fontSize, this._textMetrics.width, this._fontSize, this._corner);
         }
         if(this._isEditing) {
             this.modifyTextCursor();
@@ -250,7 +242,7 @@ export class StringEffect implements Effect<StringNode> {
         } else if (!this._isSelectingMultiple){
             this._isSelected = false;
             this._isEditing = false;
-        }  else {
+        } else {
             this._isEditing = false;
         }
         this.modifyState(this.guideContains(this._mouse.x, this._mouse.y) > 0, this.contains(this._mouse.x, this._mouse.y));
@@ -302,26 +294,10 @@ export class StringEffect implements Effect<StringNode> {
      * Creates and moves the text edit cursor based on where the mouse is clicked
      */
     modifyTextCursor(): void {
-        let leftWall: number = this.x; // the x position of the left most side of the bounding rectangle
-        let xDif: number = this._textMetrics.initMousePos - leftWall; // difference between mouse x and left wall
-        let interval: number = this._textMetrics.interval; // the text width divided by the length of the string
-        let moveFactor: number = 0;
-        if(xDif >= interval / 2 && xDif <= interval){
-            moveFactor = leftWall + interval;
-            this._textMetrics.cursorPos = interval;
-        }
-        else if(xDif <= interval / 2) {
-            moveFactor = leftWall;
-            this._textMetrics.cursorPos = 0;
-        }
-        else if(xDif % interval >= interval / 2) {
-            moveFactor = leftWall + interval * Math.ceil(xDif / interval);
-            this._textMetrics.cursorPos = interval * Math.ceil(xDif / interval);
-        }
-        else if(xDif % interval < interval / 2) {
-            moveFactor = leftWall + interval * Math.floor(xDif / interval);
-            this._textMetrics.cursorPos = interval * Math.floor(xDif / interval);
-        }
+        let xDif: number = this._textMetrics.initMousePos - this.x; // difference between mouse x and left wall
+        let interval: number = this._textMetrics.interval;
+        this._textMetrics.cursorPos = interval != 0 ? interval * Math.round(xDif / interval) : 0;
+        let moveFactor: number = this._textMetrics.cursorPos + this.x;
         this._ctx.moveTo(moveFactor, this.y - this._fontSize);
         this._ctx.lineTo(moveFactor, this.y);
         this._ctx.strokeStyle = "grey";
@@ -333,35 +309,53 @@ export class StringEffect implements Effect<StringNode> {
      * @param event keydown event
      */
     modifyText(event: any): void {
-        if(this._isEditing) {
-            let firstHalf: string;
-            let secondHalf: string;
-            let breakPoint: number = this._textMetrics.cursorPos / this._textMetrics.interval;
-            firstHalf = this._str.val.substring(0, breakPoint);
-            secondHalf = this._str.val.substring(breakPoint);
-            if(event.keyCode == 37 && this._textMetrics.initMousePos > this.x + this._textMetrics.interval / 2) {
-                this._textMetrics.initMousePos -= this._textMetrics.interval;
-                this.modifyTextCursor();
-            }
-            else if(event.keyCode == 39 && this._textMetrics.initMousePos < this.x + this._textMetrics.width) {
-                this._textMetrics.initMousePos += this._textMetrics.interval;
-                this.modifyTextCursor();
-            }
-            else if(event.keyCode == 8 && this._str.val.length > 0) {
-                firstHalf = firstHalf.substring(0, firstHalf.length - 1);
-                this._str.str = firstHalf + secondHalf;
-                this._textMetrics.initMousePos -= this._textMetrics.interval;
-                this.modifyTextCursor();
-            }
-            else {
-                let keyName = event.key;
-                if(keyName.length == 1){
-                    firstHalf += keyName;
-                    this._str.str = firstHalf + secondHalf;
-                    this._textMetrics.initMousePos += this._textMetrics.interval;
+        if (!this._isEditing) {
+            return;
+        }
+        let interval: number = this._textMetrics.interval;
+        let breakPoint: number = interval != 0 ? this._textMetrics.cursorPos / interval : 0;
+        let firstHalf: string = this._str.val.substring(0, breakPoint);
+        let secondHalf: string = this._str.val.substring(breakPoint);
+
+        switch (event.keyCode) {
+            case 37: // Arrow left
+                if (this._textMetrics.initMousePos > this.x + interval / 2) {
+                    this._textMetrics.initMousePos -= interval;
                     this.modifyTextCursor();
                 }
-            }
+                break;
+            case 39: // Arrow right
+                if (this._textMetrics.initMousePos < this.x + this._textMetrics.width) {
+                    this._textMetrics.initMousePos += interval;
+                    this.modifyTextCursor();
+                }
+                break;
+            case 8: // Backspace
+                if (this._str.val.length > 0) {
+                    firstHalf = firstHalf.substring(0, firstHalf.length - 1);
+                    this._str.str = firstHalf + secondHalf;
+                    this._textMetrics.initMousePos -= interval;
+                    this.modifyTextCursor();
+                }
+                event.preventDefault(); // Backspacing on Firefox will go back to a previous page
+                break;
+            case 46: // Del
+                if (this._str.val.length > 0) {
+                    secondHalf = secondHalf.substring(1, secondHalf.length);
+                    this._str.str = firstHalf + secondHalf;
+                }
+                break;
+            default:
+                let keyName = event.key;
+                if (keyName.length == 1) {
+                    firstHalf += keyName;
+                    this._str.str = firstHalf + secondHalf;
+                    if (interval == 0) {
+                        interval = this._ctx.measureText(this._str.val).width / this._str.val.length;
+                    }
+                    this._textMetrics.initMousePos += interval;
+                    this.modifyTextCursor();
+                }
         }
     }
 
@@ -371,10 +365,10 @@ export class StringEffect implements Effect<StringNode> {
      * @param isTooSmall true if the font size is < 15
      */
     modifyResize(isTooSmall: boolean): void {
-        if(isTooSmall){
+        if (isTooSmall){
             this._fontSize = 15;
             let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
-            if(newDistance - this._initDistance > 0){
+            if (newDistance - this._initDistance > 0) {
                 this._fontSize += (newDistance - this._initDistance) * 0.2;
                 this._initDistance = newDistance;
             }
