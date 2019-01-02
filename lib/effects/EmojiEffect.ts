@@ -67,7 +67,7 @@ export class EmojiEffect implements Effect<EmojiNode> {
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
             this._emojiImg = new Image();
-            this._emojiImg.src = './pics/' + this._emoji.name.eval(this._context).val + '.png';
+            this._emojiImg.src = './pics/' + this._emoji.name.eval(this._context).val + '.svg';
             this._ratio = this.w / this.h;
             this.update();
         }
