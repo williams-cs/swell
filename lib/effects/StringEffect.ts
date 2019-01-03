@@ -331,7 +331,7 @@ export class StringEffect implements Effect<StringNode> {
                 }
                 break;
             case 8: // Backspace
-                if (this._str.val.length > 0) {
+                if (this._textMetrics.cursorPos > 0) {
                     firstHalf = firstHalf.substring(0, firstHalf.length - 1);
                     this._str.str = firstHalf + secondHalf;
                     this._textMetrics.initMousePos -= interval;
@@ -340,10 +340,8 @@ export class StringEffect implements Effect<StringNode> {
                 event.preventDefault(); // Backspacing on Firefox will go back to a previous page
                 break;
             case 46: // Del
-                if (this._str.val.length > 0) {
-                    secondHalf = secondHalf.substring(1, secondHalf.length);
-                    this._str.str = firstHalf + secondHalf;
-                }
+                secondHalf = secondHalf.substring(1, secondHalf.length);
+                this._str.str = firstHalf + secondHalf;
                 break;
             default:
                 let keyName = event.key;

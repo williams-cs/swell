@@ -11,6 +11,7 @@ import { diffChars, IDiffResult } from 'diff';
     let editor = ((e: any) => { return e.CodeMirror })(document.getElementById("input"));
     let editorWrapper = editor.getWrapperElement();
     let canvas = document.querySelector("canvas");
+    let popUp = document.getElementById("popup");
     let ctx = canvas.getContext("2d");
     let lastCursorPos: any = editor.getCursor();
     let lastProgram: string = ""; // Used for comparing and highlighting diffs
@@ -119,6 +120,7 @@ import { diffChars, IDiffResult } from 'diff';
         if (lastProgram != newProgram) {
             editor.setValue(newProgram);
             highlightDiff(newProgram);
+            lastProgram = newProgram;
         } else if (!isCanvasSelected) {
             isDoingDM = false;
         }
@@ -134,14 +136,12 @@ import { diffChars, IDiffResult } from 'diff';
         let curChar: number = 0;
 
         diffChars(lastProgram, newProgram).forEach((result: IDiffResult) => {
-            if (result.removed) {
-                return;
-            }
             let lines: Array<string> = result.value.split(/\r?\n/g);
-            let endLine: number = curLine + lines.length - 1;
-            let endChar: number = (endLine == curLine ? curChar : 0) + lines[lines.length - 1].length;
+            let endLine: number = result.removed ? curLine : curLine + lines.length - 1;
+            let endChar: number = result.removed ? curChar :
+                ((endLine == curLine ? curChar : 0) + lines[lines.length - 1].length);
 
-            if (result.added) {
+            if (result.added || result.removed) {
                 // Extends the highlighted section all the way to the left
                 let startHighlightChar: number = curChar;
                 let firstLine: string = editor.getLine(curLine);
@@ -208,7 +208,7 @@ import { diffChars, IDiffResult } from 'diff';
         lastCursorPos = editor.getCursor();
     });
 
-    //Mousedown event for window element
+    // Window event
     window.addEventListener('mousedown', function(event: any) {
         let mouseX = event.clientX;
         let mouseY = event.clientY;
@@ -222,16 +222,21 @@ import { diffChars, IDiffResult } from 'diff';
             popUp.style.display = 'none';
         }
     });
+    window.addEventListener("keydown", function(event: any) {
+        if (!editor.hasFocus()) {
+            isDoingDM = true;
+        }
+    });
+    window.addEventListener("keyup", function(event: any) {
+        isDoingDM = false;
+    });
 
     // Canvas mouse events
-    let popUp = document.getElementById('popup');
     canvas.addEventListener("mousedown", function() {
-        lastProgram = editor.getValue();
         isCanvasSelected = true;
         isDoingDM = true;
     });
     canvas.addEventListener("mouseup", function() {
-        lastProgram = editor.getValue();
         isCanvasSelected = false;
     });
 
@@ -416,7 +421,6 @@ import { diffChars, IDiffResult } from 'diff';
             canvasIsDisabled = false;
         }
 
-        let popUp = document.getElementById('popup');
         popUp.style.display = 'none';
 
         if (cpCode.get(checkpoint._name) !== "") {
