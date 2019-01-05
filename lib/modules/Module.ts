@@ -62,14 +62,17 @@ export abstract class Module {
 
         let instruction = this._instrBoxes[this._instrIndex];
 
-        let instrDiv = document.createElement("div");
-        instrDiv.className = "instruction";
-        instrDiv.id = 'instruction';
-        instrDiv.innerText = instruction._content;
-        instrDiv.style.top = instruction._top;
-        instrDiv.style.left = instruction._left;
-        instrDiv.style.display = "block";
+        //render the instruction content
+        let div = document.createElement("div");
+        div.className = "instruction";
+        div.id = 'instruction';
+        div.innerText = instruction._content;
+        div.style.top = instruction._top;
+        div.style.left = instruction._left;
+        div.style.display = "block";
 
+        //render the buttons
+        let innerDiv = document.createElement("div");
         let prevInstr = document.createElement("button");
         prevInstr.id = 'previous-instruction';
         prevInstr.innerText = "<";
@@ -81,7 +84,7 @@ export abstract class Module {
           prevInstr.style.background = "#D8D8D8";
           prevInstr.disabled = true;
         }
-        instrDiv.appendChild(prevInstr);
+        innerDiv.appendChild(prevInstr);
 
         let nextInstr = document.createElement("button");
         nextInstr.id = 'next-instruction';
@@ -93,9 +96,11 @@ export abstract class Module {
           nextInstr.style.background = "#D8D8D8";
           nextInstr.disabled = true;
         }
-        instrDiv.appendChild(nextInstr);
+        innerDiv.appendChild(nextInstr);
 
-        document.getElementById(instruction._location).appendChild(instrDiv);
+        div.appendChild(innerDiv);
+
+        document.getElementById(instruction._location).appendChild(div);
     }
 
     get numInstructions(): number {

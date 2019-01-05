@@ -15,11 +15,6 @@ class RepeatNode {
         this._n = n;
         this._body = body;
         console.log(this._body.toString());
-        /*this._ws = ws;
-        if(ws == undefined) {
-            this._ws = "";
-        }*/
-        //console.log("repeat node constructed");
     }
     /**
      * Evaluates the repeat loop

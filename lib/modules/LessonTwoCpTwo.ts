@@ -11,7 +11,7 @@ export class LessonTwoCpTwo extends Module {
     readonly _instructions: string =
         `<p> GOAL: Fit the circle inside the given box. </p>`;
 
-    readonly _starterCode: string = `print(ellipse(100, 100), 120, 150)`;
+    readonly _starterCode: string = `print(ellipse(100, 100), 120, 150);`;
 
     _latestInstrIndex: number = 0;
 
