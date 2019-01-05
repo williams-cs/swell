@@ -9,4 +9,6 @@ export declare class ClearEvent extends LogEvent<any> {
      * Assembles and returns message "Console cleared" with date and time attached
      */
     assembleLog(): string;
+    eventType(): string;
+    toJSON(): string;
 }

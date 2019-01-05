@@ -11,9 +11,11 @@ export declare class ResizeEvent extends LogEvent<any> {
      */
     constructor(toLog: string, x1: number, y1: number, x2?: number, y2?: number);
     /**
-     * Assembles log message of form "Resized obj from size x1, y1 to size x1, y2" for rects and ellipses
+     * Assembles log message of form "Resized obj from size x1, y1 to size x2, y2" for rects and ellipses
      * or of form "Resized obj from size x1 to size y1" for strings
      * Has date and time attached
      */
     assembleLog(): string;
+    eventType(): string;
+    toJSON(): string;
 }

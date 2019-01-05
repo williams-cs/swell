@@ -20,4 +20,12 @@ export class ClickEvent extends LogEvent<any>{
         let toPrint = "Clicked on " + this.toLog + " at " + this.x1.toString() + ", " + this.y1.toString();
         return this.logItem(toPrint);
     }
+
+    eventType() : string {
+        return "ClickEvent";
+    }
+
+    toJSON(): string {
+        return "{ on: '" + this.toLog + "', x: '" + this.x1 + "', y: '" + this.y1 + "' }";
+    }
 }

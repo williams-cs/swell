@@ -11,4 +11,6 @@ export declare class ClickEvent extends LogEvent<any> {
      * Assembles and returns message of form "Clicked on obj at x, y" with date and time attached
      */
     assembleLog(): string;
+    eventType(): string;
+    toJSON(): string;
 }

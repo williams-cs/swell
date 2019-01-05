@@ -15,7 +15,7 @@ class ResizeEvent extends LogEvent_1.LogEvent {
         this.tag = "resize";
     }
     /**
-     * Assembles log message of form "Resized obj from size x1, y1 to size x1, y2" for rects and ellipses
+     * Assembles log message of form "Resized obj from size x1, y1 to size x2, y2" for rects and ellipses
      * or of form "Resized obj from size x1 to size y1" for strings
      * Has date and time attached
      */
@@ -28,6 +28,18 @@ class ResizeEvent extends LogEvent_1.LogEvent {
             this.toPrint = "Resized " + this.toLog + " from size " + this.x1.toString() + " to size " + this.y1.toString();
         }
         return this.logItem(this.toPrint);
+    }
+    eventType() {
+        return "ResizeEvent";
+    }
+    toJSON() {
+        if (this.x2 != undefined && this.y2 != undefined) {
+            return "{ on: '" + this.toLog + "', from_x: '" + this.x1 + "', from_y: '" + this.y1 + "', to_x: '" + this.x2 + "', to_y: '" + this.y2 + "' }";
+        }
+        else {
+            // I don't understand this. Why this.y1?
+            return "{ on: '" + this.toLog + "', from_x: '" + this.x1 + "', to_y: '" + this.y1 + "' }";
+        }
     }
 }
 exports.ResizeEvent = ResizeEvent;

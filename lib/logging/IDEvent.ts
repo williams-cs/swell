@@ -29,4 +29,12 @@ export class IDEvent extends LogEvent<any>{
         let print = "Assigned ID " + this._toPrint;
         return this.logItem(print);
     }
+
+    eventType() : string {
+        return "IDEvent";
+    }
+
+    toJSON(): string {
+        return "{ on: '" + (this.toLog as Effect<any>).toIDString() + "' }";
+    }
 }

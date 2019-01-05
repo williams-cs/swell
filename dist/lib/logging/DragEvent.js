@@ -26,6 +26,12 @@ class DragEvent extends LogEvent_1.LogEvent {
         let print = "Dragged " + this._toPrint;
         return this.logItem(print);
     }
+    eventType() {
+        return "DragEvent";
+    }
+    toJSON() {
+        return "{ on: '" + this.toLog.toDragString() + "' }";
+    }
 }
 exports.DragEvent = DragEvent;
 //# sourceMappingURL=DragEvent.js.map

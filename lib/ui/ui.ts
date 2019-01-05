@@ -42,6 +42,10 @@ import { diffChars, IDiffResult } from 'diff';
         console.log("Log: ");
         for (let elem of masterLog) {
             console.log(elem.assembleLog());
+            // this is just sample usage;
+            // you should replace parameters with real values
+            // this might not even be the right place to put this
+            LogEvent.logToRemoteServer(elem.eventType(), "someUUID", elem.toJSON());
         }
     }
 
@@ -181,6 +185,9 @@ import { diffChars, IDiffResult } from 'diff';
             editor.getAllMarks().forEach((mark: any) => {
                 mark.clear();
             });
+
+            // user stopped doing DM; log now
+            printLog();
         }, 500);
 
         // Update last program if necessary

@@ -15,4 +15,6 @@ export declare class SelectEvent extends LogEvent<any> {
      * Returns the message with date and time attached
      */
     assembleLog(): string;
+    eventType(): string;
+    toJSON(): string;
 }

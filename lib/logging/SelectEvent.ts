@@ -31,4 +31,12 @@ export class SelectEvent extends LogEvent<any>{
     assembleLog(): string {
         return this.logItem(this._toPrint);
     }
+
+    eventType() : string {
+        return "SelectEvent";
+    }
+
+    toJSON(): string {
+        return "{ on: '" + this.logItem(this._toPrint) + "' }";
+    }
 }

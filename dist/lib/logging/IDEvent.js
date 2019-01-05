@@ -25,6 +25,12 @@ class IDEvent extends LogEvent_1.LogEvent {
         let print = "Assigned ID " + this._toPrint;
         return this.logItem(print);
     }
+    eventType() {
+        return "IDEvent";
+    }
+    toJSON() {
+        return "{ on: '" + this.toLog.toIDString() + "' }";
+    }
 }
 exports.IDEvent = IDEvent;
 //# sourceMappingURL=IDEvent.js.map

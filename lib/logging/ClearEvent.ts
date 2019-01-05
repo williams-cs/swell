@@ -18,4 +18,12 @@ export class ClearEvent extends LogEvent<any>{
         let toPrint = "Console cleared";
         return this.logItem(toPrint);
     }
+
+    eventType() : string {
+        return "ClearEvent";
+    }
+
+    toJSON(): string {
+        return "{}";
+    }
 }

@@ -11,4 +11,6 @@ export declare class PaintEvent extends LogEvent<any> {
      * Assembles and returns message of form "Painted obj at x, y" with date and time attached
      */
     assembleLog(): string;
+    eventType(): string;
+    toJSON(): string;
 }

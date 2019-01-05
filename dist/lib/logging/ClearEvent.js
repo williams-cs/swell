@@ -17,6 +17,12 @@ class ClearEvent extends LogEvent_1.LogEvent {
         let toPrint = "Console cleared";
         return this.logItem(toPrint);
     }
+    eventType() {
+        return "ClearEvent";
+    }
+    toJSON() {
+        return "{}";
+    }
 }
 exports.ClearEvent = ClearEvent;
 //# sourceMappingURL=ClearEvent.js.map

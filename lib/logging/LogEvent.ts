@@ -46,6 +46,13 @@ export abstract class LogEvent<T> {
     abstract assembleLog(): string;
 
     /**
+     * Prints JSON payload for remote logging
+     */
+    abstract toJSON(): string;
+
+    abstract eventType(): string;
+
+    /**
      * Returns date-time string
      */
     get dateTime(): string {
@@ -95,5 +102,38 @@ export abstract class LogEvent<T> {
      */
     get y2(): number{
         return this._y2;
+    }
+
+    /**
+     * Logs to a remote server.
+     */
+    static logToRemoteServer(eventtype: string, uid: string, data: string) {
+        // modified from: https://stackoverflow.com/a/10073788/480764
+        function pad(n: number, width: number) : string {
+            let padWith = '0';
+            let nstr = n.toString();
+            return nstr.length >= width ? nstr : new Array(width - nstr.length + 1).join(padWith) + nstr;
+        }
+
+        let date = new Date();
+        let year = date.getFullYear().toString();
+        let month = pad(date.getMonth() + 1, 2);
+        let day = pad(date.getDay(), 2);
+        let hour = pad(date.getHours(), 2);
+        let minutes = pad(date.getMinutes(), 2);
+        let seconds = pad(date.getSeconds(), 2);
+
+        let payload = new FormData();
+        payload.append('uid', uid);
+        payload.append('data', data);
+        payload.append('eventtype', eventtype);
+
+        // MUST USE THE FOLLOWING DATE FORMAT
+        // payload.append('time', '2019-01-01 16:36:00');
+        payload.append('time', year + '-' + month + '-' + day + ' ' + hour + ':' + minutes + ':' + seconds);
+
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "http://localhost:3000/events", true);
+        xhr.send(payload);
     }
 }

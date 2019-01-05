@@ -16,4 +16,6 @@ export declare class DragEvent extends LogEvent<any> {
      * with date and time attached
      */
     assembleLog(): string;
+    eventType(): string;
+    toJSON(): string;
 }

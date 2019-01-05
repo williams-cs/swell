@@ -15,4 +15,6 @@ export declare class IDEvent extends LogEvent<any> {
      * Assembles message of form "Assigned ID # to obj at x, y" with date and time attached
      */
     assembleLog(): string;
+    eventType(): string;
+    toJSON(): string;
 }

@@ -34,6 +34,10 @@ const diff_1 = require("diff");
         console.log("Log: ");
         for (let elem of masterLog) {
             console.log(elem.assembleLog());
+            // this is just sample usage;
+            // you should replace parameters with real values
+            // this might not even be the right place to put this
+            index_2.LogEvent.logToRemoteServer(elem.eventType(), "someUUID", elem.toJSON());
         }
     }
     function parse() {
@@ -163,6 +167,8 @@ const diff_1 = require("diff");
             editor.getAllMarks().forEach((mark) => {
                 mark.clear();
             });
+            // user stopped doing DM; log now
+            printLog();
         }, 500);
         // Update last program if necessary
         if (update) {

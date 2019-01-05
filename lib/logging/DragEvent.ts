@@ -30,4 +30,12 @@ export class DragEvent extends LogEvent<any>{
         let print = "Dragged " + this._toPrint;
         return this.logItem(print);
     }
+
+    eventType() : string {
+        return "DragEvent";
+    }
+
+    toJSON(): string {
+        return "{ on: '" + (this.toLog as Effect<any>).toDragString() + "' }";
+    }
 }

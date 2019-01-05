@@ -20,4 +20,12 @@ export class PaintEvent extends LogEvent<any>{
         let toPrint = "Painted " + this.toLog + " at " + this.x1.toString() + ", " + this.y1.toString();
         return this.logItem(toPrint);
     }
+
+    eventType() : string {
+        return "PaintEvent";
+    }
+
+    toJSON(): string {
+        return "{ on: '" + this.toLog + "', x: '" + this.x1 + "', y: '" + this.y1 + "' }";
+    }
 }

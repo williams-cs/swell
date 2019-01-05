@@ -28,6 +28,11 @@ export declare abstract class LogEvent<T> {
      */
     abstract assembleLog(): string;
     /**
+     * Prints JSON payload for remote logging
+     */
+    abstract toJSON(): string;
+    abstract eventType(): string;
+    /**
      * Returns date-time string
      */
     readonly dateTime: string;
@@ -58,4 +63,8 @@ export declare abstract class LogEvent<T> {
      * Returns y2
      */
     readonly y2: number;
+    /**
+     * Logs to a remote server.
+     */
+    static logToRemoteServer(eventtype: string, uid: string, data: string): void;
 }

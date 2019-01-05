@@ -27,6 +27,12 @@ class SelectEvent extends LogEvent_1.LogEvent {
     assembleLog() {
         return this.logItem(this._toPrint);
     }
+    eventType() {
+        return "SelectEvent";
+    }
+    toJSON() {
+        return "{ on: '" + this.logItem(this._toPrint) + "' }";
+    }
 }
 exports.SelectEvent = SelectEvent;
 //# sourceMappingURL=SelectEvent.js.map

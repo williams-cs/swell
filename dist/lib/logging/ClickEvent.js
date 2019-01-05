@@ -19,6 +19,12 @@ class ClickEvent extends LogEvent_1.LogEvent {
         let toPrint = "Clicked on " + this.toLog + " at " + this.x1.toString() + ", " + this.y1.toString();
         return this.logItem(toPrint);
     }
+    eventType() {
+        return "ClickEvent";
+    }
+    toJSON() {
+        return "{ on: '" + this.toLog + "', x: '" + this.x1 + "', y: '" + this.y1 + "' }";
+    }
 }
 exports.ClickEvent = ClickEvent;
 //# sourceMappingURL=ClickEvent.js.map

@@ -19,6 +19,12 @@ class PaintEvent extends LogEvent_1.LogEvent {
         let toPrint = "Painted " + this.toLog + " at " + this.x1.toString() + ", " + this.y1.toString();
         return this.logItem(toPrint);
     }
+    eventType() {
+        return "PaintEvent";
+    }
+    toJSON() {
+        return "{ on: '" + this.toLog + "', x: '" + this.x1 + "', y: '" + this.y1 + "' }";
+    }
 }
 exports.PaintEvent = PaintEvent;
 //# sourceMappingURL=PaintEvent.js.map
