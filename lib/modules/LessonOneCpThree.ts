@@ -60,7 +60,6 @@ export class LessonOneCpThree extends Module {
                     this.renderLatestInstruction(document);
                 }
                 return false;
-                break;
 
             case 1:
                 for (let effect of effects) {
@@ -72,13 +71,9 @@ export class LessonOneCpThree extends Module {
                     }
                 }
                 return false;
-                break;
 
             default:
                 return true;
-                break;
         }
-
-        return false;
     }
 }
