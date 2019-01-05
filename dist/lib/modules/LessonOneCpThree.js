@@ -50,7 +50,6 @@ class LessonOneCpThree extends Module_1.Module {
                     this.renderLatestInstruction(document);
                 }
                 return false;
-                break;
             case 1:
                 for (let effect of effects) {
                     if (effect instanceof StringEffect_1.StringEffect && effect.str !== "") {
@@ -61,12 +60,9 @@ class LessonOneCpThree extends Module_1.Module {
                     }
                 }
                 return false;
-                break;
             default:
                 return true;
-                break;
         }
-        return false;
     }
 }
 exports.LessonOneCpThree = LessonOneCpThree;

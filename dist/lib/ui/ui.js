@@ -8,6 +8,7 @@ const diff_1 = require("diff");
     let editor = ((e) => { return e.CodeMirror; })(document.getElementById("input"));
     let editorWrapper = editor.getWrapperElement();
     let canvas = document.querySelector("canvas");
+    let popUp = document.getElementById("popup");
     let ctx = canvas.getContext("2d");
     let lastCursorPos = editor.getCursor();
     let lastProgram = ""; // Used for comparing and highlighting diffs
@@ -107,6 +108,7 @@ const diff_1 = require("diff");
         if (lastProgram != newProgram) {
             editor.setValue(newProgram);
             highlightDiff(newProgram);
+            lastProgram = newProgram;
         }
         else if (!isCanvasSelected) {
             isDoingDM = false;
@@ -121,13 +123,11 @@ const diff_1 = require("diff");
         let curLine = 0;
         let curChar = 0;
         diff_1.diffChars(lastProgram, newProgram).forEach((result) => {
-            if (result.removed) {
-                return;
-            }
             let lines = result.value.split(/\r?\n/g);
-            let endLine = curLine + lines.length - 1;
-            let endChar = (endLine == curLine ? curChar : 0) + lines[lines.length - 1].length;
-            if (result.added) {
+            let endLine = result.removed ? curLine : curLine + lines.length - 1;
+            let endChar = result.removed ? curChar :
+                ((endLine == curLine ? curChar : 0) + lines[lines.length - 1].length);
+            if (result.added || result.removed) {
                 // Extends the highlighted section all the way to the left
                 let startHighlightChar = curChar;
                 let firstLine = editor.getLine(curLine);
@@ -186,7 +186,7 @@ const diff_1 = require("diff");
     editor.on("blur", function () {
         lastCursorPos = editor.getCursor();
     });
-    //Mousedown event for window element
+    // Window event
     window.addEventListener('mousedown', function (event) {
         let mouseX = event.clientX;
         let mouseY = event.clientY;
@@ -200,15 +200,20 @@ const diff_1 = require("diff");
             popUp.style.display = 'none';
         }
     });
+    window.addEventListener("keydown", function (event) {
+        if (!editor.hasFocus()) {
+            isDoingDM = true;
+        }
+    });
+    window.addEventListener("keyup", function (event) {
+        isDoingDM = false;
+    });
     // Canvas mouse events
-    let popUp = document.getElementById('popup');
     canvas.addEventListener("mousedown", function () {
-        lastProgram = editor.getValue();
         isCanvasSelected = true;
         isDoingDM = true;
     });
     canvas.addEventListener("mouseup", function () {
-        lastProgram = editor.getValue();
         isCanvasSelected = false;
     });
     /* Palette */
@@ -377,7 +382,6 @@ const diff_1 = require("diff");
             canvas.style.background = 'white';
             canvasIsDisabled = false;
         }
-        let popUp = document.getElementById('popup');
         popUp.style.display = 'none';
         if (cpCode.get(checkpoint._name) !== "") {
             editor.setValue(cpCode.get(checkpoint._name));
