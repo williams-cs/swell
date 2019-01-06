@@ -7,6 +7,7 @@ export declare class LessonThreeCpSix extends Module {
     readonly _goal: any;
     readonly _constraint: string;
     readonly _instructions: string;
+    _latestInstrIndex: number;
     xA: number;
     yA: number;
     xB: number;
@@ -20,8 +21,8 @@ export declare class LessonThreeCpSix extends Module {
     /**
      * A lesson leading into conditionals
      * goals: moving the text and observe the code
-     * @param document: The HTML document
-     * @param effects: the list of effects currently on the CANVAS
+     * @param document the HTML document
+     * @param effects the list of effects currently on the CANVAS
      */
     checkGoal(document: Document, effects: Effect<any>[]): boolean;
 }

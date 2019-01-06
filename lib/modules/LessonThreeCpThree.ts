@@ -29,7 +29,6 @@ if(b < 10) {
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
         content = 'The claim is printed with the correct value of b! Good job!';
         this._instrBoxes.push(new Instruction('canvas-container', content, "70%", "10%"));
-
     }
 
     /**
