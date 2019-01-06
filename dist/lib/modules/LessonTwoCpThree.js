@@ -79,22 +79,6 @@ class LessonTwoCpThree extends Module_1.Module {
             default:
                 return true;
         }
-        /*
-        let stringExists = false;
-        let circleCount = 0;
-
-        for (let effect of effects) {
-            if (!stringExists) {
-                stringExists = effect instanceof StringEffect && effect.str !== "";
-            }
-
-            if (effect instanceof EllipseEffect) {
-                circleCount += 1;
-            }
-        }
-
-        return stringExists && circleCount >= 2;
-        */
     }
 }
 exports.LessonTwoCpThree = LessonTwoCpThree;
