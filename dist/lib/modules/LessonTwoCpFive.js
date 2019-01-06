@@ -9,19 +9,19 @@ class LessonTwoCpFive extends Module_1.Module {
         this._name = "l2c5";
         this._nextModule = 'l2c6';
         this._constraint = 'none';
-        this._instructions = `<p> GOAL: Create a variable c referring to an rect(100, 100), then write 2 print statements to print c. </p>`;
+        this._instructions = `<p> GOAL: Create a variable c referring to an rect(75, 75), then write 2 print statements to print c. </p>`;
         this._starterCode = `a = "moo moo";
 b = ellipse(100, 100);
 print(b, 100, 100);`;
         this._latestInstrIndex = 0;
-        let content = "Let's take this one step further: Create a new variable c, and make it refer to an rect(150, 150).";
+        let content = "Let's take this one step further: Create a new variable c, and make it refer to an rect(75, 75).";
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "50%", "10%"));
         content = "Now change the print statement to print c instead of b.";
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "40%", "10%"));
-        content = "Finally, write print(c, 300, 300) underneath the existing print statement.";
+        content = "Finally, write print(c, 300, 100) underneath the existing print statement.";
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "50%", "10%"));
         content = 'Awesome, You are getting good at using variables! What you just did is to draw 2 rectangles, both named c!';
-        this._instrBoxes.push(new Instruction_1.Instruction('canvas-container', content, "70%", "10%"));
+        this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "70%", "10%"));
     }
     /**
      * A lesson to print a string

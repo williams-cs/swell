@@ -96,9 +96,5 @@ print(b, 100, 100);`;
             default:
                 return true;
         }
-
-
-
-
     }
 }
