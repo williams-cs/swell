@@ -22,7 +22,7 @@ print("a is less than 10", 103, 143);`;
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "50%", "10%"));
         content = "Change the value of a to 12. Observe what happens on the CANVAS.";
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "40%", "10%"));
-        content = 'Did you notice the claim that "a is less than 10" did not change? a is now 12 and clearly greater than 10!';
+        content = 'Do you notice the claim that "a is less than 10" did not change? a is now 12 and clearly greater than 10! Yet our computer does not know to not print the wrong claim!';
         this._instrBoxes.push(new Instruction_1.Instruction('canvas-container', content, "70%", "10%"));
     }
     /**
