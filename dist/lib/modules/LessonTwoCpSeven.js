@@ -12,7 +12,7 @@ class LessonTwoCpSeven extends Module_1.Module {
         this._constraint = 'none';
         this._instructions = `<p> CHALLENGE: Create a circle and print out its size. </p>`;
         this._starterCode = `a = 50;
-print(ellipse(100, 100), 125, 125);`;
+print(ellipse(100, 100), 125, 175);`;
         this._latestInstrIndex = 1;
         this.x = 10;
         this.square_size = 250;

@@ -8,7 +8,7 @@ export class LessonThreeCpTwo extends Module {
     readonly _goal: any;
     readonly _constraint: string = 'none';
     readonly _instructions: string =
-        `<p> Did you notice the claim that "a is less than 10" did not change? a is now 12 and clearly greater than 10! </p>
+        `
     <p> What we want is for the computer to only print "a is less than 10" ONLY when the value of a is truly less than 10. </p>
     <p> To do so, we use an if statement. Observe the CODE above. All we changed was to put in an if statement that checks whether a < 10. If a is, the code inside the curly braces {} are executed. </p>
     <p> Change the value of a to 12, 10, 8 and observe what happens. </p>
