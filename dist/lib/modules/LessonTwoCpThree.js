@@ -15,15 +15,15 @@ class LessonTwoCpThree extends Module_1.Module {
         this._latestInstrIndex = 1;
         let content = "What if we want to draw more than only 1 circle?";
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "50%", "10%"));
-        content = "First copy the print statement on the first line and paste it on the second line above.";
+        content = `First copy the <span class="inline-code">print</span> statement on the first line and paste it on the second line above.`;
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "40%", "10%"));
-        content = "Hm, that should have created a second circle right? Let's try to fix this by changing the 120 above to 200.";
+        content = `Hm, that should have created a second circle right? Let's try to fix this by changing the <span class="inline-code">120</span> above to <span class="inline-code">200</span>.`;
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "50%", "10%"));
         content = "Yep! One circle was on top of the other this entire time! In the future, be mindful of this.";
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "50%", "10%"));
         content = "Now let's have a quick challenge: in addition to the 2 circles, write a word on the canvas. Do you remember how to print a word?";
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "50%", "10%"));
-        content = "There's no limit to how many print statements the computer can understand, so you can write 1000 print statements, and the computer will draw 1000 things on the CANVAS for you!";
+        content = `There's no limit to how many <span class="inline-code">print</span> statements the computer can understand, so you can write 1000 <span class="inline-code">print</span> statements, and the computer will draw 1000 things on the CANVAS for you!`;
         this._instrBoxes.push(new Instruction_1.Instruction('canvas-container', content, "70%", "10%"));
     }
     /**

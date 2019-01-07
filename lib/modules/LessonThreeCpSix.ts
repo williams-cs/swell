@@ -49,15 +49,15 @@ print(ellipse(b, b), ${circ_xB}, ${circ_yB});
 print("Circle A is smaller than circle B.", ${this.xA}, ${this.yA + this.square_size + this.font_size});`
 
         //setting up the Instructions
-        let content = "Now that you know how to use if/else statements, let's put them all together!";
+        let content = `Now that you know how to use <span class="inline-code">if/else</span> statements, let's put them all together!`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = 'Above we have the CODE to draw 2 circles: circle A has height and width a, and circle B has height and width b.';
+        content = 'Above we have the CODE to draw 2 circles: circle A has height and width <span class="inline-code">a</span>, and circle B has height and width <span class="inline-code">b</span>.';
         this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
-        content = `However, currently the claim that "Circle A is smaller than circle B." is printed regardless of the circles' actual sizes.`;
+        content = `However, currently the claim that <span class="inline-code">Circle A is smaller than circle B.</span> is printed regardless of the circles' actual sizes.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = `Here's a challenge for you: Create an if/else statement to print "Circle A is smaller than circle B." when it is actually so, and print "Circle A is bigger than circle B" otherwise.`;
+        content = `Here's a challenge for you: Create an <span class="inline-code">if/else</span> statement to print <span class="inline-code">Circle A is smaller than circle B.</span> when it is actually so, and print <span class="inline-code">Circle A is bigger than circle B.</span> otherwise.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "80%", "10%"));
-        content = 'Congratulations! You just successfully wrote a complicated if/else statement!';
+        content = 'Congratulations! You just successfully wrote a complicated <span class="inline-code">if/else</span> statement!';
         this._instrBoxes.push(new Instruction('canvas-container', content, "70%", "10%"));
     }
 

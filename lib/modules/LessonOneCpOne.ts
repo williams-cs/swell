@@ -17,7 +17,7 @@ export class LessonOneCpOne extends Module {
         super(ctx, editor);
         let content = "First, let's tell the computer to print something on the CANVAS. Click on the CODE box.";
         this._instrBoxes.push(new Instruction('code-editor', content, "70%", "10%"));
-        content = 'Great! Now type `print("Hello")` in this CODE box.';
+        content = 'Great! Now type <span class="inline-code">print("Hello");</span> in this CODE box.';
         this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
         content = 'Notice that what you typed causes the computer to print the word "Hello" on the CANVAS here. Congratulations! You just wrote your first line of code!';
         this._instrBoxes.push(new Instruction('canvas-container', content, "65%", "10%"));

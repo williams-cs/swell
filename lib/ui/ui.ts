@@ -393,6 +393,11 @@ import { diffChars, IDiffResult } from 'diff';
         ['l4c2', false]
     ]);
 
+    /* keeping track of and displaying user's progress */
+    let starCount: number = 0;
+    let starBox = document.getElementById("achievement");
+    updateStarBox();
+
     let cpNames: string[] = [
         'l1c1', 'l1c2', 'l1c3', 'l1c4',
         'l2c1', 'l2c2', 'l2c3', 'l2c4', 'l2c5', 'l2c6', 'l2c7',
@@ -418,7 +423,7 @@ import { diffChars, IDiffResult } from 'diff';
      * @param cp the name of the checkpoint
      */
     function initCheckpoint(cp: string) {
-        //store CODE of old checkpoint
+        //store code written of old checkpoint
         if (checkpoint != null) {
             cpCode.set(checkpoint._name, editor.getValue());
         }
@@ -428,7 +433,7 @@ import { diffChars, IDiffResult } from 'diff';
         instrLabel.innerHTML = cp + " - GOAL";
         instructions.innerHTML = checkpoint._instructions;
 
-        //set up the CODE and CANVAS areas
+        //freeze/unfreeze the CODE and CANVAS areas
         if (checkpoint._constraint == 'code') {
             editor.setOption("readOnly", true);
             editorWrapper.style.opacity = '0.5';
@@ -451,11 +456,21 @@ import { diffChars, IDiffResult } from 'diff';
             canvasIsDisabled = false;
         }
 
-        popUp.style.display = 'none';
-
+        //restore previous code written in this checkpoint
         if (cpCode.get(checkpoint._name) !== "") {
             editor.setValue(cpCode.get(checkpoint._name));
             parse();
+        }
+
+        //restore latest instruction at this checkpoint
+        popUp.style.display = 'none';
+        let curInstruction = document.getElementById("instruction");
+        if (curInstruction != null) {
+            curInstruction.remove();
+        }
+
+        if (checkpoint.numInstructions > 0) {
+            checkpoint.renderInstruction(document);
         }
 
         //set up the instruction and goal boxes
@@ -463,20 +478,13 @@ import { diffChars, IDiffResult } from 'diff';
             updateRewardBox();
 
         } else {
-            if (checkpoint._starterCode != null) {
+            //initialize starter code if this is the first time this checkpoint is reached
+            if (checkpoint._starterCode != null && cpCode.get(checkpoint._name) === "") {
                 editor.setValue(checkpoint._starterCode);
                 parse();
             }
 
-            let curInstruction = document.getElementById("instruction");
-            if (curInstruction != null) {
-                curInstruction.remove();
-            }
-
-            if (checkpoint.numInstructions > 0) {
-                checkpoint.renderInstruction(document);
-            }
-
+            //set up the instruction and goal boxes
             rewardBox.style.background = '#C0C0C0';
             let reward = document.getElementById('reward-text');
             reward.style.color = 'black';
@@ -496,6 +504,7 @@ import { diffChars, IDiffResult } from 'diff';
         if (checkpoint.checkGoal(document, effects)) {
             updateRewardBox();
             cpCompletion.set(checkpoint._name, true);
+            updateStarBox();
         }
     }
 
@@ -529,6 +538,16 @@ import { diffChars, IDiffResult } from 'diff';
         if (prevModule != '') {
             initCheckpoint(prevModule);
         }
+    }
+
+    function updateStarBox() {
+        starCount = 0;
+        for (var val of cpCompletion.values()) {
+            if (val) {
+                starCount++;
+            }
+        }
+        starBox.innerHTML = starCount + "/" + cpCompletion.size;
     }
 
     //call to animate

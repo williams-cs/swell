@@ -16,13 +16,13 @@ print("a is less than 10", 103, 143);`;
         this._latestInstrIndex = 3;
         let content = "We learned to tell the computer to print a lot of things. Now, let's teach it to make some decisions on its own.";
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "50%", "10%"));
-        content = 'Look at the CODE above. We let a = 5, then we print the value of a to the CANVAS. Then we print the line "a is less than 10".';
+        content = 'Look at the CODE above. We let <span class="inline-code">a = 5</span>, then we print the value of <span class="inline-code">a</span> to the CANVAS. Then we print the line <span class="inline-code">a is less than 10</span>.';
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "40%", "10%"));
-        content = "Since a = 5, and 5 < 10, we know that a is less than 10. But what would happen if we change the value of a to, say, 12?";
+        content = `Since <span class="inline-code">a</span> is 5, and 5 < 10, we know that <span class="inline-code">a</span> is less than 10. But what would happen if we change the value of a to, say, 12?`;
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "50%", "10%"));
-        content = "Change the value of a to 12. Observe what happens on the CANVAS.";
+        content = `Change the value of <span class="inline-code">a</span> to <span class="inline-code">12</span>. Observe what happens on the CANVAS.`;
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "40%", "10%"));
-        content = 'Do you notice the claim that "a is less than 10" did not change? a is now 12 and clearly greater than 10! Yet our computer does not know to not print the wrong claim!';
+        content = 'Do you notice the claim that <span class="inline-code">a is less than 10</span> did not change? <span class="inline-code">a</span> is now 12 and clearly greater than 10! Yet our computer does not know to not print the wrong claim!';
         this._instrBoxes.push(new Instruction_1.Instruction('canvas-container', content, "70%", "10%"));
     }
     /**

@@ -17,19 +17,19 @@ if(c == 8) {
 \tprint("c is NOT equal to 8.", 103, 143);
 }`;
         this._latestInstrIndex = 2;
-        let content = `Now, what if we want to print another message, "c is not equal to 8" any time c is not equal to 8?`;
+        let content = `Now, what if we want to print another message, <span class="inline-code">c is not equal to 8</span> any time <span class="inline-code">c</span> is not equal to 8?`;
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "50%", "10%"));
-        content = `Observe the CODE above. When the condition inside the if() statement is satisfied, the code block inside the braces {} right after it would run.`;
+        content = `Observe the CODE above. When the condition inside the brackets of <span class="inline-code">if()</span> is satisfied, the code block inside the braces <span class="inline-code">{}</span> right after it would run.`;
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "40%", "10%"));
-        content = `What would happen if we change the value of c? In the CODE above, change the value of c to 5 and observe what happens.`;
+        content = `What would happen if we change the value of <span class="inline-code">c</span>? In the CODE above, change the value of <span class="inline-code">c</span> to <span class="inline-code">5</span> and observe what happens.`;
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "50%", "10%"));
-        content = `Did you notice the claim printed here changed? When the condition inside the if statement is not satisfied, the second code block inside the braces {} after the else statement would run instead!`;
+        content = `Did you notice the claim printed here changed? When the condition inside the <span class="inline-code">if</span> statement is not satisfied, the second code block inside the braces <span class="inline-code">{}</span> after the <span class="inline-code">else</span> statement would run instead!`;
         this._instrBoxes.push(new Instruction_1.Instruction('canvas-container', content, "70%", "10%"));
-        content = `To get a better idea, change the value of c back to 8.`;
+        content = `To get a better idea, change the value of <span class="inline-code">c</span> back to <span class="inline-code">8</span>.`;
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "40%", "10%"));
-        content = `Did you see the claim changed again? Now, change the value of c to 17.`;
+        content = `Did you see the claim changed again? Now, change the value of <span class="inline-code">c</span> to <span class="inline-code">17</span>.`;
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "40%", "10%"));
-        content = `Hope you get the hang of what an else statement does by this point! As long as the condition inside the if statement is not satisfied, the code block inside the second braces {} would run instead of the first code block.`;
+        content = `Hope you get the hang of what an <span class="inline-code">else</span> statement does by this point! As long as the condition inside the <span class="inline-code">if</span> statement is not satisfied, the code block inside the second braces <span class="inline-code">else{}</span> would run instead of the first code block.`;
         this._instrBoxes.push(new Instruction_1.Instruction('canvas-container', content, "70%", "10%"));
     }
     /**

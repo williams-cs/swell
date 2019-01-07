@@ -28,13 +28,13 @@ print(c, 300, 100)`;
 
     constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) {
         super(ctx, editor);
-        let content = "Now that you have drawn 2 circles both are called c, let's see what happens when you try to modify one of them.";
+        let content = `Now that you have drawn 2 circles both are called <span class="inline-code">c</span>, let's see what happens when you try to modify one of them.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = "Click on one of the circles on the CANVAS, and try make it bigger. Observe what happens to your declaration of c.";
+        content = `Click on one of the circles on the CANVAS, and try make it bigger. Observe what happens to your declaration of <span class="inline-code">c</span>.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "70%", "10%"));
-        content = "Did you see what happened? Changing one circle changes what c is in your CODE!";
+        content = `Did you see what happened? Changing one circle changes what <span class="inline-code">c</span> is in your CODE!`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = 'Furthermore, that change also affected the other circle on the CANVAS!';
+        content = 'Furthermore, that change also affected the other circle on the CANVAS! The 2 circle referred to by <span class="inline-code">c</span> are always identical, no matter what!';
         this._instrBoxes.push(new Instruction('canvas-container', content, "70%", "10%"));
     }
 

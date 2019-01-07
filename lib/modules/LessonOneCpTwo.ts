@@ -24,13 +24,13 @@ export class LessonOneCpTwo extends Module {
     constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) {
         super(ctx, editor);
         this.x = ctx.canvas.width - this.square_size - this.y;
-        let content = "Notice the numbers added inside the () of your print statement? They specify where your computer should write the word on the CANVAS.";
+        let content = `Notice the numbers added inside the brackets <span class="inline-code">()</span> of your <span class="inline-code">print</span> statement? They specify where your computer should write the word on the CANVAS.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "30%", "10%"));
         content = "To understand what they do, first click on the word currently on the CANVAS and drag it around.";
         this._instrBoxes.push(new Instruction('canvas-container', content, "70%", "10%"));
         content = "Now drag the word into the top-right box on the CANVAS.";
         this._instrBoxes.push(new Instruction('canvas-container', content, "80%", "10%"));
-        content = "Did you notice that the numbers inside the print statement change? Now drag the word into the top-left box on the CANVAS.";
+        content = `Did you notice that the numbers inside the <span class="inline-code">print</span> statement change? Now drag the word into the top-left box on the CANVAS.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "30%", "10%"));
         content = 'These numbers indicate the location on the CANVAS where the computer should draw the word! The first number changes when the word moves left and right. The second number changes when the word moves up and down.';
         this._instrBoxes.push(new Instruction('code-editor', content, "30%", "10%"));
@@ -67,7 +67,7 @@ export class LessonOneCpTwo extends Module {
                     }
                 }
                 return false;
-                
+
             case 2:
                 for (let effect of effects) {
                     if (effect instanceof StringEffect && effect.str !== "") {

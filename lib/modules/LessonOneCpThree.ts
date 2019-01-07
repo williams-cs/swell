@@ -24,7 +24,7 @@ export class LessonOneCpThree extends Module {
     constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) {
         super(ctx, editor);
         this.x = ctx.canvas.width - this.square_size - this.y;
-        let content = "Moving things on the CANVAS changes the CODE. What if we change the CODE? In the print statement above, change the first 100 to 200. Observe the CANVAS.";
+        let content = `Moving things on the CANVAS changes the CODE. What if we change the CODE? In the <span class="inline-code">print</span> statement above, change the first <span class="inline-code">100</span> to <span class="inline-code">200</span>. Observe the CANVAS.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "30%", "10%"));
         content = "Changing those numbers in the CODE moves the word on CANVAS! Now, try move this word inside the top-right box by changing your CODE alone.";
         this._instrBoxes.push(new Instruction('canvas-container', content, "70%", "10%"));

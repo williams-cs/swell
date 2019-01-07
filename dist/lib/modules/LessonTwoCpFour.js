@@ -18,11 +18,11 @@ print(a, 100, 100);`;
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "50%", "10%"));
         content = "Variables are simply names you give to the things that you draw.";
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "40%", "10%"));
-        content = "For example, take a look at the code above. Change the a in the print statement to b, and observe what happened on the CANVAS.";
+        content = `For example, take a look at the code above. Change the <span class="inline-code">a</span> in the <span class="inline-code">print</span> statement to <span class="inline-code">b</span>, and observe what happened on the CANVAS.`;
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "50%", "10%"));
-        content = 'Did you see the CANVAS changed? In our code, we make variable a refer to the words "moo moo", and variable b refer to an ellipse(100, 100).';
+        content = 'Did you see the CANVAS changed? In our code, we make variable <span class="inline-code">a</span> refer to the words <span class="inline-code">"moo moo"</span>, and variable <span class="inline-code">b</span> refer to an <span class="inline-code">ellipse(100, 100)</span>.';
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "40%", "10%"));
-        content = 'As a result, when we tell the computer to print a, it will print "moo moo", and when we tell the computer to print b, it will print a circle!';
+        content = 'As a result, when we tell the computer to print <span class="inline-code">a</span>, it will print "moo moo", and when we tell the computer to print <span class="inline-code">b</span>, it will print a circle!';
         this._instrBoxes.push(new Instruction_1.Instruction('canvas-container', content, "70%", "10%"));
     }
     /**

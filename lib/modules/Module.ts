@@ -67,7 +67,7 @@ export abstract class Module {
         let div = document.createElement("div");
         div.className = "instruction";
         div.id = 'instruction';
-        div.innerText = instruction._content;
+        div.innerHTML = instruction._content;
         div.style.top = instruction._top;
         div.style.left = instruction._left;
         div.style.display = "block";
