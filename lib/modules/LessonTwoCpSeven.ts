@@ -26,17 +26,17 @@ print(ellipse(100, 100), 125, 175);`;
     constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) {
         super(ctx, editor);
         this.y = ctx.canvas.height - this.square_size - this.x;
-        let content = "Let's learn one final thing about variables. Observe the code above: we connect the variable a to the number 50, and we also have a print statement to print an ellipse.";
+        let content = `Let's learn one final thing about variables. Observe the code above: we connect the variable <span class="inline-code">a</span> to the number <span class="inline-code">50</span>, and we also have a <span class="inline-code">print</span> statement to print an ellipse.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = "Replace the two numbers 100 inside the print statement with the letter a. Observe what happens.";
+        content = `Replace the two numbers <span class="inline-code">100</span> inside the <span class="inline-code">print</span> statement with the letter <span class="inline-code">a</span>. Observe what happens.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
-        content = "Did you see the circle on CANVAS become smaller? The variable a is tied to the number 50, so now the circle has dimension a!";
+        content = `Did you see the circle on CANVAS become smaller? The variable <span class="inline-code">a</span> is tied to the number <span class="inline-code">50</span>, so now the circle has dimension <span class="inline-code">a</span>!`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = "Let's add one last bit of CODE: write something to print the value of a on the CANVAS.";
+        content = `Let's add one last bit of CODE: write something to print the value of <span class="inline-code">a</span> on the CANVAS.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
         content = "That's correct! Finally, click on the circle on the CANVAS, and make it bigger than the box provided. Observe what happened to the printed number.";
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = "Did you see the printed number change? You have successfully connected 2 elements on the CANVAS together - a circle and a number! Remember this lesson about variables in the future when you need to connect different things on the CANVAS together!";
+        content = "Did you see the printed number change? You have successfully connected 2 elements on the CANVAS together - a circle and a number - by a variable! Remember this lesson about variables in the future when you need to link different things on CANVAS together!";
         this._instrBoxes.push(new Instruction('code-editor', content, "70%", "10%"));
     }
 

@@ -17,7 +17,7 @@ class LessonOneCpThree extends Module_1.Module {
         this.square_size = 100;
         this.font_size = 20;
         this.x = ctx.canvas.width - this.square_size - this.y;
-        let content = `Moving things on the CANVAS changes the CODE. What if we change the CODE? In the print statement above, change the first <span class="inline-code">100</span> to <span class="inline-code">200</span>. Observe the CANVAS.`;
+        let content = `Moving things on the CANVAS changes the CODE. What if we change the CODE? In the <span class="inline-code">print</span> statement above, change the first <span class="inline-code">100</span> to <span class="inline-code">200</span>. Observe the CANVAS.`;
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "30%", "10%"));
         content = "Changing those numbers in the CODE moves the word on CANVAS! Now, try move this word inside the top-right box by changing your CODE alone.";
         this._instrBoxes.push(new Instruction_1.Instruction('canvas-container', content, "70%", "10%"));
