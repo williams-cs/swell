@@ -381,7 +381,7 @@ const diff_1 = require("diff");
      * @param cp the name of the checkpoint
      */
     function initCheckpoint(cp) {
-        //store CODE of old checkpoint
+        //store code written of old checkpoint
         if (checkpoint != null) {
             cpCode.set(checkpoint._name, editor.getValue());
         }
@@ -389,7 +389,7 @@ const diff_1 = require("diff");
         checkpoint = modGen.createModule(cp, ctx, editor);
         instrLabel.innerHTML = cp + " - GOAL";
         instructions.innerHTML = checkpoint._instructions;
-        //set up the CODE and CANVAS areas
+        //freeze/unfreeze the CODE and CANVAS areas
         if (checkpoint._constraint == 'code') {
             editor.setOption("readOnly", true);
             editorWrapper.style.opacity = '0.5';
@@ -411,27 +411,31 @@ const diff_1 = require("diff");
             canvas.style.background = 'white';
             canvasIsDisabled = false;
         }
-        popUp.style.display = 'none';
+        //restore previous code written in this checkpoint
         if (cpCode.get(checkpoint._name) !== "") {
             editor.setValue(cpCode.get(checkpoint._name));
             parse();
+        }
+        //restore latest instruction at this checkpoint
+        popUp.style.display = 'none';
+        let curInstruction = document.getElementById("instruction");
+        if (curInstruction != null) {
+            curInstruction.remove();
+        }
+        if (checkpoint.numInstructions > 0) {
+            checkpoint.renderInstruction(document);
         }
         //set up the instruction and goal boxes
         if (cpCompletion.get(cp)) {
             updateRewardBox();
         }
         else {
-            if (checkpoint._starterCode != null) {
+            //initialize starter code if this is the first time this checkpoint is reached
+            if (checkpoint._starterCode != null && cpCode.get(checkpoint._name) === "") {
                 editor.setValue(checkpoint._starterCode);
                 parse();
             }
-            let curInstruction = document.getElementById("instruction");
-            if (curInstruction != null) {
-                curInstruction.remove();
-            }
-            if (checkpoint.numInstructions > 0) {
-                checkpoint.renderInstruction(document);
-            }
+            //set up the instruction and goal boxes
             rewardBox.style.background = '#C0C0C0';
             let reward = document.getElementById('reward-text');
             reward.style.color = 'black';
