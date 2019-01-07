@@ -1,0 +1,1 @@
+{"version":3,"file":"ReturnError.js","sourceRoot":"","sources":["../../../lib/structural/ReturnError.ts"],"names":[],"mappings":";;AAAA,MAAa,WAAe,SAAQ,KAAK;IACrC;;;;OAIG;IACH,YAAmB,MAAS,EAAS,EAAU;QAC3C,KAAK,CAAC,EAAE,CAAC,CAAC;QADK,WAAM,GAAN,MAAM,CAAG;QAAS,OAAE,GAAF,EAAE,CAAQ;QAE3C,MAAM,CAAC,cAAc,CAAC,IAAI,EAAE,WAAW,CAAC,SAAS,CAAC,CAAC;IACvD,CAAC;CACJ;AAVD,kCAUC"}
