@@ -6,12 +6,14 @@ class Dimensions {
      * Constructor for Dimensions, which stores object dimensions
      * @param x The x coordinate of the object
      * @param y The y coordinate of the object
+     * @param z The z coordinate of the object
      * @param scale The scale of the object
      * @param radius The radius of the object
      */
-    constructor(x, y, scale, radius) {
+    constructor(x, y, z, scale, radius) {
         this._x = x;
         this._y = y;
+        this._z = z;
         this._scale = scale;
         this._radius = radius || new NumberNode_1.NumberNode(30, "");
     }
@@ -44,6 +46,18 @@ class Dimensions {
      */
     set y(val) {
         this._y = val;
+    }
+    /**
+     * Returns the z coordinate of the object
+     */
+    get z() {
+        return this._z;
+    }
+    /**
+     * Sets the z coordinate of the object
+     */
+    set z(val) {
+        this._z = val;
     }
     /**
      * Returns the radius of the object
