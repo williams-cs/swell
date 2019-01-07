@@ -1,4 +1,5 @@
 import { Module } from "./Module";
+import { Instruction } from "./Instruction";
 import { Effect } from "../effects/Effect";
 import { EllipseEffect } from "../effects/EllipseEffect";
 
@@ -8,36 +9,92 @@ export class LessonTwoCpFive extends Module {
     readonly _goal: any;
     readonly _constraint: string = 'none';
     readonly _instructions: string =
-        `<p> Did you see the CANVAS changed? </p>
-    <p> In our code, we make variable a refer to the words "moo moo", and variable b refer to an ellipse(100, 100). </p>
-    <p> As a result, when we tell the computer to print a, it will print "moo moo", and when we tell the computer to print b, it will print a circle. </p>
-    <p> Let's take this one step further: Create a new variable c, and make it refer to an ellipse(100, 100). Then write 2 statements to print c. What do you think would happen? </p>
-    <p> GOAL: Create a variable c referring to an ellipse(100, 100), then write 2 print statements to print c. </p>`;
+    `<p> GOAL: Create a variable c referring to an ellipse(75, 75), then write 2 print statements to print c. </p>`;
+
+    readonly _starterCode =
+        `a = "moo moo";
+b = ellipse(100, 100);
+print(b, 100, 100);`;
+
+    _latestInstrIndex: number = 0;
+
+    constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) {
+        super(ctx, editor);
+        let content = "Let's take this one step further: Create a new variable c, and make it refer to an ellipse(75, 75).";
+        this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
+        content = "Now change the print statement to print c instead of b.";
+        this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
+        content = "Finally, write print(c, 300, 100) underneath the existing print statement.";
+        this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
+        content = 'Awesome, You are getting good at using variables! What you just did is to draw 2 circles, both named c!';
+        this._instrBoxes.push(new Instruction('code-editor', content, "70%", "10%"));
+    }
 
     /**
      * A lesson to print a string
      * goals: moving the text and observe the code
-     * @param document: The HTML document
-     * @param effects: the list of effects currently on the CANVAS
+     * @param document the HTML document
+     * @param effects the list of effects currently on the CANVAS
      */
     checkGoal(document: Document, effects: Effect<any>[]): boolean {
-        //check for correct CODE
         let codeIsCorrect = false;
+        let ellipseCount = 0;
         let code: string = this.editor.getValue();
         let assignment: RegExp = /c\s*=\s*ellipse\s*\(\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\)\s*/g;
-        let matchAssign = code.match(assignment);
+        let matchAssign: string[];
         let print: RegExp = /print\s*\(\s*c\s*,\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\)/g;
-        let matchPrint = code.match(print);
-        codeIsCorrect = matchAssign != null && matchAssign.length > 0 && matchPrint != null && matchPrint.length >= 2;
+        let matchPrint: string[];
 
-        //check for correct CANVAS effects
-        let circleCount = 0;
-        for (let effect of effects) {
-            if (effect instanceof EllipseEffect) {
-                circleCount += 1;
-            }
+        switch (this._latestInstrIndex) {
+            case 0:
+                //check for correct CODE
+                matchAssign = code.match(assignment);
+                if (matchAssign != null && matchAssign.length > 0) {
+                    this._latestInstrIndex++;
+                    this.renderLatestInstruction(document);
+                }
+                return false;
+
+            case 1:
+                //check for correct CODE
+                matchAssign = code.match(assignment);
+                matchPrint = code.match(print);
+                codeIsCorrect = matchAssign != null && matchAssign.length > 0 && matchPrint != null && matchPrint.length >= 1;
+
+                //check for correct CANVAS effects
+                for (let effect of effects) {
+                    if (effect instanceof EllipseEffect) {
+                        ellipseCount += 1;
+                    }
+                }
+
+                if (codeIsCorrect && ellipseCount >= 1) {
+                    this._latestInstrIndex++;
+                    this.renderLatestInstruction(document);
+                }
+                return false;
+
+            case 2:
+                //check for correct CODE
+                matchAssign = code.match(assignment);
+                matchPrint = code.match(print);
+                codeIsCorrect = matchAssign != null && matchAssign.length > 0 && matchPrint != null && matchPrint.length >= 2;
+
+                //check for correct CANVAS effects
+                for (let effect of effects) {
+                    if (effect instanceof EllipseEffect) {
+                        ellipseCount += 1;
+                    }
+                }
+
+                if (codeIsCorrect && ellipseCount >= 2) {
+                    this._latestInstrIndex++;
+                    this.renderLatestInstruction(document);
+                }
+                return false;
+
+            default:
+                return true;
         }
-
-        return codeIsCorrect && circleCount >= 2;
     }
 }

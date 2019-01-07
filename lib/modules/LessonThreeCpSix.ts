@@ -1,19 +1,18 @@
 import { Module } from "./Module";
+import { Instruction } from "./Instruction";
 import { Effect } from "../effects/Effect";
 import { EllipseEffect } from "../effects/EllipseEffect";
 import { StringEffect } from "../effects/StringEffect";
 
 export class LessonThreeCpSix extends Module {
     readonly _name: string = "l3c6";
-    readonly _nextModule: string = 'l4c1';
+    readonly _nextModule: string = 'l3c6';
     readonly _goal: any;
     readonly _constraint: string = 'none';
     readonly _instructions: string =
-        `<p> Now that you know how to use if/else statements, let's put them all together! </p>
-    <p> Above we have the CODE to draw 2 circles: circle A has height and width a, and circle B has height and width b. </p>
-    <p> However, currently the claim that "Circle A is smaller than circle B." regardless of the circles' actual sizes. </p>
-    <p> Create an if/else statement to print "Circle A is smaller than circle B." when it is actually so, and print "Circle A is bigger than circle B" otherwise. </p>
-    <p> CHALLENGE: Create an if/else statement to print the correct claim about the sizes of the 2 circles. </p>`;
+        `<p> GOAL: Create an if/else statement to print the correct claim about the sizes of the 2 circles. </p>`;
+
+    _latestInstrIndex: number = 3;
 
     xA: number;
     yA: number;
@@ -25,6 +24,7 @@ export class LessonThreeCpSix extends Module {
     font_size: number = 20;
 
     constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) {
+        //setting up the CODE and CANVAS
         super(ctx, editor);
         this.a_size = Math.round(Math.min(ctx.canvas.width, ctx.canvas.height) * 0.4);
         this.b_size = Math.round(this.a_size / 2);
@@ -47,6 +47,18 @@ b = ${this.b_size};
 print(b, ${this.xB}, ${this.yA - 2 * this.font_size});
 print(ellipse(b, b), ${circ_xB}, ${circ_yB});
 print("Circle A is smaller than circle B.", ${this.xA}, ${this.yA + this.square_size + this.font_size});`
+
+        //setting up the Instructions
+        let content = "Now that you know how to use if/else statements, let's put them all together!";
+        this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
+        content = 'Above we have the CODE to draw 2 circles: circle A has height and width a, and circle B has height and width b.';
+        this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
+        content = `However, currently the claim that "Circle A is smaller than circle B." is printed regardless of the circles' actual sizes.`;
+        this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
+        content = `Here's a challenge for you: Create an if/else statement to print "Circle A is smaller than circle B." when it is actually so, and print "Circle A is bigger than circle B" otherwise.`;
+        this._instrBoxes.push(new Instruction('code-editor', content, "80%", "10%"));
+        content = 'Congratulations! You just successfully wrote a complicated if/else statement!';
+        this._instrBoxes.push(new Instruction('canvas-container', content, "70%", "10%"));
     }
 
     drawGuides(): void {
@@ -69,48 +81,59 @@ print("Circle A is smaller than circle B.", ${this.xA}, ${this.yA + this.square_
     /**
      * A lesson leading into conditionals
      * goals: moving the text and observe the code
-     * @param document: The HTML document
-     * @param effects: the list of effects currently on the CANVAS
+     * @param document the HTML document
+     * @param effects the list of effects currently on the CANVAS
      */
     checkGoal(document: Document, effects: Effect<any>[]): boolean {
-        //check for correct CODE
-        let codeIsCorrect = false;
-        let code: string = this.editor.getValue();
-        let regex1: RegExp = /if\s*\(\s*a\s*[<>]\s*b\s*\)/;
-        let regex2: RegExp = /if\s*\(\s*b\s*[<>]\s*a\s*\)/;
-        let match1 = code.match(regex1);
-        let match2 = code.match(regex2);
-        codeIsCorrect = (match1 != null && match1.length > 0) || (match2 != null && match2.length > 0);
+        switch (this._latestInstrIndex) {
+            case 3:
+                //check for correct CODE
+                let codeIsCorrect = false;
+                let code: string = this.editor.getValue();
+                let regex1: RegExp = /if\s*\(\s*a\s*[<>]\s*b\s*\)/;
+                let regex2: RegExp = /if\s*\(\s*b\s*[<>]\s*a\s*\)/;
+                let match1 = code.match(regex1);
+                let match2 = code.match(regex2);
+                codeIsCorrect = (match1 != null && match1.length > 0) || (match2 != null && match2.length > 0);
 
-        //check for correct CANVAS effects
-        let canvasIsCorrect = false;
-        let circleA = null;
-        let circleB = null;
+                //check for correct CANVAS effects
+                let canvasIsCorrect = false;
+                let circleA = null;
+                let circleB = null;
 
-        //look for circles A and B
-        for (let effect of effects) {
-            if (effect instanceof EllipseEffect) {
-                if (effect.x > this.xA && effect.x < this.xA + this.square_size && effect.y > this.yA && effect.y < this.yA + this.square_size) {
-                    circleA = effect;
-                } else if (effect.x > this.xB && effect.x < this.xB + this.square_size && effect.y > this.yB && effect.y < this.yB + this.square_size) {
-                    circleB = effect;
-                }
-            }
-        }
-
-        if (circleA != null && circleB != null) {
-            for (let effect of effects) {
-                if (effect instanceof StringEffect) {
-                    let str = effect.str;
-                    if ((str === "Circle A is smaller than circle B." && circleA.w < circleB.w && circleA.h < circleB.h)
-                        || (str === "Circle A is bigger than circle B." && circleA.w > circleB.w && circleA.h > circleB.h)) {
-                        canvasIsCorrect = true;
-                        break;
+                //look for circles A and B
+                for (let effect of effects) {
+                    if (effect instanceof EllipseEffect) {
+                        if (effect.x > this.xA && effect.x < this.xA + this.square_size && effect.y > this.yA && effect.y < this.yA + this.square_size) {
+                            circleA = effect;
+                        } else if (effect.x > this.xB && effect.x < this.xB + this.square_size && effect.y > this.yB && effect.y < this.yB + this.square_size) {
+                            circleB = effect;
+                        }
                     }
                 }
-            }
+
+                if (circleA != null && circleB != null) {
+                    for (let effect of effects) {
+                        if (effect instanceof StringEffect) {
+                            let str = effect.str;
+                            if ((str === "Circle A is smaller than circle B." && circleA.w < circleB.w && circleA.h < circleB.h)
+                                || (str === "Circle A is bigger than circle B." && circleA.w > circleB.w && circleA.h > circleB.h)) {
+                                canvasIsCorrect = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (codeIsCorrect && canvasIsCorrect) {
+                    this._latestInstrIndex++;
+                    this.renderLatestInstruction(document);
+                }
+                return false;
+
+            default:
+                return true;
         }
 
-        return codeIsCorrect && canvasIsCorrect;
     }
 }

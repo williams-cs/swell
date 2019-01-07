@@ -51,15 +51,10 @@ export class LessonOneCpFour extends Module {
      * A lesson to print a string
      * goals: moving the text and observe the code
      * @param document The HTML document
-     * @param effects: the list of effects currently on the CANVAS
+     * @param effects the list of effects currently on the CANVAS
      */
     checkGoal(document: Document, effects: Effect<any>[]): boolean {
         switch (this._latestInstrIndex) {
-            case 0:
-            case 1:
-            case 2:
-                return false;
-
             case 3:
                 for (let effect of effects) {
                     if (effect instanceof StringEffect && effect.str === "moo") {

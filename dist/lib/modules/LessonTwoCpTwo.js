@@ -10,7 +10,7 @@ class LessonTwoCpTwo extends Module_1.Module {
         this._nextModule = 'l2c3';
         this._constraint = 'none';
         this._instructions = `<p> GOAL: Fit the circle inside the given box. </p>`;
-        this._starterCode = `print(ellipse(100, 100), 120, 150)`;
+        this._starterCode = `print(ellipse(100, 100), 120, 150);`;
         this._latestInstrIndex = 0;
         this.y = 10;
         this.rect_h = 50;

@@ -320,6 +320,29 @@ import { diffChars, IDiffResult } from 'diff';
 
     /* Modules */
 
+    /* --- for non-DM modules, will be fully implemented in a day or 2 - Quan, 1/2/2018 --- */
+
+    /*
+    <div class="row">
+        <button id="l2c1" class="checkpoint btn btn-block">Checkpoint 1</button>
+    </div>
+    */
+
+    //set up Checkpoints sidebar
+    let lesson = document.getElementById('one');
+    if (lesson != null) {
+      var div = document.createElement('div');
+      div.className = 'row';
+      var btn = document.createElement('button');
+      btn.id = "l1c1";
+      btn.className = "checkpoint btn btn-block";
+      btn.innerHTML = "Checkpoint 1";
+      div.appendChild(btn);
+      lesson.appendChild(div);
+    }
+
+    /* ---------------------------------------------------------- */
+
     let instructions = document.getElementById('goal');
     let rewardBox = document.getElementById('reward-container');
     let instrLabel = document.getElementById('instr-label');

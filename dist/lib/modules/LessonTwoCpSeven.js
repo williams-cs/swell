@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Module_1 = require("./Module");
+const Instruction_1 = require("./Instruction");
 const NumberEffect_1 = require("../effects/NumberEffect");
 const EllipseEffect_1 = require("../effects/EllipseEffect");
 class LessonTwoCpSeven extends Module_1.Module {
@@ -9,15 +10,26 @@ class LessonTwoCpSeven extends Module_1.Module {
         this._name = "l2c7";
         this._nextModule = 'l3c1';
         this._constraint = 'none';
-        this._instructions = `<p> Changing one circle changes c, which will then in turn change the other circle! </p>
-    <p> Now let's put all we have learned to practice. </p>
-    <p> Create a circle, and print out the size of that circle in the given box. </p>
-    <p> IF we ever change the circle, we want the number in the box to change, too! </p>
-    <p> CHALLENGE: Create a circle and print its size in the given box. </p>`;
+        this._instructions = `<p> CHALLENGE: Create a circle and print out its size. </p>`;
+        this._starterCode = `a = 50;
+print(ellipse(100, 100), 125, 175);`;
+        this._latestInstrIndex = 1;
         this.x = 10;
-        this.square_size = 100;
+        this.square_size = 250;
         this.font_size = 20;
         this.y = ctx.canvas.height - this.square_size - this.x;
+        let content = "Let's learn one final thing about variables. Observe the code above: we connect the variable a to the number 50, and we also have a print statement to print an ellipse.";
+        this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "50%", "10%"));
+        content = "Replace the two numbers 100 inside the print statement with the letter a. Observe what happens.";
+        this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "40%", "10%"));
+        content = "Did you see the circle on CANVAS become smaller? The variable a is tied to the number 50, so now the circle has dimension a!";
+        this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "50%", "10%"));
+        content = "Let's add one last bit of CODE: write something to print the value of a on the CANVAS.";
+        this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "40%", "10%"));
+        content = "That's correct! Finally, click on the circle on the CANVAS, and make it bigger than the box provided. Observe what happened to the printed number.";
+        this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "50%", "10%"));
+        content = "Did you see the printed number change? You have successfully connected 2 elements on the CANVAS together - a circle and a number! Remember this lesson about variables in the future when you need to connect different things on the CANVAS together!";
+        this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "70%", "10%"));
     }
     drawGuides() {
         this.ctx.beginPath();
@@ -26,29 +38,67 @@ class LessonTwoCpSeven extends Module_1.Module {
         this.ctx.stroke();
         this.ctx.font = this.font_size + "px Courier New";
         this.ctx.fillStyle = '#6C6C6C';
-        this.ctx.fillText("Put circle's size", this.x, this.y - 2 * this.font_size);
-        this.ctx.fillText("in here", this.x, this.y - this.font_size);
+        this.ctx.fillText("Make circle", this.x, this.y + this.font_size);
+        this.ctx.fillText("bigger than this box", this.x, this.y + 2 * this.font_size);
     }
     /**
      * A lesson to print a string
      * goals: moving the text and observe the code
-     * @param document: The HTML document
-     * @param effects: the list of effects currently on the CANVAS
+     * @param document the HTML document
+     * @param effects the list of effects currently on the CANVAS
      */
     checkGoal(document, effects) {
-        for (let effect of effects) {
-            if (effect instanceof NumberEffect_1.NumberEffect && effect.num != null) {
-                if (effect.x > this.x && effect.x < this.x + this.square_size && effect.y > this.y && effect.y < this.y + this.square_size) {
-                    let val = effect.num;
-                    for (let effect2 of effects) {
-                        if (effect2 instanceof EllipseEffect_1.EllipseEffect && (val == effect2.w || val == effect2.h)) {
-                            return true;
+        let codeIsCorrect = false;
+        let canvasIsCorrect = false;
+        let code = this.editor.getValue();
+        switch (this._latestInstrIndex) {
+            case 1:
+                //check for correct CODE
+                let regex = new RegExp('print\\s*\\(\\s*ellipse\\s*\\(\\s*a\\s*,\\s*a\\s*\\)\\s*,\\s*[1-9][0-9]*\\s*,\\s*[1-9][0-9]*\\s*\\)');
+                let match = code.match(regex);
+                codeIsCorrect = match != null && match.length > 0;
+                //check for correct CANVAS effects
+                for (let effect of effects) {
+                    if (effect instanceof EllipseEffect_1.EllipseEffect) {
+                        canvasIsCorrect = true;
+                        break;
+                    }
+                }
+                if (codeIsCorrect && canvasIsCorrect) {
+                    this._latestInstrIndex = 3;
+                    this.renderNextInstruction(document);
+                }
+                return false;
+            case 3:
+                for (let effect of effects) {
+                    if (effect instanceof NumberEffect_1.NumberEffect && effect.num != null) {
+                        let val = effect.num;
+                        for (let effect2 of effects) {
+                            if (effect2 instanceof EllipseEffect_1.EllipseEffect && (val == effect2.w || val == effect2.h)) {
+                                this._latestInstrIndex++;
+                                this.renderLatestInstruction(document);
+                            }
                         }
                     }
                 }
-            }
+                return false;
+            case 4:
+                let circle;
+                for (let effect of effects) {
+                    if (effect instanceof NumberEffect_1.NumberEffect && effect.num != null) {
+                        let val = effect.num;
+                        for (let effect2 of effects) {
+                            if (effect2 instanceof EllipseEffect_1.EllipseEffect && (val == effect2.w || val == effect2.h) && val > this.square_size) {
+                                this._latestInstrIndex++;
+                                this.renderLatestInstruction(document);
+                            }
+                        }
+                    }
+                }
+                return false;
+            default:
+                return true;
         }
-        return false;
     }
 }
 exports.LessonTwoCpSeven = LessonTwoCpSeven;
