@@ -6,7 +6,7 @@ export declare class LessonTwoCpFour extends Module {
     readonly _goal: any;
     readonly _constraint: string;
     readonly _instructions: string;
-    readonly _starterCode: string;
+    readonly _starterCode = "a = \"moo moo\";\nb = ellipse(100, 100);\nprint(a, 100, 100);";
     /**
      * A lesson to print a string
      * goals: moving the text and observe the code

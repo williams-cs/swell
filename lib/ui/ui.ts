@@ -307,16 +307,16 @@ import { diffChars, IDiffResult } from 'diff';
     }
 
     //reset checkpoint
-    let resetButton = document.getElementById('reset');
-    resetButton.onclick = function() {
-        if (checkpoint._starterCode != null) {
-            editor.setValue(checkpoint._starterCode);
-            parse();
-        }
-        context.eventLog.push(new ClearEvent());
-        masterLog.push(context.eventLog[context.eventLog.length - 1]); // Does this actually work?
-        printLog();
-    };
+    // let resetButton = document.getElementById('reset');
+    // resetButton.onclick = function() {
+    //     if (checkpoint._starterCode != null) {
+    //         editor.setValue(checkpoint._starterCode);
+    //         parse();
+    //     }
+    //     context.eventLog.push(new ClearEvent());
+    //     masterLog.push(context.eventLog[context.eventLog.length - 1]); // Does this actually work?
+    //     printLog();
+    // };
 
     /* Modules */
 

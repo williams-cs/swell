@@ -278,16 +278,16 @@ const diff_1 = require("diff");
         parse();
     }
     //reset checkpoint
-    let resetButton = document.getElementById('reset');
-    resetButton.onclick = function () {
-        if (checkpoint._starterCode != null) {
-            editor.setValue(checkpoint._starterCode);
-            parse();
-        }
-        context.eventLog.push(new index_2.ClearEvent());
-        masterLog.push(context.eventLog[context.eventLog.length - 1]); // Does this actually work?
-        printLog();
-    };
+    // let resetButton = document.getElementById('reset');
+    // resetButton.onclick = function() {
+    //     if (checkpoint._starterCode != null) {
+    //         editor.setValue(checkpoint._starterCode);
+    //         parse();
+    //     }
+    //     context.eventLog.push(new ClearEvent());
+    //     masterLog.push(context.eventLog[context.eventLog.length - 1]); // Does this actually work?
+    //     printLog();
+    // };
     /* Modules */
     let instructions = document.getElementById('goal');
     let rewardBox = document.getElementById('reward-container');

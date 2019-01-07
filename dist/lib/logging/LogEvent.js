@@ -101,7 +101,7 @@ class LogEvent {
         // payload.append('time', '2019-01-01 16:36:00');
         payload.append('time', year + '-' + month + '-' + day + ' ' + hour + ':' + minutes + ':' + seconds);
         let xhr = new XMLHttpRequest();
-        xhr.open("POST", "http://localhost:3000/events", true);
+        xhr.open("POST", "http://camembert.cs.williams.edu:8080/events", true);
         xhr.send(payload);
     }
 }
