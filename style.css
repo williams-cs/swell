@@ -16,6 +16,12 @@ body {
     background-color: var(--gray);
 }
 
+.inline-code {
+    font-family: 'Roboto Mono', monospace;
+    color: var(--dark-gray);
+    background: var(--gray);
+}
+
 .sidenav {
     overflow-y: auto;
 }

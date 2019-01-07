@@ -19,13 +19,13 @@ export class LessonTwoCpOne extends Module {
 
     constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) {
         super(ctx, editor);
-        let content = "Now let's learn to print shapes on the CANVAS! In the print statement above, replace 'moo' with ellipse(100,100). Observe what happened on the CANVAS.";
+        let content = `Now let's learn to print shapes on the CANVAS! In the <span class="inline-code">print</span> statement above, replace <span class="inline-code">moo</span> with <span class="inline-code">ellipse(100,100)</span>. Observe what happened on the CANVAS.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "30%", "10%"));
-        content = "Yep! You told the computer to draw a circle on the CANVAS. Now in the print statement, replace the word ellipse with rect.";
+        content = `Yep! You told the computer to draw a circle on the CANVAS. Now in the <span class="inline-code">print</span> statement, replace the word <span class="inline-code">ellipse</span> with <span class="inline-code">rect</span>.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "30%", "10%"));
-        content = "Finally, replace the word rect with line.";
+        content = `Finally, replace the word <span class="inline-code">rect</span> with <span class="inline-code">line</span>.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "30%", "10%"));
-        content = "By putting different things inside the print statement, you can tell the computer to draw different things on the CANVAS. Remember this lesson!";
+        content = `By putting different things inside the <span class="inline-code">print</span> statement, you can tell the computer to draw different things on the CANVAS. Remember this lesson!`;
         this._instrBoxes.push(new Instruction('canvas-container', content, "70%", "10%"));
     }
 

@@ -17,7 +17,7 @@ class LessonOneCpTwo extends Module_1.Module {
         this.square_size = 100;
         this.font_size = 20;
         this.x = ctx.canvas.width - this.square_size - this.y;
-        let content = "Notice the numbers added inside the () of your print statement? They specify where your computer should write the word on the CANVAS.";
+        let content = `Notice the numbers added inside the brackets <span class="inline-code">()</span> of your print statement? They specify where your computer should write the word on the CANVAS.`;
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "30%", "10%"));
         content = "To understand what they do, first click on the word currently on the CANVAS and drag it around.";
         this._instrBoxes.push(new Instruction_1.Instruction('canvas-container', content, "70%", "10%"));
