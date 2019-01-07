@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Module_1 = require("./Module");
 const Instruction_1 = require("./Instruction");
-const RectangleEffect_1 = require("../effects/RectangleEffect");
+const EllipseEffect_1 = require("../effects/EllipseEffect");
 class LessonTwoCpSix extends Module_1.Module {
     constructor(ctx, editor) {
         super(ctx, editor);
@@ -12,7 +12,7 @@ class LessonTwoCpSix extends Module_1.Module {
         this._instructions = `<p> GOAL: Enlarge one of the circles referred to by c on the CANVAS. </p>`;
         this._starterCode = `a = "moo moo";
 b = ellipse(100, 100);
-c = rect(75, 75);
+c = ellipse(75, 75);
 print(c, 100, 100);
 print(c, 300, 100)`;
         this._latestInstrIndex = 1;
@@ -21,13 +21,13 @@ print(c, 300, 100)`;
         this.y = 25;
         this.square_size = 250;
         this.font_size = 20;
-        let content = "Now that you have drawn 2 rectangles both are called c, let's see what happens when you try to modify one of them.";
+        let content = "Now that you have drawn 2 circles both are called c, let's see what happens when you try to modify one of them.";
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "50%", "10%"));
-        content = "Click on one of the rectangles on the CANVAS, and try make it bigger. Observe what happens to your declaration of c.";
+        content = "Click on one of the circles on the CANVAS, and try make it bigger. Observe what happens to your declaration of c.";
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "70%", "10%"));
-        content = "Did you see what happened? Changing one rectangle changes what c is in your CODE!";
+        content = "Did you see what happened? Changing one circle changes what c is in your CODE!";
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "50%", "10%"));
-        content = 'Furthermore, that change also affected the other rectangle on the CANVAS!';
+        content = 'Furthermore, that change also affected the other circle on the CANVAS!';
         this._instrBoxes.push(new Instruction_1.Instruction('canvas-container', content, "70%", "10%"));
     }
     drawGuides() {
@@ -37,7 +37,7 @@ print(c, 300, 100)`;
         this.ctx.stroke();
         this.ctx.font = this.font_size + "px Courier New";
         this.ctx.fillStyle = '#6C6C6C';
-        this.ctx.fillText("Make rectangle", this.x, this.y + this.font_size);
+        this.ctx.fillText("Make circle", this.x, this.y + this.font_size);
         this.ctx.fillText("bigger than this box", this.x, this.y + 2 * this.font_size);
     }
     /**
@@ -50,10 +50,11 @@ print(c, 300, 100)`;
         switch (this._latestInstrIndex) {
             case 1:
                 for (let effect of effects) {
-                    if (effect instanceof RectangleEffect_1.RectangleEffect) {
+                    if (effect instanceof EllipseEffect_1.EllipseEffect) {
                         if (effect.w > 250 && effect.h > 250) {
                             this._latestInstrIndex = 3;
                             this.renderNextInstruction(document);
+                            break;
                         }
                     }
                 }

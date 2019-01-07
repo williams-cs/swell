@@ -1,7 +1,7 @@
 import { Module } from "./Module";
 import { Instruction } from "./Instruction";
 import { Effect } from "../effects/Effect";
-import { RectangleEffect } from "../effects/RectangleEffect";
+import { EllipseEffect } from "../effects/EllipseEffect";
 
 export class LessonTwoCpFive extends Module {
     readonly _name: string = "l2c5";
@@ -9,7 +9,7 @@ export class LessonTwoCpFive extends Module {
     readonly _goal: any;
     readonly _constraint: string = 'none';
     readonly _instructions: string =
-    `<p> GOAL: Create a variable c referring to an rect(75, 75), then write 2 print statements to print c. </p>`;
+    `<p> GOAL: Create a variable c referring to an ellipse(75, 75), then write 2 print statements to print c. </p>`;
 
     readonly _starterCode =
         `a = "moo moo";
@@ -20,13 +20,13 @@ print(b, 100, 100);`;
 
     constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) {
         super(ctx, editor);
-        let content = "Let's take this one step further: Create a new variable c, and make it refer to an rect(75, 75).";
+        let content = "Let's take this one step further: Create a new variable c, and make it refer to an ellipse(75, 75).";
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
         content = "Now change the print statement to print c instead of b.";
         this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
         content = "Finally, write print(c, 300, 100) underneath the existing print statement.";
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = 'Awesome, You are getting good at using variables! What you just did is to draw 2 rectangles, both named c!';
+        content = 'Awesome, You are getting good at using variables! What you just did is to draw 2 circles, both named c!';
         this._instrBoxes.push(new Instruction('code-editor', content, "70%", "10%"));
     }
 
@@ -38,9 +38,9 @@ print(b, 100, 100);`;
      */
     checkGoal(document: Document, effects: Effect<any>[]): boolean {
         let codeIsCorrect = false;
-        let rectCount = 0;
+        let ellipseCount = 0;
         let code: string = this.editor.getValue();
-        let assignment: RegExp = /c\s*=\s*rect\s*\(\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\)\s*/g;
+        let assignment: RegExp = /c\s*=\s*ellipse\s*\(\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\)\s*/g;
         let matchAssign: string[];
         let print: RegExp = /print\s*\(\s*c\s*,\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\)/g;
         let matchPrint: string[];
@@ -63,12 +63,12 @@ print(b, 100, 100);`;
 
                 //check for correct CANVAS effects
                 for (let effect of effects) {
-                    if (effect instanceof RectangleEffect) {
-                        rectCount += 1;
+                    if (effect instanceof EllipseEffect) {
+                        ellipseCount += 1;
                     }
                 }
 
-                if (codeIsCorrect && rectCount >= 1) {
+                if (codeIsCorrect && ellipseCount >= 1) {
                     this._latestInstrIndex++;
                     this.renderLatestInstruction(document);
                 }
@@ -82,12 +82,12 @@ print(b, 100, 100);`;
 
                 //check for correct CANVAS effects
                 for (let effect of effects) {
-                    if (effect instanceof RectangleEffect) {
-                        rectCount += 1;
+                    if (effect instanceof EllipseEffect) {
+                        ellipseCount += 1;
                     }
                 }
 
-                if (codeIsCorrect && rectCount >= 2) {
+                if (codeIsCorrect && ellipseCount >= 2) {
                     this._latestInstrIndex++;
                     this.renderLatestInstruction(document);
                 }

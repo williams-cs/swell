@@ -1,7 +1,7 @@
 import { Module } from "./Module";
 import { Instruction } from "./Instruction";
 import { Effect } from "../effects/Effect";
-import { RectangleEffect } from "../effects/RectangleEffect";
+import { EllipseEffect } from "../effects/EllipseEffect";
 
 export class LessonTwoCpSix extends Module {
     readonly _name: string = "l2c6";
@@ -14,7 +14,7 @@ export class LessonTwoCpSix extends Module {
     readonly _starterCode =
         `a = "moo moo";
 b = ellipse(100, 100);
-c = rect(75, 75);
+c = ellipse(75, 75);
 print(c, 100, 100);
 print(c, 300, 100)`;
 
@@ -28,13 +28,13 @@ print(c, 300, 100)`;
 
     constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) {
         super(ctx, editor);
-        let content = "Now that you have drawn 2 rectangles both are called c, let's see what happens when you try to modify one of them.";
+        let content = "Now that you have drawn 2 circles both are called c, let's see what happens when you try to modify one of them.";
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = "Click on one of the rectangles on the CANVAS, and try make it bigger. Observe what happens to your declaration of c.";
+        content = "Click on one of the circles on the CANVAS, and try make it bigger. Observe what happens to your declaration of c.";
         this._instrBoxes.push(new Instruction('code-editor', content, "70%", "10%"));
-        content = "Did you see what happened? Changing one rectangle changes what c is in your CODE!";
+        content = "Did you see what happened? Changing one circle changes what c is in your CODE!";
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = 'Furthermore, that change also affected the other rectangle on the CANVAS!';
+        content = 'Furthermore, that change also affected the other circle on the CANVAS!';
         this._instrBoxes.push(new Instruction('canvas-container', content, "70%", "10%"));
     }
 
@@ -46,7 +46,7 @@ print(c, 300, 100)`;
 
         this.ctx.font = this.font_size + "px Courier New";
         this.ctx.fillStyle = '#6C6C6C';
-        this.ctx.fillText("Make rectangle", this.x, this.y + this.font_size);
+        this.ctx.fillText("Make circle", this.x, this.y + this.font_size);
         this.ctx.fillText("bigger than this box", this.x, this.y + 2 * this.font_size);
     }
 
@@ -60,10 +60,11 @@ print(c, 300, 100)`;
         switch (this._latestInstrIndex) {
             case 1:
                 for (let effect of effects) {
-                    if (effect instanceof RectangleEffect) {
+                    if (effect instanceof EllipseEffect) {
                         if (effect.w > 250 && effect.h > 250) {
-                            this._latestInstrIndex =3 ;
+                            this._latestInstrIndex = 3;
                             this.renderNextInstruction(document);
+                            break;
                         }
                     }
                 }

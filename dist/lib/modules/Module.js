@@ -20,6 +20,7 @@ class Module {
     }
     renderNextInstruction(document) {
         this._instrIndex = (this._instrIndex + 1 < this._instrBoxes.length) ? this._instrIndex + 1 : this._instrIndex;
+        console.log("current instr: " + this._instrIndex);
         this.renderInstruction(document);
     }
     renderPrevInstruction(document) {
