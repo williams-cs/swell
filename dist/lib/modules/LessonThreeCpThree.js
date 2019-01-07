@@ -15,13 +15,13 @@ if(b < 10) {
 \tprint("b is greater than 20.", 103, 143);
 }`;
         this._latestInstrIndex = 1;
-        let content = "if statements allow you to run a block of code inside the curly braces {} ONLY when the condition inside the if() clause is true.";
+        let content = `<span class="inline-code">if</span> statements allow you to run a block of code inside the curly braces <span class="inline-code">{}</span> ONLY when the condition inside the brackets <span class="inline-code">if()</span> is true.`;
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "50%", "10%"));
-        content = `Let's have a quick challenge: observe the CODE above. Change the code inside the {} so that the line "b is greater than 20" is only printed on the CANVAS when b is actually greater than 20.`;
+        content = `Let's have a quick challenge: observe the CODE above. Change the code inside the <span class="inline-code">{}</span> so that the claim <span class="inline-code">b is greater than 20</span> is only printed on the CANVAS when <span class="inline-code">b</span> is actually greater than 20.`;
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "40%", "10%"));
-        content = "Your CODE seems correct! Now change the value of b to 50 to test it.";
+        content = `Your CODE seems correct! Now change the value of <span class="inline-code">b</span> to <span class="inline-code">50</span> to make sure it runs correctly.`;
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "50%", "10%"));
-        content = 'The claim is printed with the correct value of b! Good job!';
+        content = 'The claim is printed with the correct value of <span class="inline-code">b</span>! Good job!';
         this._instrBoxes.push(new Instruction_1.Instruction('canvas-container', content, "70%", "10%"));
     }
     /**

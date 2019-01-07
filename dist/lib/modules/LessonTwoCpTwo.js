@@ -19,7 +19,7 @@ class LessonTwoCpTwo extends Module_1.Module {
         this.x = Math.round((ctx.canvas.width - this.rect_w) / 2);
         let content = `What are the numbers <span class="inline-code">(100, 100)</span> next to <span class="inline-code">ellipse</span> for? Let's find out by first clicking on the circle on the CANVAS.`;
         this._instrBoxes.push(new Instruction_1.Instruction('canvas-container', content, "80%", "10%"));
-        content = "Now drag the 8 tips around the cirlce to resize it. Try to fit the circle entirely inside the given box. Observe the CODE above.";
+        content = "Now drag the 8 tips around the circle to resize it. Try to fit the circle entirely inside the given box. Observe the CODE above.";
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "50%", "10%"));
         content = `Yep! Those numbers inside <span class="inline-code">ellipse(_,_)</span> change the dimension of the circle! Note that you can also directly retype these numbers in the CODE area, without touching the CANVAS.`;
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "50%", "10%"));

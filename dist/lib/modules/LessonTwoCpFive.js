@@ -18,7 +18,7 @@ print(b, 100, 100);`;
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "50%", "10%"));
         content = `Now change the <span class="inline-code">print</span> statement to print <span class="inline-code">c</span> instead of <span class="inline-code">b</span>.`;
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "40%", "10%"));
-        content = `Finally, write <span class="inline-code">print(c, 300, 100)</span> underneath the existing <span class="inline-code">print</span> statement.`;
+        content = `Finally, write <span class="inline-code">print(c, 300, 100);</span> underneath the existing <span class="inline-code">print</span> statement.`;
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "50%", "10%"));
         content = 'Awesome, You are getting good at using variables! What you just did is to draw 2 circles, both named <span class="inline-code">c</span>!';
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "70%", "10%"));
