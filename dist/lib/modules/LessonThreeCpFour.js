@@ -15,13 +15,13 @@ if(c == 8) {
 \tprint("c is equal to 8.", 103, 143);
 }`;
         this._latestInstrIndex = 2;
-        let content = `You can put an inequality condition in the if() clause, such as "a < 5" or "b > 20".`;
+        let content = `You can put an inequality condition inside the brackets of <span class="inline-code">if()</span>, such as <span class="inline-code">a < 5</span> or <span class="inline-code">b > 20</span>.`;
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "50%", "10%"));
-        content = `You can also use an equality condition. Observe the CODE above with "c == 8". The 2 equal signs mean that you are checking whether c is exactly equal to 8 or not.`;
+        content = `You can also use an equality condition. Observe the CODE above with <span class="inline-code">c == 8</span>. The 2 equal signs <span class="inline-code">==</span> mean that you are checking whether <span class="inline-code">c</span> is EXACTLY EQUAL to <span class="inline-code">8</span> or not.`;
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "40%", "10%"));
-        content = `Let's have a small challenge: Can you change the value of c so that the line "c is equal to 8." is printed on the CANVAS?`;
+        content = `Let's have a small challenge: Can you change the value of <span class="inline-code">c</span> so that the claim <span class="inline-code">c is equal to 8.</span> is printed on the CANVAS?`;
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "50%", "10%"));
-        content = `That's correct! the code inside the braces {} of the if statement only runs when c is exactly 8!`;
+        content = `That's correct! the code inside the braces <span class="inline-code">{}</span> of the <span class="inline-code">if</span> statement only runs when <span class="inline-code">c</span> is exactly equal to 8!`;
         this._instrBoxes.push(new Instruction_1.Instruction('canvas-container', content, "70%", "10%"));
     }
     /**
