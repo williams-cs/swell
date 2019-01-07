@@ -355,6 +355,10 @@ const diff_1 = require("diff");
         ['l4c1', false],
         ['l4c2', false]
     ]);
+    /* keeping track of and displaying user's progress */
+    let starCount = 0;
+    let starBox = document.getElementById("achievement");
+    updateStarBox();
     let cpNames = [
         'l1c1', 'l1c2', 'l1c3', 'l1c4',
         'l2c1', 'l2c2', 'l2c3', 'l2c4', 'l2c5', 'l2c6', 'l2c7',
@@ -445,6 +449,7 @@ const diff_1 = require("diff");
         if (checkpoint.checkGoal(document, effects)) {
             updateRewardBox();
             cpCompletion.set(checkpoint._name, true);
+            updateStarBox();
         }
     }
     function updateRewardBox() {
@@ -475,6 +480,15 @@ const diff_1 = require("diff");
             initCheckpoint(prevModule);
         }
     };
+    function updateStarBox() {
+        starCount = 0;
+        for (var val of cpCompletion.values()) {
+            if (val) {
+                starCount++;
+            }
+        }
+        starBox.innerHTML = starCount + "/" + cpCompletion.size;
+    }
     //call to animate
     animate();
 })();
