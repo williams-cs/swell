@@ -1,3 +1,4 @@
+/// <reference types="codemirror" />
 import { Module } from "./Module";
 import { Effect } from "../effects/Effect";
 export declare class LessonTwoCpFour extends Module {
@@ -6,12 +7,14 @@ export declare class LessonTwoCpFour extends Module {
     readonly _goal: any;
     readonly _constraint: string;
     readonly _instructions: string;
-    readonly _starterCode = "a = \"moo moo\";\nb = ellipse(100, 100);\nprint(a, 100, 100);";
+    readonly _starterCode: string;
+    _latestInstrIndex: number;
+    constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor);
     /**
      * A lesson to print a string
      * goals: moving the text and observe the code
-     * @param document: The HTML document
-     * @param effects: the list of effects currently on the CANVAS
+     * @param document the HTML document
+     * @param effects the list of effects currently on the CANVAS
      */
     checkGoal(document: Document, effects: Effect<any>[]): boolean;
 }
