@@ -7,7 +7,6 @@ class LessonThreeCpTwo extends Module_1.Module {
     constructor(ctx, editor) {
         super(ctx, editor);
         this._name = "l3c2";
-        this._nextModule = 'l3c3';
         this._constraint = 'none';
         this._instructions = `<p> GOAL: Change the value of a around and observe what happens. </p>`;
         this._starterCode = `a = 12;

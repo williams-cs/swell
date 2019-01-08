@@ -50,7 +50,7 @@ class PrintNode {
         if (this._coordsGiven) {
             res.draw(context, this._dims, this);
             //check if the effects array already has some elements
-        } /*() else if (context.effects.length > 0) {
+        } /* else if (context.effects.length > 0) {
 
         }*/
         return res;

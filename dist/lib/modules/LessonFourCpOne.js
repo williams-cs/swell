@@ -6,7 +6,6 @@ class LessonFourCpOne extends Module_1.Module {
     constructor() {
         super(...arguments);
         this._name = "l4c1";
-        this._nextModule = 'l4c2';
         this._constraint = 'none';
         this._instructions = `<p> You've made it to the FINAL CHALLENGES! Complete these challenges to earn ETERNAL GLORY! </p>
     <p> Throughout this Hour of Code, you have learned: </p>

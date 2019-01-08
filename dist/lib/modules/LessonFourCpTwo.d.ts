@@ -2,7 +2,6 @@ import { Module } from "./Module";
 import { Effect } from "../effects/Effect";
 export declare class LessonFourCpTwo extends Module {
     readonly _name: string;
-    readonly _nextModule: string;
     readonly _goal: any;
     readonly _constraint: string;
     readonly _instructions: string;

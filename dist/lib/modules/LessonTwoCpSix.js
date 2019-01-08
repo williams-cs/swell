@@ -7,7 +7,6 @@ class LessonTwoCpSix extends Module_1.Module {
     constructor(ctx, editor) {
         super(ctx, editor);
         this._name = "l2c6";
-        this._nextModule = 'l2c7';
         this._constraint = 'code';
         this._instructions = `<p> GOAL: Enlarge one of the circles referred to by c on the CANVAS. </p>`;
         this._starterCode = `a = "moo moo";

@@ -6,7 +6,6 @@ class LessonFourCpTwo extends Module_1.Module {
     constructor() {
         super(...arguments);
         this._name = "l4c2";
-        this._nextModule = 'l4c2';
         this._constraint = 'none';
         this._instructions = `<p> Yes! You got this! </p>
     <p> Now let's put those skills in if/else statements to work! </p>

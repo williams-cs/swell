@@ -7,8 +7,6 @@ class LessonOneCpFour extends Module_1.Module {
     constructor(ctx, editor) {
         super(ctx, editor);
         this._name = "l1c4";
-        this._prevModule = 'l1c2';
-        this._nextModule = 'l2c1';
         this._constraint = 'canvas';
         this._instructions = `<p> CHALLENGE: Print the word "moo" on the CANVAS, and put it inside the box at the center of the CANVAS. </p>`;
         this._latestInstrIndex = 3;

@@ -7,7 +7,6 @@ class LessonThreeCpFive extends Module_1.Module {
     constructor(ctx, editor) {
         super(ctx, editor);
         this._name = "l3c5";
-        this._nextModule = 'l3c6';
         this._constraint = 'none';
         this._instructions = `<p> GOAL: Change the value of c around to see when "c is NOT equal to 8." would be printed on the CANVAS. </p>`;
         this._starterCode = `c = 8;

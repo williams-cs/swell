@@ -6,9 +6,9 @@ class LessonOneCpOne extends Module_1.Module {
     constructor(ctx, editor) {
         super(ctx, editor);
         this._name = "l1c1";
-        this._nextModule = 'l1c2';
         this._constraint = 'none';
         this._instructions = `<p> GOAL: Write 'Hello' on the CANVAS. </p>`;
+        this._starterCode = ``;
         this._latestInstrIndex = 0;
         let content = "First, let's tell the computer to print something on the CANVAS. Click on the CODE box.";
         this._instrBoxes.push(new Instruction_1.Instruction('code-editor', content, "70%", "10%"));

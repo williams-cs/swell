@@ -3,8 +3,6 @@ import { Instruction } from "./Instruction";
 import { Effect } from "../effects/Effect";
 export declare abstract class Module {
     readonly _name: string;
-    readonly _prevModule?: string;
-    readonly _nextModule: string;
     readonly _goal: any;
     readonly _constraint: string;
     readonly _instructions: string;
