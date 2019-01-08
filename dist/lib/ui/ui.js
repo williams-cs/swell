@@ -289,25 +289,42 @@ const diff_1 = require("diff");
     //     printLog();
     // };
     /* Modules */
-    /* --- for non-DM modules, will be fully implemented in a day or 2 - Quan, 1/2/2018 --- */
-    /*
-    <div class="row">
-        <button id="l2c1" class="checkpoint btn btn-block">Checkpoint 1</button>
-    </div>
+    /* Maps to help initialize the Checkpoint sidebar.
+    * The first map is for non-dm case, the second for the dm case.
     */
-    //set up Checkpoints sidebar
-    let lesson = document.getElementById('one');
-    if (lesson != null) {
-        var div = document.createElement('div');
-        div.className = 'row';
-        var btn = document.createElement('button');
-        btn.id = "l1c1";
-        btn.className = "checkpoint btn btn-block";
-        btn.innerHTML = "Checkpoint 1";
-        div.appendChild(btn);
-        lesson.appendChild(div);
+    let sidebarPlans = [
+        new Map([
+            ['collapseOne', ['l1c1', 'l1c2', 'l1c3', 'l1c4']],
+            ['collapseTwo', ['l2c1', 'l2c2', 'l2c3', 'l2c4', 'l2c5', 'l2c6', 'l2c7']],
+            ['collapseThree', ['l3c1', 'l3c2', 'l3c3', 'l3c4', 'l3c5', 'l3c6']]
+        ]),
+        new Map([
+            ['collapseOne', ['l1c1', 'l1c2', 'l1c3', 'l1c4']],
+            ['collapseTwo', ['l2c1', 'l2c2', 'l2c3', 'l2c4', 'l2c5', 'l2c6', 'l2c7']],
+            ['collapseThree', ['l3c1', 'l3c2', 'l3c3', 'l3c4', 'l3c5', 'l3c6']]
+        ])
+    ];
+    //retrieve survey choice for dm or non-dm
+    let dm = parseInt(localStorage.getItem('dm'));
+    //set up Checkpoint sidebar
+    let lessons = sidebarPlans[dm];
+    for (let key of lessons.keys()) {
+        let lesson = document.getElementById(key);
+        let cps = lessons.get(key);
+        if (lesson != null && cps != null) {
+            var i = 1;
+            for (let cp of cps) {
+                var div = document.createElement('div');
+                div.className = 'row';
+                var btn = document.createElement('button');
+                btn.id = cp;
+                btn.className = "checkpoint btn btn-block";
+                btn.innerHTML = "Checkpoint " + i++;
+                div.appendChild(btn);
+                lesson.appendChild(div);
+            }
+        }
     }
-    /* ---------------------------------------------------------- */
     let instructions = document.getElementById('goal');
     let rewardBox = document.getElementById('reward-container');
     let instrLabel = document.getElementById('instr-label');
@@ -363,10 +380,6 @@ const diff_1 = require("diff");
         'l1c1', 'l1c2', 'l1c3', 'l1c4',
         'l2c1', 'l2c2', 'l2c3', 'l2c4', 'l2c5', 'l2c6', 'l2c7',
         'l3c1', 'l3c2', 'l3c3', 'l3c4', 'l3c5', 'l3c6'
-    ];
-    //this is for testing tutorials
-    let workingCp = [
-        'l1c1', 'l1c2', 'l1c3', 'l1c4', 'l2c1'
     ];
     for (let cp of cpNames) {
         let cpButton = document.getElementById(cp);

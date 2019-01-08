@@ -64,7 +64,7 @@ export class PrintNode implements Expression<any>{
             res.draw(context, this._dims, this);
 
         //check if the effects array already has some elements
-        }/*() else if (context.effects.length > 0) {
+        }/* else if (context.effects.length > 0) {
 
         }*/
 

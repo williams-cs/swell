@@ -16,18 +16,42 @@
   <body>
     <div class="jumbotron">
       <h5> Swell Configuration </h5>
-      <p> Collect data for this session? </p>
 
+      <p> Collect data for this session? </p>
       <form>
         <div class="radio">
-          <label><input type="radio" name="data" checked> Yes </label>
+          <label><input type="radio" name="data" value="1" checked> Yes </label>
         </div>
         <div class="radio">
-          <label><input type="radio" name="data"> No </label>
+          <label><input type="radio" name="data" value="0"> No </label>
+        </div>
+      </form>
+
+      <p> Allow Direct Manipulation? </p>
+      <form>
+        <div class="radio">
+          <label><input type="radio" name="dm" value="1" checked> Yes </label>
+        </div>
+        <div class="radio">
+          <label><input type="radio" name="dm" value="0"> No </label>
         </div>
       </form>
 
       <a href="welcome.html" class="btn btn-background" role="button"> Continue </a>
     </div>
+
+    <script>
+        //storing survey values to localStorage
+        var dms = document.getElementsByName('dm');
+
+        for (let dm of dms) {
+            if (dm.checked) {
+                console.log("DM value: " + dm.value);
+                localStorage.setItem('dm', '' + dm.value);
+                break;
+            }
+        }
+    </script>
+
   </body>
 </html>
