@@ -8,7 +8,6 @@ class LessonTwoCpThree extends Module_1.Module {
     constructor(ctx, editor) {
         super(ctx, editor);
         this._name = "l2c3";
-        this._nextModule = 'l2c4';
         this._constraint = 'none';
         this._instructions = `<p> GOAL: Draw 2 circles and a word on the CANVAS. </p>`;
         this._starterCode = `print(ellipse(100, 100), 120, 150);\n`;

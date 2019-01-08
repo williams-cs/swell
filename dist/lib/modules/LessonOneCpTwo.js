@@ -7,8 +7,6 @@ class LessonOneCpTwo extends Module_1.Module {
     constructor(ctx, editor) {
         super(ctx, editor);
         this._name = "l1c2";
-        this._prevModule = 'l1c2';
-        this._nextModule = 'l1c3';
         this._constraint = 'code';
         this._instructions = `<p> GOAL: Move the words you just created to explore how it affects your code. </p>`;
         this._starterCode = `print("Hello", 100, 100)`;

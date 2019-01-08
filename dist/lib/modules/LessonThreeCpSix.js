@@ -9,7 +9,6 @@ class LessonThreeCpSix extends Module_1.Module {
         //setting up the CODE and CANVAS
         super(ctx, editor);
         this._name = "l3c6";
-        this._nextModule = 'l3c6';
         this._constraint = 'none';
         this._instructions = `<p> GOAL: Create an if/else statement to print the correct claim about the sizes of the 2 circles. </p>`;
         this._latestInstrIndex = 3;

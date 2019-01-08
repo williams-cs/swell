@@ -9,7 +9,6 @@ class LessonTwoCpOne extends Module_1.Module {
     constructor(ctx, editor) {
         super(ctx, editor);
         this._name = "l2c1";
-        this._nextModule = 'l2c2';
         this._constraint = 'none';
         this._instructions = `<p> GOAL: replace "moo" in the print statement to draw different shapes. </p>`;
         this._starterCode = `print("moo", 100, 100)`;

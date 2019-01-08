@@ -5,11 +5,12 @@ import { StringEffect } from "../effects/StringEffect";
 
 export class LessonOneCpOne extends Module {
     readonly _name: string = "l1c1";
-    readonly _nextModule: string = 'l1c2';
     readonly _goal: any;
     readonly _constraint: string = 'none';
     readonly _instructions: string =
         `<p> GOAL: Write 'Hello' on the CANVAS. </p>`;
+
+    readonly _starterCode: string = ``;
 
     _latestInstrIndex: number = 0;
 

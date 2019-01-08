@@ -293,24 +293,38 @@ const diff_1 = require("diff");
     * The first map is for non-dm case, the second for the dm case.
     */
     let sidebarPlans = [
-        new Map([
-            ['collapseOne', ['l1c1', 'l1c2', 'l1c3', 'l1c4']],
-            ['collapseTwo', ['l2c1', 'l2c2', 'l2c3', 'l2c4', 'l2c5', 'l2c6', 'l2c7']],
-            ['collapseThree', ['l3c1', 'l3c2', 'l3c3', 'l3c4', 'l3c5', 'l3c6']]
-        ]),
-        new Map([
-            ['collapseOne', ['l1c1', 'l1c2', 'l1c3', 'l1c4']],
-            ['collapseTwo', ['l2c1', 'l2c2', 'l2c3', 'l2c4', 'l2c5', 'l2c6', 'l2c7']],
-            ['collapseThree', ['l3c1', 'l3c2', 'l3c3', 'l3c4', 'l3c5', 'l3c6']]
-        ])
+        [
+            ['l1c1', 'l1c2', 'l1c3', 'l1c4'],
+            ['l2c1', 'l2c2', 'l2c3', 'l2c4', 'l2c5', 'l2c6', 'l2c7'],
+            ['l3c1', 'l3c2', 'l3c3', 'l3c4', 'l3c5', 'l3c6']
+        ],
+        [
+            ['l1c1', 'l1c2', 'l1c3', 'l1c4'],
+            ['l2c1', 'l2c2', 'l2c3', 'l2c4', 'l2c5', 'l2c6', 'l2c7'],
+            ['l3c1', 'l3c2', 'l3c3', 'l3c4', 'l3c5', 'l3c6']
+        ]
     ];
     //retrieve survey choice for dm or non-dm
     let dm = parseInt(localStorage.getItem('dm'));
     //set up Checkpoint sidebar
     let lessons = sidebarPlans[dm];
-    for (let key of lessons.keys()) {
-        let lesson = document.getElementById(key);
-        let cps = lessons.get(key);
+    for (var x = 0; x < lessons.length; x++) {
+        let lessonName = '';
+        switch (x) {
+            case 0:
+                lessonName = "collapseOne";
+                break;
+            case 1:
+                lessonName = "collapseTwo";
+                break;
+            case 2:
+                lessonName = "collapseThree";
+                break;
+            default:
+                break;
+        }
+        let lesson = document.getElementById(lessonName);
+        let cps = lessons[x];
         if (lesson != null && cps != null) {
             var i = 1;
             for (let cp of cps) {
@@ -376,11 +390,14 @@ const diff_1 = require("diff");
     let starCount = 0;
     let starBox = document.getElementById("achievement");
     updateStarBox();
-    let cpNames = [
+    /*
+    let cpNames: string[] = [
         'l1c1', 'l1c2', 'l1c3', 'l1c4',
         'l2c1', 'l2c2', 'l2c3', 'l2c4', 'l2c5', 'l2c6', 'l2c7',
         'l3c1', 'l3c2', 'l3c3', 'l3c4', 'l3c5', 'l3c6'
     ];
+    */
+    let cpNames = [].concat(...lessons);
     for (let cp of cpNames) {
         let cpButton = document.getElementById(cp);
         cpButton.onclick = function () {
@@ -485,16 +502,14 @@ const diff_1 = require("diff");
     }
     let nextButton = document.getElementById('next');
     nextButton.onclick = function () {
-        let nextModule = checkpoint._nextModule;
+        /*let nextModule = checkpoint._nextModule;
         if (nextModule != '') {
             initCheckpoint(nextModule);
-        }
-    };
-    let prevButton = document.getElementById('prev');
-    prevButton.onclick = function () {
-        let prevModule = checkpoint._prevModule;
-        if (prevModule != '') {
-            initCheckpoint(prevModule);
+        }*/
+        let cpName = checkpoint._name;
+        let i = cpNames.indexOf(cpName);
+        if (i > -1 && i < cpNames.length - 1) {
+            initCheckpoint(cpNames[i + 1]);
         }
     };
     function updateStarBox() {

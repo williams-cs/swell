@@ -7,8 +7,6 @@ class LessonOneCpThree extends Module_1.Module {
     constructor(ctx, editor) {
         super(ctx, editor);
         this._name = "l1c3";
-        this._prevModule = 'l1c2';
-        this._nextModule = 'l1c4';
         this._constraint = 'canvas';
         this._instructions = `<p> GOAL: Move the word around the CANVAS solely by changing your CODE. </p>`;
         this._starterCode = `print("Hello", 100, 100)`;

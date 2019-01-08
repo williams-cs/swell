@@ -7,7 +7,6 @@ class LessonTwoCpFive extends Module_1.Module {
     constructor(ctx, editor) {
         super(ctx, editor);
         this._name = "l2c5";
-        this._nextModule = 'l2c6';
         this._constraint = 'none';
         this._instructions = `<p> GOAL: Create a variable c referring to an ellipse(75, 75), then write 2 print statements to print c. </p>`;
         this._starterCode = `a = "moo moo";

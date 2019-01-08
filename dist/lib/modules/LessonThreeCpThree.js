@@ -7,7 +7,6 @@ class LessonThreeCpThree extends Module_1.Module {
     constructor(ctx, editor) {
         super(ctx, editor);
         this._name = "l3c3";
-        this._nextModule = 'l3c4';
         this._constraint = 'none';
         this._instructions = `<p> GOAL: Make the line "b is greater than 20" only be printed on the CANVAS when b is actually greater than 20. </p>`;
         this._starterCode = `b = 8;

@@ -8,7 +8,6 @@ class LessonTwoCpSeven extends Module_1.Module {
     constructor(ctx, editor) {
         super(ctx, editor);
         this._name = "l2c7";
-        this._nextModule = 'l3c1';
         this._constraint = 'none';
         this._instructions = `<p> CHALLENGE: Create a circle and print out its size. </p>`;
         this._starterCode = `a = 50;

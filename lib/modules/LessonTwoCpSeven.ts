@@ -6,7 +6,6 @@ import { EllipseEffect } from "../effects/EllipseEffect";
 
 export class LessonTwoCpSeven extends Module {
     readonly _name: string = "l2c7";
-    readonly _nextModule: string = 'l3c1';
     readonly _goal: any;
     readonly _constraint: string = 'none';
     readonly _instructions: string =

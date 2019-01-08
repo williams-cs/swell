@@ -5,8 +5,6 @@ import { StringEffect } from "../effects/StringEffect";
 
 export class LessonOneCpThree extends Module {
     readonly _name: string = "l1c3";
-    readonly _prevModule: string = 'l1c2';
-    readonly _nextModule: string = 'l1c4';
     readonly _goal: any;
     readonly _constraint: string = 'canvas';
     readonly _instructions: string =
