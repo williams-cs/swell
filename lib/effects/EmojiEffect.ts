@@ -9,6 +9,7 @@ import { LogEvent } from "../logging/LogEvent";
 import { ResizeEvent } from "../logging/ResizeEvent";
 import { DragEvent } from "../logging/DragEvent";
 import { ClickEvent } from "../logging/ClickEvent";
+import { EffectUtils } from "./EffectUtils";
 
 export class EmojiEffect implements Effect<EmojiNode> {
 
@@ -68,7 +69,6 @@ export class EmojiEffect implements Effect<EmojiNode> {
             this._ctx = ctx;
             this._emojiImg = new Image();
             this._emojiImg.src = './pics/' + this._emoji.name.eval(this._context).val + '.svg';
-            this._ratio = this.w / this.h;
             this.update();
         }
         this._context.eventLog.push(this.logPaint());
@@ -335,10 +335,10 @@ export class EmojiEffect implements Effect<EmojiNode> {
             this.modifyDrag();
         }
         else if(this._isResizing && this._isSelected) {
-            this.modifyResize(this.w < 10, this.h < 10);
+            this.modifyResize();
         }
         else if(this._isChangingDims && this._isSelected) {
-            this.modifyChangeDims(this.w < 10, this.h < 10);
+            this.modifyChangeDims();
         }
     }
 
@@ -396,138 +396,74 @@ export class EmojiEffect implements Effect<EmojiNode> {
      *
      * If any of width or height is too small, it sets them equal to 10 and the other equal to
      * 10 divided or multiplied by the ratio of width/height to keep it the same.
-     *
-     * The work of changing the size is done by calling the helper method modifyResizeHelper.
-     * @param widthTooSmall true if the width dimension is < 10
-     * @param heightTooSmall true if the height dimension is < 10
      */
-    modifyResize(widthTooSmall: boolean, heightTooSmall: boolean): void {
-        if(widthTooSmall) {
+    modifyResize(): void {
+        let ratio: number = this.w / this.h;
+        if (this.w < 10) {
             this._dims.width.eval(this._context).val = 10;
-            this._emoji.width = new NumberNode(10);
-            this._dims.height.eval(this._context).val = 10 / this._ratio;
-            this._emoji.height = new NumberNode(Math.round(10 / this._ratio));
-            let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
-            if(newDistance - this._initDistance > 0){
-                this.modifyResizeHelper(newDistance);
-            }
+            this._dims.height.eval(this._context).val = 10 / ratio;
         }
-        if(heightTooSmall) {
+        if (this.h < 10) {
             this._dims.height.eval(this._context).val = 10;
-            this._emoji.height = new NumberNode(10);
-            this._dims.width.eval(this._context).val = 10 * this._ratio;
-            this._emoji.width = new NumberNode(Math.round(10 * this._ratio));
-            let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
-            if(newDistance - this._initDistance > 0){
-                this.modifyResizeHelper(newDistance);
-            }
+            this._dims.width.eval(this._context).val = 10 * ratio;
         }
-        else {
-            let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
-            this.modifyResizeHelper(newDistance);
-        }
-    }
 
-    /**
-     * Does the work of changing the size of the object.
-     *
-     * Since the rectangle originates from the top left corner and not the center,
-     * it changes the x and y coordinates as well if guides 1, 2, or 4 are selected
-     *
-     * @param newDistance the distance between the mouse and the location opposite to it
-     * (if top right guide is clicked, the distance between that and the bottom left guide is newDistance)
-     */
-    modifyResizeHelper(newDistance: number): void {
-        if(this.w > 10 && this.h > 10) {
+        let newDistance = EffectUtils.calcDistance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
+        let dist_diff: number = newDistance - this._initDistance;
+
+        if (this.w >= 10 && this.h >= 10) {
             switch (this._corner) {
                 case 1:
-                    this._dims.y.eval(this._context).val -= Math.round((newDistance - this._initDistance) / this._ratio);
-                    this._dims.x.eval(this._context).val -= Math.round(newDistance - this._initDistance);
-                break;
+                    this._dims.y.eval(this._context).val -= Math.round(dist_diff / ratio);
+                    this._dims.x.eval(this._context).val -= dist_diff;
+                    break;
                 case 2:
-                    this._dims.y.eval(this._context).val -= Math.round((newDistance - this._initDistance) / this._ratio);
-                break;
+                    this._dims.y.eval(this._context).val -= Math.round(dist_diff / ratio);
+                    break;
                 case 4:
-                    this._dims.x.eval(this._context).val -= Math.round(newDistance - this._initDistance);
-                break;
+                    this._dims.x.eval(this._context).val -= dist_diff;
+                    break;
             }
+            this._dims.width.eval(this._context).val += dist_diff;
+            this._dims.height.eval(this._context).val = Math.round(this.w / ratio);
+            this._initDistance = newDistance;
         }
-        this._dims.width.eval(this._context).val += newDistance - this._initDistance;
-        this._emoji.width = new NumberNode(Math.round(this.w));
-        this._dims.height.eval(this._context).val += (newDistance - this._initDistance) / this._ratio;
-        this._emoji.height = new NumberNode(Math.round(this.h));
-        this._initDistance = newDistance;
-
     }
 
     /**
      * Changes the dimensions of the object when called.
      * If any of width or height is too small, it sets them equal to 10.
-     * Calls modifyChangeDimsHelper to actually do the work
-     * @param widthTooSmall true if the width dimension is < 10
-     * @param heightTooSmall true if the height dimension is < 10
      */
-    modifyChangeDims(widthTooSmall: boolean, heightTooSmall: boolean): void {
-        let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
-        if(widthTooSmall) {
+    modifyChangeDims(): void {
+        let newDistance = EffectUtils.calcDistance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
+        if (this.w < 10) {
             this._dims.width.eval(this._context).val = 10;
-            this._emoji.width = new NumberNode(10);
-            if(newDistance - this._initDistance > 0){
-                this.modifyChangeDimsHelper();
-            }
         }
-        if(heightTooSmall) {
+        if (this.h < 10) {
             this._dims.height.eval(this._context).val = 10;
-            this._emoji.height = new NumberNode(10);
-            if(newDistance - this._initDistance > 0){
-                this.modifyChangeDimsHelper();
-            }
         }
-        else {
-            this.modifyChangeDimsHelper();
-        }
-    }
-
-    /**
-     * Does the work of changing the size of the object.
-     *
-     * Since the rectangle originates from the top left corner and not the center,
-     * it changes the x and y coordinates as well if guides 5 or 8 are selected
-     */
-    modifyChangeDimsHelper(): void {
-        let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
+        let dist_diff: number = newDistance - this._initDistance;
         switch (this._corner) {
             case 5:
-                if(this.w > 10 && this.h > 10) {
-                    this._dims.y.eval(this._context).val -= Math.round(newDistance - this._initDistance);
+                if (this.h > 10) { //as long as the height is >= 10
+                    this._dims.y.eval(this._context).val -= dist_diff;
                 }
-                this._dims.height.eval(this._context).val += newDistance - this._initDistance;
-                this._emoji.height = new NumberNode(Math.round(this.h));
-                this._ratio = this.w / this.h;
-                this._initDistance = newDistance;
-            break;
+                this._dims.height.eval(this._context).val += dist_diff;
+                break;
             case 6:
-                this._dims.width.eval(this._context).val += newDistance - this._initDistance;
-                this._emoji.width = new NumberNode(Math.round(this.w));
-                this._ratio = this.w / this.h;
-                this._initDistance = newDistance;
-            break;
+                this._dims.width.eval(this._context).val += dist_diff;
+                break;
             case 7:
-                this._dims.height.eval(this._context).val += newDistance - this._initDistance;
-                this._emoji.height = new NumberNode(Math.round(this.h));
-                this._ratio = this.w / this.h;
-                this._initDistance = newDistance;
-            break;
+                this._dims.height.eval(this._context).val += dist_diff;
+                break;
             case 8:
-                if(this.w > 10 && this.h > 10) {
-                    this._dims.x.eval(this._context).val -= Math.round(newDistance - this._initDistance);
+                if (this.w > 10) { // as long as width is > 10
+                    this._dims.x.eval(this._context).val -= dist_diff;
                 }
-                this._dims.width.eval(this._context).val += newDistance - this._initDistance;
-                this._emoji.width = new NumberNode(Math.round(this.w));
-                this._ratio = this.w / this.h;
-                this._initDistance = newDistance;
-            break;
+                this._dims.width.eval(this._context).val += dist_diff;
+                break;
         }
+        this._initDistance = newDistance;
     }
 
     /**
@@ -585,27 +521,27 @@ export class EmojiEffect implements Effect<EmojiNode> {
 
                 switch (this._corner) {
                     case 1:
-                        this._initDistance = distance(this._mouse.x, this._mouse.y, x + w, y + h);
+                        this._initDistance = EffectUtils.calcDistance(this._mouse.x, this._mouse.y, x + w, y + h);
                         this._dragoffx = x + w;
                         this._dragoffy = y + h;
                     break;
                     case 2:
-                        this._initDistance = distance(this._mouse.x, this._mouse.y, x, y + h);
+                        this._initDistance = EffectUtils.calcDistance(this._mouse.x, this._mouse.y, x, y + h);
                         this._dragoffx = x;
                         this._dragoffy = y + h;
                     break;
                     case 3:
-                        this._initDistance = distance(this._mouse.x, this._mouse.y, x, y);
+                        this._initDistance = EffectUtils.calcDistance(this._mouse.x, this._mouse.y, x, y);
                         this._dragoffx = x;
                         this._dragoffy = y;
                     break;
                     case 4:
-                        this._initDistance = distance(this._mouse.x, this._mouse.y, x + w, y);
+                        this._initDistance = EffectUtils.calcDistance(this._mouse.x, this._mouse.y, x + w, y);
                         this._dragoffx = x + w;
                         this._dragoffy = y;
                     break;
                 }
-                //this._initDistance = distance(this._mouse.x, this._mouse.y, x + w / 2, y + h / 2);
+                //this._initDistance = EffectUtils.calcDistance(this._mouse.x, this._mouse.y, x + w / 2, y + h / 2);
             } else if (guideContains > 4) { //changing shape dimensions
                 this._isSelected = true;
                 this._isChangingDims = true;
@@ -613,22 +549,22 @@ export class EmojiEffect implements Effect<EmojiNode> {
 
                 switch (this._corner) {
                     case 5:
-                        this._initDistance = distance(this._mouse.x, this._mouse.y, x + w / 2, y + h);
+                        this._initDistance = EffectUtils.calcDistance(this._mouse.x, this._mouse.y, x + w / 2, y + h);
                         this._dragoffx = x + w / 2;
                         this._dragoffy = y + h;
                     break;
                     case 6:
-                        this._initDistance = distance(this._mouse.x, this._mouse.y, x, y + h / 2);
+                        this._initDistance = EffectUtils.calcDistance(this._mouse.x, this._mouse.y, x, y + h / 2);
                         this._dragoffx = x;
                         this._dragoffy = y + h / 2;
                     break;
                     case 7:
-                        this._initDistance = distance(this._mouse.x, this._mouse.y, x + w / 2, y);
+                        this._initDistance = EffectUtils.calcDistance(this._mouse.x, this._mouse.y, x + w / 2, y);
                         this._dragoffx = x + w / 2;
                         this._dragoffy = y;
                     break;
                     case 8:
-                        this._initDistance = distance(this._mouse.x, this._mouse.y, x + w, y + h / 2);
+                        this._initDistance = EffectUtils.calcDistance(this._mouse.x, this._mouse.y, x + w, y + h / 2);
                         this._dragoffx = x + w;
                         this._dragoffy = y + h / 2;
                     break;
@@ -644,7 +580,7 @@ export class EmojiEffect implements Effect<EmojiNode> {
                 this._dragoffx = this._mouse.x - x;
                 this._dragoffy = this._mouse.y - y;
             }
-            
+
         } else if (!this._isSelectingMultiple) {
             this._isSelected = false;
             this._isDragging = false;
@@ -679,8 +615,8 @@ export class EmojiEffect implements Effect<EmojiNode> {
      * @param event the mousedown event
      */
     getMousePosition(event: any): void {
-        this._mouse.x = getMousePos(this._canvas, event).x;
-        this._mouse.y = getMousePos(this._canvas, event).y;
+        this._mouse.x = EffectUtils.getMouseCanvasPos(this._canvas, event).x;
+        this._mouse.y = EffectUtils.getMouseCanvasPos(this._canvas, event).y;
     }
 
     /**
@@ -830,28 +766,4 @@ export class EmojiEffect implements Effect<EmojiNode> {
     toIDString(): string {
         return (this.idObj._id.toString() + " to emoji at " + this.x + ", " + this.y);
     }
-}
-
-/**
- * Gets the mouse x and y coordinates in relation to the canvas
- * @param canvas the canvas object
- * @param event the mousemove event
- */
-function getMousePos(canvas: any, event: any): {x: number, y: number} {
-    let emoji = canvas.getBoundingClientRect();
-    return {
-        x: event.clientX - emoji.left,
-        y: event.clientY - emoji.top
-    };
-}
-
-/**
- * Computes the distance between two points
- * @param x1 x coordinate of first point
- * @param y1 y coordinate of first point
- * @param x2 x coordinate of second point
- * @param y2 y coordinate of second point
- */
-function distance(x1: number, y1: number, x2: number, y2: number) {
-    return Math.sqrt(Math.pow(x1 - x2,2) + Math.pow(y1 - y2,2));
 }

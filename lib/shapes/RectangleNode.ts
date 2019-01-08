@@ -40,8 +40,8 @@ export class RectangleNode implements Expression<RectangleNode> {
      * @param ast The program AST
      */
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
-        dims.width = new NumberNode(this._width.eval(context).val, "");
-        dims.height = new NumberNode(this._height.eval(context).val, "");
+        dims.width = this._width;
+        dims.height = this._height;
         let e = new RectangleEffect(this);
         e.draw(context, dims, ast);
     }

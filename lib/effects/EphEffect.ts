@@ -9,6 +9,7 @@ import { LogEvent } from "../logging/LogEvent";
 import { ResizeEvent } from "../logging/ResizeEvent";
 import { DragEvent } from "../logging/DragEvent";
 import { ClickEvent } from "../logging/ClickEvent";
+import { EffectUtils } from "./EffectUtils";
 
 export class EphEffect implements Effect<EphNode> {
 
@@ -407,7 +408,7 @@ export class EphEffect implements Effect<EphNode> {
             this._eph.width = new NumberNode(10);
             this._dims.height.eval(this._context).val = 10 / this._ratio;
             this._eph.height = new NumberNode(Math.round(10 / this._ratio));
-            let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
+            let newDistance = EffectUtils.calcDistance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
             if(newDistance - this._initDistance > 0){
                 this.modifyResizeHelper(newDistance);
             }
@@ -417,13 +418,13 @@ export class EphEffect implements Effect<EphNode> {
             this._eph.height = new NumberNode(10);
             this._dims.width.eval(this._context).val = 10 * this._ratio;
             this._eph.width = new NumberNode(Math.round(10 * this._ratio));
-            let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
+            let newDistance = EffectUtils.calcDistance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
             if(newDistance - this._initDistance > 0){
                 this.modifyResizeHelper(newDistance);
             }
         }
         else {
-            let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
+            let newDistance = EffectUtils.calcDistance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
             this.modifyResizeHelper(newDistance);
         }
     }
@@ -468,7 +469,7 @@ export class EphEffect implements Effect<EphNode> {
      * @param heightTooSmall true if the height dimension is < 10
      */
     modifyChangeDims(widthTooSmall: boolean, heightTooSmall: boolean): void {
-        let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
+        let newDistance = EffectUtils.calcDistance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
         if(widthTooSmall) {
             this._dims.width.eval(this._context).val = 10;
             this._eph.width = new NumberNode(10);
@@ -495,7 +496,7 @@ export class EphEffect implements Effect<EphNode> {
      * it changes the x and y coordinates as well if guides 5 or 8 are selected
      */
     modifyChangeDimsHelper(): void {
-        let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
+        let newDistance = EffectUtils.calcDistance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
         switch (this._corner) {
             case 5:
                 if(this.w > 10 && this.h > 10) {
@@ -585,27 +586,27 @@ export class EphEffect implements Effect<EphNode> {
 
                 switch (this._corner) {
                     case 1:
-                        this._initDistance = distance(this._mouse.x, this._mouse.y, x + w, y + h);
+                        this._initDistance = EffectUtils.calcDistance(this._mouse.x, this._mouse.y, x + w, y + h);
                         this._dragoffx = x + w;
                         this._dragoffy = y + h;
                     break;
                     case 2:
-                        this._initDistance = distance(this._mouse.x, this._mouse.y, x, y + h);
+                        this._initDistance = EffectUtils.calcDistance(this._mouse.x, this._mouse.y, x, y + h);
                         this._dragoffx = x;
                         this._dragoffy = y + h;
                     break;
                     case 3:
-                        this._initDistance = distance(this._mouse.x, this._mouse.y, x, y);
+                        this._initDistance = EffectUtils.calcDistance(this._mouse.x, this._mouse.y, x, y);
                         this._dragoffx = x;
                         this._dragoffy = y;
                     break;
                     case 4:
-                        this._initDistance = distance(this._mouse.x, this._mouse.y, x + w, y);
+                        this._initDistance = EffectUtils.calcDistance(this._mouse.x, this._mouse.y, x + w, y);
                         this._dragoffx = x + w;
                         this._dragoffy = y;
                     break;
                 }
-                //this._initDistance = distance(this._mouse.x, this._mouse.y, x + w / 2, y + h / 2);
+                //this._initDistance = EffectUtils.calcDistance(this._mouse.x, this._mouse.y, x + w / 2, y + h / 2);
             } else if (guideContains > 4) { //changing shape dimensions
                 this._isSelected = true;
                 this._isChangingDims = true;
@@ -613,22 +614,22 @@ export class EphEffect implements Effect<EphNode> {
 
                 switch (this._corner) {
                     case 5:
-                        this._initDistance = distance(this._mouse.x, this._mouse.y, x + w / 2, y + h);
+                        this._initDistance = EffectUtils.calcDistance(this._mouse.x, this._mouse.y, x + w / 2, y + h);
                         this._dragoffx = x + w / 2;
                         this._dragoffy = y + h;
                     break;
                     case 6:
-                        this._initDistance = distance(this._mouse.x, this._mouse.y, x, y + h / 2);
+                        this._initDistance = EffectUtils.calcDistance(this._mouse.x, this._mouse.y, x, y + h / 2);
                         this._dragoffx = x;
                         this._dragoffy = y + h / 2;
                     break;
                     case 7:
-                        this._initDistance = distance(this._mouse.x, this._mouse.y, x + w / 2, y);
+                        this._initDistance = EffectUtils.calcDistance(this._mouse.x, this._mouse.y, x + w / 2, y);
                         this._dragoffx = x + w / 2;
                         this._dragoffy = y;
                     break;
                     case 8:
-                        this._initDistance = distance(this._mouse.x, this._mouse.y, x + w, y + h / 2);
+                        this._initDistance = EffectUtils.calcDistance(this._mouse.x, this._mouse.y, x + w, y + h / 2);
                         this._dragoffx = x + w;
                         this._dragoffy = y + h / 2;
                     break;
@@ -680,8 +681,8 @@ export class EphEffect implements Effect<EphNode> {
      * @param event the mousedown event
      */
     getMousePosition(event: any): void {
-        this._mouse.x = getMousePos(this._canvas, event).x;
-        this._mouse.y = getMousePos(this._canvas, event).y;
+        this._mouse.x = EffectUtils.getMouseCanvasPos(this._canvas, event).x;
+        this._mouse.y = EffectUtils.getMouseCanvasPos(this._canvas, event).y;
     }
 
     /**
@@ -831,28 +832,4 @@ export class EphEffect implements Effect<EphNode> {
     toIDString(): string {
         return (this.idObj._id.toString() + " to eph at " + this.x + ", " + this.y);
     }
-}
-
-/**
- * Gets the mouse x and y coordinates in relation to the canvas
- * @param canvas the canvas object
- * @param event the mousemove event
- */
-function getMousePos(canvas: any, event: any): {x: number, y: number} {
-    let eph = canvas.getBoundingClientRect();
-    return {
-        x: event.clientX - eph.left,
-        y: event.clientY - eph.top
-    };
-}
-
-/**
- * Computes the distance between two points
- * @param x1 x coordinate of first point
- * @param y1 y coordinate of first point
- * @param x2 x coordinate of second point
- * @param y2 y coordinate of second point
- */
-function distance(x1: number, y1: number, x2: number, y2: number) {
-    return Math.sqrt(Math.pow(x1 - x2,2) + Math.pow(y1 - y2,2));
 }

@@ -9,6 +9,7 @@ import { ResizeEvent } from "../logging/ResizeEvent";
 import { LogEvent } from "../logging/LogEvent";
 import { NumberNode } from "../prims/NumberNode";
 import { ClickEvent } from "../logging/ClickEvent";
+import { EffectUtils } from "./EffectUtils";
 
 export class EllipseEffect implements Effect<EllipseNode> {
 
@@ -67,14 +68,12 @@ export class EllipseEffect implements Effect<EllipseNode> {
             this._context = context;
             let ctx = context.canvas.get().getContext("2d");
             this._ctx = ctx;
-            this._ratio = this.w / this.h;
             this.update();
         }
-        // logging
+        // Logging
         this._context.eventLog.push(this.logPaint());
         context.effects.push(this);
         this.addEventListeners();
-
     }
 
     /**
@@ -87,13 +86,9 @@ export class EllipseEffect implements Effect<EllipseNode> {
         let h: number = this.h;
         this._ctx.beginPath();
         this._ctx.ellipse(x, y, w/2, h/2, 0, 0, Math.PI * 2, false);
-        //this._ctx.strokeStyle = "black";
-        //this._ctx.stroke();
         this._ctx.fillStyle = "#D5B8FF";
         this._ctx.shadowColor = "#6C6C6C";
         this._ctx.shadowBlur = 15;
-        //this._ctx.shadowOffsetX = 2;
-        //this._ctx.shadowOffsetY = 2;
         this._ctx.fill();
 
         if(this._isSelected) {
@@ -345,14 +340,12 @@ export class EllipseEffect implements Effect<EllipseNode> {
      */
     onMouseMove(event: any): void {
         this.getMousePosition(event);
-        if(this._isDragging && this._isSelected){
+        if (this._isDragging && this._isSelected){
             this.modifyDrag();
-        }
-        else if(this._isResizing && this._isSelected){
-            this.modifyResize(this.w < 14, this.h < 14);
-        }
-        else if(this._isChangingDims && this._isSelected) {
-            this.modifyChangeDims(this.w < 14, this.h < 14);
+        } else if (this._isResizing && this._isSelected){
+            this.modifyResize();
+        } else if (this._isChangingDims && this._isSelected) {
+            this.modifyChangeDims();
         }
     }
 
@@ -371,7 +364,6 @@ export class EllipseEffect implements Effect<EllipseNode> {
      * @param event the mouseup event
      */
     onMouseUp(event: any) {
-        //console.log("I'm an ellipse!");
         this.modifyReset();
     }
 
@@ -403,7 +395,6 @@ export class EllipseEffect implements Effect<EllipseNode> {
      * Changes the x and y coordinates of the object in order to drag the object.
      */
     modifyDrag(): void {
-        //console.log("ellipse dragoffx: " + this._dragoffx);
         this._dims.x.eval(this._context).val = this._mouse.x - this._dragoffx;
         this._dims.y.eval(this._context).val = this._mouse.y - this._dragoffy;
     }
@@ -413,89 +404,51 @@ export class EllipseEffect implements Effect<EllipseNode> {
      *
      * If any of width or height is too small, it sets them equal to 14 and the other equal to
      * 10 divided or multiplied by the ratio of width/height to keep it the same.
-     * @param widthTooSmall true if the width dimension is < 14
-     * @param heightTooSmall true if the height dimension is < 14
      */
-    modifyResize(widthTooSmall: boolean, heightTooSmall: boolean): void {
-        if(widthTooSmall){
+    modifyResize(): void {
+        let ratio: number = this.w / this.h;
+        if (this.w < 14) {
             this._dims.width.eval(this._context).val = 14;
-            this._circle.width = new NumberNode(14); // set for the prodirect manipulation
-            this._dims.height.eval(this._context).val = 14 / this._ratio;
-            this._circle.height = new NumberNode(Math.round(14 / this._ratio));
-            let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
-            if(newDistance - this._initDistance > 0){
-                this._dims.width.eval(this._context).val += (newDistance - this._initDistance) * 2;
-                this._circle.width = new NumberNode(Math.round(this.w));
-                this._dims.height.eval(this._context).val += (newDistance - this._initDistance) * 2 / this._ratio;
-                this._circle.height = new NumberNode(Math.round(this.h));
-                this._initDistance = newDistance;
-            }
+            this._dims.height.eval(this._context).val = Math.round(14 / ratio);
         }
-        if(heightTooSmall) {
+        if (this.h < 14) {
             this._dims.height.eval(this._context).val = 14;
-            this._circle.height = new NumberNode(14); // set for the prodirect manipulation
-            this._dims.width.eval(this._context).val = 14 * this._ratio;
-            this._circle.width = new NumberNode(Math.round(14 * this._ratio));
-            let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
-            if(newDistance - this._initDistance > 0){
-                this._dims.width.eval(this._context).val += (newDistance - this._initDistance) * 2;
-                this._circle.width = new NumberNode(Math.round(this.w));
-                this._dims.height.eval(this._context).val += (newDistance - this._initDistance) * 2 / this._ratio;
-                this._circle.height = new NumberNode(Math.round(this.h));
-                this._initDistance = newDistance;
-            }
+            this._dims.width.eval(this._context).val = Math.round(14 * ratio);
         }
-        else {
-            let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
-            this._dims.width.eval(this._context).val += (newDistance - this._initDistance) * 2;
-            this._circle.width = new NumberNode(Math.round(this.w));
-            this._dims.height.eval(this._context).val += (newDistance - this._initDistance) * 2 / this._ratio;
-            this._circle.height = new NumberNode(Math.round(this.h));
-            this._initDistance = newDistance;
-        }
+        let newDistance = EffectUtils.calcDistance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
+        this._dims.width.eval(this._context).val += newDistance - this._initDistance;
+        this._dims.height.eval(this._context).val = Math.round(this.w / ratio);
+        this._initDistance = newDistance;
     }
 
     /**
      * Changes the dimensions of the object when called.
      * If any of width or height is too small, it sets them equal to 10.
-     * @param widthTooSmall true if the width dimension is < 10
-     * @param heightTooSmall true if the height dimension is < 10
      */
-    modifyChangeDims(widthTooSmall: boolean, heightTooSmall: boolean): void {
-        let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
+    modifyChangeDims(): void {
+        let newDistance = EffectUtils.calcDistance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
+        let ratio: number = this.w / this.h;
+        let dist_diff: number = newDistance - this._initDistance;
         if (this._corner == 5 || this._corner == 7) { // if modifying height
-            if (!heightTooSmall) {
-                this._dims.height.eval(this._context).val += (newDistance - this._initDistance) * 2 / this._ratio;
-                this._circle.height = new NumberNode(Math.round(this.h));
+            if (this.h >= 14) {
+                this._dims.height.eval(this._context).val += dist_diff * 2;
                 this._initDistance = newDistance;
-                this._ratio = this.w / this.h; // setting width/height ratio = to the new ratio
             } else {
                 this._dims.height.eval(this._context).val = 14;
-                this._circle.height = new NumberNode(14);
-                this._ratio = this.w / this.h;
-                if(newDistance - this._initDistance > 0){
-                    this._dims.height.eval(this._context).val += (newDistance - this._initDistance) * 2 / this._ratio;
-                    this._circle.height = new NumberNode(Math.round(this.h));
+                if (dist_diff > 0) {
+                    this._dims.height.eval(this._context).val += dist_diff * 2;
                     this._initDistance = newDistance;
-                    this._ratio = this.w / this.h;
                 }
             }
-        }
-        else { // modifying width
-            if (!widthTooSmall) {
-                this._dims.width.eval(this._context).val += (newDistance - this._initDistance) * 2;
-                this._circle.width = new NumberNode(Math.round(this.w));
+        } else { // modifying width
+            if (this.w >= 14) {
+                this._dims.width.eval(this._context).val += dist_diff * 2;
                 this._initDistance = newDistance;
-                this._ratio = this.w / this.h;
             } else {
                 this._dims.width.eval(this._context).val = 14;
-                this._circle.width = new NumberNode(14);
-                this._ratio = this.w / this.h;
-                if(newDistance - this._initDistance > 0){
-                    this._dims.width.eval(this._context).val += (newDistance - this._initDistance) * 2;
-                    this._circle.width = new NumberNode(Math.round(this.w));
+                if (dist_diff > 0){
+                    this._dims.width.eval(this._context).val += dist_diff * 2;
                     this._initDistance = newDistance;
-                    this._ratio = this.w / this.h;
                 }
             }
         }
@@ -511,17 +464,13 @@ export class EllipseEffect implements Effect<EllipseNode> {
         this._justDragged = false;
 
         if (this._isSelectingMultiple) { //prepares the object for dragging whether it is personally selected or not
+            this._isDragging = true;
+            this._dragoffx = this._mouse.x - this.x;
+            this._dragoffy = this._mouse.y - this.y;
             if (contains) {
                 this._x1 = this.x;
                 this._y1 = this.y;
                 this._isSelected = true;
-                this._isDragging = true;
-                this._dragoffx = this._mouse.x - this.x;
-                this._dragoffy = this._mouse.y - this.y;
-            } else {
-                this._dragoffx = this._mouse.x - this.x;
-                this._dragoffy = this._mouse.y - this.y;
-                this._isDragging = true;
             }
 
         } else if (guideContains > 0 || contains) {
@@ -547,7 +496,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
                 this._corner = guideContains;
                 this._dragoffx = this.x;
                 this._dragoffy = this.y;
-                this._initDistance = distance(this._mouse.x, this._mouse.y, this.x, this.y);
+                this._initDistance = EffectUtils.calcDistance(this._mouse.x, this._mouse.y, this.x, this.y);
 
                 this._width1 = this.w;
                 this._height1 = this.h;
@@ -559,7 +508,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
                 this._corner = guideContains;
                 this._dragoffx = this.x;
                 this._dragoffy = this.y;
-                this._initDistance = distance(this._mouse.x, this._mouse.y, this.x, this.y);
+                this._initDistance = EffectUtils.calcDistance(this._mouse.x, this._mouse.y, this.x, this.y);
 
             } else if (contains) { //simply selecting the shape or dragging
                 this._x1 = this.x; // Saving original x and y
@@ -616,8 +565,8 @@ export class EllipseEffect implements Effect<EllipseNode> {
      * @param event the mousedown event
      */
     getMousePosition(event: any): void {
-        this._mouse.x = getMousePos(this._canvas, event).x;
-        this._mouse.y = getMousePos(this._canvas, event).y;
+        this._mouse.x = EffectUtils.getMouseCanvasPos(this._canvas, event).x;
+        this._mouse.y = EffectUtils.getMouseCanvasPos(this._canvas, event).y;
     }
 
     /**
@@ -757,28 +706,4 @@ export class EllipseEffect implements Effect<EllipseNode> {
     toIDString(): string {
         return (this.idObj._id.toString() + " to ellipse at " + this.x + ", " + this.y);
     }
-}
-
-/**
- * Get's the mouse x and y coordinates in relation to the canvas
- * @param canvas the canvas object
- * @param event the mousemove event
- */
-function getMousePos(canvas: any, event: any): {x: number, y: number} {
-    let rect = canvas.getBoundingClientRect();
-    return {
-        x: event.clientX - rect.left,
-        y: event.clientY - rect.top
-    };
-}
-
-/**
- * Computes the distance between two points
- * @param x1 x coordinate of first point
- * @param y1 y coordinate of first point
- * @param x2 x coordinate of second point
- * @param y2 y coordinate of second point
- */
-function distance(x1: number, y1: number, x2: number, y2: number) {
-    return Math.sqrt(Math.pow(x1 - x2,2) + Math.pow(y1 - y2,2));
 }

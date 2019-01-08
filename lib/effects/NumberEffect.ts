@@ -8,6 +8,7 @@ import { DragEvent } from "../logging/DragEvent";
 import { ResizeEvent } from "../logging/ResizeEvent";
 import { LogEvent } from "../logging/LogEvent";
 import { ClickEvent } from "../logging/ClickEvent";
+import { EffectUtils } from "./EffectUtils";
 
 export class NumberEffect implements Effect<NumberNode> {
 
@@ -378,14 +379,14 @@ export class NumberEffect implements Effect<NumberNode> {
     modifyResize(isTooSmall: boolean): void {
         if(isTooSmall){
             this._fontSize = 15;
-            let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
+            let newDistance = EffectUtils.calcDistance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
             if(newDistance - this._initDistance > 0){
                 this._fontSize += (newDistance - this._initDistance) * 0.2;
                 this._initDistance = newDistance;
             }
         }
         else {
-            let newDistance = distance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
+            let newDistance = EffectUtils.calcDistance(this._mouse.x, this._mouse.y, this._dragoffx, this._dragoffy);
             this._fontSize += (newDistance - this._initDistance) * 0.2;
             this._initDistance = newDistance;
         }
@@ -445,7 +446,7 @@ export class NumberEffect implements Effect<NumberNode> {
 
                 this._dragoffx = this.x;
                 this._dragoffy = this.y;
-                this._initDistance = distance(this._mouse.x, this._mouse.y, this.x, this.y);
+                this._initDistance = EffectUtils.calcDistance(this._mouse.x, this._mouse.y, this.x, this.y);
                 this._isResizing = true;
                 this._size1 = this._fontSize; // saving old font size
 
@@ -462,7 +463,7 @@ export class NumberEffect implements Effect<NumberNode> {
                     this._isDragging = true;
                 }
             }
-            
+
         } else if (!this._isSelectingMultiple) {
             this._isSelected = false;
             this._isDragging = false;
@@ -508,8 +509,8 @@ export class NumberEffect implements Effect<NumberNode> {
      * @param event the mousedown event
      */
     getMousePosition(event: any): void {
-        this._mouse.x = getMousePos(this._canvas, event).x;
-        this._mouse.y = getMousePos(this._canvas, event).y;
+        this._mouse.x = EffectUtils.getMouseCanvasPos(this._canvas, event).x;
+        this._mouse.y = EffectUtils.getMouseCanvasPos(this._canvas, event).y;
     }
 
     /**
@@ -659,28 +660,4 @@ export class NumberEffect implements Effect<NumberNode> {
    toIDString(): string {
        return (this.idObj._id.toString() + " to " + this._num.toString() + " at " + this.x + ", " + this.y);
    }
-}
-
-/**
- * Get's the mouse x and y coordinates in relation to the canvas
- * @param canvas the canvas object
- * @param event the mousemove event
- */
-function getMousePos(canvas: any, event: any): {x: number, y: number} {
-    let rect = canvas.getBoundingClientRect();
-    return {
-        x: event.clientX - rect.left,
-        y: event.clientY - rect.top
-    };
-}
-
-/**
- * Computes the distance between two points
- * @param x1 x coordinate of first point
- * @param y1 y coordinate of first point
- * @param x2 x coordinate of second point
- * @param y2 y coordinate of second point
- */
-function distance(x1: number, y1: number, x2: number, y2: number) {
-    return Math.sqrt(Math.pow(x1 - x2,2) + Math.pow(y1 - y2,2));
 }

@@ -40,8 +40,8 @@ export class LineNode implements Expression<LineNode> {
      * @param ast The program AST
      */
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
-        dims.width = new NumberNode(this._dx.eval(context).val, "");
-        dims.height = new NumberNode(this._dy.eval(context).val, "");
+        dims.width = this._dx;
+        dims.height = this._dy;
         let e = new LineEffect(this);
         e.draw(context, dims, ast);
     }
