@@ -305,7 +305,14 @@ const diff_1 = require("diff");
         ]
     ];
     //retrieve survey choice for dm or non-dm
-    let dm = parseInt(localStorage.getItem('dm'));
+    let dm = 1;
+    let val = localStorage.getItem('dm');
+    if (val != null) {
+        dm = parseInt(val);
+    }
+    if (dm == 0) {
+        canvas.style.pointerEvents = "none";
+    }
     //set up Checkpoint sidebar
     let lessons = sidebarPlans[dm];
     for (var x = 0; x < lessons.length; x++) {
@@ -420,26 +427,28 @@ const diff_1 = require("diff");
         instrLabel.innerHTML = cp + " - GOAL";
         instructions.innerHTML = checkpoint._instructions;
         //freeze/unfreeze the CODE and CANVAS areas
-        if (checkpoint._constraint == 'code') {
-            editor.setOption("readOnly", true);
-            editorWrapper.style.opacity = '0.5';
-            canvas.style.pointerEvents = "auto";
-            canvas.style.background = 'white';
-            canvasIsDisabled = false;
-        }
-        else if (checkpoint._constraint == 'canvas') {
-            editor.setOption("readOnly", false);
-            editorWrapper.style.opacity = '1.0';
-            canvas.style.pointerEvents = "none";
-            canvas.style.background = '#C0C0C0';
-            canvasIsDisabled = true;
-        }
-        else {
-            editor.setOption("readOnly", false);
-            editorWrapper.style.opacity = '1.0';
-            canvas.style.pointerEvents = "auto";
-            canvas.style.background = 'white';
-            canvasIsDisabled = false;
+        if (dm == 1) {
+            if (checkpoint._constraint == 'code') {
+                editor.setOption("readOnly", true);
+                editorWrapper.style.opacity = '0.5';
+                canvas.style.pointerEvents = "auto";
+                canvas.style.background = 'white';
+                canvasIsDisabled = false;
+            }
+            else if (checkpoint._constraint == 'canvas') {
+                editor.setOption("readOnly", false);
+                editorWrapper.style.opacity = '1.0';
+                canvas.style.pointerEvents = "none";
+                canvas.style.background = '#C0C0C0';
+                canvasIsDisabled = true;
+            }
+            else {
+                editor.setOption("readOnly", false);
+                editorWrapper.style.opacity = '1.0';
+                canvas.style.pointerEvents = "auto";
+                canvas.style.background = 'white';
+                canvasIsDisabled = false;
+            }
         }
         //restore previous code written in this checkpoint
         if (cpCode.get(checkpoint._name) !== "") {
@@ -512,6 +521,16 @@ const diff_1 = require("diff");
             initCheckpoint(cpNames[i + 1]);
         }
     };
+    let prevButton = document.getElementById('prev');
+    if (dm == 1) {
+        prevButton.onclick = function () {
+            let cpName = checkpoint._name;
+            let i = cpNames.indexOf(cpName);
+            if (i > 0 && i < cpNames.length) {
+                initCheckpoint(cpNames[i - 1]);
+            }
+        };
+    }
     function updateStarBox() {
         starCount = 0;
         for (var val of cpCompletion.values()) {

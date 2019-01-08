@@ -37,18 +37,21 @@
         </div>
       </form>
 
-      <a href="welcome.html" class="btn btn-background" role="button"> Continue </a>
+      <a id="continue" href="welcome.html" class="btn btn-background" role="button"> Continue </a>
     </div>
 
     <script>
         //storing survey values to localStorage
-        var dms = document.getElementsByName('dm');
+        let button = document.getElementById("continue");
+        button.onclick = function() {
+            var dms = document.getElementsByName('dm');
 
-        for (let dm of dms) {
-            if (dm.checked) {
-                console.log("DM value: " + dm.value);
-                localStorage.setItem('dm', '' + dm.value);
-                break;
+            for (let dm of dms) {
+                if (dm.checked) {
+                    console.log("DM value: " + dm.value);
+                    localStorage.setItem('dm', '' + dm.value);
+                    break;
+                }
             }
         }
     </script>
