@@ -345,3 +345,7 @@ test/**/*.js
 *.pdf
 !wireframes/*.pdf
 !swellskillmap.pdf
+
+docs
+dist
+browserui.js
