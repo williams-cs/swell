@@ -21,21 +21,6 @@ export interface Effect<T>{
     update(): void;
 
     /**
-     * Returns string for selection logging
-     */
-    toSelString(): string;
-
-    /**
-     * returns string for drag logging
-     */
-    toDragString(): string;
-
-    /**
-     * // returns string for ID assignment logging
-     */
-    toIDString(): string;
-
-    /**
      * The x position
      */
     x: number;
@@ -60,6 +45,22 @@ export interface Effect<T>{
     selected: boolean;
 
     /**
+     * Returns a number > 0 if the mouse is inside one of the corner/side guides, returns 0 if not
+     * The corner guides are numbered 1-4 with 1 being the top left, 2 being the top right, and so on.
+     * The middle guides are numbered 5-8, with 5 being the top middle, 6 being the right middle, and so on.
+     * @param mx the mouse x coordinate
+     * @param my the mouse y coordinate
+     */
+    guideContains(mx: number, my: number): number;
+
+    /**
+     * Returns true if the mouse is inside of the object's bounding rectangle, false if otherwise
+     * @param mx the mouse x coordinate
+     * @param my the mouse y coordinate
+     */
+    contains(mx: number, my: number): boolean;
+
+    /**
      * Was the object just dragged?
      */
     getJustDragged(): boolean;
@@ -82,4 +83,19 @@ export interface Effect<T>{
 
     addEventListeners(): void;
     removeEventListeners(): void;
+
+    /**
+     * Returns string for selection logging
+     */
+    toSelString(): string;
+
+    /**
+     * returns string for drag logging
+     */
+    toDragString(): string;
+
+    /**
+     * returns string for ID assignment logging
+     */
+    toIDString(): string;
 }

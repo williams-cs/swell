@@ -463,8 +463,8 @@ var Parser;
             return new index_1.FunDef(fname, body, args, ws);
         }))(i);
     };
-    let printOffset = -1;
-    let boundingRects = [];
+    //let printOffset = -1;
+    //let boundingRects = [];
     //TODO
     function getNonOverlappingCoords() {
         return [0, 0];
@@ -484,11 +484,11 @@ var Parser;
                 case "print":
                     if (tup[1].length == 3) {
                         //boundingRects.push([tup[1][0].width, tup[1][0].height, tup[1][1], tup[1][2]]);
-                        return new index_1.PrintNode(tup[1][0], new index_1.Dimensions(tup[1][1], tup[1][2], new index_1.NumberNode(1)), ws);
+                        return new index_1.PrintNode(tup[1][0], true, new index_1.Dimensions(tup[1][1], tup[1][2], new index_1.NumberNode(1)), ws);
                     }
-                    printOffset = (printOffset + 1) % 12;
-                    console.log("printOffset: " + printOffset);
-                    return new index_1.PrintNode(tup[1][0], new index_1.Dimensions(new index_1.NumberNode(100 + 100 * (printOffset % 3)), new index_1.NumberNode(100 + 100 * (printOffset / 4)), new index_1.NumberNode(1)), ws);
+                    //printOffset = (printOffset + 1) % 12;
+                    return new index_1.PrintNode(tup[1][0], true, new index_1.Dimensions(new index_1.NumberNode(100), new index_1.NumberNode(100), new index_1.NumberNode(1)), ws);
+                //return new PrintNode(tup[1][0], false);
                 case "ellipse":
                     if (tup[1].length == 2) {
                         return new index_1.EllipseNode(tup[1][0], tup[1][1], ws);

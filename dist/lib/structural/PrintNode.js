@@ -4,13 +4,15 @@ class PrintNode {
     /**
      * Constructor for a PrintNode, representing an object to be printed
      * @param toPrint The object to be printed
+     * @param coordsGiven Whether the xy coordinates to print the object is given
      * @param dimensions The dimensions of the object to be printed
      * @param ws Preceding whitespace
      */
-    constructor(toPrint, dimensions, ws) {
+    constructor(toPrint, coordsGiven, dimensions, ws) {
         this._scale = 1;
         this._newLine = false;
         this._toPrint = toPrint;
+        this._coordsGiven = coordsGiven;
         this._ws = ws;
         if (ws == undefined) {
             this._ws = "";
@@ -45,7 +47,12 @@ class PrintNode {
      */
     eval(context) {
         let res = this._toPrint.eval(context);
-        res.draw(context, this._dims, this);
+        if (this._coordsGiven) {
+            res.draw(context, this._dims, this);
+            //check if the effects array already has some elements
+        } /*() else if (context.effects.length > 0) {
+
+        }*/
         return res;
     }
     /**

@@ -533,8 +533,8 @@ export namespace Parser {
                 )(i)
     }
 
-    let printOffset = -1;
-    let boundingRects = [];
+    //let printOffset = -1;
+    //let boundingRects = [];
 
     //TODO
     export function getNonOverlappingCoords(): [number, number] {
@@ -555,11 +555,11 @@ export namespace Parser {
                 case "print":
                     if (tup[1].length == 3) {
                             //boundingRects.push([tup[1][0].width, tup[1][0].height, tup[1][1], tup[1][2]]);
-                            return new PrintNode(tup[1][0], new Dimensions(tup[1][1] , tup[1][2], new NumberNode(1)), ws);
+                            return new PrintNode(tup[1][0], true, new Dimensions(tup[1][1] , tup[1][2], new NumberNode(1)), ws);
                     }
-                    printOffset = (printOffset + 1) % 12;
-                    console.log("printOffset: " + printOffset);
-                    return new PrintNode(tup[1][0], new Dimensions(new NumberNode(100 + 100*(printOffset % 3)) , new NumberNode(100 + 100*(printOffset / 4)), new NumberNode(1)), ws);
+                    //printOffset = (printOffset + 1) % 12;
+                    return new PrintNode(tup[1][0], true, new Dimensions(new NumberNode(100) , new NumberNode(100), new NumberNode(1)), ws);
+                    //return new PrintNode(tup[1][0], false);
                 case "ellipse":
                     if(tup[1].length == 2){
                         return new EllipseNode(tup[1][0], tup[1][1], ws);

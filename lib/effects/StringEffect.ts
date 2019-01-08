@@ -408,40 +408,56 @@ export class StringEffect implements Effect<StringNode> {
             //     this._context.eventLog.push(this.logSelected());
             //     //this.logSelected();
             // }
-        }
-        else if (guideContains) { //if the corner guides contain the mouse we are resizing
-            this._isSelected = true;
-            this._corner = this.guideContains(this._mouse.x, this._mouse.y);
 
-            this._context.eventLog.push(this.logClick());
-
-            //console.log(this._str.val + "is selected?" + this._selected);
-            //console.log("state selection is " + this._str.val);
-
-            this._dragoffx = this.x;
-            this._dragoffy = this.y;
-            this._initDistance = distance(this._mouse.x, this._mouse.y, this.x, this.y);
-            this._isResizing = true;
-            this._size1 = this._fontSize; // saving old font size
-        }
-        else if (contains) {
-            this._x1 = this.x; // Saving original x and y
-            this._y1 = this.y;
-            this._isSelected = true;
-
-            this._context.eventLog.push(this.logClick());
-
-            //console.log(this._str.val + "is selected?" + this._selected);
-            //console.log("state selection is " + this._str.val);
-
-            this._dragoffx = this._mouse.x - this.x;
-            this._dragoffy = this._mouse.y - this.y;
-            if(!this._isEditing){
-                this._isDragging = true;
-                //console.log(this._str.val + " is dragging? " + this._isDragging);
+        } else if (guideContains || contains) {
+            let effects = this._context.effects;
+            let curID = this.getID();
+            for (let effect of effects) {
+                let effectID = effect.getID();
+                if (effectID == curID) {
+                    continue;
+                } else if (effectID > curID && (effect.guideContains(this._mouse.x, this._mouse.y) > 0 || effect.contains(this._mouse.x, this._mouse.y))) {
+                    this._isSelected = false;
+                    this._isDragging = false;
+                    this._isEditing = false;
+                    return;
+                }
             }
-        }
-        else if (!this._isSelectingMultiple) {
+
+            if (guideContains) { //if the corner guides contain the mouse we are resizing
+                this._isSelected = true;
+                this._corner = this.guideContains(this._mouse.x, this._mouse.y);
+
+                this._context.eventLog.push(this.logClick());
+
+                //console.log(this._str.val + "is selected?" + this._selected);
+                //console.log("state selection is " + this._str.val);
+
+                this._dragoffx = this.x;
+                this._dragoffy = this.y;
+                this._initDistance = distance(this._mouse.x, this._mouse.y, this.x, this.y);
+                this._isResizing = true;
+                this._size1 = this._fontSize; // saving old font size
+
+            } else if (contains) {
+                this._x1 = this.x; // Saving original x and y
+                this._y1 = this.y;
+                this._isSelected = true;
+
+                this._context.eventLog.push(this.logClick());
+
+                //console.log(this._str.val + "is selected?" + this._selected);
+                //console.log("state selection is " + this._str.val);
+
+                this._dragoffx = this._mouse.x - this.x;
+                this._dragoffy = this._mouse.y - this.y;
+                if(!this._isEditing){
+                    this._isDragging = true;
+                    //console.log(this._str.val + " is dragging? " + this._isDragging);
+                }
+            }
+
+        } else if (!this._isSelectingMultiple) {
             this._isSelected = false;
             this._isDragging = false;
             this._isEditing = false;

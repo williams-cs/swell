@@ -502,72 +502,87 @@ class LineEffect {
                 this._isDragging = true;
             }
         }
-        else if (guideContains > 0 && guideContains <= 4) { //resizing
-            this._isSelected = true;
-            this._isResizing = true;
-            this._context.eventLog.push(this.logClick());
-            this._corner = this.guideContains(this._mouse.x, this._mouse.y);
-            this._height1 = this.h;
-            this._width1 = this.w;
-            //this._size1 = Math.sqrt(Math.pow(w,2) + Math.pow(h,2)); // size is diagonal length
-            switch (this._corner) { // sets the offsets depending on which corner is selected
-                case 1: // top left
-                    this._initDistance = distance(this._mouse.x, this._mouse.y, x + w, y + h);
-                    this._dragoffx = x + w; // offset is bottom right
-                    this._dragoffy = y + h;
-                    break;
-                case 2: // top right
-                    this._initDistance = distance(this._mouse.x, this._mouse.y, x, y + h);
-                    this._dragoffx = x;
-                    this._dragoffy = y + h; // offset is bottom left, etc
-                    break;
-                case 3:
-                    this._initDistance = distance(this._mouse.x, this._mouse.y, x, y);
-                    this._dragoffx = x;
-                    this._dragoffy = y;
-                    break;
-                case 4:
-                    this._initDistance = distance(this._mouse.x, this._mouse.y, x + w, y);
-                    this._dragoffx = x + w;
-                    this._dragoffy = y;
-                    break;
+        else if (guideContains > 0 || contains) {
+            let effects = this._context.effects;
+            let curID = this.getID();
+            for (let effect of effects) {
+                let effectID = effect.getID();
+                if (effectID == curID) {
+                    continue;
+                }
+                else if (effectID > curID && (effect.guideContains(this._mouse.x, this._mouse.y) > 0 || effect.contains(this._mouse.x, this._mouse.y))) {
+                    this._isSelected = false;
+                    this._isDragging = false;
+                    return;
+                }
             }
-        }
-        else if (guideContains > 4) { //changing shape dimensions
-            this._isSelected = true;
-            this._isChangingDims = true;
-            this._corner = guideContains;
-            switch (this._corner) { // sets the offsets depending on which middle guide is selected
-                case 5: // top middle
-                    this._initDistance = distance(this._mouse.x, this._mouse.y, x + w / 2, y + h);
-                    this._dragoffx = x + w / 2; // offset is bottom middle
-                    this._dragoffy = y + h;
-                    break;
-                case 6: //right middle
-                    this._initDistance = distance(this._mouse.x, this._mouse.y, x, y + h / 2);
-                    this._dragoffx = x;
-                    this._dragoffy = y + h / 2; // offset is left middle etc
-                    break;
-                case 7:
-                    this._initDistance = distance(this._mouse.x, this._mouse.y, x + w / 2, y);
-                    this._dragoffx = x + w / 2;
-                    this._dragoffy = y;
-                    break;
-                case 8:
-                    this._initDistance = distance(this._mouse.x, this._mouse.y, x + w, y + h / 2);
-                    this._dragoffx = x + w;
-                    this._dragoffy = y + h / 2;
-                    break;
+            if (guideContains > 0 && guideContains <= 4) { //resizing
+                this._isSelected = true;
+                this._isResizing = true;
+                this._context.eventLog.push(this.logClick());
+                this._corner = this.guideContains(this._mouse.x, this._mouse.y);
+                this._height1 = this.h;
+                this._width1 = this.w;
+                //this._size1 = Math.sqrt(Math.pow(w,2) + Math.pow(h,2)); // size is diagonal length
+                switch (this._corner) { // sets the offsets depending on which corner is selected
+                    case 1: // top left
+                        this._initDistance = distance(this._mouse.x, this._mouse.y, x + w, y + h);
+                        this._dragoffx = x + w; // offset is bottom right
+                        this._dragoffy = y + h;
+                        break;
+                    case 2: // top right
+                        this._initDistance = distance(this._mouse.x, this._mouse.y, x, y + h);
+                        this._dragoffx = x;
+                        this._dragoffy = y + h; // offset is bottom left, etc
+                        break;
+                    case 3:
+                        this._initDistance = distance(this._mouse.x, this._mouse.y, x, y);
+                        this._dragoffx = x;
+                        this._dragoffy = y;
+                        break;
+                    case 4:
+                        this._initDistance = distance(this._mouse.x, this._mouse.y, x + w, y);
+                        this._dragoffx = x + w;
+                        this._dragoffy = y;
+                        break;
+                }
             }
-        }
-        else if (contains) { // dragging
-            this._x1 = x; // Saving original x and y
-            this._y1 = y;
-            this._context.eventLog.push(this.logClick());
-            this._isSelected = true;
-            this._isDragging = true;
-            this._dragoffx = this._mouse.x - x;
-            this._dragoffy = this._mouse.y - y;
+            else if (guideContains > 4) { //changing shape dimensions
+                this._isSelected = true;
+                this._isChangingDims = true;
+                this._corner = guideContains;
+                switch (this._corner) { // sets the offsets depending on which middle guide is selected
+                    case 5: // top middle
+                        this._initDistance = distance(this._mouse.x, this._mouse.y, x + w / 2, y + h);
+                        this._dragoffx = x + w / 2; // offset is bottom middle
+                        this._dragoffy = y + h;
+                        break;
+                    case 6: //right middle
+                        this._initDistance = distance(this._mouse.x, this._mouse.y, x, y + h / 2);
+                        this._dragoffx = x;
+                        this._dragoffy = y + h / 2; // offset is left middle etc
+                        break;
+                    case 7:
+                        this._initDistance = distance(this._mouse.x, this._mouse.y, x + w / 2, y);
+                        this._dragoffx = x + w / 2;
+                        this._dragoffy = y;
+                        break;
+                    case 8:
+                        this._initDistance = distance(this._mouse.x, this._mouse.y, x + w, y + h / 2);
+                        this._dragoffx = x + w;
+                        this._dragoffy = y + h / 2;
+                        break;
+                }
+            }
+            else if (contains) { // dragging
+                this._x1 = x; // Saving original x and y
+                this._y1 = y;
+                this._context.eventLog.push(this.logClick());
+                this._isSelected = true;
+                this._isDragging = true;
+                this._dragoffx = this._mouse.x - x;
+                this._dragoffy = this._mouse.y - y;
+            }
         }
         else if (!this._isSelectingMultiple) { // not selected
             this._isSelected = false;
