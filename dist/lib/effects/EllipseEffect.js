@@ -478,34 +478,49 @@ class EllipseEffect {
                 this._isDragging = true;
             }
         }
-        else if (guideContains > 0 && guideContains <= 4) { //resizing
-            this._isSelected = true;
-            this._isResizing = true;
-            this._context.eventLog.push(this.logClick());
-            this._corner = guideContains;
-            this._dragoffx = this.x;
-            this._dragoffy = this.y;
-            this._initDistance = distance(this._mouse.x, this._mouse.y, this.x, this.y);
-            this._width1 = this.w;
-            this._height1 = this.h;
-            //this._size1 = Math.sqrt(Math.pow(this.w,2) + Math.pow(this.h,2)); // saving old size
-        }
-        else if (guideContains > 4) { //changing shape dimensions
-            this._isSelected = true;
-            this._isChangingDims = true;
-            this._corner = guideContains;
-            this._dragoffx = this.x;
-            this._dragoffy = this.y;
-            this._initDistance = distance(this._mouse.x, this._mouse.y, this.x, this.y);
-        }
-        else if (contains) { //simply selecting the shape or dragging
-            this._x1 = this.x; // Saving original x and y
-            this._y1 = this.y;
-            this._isSelected = true;
-            this._isDragging = true;
-            this._context.eventLog.push(this.logClick());
-            this._dragoffx = this._mouse.x - this.x;
-            this._dragoffy = this._mouse.y - this.y;
+        else if (guideContains > 0 || contains) {
+            let effects = this._context.effects;
+            let curID = this.getID();
+            for (let effect of effects) {
+                let effectID = effect.getID();
+                if (effectID == curID) {
+                    continue;
+                }
+                else if (effectID > curID && (effect.guideContains(this._mouse.x, this._mouse.y) > 0 || effect.contains(this._mouse.x, this._mouse.y))) {
+                    this._isSelected = false;
+                    this._isDragging = false;
+                    return;
+                }
+            }
+            if (guideContains > 0 && guideContains <= 4) { //resizing
+                this._isSelected = true;
+                this._isResizing = true;
+                this._context.eventLog.push(this.logClick());
+                this._corner = guideContains;
+                this._dragoffx = this.x;
+                this._dragoffy = this.y;
+                this._initDistance = distance(this._mouse.x, this._mouse.y, this.x, this.y);
+                this._width1 = this.w;
+                this._height1 = this.h;
+                //this._size1 = Math.sqrt(Math.pow(this.w,2) + Math.pow(this.h,2)); // saving old size
+            }
+            else if (guideContains > 4) { //changing shape dimensions
+                this._isSelected = true;
+                this._isChangingDims = true;
+                this._corner = guideContains;
+                this._dragoffx = this.x;
+                this._dragoffy = this.y;
+                this._initDistance = distance(this._mouse.x, this._mouse.y, this.x, this.y);
+            }
+            else if (contains) { //simply selecting the shape or dragging
+                this._x1 = this.x; // Saving original x and y
+                this._y1 = this.y;
+                this._isSelected = true;
+                this._isDragging = true;
+                this._context.eventLog.push(this.logClick());
+                this._dragoffx = this._mouse.x - this.x;
+                this._dragoffy = this._mouse.y - this.y;
+            }
         }
         else if (!this._isSelectingMultiple) {
             this._isSelected = false;

@@ -408,8 +408,8 @@ export class StringEffect implements Effect<StringNode> {
             //     this._context.eventLog.push(this.logSelected());
             //     //this.logSelected();
             // }
-        }
-        else if (guideContains) { //if the corner guides contain the mouse we are resizing
+
+        } else if (guideContains) { //if the corner guides contain the mouse we are resizing
             this._isSelected = true;
             this._corner = this.guideContains(this._mouse.x, this._mouse.y);
 
@@ -423,8 +423,8 @@ export class StringEffect implements Effect<StringNode> {
             this._initDistance = distance(this._mouse.x, this._mouse.y, this.x, this.y);
             this._isResizing = true;
             this._size1 = this._fontSize; // saving old font size
-        }
-        else if (contains) {
+
+        } else if (contains) {
             this._x1 = this.x; // Saving original x and y
             this._y1 = this.y;
             this._isSelected = true;
@@ -440,8 +440,8 @@ export class StringEffect implements Effect<StringNode> {
                 this._isDragging = true;
                 //console.log(this._str.val + " is dragging? " + this._isDragging);
             }
-        }
-        else if (!this._isSelectingMultiple) {
+            
+        } else if (!this._isSelectingMultiple) {
             this._isSelected = false;
             this._isDragging = false;
             this._isEditing = false;
