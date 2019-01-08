@@ -544,6 +544,18 @@ describe('If Statement Parser', () => {
         }
     });
     it('should be able to parse a simple if statement', () => {
+        const input= 'if ( true ) {\n"goodbye"; }';
+        let result= Parser.parse(input);
+        var test = new SequenceNode(new Conditional(new BooleanNode(true), new SequenceNode(new StringNode('goodbye'), new NOP())), new NOP());
+        if(result.isDefined()){
+            //console.log(result.get().toString());
+            expect(result.get()).to.eql(test);
+        }
+        else{
+            assert.fail();
+        }
+    });
+    it('should be able to parse a simple if statement', () => {
         const input= 'if( true ) {\n"goodbye"; }\n if ( false ) {\n "hello"; }';
         let result= Parser.condParse(new CharUtil.CharStream(input));
         switch(result.tag){

@@ -669,7 +669,9 @@ export namespace Parser {
     export function IfParse() : Primitives.IParser<Expression<any>[]>{
         let expr= Primitives.between<CharUtil.CharStream, CharUtil.CharStream, Expression<{}>>(Primitives.ws())(Primitives.ws())(ExpressionParserNoSeq);
         let bodyParse= Primitives.between<CharUtil.CharStream, CharUtil.CharStream, Expression<{}>>(Primitives.ws())(Primitives.ws())(ExpressionParser);
-        let p1= Primitives.seq<CharUtil.CharStream, CharUtil.CharStream, CharUtil.CharStream[]>(Primitives.str('if'))(Primitives.char('('))(x =>x);
+        let ifStr = Primitives.between<CharUtil.CharStream, CharUtil.CharStream, CharUtil.CharStream>(Primitives.ws())(Primitives.ws())(Primitives.str('if'));
+        //let p1= Primitives.seq<CharUtil.CharStream, CharUtil.CharStream, CharUtil.CharStream[]>(Primitives.str('if'))(Primitives.char('('))(x =>x);
+        let p1= Primitives.seq<CharUtil.CharStream, CharUtil.CharStream, CharUtil.CharStream[]>(ifStr)(Primitives.char('('))(x =>x);
         let cond= Primitives.between<CharUtil.CharStream[], CharUtil.CharStream, Expression<any>>(p1)(Primitives.char(')'))(expr);
         let curly= Primitives.between<CharUtil.CharStream, CharUtil.CharStream, CharUtil.CharStream>(Primitives.ws())(Primitives.ws())(Primitives.char('{'));
         let body= Primitives.between<CharUtil.CharStream, CharUtil.CharStream, Expression<any>>(curly)(Primitives.char('}'))(bodyParse);
