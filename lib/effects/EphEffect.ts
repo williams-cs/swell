@@ -538,11 +538,11 @@ export class EphEffect implements Effect<EphNode> {
      */
     modifyState(guideContains: number, contains: boolean): void {
         this._justDragged = false;
-
         let x: number = this.x;
         let y: number = this.y;
         let w: number = this.w;
         let h: number = this.h;
+
         if (this._isSelectingMultiple) {
             if (contains) {
                 this._x1 = this.x;
@@ -557,85 +557,99 @@ export class EphEffect implements Effect<EphNode> {
                 this._dragoffy = this._mouse.y - y;
                 this._isDragging = true;
             }
-        }
-        else if(guideContains > 0 && guideContains <= 4) { //resizing
-            this._isSelected = true;
-            this._isResizing = true;
 
-            this._context.eventLog.push(this.logClick());
-
-            this._corner = this.guideContains(this._mouse.x, this._mouse.y);
-            this._height1 = this.h;
-            this._width1 = this.w;
-            //this._size1 = Math.sqrt(Math.pow(w,2) + Math.pow(h,2)); // size is diagonal length
-
-            switch (this._corner) {
-                case 1:
-                    this._initDistance = distance(this._mouse.x, this._mouse.y, x + w, y + h);
-                    this._dragoffx = x + w;
-                    this._dragoffy = y + h;
-                break;
-                case 2:
-                    this._initDistance = distance(this._mouse.x, this._mouse.y, x, y + h);
-                    this._dragoffx = x;
-                    this._dragoffy = y + h;
-                break;
-                case 3:
-                    this._initDistance = distance(this._mouse.x, this._mouse.y, x, y);
-                    this._dragoffx = x;
-                    this._dragoffy = y;
-                break;
-                case 4:
-                    this._initDistance = distance(this._mouse.x, this._mouse.y, x + w, y);
-                    this._dragoffx = x + w;
-                    this._dragoffy = y;
-                break;
+        } else if (guideContains > 0 || contains) {
+            let effects = this._context.effects;
+            let curID = this.getID();
+            for (let effect of effects) {
+                let effectID = effect.getID();
+                if (effectID == curID) {
+                    continue;
+                } else if (effectID > curID && (effect.guideContains(this._mouse.x, this._mouse.y) > 0 || effect.contains(this._mouse.x, this._mouse.y))) {
+                    this._isSelected = false;
+                    this._isDragging = false;
+                    return;
+                }
             }
-            //this._initDistance = distance(this._mouse.x, this._mouse.y, x + w / 2, y + h / 2);
-        }
-        else if(guideContains > 4){ //changing shape dimensions
-            this._isSelected = true;
-            this._isChangingDims = true;
-            this._corner = guideContains;
 
-            switch (this._corner) {
-                case 5:
-                    this._initDistance = distance(this._mouse.x, this._mouse.y, x + w / 2, y + h);
-                    this._dragoffx = x + w / 2;
-                    this._dragoffy = y + h;
-                break;
-                case 6:
-                    this._initDistance = distance(this._mouse.x, this._mouse.y, x, y + h / 2);
-                    this._dragoffx = x;
-                    this._dragoffy = y + h / 2;
-                break;
-                case 7:
-                    this._initDistance = distance(this._mouse.x, this._mouse.y, x + w / 2, y);
-                    this._dragoffx = x + w / 2;
-                    this._dragoffy = y;
-                break;
-                case 8:
-                    this._initDistance = distance(this._mouse.x, this._mouse.y, x + w, y + h / 2);
-                    this._dragoffx = x + w;
-                    this._dragoffy = y + h / 2;
-                break;
+            if (guideContains > 0 && guideContains <= 4) { //resizing
+                this._isSelected = true;
+                this._isResizing = true;
+
+                this._context.eventLog.push(this.logClick());
+
+                this._corner = this.guideContains(this._mouse.x, this._mouse.y);
+                this._height1 = this.h;
+                this._width1 = this.w;
+                //this._size1 = Math.sqrt(Math.pow(w,2) + Math.pow(h,2)); // size is diagonal length
+
+                switch (this._corner) {
+                    case 1:
+                        this._initDistance = distance(this._mouse.x, this._mouse.y, x + w, y + h);
+                        this._dragoffx = x + w;
+                        this._dragoffy = y + h;
+                    break;
+                    case 2:
+                        this._initDistance = distance(this._mouse.x, this._mouse.y, x, y + h);
+                        this._dragoffx = x;
+                        this._dragoffy = y + h;
+                    break;
+                    case 3:
+                        this._initDistance = distance(this._mouse.x, this._mouse.y, x, y);
+                        this._dragoffx = x;
+                        this._dragoffy = y;
+                    break;
+                    case 4:
+                        this._initDistance = distance(this._mouse.x, this._mouse.y, x + w, y);
+                        this._dragoffx = x + w;
+                        this._dragoffy = y;
+                    break;
+                }
+                //this._initDistance = distance(this._mouse.x, this._mouse.y, x + w / 2, y + h / 2);
+            } else if (guideContains > 4) { //changing shape dimensions
+                this._isSelected = true;
+                this._isChangingDims = true;
+                this._corner = guideContains;
+
+                switch (this._corner) {
+                    case 5:
+                        this._initDistance = distance(this._mouse.x, this._mouse.y, x + w / 2, y + h);
+                        this._dragoffx = x + w / 2;
+                        this._dragoffy = y + h;
+                    break;
+                    case 6:
+                        this._initDistance = distance(this._mouse.x, this._mouse.y, x, y + h / 2);
+                        this._dragoffx = x;
+                        this._dragoffy = y + h / 2;
+                    break;
+                    case 7:
+                        this._initDistance = distance(this._mouse.x, this._mouse.y, x + w / 2, y);
+                        this._dragoffx = x + w / 2;
+                        this._dragoffy = y;
+                    break;
+                    case 8:
+                        this._initDistance = distance(this._mouse.x, this._mouse.y, x + w, y + h / 2);
+                        this._dragoffx = x + w;
+                        this._dragoffy = y + h / 2;
+                    break;
+                }
+            } else if (contains) {
+                this._x1 = x; // Saving original x and y
+                this._y1 = y;
+
+                this._context.eventLog.push(this.logClick());
+                this._isSelected = true;
+                this._isDragging = true;
+
+                this._dragoffx = this._mouse.x - x;
+                this._dragoffy = this._mouse.y - y;
             }
-        }
-        else if (contains) {
-            this._x1 = x; // Saving original x and y
-            this._y1 = y;
 
-            this._context.eventLog.push(this.logClick());
-            this._isSelected = true;
-            this._isDragging = true;
-
-            this._dragoffx = this._mouse.x - x;
-            this._dragoffy = this._mouse.y - y;
-        }
-        else if (!this._isSelectingMultiple) {
+        } else if (!this._isSelectingMultiple) {
             this._isSelected = false;
             this._isDragging = false;
         }
+
     }
 
     /**

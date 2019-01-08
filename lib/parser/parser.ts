@@ -85,7 +85,6 @@ export namespace Parser {
      */
     export function parse(program: string): Option<Expression<any>>{
         program += "\n";
-        z = 0;
         //printOffset = -1;
         //this.effects = effects;
         let o = ExpressionParser(new CharUtil.CharStream(program));
@@ -536,7 +535,6 @@ export namespace Parser {
 
     //let printOffset = -1;
     //let boundingRects = [];
-    let z = 0;
 
     //TODO
     export function getNonOverlappingCoords(): [number, number] {
@@ -555,13 +553,12 @@ export namespace Parser {
             let fname: string = tup[0].toString();
             switch(fname){
                 case "print":
-                    console.log("z coordinate: " + z);
                     if (tup[1].length == 3) {
                             //boundingRects.push([tup[1][0].width, tup[1][0].height, tup[1][1], tup[1][2]]);
-                            return new PrintNode(tup[1][0], true, new Dimensions(tup[1][1] , tup[1][2], new NumberNode(z++), new NumberNode(1)), ws);
+                            return new PrintNode(tup[1][0], true, new Dimensions(tup[1][1] , tup[1][2], new NumberNode(1)), ws);
                     }
                     //printOffset = (printOffset + 1) % 12;
-                    return new PrintNode(tup[1][0], true, new Dimensions(new NumberNode(100) , new NumberNode(100), new NumberNode(z++), new NumberNode(1)), ws);
+                    return new PrintNode(tup[1][0], true, new Dimensions(new NumberNode(100) , new NumberNode(100), new NumberNode(1)), ws);
                     //return new PrintNode(tup[1][0], false);
                 case "ellipse":
                     if(tup[1].length == 2){

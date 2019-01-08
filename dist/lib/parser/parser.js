@@ -78,7 +78,6 @@ var Parser;
      */
     function parse(program) {
         program += "\n";
-        z = 0;
         //printOffset = -1;
         //this.effects = effects;
         let o = Parser.ExpressionParser(new pants_1.CharUtil.CharStream(program));
@@ -466,7 +465,6 @@ var Parser;
     };
     //let printOffset = -1;
     //let boundingRects = [];
-    let z = 0;
     //TODO
     function getNonOverlappingCoords() {
         return [0, 0];
@@ -484,13 +482,12 @@ var Parser;
             let fname = tup[0].toString();
             switch (fname) {
                 case "print":
-                    console.log("z coordinate: " + z);
                     if (tup[1].length == 3) {
                         //boundingRects.push([tup[1][0].width, tup[1][0].height, tup[1][1], tup[1][2]]);
-                        return new index_1.PrintNode(tup[1][0], true, new index_1.Dimensions(tup[1][1], tup[1][2], new index_1.NumberNode(z++), new index_1.NumberNode(1)), ws);
+                        return new index_1.PrintNode(tup[1][0], true, new index_1.Dimensions(tup[1][1], tup[1][2], new index_1.NumberNode(1)), ws);
                     }
                     //printOffset = (printOffset + 1) % 12;
-                    return new index_1.PrintNode(tup[1][0], true, new index_1.Dimensions(new index_1.NumberNode(100), new index_1.NumberNode(100), new index_1.NumberNode(z++), new index_1.NumberNode(1)), ws);
+                    return new index_1.PrintNode(tup[1][0], true, new index_1.Dimensions(new index_1.NumberNode(100), new index_1.NumberNode(100), new index_1.NumberNode(1)), ws);
                 //return new PrintNode(tup[1][0], false);
                 case "ellipse":
                     if (tup[1].length == 2) {

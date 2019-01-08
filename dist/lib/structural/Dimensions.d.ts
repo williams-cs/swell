@@ -3,7 +3,6 @@ import { Expression } from "../Expression";
 export declare class Dimensions {
     private _x;
     private _y;
-    private _z;
     private _radius;
     private _scale;
     private _width;
@@ -13,11 +12,10 @@ export declare class Dimensions {
      * Constructor for Dimensions, which stores object dimensions
      * @param x The x coordinate of the object
      * @param y The y coordinate of the object
-     * @param z The z coordinate of the object
      * @param scale The scale of the object
      * @param radius The radius of the object
      */
-    constructor(x: Expression<NumberNode>, y: Expression<NumberNode>, z: Expression<NumberNode>, scale: Expression<NumberNode>, radius?: Expression<NumberNode>);
+    constructor(x: Expression<NumberNode>, y: Expression<NumberNode>, scale: Expression<NumberNode>, radius?: Expression<NumberNode>);
     /**
      * Returns a string representation of the dimensions
      */
@@ -36,13 +34,6 @@ export declare class Dimensions {
     * Sets the y coordinate of the object
     */
     y: Expression<NumberNode>;
-    /**
-     * Returns the z coordinate of the object
-     */
-    /**
-    * Sets the z coordinate of the object
-    */
-    z: Expression<NumberNode>;
     /**
      * Returns the radius of the object
      */

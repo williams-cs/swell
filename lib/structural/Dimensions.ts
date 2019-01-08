@@ -4,7 +4,6 @@ import { Expression } from "../Expression";
 export class Dimensions {
     private _x: Expression<NumberNode>;
     private _y: Expression<NumberNode>;
-    private _z: Expression<NumberNode>;
     private _radius: Expression<NumberNode>;
     private _scale: Expression<NumberNode>;
     private _width: Expression<NumberNode>;
@@ -15,14 +14,12 @@ export class Dimensions {
      * Constructor for Dimensions, which stores object dimensions
      * @param x The x coordinate of the object
      * @param y The y coordinate of the object
-     * @param z The z coordinate of the object
      * @param scale The scale of the object
      * @param radius The radius of the object
      */
-    constructor(x: Expression<NumberNode>, y: Expression<NumberNode>, z: Expression<NumberNode>, scale: Expression<NumberNode>, radius?: Expression<NumberNode>) {
+    constructor(x: Expression<NumberNode>, y: Expression<NumberNode>, scale: Expression<NumberNode>, radius?: Expression<NumberNode>) {
         this._x = x;
         this._y = y;
-        this._z = z;
         this._scale = scale;
         this._radius = radius || new NumberNode(30, "");
     }
@@ -58,19 +55,6 @@ export class Dimensions {
      */
     set y(val: Expression<NumberNode>) {
         this._y = val;
-    }
-
-    /**
-     * Returns the z coordinate of the object
-     */
-    get z(): Expression<NumberNode> {
-        return this._z;
-    }
-    /**
-     * Sets the z coordinate of the object
-     */
-    set z(val: Expression<NumberNode>) {
-        this._z = val;
     }
 
     /**
