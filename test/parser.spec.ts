@@ -769,7 +769,7 @@ describe('Ellipse parser', () => {
         let input = 'print(ellipse( 5 , 5));'
         let result= Parser.parse(input);
         var ellipse= new EllipseNode(new NumberNode(5), new NumberNode(5), "")
-        var test= new SequenceNode(new PrintNode(ellipse, new Dimensions(new NumberNode(100), new NumberNode(100), new NumberNode(1))), new NOP());
+        var test= new SequenceNode(new PrintNode(ellipse, new Dimensions(new NumberNode(200), new NumberNode(125), new NumberNode(1))), new NOP());
         if(result.isDefined()){
             //console.log(result.get().toString());
             expect(result.get()).to.eql(test);
@@ -811,7 +811,7 @@ describe('Rectangle parser', () => {
         let input = 'print(rect( 5 , 5));'
         let result= Parser.parse(input);
         var rect= new RectangleNode(new NumberNode(5), new NumberNode(5))
-        var test= new SequenceNode(new PrintNode(rect,new Dimensions(new NumberNode(100), new NumberNode(100), new NumberNode(1))), new NOP());
+        var test= new SequenceNode(new PrintNode(rect,new Dimensions(new NumberNode(100), new NumberNode(175), new NumberNode(1))), new NOP());
         if(result.isDefined()){
             expect(result.get()).to.eql(test);
         }
@@ -864,7 +864,7 @@ describe("Variable Name Parser", () => {
 describe('Ephelia easter egg test', () => {
     it('should parse a print ephelia statement', () => {
         const input = 'print(eph(10, 10));';
-        let test = new SequenceNode(new PrintNode(new EphNode(new NumberNode(10), new NumberNode(10)), new Dimensions(new NumberNode(100),new NumberNode(100), new NumberNode(1))), new NOP());
+        let test = new SequenceNode(new PrintNode(new EphNode(new NumberNode(10), new NumberNode(10)), new Dimensions(new NumberNode(200),new NumberNode(200), new NumberNode(1))), new NOP());
         let result = Parser.parse(input);
         if(result.isDefined()){
             console.log(result.get().toString());
