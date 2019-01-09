@@ -183,7 +183,16 @@ button:hover {
     padding-top: 20px;
 }
 
+.end {
+  width: 75%;
+  bottom: 1%;
+  position: absolute;
+}
+
+.end-password {
+  width: 100%;
+}
+
 .password {
-    display: block;
     margin: auto auto 20px auto;
 }

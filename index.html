@@ -177,11 +177,17 @@
                 Emoji
             </button>
             <div id="emoji" class="collapse">
-              <button id="happy" class="btn btn-block checkpoint"> happy </button>
-              <button id="sad" class="btn btn-block checkpoint"> sad </button>
-              <button id="angry" class="btn btn-block checkpoint"> angry </button>
-              <button id="cool" class="btn btn-block checkpoint"> cool </button>
+              <button id="happy" class="btn btn-block checkpoint">happy</button>
+              <button id="sad" class="btn btn-block checkpoint">sad</button>
+              <button id="angry" class="btn btn-block checkpoint">angry</button>
+              <button id="cool" class="btn btn-block checkpoint">cool</button>
             </div>
+          </div>
+          <div class="end">
+              <div>
+              </div>
+              <input type="password" id="password" name="password" class="end-password">
+              <button type="button" class="btn btn-block btn-sm" id='end'>End</button>
           </div>
         </div>
       </div>
@@ -207,6 +213,27 @@
             document.getElementsByTagName("body")[0].onresize = resizeCanvas;
             resizeCanvas();
         })();
+
+        //disable the end button initially
+        let pwd = document.getElementById("password");
+        let end = document.getElementById("end");
+        end.style.background = "#D8D8D8";
+        end.disabled = true;
+
+        //enable the button if the password matches
+        pwd.onkeyup = function() {
+            if (pwd.value === "provolone") {
+                end.style.background = "#673AB7";
+                end.disabled = false;
+            } else {
+                end.style.background = "#D8D8D8";
+                end.disabled = true;
+            }
+        }
+
+        end.onclick = function() {
+            location.href = "posttest.html";
+        }
     </script>
     <script src='browserui.js'></script>
 </body>
