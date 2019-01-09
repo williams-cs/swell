@@ -15,14 +15,37 @@
 
   <body>
     <div class="jumbotron">
-      <h5> Welcome! Don't start yet! </h5>
+      <h5> Welcome! </h5>
       <p> Wait for your instructors... </p>
 
-      <a href="pretest.html" class="btn btn-background" role="button"> Start! </a>
+      <div class="password">
+        <input type="password" id="password" name="password">
+      </div>
+
+      <button id="start" class="btn btn-background" > Start! </button>
     </div>
 
     <script>
-      sessionStorage.setItem("swell_uuid",'' + Math.floor(Math.random() * Number.MAX_SAFE_INTEGER));
+        //disable the button initially
+        let pwd = document.getElementById("password");
+        let button = document.getElementById("start");
+        button.style.background = "#D8D8D8";
+        button.disabled = true;
+
+        //enable the button if the password matches
+        pwd.onkeyup = function() {
+            if (pwd.value === "mozzarella") {
+                button.style.background = "#673AB7";
+                button.disabled = false;
+            } else {
+                button.style.background = "#D8D8D8";
+                button.disabled = true;
+            }
+        }
+
+        button.onclick = function() {
+            location.href = "pretest.html";
+        }
     </script>
   </body>
 </html>

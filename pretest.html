@@ -18,42 +18,144 @@
       <h5> Swell Survey </h5>
       <p> Before the fun begins, please answer the following 2 questions! </p>
 
-      <p> 1. How excited are you about programming? </p>
-      <form>
-        <div class="radio">
-          <label><input type="radio" name="excitement" checked> Very excited </label>
-        </div>
-        <div class="radio">
-          <label><input type="radio" name="excitement"> Excited </label>
-        </div>
-        <div class="radio">
-          <label><input type="radio" name="excitement"> Not excited </label>
-        </div>
-      </form>
+      <div id="question">
+        1. How excited are you about programming?
+      </div>
+      <form id="answer"> </form>
 
-      <p> 2. Have you programmed before? </p>
-      <form>
-        <div class="radio">
-          <label><input type="radio" name="experience" checked> Yes. I took a class. </label>
-        </div>
-        <div class="radio">
-          <label><input type="radio" name="experience"> Yes. I did an hour of code. </label>
-        </div>
-        <div class="radio">
-          <label><input type="radio" name="experience"> No. </label>
-        </div>
-      </form>
-
-      <a href="index.html" class="btn btn-background" role="button"> Continue </a>
+      <button id="back" class="btn btn-background" > Back </button>
+      <button id="next" class="btn btn-background" > Next </button>
 
       <p id="uuid"> UUID: </p>
     </div>
 
     <script>
-      let uuid_tag = document.getElementById("uuid");
-      let uuid = sessionStorage.getItem("swell_uuid");
-      console.log(uuid);
-      uuid_tag.innerHTML += uuid;
+        let next = document.getElementById("next");
+        let back = document.getElementById("back");
+        let question = document.getElementById("question");
+        let answer_radio = document.getElementById("answer");
+        back.style.background = "#D8D8D8";
+        back.disabled = true;
+        next.style.background = "#D8D8D8";
+        next.disabled = true;
+
+        let questions = [
+          ["How excited are you about programming?", "excitement"],
+          ["Have you programmed before?", "experience"]
+        ]
+
+        let answers = [
+          [["Very excited.", 2], ["Excited.", 1], ["Not excited.", 0]],
+          [["Yes. I took a class.", 2], ["Yes. I did an hour of code.", 1], ["No.", 0]]
+        ]
+
+        let q_order = shuffle([0, 1]);
+        let i = 0;
+        let q_tag = 0;
+        updateQuestion();
+
+        //set up the next button
+        next.onclick = function() {
+            var radios = document.getElementsByName(q_tag);
+            for (let radio of radios) {
+                if (radio.checked) {
+                    localStorage.setItem(q_tag, radio.value);
+                    break;
+                }
+            }
+
+            if (i < q_order.length - 1) {
+                i++;
+                updateQuestion();
+
+                if (i > 0) {
+                    back.style.background = "#673AB7";
+                    back.disabled = false;
+                }
+
+            } else if (i == q_order.length - 1) {
+                location.href = "index.html";
+            }
+        }
+
+        //set up the back button
+        back.onclick = function() {
+            var radios = document.getElementsByName(q_tag);
+            for (let radio of radios) {
+                if (radio.checked) {
+                    localStorage.setItem(q_tag, radio.value);
+                    break;
+                }
+            }
+            if (i > 0) {
+                i--;
+                updateQuestion();
+
+                if (i == 0) {
+                    back.style.background = "#D8D8D8";
+                    back.disabled = true;
+                }
+            }
+        }
+
+        //display uuid for debugging
+        let uuid_tag = document.getElementById("uuid");
+        let uuid = localStorage.getItem("swell_uuid");
+        console.log(uuid);
+        uuid_tag.innerHTML += uuid;
+
+        //enable next button if 1 radio button is checked
+        function checkRadio() {
+            var radios = document.getElementsByName(q_tag);
+            for (let radio of radios) {
+                if (radio.checked) {
+                    next.style.background = "#673AB7";
+                    next.disabled = false;
+                    return;
+                }
+            }
+            next.style.background = "#D8D8D8";
+            next.disabled = true;
+        }
+
+        //update the current question
+        function updateQuestion() {
+            question.innerHTML = (i + 1) + ". " + questions[q_order[i]][0];
+
+            q_tag = questions[q_order[i]][1];
+            let a_order = shuffle([0, 1, 2]);
+            let checked = localStorage.getItem(q_tag);
+            if (checked != null) {
+                checked = parseInt(checked);
+            }
+
+            answer_radio.innerHTML = '';
+            for (let j of a_order) {
+                var div = document.createElement('div');
+                div.className = 'radio';
+                if (checked != null && checked == answers[q_order[i]][j][1]) {
+                    div.innerHTML = `<label><input type="radio" name=${q_tag} value=${answers[q_order[i]][j][1]} onclick="checkRadio()" checked> ${answers[q_order[i]][j][0]} </label>`;
+                } else {
+                    div.innerHTML = `<label><input type="radio" name=${q_tag} value=${answers[q_order[i]][j][1]} onclick="checkRadio()"> ${answers[q_order[i]][j][0]} </label>`;
+                }
+
+                answer_radio.appendChild(div);
+            }
+
+
+        }
+
+        //function to shuffle questions and answers
+        function shuffle(arr) {
+            for (var i = arr.length - 1; i > 0; i--) {
+                let j = Math.floor(Math.random() * (i + 1));
+
+                let temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+            return arr;
+        }
     </script>
   </body>
 </html>

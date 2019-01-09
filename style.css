@@ -182,3 +182,8 @@ button:hover {
 #toolbox-container {
     padding-top: 20px;
 }
+
+.password {
+    display: block;
+    margin: auto auto 20px auto;
+}
