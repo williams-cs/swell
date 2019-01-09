@@ -37,10 +37,12 @@
         </div>
       </form>
 
-      <a id="continue" href="welcome.html" class="btn btn-background" role="button"> Continue </a>
+      <button id="continue" class="btn btn-background" > Continue </button>
     </div>
 
     <script>
+        localStorage.setItem("swell_uuid",'' + Math.floor(Math.random() * Number.MAX_SAFE_INTEGER));
+
         //storing survey values to localStorage
         let button = document.getElementById("continue");
         button.onclick = function() {
@@ -53,6 +55,8 @@
                     break;
                 }
             }
+
+            location.href = "welcome.html";
         }
     </script>
 
