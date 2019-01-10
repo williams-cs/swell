@@ -46,32 +46,10 @@ export namespace Parser {
      * punctuation parses all possible punctuation characters
      */
     export function punctuation(){
-        return Primitives.sat(x => x == "!"
-        || x == "."
-        || x == ','
-        || x == ";"
-        || x == '?'
-        || x == "-"
-        || x == "&"
-        || x == '$'
-        || x == ':'
-        || x == '/'
-        || x == '|'
-        || x == '%'
-        || x == '#'
-        || x == "@"
-        || x == "~"
-        || x == '`'
-        || x == '*'
-        || x == '^'
-        || x == '{'
-        || x == '}'
-        || x == "["
-        || x == ']'
-        || x == '('
-        || x == ")"
-        || x == "'"
-        || x == "_")
+        return Primitives.sat(
+            ["!", ".", ",", ";", "?", "-", "&", "$", ":",
+             "/", "|", "%", "#", "@", "~", "`", "*", "^",
+             "{", "}", "[", "]", "(", ")", "'", "_"]);
     }
 
     let id = (x: any) => x
@@ -212,12 +190,13 @@ export namespace Parser {
      */
     export function binOpsChar() : Primitives.IParser<CharUtil.CharStream> {
         return (istream: CharUtil.CharStream) => {
-            return Primitives.between<CharUtil.CharStream, CharUtil.CharStream, CharUtil.CharStream>(Primitives.ws())(Primitives.ws())(Primitives.sat(x =>
-                x == "+"
-             || x == "-"
-             || x == "/"
-             || x == "="
-             || x == "*"))(istream);
+            return Primitives.between<CharUtil.CharStream, CharUtil.CharStream, CharUtil.CharStream>(
+                    Primitives.ws()
+                )(
+                    Primitives.ws()
+                )(
+                    Primitives.sat(["+", "-", "/", "=", "*"])
+                )(istream);
         }
     }
 
