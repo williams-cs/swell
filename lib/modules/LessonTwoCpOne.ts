@@ -18,7 +18,7 @@ export class LessonTwoCpOne extends Module {
 
     constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) {
         super(ctx, editor);
-        let content = `Now let's learn to print shapes on the CANVAS! In the <span class="inline-code">print</span> statement above, replace <span class="inline-code">moo</span> with <span class="inline-code">ellipse(100,100)</span>. Observe what happened on the CANVAS.`;
+        let content = `Now let's learn to print shapes on the CANVAS! In the <span class="inline-code">print</span> statement above, replace <span class="inline-code">"moo"</span> with <span class="inline-code">ellipse(100,100)</span>. Observe what happened on the CANVAS.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "30%", "10%"));
         content = `Yep! You told the computer to draw a circle on the CANVAS. Now in the <span class="inline-code">print</span> statement, replace the word <span class="inline-code">ellipse</span> with <span class="inline-code">rect</span>.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "30%", "10%"));
