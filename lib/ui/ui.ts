@@ -6,14 +6,15 @@ import { LessonThreeCpOne, LessonThreeCpTwo, LessonThreeCpThree, LessonThreeCpFo
 import { LessonFourCpOne, LessonFourCpTwo } from '../../index';
 import { Option, Some, None } from 'space-lift';
 import { diffChars, IDiffResult } from 'diff';
+import CodeMirror from 'codemirror';
 
 (function() {
-    let editor = ((e: any) => { return e.CodeMirror })(document.getElementById("input"));
+    let editor: CodeMirror.Editor = ((e: any) => { return e.CodeMirror })(document.getElementById("input"));
     let editorWrapper = editor.getWrapperElement();
     let canvas = document.querySelector("canvas");
     let popUp = document.getElementById("popup");
     let ctx = canvas.getContext("2d");
-    let lastCursorPos: any = editor.getCursor();
+    let lastCursorPos: any = editor.getDoc().getCursor();
     let lastProgram: string = ""; // Used for comparing and highlighting diffs
 
     let effects: Effect<any>[] = [];
@@ -162,7 +163,7 @@ import { diffChars, IDiffResult } from 'diff';
             if (result.added || result.removed) {
                 // Extends the highlighted section all the way to the left
                 let startHighlightChar: number = curChar;
-                let firstLine: string = editor.getLine(curLine);
+                let firstLine: string = editor.getDoc().getLine(curLine);
                 while (startHighlightChar >= 1) {
                     // Check if alphanumeric
                     if (!/^[a-z0-9]+$/i.test(firstLine[startHighlightChar - 1])) {
@@ -173,7 +174,7 @@ import { diffChars, IDiffResult } from 'diff';
 
                 // Extends to the right
                 let endHightLightChar: number = endChar;
-                let lastLine: string = editor.getLine(endLine);
+                let lastLine: string = editor.getDoc().getLine(endLine);
                 while (endHightLightChar < lastLine.length) {
                     if (!/^[a-z0-9]+$/i.test(lastLine[endHightLightChar])) {
                         break;
@@ -181,7 +182,7 @@ import { diffChars, IDiffResult } from 'diff';
                     endHightLightChar++;
                 }
 
-                editor.markText( // Highlight text
+                editor.getDoc().markText( // Highlight text
                     { line: curLine, ch: startHighlightChar }, // Starting point
                     { line: endLine, ch: endHightLightChar }, // Inclusive line, exclusive char
                     { className: "highlighted-text" }
@@ -196,7 +197,7 @@ import { diffChars, IDiffResult } from 'diff';
             clearTimeout(highlightTimer);
         }
         highlightTimer = setTimeout(function() {
-            editor.getAllMarks().forEach((mark: any) => {
+            editor.getDoc().getAllMarks().forEach((mark: any) => {
                 mark.clear();
             });
 
@@ -213,10 +214,10 @@ import { diffChars, IDiffResult } from 'diff';
     /* Event listeners */
     editor.on("keyup", function() {
         // Check if editor has been modified, only parses if modified
-        if (editor.isClean()) {
+        if (editor.getDoc().isClean()) {
             return;
         } else {
-            editor.markClean();
+            editor.getDoc().markClean();
         }
 
         if (parseTimer != null) {
@@ -226,7 +227,7 @@ import { diffChars, IDiffResult } from 'diff';
     });
 
     editor.on("blur", function() {
-        lastCursorPos = editor.getCursor();
+        lastCursorPos = editor.getDoc().getCursor();
     });
 
     // Window event
@@ -307,14 +308,14 @@ import { diffChars, IDiffResult } from 'diff';
                 return;
         }
         // Insert at cursor position & highlight changes
-        editor.replaceRange(newNode, lastCursorPos);
+        editor.getDoc().replaceRange(newNode, lastCursorPos);
         highlightDiff(editor.getValue(), true);
 
         // Update cursor & refocus editor
         lastCursorPos.line++;
         lastCursorPos.ch = 0;
         editor.focus();
-        editor.setCursor(lastCursorPos);
+        editor.getDoc().setCursor(lastCursorPos);
 
         // Parse
         parse();
