@@ -1,241 +1,448 @@
-<!DOCTYPE html>
-<html>
-
+<!doctype html>
+<html class="default no-js">
 <head>
-    <meta charset='utf-8'>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Swell</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link href='https://fonts.googleapis.com/css?family=Roboto+Mono' rel='stylesheet'>
-    <link rel="stylesheet" href="ui_modules/codemirror/lib/codemirror.css">
-    <link href='style.css' rel='stylesheet' type='text/css'>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    <script src="ui_modules/codemirror/lib/codemirror.js"></script>
-    <script src="ui_modules/codemirror/addon/display/placeholder.js"></script>
-    <script src="ui_modules/codemirror/addon/selection/mark-selection.js"></script>
-    <script src="ui_modules/codemirror/addon/edit/matchbrackets.js"></script>
-    <script src="ui_modules/codemirror/addon/edit/closebrackets.js"></script>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>swell</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
 </head>
-
 <body>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="sidenav col-md-1">
-                <div class="row">
-                    <span id="logo">SWELL</span>
-                </div>
-                <div class="row achievement-container">
-                    <div class="col-4">
-                        <img src="pics/star.svg" class="icon" alt="yellow star" height="25px" width="25px" />
-                    </div>
-                    <div class="col">
-                        <span id="achievement">1/30</span>
-                    </div>
-                </div>
-                <!-- Lessons -->
-                <div id="lesson-accordion">
-                    <div class="row">
-                        <button type="button" class="btn btn-block lesson-btn" data-toggle="collapse" data-target="#collapseOne">
-                            Lesson 1
-                        </button>
-                    </div>
-                    <div id="collapseOne" class="collapse" data-parent="#lesson-accordion">
-                        <!--div class="row">
-                            <button id="l1c1" class="checkpoint btn btn-block">Checkpoint 1</button>
-                        </div>
-                        <div class="row">
-                            <button id="l1c2" class="checkpoint btn btn-block">Checkpoint 2</button>
-                        </div>
-                        <div class="row">
-                            <button id="l1c3" class="checkpoint btn btn-block">Checkpoint 3</button>
-                        </div>
-                        <div class="row">
-                            <button id="l1c4" class="checkpoint btn btn-block">Checkpoint 4</button>
-                        </div-->
-                    </div>
-
-                    <div class="row">
-                        <button type="button" class="btn btn-block lesson-btn" data-toggle="collapse" data-target="#collapseTwo">
-                            Lesson 2
-                        </button>
-                    </div>
-                    <div id="collapseTwo" class="collapse" data-parent="#lesson-accordion">
-                        <!--div class="row">
-                            <button id="l2c1" class="checkpoint btn btn-block">Checkpoint 1</button>
-                        </div>
-                        <div class="row">
-                            <button id="l2c2" class="checkpoint btn btn-block">Checkpoint 2</button>
-                        </div>
-                        <div class="row">
-                            <button id="l2c3" class="checkpoint btn btn-block">Checkpoint 3</button>
-                        </div>
-                        <div class="row">
-                            <button id="l2c4" class="checkpoint btn btn-block">Checkpoint 4</button>
-                        </div>
-                        <div class="row">
-                            <button id="l2c5" class="checkpoint btn btn-block">Checkpoint 5</button>
-                        </div>
-                        <div class="row">
-                            <button id="l2c6" class="checkpoint btn btn-block">Checkpoint 6</button>
-                        </div>
-                        <div class="row">
-                            <button id="l2c7" class="checkpoint btn btn-block">Checkpoint 7</button>
-                        </div-->
-                    </div>
-
-                    <div class="row">
-                        <button type="button" class="btn btn-block lesson-btn" data-toggle="collapse" data-target="#collapseThree">
-                            Lesson 3
-                        </button>
-                    </div>
-                    <div id="collapseThree" class="collapse" data-parent="#lesson-accordion">
-                        <!--div class="row">
-                            <button id="l3c1" class="checkpoint btn btn-block">Checkpoint 1</button>
-                        </div>
-                        <div class="row">
-                            <button id="l3c2" class="checkpoint btn btn-block">Checkpoint 2</button>
-                        </div>
-                        <div class="row">
-                            <button id="l3c3" class="checkpoint btn btn-block">Checkpoint 3</button>
-                        </div>
-                        <div class="row">
-                            <button id="l3c4" class="checkpoint btn btn-block">Checkpoint 4</button>
-                        </div>
-                        <div class="row">
-                            <button id="l3c5" class="checkpoint btn btn-block">Checkpoint 5</button>
-                        </div>
-                        <div class="row">
-                            <button id="l3c6" class="checkpoint btn btn-block">Checkpoint 6</button>
-                        </div-->
-                    </div>
-                </div>
-            </div>
-
-            <div class="main-container col-md">
-                <div class="row label-container">
-                    <div class="col-md-6">
-                        <div class="label">CODE</div>
-                    </div>
-                    <div class="col-md">
-                        <div class="label">CANVAS</div>
-                    </div>
-                </div>
-                <div id="code-canvas-container" class="row">
-                    <div id="code-editor" class="col-md-6">
-                        <textarea id="input-textarea" placeholder="//code goes here"></textarea>
-                    </div>
-
-                    <div id="canvas-container" class="col-md">
-                        <canvas id='output'></canvas>
-                        <div id='popup' class='instruction'>
-                            <p> You need to complete the goal using only the CODE area to the left! </p>
-                            <p> Don't remember how? Refresh your memory by going back to the last checkpoint:
-                                <button id='prev'> Last Checkpoint </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row label-container">
-                    <div class="col-md-10">
-                        <div id="instr-label" class="label">TERMINAL</div>
-                    </div>
-                    <div class="col-md">
-                        <!--div class="label">MISSION</div-->
-                    </div>
-                </div>
-                <div id="terminal-reward-container" class="row">
-                    <div class="col-md-10">
-                        <div id="goal" class="mid-col-2nd-row-container">
-                            <p>Welcome to Swell! Let's learn how to code!</p>
-                            <p>What is coding? Well, computers can do wonderful things, but they unfortunately don't understand English.</p>
-                            <p>To tell a computer what we want it to do, we need to communicate with it in a language that it understands.</p>
-                            <p>That's basically what coding is: to communicate with computers, by writing in a language they understand!</p>
-                        </div>
-                    </div>
-                    <div class="col-md">
-                        <div id="reward-container" class="mid-col-2nd-row-container">
-                            <div id="reward-text" class="reward"> Complete goal to earn a star! </div>
-                            <img id="reward-image" src="pics/greystar.svg" class="star" alt="a star to be earned" height="50px" width="50px" />
-                            <button id="next" class="btn next">Next</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        <div class="sidenav col-md-auto">
-          <div id="toolbox-container">
-            <!-- <button type="button" class="btn btn-block btn-sm" id='reset'>Reset</button> -->
-            <button type="button" class="btn btn-block btn-sm" id='string'>Word</button>
-            <button type="button" class="btn btn-block btn-sm" id='number'>Number</button>
-            <button type="button" class="btn btn-block btn-sm" id='ellipse'>Ellipse</button>
-            <button type="button" class="btn btn-block btn-sm" id='rect'>Rectangle</button>
-            <button type="button" class="btn btn-block btn-sm" id='line'>Line</button>
-            <button type="button" class="btn btn-block btn-sm" id='curve'>Curve</button>
-            <button type="button" class="btn btn-block btn-sm" data-toggle="collapse" data-target="#emoji">
-                Emoji
-            </button>
-            <div id="emoji" class="collapse">
-              <button id="happy" class="btn btn-block checkpoint">happy</button>
-              <button id="sad" class="btn btn-block checkpoint">sad</button>
-              <button id="angry" class="btn btn-block checkpoint">angry</button>
-              <button id="cool" class="btn btn-block checkpoint">cool</button>
-            </div>
-          </div>
-          <div class="end">
-              <div>
-              </div>
-              <input type="password" id="password" name="password" class="end-password">
-              <button type="button" class="btn btn-block btn-sm" id='end'>End</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <script>
-        (function() {
-            let cm = CodeMirror.fromTextArea(document.getElementById("input-textarea"), {
-                lineNumbers: true,
-                autofocus: true,
-                matchBrackets: true,
-                autoCloseBrackets: true
-            });
-            let editor = cm.getWrapperElement();
-            editor.setAttribute("id", "input");
-
-            // Make canvas responsive
-            let canvas = document.querySelector("canvas");
-            resizeCanvas = function() {
-                canvas.height = parseInt(editor.clientHeight);
-                canvas.width = parseInt(editor.clientWidth * 0.98);
-            };
-            document.getElementsByTagName("body")[0].onresize = resizeCanvas;
-            resizeCanvas();
-        })();
-
-        //disable the end button initially
-        let pwd = document.getElementById("password");
-        let end = document.getElementById("end");
-        end.style.background = "#D8D8D8";
-        end.disabled = true;
-
-        //enable the button if the password matches
-        pwd.onkeyup = function() {
-            if (pwd.value === "provolone") {
-                end.style.background = "#673AB7";
-                end.disabled = false;
-            } else {
-                end.style.background = "#D8D8D8";
-                end.disabled = true;
-            }
-        }
-
-        end.onclick = function() {
-            location.href = "posttest.html";
-        }
-    </script>
-    <script src='browserui.js'></script>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">swell</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1> swell</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<p><a href="https://williams-cs.github.io/swell/">Link to documentation</a></p>
+				<h2 id="about">About</h2>
+				<p>This is an evaluator for SWELL. It is responsible for managing the program AST and provides a link between the parser and UI that helps manage ProDirect Manipulation. </p>
+				<h2 id="building">Building</h2>
+				<p>Type <code>make</code> in the terminal and hit enter. <code>make</code> will, if necessary, install the npm modules, remove the compiled files, recompile, and generate documentation.</p>
+				<p><code>make clean</code> will remove all the compiled files, documentation, and npm modules. If you&#39;re having any sort of issues, run this and then <code>make</code>. </p>
+				<p>If you&#39;re still having issues and you&#39;re using VSC, close VSC, <code>make clean</code>, then <code>make</code>.
+				If you&#39;re still having issues, Google.</p>
+				<h2 id="testing">Testing</h2>
+				<p><code>make test</code> will compile and run all tests. Currently, two tests (both called <em>A draw test should evaluate to an error</em>) should evaluate to errors. All others should pass.</p>
+				<p>Note that module and UI tests must be written in the UI test folder. The UI can be tested manually or with Selenium Webdriver. To use the debugger, Webdriver is best... if you can get it to work.</p>
+				<h2 id="modules">Modules</h2>
+				<p><strong>How to Build a Module</strong></p>
+				<ol>
+					<li>Come up with a goal: draw a circle, write text, make a scene, etc, and a clever name for the module.</li>
+					<li>Figure out how to check if these goals are complete. This will be the <code>checkGoal()</code> method in the module. <ul>
+							<li>Since there&#39;s no way to check what is on the canvas, this will mainly involve regex parsing of the input text, which you can read from the &#39;input&#39; element of the document.</li>
+							<li>You will likely have multiple components to check; each of these will be their own goal boolean</li>
+							<li><code>checkGoal()</code> should be run when the Run button is pressed, but you may need to incorporate a delay, since for the Circle module it verifies it when the button is hit but before it actually paints anything.</li>
+						</ul>
+					</li>
+					<li>Develop instructions and/or starter code.<ul>
+							<li>Currently this shows up in a prompt at the beginning of the module, but if you decide to include starter code you may want to work out how to put it somewhere in the UI so the students can reference it... or print it directly in the input space!</li>
+						</ul>
+					</li>
+					<li><code>checkGoal()</code> is the bulk of the module, but you may want additional helper methods based on how complicated the goal is to check. <a href="./lib/modules/CircleMod.ts">CircleMod</a> can provide a good reference for a basic goal check. </li>
+				</ol>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_index_.html">"index"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_expression_.html">"lib/<wbr>Expression"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_ignore_for_now_ellipse_.html">"lib/<wbr>Ignore for now/<wbr>Ellipse"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_ignore_for_now_shape_.html">"lib/<wbr>Ignore for now/<wbr>Shape"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_binops_assignop_.html">"lib/binops/<wbr>Assign<wbr>Op"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_binops_binaryoperation_.html">"lib/binops/<wbr>Binary<wbr>Operation"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_binops_declareop_.html">"lib/binops/<wbr>Declare<wbr>Op"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_binops_decrement_.html">"lib/binops/<wbr>Decrement"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_binops_divop_.html">"lib/binops/<wbr>Div<wbr>Op"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_binops_increment_.html">"lib/binops/<wbr>Increment"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_binops_minusop_.html">"lib/binops/<wbr>Minus<wbr>Op"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_binops_mulop_.html">"lib/binops/<wbr>Mul<wbr>Op"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_binops_plusop_.html">"lib/binops/<wbr>Plus<wbr>Op"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_conditionals_conditional_.html">"lib/conditionals/<wbr>Conditional"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_effects_curveeffect_.html">"lib/effects/<wbr>Curve<wbr>Effect"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_effects_effect_.html">"lib/effects/<wbr>Effect"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_effects_effectutils_.html">"lib/effects/<wbr>Effect<wbr>Utils"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_effects_ellipseeffect_.html">"lib/effects/<wbr>Ellipse<wbr>Effect"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_effects_emojieffect_.html">"lib/effects/<wbr>Emoji<wbr>Effect"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_effects_epheffect_.html">"lib/effects/<wbr>Eph<wbr>Effect"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_effects_lineeffect_.html">"lib/effects/<wbr>Line<wbr>Effect"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_effects_numbereffect_.html">"lib/effects/<wbr>Number<wbr>Effect"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_effects_rectangleeffect_.html">"lib/effects/<wbr>Rectangle<wbr>Effect"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_effects_stringeffect_.html">"lib/effects/<wbr>String<wbr>Effect"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_funhouse_funapp_.html">"lib/funhouse/<wbr>Fun<wbr>App"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_funhouse_fundef_.html">"lib/funhouse/<wbr>Fun<wbr>Def"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_lists_listnode_.html">"lib/lists/<wbr>List<wbr>Node"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_logging_clearevent_.html">"lib/logging/<wbr>Clear<wbr>Event"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_logging_clickevent_.html">"lib/logging/<wbr>Click<wbr>Event"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_logging_dragevent_.html">"lib/logging/<wbr>Drag<wbr>Event"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_logging_idevent_.html">"lib/logging/IDEvent"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_logging_logevent_.html">"lib/logging/<wbr>Log<wbr>Event"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_logging_paintevent_.html">"lib/logging/<wbr>Paint<wbr>Event"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_logging_resizeevent_.html">"lib/logging/<wbr>Resize<wbr>Event"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_logging_selectevent_.html">"lib/logging/<wbr>Select<wbr>Event"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_logic_and_.html">"lib/logic/<wbr>And"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_logic_equals_.html">"lib/logic/<wbr>Equals"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_logic_greaterthan_.html">"lib/logic/<wbr>Greater<wbr>Than"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_logic_greaterthaneq_.html">"lib/logic/<wbr>Greater<wbr>Than<wbr>Eq"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_logic_lessthan_.html">"lib/logic/<wbr>Less<wbr>Than"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_logic_lessthaneq_.html">"lib/logic/<wbr>Less<wbr>Than<wbr>Eq"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_logic_not_.html">"lib/logic/<wbr>Not"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_logic_notequal_.html">"lib/logic/<wbr>Not<wbr>Equal"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_logic_or_.html">"lib/logic/<wbr>Or"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_loops_fornode_.html">"lib/loops/<wbr>For<wbr>Node"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_loops_repeatnode_.html">"lib/loops/<wbr>Repeat<wbr>Node"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_loops_whilenode_.html">"lib/loops/<wbr>While<wbr>Node"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_modules_instruction_.html">"lib/modules/<wbr>Instruction"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_modules_lessonfourcpone_.html">"lib/modules/<wbr>Lesson<wbr>Four<wbr>CpOne"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_modules_lessonfourcptwo_.html">"lib/modules/<wbr>Lesson<wbr>Four<wbr>CpTwo"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_modules_lessononecpfour_.html">"lib/modules/<wbr>Lesson<wbr>One<wbr>CpFour"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_modules_lessononecpone_.html">"lib/modules/<wbr>Lesson<wbr>One<wbr>CpOne"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_modules_lessononecpthree_.html">"lib/modules/<wbr>Lesson<wbr>One<wbr>CpThree"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_modules_lessononecptwo_.html">"lib/modules/<wbr>Lesson<wbr>One<wbr>CpTwo"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_modules_lessonthreecpfive_.html">"lib/modules/<wbr>Lesson<wbr>Three<wbr>CpFive"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_modules_lessonthreecpfour_.html">"lib/modules/<wbr>Lesson<wbr>Three<wbr>CpFour"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_modules_lessonthreecpone_.html">"lib/modules/<wbr>Lesson<wbr>Three<wbr>CpOne"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_modules_lessonthreecpsix_.html">"lib/modules/<wbr>Lesson<wbr>Three<wbr>CpSix"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_modules_lessonthreecpthree_.html">"lib/modules/<wbr>Lesson<wbr>Three<wbr>CpThree"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_modules_lessonthreecptwo_.html">"lib/modules/<wbr>Lesson<wbr>Three<wbr>CpTwo"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_modules_lessontwocpfive_.html">"lib/modules/<wbr>Lesson<wbr>Two<wbr>CpFive"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_modules_lessontwocpfour_.html">"lib/modules/<wbr>Lesson<wbr>Two<wbr>CpFour"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_modules_lessontwocpone_.html">"lib/modules/<wbr>Lesson<wbr>Two<wbr>CpOne"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_modules_lessontwocpseven_.html">"lib/modules/<wbr>Lesson<wbr>Two<wbr>CpSeven"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_modules_lessontwocpsix_.html">"lib/modules/<wbr>Lesson<wbr>Two<wbr>CpSix"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_modules_lessontwocpthree_.html">"lib/modules/<wbr>Lesson<wbr>Two<wbr>CpThree"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_modules_lessontwocptwo_.html">"lib/modules/<wbr>Lesson<wbr>Two<wbr>CpTwo"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_modules_module_.html">"lib/modules/<wbr>Module"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_modules_modulegenerator_.html">"lib/modules/<wbr>Module<wbr>Generator"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_parser_parser_.html">"lib/parser/parser"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_prims_booleannode_.html">"lib/prims/<wbr>Boolean<wbr>Node"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_prims_nop_.html">"lib/prims/NOP"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_prims_numbernode_.html">"lib/prims/<wbr>Number<wbr>Node"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_prims_stringnode_.html">"lib/prims/<wbr>String<wbr>Node"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_shapes_colornode_.html">"lib/shapes/<wbr>Color<wbr>Node"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_shapes_curvenode_.html">"lib/shapes/<wbr>Curve<wbr>Node"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_shapes_ellipsenode_.html">"lib/shapes/<wbr>Ellipse<wbr>Node"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_shapes_emojinode_.html">"lib/shapes/<wbr>Emoji<wbr>Node"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_shapes_ephnode_.html">"lib/shapes/<wbr>Eph<wbr>Node"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_shapes_linenode_.html">"lib/shapes/<wbr>Line<wbr>Node"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_shapes_rectanglenode_.html">"lib/shapes/<wbr>Rectangle<wbr>Node"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_structural_dimensions_.html">"lib/structural/<wbr>Dimensions"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_structural_printnode_.html">"lib/structural/<wbr>Print<wbr>Node"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_structural_return_.html">"lib/structural/<wbr>Return"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_structural_returnerror_.html">"lib/structural/<wbr>Return<wbr>Error"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_structural_scope_.html">"lib/structural/<wbr>Scope"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_structural_sequencenode_.html">"lib/structural/<wbr>Sequence<wbr>Node"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_ui_ui_.html">"lib/ui/ui"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_unops_negop_.html">"lib/unops/<wbr>Neg<wbr>Op"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_unops_unaryoperation_.html">"lib/unops/<wbr>Unary<wbr>Operation"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_lib_vars_variablenode_.html">"lib/vars/<wbr>Variable<wbr>Node"</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
 </body>
-
 </html>
