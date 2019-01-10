@@ -50,19 +50,32 @@ import { diffChars, IDiffResult } from 'diff';
     }
 
     function parse() {
+        // clear the canvas
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // grab program from input
         let inputText = editor.getValue();
-        let astOpt = Parser.parse(inputText);
-        effects.length = 0; // slightly sketch clearing method to maintain reference to original array
-        if (astOpt.isDefined()) {
-            ast = astOpt.get();
-            context = new Scope(null, effects, masterLog);
-            context.canvas = Some(canvas);
-            ast.eval(context); //this is where we draw the objects to the screen
-        } else {
-            ast = undefined;
+
+        // zero effects array
+        effects.length = 0;
+
+        // run parser
+        let astOutcome = Parser.parseWithOutcome(inputText);
+        
+        // check outcome; if successful, run program
+        // otherwise, alert user
+        switch(astOutcome.tag) {
+            case "success":
+                let ast = astOutcome.result;
+                context = new Scope(null, effects, masterLog);  // new scope
+                context.canvas = Some(canvas);                  // assign canvas
+                ast.eval(context);                              // evaluate program (draw to screen)
+                break;
+            case "failure":
+                ast = undefined;
+                break;
         }
-        printLog();
+        printLog();      
     }
 
     /**

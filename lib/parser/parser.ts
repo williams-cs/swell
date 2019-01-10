@@ -3,7 +3,6 @@ import { NumberNode, StringNode, Expression, BinaryOperation, DeclareOp, PlusOp,
 import { Option, Some, None } from 'space-lift';
 
 export namespace Parser {
-
     /**
      * to be moved to Pants
      * number parses numbers by repeatedly applying the digit parser
@@ -42,41 +41,28 @@ export namespace Parser {
     }
 
     /**
-     * to be moved to Pants
      * punctuation parses all possible punctuation characters
      */
     export function punctuation(){
-        return Primitives.sat(x => x == "!"
-        || x == "."
-        || x == ','
-        || x == ";"
-        || x == '?'
-        || x == "-"
-        || x == "&"
-        || x == '$'
-        || x == ':'
-        || x == '/'
-        || x == '|'
-        || x == '%'
-        || x == '#'
-        || x == "@"
-        || x == "~"
-        || x == '`'
-        || x == '*'
-        || x == '^'
-        || x == '{'
-        || x == '}'
-        || x == "["
-        || x == ']'
-        || x == '('
-        || x == ")"
-        || x == "'"
-        || x == "_")
+        return Primitives.sat(
+            ["!", ".", ",", ";", "?", "-", "&", "$", ":",
+             "/", "|", "%", "#", "@", "~", "`", "*", "^",
+             "{", "}", "[", "]", "(", ")", "'", "_"]);
     }
 
     let id = (x: any) => x
 
-    //let effects: Effect<any>[] = [];
+    /**
+     * parseWithOutcome is the top-level (whole program) parser
+     * that takes a program as a string and returns an Outcome
+     * object that contains either the AST on success or failure
+     * information on parsing failure.
+     * @param program a string representating program text
+     */
+    export function parseWithOutcome(program: string): Primitives.Outcome<Expression<any>> {
+        program += "\n";
+        return ExpressionParser(new CharUtil.CharStream(program));
+    }
 
     /**
      * parse is a function that wraps the input text in a CharStream
@@ -84,11 +70,8 @@ export namespace Parser {
      * @param program a string representing program text
      */
     export function parse(program: string): Option<Expression<any>>{
-        program += "\n";
-        //printOffset = -1;
-        //this.effects = effects;
-        let o = ExpressionParser(new CharUtil.CharStream(program));
-        switch(o.tag){
+        let o = parseWithOutcome(program);
+        switch(o.tag) {
             case "success":
                 return Some(o.result);
             case "failure":
@@ -212,12 +195,13 @@ export namespace Parser {
      */
     export function binOpsChar() : Primitives.IParser<CharUtil.CharStream> {
         return (istream: CharUtil.CharStream) => {
-            return Primitives.between<CharUtil.CharStream, CharUtil.CharStream, CharUtil.CharStream>(Primitives.ws())(Primitives.ws())(Primitives.sat(x =>
-                x == "+"
-             || x == "-"
-             || x == "/"
-             || x == "="
-             || x == "*"))(istream);
+            return Primitives.between<CharUtil.CharStream, CharUtil.CharStream, CharUtil.CharStream>(
+                    Primitives.ws()
+                )(
+                    Primitives.ws()
+                )(
+                    Primitives.sat(["+", "-", "/", "=", "*"])
+                )(istream);
         }
     }
 
