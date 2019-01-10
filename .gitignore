@@ -346,6 +346,5 @@ test/**/*.js
 !wireframes/*.pdf
 !swellskillmap.pdf
 
-docs
 dist
 browserui.js
