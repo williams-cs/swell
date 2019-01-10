@@ -9,6 +9,7 @@ clean:
 	rm -rf dist
 	rm -rf docs
 	rm -rf node_modules
+	rm -f browserui.js
 
 node_modules:
 	npm install
