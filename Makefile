@@ -1,9 +1,11 @@
 build: node_modules
 	rm -rf dist
 	tsc
+	browserify --debug dist/lib/ui/ui.js -o browserui.js
+
+docs: build
 	typedoc --out docs --excludeExternals --readme README.md
 	touch docs/.nojekyll
-	browserify --debug dist/lib/ui/ui.js -o browserui.js
 
 clean:
 	rm -rf dist
