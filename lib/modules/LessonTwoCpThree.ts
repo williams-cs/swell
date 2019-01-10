@@ -1,33 +1,32 @@
 import { Module } from "./Module";
 import { Instruction } from "./Instruction";
 import { Effect } from "../effects/Effect";
-import { EllipseEffect } from "../effects/EllipseEffect";
-import { StringEffect } from "../effects/StringEffect";
+import { EmojiEffect } from "../effects/EmojiEffect";
 
 export class LessonTwoCpThree extends Module {
     readonly _name: string = "l2c3";
     readonly _goal: any;
     readonly _constraint: string = 'none';
     readonly _instructions: string =
-        `<p> GOAL: Draw 2 circles and a word on the CANVAS. </p>`;
+        `<p> GOAL: Draw 2 emojis on the CANVAS. </p>`;
 
-    readonly _starterCode: string = `print(ellipse(100, 100), 120, 150);\n`;
+    readonly _starterCode: string = `print(emoji("angry", 100, 100), 120, 150);\n`;
 
     _latestInstrIndex: number = 1;
 
     constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) {
         super(ctx, editor);
-        let content = "What if we want to draw more than only 1 circle?";
+        let content = "What if we want to draw more than 1 emoji?";
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
         content = `First copy the <span class="inline-code">print</span> statement on the first line and paste it on the second line above.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
-        content = `Hm, that should have created a second circle right? Let's try to fix this by changing the <span class="inline-code">120</span> above to <span class="inline-code">200</span>.`;
+        content = `Hm, that should have created a second emoji right? Let's try to fix this by changing the <span class="inline-code">120</span> above to <span class="inline-code">300</span>.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = "Yep! One circle was on top of the other this entire time! In the future, be mindful of this.";
+        content = "Yep! One emoji was on top of the other this entire time! In the future, be mindful of this.";
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = "Now let's have a quick challenge: in addition to the 2 circles, write a word on the canvas. Do you remember how to print a word?";
+        content = "Now let's have a quick challenge: make one of the emoji a happy face, and the other one a sad face. Do you remember how to do that?";
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = `There's no limit to how many <span class="inline-code">print</span> statements the computer can understand, so you can write 1000 <span class="inline-code">print</span> statements, and the computer will draw 1000 things on the CANVAS for you!`;
+        content = `There's no limit to how many emojis the computer can draw, so you can write 1000 <span class="inline-code">print</span> statements, and the computer will draw 1000 emojis for you!`;
         this._instrBoxes.push(new Instruction('canvas-container', content, "70%", "10%"));
     }
 
@@ -38,15 +37,15 @@ export class LessonTwoCpThree extends Module {
      * @param effects the list of effects currently on the CANVAS
      */
     checkGoal(document: Document, effects: Effect<any>[]): boolean {
-        let circleCount = 0;
+        let emojiCount = 0;
         switch (this._latestInstrIndex) {
             case 1:
                 for (let effect of effects) {
-                    if (effect instanceof EllipseEffect) {
-                        circleCount += 1;
+                    if (effect instanceof EmojiEffect) {
+                        emojiCount += 1;
                     }
                 }
-                if (circleCount >= 2) {
+                if (emojiCount >= 2) {
                   this._latestInstrIndex++;
                   this.renderLatestInstruction(document);
                 }
@@ -55,31 +54,36 @@ export class LessonTwoCpThree extends Module {
             case 2:
                 let moved = false;
                 for (let effect of effects) {
-                    if (effect instanceof EllipseEffect) {
-                        if (effect.x  == 200) {
+                    if (effect instanceof EmojiEffect) {
+                        if (effect.x  == 300) {
                             moved = true;
                         }
-                        circleCount += 1;
+                        emojiCount += 1;
                     }
                 }
-                if ((circleCount >= 2) && moved) {
+                if ((emojiCount >= 2) && moved) {
                   this._latestInstrIndex += 2;
                   this.renderNextInstruction(document);
                 }
                 return false;
 
             case 4:
-                let stringExists = false;
+                let sadExists = false;
+                let happyExists = false;
                 for (let effect of effects) {
-                    if (!stringExists) {
-                        stringExists = effect instanceof StringEffect && effect.str !== "";
-                    }
+                  if (effect instanceof EmojiEffect) {
+                        if (effect.name === "happy") {
+                            happyExists = true;
+                        }
 
-                    if (effect instanceof EllipseEffect) {
-                        circleCount += 1;
+                        if (effect.name === "sad") {
+                            sadExists = true;
+                        }
+
+                        emojiCount += 1;
                     }
                 }
-                if ((circleCount >= 2) && stringExists) {
+                if ((emojiCount >= 2) && sadExists && happyExists) {
                   this._latestInstrIndex += 1;
                   this.renderLatestInstruction(document);
                 }

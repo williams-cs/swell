@@ -2,18 +2,18 @@ import { Module } from "./Module";
 import { Instruction } from "./Instruction";
 import { Effect } from "../effects/Effect";
 import { NumberEffect } from "../effects/NumberEffect";
-import { EllipseEffect } from "../effects/EllipseEffect";
+import { EmojiEffect } from "../effects/EmojiEffect";
 
 export class LessonTwoCpSeven extends Module {
     readonly _name: string = "l2c7";
     readonly _goal: any;
     readonly _constraint: string = 'none';
     readonly _instructions: string =
-        `<p> CHALLENGE: Create a circle and print out its size. </p>`;
+        `<p> CHALLENGE: Create an emoji and print out its size. </p>`;
 
     readonly _starterCode =
         `a = 50;
-print(ellipse(100, 100), 125, 175);`;
+print(emoji("mustache", 100, 100), 125, 175);`;
 
     _latestInstrIndex: number = 1;
 
@@ -25,17 +25,17 @@ print(ellipse(100, 100), 125, 175);`;
     constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) {
         super(ctx, editor);
         this.y = ctx.canvas.height - this.square_size - this.x;
-        let content = `Let's learn one final thing about variables. Observe the code above: we connect the variable <span class="inline-code">a</span> to the number <span class="inline-code">50</span>, and we also have a <span class="inline-code">print</span> statement to print an ellipse.`;
+        let content = `Let's learn one final thing about variables. Observe the code above: we connect the variable <span class="inline-code">a</span> to the number <span class="inline-code">50</span>, and we also have a <span class="inline-code">print</span> statement to print a mustache emoji.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
         content = `Replace the two numbers <span class="inline-code">100</span> inside the <span class="inline-code">print</span> statement with the letter <span class="inline-code">a</span>. Observe what happens.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
-        content = `Did you see the circle on CANVAS become smaller? The variable <span class="inline-code">a</span> is tied to the number <span class="inline-code">50</span>, so now the circle has dimension <span class="inline-code">a</span>!`;
+        content = `Did you see the emoji become smaller? The variable <span class="inline-code">a</span> is tied to the number <span class="inline-code">50</span>, so now the emoji has dimension <span class="inline-code">a</span>!`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
         content = `Let's add one last bit of CODE: write something to print the value of <span class="inline-code">a</span> on the CANVAS.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
-        content = "That's correct! Finally, click on the circle on the CANVAS, and make it bigger than the box provided. Observe what happened to the printed number.";
+        content = "That's correct! Finally, click on the emoji on the CANVAS, and make it bigger than the box provided. Observe what happened to the printed number.";
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = "Did you see the printed number change? You have successfully connected 2 elements on the CANVAS together - a circle and a number - by a variable! Remember this lesson about variables in the future when you need to link different things on CANVAS together!";
+        content = "Did you see the printed number change? You have successfully connected 2 elements on the CANVAS together - an emoji and a number - by a variable! Remember this lesson about variables in the future when you need to link different things on CANVAS together!";
         this._instrBoxes.push(new Instruction('code-editor', content, "70%", "10%"));
     }
 
@@ -47,7 +47,7 @@ print(ellipse(100, 100), 125, 175);`;
 
         this.ctx.font = this.font_size + "px Courier New";
         this.ctx.fillStyle = '#6C6C6C';
-        this.ctx.fillText("Make circle", this.x, this.y + this.font_size);
+        this.ctx.fillText("Make emoji", this.x, this.y + this.font_size);
         this.ctx.fillText("bigger than this box", this.x, this.y + 2 * this.font_size);
     }
 
@@ -65,13 +65,13 @@ print(ellipse(100, 100), 125, 175);`;
         switch (this._latestInstrIndex) {
             case 1:
                 //check for correct CODE
-                let regex: RegExp = new RegExp('print\\s*\\(\\s*ellipse\\s*\\(\\s*a\\s*,\\s*a\\s*\\)\\s*,\\s*[1-9][0-9]*\\s*,\\s*[1-9][0-9]*\\s*\\)');
+                let regex: RegExp = /print\s*\(\s*emoji\s*\(\s*"mustache"\s*,\s*a\s*,\s*a\s*\)\s*,\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\)/g;
                 let match = code.match(regex);
                 codeIsCorrect = match != null && match.length > 0;
 
                 //check for correct CANVAS effects
                 for (let effect of effects) {
-                    if (effect instanceof EllipseEffect) {
+                    if (effect instanceof EmojiEffect) {
                         canvasIsCorrect = true;
                         break;
                     }
@@ -89,7 +89,7 @@ print(ellipse(100, 100), 125, 175);`;
                     if (effect instanceof NumberEffect && effect.num != null) {
                         let val = effect.num;
                         for (let effect2 of effects) {
-                            if (effect2 instanceof EllipseEffect && (val == effect2.w || val == effect2.h)) {
+                            if (effect2 instanceof EmojiEffect && (val == effect2.w || val == effect2.h)) {
                                 this._latestInstrIndex++;
                                 this.renderLatestInstruction(document);
                             }
@@ -99,12 +99,11 @@ print(ellipse(100, 100), 125, 175);`;
                 return false;
 
             case 4:
-                let circle: EllipseEffect;
                 for (let effect of effects) {
                     if (effect instanceof NumberEffect && effect.num != null) {
                         let val = effect.num;
                         for (let effect2 of effects) {
-                            if (effect2 instanceof EllipseEffect && (val == effect2.w || val == effect2.h) && val > this.square_size) {
+                            if (effect2 instanceof EmojiEffect && (val == effect2.w || val == effect2.h) && val > this.square_size) {
                                 this._latestInstrIndex++;
                                 this.renderLatestInstruction(document);
                             }

@@ -1,7 +1,7 @@
 import { Module } from "./Module";
 import { Instruction } from "./Instruction";
 import { Effect } from "../effects/Effect";
-import { EllipseEffect } from "../effects/EllipseEffect";
+import { EmojiEffect } from "../effects/EmojiEffect";
 
 export class LessonTwoCpFour extends Module {
     readonly _name: string = "l2c4";
@@ -11,8 +11,8 @@ export class LessonTwoCpFour extends Module {
         `<p> GOAL: Change a to b in the print statement. </p>`;
 
     readonly _starterCode =
-        `a = "moo moo";
-b = ellipse(100, 100);
+        `a = emoji("angry", 100, 100);
+b = emoji("cool", 100, 100);
 print(a, 100, 100);`;
 
     _latestInstrIndex: number = 2;
@@ -25,9 +25,9 @@ print(a, 100, 100);`;
         this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
         content = `For example, take a look at the code above. Change the <span class="inline-code">a</span> in the <span class="inline-code">print</span> statement to <span class="inline-code">b</span>, and observe what happened on the CANVAS.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = 'Did you see the CANVAS changed? In our code, we make variable <span class="inline-code">a</span> refer to the words <span class="inline-code">"moo moo"</span>, and variable <span class="inline-code">b</span> refer to an <span class="inline-code">ellipse(100, 100)</span>.';
+        content = 'Did you see a different emoji is printed? In our code, we make variable <span class="inline-code">a</span> refer to an angry emoji, and variable <span class="inline-code">b</span> refer to a cool emoji.';
         this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
-        content = 'As a result, when we tell the computer to print <span class="inline-code">a</span>, it will print "moo moo", and when we tell the computer to print <span class="inline-code">b</span>, it will print a circle!';
+        content = 'As a result, when we tell the computer to print <span class="inline-code">a</span>, it will print the angry emoji, and when we tell the computer to print <span class="inline-code">b</span>, it will print the cool emoji!';
         this._instrBoxes.push(new Instruction('canvas-container', content, "70%", "10%"));
     }
 
@@ -48,9 +48,9 @@ print(a, 100, 100);`;
                 codeIsCorrect = match != null && match.length > 0;
 
                 //check for correct CANVAS effects
-                let canvasIsCorrect = true;
+                let canvasIsCorrect = false;
                 for (let effect of effects) {
-                    if (!canvasIsCorrect && effect instanceof EllipseEffect) {
+                    if (effect instanceof EmojiEffect && effect.name === "cool") {
                         canvasIsCorrect = true;
                         break;
                     }

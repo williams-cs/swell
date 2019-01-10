@@ -1,16 +1,16 @@
 import { Module } from "./Module";
 import { Instruction } from "./Instruction";
 import { Effect } from "../effects/Effect";
-import { EllipseEffect } from "../effects/EllipseEffect";
+import { EmojiEffect } from "../effects/EmojiEffect";
 
 export class LessonTwoCpTwo extends Module {
     readonly _name: string = "l2c2";
     readonly _goal: any;
     readonly _constraint: string = 'none';
     readonly _instructions: string =
-        `<p> GOAL: Fit the circle inside the given box. </p>`;
+        `<p> GOAL: Fit the emoji inside the given box. </p>`;
 
-    readonly _starterCode: string = `print(ellipse(100, 100), 120, 150);`;
+    readonly _starterCode: string = `print(emoji("angry", 100, 100), 120, 150);`;
 
     _latestInstrIndex: number = 0;
 
@@ -23,11 +23,11 @@ export class LessonTwoCpTwo extends Module {
     constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) {
         super(ctx, editor);
         this.x = Math.round((ctx.canvas.width - this.rect_w) / 2);
-        let content = `What are the numbers <span class="inline-code">(100, 100)</span> next to <span class="inline-code">ellipse</span> for? Let's find out by first clicking on the circle on the CANVAS.`;
+        let content = `What are the numbers <span class="inline-code">(100, 100)</span> next to <span class="inline-code">"angry"</span> for? Let's find out by first clicking on the emoji on the CANVAS.`;
         this._instrBoxes.push(new Instruction('canvas-container', content, "80%", "10%"));
-        content = "Now drag the 8 tips around the circle to resize it. Try to fit the circle entirely inside the given box. Observe the CODE above.";
+        content = "Now drag the 8 tips around the emoji to resize it. Try to fit the emoji entirely inside the given box. Observe the CODE above.";
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = `Yep! Those numbers inside <span class="inline-code">ellipse(_,_)</span> change the dimension of the circle! Note that you can also directly retype these numbers in the CODE area, without touching the CANVAS.`;
+        content = `Yep! Those numbers inside <span class="inline-code">emoji(_,_,_)</span> change the dimension of the emoji!`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
     }
 
@@ -39,7 +39,7 @@ export class LessonTwoCpTwo extends Module {
 
         this.ctx.font = this.font_size + "px Courier New";
         this.ctx.fillStyle = '#6C6C6C';
-        this.ctx.fillText("Fit circle", this.x, this.y - 2 * this.font_size);
+        this.ctx.fillText("Fit emoji", this.x, this.y - 2 * this.font_size);
         this.ctx.fillText("in here", this.x, this.y - this.font_size);
     }
 
@@ -52,7 +52,7 @@ export class LessonTwoCpTwo extends Module {
         switch (this._latestInstrIndex) {
             case 0:
                 for (let effect of effects) {
-                    if (effect instanceof EllipseEffect && effect.selected) {
+                    if (effect instanceof EmojiEffect && effect.selected) {
                         this._latestInstrIndex++;
                         this.renderLatestInstruction(document);
                     }
@@ -61,7 +61,7 @@ export class LessonTwoCpTwo extends Module {
 
             case 1:
                 for (let effect of effects) {
-                    if (effect instanceof EllipseEffect) {
+                    if (effect instanceof EmojiEffect) {
                         if (effect.x > this.x && effect.x < this.x + this.rect_w
                             && effect.y > this.y && effect.y < this.y + this.rect_h
                             && effect.w < this.rect_w && effect.h < this.rect_h) {
