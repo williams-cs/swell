@@ -8,27 +8,44 @@ export class LessonThreeCpOne extends Module {
     readonly _goal: any;
     readonly _constraint: string = 'none';
     readonly _instructions: string =
-        `<p> GOAL: Change the value of a to 12. </p>`;
+        `<p> GOAL: Change the value of a to 150. </p>`;
 
     readonly _starterCode: string =
-        `a = 5;
-print(a, 118, 63);
-print("a is less than 10", 103, 143);`;
+    `a = 75;
+print(emoji("skull", a, a), 25, 25);
+print("The skull is smaller than the box.", 25, 220)`;
 
     _latestInstrIndex: number = 3;
+
+    x: number = 10;
+    y: number = 10;
+    square_size: number = 100;
+    font_size: number = 20;
 
     constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) {
         super(ctx, editor);
         let content = "We learned to tell the computer to print a lot of things. Now, let's teach it to make some decisions on its own.";
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = 'Look at the CODE above. We let <span class="inline-code">a = 5</span>, then we print the value of <span class="inline-code">a</span> to the CANVAS. Then we print the line <span class="inline-code">a is less than 10</span>.';
+        content = 'Look at the CODE above. We let <span class="inline-code">a = 75</span>, then we use it to refer to the dimension of a skull emoji. Then we print the line <span class="inline-code">The skull is smaller than the box.</span>.';
         this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
-        content = `Since <span class="inline-code">a</span> is 5, and 5 < 10, we know that <span class="inline-code">a</span> is less than 10. But what would happen if we change the value of a to, say, 12?`;
+        content = `Since <span class="inline-code">a</span> is 75, and the box's width is 100, we know the printed claim is correct. But what would happen if we change the value of a to, say, 150?`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = `Change the value of <span class="inline-code">a</span> to <span class="inline-code">12</span>. Observe what happens on the CANVAS.`;
+        content = `Change the value of <span class="inline-code">a</span> to <span class="inline-code">150</span>. Observe what happens.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
-        content = 'Do you notice the claim that <span class="inline-code">a is less than 10</span> did not change? <span class="inline-code">a</span> is now 12 and clearly greater than 10! Yet our computer does not know to not print the wrong claim!';
+        content = 'Do you notice that the claim <span class="inline-code">The skull is smaller than the box</span> did not change? The skull now clearly looks bigger than the box! Yet our computer does not know to stop printing the wrong claim!';
         this._instrBoxes.push(new Instruction('canvas-container', content, "70%", "10%"));
+    }
+
+    drawGuides(): void {
+        this.ctx.beginPath();
+        this.ctx.rect(this.x, this.y, this.square_size, this.square_size);
+        this.ctx.strokeStyle = '#6C6C6C';
+        this.ctx.stroke();
+
+        this.ctx.font = this.font_size + "px Courier New";
+        this.ctx.fillStyle = '#6C6C6C';
+        this.ctx.fillText("Box with", this.x, this.y + this.square_size + this.font_size);
+        this.ctx.fillText("width 100", this.x, this.y + this.square_size + 2 * this.font_size);
     }
 
     /**
@@ -43,14 +60,14 @@ print("a is less than 10", 103, 143);`;
                 //check for correct CODE
                 let codeIsCorrect = false;
                 let code: string = this.editor.getValue();
-                let regex: RegExp = /a\s*=\s*12\s*/;
+                let regex: RegExp = /a\s*=\s*150\s*/;
                 let match = code.match(regex);
                 codeIsCorrect = match != null && match.length > 0;
 
                 //check for correct CANVAS effects
                 let canvasIsCorrect = false;
                 for (let effect of effects) {
-                    if (effect instanceof StringEffect && effect.str === "a is less than 10") {
+                    if (effect instanceof StringEffect && effect.str === "The skull is smaller than the box.") {
                         canvasIsCorrect = true;
                         break;
                     }
