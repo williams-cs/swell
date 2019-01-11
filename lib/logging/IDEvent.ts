@@ -13,7 +13,7 @@ export class IDEvent extends LogEvent<any>{
         this.tag = "ID";
         this._toPrint = this.assembleString();
     }
-    
+
     /**
      * Assembles string using the effect's toIDString() method
      */
@@ -21,7 +21,7 @@ export class IDEvent extends LogEvent<any>{
         this._toPrint = (this.toLog as Effect<any>).toIDString();
         return this._toPrint;
     }
-    
+
     /**
      * Assembles message of form "Assigned ID # to obj at x, y" with date and time attached
      */
@@ -37,4 +37,7 @@ export class IDEvent extends LogEvent<any>{
     toJSON(): string {
         return "{ on: '" + (this.toLog as Effect<any>).toIDString() + "' }";
     }
+
+    logRemotely(uid: string, data: string, ip: string, checkpoint: string, parses: boolean): void{};
+
 }

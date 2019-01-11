@@ -15,15 +15,15 @@ export class ResizeEvent extends LogEvent<any>{
         super(toLog, x1, y1, x2, y2);
         this.tag = "resize";
     }
-    
+
     /**
      * Assembles log message of form "Resized obj from size x1, y1 to size x2, y2" for rects and ellipses
-     * or of form "Resized obj from size x1 to size y1" for strings 
+     * or of form "Resized obj from size x1 to size y1" for strings
      * Has date and time attached
      */
     assembleLog(): string{
         if(this.x2 != undefined && this.y2 != undefined){
-            this.toPrint = "Resized " + this.toLog + " from size " + this.x1.toString() + " by " + this.y1.toString() 
+            this.toPrint = "Resized " + this.toLog + " from size " + this.x1.toString() + " by " + this.y1.toString()
             + " to size " + this.x2.toString() + " by " + this.y2.toString();
         } else{
             this.toPrint = "Resized " + this.toLog + " from size " + this.x1.toString() + " to size " + this.y1.toString();
@@ -42,5 +42,9 @@ export class ResizeEvent extends LogEvent<any>{
             // I don't understand this. Why this.y1?
             return "{ on: '" + this.toLog + "', from_x: '" + this.x1 + "', to_y: '" + this.y1 + "' }";
         }
+    }
+
+    logRemotely(uid: string, data: string, ip: string, checkpoint: string, parses: boolean): void {
+        LogEvent.logToRemoteServer(this.eventType(), uid, data, ip, checkpoint, parses);
     }
 }

@@ -52,6 +52,8 @@ export abstract class LogEvent<T> {
 
     abstract eventType(): string;
 
+    abstract logRemotely(uid: string, data: string, ip: string, checkpoint: string, parses: boolean): void;
+
     /**
      * Returns date-time string
      */
@@ -107,7 +109,7 @@ export abstract class LogEvent<T> {
     /**
      * Logs to a remote server.
      */
-    static logToRemoteServer(eventtype: string, uid: string, data: string) {
+    static logToRemoteServer(eventtype: string, uid: string, data: string, ip: string, checkpoint: string, parses: boolean) {
         // modified from: https://stackoverflow.com/a/10073788/480764
         function pad(n: number, width: number) : string {
             let padWith = '0';
@@ -131,6 +133,10 @@ export abstract class LogEvent<T> {
         // MUST USE THE FOLLOWING DATE FORMAT
         // payload.append('time', '2019-01-01 16:36:00');
         payload.append('time', year + '-' + month + '-' + day + ' ' + hour + ':' + minutes + ':' + seconds);
+        payload.append('ip_address', ip);
+        payload.append('checkpoint_id', checkpoint);
+        payload.append('parses', '' + parses);
+
 
         let xhr = new XMLHttpRequest();
         xhr.open("POST", "http://camembert.cs.williams.edu:8080/events", true);

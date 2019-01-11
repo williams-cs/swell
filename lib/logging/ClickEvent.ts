@@ -12,7 +12,7 @@ export class ClickEvent extends LogEvent<any>{
         super(toLog, x1, y1);
         this.tag = "click";
     }
-    
+
     /**
      * Assembles and returns message of form "Clicked on obj at x, y" with date and time attached
      */
@@ -28,4 +28,7 @@ export class ClickEvent extends LogEvent<any>{
     toJSON(): string {
         return "{ on: '" + this.toLog + "', x: '" + this.x1 + "', y: '" + this.y1 + "' }";
     }
+
+    logRemotely(uid: string, data: string, ip: string, checkpoint: string, parses: boolean): void{};
+
 }

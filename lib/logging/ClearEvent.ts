@@ -1,7 +1,7 @@
 import {LogEvent} from './LogEvent';
 
 export class ClearEvent extends LogEvent<any>{
-    
+
     /**
      * Constructor for the Clear Event, which logs when the canvas is cleared
      * @param toLog What to log (spoiler: nothing)
@@ -10,7 +10,7 @@ export class ClearEvent extends LogEvent<any>{
         super(toLog);
         this.tag = "clear";
     }
-    
+
     /**
      * Assembles and returns message "Console cleared" with date and time attached
      */
@@ -26,4 +26,6 @@ export class ClearEvent extends LogEvent<any>{
     toJSON(): string {
         return "{}";
     }
+
+    logRemotely(uid: string, data: string, ip: string, checkpoint: string, parses: boolean): void{};
 }

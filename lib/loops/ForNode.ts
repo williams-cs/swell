@@ -36,19 +36,27 @@ export class ForNode implements Expression<any>{
      * @param context The current program context
      */
     eval(context: Scope){
+        //create the block scope for the loop body
         let childCtx = new Scope(context, context.effects, context.eventLog);
         childCtx.canvas = Some(context.canvas.get());
-        this._init.eval(childCtx); // initialize var
 
+        //Initialize loop variable
+        this._init.eval(childCtx);
+
+        //checks the loop condition
         let res = this._cond.eval(childCtx);
         if(!(res instanceof BooleanNode)){
             throw new Error("The condition must be a boolean expression.");
         }
 
+
         let ret;
         while(res.val){
+            //evaluate the loop body
             ret = this._body.eval(childCtx);
+            //update the loop variable
             this._post.eval(childCtx);
+            //check the loop condition
             res = this._cond.eval(childCtx);
         }
         return ret;

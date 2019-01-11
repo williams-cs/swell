@@ -1,5 +1,5 @@
 import { Parser } from '../../index';
-import { Effect, Expression, Scope, ClearEvent, LogEvent, DragEvent, SelectEvent, IDEvent, Module, ModuleGenerator } from '../../index';
+import { Effect, Expression, Scope, ClearEvent, LogEvent, DragEvent, SelectEvent, IDEvent, CodeEvent, Module, ModuleGenerator } from '../../index';
 import { LessonOneCpOne, LessonOneCpTwo, LessonOneCpThree, LessonOneCpFour } from '../../index';
 import { LessonTwoCpOne, LessonTwoCpTwo, LessonTwoCpThree, LessonTwoCpFour, LessonTwoCpFive, LessonTwoCpSix, LessonTwoCpSeven } from '../../index';
 import { LessonThreeCpOne, LessonThreeCpTwo, LessonThreeCpThree, LessonThreeCpFour, LessonThreeCpFive, LessonThreeCpSix } from '../../index';
@@ -44,22 +44,29 @@ import CodeMirror from 'codemirror';
         uid = "someUUID";
     }
 
+    let codeEvent = new CodeEvent('CodeEvent');
+    let ip = '172.16.254.1';
+    let checkpointName = 'l0c0';
+    let parses = false;
+
     /* Logging, parsing & rendering */
 
-    function printLog() {
-        console.log("Log: ");
+    function logDM() {
         for (let elem of masterLog) {
             console.log(elem.assembleLog());
-            // this is just sample usage;
-            // you should replace parameters with real values
-            // this might not even be the right place to put this
-            LogEvent.logToRemoteServer(elem.eventType(), uid, elem.toJSON());
+            if (checkpoint != null) {
+                checkpointName = checkpoint._name;
+            }
+            elem.logRemotely(uid, editor.getValue(), ip, checkpointName, parses);
         }
         masterLog = [];
     }
 
-    function logProgram() {
-        LogEvent.logToRemoteServer("Program", uid, editor.getValue());
+    function logCodeEvent() {
+        if (checkpoint != null) {
+            checkpointName = checkpoint._name;
+        }
+        codeEvent.logRemotely(uid, editor.getValue(), ip, checkpointName, parses);
     }
 
     function parse() {
@@ -77,19 +84,27 @@ import CodeMirror from 'codemirror';
 
         // check for parser outcome
         switch (outcome.tag) {
-            case "success":;
-                // get AST
-                ast = outcome.result;
+            case "success":
+                try {
+                    parses = true;
+                    // get AST
+                    ast = outcome.result;
 
-                // init context
-                context = new Scope(null, effects, masterLog);
-                context.canvas = Some(canvas);
+                    // init context
+                    context = new Scope(null, effects, masterLog);
+                    context.canvas = Some(canvas);
 
-                // evaluate (this is where objects appear on screen)
-                ast.eval(context);
+                    // evaluate (this is where objects appear on screen)
+                    ast.eval(context);
+
+                } catch (e) {
+                    console.log(e);
+                }
+
                 break;
 
             case "failure":
+                parses = false;
                 ast = undefined;
                 let startpos = outcome.inputstream.furthestFailure;
                 let endpos = (startpos + 3) < outcome.inputstream.length()
@@ -100,11 +115,12 @@ import CodeMirror from 'codemirror';
                     editorDoc.posFromIndex(endpos),
                     { className: "err" }
                 );
+
                 break;
         }
 
         // log to console
-        printLog();
+        logDM();
     }
 
     /**
@@ -225,8 +241,7 @@ import CodeMirror from 'codemirror';
         }
         highlightTimer = setTimeout(function() {
             clearEditorMarkers(); // Clear markers
-            printLog(); // user stopped doing DM; log now
-            LogEvent.logToRemoteServer("Program", uid, editor.getValue());
+            logDM(); // user stopped doing DM; log now
         }, 500);
 
         // Update last program if necessary
@@ -261,7 +276,7 @@ import CodeMirror from 'codemirror';
         if (logTimer != null) {
             clearTimeout(logTimer);
         }
-        logTimer = setTimeout(logProgram, 5000);
+        logTimer = setTimeout(logCodeEvent, 5000);
     });
 
     editor.on("blur", function() {
@@ -344,7 +359,7 @@ import CodeMirror from 'codemirror';
                 console.log("Problem with " + buttonName);
                 return;
         }
-        
+
         // compute insertion position
         let endIdx = editor.getValue().length;
         let posInsert = editorDoc.posFromIndex(endIdx + 1);
@@ -373,7 +388,7 @@ import CodeMirror from 'codemirror';
     //     }
     //     context.eventLog.push(new ClearEvent());
     //     masterLog.push(context.eventLog[context.eventLog.length - 1]); // Does this actually work?
-    //     printLog();
+    //     logDM();
     // };
 
     /* Modules */
