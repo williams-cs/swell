@@ -16,7 +16,11 @@ export class LessonTwoCpOne extends Module {
 
     constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) {
         super(ctx, editor);
+<<<<<<< HEAD
         let content = `Now let's learn to print emojis! In the <span class="inline-code">print</span> statement above, replace <span class="inline-code">"happy"</span> with <span class="inline-code">emoji("happy", 100, 100)</span>. Don't worry, we will shortly learn what this means.`;
+=======
+        let content = `Now let's learn to print shapes on the CANVAS! In the <span class="inline-code">print</span> statement above, replace <span class="inline-code">"moo"</span> with <span class="inline-code">ellipse(100,100)</span>. Observe what happened on the CANVAS.`;
+>>>>>>> master
         this._instrBoxes.push(new Instruction('code-editor', content, "30%", "10%"));
         content = `Yay! You told the computer to draw your first emoji! The computer knows how to draw so many emojis! In the <span class="inline-code">print</span> statement above, replace the word <span class="inline-code">"happy"</span> with <span class="inline-code">"sad"</span>, and see what happens.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "30%", "10%"));

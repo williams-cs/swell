@@ -6,14 +6,16 @@ import { LessonThreeCpOne, LessonThreeCpTwo, LessonThreeCpThree, LessonThreeCpFo
 import { LessonFourCpOne, LessonFourCpTwo } from '../../index';
 import { Option, Some, None } from 'space-lift';
 import { diffChars, IDiffResult } from 'diff';
+import CodeMirror from 'codemirror';
 
 (function() {
-    let editor = ((e: any) => { return e.CodeMirror })(document.getElementById("input"));
+    let editor: CodeMirror.Editor = ((e: any) => { return e.CodeMirror })(document.getElementById("input"));
+    let editorDoc: CodeMirror.Doc = editor.getDoc();
     let editorWrapper = editor.getWrapperElement();
     let canvas = document.querySelector("canvas");
     let popUp = document.getElementById("popup");
     let ctx = canvas.getContext("2d");
-    let lastCursorPos: any = editor.getCursor();
+    let lastCursorPos: any = editorDoc.getCursor();
     let lastProgram: string = ""; // Used for comparing and highlighting diffs
 
     let effects: Effect<any>[] = [];
@@ -50,18 +52,47 @@ import { diffChars, IDiffResult } from 'diff';
     }
 
     function parse() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(0, 0, canvas.width, canvas.height); // clear the canvas
+        clearEditorMarkers();
+
+        // get program
         let inputText = editor.getValue();
-        let astOpt = Parser.parse(inputText);
-        effects.length = 0; // slightly sketch clearing method to maintain reference to original array
-        if (astOpt.isDefined()) {
-            ast = astOpt.get();
-            context = new Scope(null, effects, masterLog);
-            context.canvas = Some(canvas);
-            ast.eval(context); //this is where we draw the objects to the screen
-        } else {
-            ast = undefined;
+
+        // parse program text
+        let outcome = Parser.parseWithOutcome(inputText);
+
+        // clear effects array
+        effects.length = 0;
+
+        // check for parser outcome
+        switch (outcome.tag) {
+            case "success":;
+                // get AST
+                ast = outcome.result;
+
+                // init context
+                context = new Scope(null, effects, masterLog);
+                context.canvas = Some(canvas);
+
+                // evaluate (this is where objects appear on screen)
+                ast.eval(context);
+                break;
+
+            case "failure":
+                ast = undefined;
+                let startpos = outcome.inputstream.furthestFailure;
+                let endpos = (startpos + 3) < outcome.inputstream.length()
+                    ? (startpos + 3) : outcome.inputstream.length();
+                // mark region
+                editorDoc.markText(
+                    editorDoc.posFromIndex(startpos),
+                    editorDoc.posFromIndex(endpos),
+                    { className: "err" }
+                );
+                break;
         }
+
+        // log to console
         printLog();
     }
 
@@ -148,7 +179,7 @@ import { diffChars, IDiffResult } from 'diff';
             if (result.added || result.removed) {
                 // Extends the highlighted section all the way to the left
                 let startHighlightChar: number = curChar;
-                let firstLine: string = editor.getLine(curLine);
+                let firstLine: string = editorDoc.getLine(curLine);
                 while (startHighlightChar >= 1) {
                     // Check if alphanumeric
                     if (!/^[a-z0-9]+$/i.test(firstLine[startHighlightChar - 1])) {
@@ -159,7 +190,7 @@ import { diffChars, IDiffResult } from 'diff';
 
                 // Extends to the right
                 let endHightLightChar: number = endChar;
-                let lastLine: string = editor.getLine(endLine);
+                let lastLine: string = editorDoc.getLine(endLine);
                 while (endHightLightChar < lastLine.length) {
                     if (!/^[a-z0-9]+$/i.test(lastLine[endHightLightChar])) {
                         break;
@@ -167,7 +198,7 @@ import { diffChars, IDiffResult } from 'diff';
                     endHightLightChar++;
                 }
 
-                editor.markText( // Highlight text
+                editorDoc.markText( // Highlight text
                     { line: curLine, ch: startHighlightChar }, // Starting point
                     { line: endLine, ch: endHightLightChar }, // Inclusive line, exclusive char
                     { className: "highlighted-text" }
@@ -182,12 +213,8 @@ import { diffChars, IDiffResult } from 'diff';
             clearTimeout(highlightTimer);
         }
         highlightTimer = setTimeout(function() {
-            editor.getAllMarks().forEach((mark: any) => {
-                mark.clear();
-            });
-
-            // user stopped doing DM; log now
-            printLog();
+            clearEditorMarkers(); // Clear markers
+            printLog(); // user stopped doing DM; log now
         }, 500);
 
         // Update last program if necessary
@@ -196,13 +223,22 @@ import { diffChars, IDiffResult } from 'diff';
         }
     }
 
+    /**
+     * Clear all text markers
+     **/
+    function clearEditorMarkers() {
+        editorDoc.getAllMarks().forEach((mark: CodeMirror.TextMarker) => {
+            mark.clear();
+        });
+    }
+
     /* Event listeners */
     editor.on("keyup", function() {
         // Check if editor has been modified, only parses if modified
-        if (editor.isClean()) {
+        if (editorDoc.isClean()) {
             return;
         } else {
-            editor.markClean();
+            editorDoc.markClean();
         }
 
         if (parseTimer != null) {
@@ -212,7 +248,7 @@ import { diffChars, IDiffResult } from 'diff';
     });
 
     editor.on("blur", function() {
-        lastCursorPos = editor.getCursor();
+        lastCursorPos = editorDoc.getCursor();
     });
 
     // Window event
@@ -293,14 +329,14 @@ import { diffChars, IDiffResult } from 'diff';
                 return;
         }
         // Insert at cursor position & highlight changes
-        editor.replaceRange(newNode, lastCursorPos);
+        editorDoc.replaceRange(newNode, lastCursorPos);
         highlightDiff(editor.getValue(), true);
 
         // Update cursor & refocus editor
         lastCursorPos.line++;
         lastCursorPos.ch = 0;
         editor.focus();
-        editor.setCursor(lastCursorPos);
+        editorDoc.setCursor(lastCursorPos);
 
         // Parse
         parse();
@@ -324,6 +360,7 @@ import { diffChars, IDiffResult } from 'diff';
     * The first map is for non-dm case, the second for the dm case.
     */
     let sidebarPlans = [
+<<<<<<< HEAD
       [
           ['l1c1','l1c3','l1c4'],
           ['l2c1','l2c3','l2c4','l2c5','l2c7'],
@@ -334,6 +371,18 @@ import { diffChars, IDiffResult } from 'diff';
           ['l2c1','l2c2','l2c3','l2c4','l2c5','l2c6','l2c7'],
           ['l3c1','l3c2','l3c3','l3c4','l3c5','l3c6']
       ]
+=======
+        [
+            ['l1c1', 'l1c2', 'l1c3', 'l1c4'],
+            ['l2c1', 'l2c2', 'l2c3', 'l2c4', 'l2c5', 'l2c6', 'l2c7'],
+            ['l3c1', 'l3c2', 'l3c3', 'l3c4', 'l3c5', 'l3c6']
+        ],
+        [
+            ['l1c1', 'l1c2', 'l1c3', 'l1c4'],
+            ['l2c1', 'l2c2', 'l2c3', 'l2c4', 'l2c5', 'l2c6', 'l2c7'],
+            ['l3c1', 'l3c2', 'l3c3', 'l3c4', 'l3c5', 'l3c6']
+        ]
+>>>>>>> master
     ]
 
     //retrieve survey choice for dm or non-dm
