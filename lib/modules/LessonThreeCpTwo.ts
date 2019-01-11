@@ -26,17 +26,17 @@ if(a < 100) {
 
     constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) {
         super(ctx, editor);
-        let content = `Let's teach the computer to print the sentence <span class="inline-code">The skull is smaller than the box</span> ONLY when the printed skull emoji is clearly not as big as the box.`;
+        let content = `Let's teach the computer to print the sentence <span class="inline-code">The skull is smaller than the box</span> ONLY when the printed skull emoji really is smaller the box.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = `We will use something called an <span class="inline-code">if</span> statement. Observe the CODE above. All we added was an <span class="inline-code">if</span> statement that checks whether <span class="inline-code">a < 100</span>. If a is less than 100 - which is the box's width, the code inside the curly braces <span class="inline-code">{}</span> will run.`;
+        content = `We will use something called an <span class="inline-code">if</span> statement. Observe the CODE above. We added was an <span class="inline-code">if</span> statement. When <span class="inline-code">a < 100</span>, the code inside the curly braces <span class="inline-code">{}</span> will run.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
-        content = `Let's investigate what this statement does. First, change the value of <span class="inline-code">a</span> to <span class="inline-code">80</span>. Observe what happens.`;
+        content = `Let's investigate what <span class="inline-code">if</span> does. Change the value of <span class="inline-code">a</span> from <span class="inline-code">150</span> to <span class="inline-code">80</span>.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = `Did you see the correct claim is printed on the CANVAS? Now let's change the value of <span class="inline-code">a</span> to, say, <span class="inline-code">140</span>.`;
+        content = `Do you see the text is now printed on the CANVAS?  Let's change the value of <span class="inline-code">a</span> from <span class="inline-code">80</span> to <span class="inline-code">140</span>.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
-        content = 'The claim about <span class="inline-code">a</span> disappears! Finally, change the value of <span class="inline-code">a</span> to <span class="inline-code">20</span>.';
+        content = 'The text disappears! Finally, change the value of <span class="inline-code">a</span> from <span class="inline-code">140</span> to <span class="inline-code">20</span>.';
         this._instrBoxes.push(new Instruction('canvas-container', content, "70%", "10%"));
-        content = 'The claim appears again! The <span class="inline-code">if</span> statement makes the computer constantly check the value of <span class="inline-code">a</span>, and only print the claim when the condition inside the brackets <span class="inline-code">()</span> is satisfied!';
+        content = 'The text comes back! The <span class="inline-code">if</span> statement makes the computer check the value of <span class="inline-code">a</span> before running the CODE inside the curly braces <span class="inline-code">{}</span>.';
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
     }
 
