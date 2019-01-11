@@ -118,7 +118,7 @@ button:hover {
     cursor: default;
     position: absolute;
     bottom: 0;
-    z-index: 9999;
+    z-index: 1000;
 }
 
 #code-editor {
@@ -175,7 +175,7 @@ button:hover {
     padding: 5px;
     border: 5px solid #673AB7;
     background-color: white;
-    z-index: 1002;
+    z-index: 9999;
     overflow: auto;
 }
 
