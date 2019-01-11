@@ -360,16 +360,16 @@ import CodeMirror from 'codemirror';
     * The first map is for non-dm case, the second for the dm case.
     */
     let sidebarPlans = [
-        [
-            ['l1c1', 'l1c2', 'l1c3', 'l1c4'],
-            ['l2c1', 'l2c2', 'l2c3', 'l2c4', 'l2c5', 'l2c6', 'l2c7'],
-            ['l3c1', 'l3c2', 'l3c3', 'l3c4', 'l3c5', 'l3c6']
-        ],
-        [
-            ['l1c1', 'l1c2', 'l1c3', 'l1c4'],
-            ['l2c1', 'l2c2', 'l2c3', 'l2c4', 'l2c5', 'l2c6', 'l2c7'],
-            ['l3c1', 'l3c2', 'l3c3', 'l3c4', 'l3c5', 'l3c6']
-        ]
+      [
+          ['l1c1','l1c3','l1c4'],
+          ['l2c1','l2c3','l2c4','l2c5','l2c7'],
+          ['l3c1','l3c2','l3c3','l3c4','l3c5','l3c6']
+      ],
+      [
+          ['l1c1','l1c2','l1c3','l1c4'],
+          ['l2c1','l2c2','l2c3','l2c4','l2c5','l2c6','l2c7'],
+          ['l3c1','l3c2','l3c3','l3c4','l3c5','l3c6']
+      ]
     ]
 
     //retrieve survey choice for dm or non-dm
@@ -465,10 +465,10 @@ import CodeMirror from 'codemirror';
         ['l3c3', false],
         ['l3c4', false],
         ['l3c5', false],
-        ['l3c6', false],
-        ['l4c1', false],
-        ['l4c2', false]
+        ['l3c6', false]
     ]);
+
+    let cpNames = [].concat(...lessons);
 
     /* keeping track of and displaying user's progress */
     let starCount: number = 0;
@@ -482,8 +482,6 @@ import CodeMirror from 'codemirror';
         'l3c1', 'l3c2', 'l3c3', 'l3c4', 'l3c5', 'l3c6'
     ];
     */
-
-    let cpNames = [].concat(...lessons);
 
     for (let cp of cpNames) {
         let cpButton = document.getElementById(cp);
@@ -635,7 +633,7 @@ import CodeMirror from 'codemirror';
                 starCount++;
             }
         }
-        starBox.innerHTML = starCount + "/" + cpCompletion.size;
+        starBox.innerHTML = starCount + "/" + cpNames.length;
     }
 
     //call to animate

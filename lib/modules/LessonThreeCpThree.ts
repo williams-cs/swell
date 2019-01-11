@@ -8,26 +8,44 @@ export class LessonThreeCpThree extends Module {
     readonly _goal: any;
     readonly _constraint: string = 'none';
     readonly _instructions: string =
-        `<p> GOAL: Make the line "b is greater than 20" only be printed on the CANVAS when b is actually greater than 20. </p>`;
+        `<p> GOAL: Make the line "The pirate is bigger than the box." only be printed on the CANVAS when the pirate emoji is actually bigger than the box. </p>`;
 
     readonly _starterCode: string =
-        `b = 8;
-if(b < 10) {
-\tprint("b is greater than 20.", 103, 143);
+        `b = 50;
+print(emoji("pirate", b, b), 25, 25);
+if(b < 75) {
+\tprint("The pirate is bigger than the box.", 25, 250);
 }`;
 
     _latestInstrIndex: number = 1;
 
+    x: number = 10;
+    y: number = 10;
+    square_size: number = 150;
+    font_size: number = 20;
+
     constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) {
         super(ctx, editor);
-        let content = `<span class="inline-code">if</span> statements allow you to run a block of code inside the curly braces <span class="inline-code">{}</span> ONLY when the condition inside the brackets <span class="inline-code">if()</span> is true.`;
+        let content = `<span class="inline-code">if</span> statements allow you to run a block of code inside the curly braces <span class="inline-code">{}</span> ONLY when the condition inside the brackets <span class="inline-code">if()</span> is met.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = `Let's have a quick challenge: observe the CODE above. Change the code inside the brackets <span class="inline-code">if()</span> so that the claim <span class="inline-code">b is greater than 20</span> is only printed on the CANVAS when <span class="inline-code">b</span> is actually greater than 20.`;
+        content = `Let's have a quick challenge: observe the CODE above. Change the code inside the brackets <span class="inline-code">if()</span> so that the claim <span class="inline-code">The pirate is bigger than the box</span> is only printed when the printed emoji is actually bigger than the box.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
-        content = `Your CODE seems correct! Now change the value of <span class="inline-code">b</span> to <span class="inline-code">50</span> to test that it runs correctly.`;
+        content = `Your CODE seems correct! Now change the value of <span class="inline-code">b</span> to <span class="inline-code">200</span> to test that it runs correctly.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
         content = 'The claim is printed with the correct value of <span class="inline-code">b</span>! Good job!';
-        this._instrBoxes.push(new Instruction('canvas-container', content, "70%", "10%"));
+        this._instrBoxes.push(new Instruction('canvas-container', content, "80%", "10%"));
+    }
+
+    drawGuides(): void {
+        this.ctx.beginPath();
+        this.ctx.rect(this.x, this.y, this.square_size, this.square_size);
+        this.ctx.strokeStyle = '#6C6C6C';
+        this.ctx.stroke();
+
+        this.ctx.font = this.font_size + "px Courier New";
+        this.ctx.fillStyle = '#6C6C6C';
+        this.ctx.fillText("Box with", this.x, this.y + this.square_size + this.font_size);
+        this.ctx.fillText("width 150", this.x, this.y + this.square_size + 2 * this.font_size);
     }
 
     /**
@@ -46,7 +64,7 @@ if(b < 10) {
         switch (this._latestInstrIndex) {
             case 1:
                 //check for correct CODE
-                regex = /if\s*\(\s*b\s*>\s*20\s*\)/;
+                regex = /if\s*\(\s*b\s*>\s*150\s*\)/;
                 match = code.match(regex);
                 if (match != null && match.length > 0) {
                     this._latestInstrIndex++;
@@ -56,15 +74,15 @@ if(b < 10) {
 
             case 2:
                 //check for correct CODE
-                regex = /if\s*\(\s*b\s*>\s*20\s*\)/;
+                regex = /if\s*\(\s*b\s*>\s*150\s*\)/;
                 match = code.match(regex);
-                let assign: RegExp = /b\s*=\s*50\s*/;
+                let assign: RegExp = /b\s*=\s*200\s*/;
                 let matchAssign = code.match(assign);
                 codeIsCorrect = match != null && match.length > 0 && matchAssign != null && matchAssign.length > 0;
 
                 //check for correct CANVAS effects
                 for (let effect of effects) {
-                    if (effect instanceof StringEffect && effect.str === "b is greater than 20.") {
+                    if (effect instanceof StringEffect && effect.str === "The pirate is bigger than the box.") {
                         canvasIsCorrect = true;
                         break;
                     }

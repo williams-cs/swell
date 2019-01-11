@@ -1,7 +1,7 @@
 import { Module } from "./Module";
 import { Instruction } from "./Instruction";
 import { Effect } from "../effects/Effect";
-import { EllipseEffect } from "../effects/EllipseEffect";
+import { EmojiEffect } from "../effects/EmojiEffect";
 import { StringEffect } from "../effects/StringEffect";
 
 export class LessonThreeCpSix extends Module {
@@ -9,7 +9,7 @@ export class LessonThreeCpSix extends Module {
     readonly _goal: any;
     readonly _constraint: string = 'none';
     readonly _instructions: string =
-        `<p> GOAL: Create an if/else statement to print the correct claim about the sizes of the 2 circles. </p>`;
+        `<p> GOAL: Create an if/else statement to print the correct claim about the sizes of the 2 emojis. </p>`;
 
     _latestInstrIndex: number = 3;
 
@@ -32,32 +32,32 @@ export class LessonThreeCpSix extends Module {
         this.yB = this.yA;
         this.xA = Math.round(ctx.canvas.width / 2) - this.square_size - 10;
         this.xB = this.xA + this.square_size + 10;
-        let square_mid = Math.round(this.square_size / 2);
-        let circ_xA = this.xA + square_mid;
-        let circ_yA = this.yA + square_mid;
-        let circ_xB = this.xB + square_mid;
-        let circ_yB = this.yB + square_mid;
+        //let square_mid = Math.round(this.square_size / 2);
+        let circ_xA = this.xA + 10;
+        let circ_yA = this.yA + 10;
+        let circ_xB = this.xB + 10;
+        let circ_yB = this.yB + 10;
 
         this._starterCode =
             `a = ${this.a_size};
 print(a, ${this.xA}, ${this.yA - 2 * this.font_size});
-print(ellipse(a, a), ${circ_xA}, ${circ_yA});
+print(emoji("angel", a, a), ${circ_xA}, ${circ_yA});
 b = ${this.b_size};
 print(b, ${this.xB}, ${this.yA - 2 * this.font_size});
-print(ellipse(b, b), ${circ_xB}, ${circ_yB});
-print("Circle A is smaller than circle B.", ${this.xA}, ${this.yA + this.square_size + this.font_size});`
+print(emoji("devil", b, b), ${circ_xB}, ${circ_yB});
+print("The angel is smaller than the devil.", ${this.xA}, ${this.yA + this.square_size + this.font_size});`
 
         //setting up the Instructions
         let content = `Now that you know how to use <span class="inline-code">if/else</span> statements, let's put them all together!`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = 'Above we have the CODE to draw 2 circles: circle A has height and width <span class="inline-code">a</span>, and circle B has height and width <span class="inline-code">b</span>.';
+        content = 'Above we have the CODE to draw 2 emojis: an angel emoji with height and width <span class="inline-code">a</span>, and a devil emoji with height and width <span class="inline-code">b</span>.';
         this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
-        content = `However, currently the claim that <span class="inline-code">Circle A is smaller than circle B.</span> is printed regardless of the circles' actual sizes.`;
+        content = `However, currently the claim that <span class="inline-code">The angel is smaller than the devil.</span> is printed regardless of the emojis' actual sizes.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = `Here's a challenge for you: Create an <span class="inline-code">if/else</span> statement to print <span class="inline-code">Circle A is smaller than circle B.</span> when it is actually so, and print <span class="inline-code">Circle A is bigger than circle B.</span> otherwise.`;
+        content = `Here's a challenge for you: Create an <span class="inline-code">if/else</span> statement to print <span class="inline-code">The angel is smaller than the devil.</span> when it is actually so, and print <span class="inline-code">The angel is bigger than the devil.</span> otherwise.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "80%", "10%"));
         content = 'Congratulations! You just successfully wrote a complicated <span class="inline-code">if/else</span> statement!';
-        this._instrBoxes.push(new Instruction('canvas-container', content, "70%", "10%"));
+        this._instrBoxes.push(new Instruction('canvas-container', content, "90%", "10%"));
     }
 
     drawGuides(): void {
@@ -68,13 +68,13 @@ print("Circle A is smaller than circle B.", ${this.xA}, ${this.yA + this.square_
 
         this.ctx.font = this.font_size + "px Courier New";
         this.ctx.fillStyle = '#6C6C6C';
-        this.ctx.fillText("Circle A", this.xA, this.yA - this.font_size);
+        this.ctx.fillText("Angel emoji", this.xA, this.yA - this.font_size);
 
         this.ctx.beginPath();
         this.ctx.rect(this.xB, this.yB, this.square_size, this.square_size);
         this.ctx.stroke();
 
-        this.ctx.fillText("Circle B", this.xB, this.yB - this.font_size);
+        this.ctx.fillText("Devil emoji", this.xB, this.yB - this.font_size);
     }
 
     /**
@@ -97,26 +97,26 @@ print("Circle A is smaller than circle B.", ${this.xA}, ${this.yA + this.square_
 
                 //check for correct CANVAS effects
                 let canvasIsCorrect = false;
-                let circleA = null;
-                let circleB = null;
+                let angel = null;
+                let devil = null;
 
-                //look for circles A and B
+                //look for the 2 emojis
                 for (let effect of effects) {
-                    if (effect instanceof EllipseEffect) {
+                    if (effect instanceof EmojiEffect) {
                         if (effect.x > this.xA && effect.x < this.xA + this.square_size && effect.y > this.yA && effect.y < this.yA + this.square_size) {
-                            circleA = effect;
+                            angel = effect;
                         } else if (effect.x > this.xB && effect.x < this.xB + this.square_size && effect.y > this.yB && effect.y < this.yB + this.square_size) {
-                            circleB = effect;
+                            devil = effect;
                         }
                     }
                 }
 
-                if (circleA != null && circleB != null) {
+                if (angel != null && devil != null) {
                     for (let effect of effects) {
                         if (effect instanceof StringEffect) {
                             let str = effect.str;
-                            if ((str === "Circle A is smaller than circle B." && circleA.w < circleB.w && circleA.h < circleB.h)
-                                || (str === "Circle A is bigger than circle B." && circleA.w > circleB.w && circleA.h > circleB.h)) {
+                            if ((str === "The angel is smaller than the devil." && angel.w < devil.w && angel.h < devil.h)
+                                || (str === "The angel is bigger than the devil." && angel.w > devil.w && angel.h > devil.h)) {
                                 canvasIsCorrect = true;
                                 break;
                             }

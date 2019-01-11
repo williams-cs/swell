@@ -719,6 +719,13 @@ export class EmojiEffect implements Effect<EmojiNode> {
     }
 
     /**
+     * Returns the name of this emoji
+     */
+    get name(): string {
+        return this._emoji.name.eval(this._context).val;
+    }
+
+    /**
      * Returns the ID of the emoji
      */
     getID(): number{

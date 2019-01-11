@@ -8,31 +8,48 @@ export class LessonThreeCpTwo extends Module {
     readonly _goal: any;
     readonly _constraint: string = 'none';
     readonly _instructions: string =
-        `<p> GOAL: Change the value of a around and observe what happens. </p>`;
+        `<p> GOAL: Change the value of a and observe what happens. </p>`;
 
     readonly _starterCode: string =
-        `a = 12;
-print(a, 118, 63);
-if(a < 10) {
-\tprint("a is less than 10", 103, 143);
+        `a = 150;
+print(emoji("skull", a, a), 25, 25);
+if(a < 100) {
+\tprint("The skull is smaller than the box.", 25, 220);
 }`;
 
     _latestInstrIndex: number = 2;
 
+    x: number = 10;
+    y: number = 10;
+    square_size: number = 100;
+    font_size: number = 20;
+
     constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) {
         super(ctx, editor);
-        let content = `Let's teach the computer to print the sentence <span class="inline-code">a is less than 10</span> ONLY when <span class="inline-code">a</span> is truly less than 10.`;
+        let content = `Let's teach the computer to print the sentence <span class="inline-code">The skull is smaller than the box</span> ONLY when the printed skull emoji is clearly not as big as the box.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = 'We will use something called an <span class="inline-code">if</span> statement. Observe the CODE above. All we added was an <span class="inline-code">if</span> statement that checks whether <span class="inline-code">a < 10</span>. If a is less than 10, the code inside the curly braces <span class="inline-code">{}</span> will be executed.';
+        content = `We will use something called an <span class="inline-code">if</span> statement. Observe the CODE above. All we added was an <span class="inline-code">if</span> statement that checks whether <span class="inline-code">a < 100</span>. If a is less than 100 - which is the box's width, the code inside the curly braces <span class="inline-code">{}</span> will run.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
-        content = `Let's investigate what this statement does. First, change the value of <span class="inline-code">a</span> to <span class="inline-code">8</span>. Observe what happens.`;
+        content = `Let's investigate what this statement does. First, change the value of <span class="inline-code">a</span> to <span class="inline-code">80</span>. Observe what happens.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = `Did you see the correct claim is printed on the CANVAS? Now let's change the value of <span class="inline-code">a</span> to, say, <span class="inline-code">25</span>.`;
+        content = `Did you see the correct claim is printed on the CANVAS? Now let's change the value of <span class="inline-code">a</span> to, say, <span class="inline-code">140</span>.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
-        content = 'The claim about <span class="inline-code">a</span> disappears! Finally, change the value of <span class="inline-code">a</span> to <span class="inline-code">0</span>.';
+        content = 'The claim about <span class="inline-code">a</span> disappears! Finally, change the value of <span class="inline-code">a</span> to <span class="inline-code">20</span>.';
         this._instrBoxes.push(new Instruction('canvas-container', content, "70%", "10%"));
         content = 'The claim appears again! The <span class="inline-code">if</span> statement makes the computer constantly check the value of <span class="inline-code">a</span>, and only print the claim when the condition inside the brackets <span class="inline-code">()</span> is satisfied!';
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
+    }
+
+    drawGuides(): void {
+        this.ctx.beginPath();
+        this.ctx.rect(this.x, this.y, this.square_size, this.square_size);
+        this.ctx.strokeStyle = '#6C6C6C';
+        this.ctx.stroke();
+
+        this.ctx.font = this.font_size + "px Courier New";
+        this.ctx.fillStyle = '#6C6C6C';
+        this.ctx.fillText("Box with", this.x, this.y + this.square_size + this.font_size);
+        this.ctx.fillText("width 100", this.x, this.y + this.square_size + 2 * this.font_size);
     }
 
     /**
@@ -51,13 +68,13 @@ if(a < 10) {
         switch (this._latestInstrIndex) {
             case 2:
                 //check for correct CODE
-                regex = /a\s*=\s*8\s*/;
+                regex = /a\s*=\s*80\s*/;
                 match = code.match(regex);
                 codeIsCorrect = match != null && match.length > 0;
 
                 //check for correct CANVAS effects
                 for (let effect of effects) {
-                    if (effect instanceof StringEffect && effect.str === "a is less than 10") {
+                    if (effect instanceof StringEffect && effect.str === "The skull is smaller than the box.") {
                         canvasIsCorrect = true;
                         break;
                     }
@@ -71,13 +88,13 @@ if(a < 10) {
 
             case 3:
                 //check for correct CODE
-                regex = /a\s*=\s*25\s*/;
+                regex = /a\s*=\s*140\s*/;
                 match = code.match(regex);
                 codeIsCorrect = match != null && match.length > 0;
 
                 //check for correct CANVAS effects
                 for (let effect of effects) {
-                    if (effect instanceof StringEffect && effect.str === "a is less than 10") {
+                    if (effect instanceof StringEffect && effect.str === "The skull is smaller than the box.") {
                         canvasIsCorrect = true;
                         break;
                     }
@@ -91,13 +108,13 @@ if(a < 10) {
 
             case 4:
                 //check for correct CODE
-                regex = /a\s*=\s*0\s*/;
+                regex = /a\s*=\s*20\s*/;
                 match = code.match(regex);
                 codeIsCorrect = match != null && match.length > 0;
 
                 //check for correct CANVAS effects
                 for (let effect of effects) {
-                    if (effect instanceof StringEffect && effect.str === "a is less than 10") {
+                    if (effect instanceof StringEffect && effect.str === "The skull is smaller than the box.") {
                         canvasIsCorrect = true;
                         break;
                     }

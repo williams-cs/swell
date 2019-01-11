@@ -10,7 +10,7 @@ export class LessonOneCpThree extends Module {
     readonly _instructions: string =
         `<p> GOAL: Move the word around the CANVAS solely by changing your CODE. </p>`;
 
-    readonly _starterCode: string = `print("Hello", 100, 100)`;
+    readonly _starterCode: string = `print("happy", 100, 100)`;
 
     _latestInstrIndex: number = 0;
 
@@ -22,11 +22,11 @@ export class LessonOneCpThree extends Module {
     constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) {
         super(ctx, editor);
         this.x = ctx.canvas.width - this.square_size - this.y;
-        let content = `Moving things on the CANVAS changes the CODE. What if we change the CODE? In the <span class="inline-code">print</span> statement above, change the first <span class="inline-code">100</span> to <span class="inline-code">200</span>. Observe the CANVAS.`;
+        let content = `Now, we can also use the CODE to tell the computer where to print on the CANVAS. In the <span class="inline-code">print</span> statement above, change the first <span class="inline-code">100</span> to <span class="inline-code">200</span>. Observe what happens.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "30%", "10%"));
-        content = "Changing those numbers in the CODE moves the word on CANVAS! Now, try move this word inside the top-right box by changing your CODE alone.";
+        content = "Changing those numbers in the CODE moves the word on CANVAS! Now, can you change the number around to put the word inside the box provided?";
         this._instrBoxes.push(new Instruction('canvas-container', content, "70%", "10%"));
-        content = "Yay! You've learned how to tell the computer to write for you!";
+        content = `Good job! You just learned how to use a <span class="inline-code">print</span> statement!`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
     }
 
@@ -38,8 +38,8 @@ export class LessonOneCpThree extends Module {
 
         this.ctx.font = this.font_size + "px Courier New";
         this.ctx.fillStyle = '#6C6C6C';
-        this.ctx.fillText("Put word", this.x, this.y - 2 * this.font_size);
-        this.ctx.fillText("in here", this.x, this.y - this.font_size);
+        this.ctx.fillText("Put word", this.x, this.y + this.square_size + this.font_size);
+        this.ctx.fillText("in here", this.x, this.y + this.square_size + 2 * this.font_size);
     }
 
     /**
