@@ -25,7 +25,7 @@ print(b, 100, 100);`;
         this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
         content = `Finally, write <span class="inline-code">print(c, 300, 100);</span> underneath the existing <span class="inline-code">print</span> statement.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = 'Awesome, You are getting good at using variables! What you just did is to draw 2 pirate emojis, both named <span class="inline-code">c</span>!';
+        content = 'Awesome, you are getting good at using variables! You just drew 2 pirate emojis, both named <span class="inline-code">c</span>!';
         this._instrBoxes.push(new Instruction('code-editor', content, "70%", "10%"));
     }
 
