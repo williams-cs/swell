@@ -10,11 +10,12 @@ import CodeMirror from 'codemirror';
 
 (function() {
     let editor: CodeMirror.Editor = ((e: any) => { return e.CodeMirror })(document.getElementById("input"));
+    let editorDoc: CodeMirror.Doc = editor.getDoc();
     let editorWrapper = editor.getWrapperElement();
     let canvas = document.querySelector("canvas");
     let popUp = document.getElementById("popup");
     let ctx = canvas.getContext("2d");
-    let lastCursorPos: any = editor.getDoc().getCursor();
+    let lastCursorPos: any = editorDoc.getCursor();
     let lastProgram: string = ""; // Used for comparing and highlighting diffs
 
     let effects: Effect<any>[] = [];
@@ -37,8 +38,6 @@ import CodeMirror from 'codemirror';
     let highlightTimer: any = null;
     let parseTimer: any = null;
 
-    let errorMarker: Option<CodeMirror.TextMarker> = None;
-
     /* Logging, parsing & rendering */
 
     function printLog() {
@@ -53,8 +52,8 @@ import CodeMirror from 'codemirror';
     }
 
     function parse() {
-        // clear the canvas
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(0, 0, canvas.width, canvas.height); // clear the canvas
+        clearEditorMarkers();
 
         // get program
         let inputText = editor.getValue();
@@ -66,14 +65,8 @@ import CodeMirror from 'codemirror';
         effects.length = 0;
 
         // check for parser outcome
-        switch(outcome.tag) {
-            case "success":
-                // clear error marker, if any
-                if(errorMarker.isDefined()) {
-                    errorMarker.get().clear();
-                    errorMarker = None;
-                }
-
+        switch (outcome.tag) {
+            case "success":;
                 // get AST
                 ast = outcome.result;
 
@@ -84,21 +77,17 @@ import CodeMirror from 'codemirror';
                 // evaluate (this is where objects appear on screen)
                 ast.eval(context);
                 break;
+
             case "failure":
                 ast = undefined;
                 let startpos = outcome.inputstream.furthestFailure;
-                let endpos = startpos + 3 < outcome.inputstream.length() ? startpos + 3 : outcome.inputstream.length();
-
+                let endpos = (startpos + 3) < outcome.inputstream.length()
+                    ? (startpos + 3) : outcome.inputstream.length();
                 // mark region
-                let doc = editor.getDoc();
-                Some(doc.markText(
-                    doc.posFromIndex(startpos),
-                    doc.posFromIndex(endpos),
-                    {
-                        className: "err",
-                        inclusiveLeft: true,
-                        inclusiveRight: true
-                    })
+                editorDoc.markText(
+                    editorDoc.posFromIndex(startpos),
+                    editorDoc.posFromIndex(endpos),
+                    { className: "err" }
                 );
                 break;
         }
@@ -190,7 +179,7 @@ import CodeMirror from 'codemirror';
             if (result.added || result.removed) {
                 // Extends the highlighted section all the way to the left
                 let startHighlightChar: number = curChar;
-                let firstLine: string = editor.getDoc().getLine(curLine);
+                let firstLine: string = editorDoc.getLine(curLine);
                 while (startHighlightChar >= 1) {
                     // Check if alphanumeric
                     if (!/^[a-z0-9]+$/i.test(firstLine[startHighlightChar - 1])) {
@@ -201,7 +190,7 @@ import CodeMirror from 'codemirror';
 
                 // Extends to the right
                 let endHightLightChar: number = endChar;
-                let lastLine: string = editor.getDoc().getLine(endLine);
+                let lastLine: string = editorDoc.getLine(endLine);
                 while (endHightLightChar < lastLine.length) {
                     if (!/^[a-z0-9]+$/i.test(lastLine[endHightLightChar])) {
                         break;
@@ -209,7 +198,7 @@ import CodeMirror from 'codemirror';
                     endHightLightChar++;
                 }
 
-                editor.getDoc().markText( // Highlight text
+                editorDoc.markText( // Highlight text
                     { line: curLine, ch: startHighlightChar }, // Starting point
                     { line: endLine, ch: endHightLightChar }, // Inclusive line, exclusive char
                     { className: "highlighted-text" }
@@ -224,12 +213,8 @@ import CodeMirror from 'codemirror';
             clearTimeout(highlightTimer);
         }
         highlightTimer = setTimeout(function() {
-            editor.getDoc().getAllMarks().forEach((mark: any) => {
-                mark.clear();
-            });
-
-            // user stopped doing DM; log now
-            printLog();
+            clearEditorMarkers(); // Clear markers
+            printLog(); // user stopped doing DM; log now
         }, 500);
 
         // Update last program if necessary
@@ -238,13 +223,22 @@ import CodeMirror from 'codemirror';
         }
     }
 
+    /**
+     * Clear all text markers
+     **/
+    function clearEditorMarkers() {
+        editorDoc.getAllMarks().forEach((mark: CodeMirror.TextMarker) => {
+            mark.clear();
+        });
+    }
+
     /* Event listeners */
     editor.on("keyup", function() {
         // Check if editor has been modified, only parses if modified
-        if (editor.getDoc().isClean()) {
+        if (editorDoc.isClean()) {
             return;
         } else {
-            editor.getDoc().markClean();
+            editorDoc.markClean();
         }
 
         if (parseTimer != null) {
@@ -254,7 +248,7 @@ import CodeMirror from 'codemirror';
     });
 
     editor.on("blur", function() {
-        lastCursorPos = editor.getDoc().getCursor();
+        lastCursorPos = editorDoc.getCursor();
     });
 
     // Window event
@@ -335,14 +329,14 @@ import CodeMirror from 'codemirror';
                 return;
         }
         // Insert at cursor position & highlight changes
-        editor.getDoc().replaceRange(newNode, lastCursorPos);
+        editorDoc.replaceRange(newNode, lastCursorPos);
         highlightDiff(editor.getValue(), true);
 
         // Update cursor & refocus editor
         lastCursorPos.line++;
         lastCursorPos.ch = 0;
         editor.focus();
-        editor.getDoc().setCursor(lastCursorPos);
+        editorDoc.setCursor(lastCursorPos);
 
         // Parse
         parse();
@@ -366,16 +360,16 @@ import CodeMirror from 'codemirror';
     * The first map is for non-dm case, the second for the dm case.
     */
     let sidebarPlans = [
-      [
-          ['l1c1','l1c2','l1c3','l1c4'],
-          ['l2c1','l2c2','l2c3','l2c4','l2c5','l2c6','l2c7'],
-          ['l3c1','l3c2','l3c3','l3c4','l3c5','l3c6']
-      ],
-      [
-          ['l1c1','l1c2','l1c3','l1c4'],
-          ['l2c1','l2c2','l2c3','l2c4','l2c5','l2c6','l2c7'],
-          ['l3c1','l3c2','l3c3','l3c4','l3c5','l3c6']
-      ]
+        [
+            ['l1c1', 'l1c2', 'l1c3', 'l1c4'],
+            ['l2c1', 'l2c2', 'l2c3', 'l2c4', 'l2c5', 'l2c6', 'l2c7'],
+            ['l3c1', 'l3c2', 'l3c3', 'l3c4', 'l3c5', 'l3c6']
+        ],
+        [
+            ['l1c1', 'l1c2', 'l1c3', 'l1c4'],
+            ['l2c1', 'l2c2', 'l2c3', 'l2c4', 'l2c5', 'l2c6', 'l2c7'],
+            ['l3c1', 'l3c2', 'l3c3', 'l3c4', 'l3c5', 'l3c6']
+        ]
     ]
 
     //retrieve survey choice for dm or non-dm
