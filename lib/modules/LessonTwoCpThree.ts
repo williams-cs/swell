@@ -18,15 +18,15 @@ export class LessonTwoCpThree extends Module {
         super(ctx, editor);
         let content = "What if we want to draw more than 1 emoji?";
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = `First copy the <span class="inline-code">print</span> statement on the first line and paste it on the second line above.`;
+        content = `First copy the <span class="inline-code">print</span> statement on the first line and paste it into the second line in the CODE above.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
-        content = `Hm, that should have created a second emoji right? Let's try to fix this by changing the <span class="inline-code">120</span> above to <span class="inline-code">300</span>.`;
+        content = `Hmm... that should have created a second emoji, right? What happens if we change the number <span class="inline-code">120</span> in the second line of CODE to <span class="inline-code">300</span>? Give it a try.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = "Yep! One emoji was on top of the other this entire time! In the future, be mindful of this.";
+        content = "Hey! An emoji was hiding behind the other emoji! In the future, watch out.  Any shape can hide behind any other shape.";
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = "Now let's have a quick challenge: make one of the emoji a happy face, and the other one a sad face. Do you remember how to do that?";
+        content = "Now let's have a quick challenge: make one of the emojis a happy face, and the other one a sad face. Do you remember how to do that?";
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = `There's no limit to how many emojis the computer can draw, so you can write 1000 <span class="inline-code">print</span> statements, and the computer will draw 1000 emojis for you!`;
+        content = `There's no limit to how many emojis the computer can draw. You could <span class="inline-code">print</span> 1,000 emojis if you wanted!`;
         this._instrBoxes.push(new Instruction('canvas-container', content, "70%", "10%"));
     }
 

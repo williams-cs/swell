@@ -27,7 +27,7 @@ export class LessonTwoCpTwo extends Module {
         this._instrBoxes.push(new Instruction('canvas-container', content, "80%", "10%"));
         content = "Now drag one of the 8 tips around the emoji to resize it. Try to fit the emoji entirely inside the given box. Watch what happens with the CODE.";
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = `Yep! Those numbers inside <span class="inline-code">emoji(_,_,_)</span> change the size of the emoji!`;
+        content = `Yep! Those numbers change the size of the emoji!`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
     }
 
