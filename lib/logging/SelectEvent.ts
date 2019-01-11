@@ -13,7 +13,7 @@ export class SelectEvent extends LogEvent<any>{
         this.tag = "select";
         this._toPrint = this.assembleStrings();
     }
-    
+
     /**
      * Assembles and returns a string representation of all the objects selected
      */
@@ -39,4 +39,6 @@ export class SelectEvent extends LogEvent<any>{
     toJSON(): string {
         return "{ on: '" + this.logItem(this._toPrint) + "' }";
     }
+
+    logRemotely(uid: string, data: string, ip: string, checkpoint: string, parses: boolean): void{};
 }

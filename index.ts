@@ -77,6 +77,7 @@ export {PaintEvent} from './lib/logging/PaintEvent';
 export {ResizeEvent} from './lib/logging/ResizeEvent';
 export {SelectEvent} from './lib/logging/SelectEvent';
 export {IDEvent} from './lib/logging/IDEvent';
+export {CodeEvent} from './lib/logging/CodeEvent';
 
 /* MODULES */
 export {Module} from './lib/modules/Module'

@@ -3,7 +3,7 @@ import { Effect } from '../effects/Effect';
 
 export class DragEvent extends LogEvent<any>{
     private _toPrint: string;
-    
+
     /**
      * Constructor for a Drag Event, which logs when an object on the canvas is dragged
      * @param toLog The effect to log
@@ -13,7 +13,7 @@ export class DragEvent extends LogEvent<any>{
         this.tag = "drag";
         this._toPrint = this.assembleString();
     }
-    
+
     /**
      * Assembles a log string using the Effect's toDragString() method
      */
@@ -38,4 +38,9 @@ export class DragEvent extends LogEvent<any>{
     toJSON(): string {
         return "{ on: '" + (this.toLog as Effect<any>).toDragString() + "' }";
     }
+
+    logRemotely(uid: string, data: string, ip: string, checkpoint: string, parses: boolean): void {
+        LogEvent.logToRemoteServer(this.eventType(), uid, data, ip, checkpoint, parses);
+    }
+
 }

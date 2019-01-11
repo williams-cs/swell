@@ -26,15 +26,17 @@ export class RepeatNode implements Expression<any>{
      * @param context The current program context
      */
     eval(context: Scope){
+        //create the block scope for the loop body
         let childCtx = new Scope(context, context.effects, context.eventLog);
         childCtx.canvas = Some(context.canvas.get());
-        let res = this._n.eval(childCtx);
-        if(!(res instanceof NumberNode)){
+
+        let n = this._n.eval(childCtx);
+        if(!(n instanceof NumberNode)){
             throw new Error("The parameter for repeat() must be a number expression.");
         }
 
         let ret;
-        for(var i = 0; i < res.val; i++) {
+        for(var i = 0; i < n.val; i++) {
           ret = this._body.eval(childCtx);
         }
         return ret;

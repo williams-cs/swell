@@ -1,7 +1,7 @@
 import {LogEvent} from './LogEvent';
 
 export class PaintEvent extends LogEvent<any>{
-    
+
     /**
      * Constructor for a Paint Event, used when an object is painted on the canvas
      * @param toLog The string representation of the object to be logged
@@ -12,7 +12,7 @@ export class PaintEvent extends LogEvent<any>{
         super(toLog,x1,y1);
         this.tag = "paint";
     }
-    
+
     /**
      * Assembles and returns message of form "Painted obj at x, y" with date and time attached
      */
@@ -28,4 +28,7 @@ export class PaintEvent extends LogEvent<any>{
     toJSON(): string {
         return "{ on: '" + this.toLog + "', x: '" + this.x1 + "', y: '" + this.y1 + "' }";
     }
+
+    logRemotely(uid: string, data: string, ip: string, checkpoint: string, parses: boolean): void{};
+
 }
