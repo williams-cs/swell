@@ -26,13 +26,13 @@ if(b < 75) {
 
     constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) {
         super(ctx, editor);
-        let content = `<span class="inline-code">if</span> statements allow you to run a block of code inside the curly braces <span class="inline-code">{}</span> ONLY when the condition inside the brackets <span class="inline-code">if()</span> is met.`;
+        let content = `<span class="inline-code">if</span> statements allow you to run a block of code inside the curly braces <span class="inline-code">{}</span> ONLY when the condition inside the brackets <span class="inline-code">if ()</span> is <span class="red-text">true</span>.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = `Let's have a quick challenge: observe the CODE above. Change the code inside the brackets <span class="inline-code">if()</span> so that the claim <span class="inline-code">The pirate is bigger than the box</span> is only printed when the printed emoji is actually bigger than the box.`;
+        content = `Let's try a challenge: change the CODE inside the brackets <span class="inline-code">if ()</span> so that the claim <span class="inline-code">The pirate is bigger than the box</span> is only printed when the printed emoji is actually bigger than the box.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
-        content = `Your CODE seems correct! Now change the value of <span class="inline-code">b</span> to <span class="inline-code">200</span> to test that it runs correctly.`;
+        content = `Your CODE looks correct! Now change the value of <span class="inline-code">b</span> from <span class="inline-code">50</span> to <span class="inline-code">200</span> to test that it runs correctly.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = 'The claim is printed with the correct value of <span class="inline-code">b</span>! Good job!';
+        content = 'The claim is printed when <span class="inline-code">b</span> is bigger than the box! Good job!';
         this._instrBoxes.push(new Instruction('canvas-container', content, "80%", "10%"));
     }
 
