@@ -11,20 +11,36 @@ export class LessonTwoCpSeven extends Module {
     readonly _instructions: string =
         `<p> CHALLENGE: Create an emoji and print out its size. </p>`;
 
-    readonly _starterCode =
-        `a = 50;
-print(emoji("mustache", 100, 100), 125, 175);`;
-
     _latestInstrIndex: number = 1;
 
-    x: number = 10;
+    dm: number;
+
+    x: number;
     y: number;
     square_size: number = 250;
     font_size = 20;
 
+    //retrieve survey choice for dm or non-dm
+
+
     constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) {
         super(ctx, editor);
-        this.y = ctx.canvas.height - this.square_size - this.x;
+        this.x = ctx.canvas.width - this.square_size - 10;
+        this.y = ctx.canvas.height - this.square_size - 10;
+        //let square_mid = Math.round(this.square_size / 2);
+        //let e_x = this.x + 10;
+        //let e_y = this.y + 10;
+
+        this._starterCode =
+            `a = 50;
+print(emoji("mustache", 100, 100), ${this.x + 10}, ${this.y + 10});`;
+
+        this.dm = 1;
+        let val = localStorage.getItem('dm');
+        if (val != null) {
+            this.dm = parseInt(val);
+        }
+
         let content = `Let's learn one final thing about variables. Observe the code above: we connect the variable <span class="inline-code">a</span> to the number <span class="inline-code">50</span>, and we also have a <span class="inline-code">print</span> statement to print a mustache emoji.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
         content = `Replace the two numbers <span class="inline-code">100</span> inside the <span class="inline-code">print</span> statement with the letter <span class="inline-code">a</span>. Observe what happens.`;
@@ -33,7 +49,11 @@ print(emoji("mustache", 100, 100), 125, 175);`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
         content = `Let's add one last bit of CODE: write something to print the value of <span class="inline-code">a</span> on the CANVAS.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
-        content = "That's correct! Finally, click on the emoji on the CANVAS, and make it bigger than the box provided. Observe what happened to the printed number.";
+        if (this.dm == 1) {
+            content = "That's correct! Finally, click on the emoji on the CANVAS, and make it bigger than the box provided. Observe what happened to the printed number.";
+        } else {
+            content = `That's correct! Finally, change the value of <span class="inline-code">a</span>, until the emoji is bigger than the box provided. Observe what happened to the printed number.`;
+        }
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
         content = "Did you see the printed number change? You have successfully connected 2 elements on the CANVAS together - an emoji and a number - by a variable! Remember this lesson about variables in the future when you need to link different things on CANVAS together!";
         this._instrBoxes.push(new Instruction('code-editor', content, "70%", "10%"));
@@ -47,8 +67,8 @@ print(emoji("mustache", 100, 100), 125, 175);`;
 
         this.ctx.font = this.font_size + "px Courier New";
         this.ctx.fillStyle = '#6C6C6C';
-        this.ctx.fillText("Make emoji", this.x, this.y + this.font_size);
-        this.ctx.fillText("bigger than this box", this.x, this.y + 2 * this.font_size);
+        this.ctx.fillText("Make emoji", this.x, this.y - 2 * this.font_size);
+        this.ctx.fillText("bigger than this box", this.x, this.y - this.font_size);
     }
 
     /**

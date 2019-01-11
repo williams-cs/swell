@@ -13,7 +13,7 @@ export class LessonTwoCpFive extends Module {
     readonly _starterCode =
     `a = emoji("angry", 100, 100);
 b = emoji("cool", 100, 100);
-print(a, 100, 100);`;
+print(b, 100, 100);`;
 
     _latestInstrIndex: number = 0;
 
@@ -41,8 +41,10 @@ print(a, 100, 100);`;
         let code: string = this.editor.getValue();
         let assignment: RegExp = /c\s*=\s*emoji\s*\(\s*"pirate"\s*,\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\)\s*/g;
         let matchAssign: string[];
-        let print: RegExp = /print\s*\(\s*c\s*,\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\)/g;
+        let print: RegExp = /print\s*\(\s*c\s*,\s*100\s*,\s*100\s*\)/g;
+        let print2: RegExp = /print\s*\(\s*c\s*,\s*300\s*,\s*100\s*\)/g;
         let matchPrint: string[];
+        let matchPrint2: string[];
 
         switch (this._latestInstrIndex) {
             case 0:
@@ -77,7 +79,8 @@ print(a, 100, 100);`;
                 //check for correct CODE
                 matchAssign = code.match(assignment);
                 matchPrint = code.match(print);
-                codeIsCorrect = matchAssign != null && matchAssign.length > 0 && matchPrint != null && matchPrint.length >= 2;
+                matchPrint2 = code.match(print2);
+                codeIsCorrect = matchAssign != null && matchAssign.length > 0 && matchPrint != null && matchPrint.length >= 1 && matchPrint2 != null && matchPrint2.length >= 1;
 
                 //check for correct CANVAS effects
                 for (let effect of effects) {

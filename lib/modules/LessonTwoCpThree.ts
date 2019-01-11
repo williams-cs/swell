@@ -10,7 +10,7 @@ export class LessonTwoCpThree extends Module {
     readonly _instructions: string =
         `<p> GOAL: Draw 2 emojis on the CANVAS. </p>`;
 
-    readonly _starterCode: string = `print(emoji("angry", 100, 100), 120, 150);\n`;
+    readonly _starterCode: string = `print(emoji("wink", 100, 100), 120, 150);\n`;
 
     _latestInstrIndex: number = 1;
 
