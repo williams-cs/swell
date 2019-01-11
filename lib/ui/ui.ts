@@ -360,7 +360,6 @@ import CodeMirror from 'codemirror';
     * The first map is for non-dm case, the second for the dm case.
     */
     let sidebarPlans = [
-<<<<<<< HEAD
       [
           ['l1c1','l1c3','l1c4'],
           ['l2c1','l2c3','l2c4','l2c5','l2c7'],
@@ -371,18 +370,6 @@ import CodeMirror from 'codemirror';
           ['l2c1','l2c2','l2c3','l2c4','l2c5','l2c6','l2c7'],
           ['l3c1','l3c2','l3c3','l3c4','l3c5','l3c6']
       ]
-=======
-        [
-            ['l1c1', 'l1c2', 'l1c3', 'l1c4'],
-            ['l2c1', 'l2c2', 'l2c3', 'l2c4', 'l2c5', 'l2c6', 'l2c7'],
-            ['l3c1', 'l3c2', 'l3c3', 'l3c4', 'l3c5', 'l3c6']
-        ],
-        [
-            ['l1c1', 'l1c2', 'l1c3', 'l1c4'],
-            ['l2c1', 'l2c2', 'l2c3', 'l2c4', 'l2c5', 'l2c6', 'l2c7'],
-            ['l3c1', 'l3c2', 'l3c3', 'l3c4', 'l3c5', 'l3c6']
-        ]
->>>>>>> master
     ]
 
     //retrieve survey choice for dm or non-dm
