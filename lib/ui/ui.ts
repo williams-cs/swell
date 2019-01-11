@@ -37,6 +37,8 @@ import CodeMirror from 'codemirror';
     let highlightTimer: any = null;
     let parseTimer: any = null;
 
+    let errorMarker: Option<CodeMirror.TextMarker> = None;
+
     /* Logging, parsing & rendering */
 
     function printLog() {
@@ -61,18 +63,43 @@ import CodeMirror from 'codemirror';
         let outcome = Parser.parseWithOutcome(inputText);
 
         // clear effects array
-        effects.length = 0; // slightly sketch clearing method to maintain reference to original array
+        effects.length = 0;
 
         // check for parser outcome
         switch(outcome.tag) {
             case "success":
+                // clear error marker, if any
+                if(errorMarker.isDefined()) {
+                    errorMarker.get().clear();
+                    errorMarker = None;
+                }
+
+                // get AST
                 ast = outcome.result;
+
+                // init context
                 context = new Scope(null, effects, masterLog);
                 context.canvas = Some(canvas);
-                ast.eval(context); //this is where we draw the objects to the screen
+
+                // evaluate (this is where objects appear on screen)
+                ast.eval(context);
                 break;
             case "failure":
                 ast = undefined;
+                let startpos = outcome.inputstream.furthestFailure;
+                let endpos = startpos + 3 < outcome.inputstream.length() ? startpos + 3 : outcome.inputstream.length();
+
+                // mark region
+                let doc = editor.getDoc();
+                Some(doc.markText(
+                    doc.posFromIndex(startpos),
+                    doc.posFromIndex(endpos),
+                    {
+                        className: "err",
+                        inclusiveLeft: true,
+                        inclusiveRight: true
+                    })
+                );
                 break;
         }
 
