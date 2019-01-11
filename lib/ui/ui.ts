@@ -37,6 +37,12 @@ import CodeMirror from 'codemirror';
     let globalID: number = 1;
     let highlightTimer: any = null;
     let parseTimer: any = null;
+    let logTimer: any = null;
+
+    let uid: string = localStorage.getItem("swell_uuid");
+    if (uid == null) {
+        uid = "someUUID";
+    }
 
     /* Logging, parsing & rendering */
 
@@ -47,8 +53,13 @@ import CodeMirror from 'codemirror';
             // this is just sample usage;
             // you should replace parameters with real values
             // this might not even be the right place to put this
-            LogEvent.logToRemoteServer(elem.eventType(), "someUUID", elem.toJSON());
+            LogEvent.logToRemoteServer(elem.eventType(), uid, elem.toJSON());
         }
+        masterLog = [];
+    }
+
+    function logProgram() {
+        LogEvent.logToRemoteServer("Program", uid, editor.getValue());
     }
 
     function parse() {
@@ -215,6 +226,7 @@ import CodeMirror from 'codemirror';
         highlightTimer = setTimeout(function() {
             clearEditorMarkers(); // Clear markers
             printLog(); // user stopped doing DM; log now
+            LogEvent.logToRemoteServer("Program", uid, editor.getValue());
         }, 500);
 
         // Update last program if necessary
@@ -245,6 +257,11 @@ import CodeMirror from 'codemirror';
             clearTimeout(parseTimer);
         }
         parseTimer = setTimeout(parse, 200);
+
+        if (logTimer != null) {
+            clearTimeout(logTimer);
+        }
+        logTimer = setTimeout(logProgram, 5000);
     });
 
     editor.on("blur", function() {
