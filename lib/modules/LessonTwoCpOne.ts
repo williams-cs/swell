@@ -1,30 +1,28 @@
 import { Module } from "./Module";
 import { Instruction } from "./Instruction";
 import { Effect } from "../effects/Effect";
-import { EllipseEffect } from "../effects/EllipseEffect";
-import { RectangleEffect } from "../effects/RectangleEffect";
-import { LineEffect } from "../effects/LineEffect";
+import { EmojiEffect } from "../effects/EmojiEffect";
 
 export class LessonTwoCpOne extends Module {
     readonly _name: string = "l2c1";
     readonly _goal: any;
     readonly _constraint: string = 'none';
     readonly _instructions: string =
-        `<p> GOAL: replace "moo" in the print statement to draw different shapes. </p>`;
+        `<p> GOAL: replace "happy" in the print statement to draw emojis! </p>`;
 
-    readonly _starterCode: string = `print("moo", 100, 100)`;
+    readonly _starterCode: string = `print("happy", 100, 100)`;
 
     _latestInstrIndex: number = 0;
 
     constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) {
         super(ctx, editor);
-        let content = `Now let's learn to print shapes on the CANVAS! In the <span class="inline-code">print</span> statement above, replace <span class="inline-code">moo</span> with <span class="inline-code">ellipse(100,100)</span>. Observe what happened on the CANVAS.`;
+        let content = `Now let's learn to print emojis! In the <span class="inline-code">print</span> statement above, replace <span class="inline-code">"happy"</span> with <span class="inline-code">emoji("happy", 100, 100)</span>. Don't worry, we will shortly learn what this means.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "30%", "10%"));
-        content = `Yep! You told the computer to draw a circle on the CANVAS. Now in the <span class="inline-code">print</span> statement, replace the word <span class="inline-code">ellipse</span> with <span class="inline-code">rect</span>.`;
+        content = `Yay! You told the computer to draw your first emoji! The computer knows how to draw so many emojis! In the <span class="inline-code">print</span> statement above, replace the word <span class="inline-code">"happy"</span> with <span class="inline-code">"sad"</span>, and see what happens.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "30%", "10%"));
-        content = `Finally, replace the word <span class="inline-code">rect</span> with <span class="inline-code">line</span>.`;
+        content = `Finally, replace the word <span class="inline-code">"sad"</span> with <span class="inline-code">"angry"</span>.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "30%", "10%"));
-        content = `By putting different things inside the <span class="inline-code">print</span> statement, you can tell the computer to draw different things on the CANVAS. Remember this lesson!`;
+        content = `By putting different words inside the brackets <span class="inline-code">emoji()</span>, you can tell the computer to draw different emojis. Remember this lesson!`;
         this._instrBoxes.push(new Instruction('canvas-container', content, "70%", "10%"));
     }
 
@@ -37,21 +35,21 @@ export class LessonTwoCpOne extends Module {
         let code = this.editor.getValue();
         switch (this._latestInstrIndex) {
             case 0:
-                if (this.checkCodeAndCanvasEffect(code, "ellipse", effects)) {
+                if (this.checkCodeAndCanvasEffect(code, "happy", effects)) {
                     this._latestInstrIndex++;
                     this.renderLatestInstruction(document);
                 }
                 return false;
 
             case 1:
-                if (this.checkCodeAndCanvasEffect(code, "rect", effects)) {
+                if (this.checkCodeAndCanvasEffect(code, "sad", effects)) {
                     this._latestInstrIndex++;
                     this.renderLatestInstruction(document);
                 }
                 return false;
 
             case 2:
-                if (this.checkCodeAndCanvasEffect(code, "line", effects)) {
+                if (this.checkCodeAndCanvasEffect(code, "angry", effects)) {
                     this._latestInstrIndex++;
                     this.renderLatestInstruction(document);
                 }
@@ -65,40 +63,17 @@ export class LessonTwoCpOne extends Module {
     private checkCodeAndCanvasEffect(code: string, f: string, effects: Effect<any>[]): boolean {
         //check for correct CODE
         let codeIsCorrect = false;
-        let regex: RegExp = new RegExp('print\\s*\\(\\s*' + f + '\\s*\\(\\s*[1-9][0-9]*\\s*,\\s*[1-9][0-9]*\\s*\\)\\s*,\\s*[1-9][0-9]*\\s*,\\s*[1-9][0-9]*\\s*\\)');
+        let regex: RegExp = new RegExp('print\\s*\\(\\s*emoji\\s*\\(\\s*"'+ f + '"\\s*,\\s*[1-9][0-9]*\\s*,\\s*[1-9][0-9]*\\s*\\)\\s*,\\s*[1-9][0-9]*\\s*,\\s*[1-9][0-9]*\\s*\\)');
         let match = code.match(regex);
         codeIsCorrect = match != null && match.length > 0;
 
         //check for correct CANVAS effects
         let canvasIsCorrect = false;
-        switch (f) {
-            case "ellipse":
-                for (let effect of effects) {
-                    if (effect instanceof EllipseEffect) {
-                        canvasIsCorrect = true;
-                        break;
-                    }
-                }
+        for (let effect of effects) {
+            if (effect instanceof EmojiEffect && effect.name === f) {
+                canvasIsCorrect = true;
                 break;
-
-            case "rect":
-                for (let effect of effects) {
-                    if (effect instanceof RectangleEffect) {
-                        canvasIsCorrect = true;
-                        break;
-                    }
-                }
-                break;
-
-            case "line":
-                for (let effect of effects) {
-                    if (effect instanceof LineEffect) {
-                        canvasIsCorrect = true;
-                        break;
-                    }
-                }
-                break;
-
+            }
         }
 
         if (codeIsCorrect && canvasIsCorrect) {

@@ -10,7 +10,7 @@ export class LessonOneCpTwo extends Module {
     readonly _instructions: string =
         `<p> GOAL: Move the words you just created to explore how it affects your code. </p>`;
 
-    readonly _starterCode: string = `print("Hello", 100, 100)`;
+    readonly _starterCode: string = `print("happy", 100, 100)`;
 
     _latestInstrIndex: number = 1;
 

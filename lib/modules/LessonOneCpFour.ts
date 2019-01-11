@@ -8,9 +8,11 @@ export class LessonOneCpFour extends Module {
     readonly _goal: any;
     readonly _constraint: string = 'canvas';
     readonly _instructions: string =
-        `<p> CHALLENGE: Print the word "moo" on the CANVAS, and put it inside the box at the center of the CANVAS. </p>`;
+        `<p> GOAL: Print the word "cool" on the CANVAS, and put it inside the box at the center of the CANVAS. </p>`;
 
-    _latestInstrIndex: number = 3;
+    readonly _starterCode: string = `print("happy", 100, 100)`;
+
+    _latestInstrIndex: number = 1;
 
     x: number;
     y: number;
@@ -23,11 +25,7 @@ export class LessonOneCpFour extends Module {
         this.y = Math.round((ctx.canvas.height - this.square_size) / 2);
         let content = "In real life, computer scientists often can only change their CODE to affect the CANVAS, instead of interacting with the CANVAS directly.";
         this._instrBoxes.push(new Instruction('code-editor', content, "30%", "10%"));
-        content = "Anyone, including you, is cut out to be a computer scientist! Let's have a challenge.";
-        this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = "The CANVAS is temporarily frozen. You can no longer interact with objects drawn on it.";
-        this._instrBoxes.push(new Instruction('code-editor', content, "80%", "10%"));
-        content = "Can you figure out how to write CODE to print the word 'moo' inside the box at the center of the CANVAS?";
+        content = "Let's have a challenge. Can you figure out how to write CODE to print the word 'cool' inside the box at the center of the CANVAS?";
         this._instrBoxes.push(new Instruction('code-editor', content, "80%", "10%"));
         content = "Congratulations! You finished your first coding challenge!";
         this._instrBoxes.push(new Instruction('canvas-container', content, "80%", "10%"));
@@ -53,9 +51,9 @@ export class LessonOneCpFour extends Module {
      */
     checkGoal(document: Document, effects: Effect<any>[]): boolean {
         switch (this._latestInstrIndex) {
-            case 3:
+            case 1:
                 for (let effect of effects) {
-                    if (effect instanceof StringEffect && effect.str === "moo") {
+                    if (effect instanceof StringEffect && effect.str === "cool") {
                         if ((effect.x > this.x && effect.x < this.x + this.square_size) && (effect.y > this.y && effect.y < this.y + this.square_size)) {
                             this._latestInstrIndex++;
                             this.renderLatestInstruction(document);
