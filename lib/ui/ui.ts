@@ -320,42 +320,47 @@ import CodeMirror from 'codemirror';
         let newNode: string = "";
         switch (buttonName) {
             case "ellipse":
-                newNode = "print(ellipse(100, 100));\n";
+                newNode = "\nprint(ellipse(100, 100));";
                 break;
             case "rect":
-                newNode = "print(rect(100, 100));\n";
+                newNode = "\nprint(rect(100, 100));";
                 break;
             case "string":
-                newNode = 'print("newWord");\n';
+                newNode = '\nprint("newWord");';
                 break;
             case "number":
-                newNode = "print(10);\n";
+                newNode = "\nprint(10);";
                 break;
             case "line":
-                newNode = "print(line(100, 100));\n";
+                newNode = "\nprint(line(100, 100));";
                 break;
             case "curve":
-                newNode = "print(curve(100, 100, 100));\n";
+                newNode = "\nprint(curve(100, 100, 100));";
                 break;
             case "happy": case "sad": case "angry": case "cool":
-                newNode = 'print(emoji("' + buttonName + '", 100, 100));\n';
+                newNode = '\nprint(emoji("' + buttonName + '", 100, 100));';
                 break;
-
             default:
                 console.log("Problem with " + buttonName);
                 return;
         }
-        // Insert at cursor position & highlight changes
-        editorDoc.replaceRange(newNode, lastCursorPos);
+        
+        // compute insertion position
+        let endIdx = editor.getValue().length;
+        let posInsert = editorDoc.posFromIndex(endIdx + 1);
+        let lastLineNum = editorDoc.lastLine();
+
+        // Insert at the end of the document & highlight changes
+        editorDoc.replaceRange(newNode, posInsert);
         highlightDiff(editor.getValue(), true);
 
         // Update cursor & refocus editor
-        lastCursorPos.line++;
+        lastCursorPos.line = lastLineNum + 2;
         lastCursorPos.ch = 0;
         editor.focus();
         editorDoc.setCursor(lastCursorPos);
 
-        // Parse
+        // parse
         parse();
     }
 
