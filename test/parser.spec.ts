@@ -477,7 +477,7 @@ describe('Function Application parser', () => {
             assert.fail();
         }
     });
-    it('should be able to parse a print statement and return a PrintNode (special case)', () => {
+    /**it('should be able to parse a print statement and return a PrintNode (special case)', () => {
         const input = '    print("hello");';
         const result = Parser.parse(input);
         //console.log(result);
@@ -489,7 +489,7 @@ describe('Function Application parser', () => {
         else{
             assert.fail();
         }
-    });
+    });**/
 });
 
 describe('Boolean Parser', () => {
@@ -777,7 +777,7 @@ describe('Ellipse parser', () => {
             assert.fail();
         }
     });
-    it('should parse an ellipse function application with proper syntax', () => {
+    /*it('should parse an ellipse function application with proper syntax', () => {
         let input = 'print(ellipse( 5 , 5));'
         let result= Parser.parse(input);
         var ellipse= new EllipseNode(new NumberNode(5), new NumberNode(5), "")
@@ -789,7 +789,7 @@ describe('Ellipse parser', () => {
         else{
             assert.fail();
         }
-    });
+    });*/
 });
 
 describe('function definition and application test', () => {
@@ -819,7 +819,7 @@ describe('Rectangle parser', () => {
             assert.fail();
         }
     });
-    it('should parse a rectangle function application with proper syntax', () => {
+    /*it('should parse a rectangle function application with proper syntax', () => {
         let input = 'print(rect( 5 , 5));'
         let result= Parser.parse(input);
         var rect= new RectangleNode(new NumberNode(5), new NumberNode(5))
@@ -830,7 +830,7 @@ describe('Rectangle parser', () => {
         else{
             assert.fail();
         }
-    });
+    });*/
 });
 
 describe("Variable Name Parser", () => {
@@ -873,7 +873,7 @@ describe("Variable Name Parser", () => {
     });
 });
 
-describe('Ephelia easter egg test', () => {
+/*describe('Ephelia easter egg test', () => {
     it('should parse a print ephelia statement', () => {
         const input = 'print(eph(10, 10));';
         let test = new SequenceNode(new PrintNode(new EphNode(new NumberNode(10), new NumberNode(10)), new Dimensions(new NumberNode(200),new NumberNode(200), new NumberNode(1))), new NOP());
@@ -884,6 +884,19 @@ describe('Ephelia easter egg test', () => {
         }
         else {
             assert.fail();
+        }
+    });
+});*/
+
+describe('Special case issue', () =>{
+    it('should result in failure to parse', () => {
+        const input = 'print("hi");\n print(\\\)';
+        let result = Parser.parse(input);
+        if(result.isDefined()) {
+            assert.fail();
+        }
+        else {
+            assert(true);
         }
     });
 });
