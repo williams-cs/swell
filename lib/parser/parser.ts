@@ -24,6 +24,12 @@ export namespace Parser {
         }
     }
 
+    /**export function float() {
+        let p1 = Primitives.many1<CharUtil.CharStream> (Primitives.digit());
+        let p2 = Primitives.seq<CharUtil.CharStream, CharUtil.CharStream, CharUtil.CharStream>(Primitives.str("."))(p1)(x => x[1]);
+        
+    }*/
+
     /**
      * to be moved to Pants
      * string is an arbitrary string parser that repeatedly applies the letter primitive
