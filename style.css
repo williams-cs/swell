@@ -214,3 +214,13 @@ button:hover {
     left: -1px;
     overflow: hidden;
 }
+
+.red-text {
+    color: red;
+    font-weight: bold;
+}
+
+.blue-text {
+    color: blue;
+    font-weight: bold;
+}
