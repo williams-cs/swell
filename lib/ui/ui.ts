@@ -45,9 +45,10 @@ import CodeMirror from 'codemirror';
     }
 
     let codeEvent = new CodeEvent('CodeEvent');
-    let ip = '172.16.254.1';
     let checkpointName = 'l0c0';
     let parses = false;
+
+    let doNotLog = localStorage.getItem("data_collection") != "1";
 
     /* Logging, parsing & rendering */
 
@@ -57,7 +58,7 @@ import CodeMirror from 'codemirror';
             if (checkpoint != null) {
                 checkpointName = checkpoint._name;
             }
-            elem.logRemotely(uid, editor.getValue(), ip, checkpointName, parses);
+            elem.logRemotely(uid, editor.getValue(), checkpointName, parses, doNotLog);
         }
         masterLog = [];
     }
@@ -66,7 +67,7 @@ import CodeMirror from 'codemirror';
         if (checkpoint != null) {
             checkpointName = checkpoint._name;
         }
-        codeEvent.logRemotely(uid, editor.getValue(), ip, checkpointName, parses);
+        codeEvent.logRemotely(uid, editor.getValue(), checkpointName, parses, doNotLog);
     }
 
     function parse() {

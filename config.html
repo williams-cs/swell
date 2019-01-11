@@ -56,6 +56,16 @@
                 }
             }
 
+            var datas = document.getElementsByName('data');
+
+            for (let data of datas) {
+                if (data.checked) {
+                    console.log("Data collection flag: " + data.value);
+                    localStorage.setItem('data_collection', '' + data.value);
+                    break;
+                }
+            }
+
             location.href = "welcome.html";
         }
     </script>

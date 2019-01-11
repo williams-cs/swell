@@ -27,5 +27,5 @@ export class ClearEvent extends LogEvent<any>{
         return "{}";
     }
 
-    logRemotely(uid: string, data: string, ip: string, checkpoint: string, parses: boolean): void{};
+    logRemotely(uid: string, data: string, checkpoint: string, parses: boolean, doNotLog: boolean): void{};
 }
