@@ -26,13 +26,13 @@ print("The skull is smaller than the box.", 25, 220)`;
         super(ctx, editor);
         let content = "We learned to tell the computer to print a lot of things. Now, let's teach it to make some decisions on its own.";
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = 'Look at the CODE above. We let <span class="inline-code">a = 75</span>, then we use it to refer to the dimension of a skull emoji. Then we print the line <span class="inline-code">The skull is smaller than the box.</span>.';
+        content = 'Look at the CODE above. We let <span class="inline-code">a = 75</span>, then we use it as the size of a skull emoji. Then we print the text <span class="inline-code">The skull is smaller than the box.</span>.';
         this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
-        content = `Since <span class="inline-code">a</span> is 75, and the box's width is 100, we know the printed claim is correct. But what would happen if we change the value of a to, say, 150?`;
+        content = `Since <span class="inline-code">a</span> is 75, and the box's width is 100, we know the program is telling the truth. But what would happen if we changed the value of a to 150?`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = `Change the value of <span class="inline-code">a</span> to <span class="inline-code">150</span>. Observe what happens.`;
+        content = `Change the value of <span class="inline-code">a</span> to <span class="inline-code">150</span>.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
-        content = 'Do you notice that the claim <span class="inline-code">The skull is smaller than the box</span> did not change? The skull now clearly looks bigger than the box! Yet our computer does not know to stop printing the wrong claim!';
+        content = 'Do you see that the text <span class="inline-code">The skull is smaller than the box</span> did not change? The skull is bigger than the box. Our program is telling a lie!';
         this._instrBoxes.push(new Instruction('canvas-container', content, "70%", "10%"));
     }
 
