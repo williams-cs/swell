@@ -29,6 +29,6 @@ export class PaintEvent extends LogEvent<any>{
         return "{ on: '" + this.toLog + "', x: '" + this.x1 + "', y: '" + this.y1 + "' }";
     }
 
-    logRemotely(uid: string, data: string, ip: string, checkpoint: string, parses: boolean): void{};
+    logRemotely(uid: string, data: string, checkpoint: string, parses: boolean, doNotLog: boolean): void{};
 
 }

@@ -31,8 +31,8 @@ export class CodeEvent extends LogEvent<any>{
         return '';
     }
 
-    logRemotely(uid: string, data: string, ip: string, checkpoint: string, parses: boolean): void {
-        LogEvent.logToRemoteServer(this.eventType(), uid, data, ip, checkpoint, parses);
+    logRemotely(uid: string, data: string, checkpoint: string, parses: boolean, doNotLog: boolean): void {
+        LogEvent.logToRemoteServer(this.eventType(), uid, data, checkpoint, parses, doNotLog);
     }
 
 }

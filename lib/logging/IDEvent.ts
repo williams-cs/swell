@@ -38,6 +38,6 @@ export class IDEvent extends LogEvent<any>{
         return "{ on: '" + (this.toLog as Effect<any>).toIDString() + "' }";
     }
 
-    logRemotely(uid: string, data: string, ip: string, checkpoint: string, parses: boolean): void{};
+    logRemotely(uid: string, data: string, checkpoint: string, parses: boolean, doNotLog: boolean): void{};
 
 }
