@@ -421,112 +421,68 @@ import CodeMirror from 'codemirror';
 
     //set up Checkpoint sidebar
     let lessons = sidebarPlans[dm];
+    let cpNames = [].concat(...lessons);
+    let lessonAccordion = document.getElementById("lesson-accordion");
     for (var x = 0; x < lessons.length; x++) {
-        let lessonName = '';
-        switch (x) {
-            case 0:
-                lessonName = "collapseOne";
-                break;
-            case 1:
-                lessonName = "collapseTwo";
-                break;
-            case 2:
-                lessonName = "collapseThree";
-                break;
-            default:
-                break;
-        }
+        let lessonID: string = "collapse" + x + 1;
 
-        let lesson = document.getElementById(lessonName);
+        let lessonLabel = document.createElement("div");
+        lessonLabel.className = "row";
+        let lessonLabelBtn = document.createElement("button");
+        lessonLabelBtn.className = "btn btn-block lesson-btn";
+        lessonLabelBtn.setAttribute("type", "button");
+        lessonLabelBtn.setAttribute("data-toggle", "collapse");
+        lessonLabelBtn.setAttribute("data-target", "#" + lessonID);
+        lessonLabelBtn.innerHTML = "Lesson " + (x + 1);
+        lessonLabel.append(lessonLabelBtn);
+        lessonAccordion.append(lessonLabel);
+
+        let lesson = document.createElement("div");
+        lesson.id = lessonID;
+        lesson.className = "collapse";
+        lesson.setAttribute("data-parent", "#lesson-accordion")
+
         let cps = lessons[x];
-
-        if (lesson != null && cps != null) {
-            var i = 1;
-            for (let cp of cps) {
-                var div = document.createElement('div');
-                div.className = 'row';
-
-                var btn = document.createElement('button');
-                btn.id = cp;
-                btn.className = "checkpoint btn btn-block";
-                btn.innerHTML = "Checkpoint " + i++;
-
-                div.appendChild(btn);
-                lesson.appendChild(div);
+        let i = 1;
+        for (let cp of cps) {
+            var div = document.createElement('div');
+            div.className = 'row';
+            var btn = document.createElement('button');
+            btn.id = cp;
+            btn.className = "checkpoint btn btn-block";
+            btn.innerHTML = "Checkpoint " + i++;
+            btn.onclick = function() {
+                lastProgram = "";
+                initCheckpoint(cp);
             }
+
+            div.appendChild(btn);
+            lesson.appendChild(div);
         }
+
+        lessonAccordion.append(lesson);
     }
 
     let instructions = document.getElementById('goal');
     let rewardBox = document.getElementById('reward-container');
+    let rewardText = document.getElementById('reward-text');
+    let rewardImg: HTMLImageElement = document.getElementById('reward-image') as HTMLImageElement;
     let instrLabel = document.getElementById('instr-label');
+    let nextButton = document.getElementById('next');
 
     //Map maintaining code last used at a checkpoint
-    let cpCode: Map<string, string> = new Map([
-        ['l1c1', ""],
-        ['l1c2', ""],
-        ['l1c3', ""],
-        ['l1c4', ""],
-        ['l2c1', ""],
-        ['l2c2', ""],
-        ['l2c3', ""],
-        ['l2c4', ""],
-        ['l2c5', ""],
-        ['l2c6', ""],
-        ['l2c7', ""],
-        ['l3c1', ""],
-        ['l3c2', ""],
-        ['l3c3', ""],
-        ['l3c4', ""],
-        ['l3c5', ""],
-        ['l3c6', ""],
-        ['l4c1', ""],
-        ['l4c2', ""]
-    ]);
-
+    let cpCode: Map<string, string> = new Map([]);
     //Map maintaining whether a checkpoint has been completed
-    let cpCompletion: Map<string, boolean> = new Map([
-        ['l1c1', false],
-        ['l1c2', false],
-        ['l1c3', false],
-        ['l1c4', false],
-        ['l2c1', false],
-        ['l2c2', false],
-        ['l2c3', false],
-        ['l2c4', false],
-        ['l2c5', false],
-        ['l2c6', false],
-        ['l2c7', false],
-        ['l3c1', false],
-        ['l3c2', false],
-        ['l3c3', false],
-        ['l3c4', false],
-        ['l3c5', false],
-        ['l3c6', false]
-    ]);
-
-    let cpNames = [].concat(...lessons);
+    let cpCompletion: Map<string, boolean> = new Map([]);
+    cpNames.forEach((cp: string) => {
+        cpCode.set(cp, "");
+        cpCompletion.set(cp, false);
+    });
 
     /* keeping track of and displaying user's progress */
     let starCount: number = 0;
     let starBox = document.getElementById("achievement");
     updateStarBox();
-
-    /*
-    let cpNames: string[] = [
-        'l1c1', 'l1c2', 'l1c3', 'l1c4',
-        'l2c1', 'l2c2', 'l2c3', 'l2c4', 'l2c5', 'l2c6', 'l2c7',
-        'l3c1', 'l3c2', 'l3c3', 'l3c4', 'l3c5', 'l3c6'
-    ];
-    */
-
-    for (let cp of cpNames) {
-        let cpButton = document.getElementById(cp);
-        cpButton.onclick = function() {
-            lastProgram = "";
-            initCheckpoint(cp);
-        }
-    }
 
     /**
      * Creates a module corresponding to a checkpoint passed in.
@@ -540,7 +496,7 @@ import CodeMirror from 'codemirror';
         }
 
         console.log("Initiating checkpoint " + cp);
-        checkpoint = modGen.createModule(cp, ctx, editor as CodeMirror.Editor);
+        checkpoint = modGen.createModule(cp, ctx, editor);
         instrLabel.innerHTML = cp + " - GOAL";
         instructions.innerHTML = checkpoint._instructions;
 
@@ -553,19 +509,18 @@ import CodeMirror from 'codemirror';
                 canvas.style.background = 'white';
                 canvasIsDisabled = false;
 
-            } else if (checkpoint._constraint == 'canvas') {
-                editor.setOption("readOnly", false);
-                editorWrapper.style.opacity = '1.0';
-                canvas.style.pointerEvents = "none";
-                canvas.style.background = '#C0C0C0';
-                canvasIsDisabled = true;
-
             } else {
                 editor.setOption("readOnly", false);
-                editorWrapper.style.opacity = '1.0';
-                canvas.style.pointerEvents = "auto";
-                canvas.style.background = 'white';
-                canvasIsDisabled = false;
+                editorWrapper.style.opacity = "1.0";
+                if (checkpoint._constraint == "canvas") {
+                    canvas.style.pointerEvents = "none";
+                    canvas.style.background = "#C0C0C0";
+                    canvasIsDisabled = true;
+                } else {
+                    canvas.style.pointerEvents = "auto";
+                    canvas.style.background = "white";
+                    canvasIsDisabled = false;
+                }
             }
         }
 
@@ -589,7 +544,6 @@ import CodeMirror from 'codemirror';
         //set up the instruction and goal boxes
         if (cpCompletion.get(cp)) {
             updateRewardBox();
-
         } else {
             //initialize starter code if this is the first time this checkpoint is reached
             if (checkpoint._starterCode != null && cpCode.get(checkpoint._name) === "") {
@@ -599,14 +553,11 @@ import CodeMirror from 'codemirror';
 
             //set up the instruction and goal boxes
             rewardBox.style.background = '#C0C0C0';
-            let reward = document.getElementById('reward-text');
-            reward.style.color = 'black';
-            reward.innerHTML = 'Complete goal to earn a star!';
-            let rewardImg: HTMLImageElement = document.getElementById('reward-image') as HTMLImageElement;
+            rewardText.style.color = 'black';
+            rewardText.innerHTML = 'Complete goal to earn a star!';
             rewardImg.src = 'pics/greystar.svg';
             rewardImg.alt = 'a star to be earned';
-            let nextBtn = document.getElementById('next');
-            nextBtn.style.display = 'none';
+            nextButton.style.display = 'none';
 
             instructions.scrollTop = 0;
             checkpointIsActive = true;
@@ -615,39 +566,83 @@ import CodeMirror from 'codemirror';
 
     function checkpointChecksGoal() {
         if (checkpoint.checkGoal(document, effects)) {
-            updateRewardBox();
             cpCompletion.set(checkpoint._name, true);
+            updateRewardBox();
             updateStarBox();
         }
     }
 
     function updateRewardBox() {
+        let isFinished = true;
+        for (var val  of cpCompletion.values()) {
+            if (!val) {
+                isFinished = false;
+                break;
+            }
+        }
+
         rewardBox.style.background = '#673AB7';
-        console.log(document);
-        let rewardText = document.getElementById('reward-text');
         rewardText.style.color = '#D8D8D8';
-        rewardText.innerHTML = "Goal met! Click 'Next' to go to next checkpoint!";
-        let rewardImg: HTMLImageElement = document.getElementById('reward-image') as HTMLImageElement;
+        rewardText.innerHTML = isFinished
+            ? "Congratulations! You have finished everything!"
+            : "Goal met! Click 'Next' to go to the next checkpoint!";
+
         rewardImg.src = 'pics/star.svg';
         rewardImg.alt = 'star earned';
-        let nextBtn = document.getElementById('next');
-        nextBtn.style.display = 'block';
+        nextButton.style.display = 'block';
+        if (isFinished) {
+            nextButton.innerHTML = "Finish"
+        }
 
         instructions.scrollTop = instructions.scrollHeight;
         checkpointIsActive = false;
     }
 
-    let nextButton = document.getElementById('next');
     nextButton.onclick = function() {
-        /*let nextModule = checkpoint._nextModule;
-        if (nextModule != '') {
-            initCheckpoint(nextModule);
-        }*/
+        let isFinished = true;
+        for (var val  of cpCompletion.values()) {
+            if (!val) {
+                isFinished = false;
+                break;
+            }
+        }
+        if (isFinished) {
+            nextButton.style.display = "none";
+            rewardText.innerHTML = "Code away!";
+            rewardText.style.color = "black";
+            rewardBox.style.background = '#C0C0C0';
+            rewardImg.style.display = "none";
+            return;
+        }
 
         let cpName = checkpoint._name;
-        let i = cpNames.indexOf(cpName);
-        if (i > -1 && i < cpNames.length - 1) {
-            initCheckpoint(cpNames[i + 1]);
+        let curCpIndex = cpNames.indexOf(cpName);
+        if (curCpIndex < 0) {
+            return;
+        }
+        let nextCpIndex = -1; // Next unfinished lesson
+        for (let i = curCpIndex + 1; i < cpNames.length; i++) {
+            if (!cpCompletion.get(cpNames[i])) {
+                nextCpIndex = i;
+                break;
+            }
+        }
+        if (nextCpIndex != -1)  {
+            initCheckpoint(cpNames[nextCpIndex]);
+            return;
+        }
+        let previousCpIndex = -1; // Previous, earliest unfinished lesson
+        for (let i = 0; i < curCpIndex; i++) {
+            if (!cpCompletion.get(cpNames[i])) {
+                previousCpIndex = i;
+                break;
+            }
+        }
+        if (previousCpIndex != -1)  {
+            initCheckpoint(cpNames[previousCpIndex]);
+            return;
+        } else {
+            console.log("Error: Cannot find unfinished checkpoint"); // Can't happen
         }
     }
 
