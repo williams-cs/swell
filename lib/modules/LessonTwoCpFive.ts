@@ -8,7 +8,9 @@ export class LessonTwoCpFive extends Module {
     readonly _goal: any;
     readonly _constraint: string = 'none';
     readonly _instructions: string =
-    `<p> GOAL: Create a variable c referring to an emoji("pirate", 75, 75), then write 2 print statements to print c. </p>`;
+        `<p>Lesson 2 - Checkpoint 5</p>` +
+        `<p>GOAL: Create a variable c referring to an emoji("pirate", 75, 75),
+        then write 2 print statements to print c.</p>`;
 
     readonly _starterCode =
     `a = emoji("angry", 100, 100);

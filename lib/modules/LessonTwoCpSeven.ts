@@ -9,7 +9,8 @@ export class LessonTwoCpSeven extends Module {
     readonly _goal: any;
     readonly _constraint: string = 'none';
     readonly _instructions: string =
-        `<p> CHALLENGE: Create an emoji and print out its size. </p>`;
+        `<p>Lesson 2 - Checkpoint 7</p>` +
+        `<p>CHALLENGE: Create an emoji and print out its size.</p>`;
 
     _latestInstrIndex: number = 1;
 

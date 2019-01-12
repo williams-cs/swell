@@ -8,7 +8,8 @@ export class LessonOneCpThree extends Module {
     readonly _goal: any;
     readonly _constraint: string = 'canvas';
     readonly _instructions: string =
-        `<p> GOAL: Move the word around the CANVAS solely by changing your CODE. </p>`;
+        `<p>Lesson 1 - Checkpoint 3</p>` +
+        `<p>GOAL: Move the word around the CANVAS solely by changing your CODE.</p>`;
 
     readonly _starterCode: string = `print("happy", 100, 100)`;
 

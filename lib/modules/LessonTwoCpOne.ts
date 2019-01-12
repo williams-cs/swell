@@ -8,7 +8,8 @@ export class LessonTwoCpOne extends Module {
     readonly _goal: any;
     readonly _constraint: string = 'none';
     readonly _instructions: string =
-        `<p> GOAL: replace "happy" in the print statement to draw emojis! </p>`;
+        `<p>Lesson 2 - Checkpoint 1</p>` +
+        `<p>GOAL: replace "happy" in the print statement to draw emojis!</p>`;
 
     readonly _starterCode: string = `print("happy", 100, 100)`;
 
