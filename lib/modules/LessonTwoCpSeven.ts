@@ -20,21 +20,18 @@ export class LessonTwoCpSeven extends Module {
     square_size: number = 250;
     font_size = 20;
 
-    //retrieve survey choice for dm or non-dm
 
 
     constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) {
         super(ctx, editor);
         this.x = ctx.canvas.width - this.square_size - 10;
         this.y = ctx.canvas.height - this.square_size - 10;
-        //let square_mid = Math.round(this.square_size / 2);
-        //let e_x = this.x + 10;
-        //let e_y = this.y + 10;
 
         this._starterCode =
             `a = 50;
 print(emoji("mustache", 100, 100), ${this.x + 10}, ${this.y + 10});`;
 
+        //retrieve survey choice for dm or non-dm
         this.dm = 1;
         let val = localStorage.getItem('dm');
         if (val != null) {
@@ -72,8 +69,7 @@ print(emoji("mustache", 100, 100), ${this.x + 10}, ${this.y + 10});`;
     }
 
     /**
-     * A lesson to print a string
-     * goals: moving the text and observe the code
+     * A lesson to use a variable to connect different objects, taught using DM and non-DM
      * @param document the HTML document
      * @param effects the list of effects currently on the CANVAS
      */

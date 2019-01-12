@@ -53,8 +53,7 @@ if(a < 100) {
     }
 
     /**
-     * A lesson leading into conditionals
-     * goals: moving the text and observe the code
+     * A lesson to explore if statement
      * @param document the HTML document
      * @param effects the list of effects currently on the CANVAS
      */

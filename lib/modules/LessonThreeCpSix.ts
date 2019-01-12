@@ -78,8 +78,7 @@ print("The angel is smaller than the devil.", ${this.xA}, ${this.yA + this.squar
     }
 
     /**
-     * A lesson leading into conditionals
-     * goals: moving the text and observe the code
+     * A test on if/else statement
      * @param document the HTML document
      * @param effects the list of effects currently on the CANVAS
      */

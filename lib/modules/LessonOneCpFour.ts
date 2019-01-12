@@ -44,8 +44,7 @@ export class LessonOneCpFour extends Module {
     }
 
     /**
-     * A lesson to print a string
-     * goals: moving the text and observe the code
+     * A test on location parameters, disallowing DM
      * @param document The HTML document
      * @param effects the list of effects currently on the CANVAS
      */

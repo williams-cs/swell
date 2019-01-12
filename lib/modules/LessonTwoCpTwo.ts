@@ -44,8 +44,8 @@ export class LessonTwoCpTwo extends Module {
     }
 
     /**
-     *
-     * @param document The HTML document
+     * A lesson on size parameters for emojis, taught with DM
+     * @param document the HTML document
      * @param effects the list of effects currently on the CANVAS
      */
     checkGoal(document: Document, effects: Effect<any>[]): boolean {

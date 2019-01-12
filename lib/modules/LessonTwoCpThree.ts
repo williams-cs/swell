@@ -31,8 +31,7 @@ export class LessonTwoCpThree extends Module {
     }
 
     /**
-     * A lesson to print a string
-     * goals: moving the text and observe the code
+     * A lesson on sequence
      * @param document the HTML document
      * @param effects the list of effects currently on the CANVAS
      */

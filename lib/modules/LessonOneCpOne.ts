@@ -26,7 +26,6 @@ export class LessonOneCpOne extends Module {
 
     /**
      * A lesson to print a string
-     * goals: write any string on CANVAS
      * @param document The HTML document
      * @param effects the list of effects currently on the CANVAS
      */
