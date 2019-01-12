@@ -26,7 +26,7 @@
       <button id="back" class="btn btn-background" > Back </button>
       <button id="next" class="btn btn-background" > Next </button>
 
-      <p id="uuid"> UUID: </p>
+      <p id="uid"> UID: </p>
     </div>
 
     <script>
@@ -39,6 +39,13 @@
         next.style.background = "#D8D8D8";
         next.disabled = true;
 
+        //display uid for debugging
+        let uid_tag = document.getElementById("uid");
+        let uid = localStorage.getItem("swell_uid");
+        uid_tag.innerHTML += uid;
+
+        let doNotLog = localStorage.getItem("data_collection") != "1";
+
         let questions = [
           ["How excited are you about programming?", "pre-excitement"],
           ["Have you programmed before?", "experience"]
@@ -46,7 +53,7 @@
 
         let answers = [
           [["Very excited.", 2], ["Excited.", 1], ["Not excited.", 0]],
-          [["Yes. I took a class.", 2], ["Yes. I did an hour of code.", 1], ["No.", 0]]
+          [["Yes.", 1], ["No.", 0]]
         ]
 
         let q_order = shuffle([0, 1]);
@@ -87,12 +94,6 @@
             }
         }
 
-        //display uuid for debugging
-        let uuid_tag = document.getElementById("uuid");
-        let uuid = localStorage.getItem("swell_uuid");
-        console.log(uuid);
-        uuid_tag.innerHTML += uuid;
-
         //enable next button if 1 radio button is checked
         function checkRadio() {
             var radios = document.getElementsByName(q_tag);
@@ -113,6 +114,9 @@
 
             q_tag = questions[q_order[i]][1];
             let a_order = shuffle([0, 1, 2]);
+            if (q_order[i] == 1) {
+                a_order = shuffle([0, 1]);
+            }
             let checked = localStorage.getItem(q_tag);
             if (checked != null) {
                 checked = parseInt(checked);
@@ -136,7 +140,7 @@
             var radios = document.getElementsByName(q_tag);
             for (let radio of radios) {
                 if (radio.checked) {
-                    localStorage.setItem(q_tag, radio.value);
+                    logSurvey(q_tag, radio.value, doNotLog);
                     break;
                 }
             }
@@ -152,6 +156,37 @@
                 arr[j] = temp;
             }
             return arr;
+        }
+
+        function logSurvey(eventtype, data, doNotLog) {
+            if (doNotLog) {
+                return;
+            }
+
+            function pad(n, width) {
+                let padWith = '0';
+                let nstr = n.toString();
+                return nstr.length >= width ? nstr : new Array(width - nstr.length + 1).join(padWith) + nstr;
+            }
+
+            let date = new Date();
+            let year = date.getFullYear().toString();
+            let month = pad(date.getMonth() + 1, 2);
+            let day = pad(date.getDay(), 2);
+            let hour = pad(date.getHours(), 2);
+            let minutes = pad(date.getMinutes(), 2);
+            let seconds = pad(date.getSeconds(), 2);
+
+            let payload = new FormData();
+            payload.append('uid', uid);
+            payload.append('data', data);
+            payload.append('eventtype', eventtype);
+            payload.append('time', year + '-' + month + '-' + day + ' ' + hour + ':' + minutes + ':' + seconds);
+            payload.append('checkpoint_id', 'l0c0');
+            payload.append('parses', 'false');
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", "http://camembert.cs.williams.edu:8080/events", true);
+            xhr.send(payload);
         }
     </script>
   </body>

@@ -47,7 +47,6 @@ import CodeMirror from 'codemirror';
     let codeEvent = new CodeEvent('CodeEvent');
     let checkpointName = 'l0c0';
     let parses = false;
-
     let doNotLog = localStorage.getItem("data_collection") != "1";
 
     /* Logging, parsing & rendering */
