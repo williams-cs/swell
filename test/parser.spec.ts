@@ -986,6 +986,19 @@ describe('Float parser', () => {
             assert(true);
         }
     });
+     it('should parse a print statement with floats', () => {
+        let input = 'print(12.5);'
+        let result= Parser.parse(input);
+        let float = new FloatNode(12.5);
+        var test= new SequenceNode(new PrintNode(float, false), new NOP());
+        if(result.isDefined()){
+            console.log(result.get().toString());
+            //expect(result.get()).to.eql(test);
+        }
+        else{
+            assert.fail();
+        }
+    });
 });
 
 describe('parsing a string containing numbers', () => {
