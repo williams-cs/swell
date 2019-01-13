@@ -142,7 +142,7 @@ button:hover {
     background-color: var(--mid-gray);
 }
 
-#goal {
+#message {
     padding: 10px;
     font-size: 15px;
     overflow-y: auto;
@@ -229,5 +229,10 @@ button:hover {
 
 .blue-text {
     color: blue;
+    font-weight: bold;
+}
+
+.purple-text {
+    color: var(--purple);
     font-weight: bold;
 }
