@@ -94,6 +94,18 @@ describe('binOpExpr parser test', () => {
         }
     });
 
+    it("should parse an entire binary expression with floats", () => {
+        const input = "6.25 - 3.25;";
+        let result = Parser.binOpExpr(new CharUtil.CharStream(input));
+        switch(result.tag){
+            case "success":
+                expect(result.result.eval(null)).to.eql(new NumberNode(3));
+                break;
+            case "failure":
+                assert.fail();
+        }
+    });
+
     it("should parse an increment expression", () => {
         const input = new CharUtil.CharStream("i++");
         let result = Parser.binOpExpr(input);
@@ -119,6 +131,19 @@ describe('binOpExpr parser test', () => {
                 assert.fail();
         }
     });
+    it("should parse an increment expression with floats", () => {
+        const input = new CharUtil.CharStream("  2.5++");
+        let result = Parser.binOpExpr(input);
+        switch(result.tag){
+            case "success":
+                //console.log(result.result.toString());
+                expect(result.result).to.eql(new Increment(new FloatNode(2.5), "  "));
+                expect(result.result.eval(null)).to.eql(new NumberNode(3.5));
+                break;
+            case "failure":
+                assert.fail();
+        }
+    });
     it("should parse an decrement expression", () => {
         const input = new CharUtil.CharStream("i--");
         let result = Parser.binOpExpr(input);
@@ -139,6 +164,19 @@ describe('binOpExpr parser test', () => {
                 //console.log(result.result.toString());
                 expect(result.result).to.eql(new Decrement(new NumberNode(2), "  "));
                 expect(result.result.eval(null)).to.eql(new NumberNode(1));
+                break;
+            case "failure":
+                assert.fail();
+        }
+    });
+    it("should parse an decrement expression with floats", () => {
+        const input = new CharUtil.CharStream("  2.5--");
+        let result = Parser.binOpExpr(input);
+        switch(result.tag){
+            case "success":
+                //console.log(result.result.toString());
+                expect(result.result).to.eql(new Decrement(new FloatNode(2.5), "  "));
+                expect(result.result.eval(null)).to.eql(new NumberNode(1.5));
                 break;
             case "failure":
                 assert.fail();

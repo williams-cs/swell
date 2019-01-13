@@ -252,13 +252,13 @@ export namespace Parser {
             let rhs: Expression<any> = tup[1][1];
             switch(op.toString()) {
                 case "+":
-                    return new PlusOp((<Expression<NumberNode>>lhs), (<Expression<NumberNode>>rhs), ws);
+                    return new PlusOp((<Expression<NumberNode|FloatNode>>lhs), (<Expression<NumberNode|FloatNode>>rhs), ws);
                 case "-":
-                    return new MinusOp((<Expression<NumberNode>>lhs), (<Expression<NumberNode>>rhs), ws);
+                    return new MinusOp((<Expression<NumberNode|FloatNode>>lhs), (<Expression<NumberNode|FloatNode>>rhs), ws);
                 case "/":
-                    return new DivOp((<Expression<NumberNode>>lhs), (<Expression<NumberNode>>rhs), ws);
+                    return new DivOp((<Expression<NumberNode|FloatNode>>lhs), (<Expression<NumberNode|FloatNode>>rhs), ws);
                 case "*":
-                    return new MulOp((<Expression<NumberNode>>lhs), (<Expression<NumberNode>>rhs), ws);
+                    return new MulOp((<Expression<NumberNode|FloatNode>>lhs), (<Expression<NumberNode|FloatNode>>rhs), ws);
                 case "=":
                     return new AssignOp((<Expression<VariableNode>> lhs), (<Expression<any>> rhs), ws);
                  default:

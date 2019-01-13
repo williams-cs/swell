@@ -14,7 +14,7 @@ export class DivOp extends BinaryOperation<NumberNode|FloatNode>{
      * @param right The divisor
      * @param ws Preceding whitespace
      */
-    constructor(left: Expression<NumberNode> | Expression<FloatNode>, right: Expression<NumberNode> | Expression<FloatNode>, ws?: string){
+    constructor(left: Expression<NumberNode | FloatNode>, right: Expression<NumberNode|FloatNode>, ws?: string){
         super(left,right);
         this._ws = ws;
         if(ws == undefined){
