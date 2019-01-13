@@ -124,7 +124,9 @@ export abstract class LogEvent<T> {
         let date = new Date();
         let year = date.getFullYear().toString();
         let month = pad(date.getMonth() + 1, 2);
-        let day = pad(date.getDay(), 2);
+        let day = pad(date.getDate(), 2);
+        console.log("Day.getDay logged: " + day);
+        console.log("Day logged: " + day);
         let hour = pad(date.getHours(), 2);
         let minutes = pad(date.getMinutes(), 2);
         let seconds = pad(date.getSeconds(), 2);
