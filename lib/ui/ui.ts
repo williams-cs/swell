@@ -331,25 +331,25 @@ import CodeMirror from 'codemirror';
         let newNode: string = "";
         switch (buttonName) {
             case "ellipse":
-                newNode = "\nprint(ellipse(100, 100));";
+                newNode = "print(ellipse(100, 100));";
                 break;
             case "rect":
-                newNode = "\nprint(rect(100, 100));";
+                newNode = "print(rect(100, 100));";
                 break;
             case "string":
-                newNode = '\nprint("newWord");';
+                newNode = 'print("newWord");';
                 break;
             case "number":
-                newNode = "\nprint(10);";
+                newNode = "print(10);";
                 break;
             case "line":
-                newNode = "\nprint(line(100, 100));";
+                newNode = "print(line(100, 100));";
                 break;
             case "curve":
-                newNode = "\nprint(curve(100, 100, 100));";
+                newNode = "print(curve(100, 100, 100));";
                 break;
             case "happy": case "sad": case "angry": case "cool":
-                newNode = '\nprint(emoji("' + buttonName + '", 100, 100));';
+                newNode = 'print(emoji("' + buttonName + '", 100, 100));';
                 break;
             default:
                 console.log("Problem with " + buttonName);
@@ -362,7 +362,7 @@ import CodeMirror from 'codemirror';
         let lastLineNum = editorDoc.lastLine();
 
         // Insert at the end of the document & highlight changes
-        editorDoc.replaceRange(newNode, posInsert);
+        editorDoc.replaceRange(endIdx == 0 ? newNode : ("\n" + newNode), posInsert);
         highlightDiff(editor.getValue(), true);
 
         // Update cursor & refocus editor
@@ -588,7 +588,6 @@ import CodeMirror from 'codemirror';
         rewardImg.src = 'pics/star.svg';
         rewardImg.alt = 'star earned';
         nextButton.style.display = 'block';
-        resetButton.style.display = "none";
         if (isFinished) {
             nextButton.innerHTML = "Finish"
         }
@@ -611,6 +610,7 @@ import CodeMirror from 'codemirror';
             rewardText.style.color = "black";
             rewardBox.style.background = '#C0C0C0';
             rewardImg.style.display = "none";
+            resetButton.style.display = "none";
 
             message.innerHTML = `<span class="purple-text">You've completed the Hour of Code! Let your instructor know of this amazing achievement!</span>`;
 
