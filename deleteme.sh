@@ -4,7 +4,7 @@ rm -rf .git
 rm -f .gitignore
 rm -rf .vscode
 rm -f browserui.js
-rm -f completed.html
+rm -rf completed.html
 rm -f config.html
 rm -f coverage
 rm -rf dist
@@ -29,3 +29,4 @@ rm -rf ui_modules
 rm -f weekly-and-lesson-plans.md
 rm -f welcome.html
 rm -rf wireframes
+rm -f deleteme.sh
