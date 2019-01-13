@@ -4,6 +4,7 @@ import 'mocha';
 import { CharUtil, Primitives } from 'pants/lib';
 import { SequenceNode, StringNode, Return, Scope, NumberNode, BooleanNode, WhileNode, ForNode, Conditional, ListNode, FunDef, FunApp, PrintNode, VariableNode, NegOp, NOP, Dimensions, EllipseNode,
     RectangleNode, Equals, NotEqual, And, Or, GreaterThan, LessThan, Not, GreaterThanEq, LessThanEq, AssignOp, PlusOp, Decrement, DeclareOp, Increment, EphNode } from '../index';
+import { FloatNode } from '../lib/prims/FloatNode';
 
 describe('Number Parser test', () =>{
     it('should return a node with digit value', () => {
@@ -93,6 +94,18 @@ describe('binOpExpr parser test', () => {
         }
     });
 
+    it("should parse an entire binary expression with floats", () => {
+        const input = "6.25 - 3.25;";
+        let result = Parser.binOpExpr(new CharUtil.CharStream(input));
+        switch(result.tag){
+            case "success":
+                expect(result.result.eval(null)).to.eql(new NumberNode(3));
+                break;
+            case "failure":
+                assert.fail();
+        }
+    });
+
     it("should parse an increment expression", () => {
         const input = new CharUtil.CharStream("i++");
         let result = Parser.binOpExpr(input);
@@ -118,6 +131,19 @@ describe('binOpExpr parser test', () => {
                 assert.fail();
         }
     });
+    it("should parse an increment expression with floats", () => {
+        const input = new CharUtil.CharStream("  2.5++");
+        let result = Parser.binOpExpr(input);
+        switch(result.tag){
+            case "success":
+                //console.log(result.result.toString());
+                expect(result.result).to.eql(new Increment(new FloatNode(2.5), "  "));
+                expect(result.result.eval(null)).to.eql(new NumberNode(3.5));
+                break;
+            case "failure":
+                assert.fail();
+        }
+    });
     it("should parse an decrement expression", () => {
         const input = new CharUtil.CharStream("i--");
         let result = Parser.binOpExpr(input);
@@ -138,6 +164,19 @@ describe('binOpExpr parser test', () => {
                 //console.log(result.result.toString());
                 expect(result.result).to.eql(new Decrement(new NumberNode(2), "  "));
                 expect(result.result.eval(null)).to.eql(new NumberNode(1));
+                break;
+            case "failure":
+                assert.fail();
+        }
+    });
+    it("should parse an decrement expression with floats", () => {
+        const input = new CharUtil.CharStream("  2.5--");
+        let result = Parser.binOpExpr(input);
+        switch(result.tag){
+            case "success":
+                //console.log(result.result.toString());
+                expect(result.result).to.eql(new Decrement(new FloatNode(2.5), "  "));
+                expect(result.result.eval(null)).to.eql(new NumberNode(1.5));
                 break;
             case "failure":
                 assert.fail();
@@ -189,6 +228,18 @@ describe('unOpExpr parser test', () => {
             case "success":
                 //console.log(result.result.toString());
                 expect(result.result).to.eql(new SequenceNode(new NegOp(new NumberNode(2)), new NOP()));
+                break;
+            case "failure":
+                assert.fail();
+        }
+    });
+    it('should successfully parse a unary expression (negation) with float', () => {
+        const input=new CharUtil.CharStream('-2.5;');
+        let result=Parser.ExpressionParser(input);
+        switch(result.tag){
+            case "success":
+                console.log(result.result.toString());
+                expect(result.result).to.eql(new SequenceNode(new NegOp(new FloatNode(2.5)), new NOP()));
                 break;
             case "failure":
                 assert.fail();
@@ -896,6 +947,42 @@ describe('Special case issue', () =>{
             assert.fail();
         }
         else {
+            assert(true);
+        }
+    });
+});
+
+describe('Float parser', () => {
+    it('should correctly parse a float with proper syntax', () => {
+        const input = '14.25';
+        let test = new SequenceNode(new FloatNode(14.25), new NOP());
+        let result = Parser.parse(input);
+        if(result.isDefined()){
+            console.log(result.get().toString());
+            expect(result.get()).to.eql(test);
+        }
+        else{
+            assert.fail();
+        }
+    });
+    it('should parse numbers separately from floats', () => {
+        const input = '12';
+        let test = new SequenceNode(new NumberNode(12), new NOP());
+        let result = Parser.parse(input);
+        if(result.isDefined()){
+            expect(result.get()).to.eql(test);
+        }
+        else{
+            assert.fail();
+        }
+    });
+    it('should not parse floats with incorrect syntax (no decimal val after decimal point)', () => {
+        const input = '12.';
+        let result = Parser.parse(input);
+        if(result.isDefined()){
+            assert.fail();
+        }
+        else{
             assert(true);
         }
     });

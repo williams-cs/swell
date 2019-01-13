@@ -2,9 +2,10 @@ import {UnaryOperation} from './UnaryOperation';
 import {Expression} from '../Expression';
 import {Scope} from '../structural/Scope';
 import { NumberNode } from '../prims/NumberNode';
+import { FloatNode } from "../prims/FloatNode";
 import { Dimensions } from '../structural/Dimensions';
 
-export class NegOp extends UnaryOperation<NumberNode>{
+export class NegOp extends UnaryOperation<NumberNode|FloatNode>{
     private _ws: string;
 
     /**
@@ -12,7 +13,7 @@ export class NegOp extends UnaryOperation<NumberNode>{
      * @param val The value to be negated (must be a NumberNode)
      * @param ws Preceding whitespace
      */
-    constructor(val: Expression<NumberNode>, ws?: string){
+    constructor(val: Expression<NumberNode|FloatNode>, ws?: string){
         super(val);
         this._ws = ws;
         if (ws == undefined){
@@ -24,9 +25,14 @@ export class NegOp extends UnaryOperation<NumberNode>{
      * Evaluates the value into the negative version
      * @param context The current program context
      */
-    eval(context: Scope): NumberNode{
+    eval(context: Scope): NumberNode|FloatNode{
         let v = this.val.eval(context);
-        return new NumberNode(-v.val, "");
+        if(v instanceof FloatNode){
+        return new FloatNode(-v.val, "");
+        }
+        else{
+            return new NumberNode(-v.val, "");
+        }
     }
 
     /**

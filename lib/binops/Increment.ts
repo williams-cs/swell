@@ -2,6 +2,7 @@ import {BinaryOperation} from './BinaryOperation';
 import {Expression} from '../Expression';
 import {Scope} from '../structural/Scope';
 import {NumberNode} from '../prims/NumberNode';
+import {FloatNode} from '../prims/FloatNode';
 import { Dimensions } from '../structural/Dimensions';
 import { PlusOp } from './PlusOp';
 import { AssignOp } from './AssignOp';
@@ -35,7 +36,7 @@ export class Increment implements Expression<any>{
      * Evaluates increment into a number node
      * @param context The function scope
      */
-    eval(context: Scope): NumberNode {
+    eval(context: Scope): NumberNode | FloatNode {
         return this.innerRep.eval(context);
     }
 

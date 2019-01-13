@@ -2,6 +2,7 @@ import {BinaryOperation} from './BinaryOperation';
 import {Expression} from '../Expression';
 import {Scope} from '../structural/Scope';
 import {NumberNode} from '../prims/NumberNode';
+import {FloatNode} from '../prims/FloatNode';
 import { Dimensions } from '../structural/Dimensions';
 import { MinusOp } from './MinusOp';
 import { AssignOp } from './AssignOp';
@@ -35,7 +36,7 @@ export class Decrement implements Expression<any>{
      * Evaluates the decrement op to a NumberNode
      * @param context The current program context
      */
-    eval(context: Scope): NumberNode {
+    eval(context: Scope): NumberNode|FloatNode {
         return this.innerRep.eval(context);
     }
 
