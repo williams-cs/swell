@@ -152,22 +152,6 @@ export namespace Parser {
         let p16 = Primitives.choice<Expression<any>>(funDef)(p15);
         let p17 = Primitives.choice<Expression<any>>(loopParse)(p16);
         return p17(i);
-        /**let p2 = Primitives.choice<Expression<any>>(varNameParse())(p1);
-        let p3 = Primitives.choice<Expression<any>>(BoolParse())(p2);
-        let p4 = Primitives.choice<Expression<any>>(varDecParse())(p3);
-        let p5 = Primitives.choice<Expression<any>>(unOpsExpr)(p4);
-        let p6 = Primitives.choice<Expression<any>>(Declare())(p5);
-        let p7 = Primitives.choice<Expression<any>>(binOpExpr)(p6);
-        let p8 = Primitives.choice<Expression<any>> (LogicExpr())(p7);
-        let p9 = Primitives.choice<Expression<any>>(ListHead)(p8);
-        let p10 = Primitives.choice<Expression<any>>(funApp)(p9);
-        let p11 = Primitives.choice<Expression<any>>(returnParser)(p10);
-        let p12 = Primitives.choice<Expression<any>>(condParse)(p11);
-        let p13 = Primitives.choice<Expression<any>>(WhileLoop)(p12);
-        let p14 = Primitives.choice<Expression<any>>(ForLoop)(p13);
-        let p15 = Primitives.choice<Expression<any>>(funDef)(p14);
-        let p16 = Primitives.choice<Expression<any>>(loopParse)(p15);
-        return p16(i);*/
     }
 
     /**
@@ -176,50 +160,13 @@ export namespace Parser {
      * @param i a nonsense parameter used to avoid bug of eager parsing
      */
     export let ExpressionParserNoBinOp : Primitives.IParser<Expression<{}>> = i => {
-        let p1 = Primitives.choice(lNumber())(lstring2())
-        let p2 = Primitives.choice<Expression<any>>(varNameParse())(p1);
-        let p3 = Primitives.choice<Expression<any>>(BoolParse())(p2);
-        let p4 = Primitives.choice<Expression<any>>(varDecParse())(p3);
-        let p5 = Primitives.choice<Expression<any>>(unOpsExpr)(p4);
-        let p6= Primitives.choice<Expression<any>>(Declare())(p5);
-        let p7= Primitives.choice<Expression<any>>(ListHead)(p6);
-        let p8= Primitives.choice<Expression<any>>(funApp)(p7);
-        let p9= Primitives.choice<Expression<any>>(returnParser)(p8);
-        let p10= Primitives.choice<Expression<any>>(condParse)(p9);
-        let p11= Primitives.choice<Expression<any>>(WhileLoop)(p10);
-        let p12= Primitives.choice<Expression<any>>(ForLoop)(p11);
-        let p13= Primitives.choice<Expression<any>>(funDef)(p12);
-        let p14 = Primitives.choice<Expression<any>>(loopParse)(p13);
-        return p14(i);
-        /**let p2 = Primitives.choice<Expression<any>>(varNameParse())(p1);
-        let p3 = Primitives.choice<Expression<any>>(BoolParse())(p2);
-        let p4 = Primitives.choice<Expression<any>>(varDecParse())(p3);
-        let p5 = Primitives.choice<Expression<any>>(unOpsExpr)(p4);
-        let p6= Primitives.choice<Expression<any>>(Declare())(p5);
-        let p7= Primitives.choice<Expression<any>>(ListHead)(p6);
-        let p8= Primitives.choice<Expression<any>>(funApp)(p7);
-        let p9= Primitives.choice<Expression<any>>(returnParser)(p8);
-        let p10= Primitives.choice<Expression<any>>(condParse)(p9);
-        let p11= Primitives.choice<Expression<any>>(WhileLoop)(p10);
-        let p12= Primitives.choice<Expression<any>>(ForLoop)(p11);
-        let p13= Primitives.choice<Expression<any>>(funDef)(p12);
-        let p14 = Primitives.choice<Expression<any>>(loopParse)(p13);
-        return p14(i); */
-    }
-
-    /**
-     * Searches through all possible expressions except for logical expressions
-     * used to avoid infinite looping in the logical expression parser
-     * @param i a nonsense parameter used to avoid bug of eager parsing
-     */
-    export let ExpressionParserNoLogic : Primitives.IParser<Expression<{}>> = i => {
-        let p1 = Primitives.choice(lNumber())(lstring2())
-        let p2 = Primitives.choice<Expression<any>>(varNameParse())(p1)
-        let p3 = Primitives.choice<Expression<any>>(BoolParse())(p2);
-        let p4 = Primitives.choice<Expression<any>>(varDecParse())(p3);
-        let p5 = Primitives.choice<Expression<any>>(unOpsExpr)(p4);
-        let p6= Primitives.choice<Expression<any>>(Declare())(p5)
-        let p7= Primitives.choice<Expression<any>>(binOpExpr)(p6);
+        let p1 = Primitives.choice(lNumber())(lstring2());
+        let p2 = Primitives.choice(float())(p1);
+        let p3 = Primitives.choice<Expression<any>>(varNameParse())(p2);
+        let p4 = Primitives.choice<Expression<any>>(BoolParse())(p3);
+        let p5 = Primitives.choice<Expression<any>>(varDecParse())(p4);
+        let p6 = Primitives.choice<Expression<any>>(unOpsExpr)(p5);
+        let p7= Primitives.choice<Expression<any>>(Declare())(p6);
         let p8= Primitives.choice<Expression<any>>(ListHead)(p7);
         let p9= Primitives.choice<Expression<any>>(funApp)(p8);
         let p10= Primitives.choice<Expression<any>>(returnParser)(p9);
@@ -229,6 +176,31 @@ export namespace Parser {
         let p14= Primitives.choice<Expression<any>>(funDef)(p13);
         let p15 = Primitives.choice<Expression<any>>(loopParse)(p14);
         return p15(i);
+    }
+
+    /**
+     * Searches through all possible expressions except for logical expressions
+     * used to avoid infinite looping in the logical expression parser
+     * @param i a nonsense parameter used to avoid bug of eager parsing
+     */
+    export let ExpressionParserNoLogic : Primitives.IParser<Expression<{}>> = i => {
+        let p1 = Primitives.choice(lNumber())(lstring2());
+        let p2 = Primitives.choice(float())(p1);
+        let p3 = Primitives.choice<Expression<any>>(varNameParse())(p2)
+        let p4 = Primitives.choice<Expression<any>>(BoolParse())(p3);
+        let p5 = Primitives.choice<Expression<any>>(varDecParse())(p4);
+        let p6 = Primitives.choice<Expression<any>>(unOpsExpr)(p5);
+        let p7= Primitives.choice<Expression<any>>(Declare())(p6)
+        let p8= Primitives.choice<Expression<any>>(binOpExpr)(p7);
+        let p9= Primitives.choice<Expression<any>>(ListHead)(p8);
+        let p10= Primitives.choice<Expression<any>>(funApp)(p9);
+        let p11= Primitives.choice<Expression<any>>(returnParser)(p10);
+        let p12= Primitives.choice<Expression<any>>(condParse)(p11);
+        let p13= Primitives.choice<Expression<any>>(WhileLoop)(p12);
+        let p14= Primitives.choice<Expression<any>>(ForLoop)(p13);
+        let p15= Primitives.choice<Expression<any>>(funDef)(p14);
+        let p16 = Primitives.choice<Expression<any>>(loopParse)(p15);
+        return p16(i);
     }
 
     /**
