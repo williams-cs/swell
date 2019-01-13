@@ -39,15 +39,11 @@ import CodeMirror from 'codemirror';
     let parseTimer: any = null;
     let logTimer: any = null;
 
-    let uid: string = localStorage.getItem("swell_uuid");
-    if (uid == null) {
-        uid = "someUUID";
-    }
-
+    let uid: string = localStorage.getItem("swell_uid") || "someUID";
+    let doNotLog = localStorage.getItem("data_collection") != "1";
     let codeEvent = new CodeEvent('CodeEvent');
     let checkpointName = 'l0c0';
     let parses = false;
-    let doNotLog = localStorage.getItem("data_collection") != "1";
 
     /* Logging, parsing & rendering */
 

@@ -40,8 +40,8 @@
         next.disabled = true;
 
         //display uid for debugging
+        let uid = localStorage.getItem("swell_uid") || "someUID";
         let uid_tag = document.getElementById("uid");
-        let uid = localStorage.getItem("swell_uid");
         uid_tag.innerHTML += uid;
 
         let doNotLog = localStorage.getItem("data_collection") != "1";
@@ -75,6 +75,11 @@
                 }
 
             } else if (i == q_order.length - 1) {
+                //remove radio inputs saved to localStorage, if any
+                for (var q of questions) {
+                    localStorage.removeItem(q[1]);
+                }
+
                 location.href = "index.html";
             }
         }
@@ -134,6 +139,9 @@
 
                 answer_radio.appendChild(div);
             }
+
+            next.style.background = "#D8D8D8";
+            next.disabled = true;
         }
 
         function storeAnswer() {
@@ -172,7 +180,7 @@
             let date = new Date();
             let year = date.getFullYear().toString();
             let month = pad(date.getMonth() + 1, 2);
-            let day = pad(date.getDay(), 2);
+            let day = pad(date.getDate(), 2);
             let hour = pad(date.getHours(), 2);
             let minutes = pad(date.getMinutes(), 2);
             let seconds = pad(date.getSeconds(), 2);
