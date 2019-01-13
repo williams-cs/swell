@@ -1,5 +1,8 @@
 #!/bin/sh
 
+rm -rf .git
+rm -f .gitignore
+rm -rf .vscode
 rm -f browserui.js
 rm -f completed.html
 rm -f config.html
