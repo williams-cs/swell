@@ -4,9 +4,9 @@ rm -rf .git
 rm -f .gitignore
 rm -rf .vscode
 rm -f browserui.js
-rm -rf completed.html
+rm -f completed.html
 rm -f config.html
-rm -f coverage
+rm -rf coverage
 rm -rf dist
 rm -f index.html
 rm -f index.ts
