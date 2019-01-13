@@ -51,21 +51,17 @@ import CodeMirror from 'codemirror';
 
     /* Logging, parsing & rendering */
 
-    function logDM() {
+    function logSuccessfulParse() {
         for (let elem of masterLog) {
             console.log(elem.assembleLog());
-            if (checkpoint != null) {
-                checkpointName = checkpoint._name;
-            }
+            checkpointName = checkpoint != null ? checkpoint._name : "l0c0";
             elem.logRemotely(uid, editor.getValue(), checkpointName, parses, doNotLog);
         }
         masterLog = [];
     }
 
     function logCodeEvent() {
-        if (checkpoint != null) {
-            checkpointName = checkpoint._name;
-        }
+        checkpointName = checkpoint != null ? checkpoint._name : "l0c0";
         codeEvent.logRemotely(uid, editor.getValue(), checkpointName, parses, doNotLog);
     }
 
@@ -120,7 +116,7 @@ import CodeMirror from 'codemirror';
         }
 
         // log to console
-        logDM();
+        logSuccessfulParse();
     }
 
     /**
@@ -241,7 +237,7 @@ import CodeMirror from 'codemirror';
         }
         highlightTimer = setTimeout(function() {
             clearEditorMarkers(); // Clear markers
-            logDM(); // user stopped doing DM; log now
+            logSuccessfulParse(); // user stopped doing DM; log now
         }, 500);
 
         // Update last program if necessary
@@ -422,8 +418,8 @@ import CodeMirror from 'codemirror';
         lessonLabelBtn.setAttribute("data-toggle", "collapse");
         lessonLabelBtn.setAttribute("data-target", "#" + lessonID);
         lessonLabelBtn.innerHTML = "Lesson " + (x + 1);
-        lessonLabel.append(lessonLabelBtn);
-        lessonAccordion.append(lessonLabel);
+        lessonLabel.appendChild(lessonLabelBtn);
+        lessonAccordion.appendChild(lessonLabel);
 
         let lesson = document.createElement("div");
         lesson.id = lessonID;
@@ -448,7 +444,7 @@ import CodeMirror from 'codemirror';
             lesson.appendChild(div);
         }
 
-        lessonAccordion.append(lesson);
+        lessonAccordion.appendChild(lesson);
     }
 
     //reset checkpoint button
@@ -460,10 +456,10 @@ import CodeMirror from 'codemirror';
         }
         context.eventLog.push(new ClearEvent());
         masterLog.push(context.eventLog[context.eventLog.length - 1]); // Does this actually work?
-        logDM();
+        logSuccessfulParse();
     };
 
-    let instructions = document.getElementById('goal');
+    let message = document.getElementById('message');
     let rewardBox = document.getElementById('reward-container');
     let rewardText = document.getElementById('reward-text');
     let rewardImg: HTMLImageElement = document.getElementById('reward-image') as HTMLImageElement;
@@ -476,6 +472,7 @@ import CodeMirror from 'codemirror';
     cpNames.forEach((cp: string) => {
         cpCode.set(cp, "");
         cpCompletion.set(cp, false);
+        //cpCompletion.set(cp, true);
     });
 
     /* keeping track of and displaying user's progress */
@@ -496,7 +493,7 @@ import CodeMirror from 'codemirror';
 
         console.log("Initiating checkpoint " + cp);
         checkpoint = modGen.createModule(cp, ctx, editor);
-        instructions.innerHTML = checkpoint._instructions;
+        message.innerHTML = checkpoint._instructions;
 
         //freeze/unfreeze the CODE and CANVAS areas
         if (dm == 1) {
@@ -557,7 +554,7 @@ import CodeMirror from 'codemirror';
             rewardImg.alt = 'a star to be earned';
             nextButton.style.display = 'none';
 
-            instructions.scrollTop = 0;
+            message.scrollTop = 0;
             checkpointIsActive = true;
         }
 
@@ -569,13 +566,13 @@ import CodeMirror from 'codemirror';
             cpCompletion.set(checkpoint._name, true);
             updateRewardBox();
             updateStarBox();
-            instructions.innerHTML = "";
+            message.innerHTML = "";
         }
     }
 
     function updateRewardBox() {
         let isFinished = true;
-        for (var val  of cpCompletion.values()) {
+        for (var val of cpCompletion.values()) {
             if (!val) {
                 isFinished = false;
                 break;
@@ -596,13 +593,13 @@ import CodeMirror from 'codemirror';
             nextButton.innerHTML = "Finish"
         }
 
-        instructions.scrollTop = instructions.scrollHeight;
+        message.scrollTop = message.scrollHeight;
         checkpointIsActive = false;
     }
 
     nextButton.onclick = function() {
         let isFinished = true;
-        for (var val  of cpCompletion.values()) {
+        for (var val of cpCompletion.values()) {
             if (!val) {
                 isFinished = false;
                 break;
@@ -614,6 +611,16 @@ import CodeMirror from 'codemirror';
             rewardText.style.color = "black";
             rewardBox.style.background = '#C0C0C0';
             rewardImg.style.display = "none";
+
+            message.innerHTML = `<span class="purple-text">You've completed the Hour of Code! Let your instructor know of this amazing achievement!</span>`;
+
+            let popupInstruction = document.getElementById("instruction");
+            if (popupInstruction != null) {
+                popupInstruction.remove();
+            }
+
+            checkpoint = null;
+
             return;
         }
 

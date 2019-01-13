@@ -32,8 +32,7 @@ print(b, 100, 100);`;
     }
 
     /**
-     * A lesson to print a string
-     * goals: moving the text and observe the code
+     * A lesson to use variables in different places
      * @param document the HTML document
      * @param effects the list of effects currently on the CANVAS
      */

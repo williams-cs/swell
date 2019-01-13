@@ -44,8 +44,7 @@ export class LessonOneCpThree extends Module {
     }
 
     /**
-     * A lesson to print a string
-     * goals: moving the text and observe the code
+     * A lesson on location parameters, taught with textual code editing
      * @param document The HTML document
      * @param effects: the list of effects currently on the CANVAS
      */

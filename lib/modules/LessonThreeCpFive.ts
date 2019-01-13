@@ -60,8 +60,7 @@ if(c < 100) {
     }
 
     /**
-     * A lesson leading into conditionals
-     * goals: moving the text and observe the code
+     * A lesson on else statement
      * @param document the HTML document
      * @param effects the list of effects currently on the CANVAS
      */

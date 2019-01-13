@@ -48,10 +48,9 @@ export class LessonOneCpTwo extends Module {
     }
 
     /**
-     * A lesson to print a string
-     * goals: moving the text and observe the code
-     * @param document The HTML document
-     * @param effects: the list of effects currently on the CANVAS
+     * A lesson on location parameters, taught with DM
+     * @param document the HTML document
+     * @param effects the list of effects currently on the CANVAS
      */
     checkGoal(document: Document, effects: Effect<any>[]): boolean {
         switch (this._latestInstrIndex) {

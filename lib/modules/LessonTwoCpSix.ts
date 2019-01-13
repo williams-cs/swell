@@ -51,8 +51,7 @@ print(c, 300, 100)`;
     }
 
     /**
-     * A lesson to print a string
-     * goals: moving the text and observe the code
+     * A lesson on using variables in multiple places in the scope, taught using DM
      * @param document the HTML document
      * @param effects the list of effects currently on the CANVAS
      */

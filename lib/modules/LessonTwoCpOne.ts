@@ -28,8 +28,8 @@ export class LessonTwoCpOne extends Module {
     }
 
     /**
-     *
-     * @param document The HTML document
+     * A lesson to print emojis
+     * @param document the HTML document
      * @param effects the list of effects currently on the CANVAS
      */
     checkGoal(document: Document, effects: Effect<any>[]): boolean {
