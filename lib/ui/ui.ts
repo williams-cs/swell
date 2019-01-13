@@ -379,18 +379,6 @@ import CodeMirror from 'codemirror';
         parse();
     }
 
-    //reset checkpoint
-    // let resetButton = document.getElementById('reset');
-    // resetButton.onclick = function() {
-    //     if (checkpoint._starterCode != null) {
-    //         editor.setValue(checkpoint._starterCode);
-    //         parse();
-    //     }
-    //     context.eventLog.push(new ClearEvent());
-    //     masterLog.push(context.eventLog[context.eventLog.length - 1]); // Does this actually work?
-    //     logDM();
-    // };
-
     /* Modules */
 
     /* Maps to help initialize the Checkpoint sidebar.
@@ -463,11 +451,22 @@ import CodeMirror from 'codemirror';
         lessonAccordion.append(lesson);
     }
 
+    //reset checkpoint button
+    let resetButton = document.getElementById('reset');
+    resetButton.onclick = function() {
+        if (checkpoint._starterCode != null) {
+            editor.setValue(checkpoint._starterCode);
+            parse();
+        }
+        context.eventLog.push(new ClearEvent());
+        masterLog.push(context.eventLog[context.eventLog.length - 1]); // Does this actually work?
+        logDM();
+    };
+
     let instructions = document.getElementById('goal');
     let rewardBox = document.getElementById('reward-container');
     let rewardText = document.getElementById('reward-text');
     let rewardImg: HTMLImageElement = document.getElementById('reward-image') as HTMLImageElement;
-    let instrLabel = document.getElementById('instr-label');
     let nextButton = document.getElementById('next');
 
     //Map maintaining code last used at a checkpoint
@@ -497,7 +496,6 @@ import CodeMirror from 'codemirror';
 
         console.log("Initiating checkpoint " + cp);
         checkpoint = modGen.createModule(cp, ctx, editor);
-        instrLabel.innerHTML = cp + " - GOAL";
         instructions.innerHTML = checkpoint._instructions;
 
         //freeze/unfreeze the CODE and CANVAS areas
@@ -562,6 +560,8 @@ import CodeMirror from 'codemirror';
             instructions.scrollTop = 0;
             checkpointIsActive = true;
         }
+
+        resetButton.style.display = "block";
     }
 
     function checkpointChecksGoal() {
@@ -569,6 +569,7 @@ import CodeMirror from 'codemirror';
             cpCompletion.set(checkpoint._name, true);
             updateRewardBox();
             updateStarBox();
+            instructions.innerHTML = "";
         }
     }
 
@@ -590,6 +591,7 @@ import CodeMirror from 'codemirror';
         rewardImg.src = 'pics/star.svg';
         rewardImg.alt = 'star earned';
         nextButton.style.display = 'block';
+        resetButton.style.display = "none";
         if (isFinished) {
             nextButton.innerHTML = "Finish"
         }
@@ -656,7 +658,6 @@ import CodeMirror from 'codemirror';
             }
         }
     }
-
 
     function updateStarBox() {
         starCount = 0;

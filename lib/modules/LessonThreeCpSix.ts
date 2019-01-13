@@ -9,7 +9,8 @@ export class LessonThreeCpSix extends Module {
     readonly _goal: any;
     readonly _constraint: string = 'none';
     readonly _instructions: string =
-        `<p> GOAL: Create an if/else statement to print the correct claim about the sizes of the 2 emojis. </p>`;
+        `<p>Lesson 3 - Checkpoint 6</p>` +
+        `<p>GOAL: Create an if/else statement to print the correct claim about the sizes of the 2 emojis.</p>`;
 
     _latestInstrIndex: number = 3;
 

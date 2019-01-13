@@ -8,7 +8,9 @@ export class LessonThreeCpThree extends Module {
     readonly _goal: any;
     readonly _constraint: string = 'none';
     readonly _instructions: string =
-        `<p> GOAL: Make the line "The pirate is bigger than the box." only be printed on the CANVAS when the pirate emoji is actually bigger than the box. </p>`;
+        `<p>Lesson 3 - Checkpoint 3</p>` +
+        `<p>GOAL: Make the line "The pirate is bigger than the box." only be printed
+        on the CANVAS when the pirate emoji is actually bigger than the box.</p>`;
 
     readonly _starterCode: string =
         `b = 50;

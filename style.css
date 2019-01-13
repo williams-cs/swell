@@ -160,10 +160,17 @@ button:hover {
     margin: 25px auto auto auto;
 }
 
-.next {
-    background-color: var(--yellow);
-    margin: 30px auto auto auto;
+#next, #reset {
     display: none;
+    margin: 30px auto auto auto;
+}
+
+#next {
+    background-color: var(--yellow);
+}
+
+#reset {
+    background-color: var(--purple);
 }
 
 .instruction {

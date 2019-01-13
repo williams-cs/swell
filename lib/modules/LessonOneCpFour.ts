@@ -8,7 +8,8 @@ export class LessonOneCpFour extends Module {
     readonly _goal: any;
     readonly _constraint: string = 'canvas';
     readonly _instructions: string =
-        `<p> GOAL: Print the word "cool" on the CANVAS, and put it inside the box at the center of the CANVAS. </p>`;
+        `<p>Lesson 1 - Checkpoint 4</p>` +
+        `<p>GOAL: Print the word "cool" on the CANVAS, and put it inside the box at the center of the CANVAS.</p>`;
 
     readonly _starterCode: string = `print("happy", 100, 100)`;
 

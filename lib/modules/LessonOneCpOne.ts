@@ -8,7 +8,8 @@ export class LessonOneCpOne extends Module {
     readonly _goal: any;
     readonly _constraint: string = 'none';
     readonly _instructions: string =
-        `<p> GOAL: Write 'happy' on the CANVAS. </p>`;
+        `<p>Lesson 1 - Checkpoint 1</p>` +
+        `<p>GOAL: Write 'happy' on the CANVAS. </p>`;
 
     readonly _starterCode: string = ``;
 

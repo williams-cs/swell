@@ -8,7 +8,8 @@ export class LessonTwoCpTwo extends Module {
     readonly _goal: any;
     readonly _constraint: string = 'none';
     readonly _instructions: string =
-        `<p> GOAL: Fit the emoji inside the given box. </p>`;
+        `<p>Lesson 2 - Checkpoint 2</p>` +
+        `<p>GOAL: Fit the emoji inside the given box.</p>`;
 
     readonly _starterCode: string = `print(emoji("angry", 100, 100), 120, 150);`;
 

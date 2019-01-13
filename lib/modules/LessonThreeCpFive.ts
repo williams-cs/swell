@@ -8,7 +8,8 @@ export class LessonThreeCpFive extends Module {
     readonly _goal: any;
     readonly _constraint: string = 'none';
     readonly _instructions: string =
-        `<p> GOAL: Change the value of c around to see what is printed on the canvas. </p>`;
+        `<p>Lesson 3 - Checkpoint 5</p>` +
+        `<p>GOAL: Change the value of c around to see what is printed on the canvas.</p>`;
 
     readonly _starterCode: string =
         `c = 75;
