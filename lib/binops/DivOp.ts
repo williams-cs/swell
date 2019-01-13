@@ -2,9 +2,10 @@ import {BinaryOperation} from './BinaryOperation';
 import {Expression} from '../Expression';
 import {Scope} from '../structural/Scope';
 import { NumberNode } from '../prims/NumberNode';
+import {FloatNode} from '../prims/FloatNode';
 import { Dimensions } from '../structural/Dimensions';
 
-export class DivOp extends BinaryOperation<NumberNode>{
+export class DivOp extends BinaryOperation<NumberNode|FloatNode>{
     private _ws: string; 
 
     /**
@@ -13,7 +14,7 @@ export class DivOp extends BinaryOperation<NumberNode>{
      * @param right The divisor
      * @param ws Preceding whitespace
      */
-    constructor(left: Expression<NumberNode>, right: Expression<NumberNode>, ws?: string){
+    constructor(left: Expression<NumberNode> | Expression<FloatNode>, right: Expression<NumberNode> | Expression<FloatNode>, ws?: string){
         super(left,right);
         this._ws = ws;
         if(ws == undefined){
@@ -25,7 +26,7 @@ export class DivOp extends BinaryOperation<NumberNode>{
      * Performs the division and evaluates into a single NumberNode
      * @param context The current program context
      */
-    eval(context: Scope): NumberNode{
+    eval(context: Scope): NumberNode|FloatNode{
         return new NumberNode(this.left.eval(new Scope(context)).eval(context).val / this.right.eval(new Scope(context)).eval(context).val);
     }
 

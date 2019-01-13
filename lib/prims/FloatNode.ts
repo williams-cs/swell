@@ -26,7 +26,7 @@ export class FloatNode implements Expression <FloatNode>{
     };
 
     /**
-     * Returns this NumberNode
+     * Returns this FloatNode
      * @param context The current program context
      */
     eval(context: Scope): FloatNode {
@@ -34,7 +34,7 @@ export class FloatNode implements Expression <FloatNode>{
     }
 
     /**
-     * NumberNodes cannot be drawn directly
+     * FloatNodes cannot be drawn directly
      * @param context
      * @param dims
      * @param ast
@@ -45,7 +45,7 @@ export class FloatNode implements Expression <FloatNode>{
     }
 
     /**
-     * Returns whether this NumberNode equals another NumberNode
+     * Returns whether this FloatNode equals another FloatNode
      * @param right The right side of the equality (must be a NumberNode)
      */
     equalsVal(right: Expression<any>): boolean{
@@ -56,7 +56,7 @@ export class FloatNode implements Expression <FloatNode>{
     }
 
     /**
-     * Returns a string representation of the NumberNode
+     * Returns a string representation of the FloatNode
      */
     toString(): string {
         return this._ws + this._val;
