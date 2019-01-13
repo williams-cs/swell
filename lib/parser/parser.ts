@@ -1,6 +1,7 @@
 import { Primitives, CharUtil } from 'pants';
 import { NumberNode, StringNode, Expression, BinaryOperation, DeclareOp, PlusOp, MulOp, DivOp, MinusOp, NegOp, VariableNode, AssignOp, UnaryOperation, ListNode, SequenceNode, Return, FunDef, FunApp, BooleanNode, Conditional, RepeatNode, WhileNode, PrintNode, Equals, Not, And, GreaterThan, LessThan, GreaterThanEq, LessThanEq, Or, NotEqual, ForNode, Dimensions, Increment, NOP, Decrement, EllipseNode, RectangleNode, LineNode, CurveNode, EphNode, EmojiNode } from '../../index';
 import { Option, Some, None } from 'space-lift';
+import { FloatNode } from '../prims/FloatNode';
 
 export namespace Parser {
 
@@ -24,11 +25,12 @@ export namespace Parser {
         }
     }
 
-    /**export function float() {
-        let p1 = Primitives.many1<CharUtil.CharStream> (Primitives.digit());
-        let p2 = Primitives.seq<CharUtil.CharStream, CharUtil.CharStream, CharUtil.CharStream>(Primitives.str("."))(p1)(x => x[1]);
-        
-    }*/
+    export function float(): Primitives.IParser<Expression<{}>>{
+        let p1 = Primitives.left<number, CharUtil.CharStream>(number())(Primitives.str('.'));
+        let p2 = Primitives.seq<number, number, number[]>(p1)(number())(x =>x);
+        let float_val = Primitives.appfun<string, number>(Primitives.appfun<number[], string>(p2)(x=> x[0] + "." + x[1]))(x=> parseFloat(x));
+        return Primitives.appfun<number, FloatNode>(float_val)(x => new FloatNode(x));
+    }
 
     /**
      * to be moved to Pants
@@ -133,7 +135,24 @@ export namespace Parser {
      */
     export let ExpressionParserNoSeq : Primitives.IParser<Expression<{}>> = i => {
         let p1 = Primitives.choice(lNumber())(lstring2())
-        let p2 = Primitives.choice<Expression<any>>(varNameParse())(p1);
+        let p2 = Primitives.choice(float())(p1);
+        let p3 = Primitives.choice<Expression<any>>(varNameParse())(p2);
+        let p4 = Primitives.choice<Expression<any>>(BoolParse())(p3);
+        let p5 = Primitives.choice<Expression<any>>(varDecParse())(p4);
+        let p6 = Primitives.choice<Expression<any>>(unOpsExpr)(p5);
+        let p7 = Primitives.choice<Expression<any>>(Declare())(p6);
+        let p8 = Primitives.choice<Expression<any>>(binOpExpr)(p7);
+        let p9 = Primitives.choice<Expression<any>> (LogicExpr())(p8);
+        let p10 = Primitives.choice<Expression<any>>(ListHead)(p9);
+        let p11 = Primitives.choice<Expression<any>>(funApp)(p10);
+        let p12 = Primitives.choice<Expression<any>>(returnParser)(p11);
+        let p13 = Primitives.choice<Expression<any>>(condParse)(p12);
+        let p14 = Primitives.choice<Expression<any>>(WhileLoop)(p13);
+        let p15 = Primitives.choice<Expression<any>>(ForLoop)(p14);
+        let p16 = Primitives.choice<Expression<any>>(funDef)(p15);
+        let p17 = Primitives.choice<Expression<any>>(loopParse)(p16);
+        return p17(i);
+        /**let p2 = Primitives.choice<Expression<any>>(varNameParse())(p1);
         let p3 = Primitives.choice<Expression<any>>(BoolParse())(p2);
         let p4 = Primitives.choice<Expression<any>>(varDecParse())(p3);
         let p5 = Primitives.choice<Expression<any>>(unOpsExpr)(p4);
@@ -148,7 +167,7 @@ export namespace Parser {
         let p14 = Primitives.choice<Expression<any>>(ForLoop)(p13);
         let p15 = Primitives.choice<Expression<any>>(funDef)(p14);
         let p16 = Primitives.choice<Expression<any>>(loopParse)(p15);
-        return p16(i);
+        return p16(i);*/
     }
 
     /**
@@ -172,6 +191,20 @@ export namespace Parser {
         let p13= Primitives.choice<Expression<any>>(funDef)(p12);
         let p14 = Primitives.choice<Expression<any>>(loopParse)(p13);
         return p14(i);
+        /**let p2 = Primitives.choice<Expression<any>>(varNameParse())(p1);
+        let p3 = Primitives.choice<Expression<any>>(BoolParse())(p2);
+        let p4 = Primitives.choice<Expression<any>>(varDecParse())(p3);
+        let p5 = Primitives.choice<Expression<any>>(unOpsExpr)(p4);
+        let p6= Primitives.choice<Expression<any>>(Declare())(p5);
+        let p7= Primitives.choice<Expression<any>>(ListHead)(p6);
+        let p8= Primitives.choice<Expression<any>>(funApp)(p7);
+        let p9= Primitives.choice<Expression<any>>(returnParser)(p8);
+        let p10= Primitives.choice<Expression<any>>(condParse)(p9);
+        let p11= Primitives.choice<Expression<any>>(WhileLoop)(p10);
+        let p12= Primitives.choice<Expression<any>>(ForLoop)(p11);
+        let p13= Primitives.choice<Expression<any>>(funDef)(p12);
+        let p14 = Primitives.choice<Expression<any>>(loopParse)(p13);
+        return p14(i); */
     }
 
     /**

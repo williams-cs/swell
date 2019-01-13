@@ -4,6 +4,7 @@ import 'mocha';
 import { CharUtil, Primitives } from 'pants/lib';
 import { SequenceNode, StringNode, Return, Scope, NumberNode, BooleanNode, WhileNode, ForNode, Conditional, ListNode, FunDef, FunApp, PrintNode, VariableNode, NegOp, NOP, Dimensions, EllipseNode,
     RectangleNode, Equals, NotEqual, And, Or, GreaterThan, LessThan, Not, GreaterThanEq, LessThanEq, AssignOp, PlusOp, Decrement, DeclareOp, Increment, EphNode } from '../index';
+import { FloatNode } from '../lib/prims/FloatNode';
 
 describe('Number Parser test', () =>{
     it('should return a node with digit value', () => {
@@ -896,6 +897,42 @@ describe('Special case issue', () =>{
             assert.fail();
         }
         else {
+            assert(true);
+        }
+    });
+});
+
+describe('Float parser', () => {
+    it('should correctly parse a float with proper syntax', () => {
+        const input = '14.25';
+        let test = new SequenceNode(new FloatNode(14.25), new NOP());
+        let result = Parser.parse(input);
+        if(result.isDefined()){
+            console.log(result.get().toString());
+            expect(result.get()).to.eql(test);
+        }
+        else{
+            assert.fail();
+        }
+    });
+    it('should parse numbers separately from floats', () => {
+        const input = '12';
+        let test = new SequenceNode(new NumberNode(12), new NOP());
+        let result = Parser.parse(input);
+        if(result.isDefined()){
+            expect(result.get()).to.eql(test);
+        }
+        else{
+            assert.fail();
+        }
+    });
+    it('should not parse floats with incorrect syntax (no decimal val after decimal point)', () => {
+        const input = '12.';
+        let result = Parser.parse(input);
+        if(result.isDefined()){
+            assert.fail();
+        }
+        else{
             assert(true);
         }
     });
