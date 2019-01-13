@@ -290,7 +290,7 @@ export namespace Parser {
      * @param i nonsense parameter used to avoid the bug with eager evaluation
      */
     export let unOpsExpr: Primitives.IParser<UnaryOperation<{}>> = i => {
-        var f= (tup: [CharUtil.CharStream, Expression<NumberNode>]) => {
+        var f= (tup: [CharUtil.CharStream, Expression<NumberNode|FloatNode>]) => {
             return new NegOp(tup[1], ws);
         }
         let ws = "";

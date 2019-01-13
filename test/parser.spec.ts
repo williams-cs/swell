@@ -195,6 +195,18 @@ describe('unOpExpr parser test', () => {
                 assert.fail();
         }
     });
+    it('should successfully parse a unary expression (negation) with float', () => {
+        const input=new CharUtil.CharStream('-2.5;');
+        let result=Parser.ExpressionParser(input);
+        switch(result.tag){
+            case "success":
+                console.log(result.result.toString());
+                expect(result.result).to.eql(new SequenceNode(new NegOp(new FloatNode(2.5)), new NOP()));
+                break;
+            case "failure":
+                assert.fail();
+        }
+    });
 });
 
 describe('Arbitrary string Parser', () => {
