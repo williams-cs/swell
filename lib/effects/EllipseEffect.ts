@@ -26,6 +26,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
     private _isChangingDims: boolean = false;
     private _isSelectingMultiple: boolean = false;
 
+    private _justResized: boolean = false;
     private _justDragged: boolean = false; // Has this object just been dragged?
 
     private _x1: number; // used to save coords for logging
@@ -462,6 +463,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
      */
     modifyState(guideContains: number, contains: boolean): void {
         this._justDragged = false;
+        this._justResized = false;
 
         if (this._isSelectingMultiple) { //prepares the object for dragging whether it is personally selected or not
             this._isDragging = true;
@@ -544,7 +546,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
             //let size2 = Math.sqrt(Math.pow(this.w,2) + Math.pow(this.h,2));
             //console.log("Size diff: " + Math.abs(this._size1 - size2));
             if((Math.abs(this._width1 - this.w) > 0) || (Math.abs(this._height1 - this.h) > 0)){
-                this._context.eventLog.push(this.logResize());
+                this._justResized = true;
             }
         }
 
@@ -596,7 +598,7 @@ export class EllipseEffect implements Effect<EllipseNode> {
      * Logs a resize event
      */
     logResize(): LogEvent<any> {
-        return new ResizeEvent("ellipse with ID " + this.getID().toString(), Math.round(this._width1*100)/100, Math.round(this._height1*100)/100, Math.round(this.w*100)/100, Math.round(this.h*100)/100);
+        return new ResizeEvent(this);
         //Math.round(this._size1*100)/100, Math.round((Math.sqrt(Math.pow(this.w,2) + Math.pow(this.h,2))*100))/100);
     }
 
@@ -677,6 +679,13 @@ export class EllipseEffect implements Effect<EllipseNode> {
      */
     setJustDragged(val: boolean) {
         this._justDragged = val;
+    }
+
+    getJustResized(): boolean {
+        return this._justResized;
+    }
+    setJustResized(val: boolean) {
+        this._justResized = val;
     }
 
     /**

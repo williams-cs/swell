@@ -36,6 +36,7 @@ export class StringEffect implements Effect<StringNode> {
     private _isSelectingMultiple: boolean = false;
 
     private _justDragged: boolean = false; // Has this object just been dragged?
+    private _justResized: boolean = false;
 
     //private _log: string[];
 
@@ -387,6 +388,7 @@ export class StringEffect implements Effect<StringNode> {
      */
     modifyState(guideContains: boolean, contains: boolean): void {
         this._justDragged = false;
+        this._justResized = false;
 
         if (this._isSelectingMultiple) { //prepares the object for dragging whether it is personally selected or not
             if (contains) {
@@ -480,7 +482,7 @@ export class StringEffect implements Effect<StringNode> {
             //console.log(this._str.val + " logging resize");
             this._isResizing = false;
             if(Math.abs(this._size1 - this._fontSize) > 0){
-                this._context.eventLog.push(this.logResize());
+                this._justResized = true;
             }
         }
         this._isDragging = false;
@@ -537,7 +539,7 @@ export class StringEffect implements Effect<StringNode> {
      * Logs a resize event
      */
     logResize(): LogEvent<any> {
-        return new ResizeEvent(this._str.val + " with ID " + this.getID().toString(), Math.round(this._size1*100)/100, Math.round(this._fontSize*100)/100);
+        return new ResizeEvent(this);
     }
 
     /**
@@ -606,6 +608,13 @@ export class StringEffect implements Effect<StringNode> {
      */
     setJustDragged(val: boolean) {
         this._justDragged = val;
+    }
+
+    getJustResized(): boolean {
+        return this._justResized;
+    }
+    setJustResized(val: boolean) {
+        this._justResized = val;
     }
 
     /**

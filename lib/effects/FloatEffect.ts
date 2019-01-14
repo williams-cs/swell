@@ -35,7 +35,8 @@ export class FloatEffect implements Effect<FloatNode> {
     private _isResizing: boolean = false;
     private _isSelectingMultiple: boolean = false;
 
-    private _justDragged: boolean;
+    private _justDragged: boolean = false;
+    private _justResized: boolean = false;
 
     private _dragoffx: number = 0;
     private _dragoffy: number = 0;
@@ -399,6 +400,7 @@ export class FloatEffect implements Effect<FloatNode> {
      * @param contains
      */
     modifyState(guideContains: boolean, contains: boolean): void {
+        this._justResized = false;
         this._justDragged = false;
 
         if (this._isSelectingMultiple) { //prepares the object for dragging whether it is personally selected or not
@@ -484,7 +486,7 @@ export class FloatEffect implements Effect<FloatNode> {
         } else if (this._isResizing && this._isSelected){
             this._isResizing = false;
             if(Math.abs(this._size1 - this._fontSize) > 0){
-                this._context.eventLog.push(this.logResize());
+                this._justResized = true;
             }
         }
         this._isDragging = false;
@@ -541,7 +543,7 @@ export class FloatEffect implements Effect<FloatNode> {
      * Logs a resize event
      */
     logResize(): LogEvent<any> {
-        return new ResizeEvent(this._num.toString() + " with ID " + this.getID().toString(), Math.round(this._size1*100)/100, Math.round(this._fontSize*100)/100);
+        return new ResizeEvent(this);
     }
 
     /**
@@ -610,6 +612,13 @@ export class FloatEffect implements Effect<FloatNode> {
     */
    setJustDragged(val: boolean) {
        this._justDragged = val;
+   }
+
+   getJustResized(): boolean {
+       return this._justResized;
+   }
+   setJustResized(val: boolean) {
+       this._justResized = val;
    }
 
    /**

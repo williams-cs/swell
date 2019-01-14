@@ -27,6 +27,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
     private _isSelectingMultiple: boolean = false;
 
     private _justDragged = false;
+    private _justResized = false;
 
     private _x1: number; // used to save coords for logging
     private _y1: number;
@@ -473,6 +474,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
      */
     modifyState(guideContains: number, contains: boolean): void {
         this._justDragged = false;
+        this._justResized = false;
         let x: number = this.x;
         let y: number = this.y;
         let w: number = this.w;
@@ -599,7 +601,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
             this._isResizing = false;
             let size2 = Math.sqrt(Math.pow(this.w,2) + Math.pow(this.h,2));
             if((Math.abs(this._width1 - this.w) > 0) || (Math.abs(this._height1 - this.h) > 0)){
-                this._context.eventLog.push(this.logResize());
+                this._justResized = true;
             }
         }
         this._isDragging = false;
@@ -646,7 +648,7 @@ export class RectangleEffect implements Effect<RectangleNode> {
      * Logs a rectangle resize event
      */
     logResize(): LogEvent<any> {
-        return new ResizeEvent("rectangle with ID " + this.getID().toString(), Math.round(this._width1*100)/100, Math.round(this._height1*100)/100, Math.round(this.w*100)/100, Math.round(this.h*100)/100);
+        return new ResizeEvent(this);
     }
 
     /**
@@ -726,6 +728,13 @@ export class RectangleEffect implements Effect<RectangleNode> {
      */
     setJustDragged(val: boolean) {
         this._justDragged = val;
+    }
+
+    getJustResized(): boolean {
+        return this._justResized;
+    }
+    setJustResized(val: boolean) {
+        this._justResized = val;
     }
 
     /**

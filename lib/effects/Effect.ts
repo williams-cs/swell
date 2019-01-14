@@ -70,6 +70,9 @@ export interface Effect<T>{
      */
     setJustDragged(val: boolean): void;
 
+    getJustResized(): boolean;
+    setJustResized(val: boolean): void;
+
     /**
      * Initializes the object ID
      * @param id The ID number

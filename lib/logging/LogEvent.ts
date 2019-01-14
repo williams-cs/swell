@@ -52,7 +52,7 @@ export abstract class LogEvent<T> {
 
     abstract eventType(): string;
 
-    abstract logRemotely(uid: string, data: string, checkpoint: string, parses: boolean, doNotLog: boolean): void;
+    abstract logRemotely(uid: string, data: string, checkpoint: string, parses: boolean, doNotLog: boolean, time?: string): void;
 
     /**
      * Returns date-time string
@@ -109,11 +109,39 @@ export abstract class LogEvent<T> {
     /**
      * Logs to a remote server.
      */
-    static logToRemoteServer(eventtype: string, uid: string, data: string, checkpoint: string, parses: boolean, doNotLog: boolean) {
+    static logToRemoteServer(eventtype: string, uid: string, data: string, checkpoint: string, parses: boolean, doNotLog: boolean, time?: string) {
+        //check for permission to log event
         if (doNotLog) {
             return;
         }
 
+        //Initialize time to log if no time was provided
+        let newTime = time;
+        if (newTime == null) {
+            newTime = this.getNewTime();
+        }
+
+        let payload = new FormData();
+        payload.append('uid', uid);
+        payload.append('data', data);
+        payload.append('eventtype', eventtype);
+
+        // MUST USE THE FOLLOWING DATE FORMAT
+        // payload.append('time', '2019-01-01 16:36:00');
+        payload.append('time', newTime);
+        payload.append('checkpoint_id', checkpoint);
+        payload.append('parses', '' + parses);
+
+
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "http://camembert.cs.williams.edu:8080/events", true);
+        xhr.send(payload);
+    }
+
+    /**
+     * Provides new timestamp
+     */
+    static getNewTime() : string {
         // modified from: https://stackoverflow.com/a/10073788/480764
         function pad(n: number, width: number) : string {
             let padWith = '0';
@@ -125,26 +153,9 @@ export abstract class LogEvent<T> {
         let year = date.getFullYear().toString();
         let month = pad(date.getMonth() + 1, 2);
         let day = pad(date.getDate(), 2);
-        console.log("Day.getDay logged: " + day);
-        console.log("Day logged: " + day);
         let hour = pad(date.getHours(), 2);
         let minutes = pad(date.getMinutes(), 2);
         let seconds = pad(date.getSeconds(), 2);
-
-        let payload = new FormData();
-        payload.append('uid', uid);
-        payload.append('data', data);
-        payload.append('eventtype', eventtype);
-
-        // MUST USE THE FOLLOWING DATE FORMAT
-        // payload.append('time', '2019-01-01 16:36:00');
-        payload.append('time', year + '-' + month + '-' + day + ' ' + hour + ':' + minutes + ':' + seconds);
-        payload.append('checkpoint_id', checkpoint);
-        payload.append('parses', '' + parses);
-
-
-        let xhr = new XMLHttpRequest();
-        xhr.open("POST", "http://camembert.cs.williams.edu:8080/events", true);
-        xhr.send(payload);
+        return year + '-' + month + '-' + day + ' ' + hour + ':' + minutes + ':' + seconds;
     }
 }

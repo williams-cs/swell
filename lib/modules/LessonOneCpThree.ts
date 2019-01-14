@@ -27,7 +27,7 @@ export class LessonOneCpThree extends Module {
         this._instrBoxes.push(new Instruction('code-editor', content, "30%", "10%"));
         content = "Changing those numbers in the CODE moves the word on CANVAS! Try changing the number to move the word inside the box.";
         this._instrBoxes.push(new Instruction('canvas-container', content, "70%", "10%"));
-        content = `Great job! You just learned how to use a <span class="inline-code">print</span> statement!`;
+        content = `Great job! You just learned how to use a <span class="inline-code">print</span> statement! Again, remember, changing the <span class="red-text">first number</span> moves the word <span class="red-text">left</span> and <span class="red-text">right</span>. Changing the <span class="blue-text">second number</span> moves the word <span class="blue-text">up</span> and <span class="blue-text">down</span>.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
     }
 
@@ -45,13 +45,13 @@ export class LessonOneCpThree extends Module {
 
     /**
      * A lesson on location parameters, taught with textual code editing
-     * @param document The HTML document
-     * @param effects: the list of effects currently on the CANVAS
+     * @param document the HTML document
+     * @param effects the list of effects currently on the CANVAS
      */
     checkGoal(document: Document, effects: Effect<any>[]): boolean {
         switch (this._latestInstrIndex) {
             case 0:
-                let regex: RegExp = /print\s*\(\s*\".*\"\s*,\s*200\s*,\s*100\s*\)/;
+                let regex: RegExp = /print\s*\(\s*\".*\"\s*,\s*200\s*,\s*[1-9][0-9]*\s*\)/;
                 let match = this.editor.getValue().match(regex);
                 if (match != null && match.length > 0) {
                     this._latestInstrIndex++;

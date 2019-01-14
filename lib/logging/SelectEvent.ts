@@ -40,5 +40,5 @@ export class SelectEvent extends LogEvent<any>{
         return "{ on: '" + this.logItem(this._toPrint) + "' }";
     }
 
-    logRemotely(uid: string, data: string, checkpoint: string, parses: boolean, doNotLog: boolean): void{};
+    logRemotely(uid: string, data: string, checkpoint: string, parses: boolean, doNotLog: boolean, time?: string): void{};
 }

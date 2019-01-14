@@ -39,8 +39,8 @@ export class DragEvent extends LogEvent<any>{
         return "{ on: '" + (this.toLog as Effect<any>).toDragString() + "' }";
     }
 
-    logRemotely(uid: string, data: string, checkpoint: string, parses: boolean, doNotLog: boolean): void {
-        LogEvent.logToRemoteServer(this.eventType(), uid, data, checkpoint, parses, doNotLog);
+    logRemotely(uid: string, data: string, checkpoint: string, parses: boolean, doNotLog: boolean, time?: string): void {
+        LogEvent.logToRemoteServer(this.eventType(), uid, data, checkpoint, parses, doNotLog, time);
     }
 
 }

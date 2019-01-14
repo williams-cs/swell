@@ -1,5 +1,5 @@
 import { Parser } from '../../index';
-import { Effect, Expression, Scope, ClearEvent, LogEvent, DragEvent, SelectEvent, IDEvent, CodeEvent, Module, ModuleGenerator } from '../../index';
+import { Effect, Expression, Scope, ClearEvent, LogEvent, DragEvent, ResizeEvent, SelectEvent, IDEvent, CodeEvent, Module, ModuleGenerator } from '../../index';
 import { LessonOneCpOne, LessonOneCpTwo, LessonOneCpThree, LessonOneCpFour } from '../../index';
 import { LessonTwoCpOne, LessonTwoCpTwo, LessonTwoCpThree, LessonTwoCpFour, LessonTwoCpFive, LessonTwoCpSix, LessonTwoCpSeven } from '../../index';
 import { LessonThreeCpOne, LessonThreeCpTwo, LessonThreeCpThree, LessonThreeCpFour, LessonThreeCpFive, LessonThreeCpSix } from '../../index';
@@ -56,9 +56,9 @@ import CodeMirror from 'codemirror';
         masterLog = [];
     }
 
-    function logCodeEvent() {
+    function logCodeEvent(code:string, cpName: string, p: boolean, time: string) {
         checkpointName = checkpoint != null ? checkpoint._name : "l0c0";
-        codeEvent.logRemotely(uid, editor.getValue(), checkpointName, parses, doNotLog);
+        codeEvent.logRemotely(uid, code, cpName, p, doNotLog, time);
     }
 
     function parse() {
@@ -133,6 +133,11 @@ import CodeMirror from 'codemirror';
                 context.eventLog.push(new DragEvent(effects[i]));
                 masterLog.push(context.eventLog[context.eventLog.length - 1]);
                 effects[i].setJustDragged(false);
+            }
+            if (effects[i].getJustResized()) { // Logs resize event
+                context.eventLog.push(new ResizeEvent(effects[i]));
+                masterLog.push(context.eventLog[context.eventLog.length - 1]);
+                effects[i].setJustResized(false);
             }
             if (effects[i].idObj == undefined) { // Gives object an ID if it doesn't have one
                 effects[i].initID(globalID);
@@ -265,10 +270,17 @@ import CodeMirror from 'codemirror';
         }
         parseTimer = setTimeout(parse, 200);
 
+        //save current state to log for later
+        let code = editor.getValue();
+        let name = checkpointName;
+        let p = parses;
+        let newTime = LogEvent.getNewTime();
         if (logTimer != null) {
             clearTimeout(logTimer);
         }
-        logTimer = setTimeout(logCodeEvent, 5000);
+        logTimer = setTimeout(function() {
+            logCodeEvent(code, name, p, newTime);
+        }, 5000);
     });
 
     editor.on("blur", function() {
