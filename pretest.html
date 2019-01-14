@@ -62,8 +62,8 @@
         updateQuestion();
 
         //set up the next button
-        next.onclick = async function() {
-            await storeAnswer();
+        next.onclick = function() {
+            storeAnswer();
 
             if (i < q_order.length - 1) {
                 i++;
@@ -144,7 +144,7 @@
             next.disabled = true;
         }
 
-        async function storeAnswer() {
+        function storeAnswer() {
             var radios = document.getElementsByName(q_tag);
             for (let radio of radios) {
                 if (radio.checked) {
@@ -166,35 +166,39 @@
             return arr;
         }
 
-        function logSurvey(eventtype, data, doNotLog) {
-            if (doNotLog) {
-                return;
-            }
+        async function logSurvey(eventtype, data, doNotLog) {
+            let promise = new Promise((resolve, reject) => {
+                if (doNotLog) {
+                    return;
+                }
 
-            function pad(n, width) {
-                let padWith = '0';
-                let nstr = n.toString();
-                return nstr.length >= width ? nstr : new Array(width - nstr.length + 1).join(padWith) + nstr;
-            }
+                function pad(n, width) {
+                    let padWith = '0';
+                    let nstr = n.toString();
+                    return nstr.length >= width ? nstr : new Array(width - nstr.length + 1).join(padWith) + nstr;
+                }
 
-            let date = new Date();
-            let year = date.getFullYear().toString();
-            let month = pad(date.getMonth() + 1, 2);
-            let day = pad(date.getDate(), 2);
-            let hour = pad(date.getHours(), 2);
-            let minutes = pad(date.getMinutes(), 2);
-            let seconds = pad(date.getSeconds(), 2);
+                let date = new Date();
+                let year = date.getFullYear().toString();
+                let month = pad(date.getMonth() + 1, 2);
+                let day = pad(date.getDate(), 2);
+                let hour = pad(date.getHours(), 2);
+                let minutes = pad(date.getMinutes(), 2);
+                let seconds = pad(date.getSeconds(), 2);
 
-            let payload = new FormData();
-            payload.append('uid', uid);
-            payload.append('data', data);
-            payload.append('eventtype', eventtype);
-            payload.append('time', year + '-' + month + '-' + day + ' ' + hour + ':' + minutes + ':' + seconds);
-            payload.append('checkpoint_id', 'l0c0');
-            payload.append('parses', 'false');
-            let xhr = new XMLHttpRequest();
-            xhr.open("POST", "http://camembert.cs.williams.edu:8080/events", true);
-            xhr.send(payload);
+                let payload = new FormData();
+                payload.append('uid', uid);
+                payload.append('data', data);
+                payload.append('eventtype', eventtype);
+                payload.append('time', year + '-' + month + '-' + day + ' ' + hour + ':' + minutes + ':' + seconds);
+                payload.append('checkpoint_id', 'l0c0');
+                payload.append('parses', 'false');
+                let xhr = new XMLHttpRequest();
+                xhr.open("POST", "http://camembert.cs.williams.edu:8080/events", true);
+                xhr.send(payload);
+            });
+
+            let result = await promise;
         }
     </script>
   </body>
