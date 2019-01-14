@@ -31,7 +31,7 @@ if(c < 100) {
         super(ctx, editor);
         let content = `Now, let's say we already have an <span class="inline-code">if</span> statement to print a claim whenever an emoji is smaller than the box provided.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = `What if we want to print another claim, <span class="inline-code">The emoji is bigger than the box</span> any time the emoji actually bigger than the box?`;
+        content = `What if we want to print another claim, <span class="inline-code">The emoji is bigger than the box</span> any time the emoji is actually bigger than the box?`;
         this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
         content = `Observe the CODE above. When the condition inside the brackets <span class="inline-code">if()</span> is satisfied, the code block inside the braces <span class="inline-code">{}</span> right after it would run.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));

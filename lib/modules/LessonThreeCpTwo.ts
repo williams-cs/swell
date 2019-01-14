@@ -29,7 +29,7 @@ if(a < 100) {
         super(ctx, editor);
         let content = `Let's teach the computer to print the sentence <span class="inline-code">The skull is smaller than the box</span> ONLY when the printed skull emoji really is smaller the box.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = `We will use something called an <span class="inline-code">if</span> statement. Observe the CODE above. We added was an <span class="inline-code">if</span> statement. When <span class="inline-code">a < 100</span>, the code inside the curly braces <span class="inline-code">{}</span> will run.`;
+        content = `We will use something called an <span class="inline-code">if</span> statement. Observe the CODE above. We added an <span class="inline-code">if</span> statement. When <span class="inline-code">a < 100</span>, the code inside the curly braces <span class="inline-code">{}</span> will run.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
         content = `Let's investigate what <span class="inline-code">if</span> does. Change the value of <span class="inline-code">a</span> from <span class="inline-code">150</span> to <span class="inline-code">80</span>.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));

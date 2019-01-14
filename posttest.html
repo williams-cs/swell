@@ -61,8 +61,8 @@
         updateQuestion();
 
         //set up the next button
-        next.onclick = function() {
-            storeAnswer();
+        next.onclick = async function() {
+            await storeAnswer();
 
             if (i < q_order.length - 1) {
                 i++;
@@ -140,12 +140,12 @@
             next.disabled = true;
         }
 
-        function storeAnswer() {
+        async function storeAnswer() {
             var radios = document.getElementsByName(q_tag);
             for (let radio of radios) {
                 if (radio.checked) {
                     logSurvey(q_tag, radio.value, doNotLog);
-                    break;
+                    return;
                 }
             }
         }

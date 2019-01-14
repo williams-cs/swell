@@ -34,7 +34,7 @@ if(c == "devil") {
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
         content = `Your CODE seems correct! Now change the value of <span class="inline-code">c</span> to <span class="inline-code">"happy"</span> to test that it runs correctly.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
-        content = `That's correct! the code inside the braces <span class="inline-code">{}</span> of the <span class="inline-code">if</span> statement only runs when <span class="inline-code">c</span> is exactly the word <span class="inline-code">"happy"</span>!`;
+        content = `That's correct! The code inside the braces <span class="inline-code">{}</span> of the <span class="inline-code">if</span> statement only runs when <span class="inline-code">c</span> is exactly the word <span class="inline-code">"happy"</span>!`;
         this._instrBoxes.push(new Instruction('canvas-container', content, "70%", "10%"));
     }
 
