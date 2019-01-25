@@ -54,7 +54,7 @@ export namespace Parser {
      * punctuation parses all possible punctuation characters
      */
     export function punctuation(){
-        return Primitives.sat(
+        return Primitives.strSat(
             ["!", ".", ",", ";", "?", "-", "&", "$", ":",
              "/", "|", "%", "#", "@", "~", "`", "*", "^",
              "{", "}", "[", "]", "(", ")", "'", "_"]);
@@ -213,7 +213,7 @@ export namespace Parser {
                 )(
                     Primitives.ws()
                 )(
-                    Primitives.sat(["+", "-", "/", "=", "*"])
+                    Primitives.strSat(["+", "-", "/", "=", "*"])
                 )(istream);
         }
     }
