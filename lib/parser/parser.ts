@@ -2,6 +2,7 @@ import { Primitives, CharUtil } from 'pants';
 import { NumberNode, StringNode, Expression, BinaryOperation, DeclareOp, PlusOp, MulOp, DivOp, MinusOp, NegOp, VariableNode, AssignOp, UnaryOperation, ListNode, SequenceNode, Return, FunDef, FunApp, BooleanNode, Conditional, RepeatNode, WhileNode, PrintNode, Equals, Not, And, GreaterThan, LessThan, GreaterThanEq, LessThanEq, Or, NotEqual, ForNode, Dimensions, Increment, NOP, Decrement, EllipseNode, RectangleNode, LineNode, CurveNode, EphNode, EmojiNode } from '../../index';
 import { Option, Some, None } from 'space-lift';
 import { FloatNode } from '../prims/FloatNode';
+import { Parens } from '../unops/Parens';
 
 export namespace Parser {
 
@@ -300,6 +301,15 @@ export namespace Parser {
         let f = (xs: CharUtil.CharStream[]) => CharUtil.CharStream.concat(xs)
         return Primitives.appfun<CharUtil.CharStream[],CharUtil.CharStream>(p)(f);
 
+    }
+
+    export let parens: Primitives.IParser<Parens> = i => {
+        let open = Primitives.between<CharUtil.CharStream, CharUtil.CharStream, CharUtil.CharStream>(Primitives.ws())(Primitives.ws())(Primitives.str("("));
+        let close = Primitives.between<CharUtil.CharStream, CharUtil.CharStream, CharUtil.CharStream>(Primitives.ws())(Primitives.ws())(Primitives.str(")"));
+        let expr = Primitives.choice<Expression<any>>(binOpExpr)(unOpsExpr);
+        let expr2= Primitives.choice<Expression<any>>(expr)(lNumber());
+        let parens = Primitives.right<CharUtil.CharStream, Expression<any>>(open)(Primitives.left<Expression<any>, CharUtil.CharStream>(expr2)(close));
+        return Primitives.appfun<Expression<any>, Parens>(parens)(x=> new Parens(x))(i);
     }
 
     /**

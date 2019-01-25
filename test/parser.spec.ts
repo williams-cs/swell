@@ -3,7 +3,7 @@ import { assert, expect } from 'chai';
 import 'mocha';
 import { CharUtil, Primitives } from 'pants/lib';
 import { SequenceNode, StringNode, Return, Scope, NumberNode, BooleanNode, WhileNode, ForNode, Conditional, ListNode, FunDef, FunApp, PrintNode, VariableNode, NegOp, NOP, Dimensions, EllipseNode,
-    RectangleNode, Equals, NotEqual, And, Or, GreaterThan, LessThan, Not, GreaterThanEq, LessThanEq, AssignOp, PlusOp, Decrement, DeclareOp, Increment, EphNode } from '../index';
+    RectangleNode, Equals, NotEqual, And, Or, GreaterThan, LessThan, Not, GreaterThanEq, LessThanEq, AssignOp, PlusOp, Decrement, DeclareOp, Increment, EphNode, Parens } from '../index';
 import { FloatNode } from '../lib/prims/FloatNode';
 
 describe('Number Parser test', () =>{
@@ -997,6 +997,45 @@ describe('Float parser', () => {
         }
         else{
             assert.fail();
+        }
+    });
+});
+
+describe("Parens Parser", () => {
+    it("should parse a number contained in parens", () => {
+        let input= new CharUtil.CharStream('(2)');
+        let result= Parser.parens(input);
+        switch(result.tag){
+            case "success":
+                //console.log(result.result)
+                expect(result.result).to.eql(new Parens(new NumberNode(2)));
+                break;
+            case "failure":
+                assert.fail();
+        }
+    });
+    it("should parse a unaryop contained in parens", () => {
+        let input= new CharUtil.CharStream('(-2)');
+        let result= Parser.parens(input);
+        switch(result.tag){
+            case "success":
+                //console.log(result.result.toString());
+                expect(result.result).to.eql(new Parens(new NegOp(new NumberNode(2))));
+                break;
+            case "failure":
+                assert.fail();
+        }
+    });
+    it("should parse a binaryop contained in parens", () => {
+        let input= new CharUtil.CharStream('( 2 + 2)');
+        let result= Parser.parens(input);
+        switch(result.tag){
+            case "success":
+                //console.log(result.result.toString());
+                expect(result.result).to.eql(new Parens(new PlusOp(new NumberNode(2), new NumberNode(2))));
+                break;
+            case "failure":
+                assert.fail();
         }
     });
 });

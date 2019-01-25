@@ -25,6 +25,7 @@ export {Decrement} from './lib/binops/Decrement';
 export {UnaryOperation} from './lib/unops/UnaryOperation';
 export {NegOp} from './lib/unops/NegOp';
 export {Not} from './lib/logic/Not';
+export {Parens} from './lib/unops/Parens';
 
 /* DATA TYPES */
 export {ListNode} from './lib/lists/ListNode';
