@@ -7,6 +7,7 @@ import { LessonFourCpOne, LessonFourCpTwo } from '../../index';
 import { Option, Some, None } from 'space-lift';
 import { diffChars, IDiffResult } from 'diff';
 import CodeMirror from 'codemirror';
+import * as csvParse from 'csv-parse';
 
 (function() {
     let editor: CodeMirror.Editor = ((e: any) => { return e.CodeMirror })(document.getElementById("input"));
@@ -683,6 +684,149 @@ import CodeMirror from 'codemirror';
         }
         starBox.innerHTML = starCount + "/" + cpNames.length;
     }
+
+    // Check if replay query parameter is true and set up replay toolbar
+    (function() {
+        let url: string = window.location.href;
+        let queryString: string = url.split("?")[1];
+        if (!queryString) {
+            return;
+        }
+        let params = queryString.split("&");
+        let paramObj: any = {};
+        params.forEach(param => {
+            let args = param.split("=")[0];
+            let name = args.toLowerCase();
+            let value = param.split("=")[1];
+            paramObj[name] = value;
+        });
+        if (paramObj["replay"] != "true") {
+            return;
+        }
+
+        let records: Array<Array<string>> = [];
+        let recordDiv = document.createElement("div");
+        let surveyDiv = document.createElement("div");
+
+        let currentRecordIdx = 0;
+        function switchRecord(next: boolean): boolean {
+            if (records.length == 0 ||
+                (next && currentRecordIdx == records.length - 1) ||
+                (!next && currentRecordIdx == 0)) {
+                return false;
+            }
+            currentRecordIdx = next ? (currentRecordIdx + 1) : (currentRecordIdx - 1);
+            recordDiv.innerHTML = `<div>*** Event ${(currentRecordIdx + 1)}/${records.length}: ${records[currentRecordIdx][0]} ***</div>`;
+            recordDiv.innerHTML += "<div>Time: " + records[currentRecordIdx][1] + "</div>";
+            recordDiv.innerHTML += "<div>Checkpoint: " + records[currentRecordIdx][3] + "</div>";
+            recordDiv.innerHTML += "<div>Parses: " + (records[currentRecordIdx][4] == "1" ? "True" : "False") + "</div>";
+            let programText: string = records[currentRecordIdx][2];
+            programText = programText.replace(/\\n/g, "\n").replace(/\\t/g, "\t").replace(/\\r/g, "\r"); // Dirty way to unescape
+            editor.setValue(programText.slice(1, programText.length - 1));
+            parse();
+            highlightDiff(programText);
+            lastProgram = programText;
+        }
+
+        function createCsvParser(): csvParse.Parser {
+            let csvParser: csvParse.Parser = new csvParse.Parser({
+                delimiter: "|",
+                relax: true,
+            });
+            csvParser.on("readable", function() {
+                let record: any;
+                while (record = csvParser.read()) {
+                    records.push(record);
+                }
+            });
+            csvParser.on("end", function() {
+                records.splice(0, 4).forEach((record: Array<string>) => {
+                    let question = record[0];
+                    let answer = record[2];
+                    let answerLabel = "";
+                    switch (question) {
+                        case "pre-excitement":
+                        case "post-excitement":
+                            answerLabel =
+                                answer == "'2'" ? "Very excited" :
+                                answer == "'1'" ? "Excited" : "Not excited";
+                            break;
+                        case "experience":
+                            answerLabel = answer == "'1'" ? "Yes" : "No";
+                            break;
+                        case "learn-more":
+                            answerLabel =
+                                answer == "'2'" ? "Very interested" :
+                                answer == "'1'" ? "Interested" : "Not interested";
+                            break;
+                        default:
+                            break;
+                    }
+                    surveyDiv.innerHTML += `<div>${question}: ${answerLabel}</div>`;
+                });
+                records = records.slice(4);
+                switchRecord(true);
+            });
+
+            return csvParser;
+        };
+
+        let readInput = function(event: any) {
+            let input = event.target;
+            let reader = new FileReader();
+            records = [];
+            currentRecordIdx = -1;
+            surveyDiv.innerHTML = "";
+            recordDiv.innerHTML = "";
+            reader.onload = function() {
+                let csvParser: csvParse.Parser = createCsvParser();
+                csvParser.write(reader.result);
+                csvParser.end();
+            };
+            if (input.files.length > 0) {
+                reader.readAsText(input.files[0]);
+            }
+        };
+
+        let replayDiv = document.createElement("div");
+        let input = document.createElement("input");
+        input.type = "file";
+        input.accept = ".csv";
+        input.onchange = ((e: any) => readInput(e));
+        replayDiv.appendChild(input);
+
+        let prevButton = document.createElement("button");
+        let nextButton = document.createElement("button");
+        let autoplayButton = document.createElement("button");
+        prevButton.innerHTML = "Prev";
+        nextButton.innerHTML = "Next";
+        autoplayButton.innerHTML = "Auto-play";
+        prevButton.className = "btn btn-sm replay-button";
+        nextButton.className = "btn btn-sm replay-button";
+        autoplayButton.className = "btn btn-sm replay-button";
+        prevButton.onclick = _ => switchRecord(false);
+        nextButton.onclick = _ => switchRecord(true);
+        let autoplayInterval: any = null;
+        autoplayButton.onclick = _ => {
+            if (!autoplayInterval) {
+                autoplayButton.innerHTML = "Stop";
+                autoplayInterval = setInterval(_ => switchRecord(true), 1000);
+            } else {
+                autoplayButton.innerHTML = "Auto-play";
+                clearInterval(autoplayInterval);
+                autoplayInterval = null;
+            }
+        };
+
+        replayDiv.appendChild(prevButton);
+        replayDiv.appendChild(nextButton);
+        replayDiv.appendChild(autoplayButton);
+
+        message.innerHTML = "";
+        message.appendChild(replayDiv);
+        message.appendChild(surveyDiv);
+        message.appendChild(recordDiv);
+    })();
 
     //call to animate
     animate();
