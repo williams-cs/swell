@@ -142,10 +142,14 @@ button:hover {
     background-color: var(--mid-gray);
 }
 
-#message {
+#message, #replay {
     padding: 10px;
     font-size: 15px;
     overflow-y: auto;
+}
+
+#replay {
+    display: none;
 }
 
 .reward {

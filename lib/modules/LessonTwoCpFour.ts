@@ -21,13 +21,13 @@ print(a, 100, 100);`;
     constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) {
         super(ctx, editor);
         let content = `Time to take your coding to the next level. Let's learn about <span class="red-text">variables</a>.`;
-        this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
+        this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%", true));
         content = `A <span class="red-text">variable</span> is simply a <span class="red-text">name</span> you give to the things that you draw.`;
-        this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
+        this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%", true));
         content = `For example, change the variable <span class="inline-code">a</span> in the <span class="inline-code">print</span> statement to <span class="inline-code">b</span>, and observe what happens on the CANVAS.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
         content = 'Do you notice that a different emoji is printed? In our code, we make variable <span class="inline-code">a</span> refer to an angry emoji, and variable <span class="inline-code">b</span> refer to a cool emoji.';
-        this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
+        this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%", true));
         content = 'When we tell the computer to print <span class="inline-code">a</span>, it will print the angry emoji, and when we tell the computer to print <span class="inline-code">b</span>, it will print the cool emoji!';
         this._instrBoxes.push(new Instruction('canvas-container', content, "70%", "10%"));
     }

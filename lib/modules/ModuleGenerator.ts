@@ -26,7 +26,7 @@ export class ModuleGenerator {
       ['l4c1', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonFourCpOne(ctx, editor)],
       ['l4c2', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonFourCpTwo(ctx, editor)]
     ]);
-    
+
     checkpoints: Map<string, Module> = new Map([
       ['l1c1', null],
       ['l1c2', null],
@@ -59,5 +59,11 @@ export class ModuleGenerator {
       checkpoint = this.curConstructors.get(cp)(ctx, editor);
       this.checkpoints.set(cp, checkpoint);
       return checkpoint;
+    }
+
+    resetModules(): void {
+        this.checkpoints.forEach((value: Module, key: string) => {
+            this.checkpoints.set(key, null);
+        })
     }
  }

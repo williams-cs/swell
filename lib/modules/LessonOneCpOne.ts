@@ -18,7 +18,7 @@ export class LessonOneCpOne extends Module {
     constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) {
         super(ctx, editor);
         let content = "First, let's tell the computer to print something on the CANVAS. Click on the CODE box.";
-        this._instrBoxes.push(new Instruction('code-editor', content, "70%", "10%"));
+        this._instrBoxes.push(new Instruction('code-editor', content, "70%", "10%", true));
         content = 'Great! Now type <span class="inline-code">print("happy");</span> in this CODE box.';
         this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
         content = 'Notice that what you typed causes the computer to print the word "happy" on the CANVAS here. Congratulations! You just wrote your first line of code!';

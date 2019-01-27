@@ -30,15 +30,15 @@ if(c < 100) {
     constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) {
         super(ctx, editor);
         let content = `Now, let's say we already have an <span class="inline-code">if</span> statement to print a claim whenever an emoji is smaller than the box provided.`;
-        this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
+        this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%", true));
         content = `What if we want to print another claim, <span class="inline-code">The emoji is bigger than the box</span> any time the emoji is actually bigger than the box?`;
-        this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
+        this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%", true));
         content = `Observe the CODE above. When the condition inside the brackets <span class="inline-code">if()</span> is satisfied, the code block inside the braces <span class="inline-code">{}</span> right after it would run.`;
-        this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
+        this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%", true));
         content = `What would happen if we change the value of <span class="inline-code">c</span>? In the CODE above, change the value of <span class="inline-code">c</span> to <span class="inline-code">125</span> and observe what happens.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "70%", "10%"));
         content = `Did you notice the claim printed here changed? When the condition inside the <span class="inline-code">if</span> statement is not satisfied, the second code block inside the braces <span class="inline-code">{}</span> after the <span class="inline-code">else</span> statement would run instead!`;
-        this._instrBoxes.push(new Instruction('canvas-container', content, "70%", "10%"));
+        this._instrBoxes.push(new Instruction('canvas-container', content, "70%", "10%", true));
         content = `To get a better idea, change the value of <span class="inline-code">c</span> back to <span class="inline-code">65</span>.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "70%", "10%"));
         content = `Did you see the claim changed again? Now, change the value of <span class="inline-code">c</span> to <span class="inline-code">160</span>.`;

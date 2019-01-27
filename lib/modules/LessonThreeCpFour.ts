@@ -27,9 +27,9 @@ if(c == "devil") {
     constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) {
         super(ctx, editor);
         let content = `You can put an inequality condition inside the brackets of <span class="inline-code">if()</span>, such as <span class="inline-code">a < 75</span> or <span class="inline-code">b > 200</span>.`;
-        this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
+        this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%", true));
         content = `You can also check for a word. Observe the CODE above with <span class="inline-code">c == "devil"</span>. The 2 equal signs <span class="inline-code">==</span> mean that you are checking whether <span class="inline-code">c</span> is exactly the word <span class="inline-code">"devil"</span> or not.`;
-        this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
+        this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%", true));
         content = `Let's have a small challenge: Can you change the condition inside the brackets <span class="inline-code">if()</span> so that only a happy emoji can be printed?`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
         content = `Your CODE seems correct! Now change the value of <span class="inline-code">c</span> to <span class="inline-code">"happy"</span> to test that it runs correctly.`;

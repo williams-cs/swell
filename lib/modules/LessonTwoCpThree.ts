@@ -18,13 +18,13 @@ export class LessonTwoCpThree extends Module {
     constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) {
         super(ctx, editor);
         let content = "What if we want to draw more than 1 emoji?";
-        this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
+        this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%", true));
         content = `First copy the <span class="inline-code">print</span> statement on the first line and paste it into the second line in the CODE above.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
         content = `Hmm... that should have created a second emoji, right? What happens if we change the number <span class="inline-code">120</span> in the second line of CODE to <span class="inline-code">300</span>? Give it a try.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
         content = "Hey! An emoji was hiding behind the other emoji! In the future, watch out.  Any shape can hide behind any other shape.";
-        this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
+        this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%", true));
         content = "Now let's have a quick challenge: make one of the emojis a happy face, and the other one a sad face. Do you remember how to do that?";
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
         content = `There's no limit to how many emojis the computer can draw. You could <span class="inline-code">print</span> 1,000 emojis if you wanted!`;

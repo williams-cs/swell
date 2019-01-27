@@ -25,7 +25,7 @@ export class LessonTwoCpTwo extends Module {
         super(ctx, editor);
         this.x = Math.round((ctx.canvas.width - this.rect_w) / 2);
         let content = `What do the numbers <span class="inline-code">100, 100</span> next to the word <span class="inline-code">"angry"</span> do? Let's find out by first clicking on the emoji on the CANVAS.`;
-        this._instrBoxes.push(new Instruction('canvas-container', content, "80%", "10%"));
+        this._instrBoxes.push(new Instruction('canvas-container', content, "80%", "10%", true));
         content = "Now drag one of the 8 tips around the emoji to resize it. Try to fit the emoji entirely inside the given box. Watch what happens with the CODE.";
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
         content = `Yep! Those numbers change the size of the emoji!`;

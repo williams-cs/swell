@@ -37,14 +37,25 @@ export abstract class Module {
     }
 
     renderNextInstruction(document: Document): void {
-      this._instrIndex = (this._instrIndex + 1 < this._instrBoxes.length) ? this._instrIndex + 1 : this._instrIndex;
-      console.log("current instr: " + this._instrIndex);
+      this._instrIndex = Math.min(this._instrIndex + 1, this._instrBoxes.length - 1);
       this.renderInstruction(document);
     }
 
     renderPrevInstruction(document: Document): void {
-      this._instrIndex = (this._instrIndex - 1 >= 0) ? this._instrIndex - 1 : this._instrIndex;
+      this._instrIndex = Math.max(this._instrIndex - 1, 0);
       this.renderInstruction(document);
+    }
+
+    skipInstructions(document: Document): boolean {
+        let instruction: Instruction = this._instrBoxes[this._instrIndex];
+        let skipped: boolean = instruction.skippable;
+        while (instruction.skippable) {
+             this._instrIndex = Math.min(this._instrIndex + 1, this._instrBoxes.length - 1);
+             instruction = this._instrBoxes[this._instrIndex];
+        }
+        this._latestInstrIndex = Math.max(this._latestInstrIndex, this._instrIndex);
+        this.renderInstruction(document);
+        return skipped;
     }
 
     /**

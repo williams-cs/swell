@@ -418,7 +418,6 @@ import * as csvParse from 'csv-parse';
     let lessonAccordion = document.getElementById("lesson-accordion");
     for (var x = 0; x < lessons.length; x++) {
         let lessonID: string = "collapse" + x + 1;
-
         let lessonLabel = document.createElement("div");
         lessonLabel.className = "row";
         let lessonLabelBtn = document.createElement("button");
@@ -481,7 +480,6 @@ import * as csvParse from 'csv-parse';
     cpNames.forEach((cp: string) => {
         cpCode.set(cp, "");
         cpCompletion.set(cp, false);
-        //cpCompletion.set(cp, true);
     });
 
     /* keeping track of and displaying user's progress */
@@ -494,7 +492,7 @@ import * as csvParse from 'csv-parse';
      * Sets up the instruction, CODE area, and goal box accordingly.
      * @param cp the name of the checkpoint
      */
-    function initCheckpoint(cp: string) {
+    function initCheckpoint(cp: string): Module {
         //store code written of old checkpoint
         if (checkpoint != null) {
             cpCode.set(checkpoint._name, editor.getValue());
@@ -568,6 +566,7 @@ import * as csvParse from 'csv-parse';
         }
 
         resetButton.style.display = "block";
+        return checkpoint;
     }
 
     function checkpointChecksGoal() {
@@ -703,22 +702,29 @@ import * as csvParse from 'csv-parse';
         if (paramObj["replay"] != "true") {
             return;
         }
-
+        message.setAttribute("style", "display: none");
+        let replayContainerDiv = document.getElementById("replay");
+        replayContainerDiv.setAttribute("style", "display: block");
         let records: Array<Array<string>> = [];
         let recordDiv = document.createElement("div");
         let surveyDiv = document.createElement("div");
 
         let currentRecordIdx = 0;
-        function switchRecord(next: boolean): boolean {
+        function switchRecord(next: boolean) {
             if (records.length == 0 ||
                 (next && currentRecordIdx == records.length - 1) ||
                 (!next && currentRecordIdx == 0)) {
-                return false;
+                return;
             }
-            currentRecordIdx = next ? (currentRecordIdx + 1) : (currentRecordIdx - 1);
+            let nextRecordIdx = next ? (currentRecordIdx + 1) : (currentRecordIdx - 1);
+            let checkpoint: string = records[nextRecordIdx][3];
+            if (cpNames.includes(checkpoint) && initCheckpoint(checkpoint).skipInstructions(document)) {
+                return;
+            }
+            currentRecordIdx = nextRecordIdx;
             recordDiv.innerHTML = `<div>*** Event ${(currentRecordIdx + 1)}/${records.length}: ${records[currentRecordIdx][0]} ***</div>`;
             recordDiv.innerHTML += "<div>Time: " + records[currentRecordIdx][1] + "</div>";
-            recordDiv.innerHTML += "<div>Checkpoint: " + records[currentRecordIdx][3] + "</div>";
+            recordDiv.innerHTML += "<div>Checkpoint: " + checkpoint + "</div>";
             recordDiv.innerHTML += "<div>Parses: " + (records[currentRecordIdx][4] == "1" ? "True" : "False") + "</div>";
             let programText: string = records[currentRecordIdx][2];
             programText = programText.replace(/\\n/g, "\n").replace(/\\t/g, "\t").replace(/\\r/g, "\r"); // Dirty way to unescape
@@ -726,6 +732,7 @@ import * as csvParse from 'csv-parse';
             parse();
             highlightDiff(programText);
             lastProgram = programText;
+            return;
         }
 
         function createCsvParser(): csvParse.Parser {
@@ -764,7 +771,6 @@ import * as csvParse from 'csv-parse';
                     }
                     surveyDiv.innerHTML += `<div>${question}: ${answerLabel}</div>`;
                 });
-                records = records.slice(4);
                 switchRecord(true);
             });
 
@@ -778,6 +784,11 @@ import * as csvParse from 'csv-parse';
             currentRecordIdx = -1;
             surveyDiv.innerHTML = "";
             recordDiv.innerHTML = "";
+            cpNames.forEach((cp: string) => {
+                cpCode.set(cp, "");
+                cpCompletion.set(cp, false);
+            });
+            modGen.resetModules();
             reader.onload = function() {
                 let csvParser: csvParse.Parser = createCsvParser();
                 csvParser.write(reader.result);
@@ -822,10 +833,10 @@ import * as csvParse from 'csv-parse';
         replayDiv.appendChild(nextButton);
         replayDiv.appendChild(autoplayButton);
 
-        message.innerHTML = "";
-        message.appendChild(replayDiv);
-        message.appendChild(surveyDiv);
-        message.appendChild(recordDiv);
+        replayContainerDiv.innerHTML = "";
+        replayContainerDiv.appendChild(replayDiv);
+        replayContainerDiv.appendChild(surveyDiv);
+        replayContainerDiv.appendChild(recordDiv);
     })();
 
     //call to animate

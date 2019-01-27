@@ -25,7 +25,7 @@ export class LessonOneCpFour extends Module {
         this.x = Math.round((ctx.canvas.width - this.square_size) / 2);
         this.y = Math.round((ctx.canvas.height - this.square_size) / 2);
         let content = "Most coders prefer to work directly on the CODE, instead of dragging things around on the CANVAS.";
-        this._instrBoxes.push(new Instruction('code-editor', content, "30%", "10%"));
+        this._instrBoxes.push(new Instruction('code-editor', content, "30%", "10%", true));
         content = `Let's try a challenge. Can you figure out how to change the CODE to print the word <span class="inline-code">cool</span> inside the box at the center of the CANVAS?`;
         this._instrBoxes.push(new Instruction('code-editor', content, "80%", "10%"));
         content = "Congratulations! You finished your first coding challenge!";

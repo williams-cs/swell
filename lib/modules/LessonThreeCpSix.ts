@@ -50,11 +50,11 @@ print("The angel is smaller than the devil.", ${this.xA}, ${this.yA + this.squar
 
         //setting up the Instructions
         let content = `Now that you know how to use <span class="inline-code">if/else</span> statements, let's put them all together!`;
-        this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
+        this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%", true));
         content = 'Above we have the CODE to draw 2 emojis: an angel emoji with height and width <span class="inline-code">a</span>, and a devil emoji with height and width <span class="inline-code">b</span>.';
-        this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
+        this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%", true));
         content = `However, currently the claim that <span class="inline-code">The angel is smaller than the devil.</span> is printed regardless of the emojis' actual sizes.`;
-        this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
+        this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%", true));
         content = `Here's a challenge for you: Create an <span class="inline-code">if/else</span> statement to print <span class="inline-code">The angel is smaller than the devil.</span> when it is actually so, and print <span class="inline-code">The angel is bigger than the devil.</span> otherwise.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "80%", "10%"));
         content = 'Congratulations! You just successfully wrote a complicated <span class="inline-code">if/else</span> statement!';

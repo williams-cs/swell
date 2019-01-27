@@ -15,13 +15,10 @@ export class LessonTwoCpSeven extends Module {
     _latestInstrIndex: number = 1;
 
     dm: number;
-
     x: number;
     y: number;
     square_size: number = 250;
     font_size = 20;
-
-
 
     constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) {
         super(ctx, editor);
@@ -40,11 +37,11 @@ print(emoji("mustache", 100, 100), ${this.x + 10}, ${this.y + 10});`;
         }
 
         let content = `Let's learn one last thing about variables. In the code above, we connected the variable <span class="inline-code">a</span> to the number <span class="inline-code">50</span>, and we also have a <span class="inline-code">print</span> statement to print a mustache emoji.`;
-        this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
+        this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%", true));
         content = `Replace the two numbers <span class="inline-code">100</span> inside the <span class="inline-code">print</span> statement with the variable <span class="inline-code">a</span>. Watch what happens.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
         content = `Did you see that the emoji got smaller? The variable <span class="inline-code">a</span> is tied to the number <span class="inline-code">50</span>, so now the emoji has size <span class="inline-code">a</span>!`;
-        this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
+        this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%", true));
         content = `Let's make one more change. Write CODE to <span class="inline-code">print</span> the value of <span class="inline-code">a</span> on the CANVAS.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
         if (this.dm == 1) {

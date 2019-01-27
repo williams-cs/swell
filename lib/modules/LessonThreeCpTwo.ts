@@ -28,9 +28,9 @@ if(a < 100) {
     constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) {
         super(ctx, editor);
         let content = `Let's teach the computer to print the sentence <span class="inline-code">The skull is smaller than the box</span> ONLY when the printed skull emoji really is smaller the box.`;
-        this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
+        this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%", true));
         content = `We will use something called an <span class="inline-code">if</span> statement. Observe the CODE above. We added an <span class="inline-code">if</span> statement. When <span class="inline-code">a < 100</span>, the code inside the curly braces <span class="inline-code">{}</span> will run.`;
-        this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
+        this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%", true));
         content = `Let's investigate what <span class="inline-code">if</span> does. Change the value of <span class="inline-code">a</span> from <span class="inline-code">150</span> to <span class="inline-code">80</span>.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
         content = `Do you see the text is now printed on the CANVAS?  Let's change the value of <span class="inline-code">a</span> from <span class="inline-code">80</span> to <span class="inline-code">140</span>.`;

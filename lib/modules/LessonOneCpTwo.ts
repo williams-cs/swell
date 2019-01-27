@@ -24,9 +24,9 @@ export class LessonOneCpTwo extends Module {
         super(ctx, editor);
         this.x = ctx.canvas.width - this.square_size - this.y;
         let content = `Do you see the numbers inside the brackets <span class="inline-code">()</span> of the <span class="inline-code">print</span> statement? They tell your computer <u>where</u> it should print the word on the CANVAS.`;
-        this._instrBoxes.push(new Instruction('code-editor', content, "30%", "10%"));
+        this._instrBoxes.push(new Instruction('code-editor', content, "30%", "10%", true));
         content = `To understand what those numbers do, click on the word <span class="inline-code">happy</span> in the CANVAS and drag it around.`;
-        this._instrBoxes.push(new Instruction('canvas-container', content, "70%", "10%"));
+        this._instrBoxes.push(new Instruction('canvas-container', content, "70%", "10%", true));
         content = "Now drag the word into the top-right box on the CANVAS.";
         this._instrBoxes.push(new Instruction('canvas-container', content, "80%", "10%"));
         content = `Did you notice that the numbers inside the <span class="inline-code">print</span> statement in the CODE window changed? Now drag the word into the top-left box on the CANVAS.`;

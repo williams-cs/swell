@@ -29,11 +29,11 @@ print(c, 300, 100)`;
     constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) {
         super(ctx, editor);
         let content = `Now that you have 2 pirate emojis both named <span class="inline-code">c</span>, let's see what happens when you try to change one of them.`;
-        this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
+        this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%", true));
         content = `Click on one of the emojis on the CANVAS, and make it bigger than the box. Watch what happens to the code for <span class="inline-code">c</span>.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "70%", "10%"));
         content = `Did you see what happened? Changing one emoji changes what <span class="inline-code">c</span> means in your CODE!`;
-        this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
+        this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%", true));
         content = 'Also, changing one emoji changes the other emoji! The 2 emojis referred to by <span class="inline-code">c</span> are actually the same emoji!';
         this._instrBoxes.push(new Instruction('canvas-container', content, "70%", "10%"));
     }
