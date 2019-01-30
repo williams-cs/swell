@@ -126,22 +126,22 @@ import * as csvParse from 'csv-parse';
         selected = 0;
         for (let i = 0; i < effects.length; i++) {
             effects[i].update();
-            if (effects[i].selected) {
+            if (effects[i].isSelected) {
                 selectedElems.push(effects[i]);
                 selected++;
             }
-            if (effects[i].getJustDragged()) { // Logs drag event
+            if (effects[i].justDragged) { // Logs drag event
                 context.eventLog.push(new DragEvent(effects[i]));
                 masterLog.push(context.eventLog[context.eventLog.length - 1]);
-                effects[i].setJustDragged(false);
+                effects[i].justDragged = false;
             }
-            if (effects[i].getJustResized()) { // Logs resize event
+            if (effects[i].justResized) { // Logs resize event
                 context.eventLog.push(new ResizeEvent(effects[i]));
                 masterLog.push(context.eventLog[context.eventLog.length - 1]);
-                effects[i].setJustResized(false);
+                effects[i].justResized = false;
             }
-            if (effects[i].idObj == undefined) { // Gives object an ID if it doesn't have one
-                effects[i].initID(globalID);
+            if (effects[i].id == undefined) { // Gives object an ID if it doesn't have one
+                effects[i].id = globalID;
                 context.eventLog.push(new IDEvent(effects[i])); // Logs ID
                 globalID++;
             }

@@ -42,12 +42,12 @@ export class CurveNode implements Expression<CurveNode> {
      * @param dims The line dimensions
      * @param ast The program AST
      */
-    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
+    draw(scope: Scope, dims: Dimensions, ast: Expression<any>): void {
         dims.width = this._dx;
         dims.height = this._dy;
         dims.curvature = this._curvature;
-        let e = new CurveEffect(this);
-        e.draw(context, dims, ast);
+        let e = new CurveEffect(this, scope, dims);
+        e.draw();
     }
 
     /**

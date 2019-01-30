@@ -36,9 +36,9 @@ export class StringNode implements Expression<StringNode> {
      * @param dims The dimensions of the string to be drawn
      * @param ast The program AST
      */
-    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
-        let e = new StringEffect(this);
-        e.draw(context, dims, ast);
+    draw(scope: Scope, dims: Dimensions, ast: Expression<any>): void {
+        let e = new StringEffect(this, scope, dims);
+        e.draw();
     }
 
     /**
@@ -51,7 +51,7 @@ export class StringNode implements Expression<StringNode> {
         }
         return false;
     }
-    
+
     /**
      * Returns a string representation of the StringNode
      */

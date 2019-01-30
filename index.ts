@@ -52,7 +52,6 @@ export {EllipseNode} from './lib/shapes/EllipseNode';
 export {RectangleNode} from './lib/shapes/RectangleNode';
 export {LineNode} from './lib/shapes/LineNode';
 export {CurveNode} from './lib/shapes/CurveNode';
-export {EphNode} from './lib/shapes/EphNode';
 export {EmojiNode} from './lib/shapes/EmojiNode';
 export {PrintNode} from './lib/structural/PrintNode';
 export {Return} from './lib/structural/Return';
@@ -67,7 +66,6 @@ export {Dimensions} from './lib/structural/Dimensions';
 export {RectangleEffect} from './lib/effects/RectangleEffect';
 export {LineEffect} from './lib/effects/LineEffect';
 export {CurveEffect} from './lib/effects/CurveEffect';
-export {EphEffect} from './lib/effects/EphEffect';
 export {EmojiEffect} from './lib/effects/EmojiEffect';
 
 /* EVENTS */

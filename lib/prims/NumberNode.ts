@@ -41,9 +41,9 @@ export class NumberNode implements Expression <NumberNode>{
      * @param dims
      * @param ast
      */
-    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
-      let e = new NumberEffect(this);
-      e.draw(context, dims, ast);
+    draw(scope: Scope, dims: Dimensions, ast: Expression<any>): void {
+      let e = new NumberEffect(this, scope, dims);
+      e.draw();
     }
 
     /**

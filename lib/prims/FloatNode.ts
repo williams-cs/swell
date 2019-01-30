@@ -39,9 +39,9 @@ export class FloatNode implements Expression <FloatNode>{
      * @param dims
      * @param ast
      */
-    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
-      let e = new FloatEffect(this);
-      e.draw(context, dims, ast);
+    draw(scope: Scope, dims: Dimensions, ast: Expression<any>): void {
+      let e = new FloatEffect(this, scope, dims);
+      e.draw();
     }
 
     /**

@@ -59,7 +59,7 @@ export class LessonOneCpTwo extends Module {
 
             case 1:
                 for (let effect of effects) {
-                    if (effect instanceof StringEffect && effect.str !== "" && effect.selected) {
+                    if (effect instanceof StringEffect && effect.str !== "" && effect.isSelected) {
                         this._latestInstrIndex++;
                         this.renderLatestInstruction(document);
                     }

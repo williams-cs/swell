@@ -39,11 +39,11 @@ export class RectangleNode implements Expression<RectangleNode> {
      * @param dims The rectangle dimensions
      * @param ast The program AST
      */
-    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
+    draw(scope: Scope, dims: Dimensions, ast: Expression<any>): void {
         dims.width = this._width;
         dims.height = this._height;
-        let e = new RectangleEffect(this);
-        e.draw(context, dims, ast);
+        let e = new RectangleEffect(this, scope, dims);
+        e.draw();
     }
 
     /**

@@ -43,11 +43,11 @@ export class EmojiNode implements Expression<EmojiNode> {
      * @param dims The rectangle dimensions
      * @param ast The program AST
      */
-    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
+    draw(scope: Scope, dims: Dimensions, ast: Expression<any>): void {
         dims.width = this._width;
         dims.height = this._height;
-        let e = new EmojiEffect(this);
-        e.draw(context, dims, ast);
+        let e = new EmojiEffect(this, scope, dims);
+        e.draw();
     }
 
     /**

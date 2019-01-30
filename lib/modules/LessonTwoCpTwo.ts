@@ -53,7 +53,7 @@ export class LessonTwoCpTwo extends Module {
         switch (this._latestInstrIndex) {
             case 0:
                 for (let effect of effects) {
-                    if (effect instanceof EmojiEffect && effect.selected) {
+                    if (effect instanceof EmojiEffect && effect.isSelected) {
                         this._latestInstrIndex++;
                         this.renderLatestInstruction(document);
                     }

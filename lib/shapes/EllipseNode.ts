@@ -6,10 +6,10 @@ import { Dimensions } from '../structural/Dimensions';
 
 export class EllipseNode implements Expression<EllipseNode> {
     private _width: Expression<NumberNode>;
-    private _height: Expression<NumberNode>; 
+    private _height: Expression<NumberNode>;
     private _newLine: boolean = false;
     private _ws: string;
-    
+
     /**
      * Constructor for an EllipseNode, a node representing an ellipse
      * @param width The width of the ellipse
@@ -39,11 +39,11 @@ export class EllipseNode implements Expression<EllipseNode> {
      * @param dims The dimensions of the ellipse
      * @param ast The program AST
      */
-    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
+    draw(scope: Scope, dims: Dimensions, ast: Expression<any>): void {
         dims.width = this._width;
         dims.height = this._height;
-        let e = new EllipseEffect(this);
-        e.draw(context, dims, ast);
+        let e = new EllipseEffect(this, scope, dims);
+        e.draw();
     }
 
     /**
@@ -98,5 +98,5 @@ export class EllipseNode implements Expression<EllipseNode> {
     newLine(): boolean {
         return this._newLine;
     }
-    // get methods? 
+    // get methods?
 }
