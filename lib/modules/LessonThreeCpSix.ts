@@ -114,7 +114,7 @@ print("The angel is smaller than the devil.", ${this.xA}, ${this.yA + this.squar
                 if (angel != null && devil != null) {
                     for (let effect of effects) {
                         if (effect instanceof StringEffect) {
-                            let str = effect.str;
+                            let str = effect.val;
                             if ((str === "The angel is smaller than the devil." && angel.w < devil.w && angel.h < devil.h)
                                 || (str === "The angel is bigger than the devil." && angel.w > devil.w && angel.h > devil.h)) {
                                 canvasIsCorrect = true;

@@ -59,7 +59,7 @@ export class LessonOneCpTwo extends Module {
 
             case 1:
                 for (let effect of effects) {
-                    if (effect instanceof StringEffect && effect.str !== "" && effect.isSelected) {
+                    if (effect instanceof StringEffect && effect.val !== "" && effect.isSelected) {
                         this._latestInstrIndex++;
                         this.renderLatestInstruction(document);
                     }
@@ -68,7 +68,7 @@ export class LessonOneCpTwo extends Module {
 
             case 2:
                 for (let effect of effects) {
-                    if (effect instanceof StringEffect && effect.str !== "") {
+                    if (effect instanceof StringEffect && effect.val !== "") {
                         if (effect.x > this.x && effect.x < this.x + this.square_size && effect.y > this.y && effect.y < this.y + this.square_size) {
                             this.x = 10;
                             this._latestInstrIndex++;
@@ -80,7 +80,7 @@ export class LessonOneCpTwo extends Module {
 
             case 3:
                 for (let effect of effects) {
-                    if (effect instanceof StringEffect && effect.str !== "") {
+                    if (effect instanceof StringEffect && effect.val !== "") {
                         if (effect.x > this.x && effect.x < this.x + this.square_size && effect.y > this.y && effect.y < this.y + this.square_size) {
                             this._latestInstrIndex++;
                             this.renderLatestInstruction(document);

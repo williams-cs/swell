@@ -67,7 +67,7 @@ print("The skull is smaller than the box.", 25, 220)`;
                 //check for correct CANVAS effects
                 let canvasIsCorrect = false;
                 for (let effect of effects) {
-                    if (effect instanceof StringEffect && effect.str === "The skull is smaller than the box.") {
+                    if (effect instanceof StringEffect && effect.val === "The skull is smaller than the box.") {
                         canvasIsCorrect = true;
                         break;
                     }

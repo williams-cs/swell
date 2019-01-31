@@ -74,7 +74,7 @@ if(a < 100) {
 
                 //check for correct CANVAS effects
                 for (let effect of effects) {
-                    if (effect instanceof StringEffect && effect.str === "The skull is smaller than the box.") {
+                    if (effect instanceof StringEffect && effect.val === "The skull is smaller than the box.") {
                         canvasIsCorrect = true;
                         break;
                     }
@@ -94,7 +94,7 @@ if(a < 100) {
 
                 //check for correct CANVAS effects
                 for (let effect of effects) {
-                    if (effect instanceof StringEffect && effect.str === "The skull is smaller than the box.") {
+                    if (effect instanceof StringEffect && effect.val === "The skull is smaller than the box.") {
                         canvasIsCorrect = true;
                         break;
                     }
@@ -114,7 +114,7 @@ if(a < 100) {
 
                 //check for correct CANVAS effects
                 for (let effect of effects) {
-                    if (effect instanceof StringEffect && effect.str === "The skull is smaller than the box.") {
+                    if (effect instanceof StringEffect && effect.val === "The skull is smaller than the box.") {
                         canvasIsCorrect = true;
                         break;
                     }

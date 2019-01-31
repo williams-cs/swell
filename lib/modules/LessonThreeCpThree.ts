@@ -83,7 +83,7 @@ if(b < 75) {
 
                 //check for correct CANVAS effects
                 for (let effect of effects) {
-                    if (effect instanceof StringEffect && effect.str === "The pirate is bigger than the box.") {
+                    if (effect instanceof StringEffect && effect.val === "The pirate is bigger than the box.") {
                         canvasIsCorrect = true;
                         break;
                     }

@@ -81,7 +81,7 @@ if(c < 100) {
 
                 //check for correct CANVAS effects
                 for (let effect of effects) {
-                    if (effect instanceof StringEffect && effect.str === "The emoji is bigger than the box.") {
+                    if (effect instanceof StringEffect && effect.val === "The emoji is bigger than the box.") {
                         canvasIsCorrect = true;
                         break;
                     }
@@ -101,7 +101,7 @@ if(c < 100) {
 
                 //check for correct CANVAS effects
                 for (let effect of effects) {
-                    if (effect instanceof StringEffect && effect.str === "The emoji is smaller than the box.") {
+                    if (effect instanceof StringEffect && effect.val === "The emoji is smaller than the box.") {
                         canvasIsCorrect = true;
                         break;
                     }
@@ -121,7 +121,7 @@ if(c < 100) {
 
                 //check for correct CANVAS effects
                 for (let effect of effects) {
-                    if (effect instanceof StringEffect && effect.str === "The emoji is bigger than the box.") {
+                    if (effect instanceof StringEffect && effect.val === "The emoji is bigger than the box.") {
                         canvasIsCorrect = true;
                         break;
                     }

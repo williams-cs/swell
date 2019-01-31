@@ -18,7 +18,7 @@ export class StringNode implements Expression<StringNode> {
         this._str = str;
         this._ws = ws;
         if (ws == undefined) {
-            this._ws= "";
+            this._ws = "";
         }
     }
 
@@ -56,13 +56,13 @@ export class StringNode implements Expression<StringNode> {
      * Returns a string representation of the StringNode
      */
     toString(): string {
-        return this._ws + '\"' + this._str + '\"';
+        return this._ws + "\"" + this._str + "\"";
     }
 
     /**
      * Sets the string stored in the node
      */
-    set str(value: string){
+    set val(value: string){
         this._str = value;
     }
     /**

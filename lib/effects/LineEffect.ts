@@ -1,5 +1,4 @@
-import { Effect } from "./Effect";
-import { NumberNode } from "../prims/NumberNode";
+import { AbstractLineEffect } from "./AbstractLineEffect";
 import { LineNode } from "../shapes/LineNode";
 import { Expression } from "../Expression";
 import { Scope } from "../structural/Scope";
@@ -11,12 +10,12 @@ import { DragEvent } from "../logging/DragEvent";
 import { ClickEvent } from "../logging/ClickEvent";
 import { EffectUtils } from "./EffectUtils";
 
-export class LineEffect extends Effect<LineNode> {
+export class LineEffect extends AbstractLineEffect<LineNode> {
 
-    private _x1: number; // used to save coords for logging
-    private _y1: number;
     private _width1: number; // saves size for logging
     private _height1: number;
+
+    readonly name: string = "line";
 
     /**
      * This method is called in order to draw and redraw the object when manipulations are made
@@ -68,23 +67,23 @@ export class LineEffect extends Effect<LineNode> {
             return 4;
         }
         /* Middle Guides */
-        xdif = mx - (x + w / 2);
+        xdif = mx - (x + w/2);
         ydif = my - y;
         if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) { //top middle
             return 5;
         }
         xdif = mx - (x + w);
-        ydif = my - (y + h / 2);
+        ydif = my - (y + h/2);
         if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) { //middle right
             return 6;
         }
-        xdif = mx - (x + w / 2);
+        xdif = mx - (x + w/2);
         ydif = my - (y + h);
         if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) { //bottom middle
             return 7;
         }
         xdif = mx - x;
-        ydif = my - (y + h / 2);
+        ydif = my - (y + h/2);
         if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) { //middle left
             return 8;
         }
@@ -109,43 +108,43 @@ export class LineEffect extends Effect<LineNode> {
             switch (corner) { //colors the correct guide blue
                 case 1:
                     this.drawSquare(x - 2.5, y - 2.5, 5, 5, 'blue'); // top left
-                    this.drawSquare((x + w / 2) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
+                    this.drawSquare((x + w/2) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
                     this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'white'); // top right
-                    this.drawSquare(x + w - 2.5, (y + h / 2) - 2.5, 5, 5, 'white'); // middle right
+                    this.drawSquare(x + w - 2.5, (y + h/2) - 2.5, 5, 5, 'white'); // middle right
                     this.drawSquare(x + w - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom right
-                    this.drawSquare((x + w / 2) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
+                    this.drawSquare((x + w/2) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
                     this.drawSquare(x - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom left
-                    this.drawSquare(x - 2.5, (y + h / 2) - 2.5, 5, 5, 'white'); // middle left
+                    this.drawSquare(x - 2.5, (y + h/2) - 2.5, 5, 5, 'white'); // middle left
                     break;
                 case 2:
                     this.drawSquare(x - 2.5, y - 2.5, 5, 5, 'white'); // top left
-                    this.drawSquare((x + w / 2) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
+                    this.drawSquare((x + w/2) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
                     this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'blue'); // top right
-                    this.drawSquare(x + w - 2.5, (y + h / 2) - 2.5, 5, 5, 'white'); // middle right
+                    this.drawSquare(x + w - 2.5, (y + h/2) - 2.5, 5, 5, 'white'); // middle right
                     this.drawSquare(x + w - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom right
-                    this.drawSquare((x + w / 2) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
+                    this.drawSquare((x + w/2) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
                     this.drawSquare(x - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom left
-                    this.drawSquare(x - 2.5, (y + h / 2) - 2.5, 5, 5, 'white'); // middle left
+                    this.drawSquare(x - 2.5, (y + h/2) - 2.5, 5, 5, 'white'); // middle left
                     break;
                 case 3:
                     this.drawSquare(x - 2.5, y - 2.5, 5, 5, 'white'); // top left
-                    this.drawSquare((x + w / 2) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
+                    this.drawSquare((x + w/2) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
                     this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'white'); // top right
-                    this.drawSquare(x + w - 2.5, (y + h / 2) - 2.5, 5, 5, 'white'); // middle right
+                    this.drawSquare(x + w - 2.5, (y + h/2) - 2.5, 5, 5, 'white'); // middle right
                     this.drawSquare(x + w - 2.5, y + h - 2.5, 5, 5, 'blue'); // bottom right
-                    this.drawSquare((x + w / 2) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
+                    this.drawSquare((x + w/2) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
                     this.drawSquare(x - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom left
-                    this.drawSquare(x - 2.5, (y + h / 2) - 2.5, 5, 5, 'white'); // middle left
+                    this.drawSquare(x - 2.5, (y + h/2) - 2.5, 5, 5, 'white'); // middle left
                     break;
                 case 4:
                     this.drawSquare(x - 2.5, y - 2.5, 5, 5, 'white'); // top left
-                    this.drawSquare((x + w / 2) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
+                    this.drawSquare((x + w/2) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
                     this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'white'); // top right
-                    this.drawSquare(x + w - 2.5, (y + h / 2) - 2.5, 5, 5, 'white'); // middle right
+                    this.drawSquare(x + w - 2.5, (y + h/2) - 2.5, 5, 5, 'white'); // middle right
                     this.drawSquare(x + w - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom right
-                    this.drawSquare((x + w / 2) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
+                    this.drawSquare((x + w/2) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
                     this.drawSquare(x - 2.5, y + h - 2.5, 5, 5, 'blue'); // bottom left
-                    this.drawSquare(x - 2.5, (y + h / 2) - 2.5, 5, 5, 'white'); // middle left
+                    this.drawSquare(x - 2.5, (y + h/2) - 2.5, 5, 5, 'white'); // middle left
                     break;
             }
         }
@@ -153,55 +152,55 @@ export class LineEffect extends Effect<LineNode> {
             switch (corner) { //colors the correct guide blue
                 case 5:
                     this.drawSquare(x - 2.5, y - 2.5, 5, 5, 'white'); // top left
-                    this.drawSquare((x + w / 2) - 2.5, y - 2.5, 5, 5, 'blue'); // top middle
+                    this.drawSquare((x + w/2) - 2.5, y - 2.5, 5, 5, 'blue'); // top middle
                     this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'white'); // top right
-                    this.drawSquare(x + w - 2.5, (y + h / 2) - 2.5, 5, 5, 'white'); // middle right
+                    this.drawSquare(x + w - 2.5, (y + h/2) - 2.5, 5, 5, 'white'); // middle right
                     this.drawSquare(x + w - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom right
-                    this.drawSquare((x + w / 2) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
+                    this.drawSquare((x + w/2) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
                     this.drawSquare(x - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom left
-                    this.drawSquare(x - 2.5, (y + h / 2) - 2.5, 5, 5, 'white'); // middle left
+                    this.drawSquare(x - 2.5, (y + h/2) - 2.5, 5, 5, 'white'); // middle left
                     break;
                 case 6:
                     this.drawSquare(x - 2.5, y - 2.5, 5, 5, 'white'); // top left
-                    this.drawSquare((x + w / 2) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
+                    this.drawSquare((x + w/2) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
                     this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'white'); // top right
-                    this.drawSquare(x + w - 2.5, (y + h / 2) - 2.5, 5, 5, 'blue'); // middle right
+                    this.drawSquare(x + w - 2.5, (y + h/2) - 2.5, 5, 5, 'blue'); // middle right
                     this.drawSquare(x + w - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom right
-                    this.drawSquare((x + w / 2) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
+                    this.drawSquare((x + w/2) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
                     this.drawSquare(x - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom left
-                    this.drawSquare(x - 2.5, (y + h / 2) - 2.5, 5, 5, 'white'); // middle left
+                    this.drawSquare(x - 2.5, (y + h/2) - 2.5, 5, 5, 'white'); // middle left
                     break;
                 case 7:
                     this.drawSquare(x - 2.5, y - 2.5, 5, 5, 'white'); // top left
-                    this.drawSquare((x + w / 2) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
+                    this.drawSquare((x + w/2) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
                     this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'white'); // top right
-                    this.drawSquare(x + w - 2.5, (y + h / 2) - 2.5, 5, 5, 'white'); // middle right
+                    this.drawSquare(x + w - 2.5, (y + h/2) - 2.5, 5, 5, 'white'); // middle right
                     this.drawSquare(x + w - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom right
-                    this.drawSquare((x + w / 2) - 2.5, y + h - 2.5, 5, 5, 'blue'); // bottom middle
+                    this.drawSquare((x + w/2) - 2.5, y + h - 2.5, 5, 5, 'blue'); // bottom middle
                     this.drawSquare(x - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom left
-                    this.drawSquare(x - 2.5, (y + h / 2) - 2.5, 5, 5, 'white'); // middle left
+                    this.drawSquare(x - 2.5, (y + h/2) - 2.5, 5, 5, 'white'); // middle left
                     break;
                 case 8:
                     this.drawSquare(x - 2.5, y - 2.5, 5, 5, 'white'); // top left
-                    this.drawSquare((x + w / 2) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
+                    this.drawSquare((x + w/2) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
                     this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'white'); // top right
-                    this.drawSquare(x + w - 2.5, (y + h / 2) - 2.5, 5, 5, 'white'); // middle right
+                    this.drawSquare(x + w - 2.5, (y + h/2) - 2.5, 5, 5, 'white'); // middle right
                     this.drawSquare(x + w - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom right
-                    this.drawSquare((x + w / 2) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
+                    this.drawSquare((x + w/2) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
                     this.drawSquare(x - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom left
-                    this.drawSquare(x - 2.5, (y + h / 2) - 2.5, 5, 5, 'blue'); // middle left
+                    this.drawSquare(x - 2.5, (y + h/2) - 2.5, 5, 5, 'blue'); // middle left
                     break;
             }
         }
         else { //if no guides are selected, colors everything white
             this.drawSquare(x - 2.5, y - 2.5, 5, 5, 'white'); // top left
-            this.drawSquare((x + w / 2) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
+            this.drawSquare((x + w/2) - 2.5, y - 2.5, 5, 5, 'white'); // top middle
             this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'white'); // top right
-            this.drawSquare(x + w - 2.5, (y + h / 2) - 2.5, 5, 5, 'white'); // middle right
+            this.drawSquare(x + w - 2.5, (y + h/2) - 2.5, 5, 5, 'white'); // middle right
             this.drawSquare(x + w - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom right
-            this.drawSquare((x + w / 2) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
+            this.drawSquare((x + w/2) - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom middle
             this.drawSquare(x - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom left
-            this.drawSquare(x - 2.5, (y + h / 2) - 2.5, 5, 5, 'white'); // middle left
+            this.drawSquare(x - 2.5, (y + h/2) - 2.5, 5, 5, 'white'); // middle left
         }
     }
 
@@ -294,8 +293,8 @@ export class LineEffect extends Effect<LineNode> {
 
         if (this.isSelectingMultiple) { //prepares the object for dragging whether it is personally selected or not
             if (contains) {
-                this._x1 = this.x;
-                this._y1 = this.y;
+                this.prevX = this.x;
+                this.prevY = this.y;
                 this.isSelected = true;
                 this.isDragging = true;
                 this.dragOffX = this.mouse.x - x;
@@ -362,30 +361,30 @@ export class LineEffect extends Effect<LineNode> {
 
                 switch (this.corner) { // sets the offsets depending on which middle guide is selected
                     case 5: // top middle
-                        this.initDistance = EffectUtils.calcDistance(this.mouse.x, this.mouse.y, x + w / 2, y + h);
-                        this.dragOffX = x + w / 2; // offset is bottom middle
+                        this.initDistance = EffectUtils.calcDistance(this.mouse.x, this.mouse.y, x + w/2, y + h);
+                        this.dragOffX = x + w/2; // offset is bottom middle
                         this.dragOffY = y + h;
                         break;
                     case 6: //right middle
-                        this.initDistance = EffectUtils.calcDistance(this.mouse.x, this.mouse.y, x, y + h / 2);
+                        this.initDistance = EffectUtils.calcDistance(this.mouse.x, this.mouse.y, x, y + h/2);
                         this.dragOffX = x;
-                        this.dragOffY = y + h / 2; // offset is left middle etc
+                        this.dragOffY = y + h/2; // offset is left middle etc
                         break;
                     case 7:
-                        this.initDistance = EffectUtils.calcDistance(this.mouse.x, this.mouse.y, x + w / 2, y);
-                        this.dragOffX = x + w / 2;
+                        this.initDistance = EffectUtils.calcDistance(this.mouse.x, this.mouse.y, x + w/2, y);
+                        this.dragOffX = x + w/2;
                         this.dragOffY = y;
                         break;
                     case 8:
-                        this.initDistance = EffectUtils.calcDistance(this.mouse.x, this.mouse.y, x + w, y + h / 2);
+                        this.initDistance = EffectUtils.calcDistance(this.mouse.x, this.mouse.y, x + w, y + h/2);
                         this.dragOffX = x + w;
-                        this.dragOffY = y + h / 2;
+                        this.dragOffY = y + h/2;
                         break;
                 }
 
             } else if (contains) { // dragging
-                this._x1 = x; // Saving original x and y
-                this._y1 = y;
+                this.prevX = x; // Saving original x and y
+                this.prevY = y;
 
                 this.scope.eventLog.push(this.logClick());
                 this.isSelected = true;
@@ -407,7 +406,7 @@ export class LineEffect extends Effect<LineNode> {
     modifyReset(): void {
         if (this.isDragging && this.isSelected) {
             this.isDragging = false;
-            if (Math.abs(this._x1 - this.x) > 1 || Math.abs(this._y1 - this.y) > 1) {
+            if (Math.abs(this.prevX - this.x) > 1 || Math.abs(this.prevY - this.y) > 1) {
                 this.justDragged = true;
             }
         } else if ((this.isResizing || this.isChangingDims) && this.isSelected) {
@@ -455,7 +454,7 @@ export class LineEffect extends Effect<LineNode> {
     * Assembles a string for drag events
     */
     toDragString(): string {
-        return ("rectangle with ID " + this.id + " from " + this._x1 + ", " + this._y1 + " to " + this.x + ", " + this.y);
+        return ("rectangle with ID " + this.id + " from " + this.prevX + ", " + this.prevY + " to " + this.x + ", " + this.y);
     }
 
     /**

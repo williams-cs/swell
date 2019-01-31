@@ -1,9 +1,9 @@
 import { Dimensions } from "../structural/Dimensions";
+import { EffectUtils } from "./EffectUtils";
 import { Expression } from "../Expression";
+import { LogEvent } from "../logging/LogEvent";
 import { PrintNode } from "../structural/PrintNode";
 import { Scope } from "../structural/Scope";
-import { LogEvent } from "../logging/LogEvent";
-import { EffectUtils } from "./EffectUtils";
 
 export abstract class Effect<T> {
 
@@ -27,22 +27,19 @@ export abstract class Effect<T> {
      */
     private _id: number;
 
+    /**
+     * The name of the effect, used for logging
+     */
+    abstract name: string;
+
     private _isSelected: boolean = false;
-
     private _isDragging: boolean = false;
-
     private _isResizing: boolean = false;
-
     private _isChangingDims: boolean = false;
-
     private _isSelectingMultiple: boolean = false;
-
     private _justDragged: boolean = false;
-
     private _justResized: boolean = false;
-
     private _corner: number = 0;
-
     private _mouse: {
         x: number,
         y: number,
@@ -52,10 +49,10 @@ export abstract class Effect<T> {
         };
 
     private _dragOffX: number = 0;
-
     private _dragOffY: number = 0;
-
     private _initDistance: number = 0;
+    private _prevX: number;
+    private _prevY: number;
 
     constructor(node: T, scope: Scope, dims: Dimensions) {
         this.node = node;
@@ -99,10 +96,18 @@ export abstract class Effect<T> {
      * @param mx the mouse x coordinate
      * @param my the mouse y coordinate
      */
-    contains(mx: number, my: number): boolean {
-        return (mx > this.x) && (mx < this.x + this.w) &&
-            (my > this.y) && (my < this.y + this.h);
-    }
+    abstract contains(mx: number, my: number): boolean;
+
+    /**
+     * Draws the bounding rectangle and guides for the object when the object is selected
+     * If one of the guides is selected, it colors that guide blue
+     * @param x the x coordinate for where the rectangle will originate from (top left corner)
+     * @param y the y coordinate for where the rectangle will originate from (top left corner)
+     * @param w the width of the bounding rectangle
+     * @param h the height of the bounding rectangle
+     * @param corner the number of the corner (1-8) to be colored blue (if any at all, if 0, all are white)
+     */
+    abstract drawGuides(x: number, y: number, w: number, h: number, corner: number): void;
 
 
     /* Event listener functions */
@@ -236,8 +241,20 @@ export abstract class Effect<T> {
         this.dims.y.eval(this.scope).val = this.mouse.y - this.dragOffY;
     }
 
+    /**
+     * Changes the size of the object when called (when a corner guide is clicked and dragged).
+     *
+     * If any of width or height is too small, it sets them equal to 10 and the other equal to
+     * 10 divided or multiplied by the ratio of width/height to keep it the same.
+     *
+     */
     abstract modifyResize(): void;
 
+    /**
+     * Changes the dimensions of the object when called.
+     * If any of width or height is too small, it sets them equal to 10.
+     * Calls modifyChangeDimsHelper to actually do the work
+     */
     abstract modifyChangeDims(): void;
 
     /**
@@ -246,6 +263,9 @@ export abstract class Effect<T> {
      */
     abstract modifyState(): void;
 
+    /**
+     * Resets all of the private booleans to false (like dragging, resizing, etc) when the mouse is released
+     */
     abstract modifyReset(): void;
 
     /* Logging functions */
@@ -399,6 +419,22 @@ export abstract class Effect<T> {
 
     set initDistance(val: number) {
         this._initDistance = val;
+    }
+
+    get prevX(): number {
+        return this._prevX;
+    }
+
+    set prevX(val: number) {
+        this._prevX = val;
+    }
+
+    get prevY(): number {
+        return this._prevY;
+    }
+
+    set prevY(val: number) {
+        this._prevY = val;
     }
 
     get canvas(): HTMLCanvasElement {

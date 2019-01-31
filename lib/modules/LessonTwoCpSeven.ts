@@ -100,8 +100,8 @@ print(emoji("mustache", 100, 100), ${this.x + 10}, ${this.y + 10});`;
 
             case 3:
                 for (let effect of effects) {
-                    if (effect instanceof NumberEffect && effect.num != null) {
-                        let val = effect.num;
+                    if (effect instanceof NumberEffect && effect.val != null) {
+                        let val = effect.val;
                         for (let effect2 of effects) {
                             if (effect2 instanceof EmojiEffect && (val == effect2.w || val == effect2.h)) {
                                 this._latestInstrIndex++;
@@ -114,8 +114,8 @@ print(emoji("mustache", 100, 100), ${this.x + 10}, ${this.y + 10});`;
 
             case 4:
                 for (let effect of effects) {
-                    if (effect instanceof NumberEffect && effect.num != null) {
-                        let val = effect.num;
+                    if (effect instanceof NumberEffect && effect.val != null) {
+                        let val = effect.val;
                         for (let effect2 of effects) {
                             if (effect2 instanceof EmojiEffect && (val == effect2.w || val == effect2.h) && val > this.square_size) {
                                 this._latestInstrIndex++;
