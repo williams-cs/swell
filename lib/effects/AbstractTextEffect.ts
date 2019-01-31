@@ -1,3 +1,4 @@
+import { AbstractTypeableNode } from "../prims/AbstractTypeableNode";
 import { Dimensions } from "../structural/Dimensions";
 import { Effect } from "./Effect";
 import { EffectUtils } from "./EffectUtils";
@@ -11,46 +12,33 @@ import { SelectEvent } from "../logging/SelectEvent";
 import { PrintNode } from "../structural/PrintNode";
 import { Scope } from "../structural/Scope";
 
-export abstract class AbstractTextEffect<T> extends Effect<T> {
+export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V>, V> extends Effect<T> {
 
     private _fontSize: number = 20;
     private _prevFontSize: number;
     private _isEditing: boolean = false;
     private _isListening: boolean = false;
-    private _textMetrics: { // all the details of the text on the canvas
-        width: number,
-        interval: number,
-        initMousePos: number,
-        cursorPos: number,
-    } = {
-            width: 0,
-            interval: 0,
-            initMousePos: 0,
-            cursorPos: 0,
-        };
+    private _cursorPos: number = 0;
+    private _cursorTime: number = 90;
+    private _cursorTimeCurrent: number = 90;
+    private _isCursorDisplayed: boolean = true;
 
     update(): void {
         this.ctx.font = this.fontSize + "px Courier New";
         this.ctx.fillStyle = "#673AB7";
-        let text: string = this.node.toString();
-        if (text.startsWith('"') && text.endsWith('"')) {
-            text = text.slice(1, text.length - 1);
-        }
-        this.ctx.fillText(text, this.x, this.y);
-        this.textMetrics.width = this.ctx.measureText(text).width;
-        this.textMetrics.interval = this.textMetrics.width != 0 ? this.textMetrics.width / text.length : 0;
+        this.ctx.fillText(this.text, this.x, this.y);
         if (this.isSelected) {
-            this.drawGuides(this.x, this.y - this.fontSize, this.textMetrics.width, this.fontSize, this.corner);
+            this.drawGuides(this.x, this.y - this.fontSize, this.width, this.fontSize, this.corner);
         }
         if (this.isEditing) {
-            this.modifyTextCursor();
+            this.drawCursor();
         }
     }
 
     guideContains(mx: number, my: number): number {
-        let xdif = mx - (this.x + this.textMetrics.width);
-        let ydif = my - (this.y - this.fontSize);
-        if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) {
+        let xDiff = mx - (this.x + this.width);
+        let yDiff = my - (this.y - this.fontSize);
+        if (Math.abs(xDiff) <= 5 && Math.abs(yDiff) <= 5) {
             this.isEditing = false;
             return 2;
         }
@@ -58,7 +46,7 @@ export abstract class AbstractTextEffect<T> extends Effect<T> {
     }
 
     contains(mx: number, my: number): boolean {
-        return (this.x <= mx) && (this.x + this.textMetrics.width >= mx) &&
+        return (this.x <= mx) && (this.x + this.width >= mx) &&
             (this.y - this.fontSize <= my) && (this.y >= my);
     }
 
@@ -75,6 +63,23 @@ export abstract class AbstractTextEffect<T> extends Effect<T> {
                 this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'blue');
                 break;
         }
+    }
+
+    drawCursor(): void {
+        if (this.cursorTimeCurrent <= 0) {
+            this.cursorTimeCurrent = this.cursorTime;
+            this.isCursorDisplayed = !this.isCursorDisplayed;
+        } else {
+            this.cursorTimeCurrent -= 1;
+        }
+        if (!this.isCursorDisplayed) {
+            return;
+        }
+        let cursorX: number = this.x + this.cursorPos * this.interval;
+        this.ctx.moveTo(cursorX, this.y - this.fontSize);
+        this.ctx.lineTo(cursorX, this.y);
+        this.ctx.strokeStyle = "grey";
+        this.ctx.stroke();
     }
 
     /* Event listener functions */
@@ -96,8 +101,7 @@ export abstract class AbstractTextEffect<T> extends Effect<T> {
             this.isListening = true;
             this.isEditing = true;
             this.isDragging = false;
-            this.textMetrics.initMousePos = this.mouse.x;
-            this.modifyTextCursor();
+            this.updateCursorPosFromMouse();
         } else if (!this.isSelectingMultiple) {
             this.isSelected = false;
             this.isEditing = false;
@@ -111,15 +115,66 @@ export abstract class AbstractTextEffect<T> extends Effect<T> {
 
     modifyChangeDims(): void { }
 
-    modifyTextCursor(): void {
-        let xDif: number = this.textMetrics.initMousePos - this.x; // difference between mouse x and left wall
-        let interval: number = this.textMetrics.interval;
-        this.textMetrics.cursorPos = interval != 0 ? interval * Math.round(xDif / interval) : 0;
-        let moveFactor: number = this.textMetrics.cursorPos + this.x;
-        this.ctx.moveTo(moveFactor, this.y - this.fontSize);
-        this.ctx.lineTo(moveFactor, this.y);
-        this.ctx.strokeStyle = "grey";
-        this.ctx.stroke();
+    updateCursorPos(delta_pos: number): void {
+        let newPos: number = this.cursorPos + Math.round(delta_pos);
+        newPos = Math.max(newPos, 0);
+        newPos = Math.min(newPos, this.text.length);
+        this.cursorPos = newPos;
+        this.resetCursorStatus();
+    }
+
+    updateCursorPosFromMouse(): void {
+        let xDiff: number = this.mouse.x - this.x;
+        let interval: number = this.interval;
+        let newPos: number = Math.round(interval != 0 ? xDiff/interval : 0);
+        newPos = Math.max(newPos, 0);
+        newPos = Math.min(newPos, this.text.length);
+        this.cursorPos = newPos;
+        this.resetCursorStatus();
+    }
+
+    resetCursorStatus(): void {
+        this.cursorTimeCurrent = this.cursorTime;
+        this.isCursorDisplayed = true;
+    }
+
+    modifyText(event: any): void {
+        if (!this.isEditing) {
+            return;
+        }
+        let firstHalf: string = this.text.substring(0, this.cursorPos);
+        let secondHalf: string = this.text.substring(this.cursorPos);
+
+        switch (event.keyCode) {
+            case 37: // Arrow left
+                this.updateCursorPos(-1);
+                break;
+            case 39: // Arrow right
+                this.updateCursorPos(1);
+                break;
+            case 8: // Backspace
+                firstHalf = firstHalf.substring(0, firstHalf.length - 1);
+                this.node.val = this.convertStrToNodeVal(firstHalf + secondHalf);
+                this.updateCursorPos(-1);
+                event.preventDefault(); // Backspacing on Firefox will go back to a previous page
+                break;
+            case 46: // Del
+                secondHalf = secondHalf.substring(1, secondHalf.length);
+                this.node.val = this.convertStrToNodeVal(firstHalf + secondHalf);
+                break;
+            default:
+                let keyName = event.key;
+                if (keyName.length != 1) {
+                    return;
+                }
+                firstHalf += keyName;
+                try {
+                    this.node.val = this.convertStrToNodeVal(firstHalf + secondHalf);
+                } catch (e) {
+                    return;
+                }
+                this.updateCursorPos(1);
+        }
     }
 
     modifyResize(): void {
@@ -216,16 +271,12 @@ export abstract class AbstractTextEffect<T> extends Effect<T> {
         this.corner = 0;
     }
 
-    /**
-     * This edits the string when editing text
-     * @param event keydown event
-     */
-    abstract modifyText(event: any): void;
+    abstract convertStrToNodeVal(str: string): V;
 
     /* Logging functions */
 
     logPaint(): LogEvent<any> {
-        return new PaintEvent(`${this.name} ${this.node.toString()}`, this.x, this.y);
+        return new PaintEvent(`${this.name} ${this.node.toString()} with ID ${this.id}`, this.x, this.y);
     }
 
     logResize(): LogEvent<any> {
@@ -282,23 +333,47 @@ export abstract class AbstractTextEffect<T> extends Effect<T> {
         this._isListening = val;
     }
 
-    get textMetrics(): {
-        width: number,
-        interval: number,
-        initMousePos: number,
-        cursorPos: number,
-    } {
-        return this._textMetrics;
+    get cursorPos(): number {
+        return this._cursorPos;
     }
 
-    set textMetrics(textMetrics: {
-        width: number,
-        interval: number,
-        initMousePos: number,
-        cursorPos: number,
-    }) {
-        this._textMetrics = textMetrics;
+    set cursorPos(cursorPos: number) {
+        this._cursorPos = cursorPos;
     }
 
-    abstract get val(): any;
+    get cursorTimeCurrent(): number {
+        return this._cursorTimeCurrent;
+    }
+
+    set cursorTimeCurrent(val: number) {
+        this._cursorTimeCurrent = Math.round(val);
+    }
+
+    get isCursorDisplayed(): boolean {
+        return this._isCursorDisplayed;
+    }
+
+    set isCursorDisplayed(val: boolean) {
+        this._isCursorDisplayed = val;
+    }
+
+    get cursorTime(): number {
+        return this._cursorTime;
+    }
+
+    get val(): V {
+        return this.node.val;
+    }
+
+    get text(): string {
+        return String(this.val);
+    }
+
+    get width(): number {
+        return this.ctx.measureText(this.text).width;
+    }
+
+    get interval(): number {
+        return this.text.length == 0 ? 0 : this.width / this.text.length;
+    }
 }

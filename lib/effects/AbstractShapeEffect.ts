@@ -329,7 +329,7 @@ export abstract class AbstractShapeEffect<T> extends Effect<T> {
     }
 
     logPaint(): LogEvent<any> {
-        return new PaintEvent(this.name, this.x, this.y);
+        return new PaintEvent(`${this.name} with ID ${this.id}`, this.x, this.y);
     }
 
     logResize(): LogEvent<any> {
@@ -337,18 +337,18 @@ export abstract class AbstractShapeEffect<T> extends Effect<T> {
     }
 
     logClick(): LogEvent<any> {
-        return new ClickEvent(this.name + " with ID " + this.id, this.x, this.y);
+        return new ClickEvent(`${this.name} with ID ${this.id}`, this.x, this.y);
     }
 
     toSelString(): string {
-        return " " + this.name + " with ID " + this.id + " at " + this.x + ", " + this.y;
+        return ` ${this.name} with ID ${this.id} at ${this.x}, ${this.y}`;
     }
 
     toDragString(): string {
-        return (this.name + " with ID " + this.id + " from " + this.prevX + ", " + this.prevY + " to " + this.x + ", " + this.y);
+        return `${this.name} with ID ${this.id} from ${this.prevX}, ${this.prevY} to ${this.x}, ${this.y}`;
     }
 
     toIDString(): string {
-        return (this.id + " to " + this.name + " at " + this.x + ", " + this.y);
+        return `${this.id} to ${this.name} at ${this.x}, ${this.y}`;
     }
 }
