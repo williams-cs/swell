@@ -3,7 +3,7 @@ import { assert, expect } from 'chai';
 import 'mocha';
 import { CharUtil, Primitives } from 'pants/lib';
 import { SequenceNode, StringNode, Return, Scope, NumberNode, BooleanNode, WhileNode, ForNode, Conditional, ListNode, FunDef, FunApp, PrintNode, VariableNode, NegOp, NOP, Dimensions, EllipseNode,
-    RectangleNode, Equals, NotEqual, And, Or, GreaterThan, LessThan, Not, GreaterThanEq, LessThanEq, AssignOp, PlusOp, Decrement, DeclareOp, Increment, EphNode, Parens } from '../index';
+    RectangleNode, Equals, NotEqual, And, Or, GreaterThan, LessThan, Not, GreaterThanEq, LessThanEq, AssignOp, PlusOp, Decrement, DeclareOp, Increment, Parens } from '../index';
 import { FloatNode } from '../lib/prims/FloatNode';
 
 describe('Number Parser test', () =>{
@@ -939,18 +939,18 @@ describe("Variable Name Parser", () => {
     });
 });*/
 
-describe('Special case issue', () =>{
-    it('should result in failure to parse', () => {
-        const input = 'print("hi");\n print(\\\)';
-        let result = Parser.parse(input);
-        if(result.isDefined()) {
-            assert.fail();
-        }
-        else {
-            assert(true);
-        }
-    });
-});
+// describe('Special case issue', () =>{
+//     it('should result in failure to parse', () => {
+//         const input = 'print("hi");\n print(\\\)';
+//         let result = Parser.parse(input);
+//         if (result.isDefined()) {
+//             assert.fail();
+//         }
+//         else {
+//             assert(true);
+//         }
+//     });
+// });
 
 describe('Float parser', () => {
     it('should correctly parse a float with proper syntax', () => {

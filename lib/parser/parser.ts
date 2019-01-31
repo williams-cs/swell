@@ -1,5 +1,5 @@
 import { Primitives, CharUtil } from 'pants';
-import { NumberNode, StringNode, Expression, BinaryOperation, DeclareOp, PlusOp, MulOp, DivOp, MinusOp, NegOp, VariableNode, AssignOp, UnaryOperation, ListNode, SequenceNode, Return, FunDef, FunApp, BooleanNode, Conditional, RepeatNode, WhileNode, PrintNode, Equals, Not, And, GreaterThan, LessThan, GreaterThanEq, LessThanEq, Or, NotEqual, ForNode, Dimensions, Increment, NOP, Decrement, EllipseNode, RectangleNode, LineNode, CurveNode, EmojiNode } from '../../index';
+import { NumberNode, StringNode, Expression, BinaryOp, DeclareOp, PlusOp, MulOp, DivOp, MinusOp, NegOp, VariableNode, AssignOp, UnaryOperation, ListNode, SequenceNode, Return, FunDef, FunApp, BooleanNode, Conditional, RepeatNode, WhileNode, PrintNode, Equals, Not, And, GreaterThan, LessThan, GreaterThanEq, LessThanEq, Or, NotEqual, ForNode, Dimensions, Increment, NOP, Decrement, EllipseNode, RectangleNode, LineNode, CurveNode, EmojiNode } from '../../index';
 import { Option, Some, None } from 'space-lift';
 import { FloatNode } from '../prims/FloatNode';
 import { Parens } from '../unops/Parens';
@@ -258,7 +258,7 @@ export namespace Parser {
         let precedingWS = Primitives.appfun<CharUtil.CharStream, string>(Primitives.ws())(x => ws = x.toString());
         let postPlus = Primitives.seq<Expression<any>, CharUtil.CharStream, Increment>(Primitives.right<string, Expression<any>>(precedingWS)(ExpressionParserNoBinOp))(Primitives.str('++'))(tup => {return new Increment(tup[0], ws)});
         let postMinus = Primitives.seq<Expression<any>, CharUtil.CharStream, Decrement>(Primitives.right<string, Expression<any>>(precedingWS)(ExpressionParserNoBinOp))(Primitives.str('--'))(tup => {return new Decrement(tup[0], ws)});
-        let binOp = Primitives.seq<Expression<any>,[CharUtil.CharStream,Expression<any>],BinaryOperation<any>>(Primitives.right<string, Expression<any>>(precedingWS)(p1))(p2)(f);
+        let binOp = Primitives.seq<Expression<any>,[CharUtil.CharStream,Expression<any>],BinaryOp<any>>(Primitives.right<string, Expression<any>>(precedingWS)(p1))(p2)(f);
         return Primitives.choice<Expression<any>>(binOp)(Primitives.choice<Expression<any>>(postPlus)(postMinus))(i);
      }
 

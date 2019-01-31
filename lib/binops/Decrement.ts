@@ -1,4 +1,4 @@
-import {BinaryOperation} from './BinaryOperation';
+import {BinaryOp} from './BinaryOp';
 import {Expression} from '../Expression';
 import {Scope} from '../structural/Scope';
 import {NumberNode} from '../prims/NumberNode';
@@ -31,7 +31,7 @@ export class Decrement implements Expression<any>{
             this._ws= "";
         }
     }
-    
+
     /**
      * Evaluates the decrement op to a NumberNode
      * @param context The current program context
@@ -49,9 +49,9 @@ export class Decrement implements Expression<any>{
 
     /**
      * Decrement ops can't be drawn directly
-     * @param context 
-     * @param dims 
-     * @param ast 
+     * @param context
+     * @param dims
+     * @param ast
      */
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
         throw new Error("Not implemented");
@@ -59,12 +59,12 @@ export class Decrement implements Expression<any>{
 
     /**
      * Equals can't be called directly on decrement
-     * @param right 
+     * @param right
      */
     equalsVal(right: Expression<any>): boolean{
         throw new Error("Cannot call equals directly on binary operations");
     }
-    
+
     /**
      * Returns whether the element is terminated by a newline (true) or semicolon (false)
      */

@@ -1,4 +1,4 @@
-import {BinaryOperation} from './BinaryOperation';
+import {BinaryOp} from './BinaryOp';
 import {Expression} from '../Expression';
 import {Scope} from '../structural/Scope';
 import {NumberNode} from '../prims/NumberNode';
@@ -42,9 +42,9 @@ export class Increment implements Expression<any>{
 
     /**
      * Increments cannot be drawn
-     * @param context 
-     * @param dims 
-     * @param ast 
+     * @param context
+     * @param dims
+     * @param ast
      */
     draw(context: Scope, dims: Dimensions, ast: Expression<any>): void {
         throw new Error("Not implemented");
@@ -52,12 +52,12 @@ export class Increment implements Expression<any>{
 
     /**
      * Cannot call equals directly on binops
-     * @param right 
+     * @param right
      */
     equalsVal(right: Expression<any>): boolean{
         throw new Error("Cannot call equals directly on binary operations");
     }
-    
+
     /**
      * Returns a string representation of the increment expression
      */

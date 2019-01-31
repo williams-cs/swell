@@ -4,7 +4,7 @@ export {Scope} from './lib/structural/Scope';
 
 /* BINARY OPS */
 export {AssignOp} from './lib/binops/AssignOp';
-export {BinaryOperation} from './lib/binops/BinaryOperation';
+export {BinaryOp} from './lib/binops/BinaryOp';
 export {DivOp} from './lib/binops/DivOp';
 export {MinusOp} from './lib/binops/MinusOp';
 export {MulOp} from './lib/binops/MulOp';

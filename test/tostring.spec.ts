@@ -34,13 +34,12 @@ import { StringNode } from '../lib/prims/StringNode';
 import { NOP } from '../lib/prims/NOP';
 import { EllipseNode } from '../lib/shapes/EllipseNode';
 import { RectangleNode } from '../lib/shapes/RectangleNode';
-import { EphNode } from '../lib/shapes/EphNode';
 import { NegOp } from '../lib/unops/NegOp';
 
 describe('toString operations', () => {
     it('AssignOp should evaluate to a string', () => {
         // var i = 1
-        // i = 2; 
+        // i = 2;
         const v = new VariableNode("i");
         const left = new DeclareOp(v,new NumberNode(1));
         const right = new AssignOp(v,new NumberNode(2));
@@ -50,7 +49,7 @@ describe('toString operations', () => {
     });
     it('DeclareOp should evaluate to a string', () => {
         // var i = 1
-        // i = 2; 
+        // i = 2;
         const v = new VariableNode("i");
         const left = new DeclareOp(v,new NumberNode(1));
         //const right = new AssignOp(v,new NumberNode(2));
@@ -60,7 +59,7 @@ describe('toString operations', () => {
     });
     it('Decrement should evaluate to a string', () => {
         // var i = 1
-        // i--; 
+        // i--;
         const v = new VariableNode("i");
         const left = new DeclareOp(v,new NumberNode(1));
         const decr = new Decrement(v);
@@ -72,7 +71,7 @@ describe('toString operations', () => {
     });
     it('Increment should evaluate to a string', () => {
         // var i = 1
-        // i--; 
+        // i--;
         const v = new VariableNode("i");
         const left = new DeclareOp(v,new NumberNode(1));
         const decr = new Increment(v);
@@ -234,11 +233,6 @@ describe('toString operations', () => {
         const output = ell.toString();
         expect(output).to.equal("rect(30, 30)");
     });
-    it('eph should evaluate to a string', () => {
-        const ell = new EphNode(new NumberNode(30),new NumberNode(30));
-        const output = ell.toString();
-        expect(output).to.equal("eph(30, 30)");
-    });
     it('return should evaluate to a string', () => {
         const ell = new RectangleNode(new NumberNode(30),new NumberNode(30));
         const ret = new Return(ell);
@@ -249,7 +243,7 @@ describe('toString operations', () => {
         const num0 = new NumberNode(1);
         const plus0 = new PlusOp(new NumberNode(2),new NumberNode(2));
         const node0 = new SequenceNode(num0,plus0);
-        
+
         const output = node0.toString();
         //const output1 = node0.rightVal;
         //deep or strict equal?
