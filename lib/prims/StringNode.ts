@@ -1,21 +1,20 @@
 import { AbstractTypeableNode } from './AbstractTypeableNode';
 import { Expression } from '../Expression';
+import { Dimensions } from '../structural/Dimensions';
 import { Scope } from '../structural/Scope';
 import { StringEffect } from '../effects/StringEffect';
-import { Dimensions } from '../structural/Dimensions';
 
-export class StringNode extends AbstractTypeableNode<StringNode, string> {
+export class StringNode extends AbstractTypeableNode<StringNode, string, StringEffect> {
 
     eval(context: Scope): StringNode {
         return this;
     }
 
-    draw(scope: Scope, dims: Dimensions, ast: Expression<any>): void {
-        let e = new StringEffect(this, scope, dims);
-        e.draw();
+    getEffect(scope: Scope, dims: Dimensions): StringEffect {
+        return new StringEffect(this, scope, dims);
     }
 
-    equalsVal(right: Expression<any>): boolean{
+    equalsVal(right: Expression<any>): boolean {
         return right instanceof StringNode && this.val === right.val;
     }
 

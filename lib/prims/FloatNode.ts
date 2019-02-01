@@ -1,18 +1,17 @@
 import { AbstractTypeableNode } from './AbstractTypeableNode';
 import { Expression } from '../Expression';
-import { Scope } from '../structural/Scope';
 import { Dimensions } from '../structural/Dimensions';
 import { NumberEffect } from '../effects/NumberEffect';
+import { Scope } from '../structural/Scope';
 
-export class FloatNode extends AbstractTypeableNode<FloatNode, number> {
+export class FloatNode extends AbstractTypeableNode<FloatNode, number, NumberEffect> {
 
     eval(context: Scope): FloatNode {
         return this;
     }
 
-    draw(scope: Scope, dims: Dimensions, ast: Expression<any>): void {
-        let e = new NumberEffect(this, scope, dims);
-        e.draw();
+    getEffect(scope: Scope, dims: Dimensions): NumberEffect {
+        return new NumberEffect(this, scope, dims);
     }
 
     equalsVal(right: Expression<any>): boolean {

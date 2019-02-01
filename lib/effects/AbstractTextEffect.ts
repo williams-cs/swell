@@ -12,7 +12,7 @@ import { SelectEvent } from "../logging/SelectEvent";
 import { PrintNode } from "../structural/PrintNode";
 import { Scope } from "../structural/Scope";
 
-export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V>, V> extends Effect<T> {
+export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>, V, E extends AbstractTextEffect<T, V, E>> extends Effect<T> {
 
     private _fontSize: number = 20;
     private _prevFontSize: number;
