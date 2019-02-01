@@ -1,5 +1,5 @@
 import { Primitives, CharUtil } from 'pants';
-import { NumberNode, StringNode, Expression, BinaryOp, DeclareOp, PlusOp, MulOp, DivOp, MinusOp, NegOp, VariableNode, AssignOp, UnaryOperation, ListNode, SequenceNode, Return, FunDef, FunApp, BooleanNode, Conditional, RepeatNode, WhileNode, PrintNode, Equals, Not, And, GreaterThan, LessThan, GreaterThanEq, LessThanEq, Or, NotEqual, ForNode, Dimensions, Increment, NOP, Decrement, EllipseNode, RectangleNode, LineNode, CurveNode, EmojiNode } from '../../index';
+import { NumberNode, StringNode, Expression, BinaryOp, DeclareOp, PlusOp, MulOp, DivOp, MinusOp, NegOp, VariableNode, AssignOp, UnaryOp, ListNode, SequenceNode, Return, FunDef, FunApp, BooleanNode, Conditional, RepeatNode, WhileNode, PrintNode, Equals, Not, And, GreaterThan, LessThan, GreaterThanEq, LessThanEq, Or, NotEqual, ForNode, Dimensions, Increment, NOP, Decrement, EllipseNode, RectangleNode, LineNode, CurveNode, EmojiNode } from '../../index';
 import { Option, Some, None } from 'space-lift';
 import { FloatNode } from '../prims/FloatNode';
 import { Parens } from '../unops/Parens';
@@ -276,13 +276,13 @@ export namespace Parser {
      * AST node and returns it
      * @param i nonsense parameter used to avoid the bug with eager evaluation
      */
-    export let unOpsExpr: Primitives.IParser<UnaryOperation<{}>> = i => {
+    export let unOpsExpr: Primitives.IParser<UnaryOp<{}>> = i => {
         var f= (tup: [CharUtil.CharStream, Expression<NumberNode|FloatNode>]) => {
             return new NegOp(tup[1], ws);
         }
         let ws = "";
         let precedingWS = Primitives.appfun<CharUtil.CharStream, string>(Primitives.ws())(x => ws = x.toString());
-        return Primitives.seq<CharUtil.CharStream, Expression<any>, UnaryOperation<{}>>(Primitives.right<string, CharUtil.CharStream>(precedingWS)(unOpsChar))(ExpressionParserNoSeq)(f)(i);
+        return Primitives.seq<CharUtil.CharStream, Expression<any>, UnaryOp<{}>>(Primitives.right<string, CharUtil.CharStream>(precedingWS)(unOpsChar))(ExpressionParserNoSeq)(f)(i);
     }
 
     /**

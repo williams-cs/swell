@@ -18,11 +18,11 @@ export {And} from './lib/logic/And';
 export {Or} from './lib/logic/Or';
 export {Equals} from './lib/logic/Equals';
 export {NotEqual} from './lib/logic/NotEqual';
-export {Increment} from './lib/binops/Increment';
-export {Decrement} from './lib/binops/Decrement';
+export {Increment} from './lib/unops/Increment';
+export {Decrement} from './lib/unops/Decrement';
 
 /* UNARY OPS */
-export {UnaryOperation} from './lib/unops/UnaryOperation';
+export {UnaryOp} from './lib/unops/UnaryOp';
 export {NegOp} from './lib/unops/NegOp';
 export {Not} from './lib/logic/Not';
 export {Parens} from './lib/unops/Parens';
