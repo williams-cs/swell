@@ -4,16 +4,13 @@ import { Dimensions } from '../structural/Dimensions';
 
 export abstract class UnaryOp<T> implements Expression<T> {
 
-    private _ws: string = "";
     private _newLine: boolean = false;
 
     /**
      * Abstract class constructor for Unary Operations
-     * @param _node The object to be operated on
+     * @param _expr The expression to be operated on
      */
-    constructor(private _node: Expression<T>, ws?: string) {
-        this.ws = ws !== undefined ? ws : "";
-    };
+    constructor(private _expr: Expression<T>, private _ws: string = "") { };
 
     abstract eval(context?: Scope): T;
 
@@ -29,12 +26,12 @@ export abstract class UnaryOp<T> implements Expression<T> {
         return this._newLine;
     }
 
-    get node(): Expression<T> {
-        return this._node;
+    get expr(): Expression<T> {
+        return this._expr;
     }
 
-    set node(node: Expression<T>) {
-        this._node = node;
+    set expr(expr: Expression<T>) {
+        this._expr = expr;
     }
 
     get ws(): string {

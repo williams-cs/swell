@@ -6,7 +6,7 @@ import { Scope } from '../structural/Scope';
 export class Parens extends UnaryOp<NumberNode | FloatNode> {
 
     eval(context: Scope): NumberNode | FloatNode {
-        let v = this.node.eval(context);
+        let v = this.expr.eval(context);
         if (v instanceof FloatNode) {
             return new FloatNode(v.val, "");
         }
@@ -16,6 +16,6 @@ export class Parens extends UnaryOp<NumberNode | FloatNode> {
     }
 
     toString(): string {
-        return this.ws + "(" + this.node + ")";
+        return this.ws + "(" + this.expr + ")";
     }
 }
