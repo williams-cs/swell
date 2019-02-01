@@ -6,19 +6,13 @@ import { FloatNode } from '../prims/FloatNode';
 
 export class MinusOp extends BinaryOp<NumberNode | FloatNode> {
 
-    /**
-     * The constructor for the subtraction operation
-     * @param left The minuend
-     * @param right The subtrahend
-     * @param ws Preceding whitespace
-     */
-    constructor(left: Expression<NumberNode | FloatNode>, right: Expression<NumberNode | FloatNode>, ws?: string) {
-        super(left, right);
-        this.ws = ws !== undefined ? ws : "";
-    }
-
     eval(context: Scope): NumberNode | FloatNode {
-        return new NumberNode(this.left.eval(new Scope(context)).eval(context).val - this.right.eval(new Scope(context)).eval(context).val);
+        let lhs = this.left.eval(context);
+        let rhs = this.right.eval(context);
+        if (lhs instanceof FloatNode || rhs instanceof FloatNode) {
+            return new FloatNode(lhs.val - rhs.val);
+        }
+        return new NumberNode(lhs.val - rhs.val);
     }
 
     toString(): string {

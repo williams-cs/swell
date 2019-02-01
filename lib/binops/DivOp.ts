@@ -6,19 +6,8 @@ import { FloatNode } from '../prims/FloatNode';
 
 export class DivOp extends BinaryOp<NumberNode | FloatNode> {
 
-    /**
-     * Constructor for the division operation
-     * @param left The dividend
-     * @param right The divisor
-     * @param ws Preceding whitespace
-     */
-    constructor(left: Expression<NumberNode | FloatNode>, right: Expression<NumberNode | FloatNode>, ws?: string) {
-        super(left, right);
-        this.ws = ws !== undefined ? ws : "";
-    }
-
     eval(context: Scope): NumberNode | FloatNode {
-        return new NumberNode(this.left.eval(new Scope(context)).eval(context).val / this.right.eval(new Scope(context)).eval(context).val);
+        return new FloatNode(this.left.eval(context).val / this.right.eval(context).val);
     }
 
     toString(): string {

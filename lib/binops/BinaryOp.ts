@@ -3,8 +3,7 @@ import { Expression } from '../Expression';
 import { Dimensions } from '../structural/Dimensions';
 
 export abstract class BinaryOp<T> implements Expression<T> {
-
-    private _ws: string = "";
+    
     private _newLine: boolean = false;
 
     /**
@@ -12,7 +11,7 @@ export abstract class BinaryOp<T> implements Expression<T> {
      * @param _left The left side of the binary operation
      * @param _right The right side of the binary operation
      */
-    constructor(private _left: Expression<T>, private _right: Expression<T>) {};
+    constructor(private _left: Expression<T>, private _right: Expression<T>, private _ws: string = "") {};
 
     abstract eval(context: Scope): T;
 
