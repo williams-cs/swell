@@ -14,9 +14,9 @@ export class RectangleNode extends AbstractShapeNode<RectangleNode, RectangleEff
         return new RectangleEffect(this, scope, dims);
     }
 
-    equalsVal(right: Expression<any>): boolean {
+    equals(right: Expression<any>): boolean {
         return right instanceof RectangleNode &&
-            (this.width.equalsVal(right.width) && this.height.equalsVal(right.height));
+            (this.width.equals(right.width) && this.height.equals(right.height));
     }
 
     toString(): string {

@@ -14,7 +14,7 @@ export class StringNode extends AbstractTypeableNode<StringNode, string, StringE
         return new StringEffect(this, scope, dims);
     }
 
-    equalsVal(right: Expression<any>): boolean {
+    equals(right: Expression<any>): boolean {
         return right instanceof StringNode && this.val === right.val;
     }
 

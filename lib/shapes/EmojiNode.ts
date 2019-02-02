@@ -25,11 +25,11 @@ export class EmojiNode extends AbstractShapeNode<EmojiNode, EmojiEffect> {
         return new EmojiEffect(this, scope, dims);
     }
 
-    equalsVal(right: Expression<any>): boolean {
+    equals(right: Expression<any>): boolean {
         return right instanceof EmojiNode &&
-            this.name.equalsVal(right.name) &&
-            this.width.equalsVal(right.width) &&
-            this.height.equalsVal(right.height);
+            this.name.equals(right.name) &&
+            this.width.equals(right.width) &&
+            this.height.equals(right.height);
     }
 
     toString(): string {

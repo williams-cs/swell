@@ -14,7 +14,7 @@ export class NumberNode extends AbstractTypeableNode<NumberNode, number, NumberE
         return new NumberEffect(this, scope, dims);
     }
 
-    equalsVal(right: Expression<any>): boolean {
+    equals(right: Expression<any>): boolean {
         return right instanceof NumberNode && this.val === right.val;
     }
 

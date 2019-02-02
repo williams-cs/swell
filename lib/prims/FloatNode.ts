@@ -14,7 +14,7 @@ export class FloatNode extends AbstractTypeableNode<FloatNode, number, NumberEff
         return new NumberEffect(this, scope, dims);
     }
 
-    equalsVal(right: Expression<any>): boolean {
+    equals(right: Expression<any>): boolean {
         return right instanceof FloatNode && this.val === right.val;
     }
 

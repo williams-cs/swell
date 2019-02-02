@@ -6,7 +6,7 @@ import { Scope } from "../structural/Scope";
 export class Equals extends BinaryLogicOp<Expression<any>> {
 
     eval(context: Scope): BooleanNode {
-        return new BooleanNode(this.left.eval(context).equalsVal(this.right.eval(context)));
+        return new BooleanNode(this.left.eval(context).equals(this.right.eval(context)));
     }
 
     toString(): string {

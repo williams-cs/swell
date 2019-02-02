@@ -14,9 +14,9 @@ export class EllipseNode extends AbstractShapeNode<EllipseNode, EllipseEffect> {
         return new EllipseEffect(this, scope, dims);
     }
 
-    equalsVal(right: Expression<any>): boolean {
+    equals(right: Expression<any>): boolean {
         return right instanceof EllipseNode &&
-            (this.width.equalsVal(right.width) && this.height.equalsVal(right.height));
+            (this.width.equals(right.width) && this.height.equals(right.height));
     }
 
     toString(): string {

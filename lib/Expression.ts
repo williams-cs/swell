@@ -1,39 +1,56 @@
-import {Scope} from './structural/Scope';
-import { Dimensions } from './structural/Dimensions';
-import { Effect } from './effects/Effect';
+import { Scope } from './structural/Scope';
 
 /**
- * Expressions are one of the main building blocks of the AST. 
+ * Expressions are one of the main building blocks of the AST.
  * Whether a logical or mathematical statement, Expressions generally evaluate to a primitive.
  */
-export interface Expression <T>{
-    /**
-     * Interface evaluation method for Expressions
-     * @param context The current program context 
-     */
-    eval(context: Scope): T;
+export abstract class Expression<T> {
 
     /**
-     * Interface draw method for Expressions
-     * @param context The current program context
-     * @param dims Dimensions of the object to be drawn
-     * @param ast The program AST
+     * Constructor for an expression
+     * @param ws The whitespace preceding the expression
      */
-    draw(context: Scope, dims: Dimensions, ast: Expression<any>): void;
-    
+    constructor(private _ws: string = "", private _newLine: boolean = false) {}
+
+    /**
+     * Interface evaluation method for Expressions
+     * @param context The current program context
+     */
+    abstract eval(context: Scope): T;
+
     /**
      * Interface method to return a string representation of the Expression
      */
-    toString(): string;
-
-    /**
-     * Returns whether the element is terminated by a newline (true) or semicolon (false)
-     */
-    newLine(): boolean;
+    abstract toString(): string;
 
     /**
      * Returns whether the Expression equals another Expression
      * @param right The right side of the equality
      */
-    equalsVal(right: Expression<any>): boolean;
+    equals(right: Expression<any>): boolean {
+        throw("Cannot call equals on this expression");
+    };
+
+    /* Getters and Setters */
+
+    /**
+     * Returns whether or not this expression is terminated by a newline or semicolon
+     */
+    get newLine(): boolean {
+        return this._newLine;
+    }
+
+    /**
+     * Returns the whitespace preceding the expression
+     */
+    get ws(): string {
+        return this._ws;
+    }
+
+    /**
+     * Sets the whitespace preceding the expression
+     */
+    set ws(ws: string) {
+        this._ws = ws;
+    }
 }

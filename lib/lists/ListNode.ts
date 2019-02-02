@@ -1,82 +1,54 @@
 import { Expression } from "../Expression";
 import { Scope } from "../structural/Scope";
 
-export class ListNode implements Expression<ListNode>{
-    private _list: Expression<any>[];
-    private _newLine: boolean = false;
-    private _ws: string;
+export class ListNode extends Expression<ListNode> {
 
     /**
      * Constructor for an array-like list
      * @param list The list, stored in a TS array
      * @param ws Preceding whitespace
      */
-    constructor(list: Expression<any>[], ws?: string){
-        this._list = list;
-        this._ws = ws;
-        if (ws == undefined){
-            this._ws = "";
-        }
+    constructor(private _list: Expression<any>[], ws: string = "") {
+        super(ws);
     }
 
     /**
      * Evaluates each element of the list and pushes it onto the internal representation
-     * @param context 
+     * @param context
      */
     eval(context: Scope): ListNode {
         let evalList: Expression<any>[] = [];
-        for(let expr of this._list){
+        for (let expr of this.list) {
             evalList.push(expr.eval(context));
         }
         return new ListNode(evalList);
     }
 
-    /**
-     * Returns a string representation of the list
-     */
     toString(): string {
-        let list  = '';
-        for (let i = 0 ; i < this._list.length-1; i++) {
-            list += this._list[i].toString() + ", ";
+        let list = '';
+        for (let i = 0; i < this.list.length - 1; i++) {
+            list += this.list[i].toString() + ", ";
         }
-        list += this._list[this._list.length-1].toString();
-        return this._ws + '[' + list + ']';
+        list += this.list[this.list.length - 1].toString();
+        return this.ws + '[' + list + ']';
     }
 
-    /**
-     * Returns whether the list equals another list
-     * @param right The right side of the equality (must be a ListNode)
-     */
-    equalsVal(right: Expression<any>): boolean{
-        if(right instanceof ListNode){
-            for(let i = 0; i < this.list.length; i++){
-                if(!(this.list[i].equalsVal(right.list[i]))){
-                    return false;
-                }
+    equals(right: Expression<any>): boolean {
+        if (!(right instanceof ListNode)) {
+            return false;
+        }
+        for (let i = 0; i < this.list.length; i++) {
+            if (!(this.list[i].equals(right.list[i]))) {
+                return false;
             }
-            return true;
         }
-        return false;
-    }
-
-    /**
-     * Draw cannot be called directly on a list
-     */
-    draw(){
-        throw new Error("Cannot draw a ListNode");
-    }
-
-    /**
-     * Returns whether the element is terminated by a newline (true) or semicolon (false)
-     */
-    newLine(): boolean {
-        return this._newLine;
+        return true;
     }
 
     /**
      * Returns the internal representation of the list
      */
-    get list(): Expression<any>[]{
+    get list(): Expression<any>[] {
         return this._list;
     }
 }
