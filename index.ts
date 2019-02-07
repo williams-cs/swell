@@ -50,8 +50,6 @@ export {ForNode} from './lib/loops/ForNode';
 export {ColorNode} from './lib/shapes/ColorNode';
 export {EllipseNode} from './lib/shapes/EllipseNode';
 export {RectangleNode} from './lib/shapes/RectangleNode';
-export {LineNode} from './lib/shapes/LineNode';
-export {CurveNode} from './lib/shapes/CurveNode';
 export {EmojiNode} from './lib/shapes/EmojiNode';
 export {PrintNode} from './lib/structural/PrintNode';
 export {Return} from './lib/structural/Return';
@@ -64,8 +62,6 @@ export {NumberEffect} from './lib/effects/NumberEffect';
 export {StringEffect} from './lib/effects/StringEffect';
 export {Dimensions} from './lib/structural/Dimensions';
 export {RectangleEffect} from './lib/effects/RectangleEffect';
-export {LineEffect} from './lib/effects/LineEffect';
-export {CurveEffect} from './lib/effects/CurveEffect';
 export {EmojiEffect} from './lib/effects/EmojiEffect';
 
 /* EVENTS */

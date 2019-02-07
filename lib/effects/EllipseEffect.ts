@@ -1,13 +1,10 @@
 import { AbstractShapeEffect } from "./AbstractShapeEffect";
 import { EllipseNode } from "../shapes/EllipseNode";
 
-export class EllipseEffect extends AbstractShapeEffect<EllipseNode> {
+export class EllipseEffect extends AbstractShapeEffect<EllipseNode, EllipseEffect> {
 
     readonly name: string = "ellipse";
 
-    /**
-     * This method is called in order to draw and redraw the object when manipulations are made
-     */
     update(): void {
         let x: number = this.x;
         let y: number = this.y;

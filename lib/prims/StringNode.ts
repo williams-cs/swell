@@ -1,6 +1,6 @@
 import { AbstractTypeableNode } from './AbstractTypeableNode';
 import { Expression } from '../Expression';
-import { Dimensions } from '../structural/Dimensions';
+import { PrintNode } from "../structural/PrintNode";
 import { Scope } from '../structural/Scope';
 import { StringEffect } from '../effects/StringEffect';
 
@@ -10,8 +10,8 @@ export class StringNode extends AbstractTypeableNode<StringNode, string, StringE
         return this;
     }
 
-    getEffect(scope: Scope, dims: Dimensions): StringEffect {
-        return new StringEffect(this, scope, dims);
+    getEffect(context: Scope, aes: PrintNode): StringEffect {
+        return new StringEffect(this, context, aes);
     }
 
     equals(right: Expression<any>): boolean {

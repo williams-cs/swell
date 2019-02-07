@@ -1,56 +1,40 @@
+import { AbstractFunctionNode } from "../funhouse/AbstractFunctionNode";
+import { Argument } from "../funhouse/Argument";
 import { Expression } from "../Expression";
 import { Scope } from "./Scope";
 import { Dimensions } from "./Dimensions";
 import { NumberNode } from "../prims/NumberNode";
 
-export class PrintNode extends Expression<any> {
+export class PrintNode extends AbstractFunctionNode<any> {
 
-    private _scale: number = 1;
+    protected readonly name: string = "print";
 
-    /**
-     * Constructor for a PrintNode, representing an object to be printed
-     * @param _toPrint The object to be printed
-     * @param _coordsGiven Whether the xy coordinates to print the object is given
-     * @param _dims The dimensions of the object to be printed
-     * @param ws Preceding whitespace
-     */
-    constructor(
-        private _toPrint: Expression<any>,
-        private _coordsGiven: boolean,
-        private _dims: Dimensions = null,
-        ws: string = ""
-    ) {
-        super(ws);
+    initArgMap(): Map<string, Argument<any>> {
+        return new Map<string, Argument<any>>([
+            ["object", new Argument<any>()],
+            ["x", new Argument<NumberNode>(new NumberNode(100), false)],
+            ["y", new Argument<NumberNode>(new NumberNode(100), false)],
+        ]);
     }
 
-    /**
-     * Evaluates the object to be printed and draws it
-     * @param context
-     */
     eval(context: Scope): any {
-        let res = this.toPrint.eval(context);
-        if (this._coordsGiven) {
-            res.draw(context, this.dims, this);
+        let res = this.object.eval(context);
+        if (!res.draw) {
+            throw("PrintNode has invalid object.");
         }
-
+        res.draw(context, this);
         return res;
     }
 
-    toString(): string {
-        return this.ws + "print(" + this.toPrint + ", " + this.dims + ")";
+    get object(): Expression<any> {
+        return this.getArg("object");
     }
 
-    /**
-     * Returns the object to be printed
-     */
-    get toPrint(): Expression<any> {
-        return this._toPrint;
+    get x(): Expression<NumberNode> {
+        return this.getArg("x");
     }
 
-    /**
-     * Returns the dimensions of the object to be printed
-     */
-    get dims(): Dimensions {
-        return this._dims;
+    get y(): Expression<NumberNode> {
+        return this.getArg("y");
     }
 }

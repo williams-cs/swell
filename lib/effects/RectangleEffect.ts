@@ -1,13 +1,10 @@
 import { AbstractShapeEffect } from "./AbstractShapeEffect";
 import { RectangleNode } from "../shapes/RectangleNode";
 
-export class RectangleEffect extends AbstractShapeEffect<RectangleNode> {
+export class RectangleEffect extends AbstractShapeEffect<RectangleNode, RectangleEffect> {
 
     readonly name: string = "rectangle";
 
-    /**
-     * This method is called in order to draw and redraw the object when manipulations are made
-     */
     update(): void {
         let x = this.x;
         let y = this.y;

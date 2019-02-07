@@ -1,7 +1,7 @@
 import { AbstractTypeableNode } from './AbstractTypeableNode';
 import { Expression } from '../Expression';
-import { Dimensions } from '../structural/Dimensions';
 import { NumberEffect } from '../effects/NumberEffect';
+import { PrintNode } from "../structural/PrintNode";
 import { Scope } from '../structural/Scope';
 
 export class NumberNode extends AbstractTypeableNode<NumberNode, number, NumberEffect> {
@@ -10,8 +10,8 @@ export class NumberNode extends AbstractTypeableNode<NumberNode, number, NumberE
         return this;
     }
 
-    getEffect(scope: Scope, dims: Dimensions): NumberEffect {
-        return new NumberEffect(this, scope, dims);
+    getEffect(context: Scope, aes: PrintNode): NumberEffect {
+        return new NumberEffect(this, context, aes);
     }
 
     equals(right: Expression<any>): boolean {

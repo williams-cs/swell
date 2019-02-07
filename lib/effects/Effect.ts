@@ -1,4 +1,3 @@
-import { Dimensions } from "../structural/Dimensions";
 import { EffectUtils } from "./EffectUtils";
 import { Expression } from "../Expression";
 import { LogEvent } from "../logging/LogEvent";
@@ -18,9 +17,9 @@ export abstract class Effect<T> {
     private _scope: Scope;
 
     /**
-     * The effect's dimensions
+     * The PrintNode that is printing the effect
      */
-    private _dims: Dimensions;
+    private _aes: PrintNode;
 
     /**
      * The ID of the effect
@@ -51,13 +50,11 @@ export abstract class Effect<T> {
     private _dragOffX: number = 0;
     private _dragOffY: number = 0;
     private _initDistance: number = 0;
-    private _prevX: number;
-    private _prevY: number;
 
-    constructor(node: T, scope: Scope, dims: Dimensions) {
+    constructor(node: T, scope: Scope, aes: PrintNode) {
         this.node = node;
         this.scope = scope;
-        this.dims = dims;
+        this.aes = aes;
     }
 
     /**
@@ -85,30 +82,18 @@ export abstract class Effect<T> {
     abstract guideContains(mx: number, my: number): number;
 
     /**
-     * Returns true if the mouse is inside of the object's bounding rectangle, false if otherwise
+     * Returns true if the mouse is inside of the object's boundary, false if otherwise
      * @param mx the mouse x coordinate
      * @param my the mouse y coordinate
      */
 
 
     /**
-     * Returns true if the mouse is inside of the object's bounding rectangle, false if otherwise
+     * Returns true if the mouse is inside of the object's boundary, false if otherwise
      * @param mx the mouse x coordinate
      * @param my the mouse y coordinate
      */
     abstract contains(mx: number, my: number): boolean;
-
-    /**
-     * Draws the bounding rectangle and guides for the object when the object is selected
-     * If one of the guides is selected, it colors that guide blue
-     * @param x the x coordinate for where the rectangle will originate from (top left corner)
-     * @param y the y coordinate for where the rectangle will originate from (top left corner)
-     * @param w the width of the bounding rectangle
-     * @param h the height of the bounding rectangle
-     * @param corner the number of the corner (1-8) to be colored blue (if any at all, if 0, all are white)
-     */
-    abstract drawGuides(x: number, y: number, w: number, h: number, corner: number): void;
-
 
     /* Event listener functions */
 
@@ -191,9 +176,10 @@ export abstract class Effect<T> {
      * @param event the mousedown event
      */
     getMousePosition(event: any): void {
+        let mousePos: {x: number, y: number} = EffectUtils.getMouseCanvasPos(this.canvas, event);
         this.mouse = {
-            x: EffectUtils.getMouseCanvasPos(this.canvas, event).x,
-            y: EffectUtils.getMouseCanvasPos(this.canvas, event).y,
+            x: mousePos.x,
+            y: mousePos.y,
         };
     }
 
@@ -236,10 +222,7 @@ export abstract class Effect<T> {
     /**
      * Changes the x and y coordinates of the object in order to drag the object.
      */
-    modifyDrag(): void {
-        this.dims.x.eval(this.scope).val = this.mouse.x - this.dragOffX;
-        this.dims.y.eval(this.scope).val = this.mouse.y - this.dragOffY;
-    }
+    abstract modifyDrag(): void;
 
     /**
      * Changes the size of the object when called (when a corner guide is clicked and dragged).
@@ -309,12 +292,12 @@ export abstract class Effect<T> {
         this._scope = scope;
     }
 
-    get dims(): Dimensions {
-        return this._dims;
+    get aes(): PrintNode {
+        return this._aes;
     }
 
-    set dims(dims: Dimensions) {
-        this._dims = dims;
+    set aes(aes: PrintNode) {
+        this._aes = aes;
     }
 
     get id(): number {
@@ -421,55 +404,11 @@ export abstract class Effect<T> {
         this._initDistance = val;
     }
 
-    get prevX(): number {
-        return this._prevX;
-    }
-
-    set prevX(val: number) {
-        this._prevX = val;
-    }
-
-    get prevY(): number {
-        return this._prevY;
-    }
-
-    set prevY(val: number) {
-        this._prevY = val;
-    }
-
     get canvas(): HTMLCanvasElement {
         return this.scope.canvas.get();
     }
 
     get ctx(): CanvasRenderingContext2D {
         return this.canvas.getContext("2d");
-    }
-
-    /**
-     * Returns the x position of the effect
-     */
-    get x(): number {
-        return this.dims.x.eval(this.scope).val;
-    }
-
-    /**
-     * Returns the y position of the effect
-     */
-    get y(): number {
-        return this.dims.y.eval(this.scope).val;
-    }
-
-    /**
-     * Returns the width of the effect
-     */
-    get w(): number {
-        return this.dims.width.eval(this.scope).val;
-    }
-
-    /**
-     * Returns the height of the effect
-     */
-    get h(): number {
-        return this.dims.height.eval(this.scope).val;
     }
 }

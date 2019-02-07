@@ -10,10 +10,6 @@ export abstract class AbstractTypeableNode<T extends AbstractTypeableNode<T, V, 
         super(ws);
     }
 
-    draw(scope: Scope, dims: Dimensions): void {
-        this.getEffect(scope, dims).draw();
-    };
-
     get val(): V {
         return this._val;
     };

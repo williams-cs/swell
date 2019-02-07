@@ -1,10 +1,10 @@
+import { AbstractFunctionNode } from "../funhouse/AbstractFunctionNode";
 import { Effect } from "../effects/Effect";
-import { Expression } from "../Expression";
 import { Dimensions } from "./Dimensions";
 import { PrintNode } from "./PrintNode";
 import { Scope } from "./Scope";
 
-export abstract class AbstractPrintableNode<T extends AbstractPrintableNode<T, E>, E extends Effect<T>> extends Expression<T> {
+export abstract class AbstractPrintableFunctionNode<T extends AbstractPrintableFunctionNode<T, E>, E extends Effect<T>> extends AbstractFunctionNode<T> {
 
     draw(scope: Scope, aes: PrintNode): void {
         this.getEffect(scope, aes).draw();

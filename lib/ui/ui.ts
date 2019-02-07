@@ -324,7 +324,6 @@ import * as csvParse from 'csv-parse';
 
     let paletteButtons: string[] = [
         "ellipse", "rect", "string", "number",
-        "line", "curve",
         "happy", "sad", "angry", "cool"
     ];
 
@@ -350,12 +349,6 @@ import * as csvParse from 'csv-parse';
                 break;
             case "number":
                 newNode = "print(10);";
-                break;
-            case "line":
-                newNode = "print(line(100, 100));";
-                break;
-            case "curve":
-                newNode = "print(curve(100, 100, 100));";
                 break;
             case "happy": case "sad": case "angry": case "cool":
                 newNode = 'print(emoji("' + buttonName + '", 100, 100));';

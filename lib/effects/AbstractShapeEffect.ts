@@ -1,4 +1,5 @@
-import { Dimensions } from "../structural/Dimensions";
+import { AbstractRectangularBoundEffect } from "./AbstractRectangularBoundEffect";
+import { AbstractShapeNode } from "../shapes/AbstractShapeNode";
 import { Effect } from "./Effect";
 import { EffectUtils } from "./EffectUtils";
 import { Expression } from "../Expression";
@@ -9,7 +10,7 @@ import { ClickEvent } from "../logging/ClickEvent";
 import { PrintNode } from "../structural/PrintNode";
 import { Scope } from "../structural/Scope";
 
-export abstract class AbstractShapeEffect<T> extends Effect<T> {
+export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E extends AbstractShapeEffect<T, E>> extends AbstractRectangularBoundEffect<T> {
 
     _width1: number; // saves size for logging
     _height1: number;
@@ -139,12 +140,12 @@ export abstract class AbstractShapeEffect<T> extends Effect<T> {
     modifyResize(): void {
         let ratio: number = this.w / this.h;
         if (this.w < 10) {
-            this.dims.width.eval(this.scope).val = 10;
-            this.dims.height.eval(this.scope).val = 10 / ratio;
+            this.w = 10;
+            this.h = 10 / ratio;
         }
         if (this.h < 10) {
-            this.dims.height.eval(this.scope).val = 10;
-            this.dims.width.eval(this.scope).val = 10 * ratio;
+            this.w = 10;
+            this.h = 10 * ratio;
         }
 
         let newDistance = EffectUtils.calcDistance(this.mouse.x, this.mouse.y, this.dragOffX, this.dragOffY);
@@ -153,18 +154,18 @@ export abstract class AbstractShapeEffect<T> extends Effect<T> {
         if (this.w >= 10 && this.h >= 10) {
             switch (this.corner) {
                 case 1:
-                    this.dims.y.eval(this.scope).val -= Math.round(dist_diff / ratio);
-                    this.dims.x.eval(this.scope).val -= dist_diff;
+                    this.y -= Math.round(dist_diff / ratio);
+                    this.x -= dist_diff;
                     break;
                 case 2:
-                    this.dims.y.eval(this.scope).val -= Math.round(dist_diff / ratio);
+                    this.y -= Math.round(dist_diff / ratio);
                     break;
                 case 4:
-                    this.dims.x.eval(this.scope).val -= dist_diff;
+                    this.x -= dist_diff;
                     break;
             }
-            this.dims.width.eval(this.scope).val += dist_diff;
-            this.dims.height.eval(this.scope).val = Math.round(this.w / ratio);
+            this.w += dist_diff;
+            this.h = Math.round(this.w / ratio);
             this.initDistance = newDistance;
         }
     }
@@ -172,30 +173,30 @@ export abstract class AbstractShapeEffect<T> extends Effect<T> {
     modifyChangeDims(): void {
         let newDistance = EffectUtils.calcDistance(this.mouse.x, this.mouse.y, this.dragOffX, this.dragOffY);
         if (this.w < 10) {
-            this.dims.width.eval(this.scope).val = 10;
+            this.w = 10;
         }
         if (this.h < 10) {
-            this.dims.height.eval(this.scope).val = 10;
+            this.h = 10;
         }
         let dist_diff: number = newDistance - this.initDistance;
         switch (this.corner) {
             case 5:
                 if (this.h > 10) { //as long as the height is >= 10
-                    this.dims.y.eval(this.scope).val -= dist_diff;
+                    this.y -= dist_diff;
                 }
-                this.dims.height.eval(this.scope).val += dist_diff;
+                this.h += dist_diff;
                 break;
             case 6:
-                this.dims.width.eval(this.scope).val += dist_diff;
+                this.w += dist_diff;
                 break;
             case 7:
-                this.dims.height.eval(this.scope).val += dist_diff;
+                this.h += dist_diff;
                 break;
             case 8:
                 if (this.w > 10) { // as long as width is > 10
-                    this.dims.x.eval(this.scope).val -= dist_diff;
+                    this.x -= dist_diff;
                 }
-                this.dims.width.eval(this.scope).val += dist_diff;
+                this.w += dist_diff;
                 break;
         }
         this.initDistance = newDistance;
@@ -350,5 +351,21 @@ export abstract class AbstractShapeEffect<T> extends Effect<T> {
 
     toIDString(): string {
         return `${this.id} to ${this.name} at ${this.x}, ${this.y}`;
+    }
+
+    get w(): number {
+        return this.node.width.eval(this.scope).val;
+    }
+
+    set w(val: number) {
+        this.node.width.eval(this.scope).val = val;
+    }
+
+    get h(): number {
+        return this.node.height.eval(this.scope).val;
+    }
+
+    set h(val: number) {
+        this.node.height.eval(this.scope).val = val;
     }
 }

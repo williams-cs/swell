@@ -1,35 +1,34 @@
-import { AbstractPrintableNode } from '../structural/AbstractPrintableNode';
-import { AbstractShapeEffect } from '../effects/AbstractShapeEffect';
-import { Dimensions } from '../structural/Dimensions';
-import { Expression } from '../Expression';
-import { NumberNode } from '../prims/NumberNode';
-import { Scope } from '../structural/Scope';
+import { AbstractPrintableFunctionNode } from "../structural/AbstractPrintableFunctionNode";
+import { AbstractShapeEffect } from "../effects/AbstractShapeEffect";
+import { Argument } from "../funhouse/Argument";
+import { Dimensions } from "../structural/Dimensions";
+import { Expression } from "../Expression";
+import { NumberNode } from "../prims/NumberNode";
+import { PrintNode } from "../structural/PrintNode";
+import { Scope } from "../structural/Scope";
 
-export abstract class AbstractShapeNode<T extends AbstractShapeNode<T, E>, E extends AbstractShapeEffect<T>> extends AbstractPrintableNode<T, E> {
+export abstract class AbstractShapeNode<T extends AbstractShapeNode<T, E>, E extends AbstractShapeEffect<T, E>> extends AbstractPrintableFunctionNode<T, E> {
 
-    constructor(private _width: Expression<NumberNode>, private _height: Expression<NumberNode>, ws: string = "") {
-        super(ws);
+    initArgMap(): Map<string, Argument<any>> {
+        return new Map<string, Argument<any>>([
+            ["width", new Argument<NumberNode>()],
+            ["height", new Argument<NumberNode>()],
+        ]);
     }
 
-    draw(scope: Scope, dims: Dimensions): void {
-        dims.width = this.width;
-        dims.height = this.height;
-        this.getEffect(scope, dims).draw();
-    };
-
     get width(): Expression<NumberNode> {
-        return this._width;
+        return (<Expression<NumberNode>>this.getArg("width"));
     }
 
     set width(width: Expression<NumberNode>) {
-        this._width = width;
+        this.setArg("width", width);
     }
 
     get height(): Expression<NumberNode> {
-        return this._height;
+        return (<Expression<NumberNode>>this.getArg("height"));
     }
 
     set height(height: Expression<NumberNode>) {
-        this._height = height;
+        this.setArg("height", height);
     }
 }
