@@ -29,9 +29,9 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
         this.ctx.fillText(this.text, this.x, this.y);
         if (this.isSelected) {
             this.drawGuides(this.x, this.y - this.fontSize, this.width, this.fontSize, this.corner);
-        }
-        if (this.isEditing) {
-            this.drawCursor();
+            if (this.isEditing) {
+                this.drawCursor();
+            }
         }
     }
 

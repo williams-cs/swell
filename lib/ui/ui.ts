@@ -364,7 +364,7 @@ import * as csvParse from 'csv-parse';
         let lastLineNum = editorDoc.lastLine();
 
         // Insert at the end of the document & highlight changes
-        editorDoc.replaceRange(endIdx == 0 ? newNode : ("\n" + newNode), posInsert);
+        editorDoc.replaceRange(posInsert.ch == 0 ? newNode : ("\n" + newNode), posInsert);
         highlightDiff(editor.getValue(), true);
 
         // Update cursor & refocus editor
