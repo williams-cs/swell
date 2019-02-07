@@ -20,15 +20,23 @@ export abstract class AbstractShapeNode<T extends AbstractShapeNode<T, E>, E ext
         return (<Expression<NumberNode>>this.getArg("width"));
     }
 
-    set width(width: Expression<NumberNode>) {
-        this.setArg("width", width);
-    }
-
     get height(): Expression<NumberNode> {
         return (<Expression<NumberNode>>this.getArg("height"));
     }
 
-    set height(height: Expression<NumberNode>) {
-        this.setArg("height", height);
+    getWidth(context: Scope): number {
+        return (<Expression<NumberNode>>this.getArg("width")).eval(context).val;
+    }
+
+    getHeight(context: Scope): number {
+        return (<Expression<NumberNode>>this.getArg("height")).eval(context).val;
+    }
+
+    setWidth(context: Scope, val: number): void {
+        this.updateArgValue("width", context, val);
+    }
+
+    setHeight(context: Scope, val: number): void {
+        this.updateArgValue("height", context, val);
     }
 }

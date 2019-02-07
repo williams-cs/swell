@@ -354,18 +354,18 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
     }
 
     get w(): number {
-        return this.node.width.eval(this.scope).val;
+        return this.node.getWidth(this.scope);
     }
 
     set w(val: number) {
-        this.node.width.eval(this.scope).val = val;
+        this.node.setWidth(this.scope, val);
     }
 
     get h(): number {
-        return this.node.height.eval(this.scope).val;
+        return this.node.getHeight(this.scope);
     }
 
     set h(val: number) {
-        this.node.height.eval(this.scope).val = val;
+        this.node.setHeight(this.scope, val);
     }
 }

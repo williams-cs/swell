@@ -18,7 +18,7 @@ export class PrintNode extends AbstractFunctionNode<any> {
     }
 
     eval(context: Scope): any {
-        let res = this.object.eval(context);
+        let res = this.getArg("object").eval(context);
         if (!res.draw) {
             throw("PrintNode has invalid object.");
         }
@@ -26,15 +26,19 @@ export class PrintNode extends AbstractFunctionNode<any> {
         return res;
     }
 
-    get object(): Expression<any> {
-        return this.getArg("object");
+    getX(context: Scope): number {
+        return this.getArg("x").eval(context).val;
     }
 
-    get x(): Expression<NumberNode> {
-        return this.getArg("x");
+    getY(context: Scope): number {
+        return this.getArg("y").eval(context).val;
     }
 
-    get y(): Expression<NumberNode> {
-        return this.getArg("y");
+    setX(context: Scope, val: number): void {
+        this.updateArgValue("x", context, val);
+    }
+
+    setY(context: Scope, val: number): void {
+        this.updateArgValue("y", context, val);
     }
 }

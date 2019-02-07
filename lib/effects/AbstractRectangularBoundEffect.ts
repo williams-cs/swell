@@ -22,19 +22,19 @@ export abstract class AbstractRectangularBoundEffect<T> extends Effect<T> {
     }
 
     get x(): number {
-        return this.aes.x.eval(this.scope).val;
+        return this.aes.getX(this.scope);
     }
 
     set x(val: number) {
-        this.aes.x.eval(this.scope).val = val;
+        this.aes.setX(this.scope, val);
     }
 
     get y(): number {
-        return this.aes.y.eval(this.scope).val;
+        return this.aes.getY(this.scope);
     }
 
     set y(val: number) {
-        this.aes.y.eval(this.scope).val = val;
+        this.aes.setY(this.scope, val);
     }
 
     get prevX(): number {

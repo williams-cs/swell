@@ -1,5 +1,6 @@
 import { Argument } from "./Argument";
 import { Expression } from "../Expression";
+import { Scope } from "../structural/Scope";
 
 export abstract class AbstractFunctionNode<T extends AbstractFunctionNode<T>> extends Expression<T> {
 
@@ -71,6 +72,7 @@ export abstract class AbstractFunctionNode<T extends AbstractFunctionNode<T>> ex
                 throw(`Invalid argument name: ${argName}`);
             }
             this.argMap.get(argName).value = arg[1];
+            this.argMap.get(argName).isModified = true;
         }
     }
 
@@ -86,7 +88,11 @@ export abstract class AbstractFunctionNode<T extends AbstractFunctionNode<T>> ex
      * @param argName Name of argument to get
      */
     getArg(argName: string): Expression<any> {
-        return this.argMap.get(argName).value;
+        let arg: Argument<any> = this.argMap.get(argName);
+        if (arg === undefined) {
+            throw(`Invalid argument name ${argName} to function ${this.name}`);
+        }
+        return arg.value;
     }
 
     /**
@@ -98,10 +104,27 @@ export abstract class AbstractFunctionNode<T extends AbstractFunctionNode<T>> ex
         this.argMap.get(argName).value = value;
     }
 
+    /**
+     * Update argument's value and mark as modified
+     * @param argName Name of argument to update
+     * @param context Program's current context
+     * @param value The value to give to the argument
+     */
+    updateArgValue(argName: string, context: Scope, value: any): void {
+        let arg: Argument<any> = this.argMap.get(argName);
+        if (arg === undefined) {
+            throw(`Invalid argument name ${argName} to function ${this.name}`);
+        }
+        arg.value.eval(context).val = value;
+        arg.isModified = true;
+    }
+
     toString(): string {
         let argString: string = "";
         for (let [key, arg] of this.argMap) {
-            argString += arg.positional ? `${arg.value}, ` : `${key} = ${arg.value}, `;
+            if (arg.positional || arg.isModified) {
+                argString += (arg.positional && !arg.alwaysVisible) ? `${arg.value}, ` : `${key} = ${arg.value}, `;
+            }
         }
         if (this.argMap.size > 0) {
             argString = argString.slice(0, argString.length - 2);
