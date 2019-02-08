@@ -11,10 +11,10 @@ import { ClickEvent } from "../logging/ClickEvent";
 import { SelectEvent } from "../logging/SelectEvent";
 import { PrintNode } from "../structural/PrintNode";
 import { Scope } from "../structural/Scope";
+import RECT_GUIDE = EffectUtils.RECT_GUIDE;
 
 export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>, V, E extends AbstractTextEffect<T, V, E>> extends AbstractRectangularBoundEffect<T> {
 
-    private _fontSize: number = 20;
     private _prevFontSize: number;
     private _isEditing: boolean = false;
     private _isListening: boolean = false;
@@ -40,9 +40,9 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
         let yDiff = my - (this.y - this.fontSize);
         if (Math.abs(xDiff) <= 5 && Math.abs(yDiff) <= 5) {
             this.isEditing = false;
-            return 2;
+            return RECT_GUIDE.TOP_RIGHT;
         }
-        return 0;
+        return RECT_GUIDE.NONE;
     }
 
     contains(mx: number, my: number): boolean {
@@ -56,10 +56,10 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
         this.ctx.strokeStyle = 'gray';
         this.ctx.stroke();
         switch (corner) {
-            case 0:
+            case RECT_GUIDE.NONE:
                 this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'white');
                 break;
-            case 2:
+            case RECT_GUIDE.TOP_RIGHT:
                 this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'blue');
                 break;
         }
@@ -178,22 +178,14 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
     }
 
     modifyResize(): void {
-        if (this.fontSize < 15) {
-            this.fontSize = 15;
-            let newDistance = EffectUtils.calcDistance(this.mouse.x, this.mouse.y, this.dragOffX, this.dragOffY);
-            if (newDistance - this.initDistance > 0) {
-                this.fontSize += (newDistance - this.initDistance) * 0.2;
-                this.initDistance = newDistance;
-            }
-        } else {
-            let newDistance = EffectUtils.calcDistance(this.mouse.x, this.mouse.y, this.dragOffX, this.dragOffY);
-            this.fontSize += (newDistance - this.initDistance) * 0.2;
-            this.initDistance = newDistance;
-        }
+        this.fontSize = Math.max(5, this.fontSize);
+        let newDistance = EffectUtils.calcDistance(this.mouse.x, this.mouse.y, this.dragOffX, this.dragOffY);
+        this.fontSize += Math.round((newDistance - this.initDistance) * 0.2);
+        this.initDistance = newDistance;
     }
 
     modifyState(): void {
-        let guideContains: boolean = this.guideContains(this.mouse.x, this.mouse.y) > 0;
+        let guideContains: boolean = this.guideContains(this.mouse.x, this.mouse.y) == RECT_GUIDE.TOP_RIGHT;
         let contains: boolean = this.contains(this.mouse.x, this.mouse.y);
         this.justDragged = false;
         this.justResized = false;
@@ -302,11 +294,11 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
     /* Getters and Setters */
 
     get fontSize(): number {
-        return this._fontSize;
+        return this.aes.getFontSize(this.scope);
     }
 
     set fontSize(val: number) {
-        this._fontSize = val;
+        this.aes.setFontSize(this.scope, val);
     }
 
     get prevFontSize(): number {

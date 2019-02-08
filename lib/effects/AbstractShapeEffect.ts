@@ -9,13 +9,14 @@ import { ResizeEvent } from "../logging/ResizeEvent";
 import { ClickEvent } from "../logging/ClickEvent";
 import { PrintNode } from "../structural/PrintNode";
 import { Scope } from "../structural/Scope";
+import RECT_GUIDE = EffectUtils.RECT_GUIDE;
 
 export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E extends AbstractShapeEffect<T, E>> extends AbstractRectangularBoundEffect<T> {
 
     _width1: number; // saves size for logging
     _height1: number;
 
-    guideContains(mx: number, my: number): number {
+    guideContains(mx: number, my: number): RECT_GUIDE {
         let x: number = this.x;
         let y: number = this.y;
         let w: number = this.w;
@@ -24,45 +25,45 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
         /* Corner Guides */
         let xdif: number = mx - x;
         let ydif: number = my - y;
-        if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) { //top left
-            return 1;
+        if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) {
+            return RECT_GUIDE.TOP_LEFT;
         }
         xdif = mx - (x + w);
-        if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) { //top right
-            return 2;
+        if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) {
+            return RECT_GUIDE.TOP_RIGHT;
         }
         xdif = mx - (x + w);
         ydif = my - (y + h);
-        if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) { //bottom right
-            return 3;
+        if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) {
+            return RECT_GUIDE.BOTTOM_RIGHT;
         }
         xdif = mx - x;
-        if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) { //bottom left
-            return 4;
+        if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) {
+            return RECT_GUIDE.BOTTOM_LEFT;
         }
 
         /* Middle Guides */
         xdif = mx - (x + w/2);
         ydif = my - y;
-        if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) { //top middle
-            return 5;
+        if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) {
+            return RECT_GUIDE.TOP_MID;
         }
         xdif = mx - (x + w);
         ydif = my - (y + h/2);
-        if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) { //middle right
-            return 6;
+        if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) {
+            return RECT_GUIDE.MID_RIGHT;
         }
         xdif = mx - (x + w/2);
         ydif = my - (y + h);
-        if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) { //bottom middle
-            return 7;
+        if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) {
+            return RECT_GUIDE.BOTTOM_MID;
         }
         xdif = mx - x;
         ydif = my - (y + h/2);
         if (Math.abs(xdif) <= 5 && Math.abs(ydif) <= 5) { //middle left
-            return 8;
+            return RECT_GUIDE.MID_LEFT;
         }
-        return 0;
+        return RECT_GUIDE.NONE;
     }
 
     drawGuides(x: number, y: number, w: number, h: number, corner: number) {
@@ -81,28 +82,28 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
         this.drawSquare(x - 2.5, y + h - 2.5, 5, 5, 'white'); // bottom left
 
         switch (corner) {
-            case 1:
+            case RECT_GUIDE.TOP_LEFT:
                 this.drawSquare(x - 2.5, y - 2.5, 5, 5, 'blue'); // top left
                 break;
-            case 2:
+            case RECT_GUIDE.TOP_RIGHT:
                 this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'blue'); // top right
                 break;
-            case 3:
+            case RECT_GUIDE.BOTTOM_RIGHT:
                 this.drawSquare(x + w - 2.5, y + h - 2.5, 5, 5, 'blue'); // bottom right
                 break;
-            case 4:
+            case RECT_GUIDE.BOTTOM_LEFT:
                 this.drawSquare(x - 2.5, y + h - 2.5, 5, 5, 'blue'); // bottom left
                 break;
-            case 5:
+            case RECT_GUIDE.TOP_MID:
                 this.drawSquare((x + w/2) - 2.5, y - 2.5, 5, 5, 'blue'); // top middle
                 break;
-            case 6:
+            case RECT_GUIDE.MID_RIGHT:
                 this.drawSquare(x + w - 2.5, (y + h/2) - 2.5, 5, 5, 'blue'); // middle right
                 break;
-            case 7:
+            case RECT_GUIDE.BOTTOM_MID:
                 this.drawSquare((x + w/2) - 2.5, y + h - 2.5, 5, 5, 'blue'); // bottom middle
                 break;
-            case 8:
+            case RECT_GUIDE.MID_LEFT:
                 this.drawSquare(x - 2.5, (y + h/2) - 2.5, 5, 5, 'blue'); // middle left
                 break;
             default:
@@ -153,14 +154,14 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
 
         if (this.w >= 10 && this.h >= 10) {
             switch (this.corner) {
-                case 1:
+                case RECT_GUIDE.TOP_LEFT:
                     this.y -= Math.round(dist_diff / ratio);
                     this.x -= dist_diff;
                     break;
-                case 2:
+                case RECT_GUIDE.TOP_RIGHT:
                     this.y -= Math.round(dist_diff / ratio);
                     break;
-                case 4:
+                case RECT_GUIDE.BOTTOM_LEFT:
                     this.x -= dist_diff;
                     break;
             }
@@ -180,19 +181,19 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
         }
         let dist_diff: number = newDistance - this.initDistance;
         switch (this.corner) {
-            case 5:
-                if (this.h > 10) { //as long as the height is >= 10
+            case RECT_GUIDE.TOP_MID:
+                if (this.h > 10) { // as long as the height is >= 10
                     this.y -= dist_diff;
                 }
                 this.h += dist_diff;
                 break;
-            case 6:
+            case RECT_GUIDE.MID_RIGHT:
                 this.w += dist_diff;
                 break;
-            case 7:
+            case RECT_GUIDE.BOTTOM_MID:
                 this.h += dist_diff;
                 break;
-            case 8:
+            case RECT_GUIDE.MID_LEFT:
                 if (this.w > 10) { // as long as width is > 10
                     this.x -= dist_diff;
                 }
@@ -221,7 +222,7 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
             this.dragOffX = this.mouse.x - x;
             this.dragOffY = this.mouse.y - y;
             this.isDragging = true;
-        } else if (guideContains > 0 || contains) {
+        } else if (guideContains != RECT_GUIDE.NONE || contains) {
             let effects = this.scope.effects;
             let curID = this.id;
             for (let effect of effects) {
@@ -236,7 +237,7 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
                 }
             }
 
-            if (guideContains > 0 && guideContains <= 4) { //resizing
+            if (EffectUtils.isRectGuideCorner(guideContains)) { //resizing
                 this.isSelected = true;
                 this.isResizing = true;
                 this.scope.eventLog.push(this.logClick());
@@ -245,50 +246,50 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
                 this._width1 = this.w;
 
                 switch (this.corner) { // sets the offsets depending on which corner is selected
-                    case 1: // top left
+                    case RECT_GUIDE.TOP_LEFT:
                         this.initDistance = EffectUtils.calcDistance(this.mouse.x, this.mouse.y, x + w, y + h);
                         this.dragOffX = x + w; // offset is bottom right
                         this.dragOffY = y + h;
                         break;
-                    case 2: // top right
+                    case RECT_GUIDE.TOP_RIGHT:
                         this.initDistance = EffectUtils.calcDistance(this.mouse.x, this.mouse.y, x, y + h);
                         this.dragOffX = x;
                         this.dragOffY = y + h; // offset is bottom left, etc
                         break;
-                    case 3:
+                    case RECT_GUIDE.BOTTOM_RIGHT:
                         this.initDistance = EffectUtils.calcDistance(this.mouse.x, this.mouse.y, x, y);
                         this.dragOffX = x;
                         this.dragOffY = y;
                         break;
-                    case 4:
+                    case RECT_GUIDE.BOTTOM_LEFT:
                         this.initDistance = EffectUtils.calcDistance(this.mouse.x, this.mouse.y, x + w, y);
                         this.dragOffX = x + w;
                         this.dragOffY = y;
                         break;
                 }
 
-            } else if (guideContains > 4) { //changing shape dimensions
+            } else if (EffectUtils.isRectGuideSide(guideContains)) { //changing shape dimensions
                 this.isSelected = true;
                 this.isChangingDims = true;
                 this.corner = guideContains;
 
                 switch (this.corner) { // sets the offsets depending on which middle guide is selected
-                    case 5: // top middle
+                    case RECT_GUIDE.TOP_MID:
                         this.initDistance = EffectUtils.calcDistance(this.mouse.x, this.mouse.y, x + w/2, y + h);
                         this.dragOffX = x + w/2; // offset is bottom middle
                         this.dragOffY = y + h;
                         break;
-                    case 6: //right middle
+                    case RECT_GUIDE.MID_RIGHT:
                         this.initDistance = EffectUtils.calcDistance(this.mouse.x, this.mouse.y, x, y + h/2);
                         this.dragOffX = x;
                         this.dragOffY = y + h/2; // offset is left middle etc
                         break;
-                    case 7:
+                    case RECT_GUIDE.BOTTOM_MID:
                         this.initDistance = EffectUtils.calcDistance(this.mouse.x, this.mouse.y, x + w/2, y);
                         this.dragOffX = x + w/2;
                         this.dragOffY = y;
                         break;
-                    case 8:
+                    case RECT_GUIDE.MID_LEFT:
                         this.initDistance = EffectUtils.calcDistance(this.mouse.x, this.mouse.y, x + w, y + h/2);
                         this.dragOffX = x + w;
                         this.dragOffY = y + h/2;

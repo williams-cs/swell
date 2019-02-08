@@ -13,6 +13,7 @@ export class PrintNode extends AbstractFunctionNode<any> {
             ["object", new Argument<any>()],
             ["x", new Argument<NumberNode>(new NumberNode(100), false)],
             ["y", new Argument<NumberNode>(new NumberNode(100), false)],
+            ["fontSize", new Argument<NumberNode>(new NumberNode(20), false)],
         ]);
     }
 
@@ -29,15 +30,23 @@ export class PrintNode extends AbstractFunctionNode<any> {
         return this.getArg("x").eval(context).val;
     }
 
-    getY(context: Scope): number {
-        return this.getArg("y").eval(context).val;
-    }
-
     setX(context: Scope, val: number): void {
         this.updateArgValue("x", context, val);
     }
 
+    getY(context: Scope): number {
+        return this.getArg("y").eval(context).val;
+    }
+    
     setY(context: Scope, val: number): void {
         this.updateArgValue("y", context, val);
+    }
+
+    getFontSize(context: Scope): number {
+        return this.getArg("fontSize").eval(context).val;
+    }
+
+    setFontSize(context: Scope, val: number): void {
+        this.updateArgValue("fontSize", context, val);
     }
 }

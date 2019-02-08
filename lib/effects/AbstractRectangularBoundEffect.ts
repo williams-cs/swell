@@ -1,4 +1,5 @@
 import { Effect } from "./Effect";
+import { EffectUtils } from "./EffectUtils";
 
 export abstract class AbstractRectangularBoundEffect<T> extends Effect<T> {
 
@@ -14,7 +15,9 @@ export abstract class AbstractRectangularBoundEffect<T> extends Effect<T> {
      * @param h the height of the bounding rectangle
      * @param corner the number of the corner (1-8) to be colored blue (if any at all, if 0, all are white)
      */
-    abstract drawGuides(x: number, y: number, w: number, h: number, corner: number): void;
+    abstract drawGuides(x: number, y: number, w: number, h: number, corner: EffectUtils.RECT_GUIDE): void;
+
+    abstract guideContains(mx: number, my: number): EffectUtils.RECT_GUIDE;
 
     modifyDrag(): void {
         this.x = this.mouse.x - this.dragOffX;
