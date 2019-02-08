@@ -2,7 +2,6 @@ import { AbstractFunctionNode } from "../funhouse/AbstractFunctionNode";
 import { Argument } from "../funhouse/Argument";
 import { Expression } from "../Expression";
 import { Scope } from "./Scope";
-import { Dimensions } from "./Dimensions";
 import { NumberNode } from "../prims/NumberNode";
 
 export class PrintNode extends AbstractFunctionNode<any> {

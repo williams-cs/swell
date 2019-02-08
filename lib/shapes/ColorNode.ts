@@ -1,6 +1,5 @@
 import { Expression } from '../Expression';
 import { Scope } from '../structural/Scope';
-import { Dimensions } from '../structural/Dimensions';
 
 export class ColorNode extends Expression<string> {
 

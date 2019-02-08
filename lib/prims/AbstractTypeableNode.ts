@@ -1,6 +1,5 @@
 import { AbstractPrintableNode } from '../structural/AbstractPrintableNode';
 import { AbstractTextEffect } from '../effects/AbstractTextEffect';
-import { Dimensions } from '../structural/Dimensions';
 import { Expression } from '../Expression';
 import { Scope } from '../structural/Scope';
 

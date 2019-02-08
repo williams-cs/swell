@@ -1,7 +1,6 @@
 import { AbstractPrintableFunctionNode } from "../structural/AbstractPrintableFunctionNode";
 import { AbstractShapeEffect } from "../effects/AbstractShapeEffect";
 import { Argument } from "../funhouse/Argument";
-import { Dimensions } from "../structural/Dimensions";
 import { Expression } from "../Expression";
 import { NumberNode } from "../prims/NumberNode";
 import { PrintNode } from "../structural/PrintNode";

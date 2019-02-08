@@ -1,7 +1,6 @@
 import { Expression } from "../Expression";
 import { ReturnError } from "./ReturnError";
 import { Scope } from "./Scope";
-import { Dimensions } from "./Dimensions";
 
 export class Return extends Expression<any> {
 

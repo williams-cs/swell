@@ -1,6 +1,5 @@
 import { AbstractFunctionNode } from "../funhouse/AbstractFunctionNode";
 import { Effect } from "../effects/Effect";
-import { Dimensions } from "./Dimensions";
 import { PrintNode } from "./PrintNode";
 import { Scope } from "./Scope";
 

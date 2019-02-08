@@ -1,6 +1,5 @@
 import { Expression } from "../Expression";
 import { Scope } from './Scope';
-import { Dimensions } from "./Dimensions";
 import { Some } from "space-lift";
 
 export class SequenceNode extends Expression<void>{

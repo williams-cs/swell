@@ -1,7 +1,6 @@
 import { Expression } from "../Expression";
 import { Scope } from '../structural/Scope';
 import { BooleanNode } from '../prims/BooleanNode';
-import { Dimensions } from "../structural/Dimensions";
 import { Some } from "space-lift";
 
 export class WhileNode extends Expression<any> {

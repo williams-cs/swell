@@ -1,6 +1,5 @@
 import { Effect } from "../effects/Effect";
 import { Expression } from "../Expression";
-import { Dimensions } from "./Dimensions";
 import { PrintNode } from "./PrintNode";
 import { Scope } from "./Scope";
 

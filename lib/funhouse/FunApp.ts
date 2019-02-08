@@ -2,7 +2,6 @@ import { Expression } from "../Expression";
 import { Scope } from "../structural/Scope";
 import { ReturnError } from "../structural/ReturnError";
 import { Some } from "space-lift";
-import { Dimensions } from "../structural/Dimensions";
 
 // Application of a function. Assumes arg values passed in same order as FunDef args
 export class FunApp<T> extends Expression<T> {

@@ -30,6 +30,7 @@ export {Parens} from './lib/unops/Parens';
 /* DATA TYPES */
 export {ListNode} from './lib/lists/ListNode';
 export {NumberNode} from './lib/prims/NumberNode';
+export {FloatNode} from './lib/prims/FloatNode';
 export {StringNode} from './lib/prims/StringNode';
 export {BooleanNode} from './lib/prims/BooleanNode';
 export {NOP} from './lib/prims/NOP';
@@ -60,7 +61,6 @@ export {Effect} from './lib/effects/Effect';
 export {EllipseEffect} from './lib/effects/EllipseEffect';
 export {NumberEffect} from './lib/effects/NumberEffect';
 export {StringEffect} from './lib/effects/StringEffect';
-export {Dimensions} from './lib/structural/Dimensions';
 export {RectangleEffect} from './lib/effects/RectangleEffect';
 export {EmojiEffect} from './lib/effects/EmojiEffect';
 

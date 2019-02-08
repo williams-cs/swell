@@ -1,5 +1,4 @@
 import { Expression } from '../Expression';
-import { Dimensions } from '../structural/Dimensions';
 import { Scope } from '../structural/Scope';
 
 export abstract class AbstractBinaryOp<L, R, T> extends Expression<T> {
