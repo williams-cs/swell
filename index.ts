@@ -48,7 +48,7 @@ export {WhileNode} from './lib/loops/WhileNode';
 export {ForNode} from './lib/loops/ForNode';
 
 /* BUILTIN FUNCTIONS */
-export {ColorNode} from './lib/shapes/ColorNode';
+export {RGBColorNode} from './lib/aesthetics/RGBColorNode';
 export {EllipseNode} from './lib/shapes/EllipseNode';
 export {RectangleNode} from './lib/shapes/RectangleNode';
 export {EmojiNode} from './lib/shapes/EmojiNode';

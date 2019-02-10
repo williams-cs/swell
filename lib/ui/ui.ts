@@ -262,10 +262,8 @@ import * as csvParse from 'csv-parse';
         // Check if editor has been modified, only parses if modified
         if (editorDoc.isClean()) {
             return;
-        } else {
-            editorDoc.markClean();
         }
-
+        editorDoc.markClean();
         if (parseTimer != null) {
             clearTimeout(parseTimer);
         }
@@ -273,6 +271,7 @@ import * as csvParse from 'csv-parse';
 
         //save current state to log for later
         let code = editor.getValue();
+        lastProgram = code;
         let name = checkpointName;
         let p = parses;
         let newTime = LogEvent.getNewTime();

@@ -9,7 +9,8 @@ import {
     VariableNode, DeclareOp, AssignOp,
     Return, FunDef, FunApp, Conditional,
     ForNode, RepeatNode, WhileNode,
-    EllipseNode, RectangleNode, EmojiNode
+    EllipseNode, RectangleNode, EmojiNode,
+    RGBColorNode
 } from '../../index';
 import { Option, Some, None } from 'space-lift';
 
@@ -603,6 +604,8 @@ export namespace Parser {
                     return new RectangleNode(args, ws);
                 case "emoji":
                     return new EmojiNode(args, ws);
+                case "rgb":
+                    return new RGBColorNode(args, ws);
                 default:
                     return new FunApp(fname, [], ws);
             }

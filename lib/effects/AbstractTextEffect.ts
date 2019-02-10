@@ -25,7 +25,7 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
 
     update(): void {
         this.ctx.font = this.fontSize + "px Courier New";
-        this.ctx.fillStyle = "#673AB7";
+        this.ctx.fillStyle = this.color;
         this.ctx.fillText(this.text, this.x, this.y);
         if (this.isSelected) {
             this.drawGuides(this.x, this.y - this.fontSize, this.width, this.fontSize, this.corner);

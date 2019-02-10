@@ -12,9 +12,7 @@ export class EllipseEffect extends AbstractShapeEffect<EllipseNode, EllipseEffec
         let h: number = this.h;
         this.ctx.beginPath();
         this.ctx.ellipse(x + w/2, y + h/2, w/2, h/2, 0, 0, Math.PI * 2, false);
-        this.ctx.fillStyle = "#D5B8FF";
-        this.ctx.shadowColor = "#6C6C6C";
-        this.ctx.shadowBlur = 15;
+        this.ctx.fillStyle = this.color;
         this.ctx.fill();
         if (this.isSelected) {
             this.drawGuides(x, y, w, h, this.corner);

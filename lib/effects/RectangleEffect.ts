@@ -12,9 +12,7 @@ export class RectangleEffect extends AbstractShapeEffect<RectangleNode, Rectangl
         let height = this.h;
         this.ctx.beginPath();
         this.ctx.rect(x, y, width, height);
-        this.ctx.fillStyle = "#d5b8ff";
-        this.ctx.shadowColor = "#6C6C6C";
-        this.ctx.shadowBlur = 15;
+        this.ctx.fillStyle = this.color;
         this.ctx.fill();
         if (this.isSelected) {
             this.drawGuides(x, y, width, height, this.corner);

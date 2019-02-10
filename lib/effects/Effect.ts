@@ -411,4 +411,12 @@ export abstract class Effect<T> {
     get ctx(): CanvasRenderingContext2D {
         return this.canvas.getContext("2d");
     }
+
+    get color(): string {
+        return this.aes.getColor(this.scope);
+    }
+
+    set color(val: string) {
+        this.aes.setColor(this.scope, val);
+    }
 }

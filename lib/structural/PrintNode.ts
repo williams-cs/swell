@@ -1,8 +1,10 @@
 import { AbstractFunctionNode } from "../funhouse/AbstractFunctionNode";
 import { Argument } from "../funhouse/Argument";
 import { Expression } from "../Expression";
-import { Scope } from "./Scope";
 import { NumberNode } from "../prims/NumberNode";
+import { RGBColorNode } from "../aesthetics/RGBColorNode";
+import { Scope } from "./Scope";
+import { StringNode } from "../prims/StringNode";
 
 export class PrintNode extends AbstractFunctionNode<any> {
 
@@ -19,6 +21,7 @@ export class PrintNode extends AbstractFunctionNode<any> {
             ["x", new Argument<NumberNode>(new NumberNode(100), false)],
             ["y", new Argument<NumberNode>(new NumberNode(100), false)],
             ["fontSize", new Argument<NumberNode>(new NumberNode(20), false)],
+            ["color", new Argument<StringNode | RGBColorNode>(new StringNode("#673AB7"), false)],
         ]);
     }
 
@@ -53,5 +56,13 @@ export class PrintNode extends AbstractFunctionNode<any> {
 
     setFontSize(context: Scope, val: number): void {
         this.updateArgValue("fontSize", context, val);
+    }
+
+    getColor(context: Scope): string {
+        return this.getArg("color").eval(context).val;
+    }
+
+    setColor(context: Scope, val: string): void {
+        this.updateArgValue("color", context, val);
     }
 }

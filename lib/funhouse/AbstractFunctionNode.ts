@@ -2,7 +2,7 @@ import { Argument } from "./Argument";
 import { Expression } from "../Expression";
 import { Scope } from "../structural/Scope";
 
-export abstract class AbstractFunctionNode<T extends AbstractFunctionNode<T>> extends Expression<T> {
+export abstract class AbstractFunctionNode<T extends Expression<any>> extends Expression<T> {
 
     // Function's name
     protected abstract name: string;
@@ -27,11 +27,17 @@ export abstract class AbstractFunctionNode<T extends AbstractFunctionNode<T>> ex
             if (arg.value != undefined) {
                 throw(`Positional argument "${key}" must not have a default value`);
             }
+            if (!arg.isPositional) {
+                throw(`Positional argument "${key}" must have isPositional equals true`);
+            }
         }
         let optArgMap: Map<string, Argument<any>> = this.getOptionalArgMap();
         for (let [key, arg] of optArgMap) {
             if (arg.value == undefined) {
                 throw(`Optional argument "${key}" must have a default value`);
+            }
+            if (arg.isPositional) {
+                throw(`Optional argument "${key}" must have isPositional equals false`);
             }
         }
 
@@ -147,8 +153,8 @@ export abstract class AbstractFunctionNode<T extends AbstractFunctionNode<T>> ex
     toString(): string {
         let argString: string = "";
         for (let [key, arg] of this.argMap) {
-            if (arg.positional || arg.isModified) {
-                argString += (arg.positional && !arg.alwaysVisible) ? `${arg.value}, ` : `${key} = ${arg.value}, `;
+            if (arg.isPositional || arg.isModified) {
+                argString += (arg.isPositional && !arg.alwaysVisible) ? `${arg.value}, ` : `${key} = ${arg.value}, `;
             }
         }
         if (this.argMap.size > 0) {

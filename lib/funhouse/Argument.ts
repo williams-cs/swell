@@ -8,11 +8,11 @@ export class Argument<T> {
     /**
      * The constructor for Argument
      * @param value The value for the argument
-     * @param positional Whether or not the argument is positional
+     * @param isPositional Whether or not the argument is positional
      */
     constructor(
         private _value: Expression<T> = undefined,
-        private _positional: boolean = true,
+        private _isPositional: boolean = true,
         private _alwaysVisible: boolean = false,
     ) {}
 
@@ -24,12 +24,12 @@ export class Argument<T> {
         this._value = value;
     }
 
-    get positional(): boolean {
-        return this._positional;
+    get isPositional(): boolean {
+        return this._isPositional;
     }
 
-    set positional(val: boolean) {
-        this._positional = val;
+    set isPositional(val: boolean) {
+        this._isPositional = val;
     }
 
     get isModified(): boolean {
