@@ -8,9 +8,14 @@ export class PrintNode extends AbstractFunctionNode<any> {
 
     protected readonly name: string = "print";
 
-    initArgMap(): Map<string, Argument<any>> {
+    getPositionalArgMap(): Map<string, Argument<any>> {
         return new Map<string, Argument<any>>([
             ["object", new Argument<any>()],
+        ]);
+    }
+
+    getOptionalArgMap(): Map<string, Argument<any>> {
+        return new Map<string, Argument<any>>([
             ["x", new Argument<NumberNode>(new NumberNode(100), false)],
             ["y", new Argument<NumberNode>(new NumberNode(100), false)],
             ["fontSize", new Argument<NumberNode>(new NumberNode(20), false)],
@@ -37,7 +42,7 @@ export class PrintNode extends AbstractFunctionNode<any> {
     getY(context: Scope): number {
         return this.getArg("y").eval(context).val;
     }
-    
+
     setY(context: Scope, val: number): void {
         this.updateArgValue("y", context, val);
     }

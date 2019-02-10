@@ -11,7 +11,7 @@ export class EmojiNode extends AbstractShapeNode<EmojiNode, EmojiEffect> {
 
     protected readonly name: string = "emoji";
 
-    initArgMap(): Map<string, Argument<any>> {
+    getPositionalArgMap(): Map<string, Argument<any>> {
         return new Map<string, Argument<any>>([
             ["type", new Argument<StringNode>()],
             ["width", new Argument<NumberNode>()],

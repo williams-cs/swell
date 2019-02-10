@@ -13,7 +13,7 @@ export abstract class AbstractRectangularBoundEffect<T> extends Effect<T> {
      * @param y the y coordinate for where the rectangle will originate from (top left corner)
      * @param w the width of the bounding rectangle
      * @param h the height of the bounding rectangle
-     * @param corner the number of the corner (1-8) to be colored blue (if any at all, if 0, all are white)
+     * @param corner the corner to be colored blue
      */
     abstract drawGuides(x: number, y: number, w: number, h: number, corner: EffectUtils.RECT_GUIDE): void;
 

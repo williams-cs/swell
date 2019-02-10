@@ -8,7 +8,7 @@ import { Scope } from "../structural/Scope";
 
 export abstract class AbstractShapeNode<T extends AbstractShapeNode<T, E>, E extends AbstractShapeEffect<T, E>> extends AbstractPrintableFunctionNode<T, E> {
 
-    initArgMap(): Map<string, Argument<any>> {
+    getPositionalArgMap(): Map<string, Argument<any>> {
         return new Map<string, Argument<any>>([
             ["width", new Argument<NumberNode>()],
             ["height", new Argument<NumberNode>()],
