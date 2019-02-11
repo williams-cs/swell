@@ -17,7 +17,6 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
 
     private _prevFontSize: number;
     private _isEditing: boolean = false;
-    private _isListening: boolean = false;
     private _cursorPos: number = 0;
     private _cursorTime: number = 90;
     private _cursorTimeCurrent: number = 90;
@@ -46,8 +45,8 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
     }
 
     contains(mx: number, my: number): boolean {
-        return (this.x <= mx) && (this.x + this.width >= mx) &&
-            (this.y - this.fontSize <= my) && (this.y >= my);
+        return (mx >= this.x) && (mx <= this.x + this.width) &&
+            (my >= this.y - this.fontSize) && (my <= this.y);
     }
 
     drawGuides(x: number, y: number, w: number, h: number, corner: number) { //corner is 2 or 0
@@ -86,29 +85,18 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
 
     onMouseMove(event: any): void {
         this.getMousePosition(event);
-        if (this.isSelected && this.isDragging) {
+        if (!this.isSelected) {
+            return;
+        }
+        if (this.isDragging) {
             this.modifyDrag();
-        } else if (this.isResizing && this.isSelected) {
+        } else if (this.isResizing) {
             this.modifyResize();
         }
     }
 
-    onMouseDown(event: any): void {
-        if (!this.isSelectingMultiple && this.isSelected && this.contains(this.mouse.x, this.mouse.y)) { //text editing
-            if (!this.isListening) {
-                window.addEventListener('keydown', this.modifyText.bind(this));
-            }
-            this.isListening = true;
-            this.isEditing = true;
-            this.isDragging = false;
-            this.updateCursorPosFromMouse();
-        } else if (!this.isSelectingMultiple) {
-            this.isSelected = false;
-            this.isEditing = false;
-        } else {
-            this.isEditing = false;
-        }
-        this.modifyState();
+    onKeyDown(event: any) {
+        this.modifyText(event);
     }
 
     /* Modification funcions */
@@ -185,22 +173,38 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
     }
 
     modifyState(): void {
-        let guideContains: boolean = this.guideContains(this.mouse.x, this.mouse.y) == RECT_GUIDE.TOP_RIGHT;
-        let contains: boolean = this.contains(this.mouse.x, this.mouse.y);
+        let mx: number = this.mouse.x;
+        let my: number = this.mouse.y;
+        let contains: boolean = this.contains(mx, my);
+        if (!this.isSelectingMultiple && this.isSelected && contains) { //text editing
+            this.isEditing = true;
+            this.isDragging = false;
+            this.updateCursorPosFromMouse();
+        } else {
+            this.isEditing = false;
+            if (!this.isSelectingMultiple) {
+                this.isSelected = false;
+            }
+        }
+
+        let guideContains: number = this.guideContains(mx, my);
+        this.corner = guideContains;
         this.justDragged = false;
         this.justResized = false;
+        let x: number = this.x;
+        let y: number = this.y;
 
         if (this.isSelectingMultiple) { // prepares the object for dragging whether it is personally selected or not
             if (contains) {
-                this.prevX = this.x;
-                this.prevY = this.y;
+                this.prevX = x;
+                this.prevY = y;
                 this.isSelected = true;
             }
-            this.dragOffX = this.mouse.x - this.x;
-            this.dragOffY = this.mouse.y - this.y;
+            this.dragOffX = mx - x;
+            this.dragOffY = my - y;
             this.isDragging = true;
 
-        } else if (guideContains || contains) {
+        } else if (guideContains != RECT_GUIDE.NONE || contains) {
             let effects = this.scope.effects;
             let curID = this.id;
             for (let effect of effects) {
@@ -208,8 +212,8 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
                 if (effectID == curID) {
                     continue;
                 }
-                if (effectID > curID && (effect.guideContains(this.mouse.x, this.mouse.y) > 0 ||
-                    effect.contains(this.mouse.x, this.mouse.y))) {
+                if (effectID > curID && (effect.guideContains(mx, my) != RECT_GUIDE.NONE ||
+                    effect.contains(mx, my))) {
                     this.isSelected = false;
                     this.isDragging = false;
                     this.isEditing = false;
@@ -217,23 +221,21 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
                 }
             }
 
-            if (guideContains) { // if the corner guides contain the mouse we are resizing
-                this.isSelected = true;
-                this.corner = this.guideContains(this.mouse.x, this.mouse.y);
-                this.scope.eventLog.push(this.logClick());
-                this.dragOffX = this.x;
-                this.dragOffY = this.y;
-                this.initDistance = EffectUtils.calcDistance(this.mouse.x, this.mouse.y, this.x, this.y);
+            this.isSelected = true;
+            if (guideContains == RECT_GUIDE.TOP_RIGHT) {
                 this.isResizing = true;
+                this.scope.eventLog.push(this.logClick());
+                this.dragOffX = x;
+                this.dragOffY = y;
+                this.initDistance = EffectUtils.calcDistance(mx, my, x, y);
                 this.prevFontSize = this.fontSize; // saving old font size
 
             } else if (contains) {
-                this.prevX = this.x; // Saving original x and y
-                this.prevY = this.y;
-                this.isSelected = true;
+                this.prevX = x;
+                this.prevY = y;
                 this.scope.eventLog.push(this.logClick());
-                this.dragOffX = this.mouse.x - this.x;
-                this.dragOffY = this.mouse.y - this.y;
+                this.dragOffX = mx - x;
+                this.dragOffY = my - y;
                 if (!this.isEditing) {
                     this.isDragging = true;
                 }
@@ -317,14 +319,6 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
         this._isEditing = val;
     }
 
-    get isListening(): boolean {
-        return this._isListening;
-    }
-
-    set isListening(val: boolean) {
-        this._isListening = val;
-    }
-
     get cursorPos(): number {
         return this._cursorPos;
     }
@@ -362,6 +356,7 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
     }
 
     get width(): number {
+        this.ctx.font = this.fontSize + "px Courier New";
         return this.ctx.measureText(this.text).width;
     }
 

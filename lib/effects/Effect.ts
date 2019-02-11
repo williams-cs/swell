@@ -87,7 +87,6 @@ export abstract class Effect<T> {
      * @param my the mouse y coordinate
      */
 
-
     /**
      * Returns true if the mouse is inside of the object's boundary, false if otherwise
      * @param mx the mouse x coordinate
@@ -101,8 +100,9 @@ export abstract class Effect<T> {
         this.canvas.addEventListener('mousemove', this.onMouseMove.bind(this));
         this.canvas.addEventListener('mousedown', this.onMouseDown.bind(this));
         this.canvas.addEventListener('mouseup', this.onMouseUp.bind(this));
-        window.addEventListener('keydown', this.onShiftDown.bind(this));
         window.addEventListener('keyup', this.onShiftUp.bind(this));
+        window.addEventListener('keydown', this.onShiftDown.bind(this));
+        window.addEventListener('keydown', this.onKeyDown.bind(this));
         window.addEventListener('mousedown', this.isMouseOutside.bind(this));
         //makes it so that double clicking doesn't select text on the page
         this.canvas.addEventListener('selectstart', function(e) {
@@ -118,13 +118,14 @@ export abstract class Effect<T> {
      */
     onMouseMove(event: any): void {
         this.getMousePosition(event);
-        if (this.isDragging && this.isSelected) {
+        if (!this.isSelected) {
+            return;
+        }
+        if (this.isDragging) {
             this.modifyDrag();
-        }
-        else if (this.isResizing && this.isSelected) {
+        } else if (this.isResizing) {
             this.modifyResize();
-        }
-        else if (this.isChangingDims && this.isSelected) {
+        } else if (this.isChangingDims) {
             this.modifyChangeDims();
         }
     }
@@ -169,6 +170,10 @@ export abstract class Effect<T> {
         }
     }
 
+    /**
+     * Triggered when key is pressed down
+     */
+    abstract onKeyDown(event: any): void;
 
     /**
      * Gets the current x and y coordinates of the mouse
@@ -222,7 +227,7 @@ export abstract class Effect<T> {
     /**
      * Changes the x and y coordinates of the object in order to drag the object.
      */
-    abstract modifyDrag(): void;
+     abstract modifyDrag(): void;
 
     /**
      * Changes the size of the object when called (when a corner guide is clicked and dragged).

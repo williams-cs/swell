@@ -106,7 +106,6 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
             case RECT_GUIDE.MID_LEFT:
                 this.drawSquare(x - 2.5, (y + h/2) - 2.5, 5, 5, 'blue'); // middle left
                 break;
-            default:
         }
     }
 
@@ -120,23 +119,11 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
             (my > this.y) && (my < this.y + this.h);
     }
 
-    /**
-     * Called whenever the mouse moves within the canvas.
-     * Gets the mouse position, calls the modify methods if the booleans satisfy them.
-     * @param event the mousemove event
-     */
-    onMouseMove(event: any): void {
-        this.getMousePosition(event);
-        if (this.isDragging && this.isSelected) {
-            this.modifyDrag();
-        }
-        else if (this.isResizing && this.isSelected) {
-            this.modifyResize();
-        }
-        else if (this.isChangingDims && this.isSelected) {
-            this.modifyChangeDims();
-        }
-    }
+    // Event listeners
+
+    onKeyDown(event: any) {}
+
+    // Modification functions
 
     modifyResize(): void {
         let ratio: number = this.w / this.h;
@@ -215,13 +202,14 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
 
         if (this.isSelectingMultiple) { //prepares the object for dragging whether it is personally selected or not
             if (contains) {
-                this.prevX = this.x;
-                this.prevY = this.y;
+                this.prevX = x;
+                this.prevY = y;
                 this.isSelected = true;
             }
             this.dragOffX = this.mouse.x - x;
             this.dragOffY = this.mouse.y - y;
             this.isDragging = true;
+
         } else if (guideContains != RECT_GUIDE.NONE || contains) {
             let effects = this.scope.effects;
             let curID = this.id;
@@ -230,7 +218,8 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
                 if (effectID == curID) {
                     continue;
                 }
-                if (effectID > curID && (effect.guideContains(this.mouse.x, this.mouse.y) > 0 || effect.contains(this.mouse.x, this.mouse.y))) {
+                if (effectID > curID && (effect.guideContains(this.mouse.x, this.mouse.y) != RECT_GUIDE.NONE ||
+                    effect.contains(this.mouse.x, this.mouse.y))) {
                     this.isSelected = false;
                     this.isDragging = false;
                     return;
@@ -329,6 +318,8 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
         this.isChangingDims = false;
         this.corner = 0;
     }
+
+    // Logging functions
 
     logPaint(): LogEvent<any> {
         return new PaintEvent(`${this.name} with ID ${this.id}`, this.x, this.y);
