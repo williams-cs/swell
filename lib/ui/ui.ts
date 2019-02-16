@@ -307,7 +307,7 @@ import * as csvParse from 'csv-parse';
         }
     });
     window.addEventListener("keyup", function(event: any) {
-        isDoingDM = false;
+        isDoingDM = isCanvasSelected || false;
     });
 
     // Canvas mouse events

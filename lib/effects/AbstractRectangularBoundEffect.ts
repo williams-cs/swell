@@ -3,6 +3,7 @@ import { EffectUtils } from "./EffectUtils";
 
 export abstract class AbstractRectangularBoundEffect<T> extends Effect<T> {
 
+    private _guideSize: number = 7;
     private _prevX: number;
     private _prevY: number;
 
@@ -19,9 +20,9 @@ export abstract class AbstractRectangularBoundEffect<T> extends Effect<T> {
 
     abstract guideContains(mx: number, my: number): EffectUtils.RECT_GUIDE;
 
-    modifyDrag(): void {
-        this.x = this.mouse.x - this.dragOffX;
-        this.y = this.mouse.y - this.dragOffY;
+    modifyDrag(event: MouseEvent): void {
+        this.x = this.prevX + this.mouse.x - this.prevMouse.x;
+        this.y = this.prevY + this.mouse.y - this.prevMouse.y;
     }
 
     get x(): number {
@@ -54,5 +55,9 @@ export abstract class AbstractRectangularBoundEffect<T> extends Effect<T> {
 
     set prevY(val: number) {
         this._prevY = val;
+    }
+
+    get guideSize(): number {
+        return this._guideSize;
     }
 }

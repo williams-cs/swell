@@ -12,9 +12,12 @@ import { SelectEvent } from "../logging/SelectEvent";
 import { PrintNode } from "../structural/PrintNode";
 import { Scope } from "../structural/Scope";
 import RECT_GUIDE = EffectUtils.RECT_GUIDE;
+import KEYBOARD = EffectUtils.KEYBOARD;
 
 export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>, V, E extends AbstractTextEffect<T, V, E>> extends AbstractRectangularBoundEffect<T> {
 
+    private _font: string = "Courier New";
+    private _minFontSize: number = this.guideSize;
     private _prevFontSize: number;
     private _isEditing: boolean = false;
     private _cursorPos: number = 0;
@@ -23,11 +26,12 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
     private _isCursorDisplayed: boolean = true;
 
     update(): void {
-        this.ctx.font = this.fontSize + "px Courier New";
+        let fontSize: number = this.fontSize;
+        this.ctx.font = fontSize + this.font;
         this.ctx.fillStyle = this.color;
-        this.ctx.fillText(this.text, this.x, this.y);
+        this.ctx.fillText(this.text, this.x, this.y); // Text starts from bottom left
         if (this.isSelected) {
-            this.drawGuides(this.x, this.y - this.fontSize, this.width, this.fontSize, this.corner);
+            this.drawGuides(this.x, this.y - fontSize, this.width, fontSize, this.corner);
             if (this.isEditing) {
                 this.drawCursor();
             }
@@ -35,11 +39,32 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
     }
 
     guideContains(mx: number, my: number): number {
-        let xDiff = mx - (this.x + this.width);
-        let yDiff = my - (this.y - this.fontSize);
-        if (Math.abs(xDiff) <= 5 && Math.abs(yDiff) <= 5) {
+        let halfSize: number = this.guideSize/2;
+        let xDiff: number = mx - (this.x + this.width);
+        let yDiff: number = my - (this.y - this.fontSize);
+        if (Math.abs(xDiff) <= halfSize && Math.abs(yDiff) <= halfSize) {
             this.isEditing = false;
             return RECT_GUIDE.TOP_RIGHT;
+        }
+
+        xDiff = mx - this.x;
+        if (Math.abs(xDiff) <= halfSize && Math.abs(yDiff) <= halfSize) {
+            this.isEditing = false;
+            return RECT_GUIDE.TOP_LEFT;
+        }
+
+        xDiff = mx - (this.x + this.width);
+        yDiff = my - this.y;
+        if (Math.abs(xDiff) <= halfSize && Math.abs(yDiff) <= halfSize) {
+            this.isEditing = false;
+            return RECT_GUIDE.BOTTOM_RIGHT;
+        }
+
+        xDiff = mx - this.x;
+        yDiff = my - this.y;
+        if (Math.abs(xDiff) <= halfSize && Math.abs(yDiff) <= halfSize) {
+            this.isEditing = false;
+            return RECT_GUIDE.BOTTOM_LEFT;
         }
         return RECT_GUIDE.NONE;
     }
@@ -54,14 +79,12 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
         this.ctx.rect(x, y, w, h);
         this.ctx.strokeStyle = 'gray';
         this.ctx.stroke();
-        switch (corner) {
-            case RECT_GUIDE.NONE:
-                this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'white');
-                break;
-            case RECT_GUIDE.TOP_RIGHT:
-                this.drawSquare(x + w - 2.5, y - 2.5, 5, 5, 'blue');
-                break;
-        }
+        let size: number = this.guideSize;
+        let halfSize: number = size/2;
+        this.drawSquare(x - halfSize, y - halfSize, size, size, this.getGuideColor(RECT_GUIDE.TOP_LEFT));
+        this.drawSquare(x + w - halfSize, y - halfSize, size, size, this.getGuideColor(RECT_GUIDE.TOP_RIGHT));
+        this.drawSquare(x + w - halfSize, y + this.fontSize - halfSize, size, size, this.getGuideColor(RECT_GUIDE.BOTTOM_RIGHT));
+        this.drawSquare(x - halfSize, y + this.fontSize - halfSize, size, size, this.getGuideColor(RECT_GUIDE.BOTTOM_LEFT));
     }
 
     drawCursor(): void {
@@ -83,25 +106,11 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
 
     /* Event listener functions */
 
-    onMouseMove(event: any): void {
-        this.getMousePosition(event);
-        if (!this.isSelected) {
-            return;
-        }
-        if (this.isDragging) {
-            this.modifyDrag();
-        } else if (this.isResizing) {
-            this.modifyResize();
-        }
-    }
-
-    onKeyDown(event: any) {
+    onKeyDown(event: KeyboardEvent) {
         this.modifyText(event);
     }
 
     /* Modification funcions */
-
-    modifyChangeDims(): void { }
 
     updateCursorPos(delta_pos: number): void {
         let newPos: number = this.cursorPos + Math.round(delta_pos);
@@ -126,7 +135,7 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
         this.isCursorDisplayed = true;
     }
 
-    modifyText(event: any): void {
+    modifyText(event: KeyboardEvent): void {
         if (!this.isEditing) {
             return;
         }
@@ -134,21 +143,22 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
         let secondHalf: string = this.text.substring(this.cursorPos);
 
         switch (event.keyCode) {
-            case 37: // Arrow left
+            case KEYBOARD.ARROW_LEFT: // Arrow left
                 this.updateCursorPos(-1);
                 break;
-            case 39: // Arrow right
+            case KEYBOARD.ARROW_RIGHT: // Arrow right
                 this.updateCursorPos(1);
                 break;
-            case 8: // Backspace
+            case KEYBOARD.BACKSPACE: // Backspace
                 firstHalf = firstHalf.substring(0, firstHalf.length - 1);
                 this.node.val = this.convertStrToNodeVal(firstHalf + secondHalf);
                 this.updateCursorPos(-1);
                 event.preventDefault(); // Backspacing on Firefox will go back to a previous page
                 break;
-            case 46: // Del
+            case KEYBOARD.DELETE: // Del
                 secondHalf = secondHalf.substring(1, secondHalf.length);
                 this.node.val = this.convertStrToNodeVal(firstHalf + secondHalf);
+                this.updateCursorPos(0);
                 break;
             default:
                 let keyName = event.key;
@@ -165,24 +175,43 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
         }
     }
 
-    modifyResize(): void {
-        this.fontSize = Math.max(5, this.fontSize);
-        let newDistance = EffectUtils.calcDistance(this.mouse.x, this.mouse.y, this.dragOffX, this.dragOffY);
-        this.fontSize += Math.round((newDistance - this.initDistance) * 0.2);
-        this.initDistance = newDistance;
+    modifyResize(event: MouseEvent): void {
+        let prevFontSize: number = this.prevFontSize;
+        let newFontSize: number = prevFontSize;
+        let prevY: number = this.prevY;
+        let mouseY: number = this.mouse.y;
+        let prevWidth: number = this.measureTextWidth(prevFontSize);
+        let newWidth: number;
+        let yDiff: number;
+        let corner: RECT_GUIDE = this.corner;
+        let changeFactor: number = 0.75;
+
+        if (corner == RECT_GUIDE.TOP_RIGHT || corner == RECT_GUIDE.TOP_LEFT) {
+            yDiff = prevY - mouseY - prevFontSize;
+            newFontSize = Math.max(this.minFontSize, prevFontSize + Math.round(yDiff * changeFactor));
+        } else if (corner == RECT_GUIDE.BOTTOM_RIGHT || corner == RECT_GUIDE.BOTTOM_LEFT) {
+            yDiff = mouseY - prevY;
+            newFontSize = Math.max(this.minFontSize, prevFontSize + Math.round(yDiff * changeFactor));
+            this.y = prevY + newFontSize - prevFontSize;
+        }
+        if (corner == RECT_GUIDE.TOP_LEFT || corner == RECT_GUIDE.BOTTOM_LEFT) {
+            newWidth = this.measureTextWidth(newFontSize);
+            this.x = this.prevX + Math.round(prevWidth - newWidth);
+        }
+        this.fontSize = newFontSize;
     }
 
-    modifyState(): void {
+    modifyState(event: MouseEvent): void {
         let mx: number = this.mouse.x;
         let my: number = this.mouse.y;
         let contains: boolean = this.contains(mx, my);
-        if (!this.isSelectingMultiple && this.isSelected && contains) { //text editing
+        if (!event.ctrlKey && this.isSelected && contains) { //text editing
             this.isEditing = true;
             this.isDragging = false;
             this.updateCursorPosFromMouse();
         } else {
             this.isEditing = false;
-            if (!this.isSelectingMultiple) {
+            if (!event.ctrlKey) {
                 this.isSelected = false;
             }
         }
@@ -194,54 +223,41 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
         let x: number = this.x;
         let y: number = this.y;
 
-        if (this.isSelectingMultiple) { // prepares the object for dragging whether it is personally selected or not
+        if (event.ctrlKey) { // prepares the object for dragging whether it is personally selected or not
             if (contains) {
-                this.prevX = x;
-                this.prevY = y;
                 this.isSelected = true;
             }
-            this.dragOffX = mx - x;
-            this.dragOffY = my - y;
+            this.prevX = x;
+            this.prevY = y;
             this.isDragging = true;
 
         } else if (guideContains != RECT_GUIDE.NONE || contains) {
-            let effects = this.scope.effects;
-            let curID = this.id;
-            for (let effect of effects) {
-                let effectID = effect.id;
-                if (effectID == curID) {
+            for (let effect of this.scope.effects) {
+                if (effect.id == this.id) {
                     continue;
                 }
-                if (effectID > curID && (effect.guideContains(mx, my) != RECT_GUIDE.NONE ||
-                    effect.contains(mx, my))) {
+                if (effect.id > this.id && (effect.guideContains(this.mouse.x, this.mouse.y) != RECT_GUIDE.NONE ||
+                    effect.contains(this.mouse.x, this.mouse.y))) {
                     this.isSelected = false;
                     this.isDragging = false;
-                    this.isEditing = false;
                     return;
                 }
             }
 
+            this.prevX = x;
+            this.prevY = y;
             this.isSelected = true;
-            if (guideContains == RECT_GUIDE.TOP_RIGHT) {
+            this.scope.eventLog.push(this.logClick());
+            if (guideContains != RECT_GUIDE.NONE) {
                 this.isResizing = true;
-                this.scope.eventLog.push(this.logClick());
-                this.dragOffX = x;
-                this.dragOffY = y;
-                this.initDistance = EffectUtils.calcDistance(mx, my, x, y);
                 this.prevFontSize = this.fontSize; // saving old font size
-
             } else if (contains) {
-                this.prevX = x;
-                this.prevY = y;
-                this.scope.eventLog.push(this.logClick());
-                this.dragOffX = mx - x;
-                this.dragOffY = my - y;
                 if (!this.isEditing) {
                     this.isDragging = true;
                 }
             }
 
-        } else if (!this.isSelectingMultiple) {
+        } else {
             this.isSelected = false;
             this.isDragging = false;
             this.isEditing = false;
@@ -294,6 +310,10 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
     }
 
     /* Getters and Setters */
+
+    get font(): string {
+        return "px " + this._font;
+    }
 
     get fontSize(): number {
         return this.aes.getFontSize(this.scope);
@@ -356,11 +376,22 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
     }
 
     get width(): number {
-        this.ctx.font = this.fontSize + "px Courier New";
+        this.ctx.font = this.fontSize + this.font;
         return this.ctx.measureText(this.text).width;
+    }
+
+    measureTextWidth(fontSize: number): number {
+        this.ctx.font = fontSize + this.font;
+        let width: number = this.ctx.measureText(this.text).width;
+        this.ctx.font = this.fontSize + this.font;
+        return width;
     }
 
     get interval(): number {
         return this.text.length == 0 ? 0 : this.width / this.text.length;
+    }
+
+    get minFontSize(): number {
+        return this._minFontSize;
     }
 }

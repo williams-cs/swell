@@ -34,11 +34,10 @@ export abstract class Effect<T> {
     private _isSelected: boolean = false;
     private _isDragging: boolean = false;
     private _isResizing: boolean = false;
-    private _isChangingDims: boolean = false;
-    private _isSelectingMultiple: boolean = false;
     private _justDragged: boolean = false;
     private _justResized: boolean = false;
     private _corner: number = 0;
+
     private _mouse: {
         x: number,
         y: number,
@@ -46,10 +45,13 @@ export abstract class Effect<T> {
             x: 0,
             y: 0,
         };
-
-    private _dragOffX: number = 0;
-    private _dragOffY: number = 0;
-    private _initDistance: number = 0;
+    private _prevMouse: {
+        x: number,
+        y: number,
+    } = {
+            x: 0,
+            y: 0,
+        };
 
     constructor(node: T, scope: Scope, aes: PrintNode) {
         this.node = node;
@@ -86,29 +88,16 @@ export abstract class Effect<T> {
      * @param mx the mouse x coordinate
      * @param my the mouse y coordinate
      */
-
-    /**
-     * Returns true if the mouse is inside of the object's boundary, false if otherwise
-     * @param mx the mouse x coordinate
-     * @param my the mouse y coordinate
-     */
     abstract contains(mx: number, my: number): boolean;
 
     /* Event listener functions */
 
-    addEventListeners(): void {
+    private addEventListeners(): void {
         this.canvas.addEventListener('mousemove', this.onMouseMove.bind(this));
         this.canvas.addEventListener('mousedown', this.onMouseDown.bind(this));
         this.canvas.addEventListener('mouseup', this.onMouseUp.bind(this));
-        window.addEventListener('keyup', this.onShiftUp.bind(this));
-        window.addEventListener('keydown', this.onShiftDown.bind(this));
         window.addEventListener('keydown', this.onKeyDown.bind(this));
-        window.addEventListener('mousedown', this.isMouseOutside.bind(this));
-        //makes it so that double clicking doesn't select text on the page
-        this.canvas.addEventListener('selectstart', function(e) {
-            e.preventDefault();
-            return false;
-        }, false);
+        window.addEventListener('mouseup', this.isMouseOutside.bind(this));
     }
 
     /**
@@ -116,17 +105,15 @@ export abstract class Effect<T> {
      * Gets the mouse position, calls the modify methods if the booleans satisfy them.
      * @param event the mousemove event
      */
-    onMouseMove(event: any): void {
+    private onMouseMove(event: MouseEvent): void {
         this.getMousePosition(event);
         if (!this.isSelected) {
             return;
         }
         if (this.isDragging) {
-            this.modifyDrag();
+            this.modifyDrag(event);
         } else if (this.isResizing) {
-            this.modifyResize();
-        } else if (this.isChangingDims) {
-            this.modifyChangeDims();
+            this.modifyResize(event);
         }
     }
 
@@ -135,8 +122,9 @@ export abstract class Effect<T> {
      * Modifies the state depending on whether the guides contain the mouse or the bounding rect contains the mouse.
      * @param event the mousedown event
      */
-    onMouseDown(event: any): void {
-        this.modifyState();
+    private onMouseDown(event: MouseEvent): void {
+        this.prevMouse = this.mouse;
+        this.modifyState(event);
     }
 
     /**
@@ -144,44 +132,22 @@ export abstract class Effect<T> {
      * Calls modifyReset to reset dragging and resizing booleans among others.
      * @param event the mouseup event
      */
-    onMouseUp(event: any) {
+    private onMouseUp(event: MouseEvent) {
         this.modifyReset();
-    }
-
-    /**
-     * Called whenever a key is pressed down
-     * Toggles the isSelectingMultiple boolean if the key pressed is the shift key
-     * @param event the keydown event
-     */
-    onShiftDown(event: any) {
-        if (event.keyCode == "16") { //shift keycode
-            this.isSelectingMultiple = true;
-        }
-    }
-
-    /**
-     * Called whenever a key is released
-     * Toggles the isSelectingMultiple boolean if the key released is the shift key
-     * @param event the keydown event
-     */
-    onShiftUp(event: any) {
-        if (event.keyCode == "16") { //shift keycode
-            this.isSelectingMultiple = false;
-        }
     }
 
     /**
      * Triggered when key is pressed down
      */
-    abstract onKeyDown(event: any): void;
+    abstract onKeyDown(event: KeyboardEvent): void;
 
     /**
      * Gets the current x and y coordinates of the mouse
      * NOTE: in Firefox, window.event is not global. Need to be passed in here as a paramater.
      * @param event the mousedown event
      */
-    getMousePosition(event: any): void {
-        let mousePos: {x: number, y: number} = EffectUtils.getMouseCanvasPos(this.canvas, event);
+    getMousePosition(event: MouseEvent): void {
+        let mousePos: { x: number, y: number } = EffectUtils.getMouseCanvasPos(this.canvas, event);
         this.mouse = {
             x: mousePos.x,
             y: mousePos.y,
@@ -189,17 +155,16 @@ export abstract class Effect<T> {
     }
 
     /**
-     * Sets isDragging, isResizing, isChangingDims, and isSelected to false if the mouse clicks outside of the canvas
+     * Sets isDragging, isResizing and isSelected to false if the mouse clicks outside of the canvas
      * @param event the mousedown event
      */
-    isMouseOutside(event: any): void {
+    isMouseOutside(event: MouseEvent): void {
         let mouseX = event.clientX;
         let mouseY = event.clientY;
         let rect = this.canvas.getBoundingClientRect();
         if (mouseX < rect.left || mouseX > rect.right || mouseY < rect.top || mouseY > rect.bottom) {
             this.isDragging = false;
             this.isResizing = false;
-            this.isChangingDims = false;
             this.isSelected = false;
             this.corner = 0;
         }
@@ -222,34 +187,27 @@ export abstract class Effect<T> {
         this.ctx.stroke();
     }
 
+    getGuideColor(guide: number) {
+        return this.corner == guide ? "blue" : "white";
+    }
+
     /* Modification functions */
 
     /**
      * Changes the x and y coordinates of the object in order to drag the object.
      */
-     abstract modifyDrag(): void;
+    abstract modifyDrag(event: MouseEvent): void;
 
     /**
      * Changes the size of the object when called (when a corner guide is clicked and dragged).
-     *
-     * If any of width or height is too small, it sets them equal to 10 and the other equal to
-     * 10 divided or multiplied by the ratio of width/height to keep it the same.
-     *
      */
-    abstract modifyResize(): void;
-
-    /**
-     * Changes the dimensions of the object when called.
-     * If any of width or height is too small, it sets them equal to 10.
-     * Calls modifyChangeDimsHelper to actually do the work
-     */
-    abstract modifyChangeDims(): void;
+    abstract modifyResize(event: MouseEvent): void;
 
     /**
      * Toggles all of the private booleans depending on the mouse position when called (onMouseDown)
      * e.g. if the mouse is within the bounding rectangle when this is called, isSelected = true
      */
-    abstract modifyState(): void;
+    abstract modifyState(event: MouseEvent): void;
 
     /**
      * Resets all of the private booleans to false (like dragging, resizing, etc) when the mouse is released
@@ -321,14 +279,6 @@ export abstract class Effect<T> {
         this._isSelected = val;
     }
 
-    get isSelectingMultiple(): boolean {
-        return this._isSelectingMultiple;
-    }
-
-    set isSelectingMultiple(val: boolean) {
-        this._isSelectingMultiple = val;
-    }
-
     get justDragged(): boolean {
         return this._justDragged;
     }
@@ -361,14 +311,6 @@ export abstract class Effect<T> {
         this._isResizing = val;
     }
 
-    get isChangingDims(): boolean {
-        return this._isChangingDims;
-    }
-
-    set isChangingDims(val: boolean) {
-        this._isChangingDims = val;
-    }
-
     get corner(): number {
         return this._corner;
     }
@@ -385,28 +327,12 @@ export abstract class Effect<T> {
         this._mouse = mouse;
     }
 
-    get dragOffX(): number {
-        return this._dragOffX;
+    get prevMouse(): { x: number, y: number } {
+        return this._prevMouse;
     }
 
-    set dragOffX(val: number) {
-        this._dragOffX = val;
-    }
-
-    get dragOffY(): number {
-        return this._dragOffY;
-    }
-
-    set dragOffY(val: number) {
-        this._dragOffY = val;
-    }
-
-    get initDistance(): number {
-        return this._initDistance;
-    }
-
-    set initDistance(val: number) {
-        this._initDistance = val;
+    set prevMouse(mouse: { x: number, y: number }) {
+        this._prevMouse = mouse;
     }
 
     get canvas(): HTMLCanvasElement {
