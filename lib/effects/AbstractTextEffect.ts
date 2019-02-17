@@ -11,7 +11,7 @@ import { ClickEvent } from "../logging/ClickEvent";
 import { SelectEvent } from "../logging/SelectEvent";
 import { PrintNode } from "../structural/PrintNode";
 import { Scope } from "../structural/Scope";
-import RECT_GUIDE = EffectUtils.RECT_GUIDE;
+import GUIDE = EffectUtils.GUIDE;
 import KEYBOARD = EffectUtils.KEYBOARD;
 
 export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>, V, E extends AbstractTextEffect<T, V, E>> extends AbstractRectangularBoundEffect<T> {
@@ -26,65 +26,71 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
     private _isCursorDisplayed: boolean = true;
 
     update(): void {
-        let fontSize: number = this.fontSize;
-        this.ctx.font = fontSize + this.font;
+        this.ctx.font = this.fontSize + this.font;
         this.ctx.fillStyle = this.color;
         this.ctx.fillText(this.text, this.x, this.y); // Text starts from bottom left
         if (this.isSelected) {
-            this.drawGuides(this.x, this.y - fontSize, this.width, fontSize, this.corner);
+            this.drawGuides();
             if (this.isEditing) {
                 this.drawCursor();
             }
         }
     }
 
-    guideContains(mx: number, my: number): number {
+    guideContains(): number {
+        let mx: number = this.mouse.x;
+        let my: number = this.mouse.y;
         let halfSize: number = this.guideSize/2;
         let xDiff: number = mx - (this.x + this.width);
         let yDiff: number = my - (this.y - this.fontSize);
         if (Math.abs(xDiff) <= halfSize && Math.abs(yDiff) <= halfSize) {
             this.isEditing = false;
-            return RECT_GUIDE.TOP_RIGHT;
+            return GUIDE.RECT_TOP_RIGHT;
         }
 
         xDiff = mx - this.x;
         if (Math.abs(xDiff) <= halfSize && Math.abs(yDiff) <= halfSize) {
             this.isEditing = false;
-            return RECT_GUIDE.TOP_LEFT;
+            return GUIDE.RECT_TOP_LEFT;
         }
 
         xDiff = mx - (this.x + this.width);
         yDiff = my - this.y;
         if (Math.abs(xDiff) <= halfSize && Math.abs(yDiff) <= halfSize) {
             this.isEditing = false;
-            return RECT_GUIDE.BOTTOM_RIGHT;
+            return GUIDE.RECT_BOTTOM_RIGHT;
         }
 
         xDiff = mx - this.x;
         yDiff = my - this.y;
         if (Math.abs(xDiff) <= halfSize && Math.abs(yDiff) <= halfSize) {
             this.isEditing = false;
-            return RECT_GUIDE.BOTTOM_LEFT;
+            return GUIDE.RECT_BOTTOM_LEFT;
         }
-        return RECT_GUIDE.NONE;
+        return GUIDE.NONE;
     }
 
-    contains(mx: number, my: number): boolean {
+    contains(): boolean {
+        let mx: number = this.mouse.x;
+        let my: number = this.mouse.y;
         return (mx >= this.x) && (mx <= this.x + this.width) &&
             (my >= this.y - this.fontSize) && (my <= this.y);
     }
 
-    drawGuides(x: number, y: number, w: number, h: number, corner: number) { //corner is 2 or 0
+    drawGuides() {
+        let fontSize: number = this.fontSize;
+        let x: number = this.x;
+        let y: number = this.y - fontSize;
+        let w: number = this.width;
         this.ctx.beginPath();
-        this.ctx.rect(x, y, w, h);
+        this.ctx.rect(x, y, w, fontSize);
         this.ctx.strokeStyle = 'gray';
         this.ctx.stroke();
-        let size: number = this.guideSize;
-        let halfSize: number = size/2;
-        this.drawSquare(x - halfSize, y - halfSize, size, size, this.getGuideColor(RECT_GUIDE.TOP_LEFT));
-        this.drawSquare(x + w - halfSize, y - halfSize, size, size, this.getGuideColor(RECT_GUIDE.TOP_RIGHT));
-        this.drawSquare(x + w - halfSize, y + this.fontSize - halfSize, size, size, this.getGuideColor(RECT_GUIDE.BOTTOM_RIGHT));
-        this.drawSquare(x - halfSize, y + this.fontSize - halfSize, size, size, this.getGuideColor(RECT_GUIDE.BOTTOM_LEFT));
+        let halfSize: number = this.guideSize/2;
+        this.drawSingleGuide(x - halfSize, y - halfSize, GUIDE.RECT_TOP_LEFT);
+        this.drawSingleGuide(x + w - halfSize, y - halfSize, GUIDE.RECT_TOP_RIGHT);
+        this.drawSingleGuide(x + w - halfSize, y + fontSize - halfSize, GUIDE.RECT_BOTTOM_RIGHT);
+        this.drawSingleGuide(x - halfSize, y + fontSize - halfSize, GUIDE.RECT_BOTTOM_LEFT);
     }
 
     drawCursor(): void {
@@ -183,18 +189,18 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
         let prevWidth: number = this.measureTextWidth(prevFontSize);
         let newWidth: number;
         let yDiff: number;
-        let corner: RECT_GUIDE = this.corner;
+        let corner: GUIDE = this.corner;
         let changeFactor: number = 0.75;
 
-        if (corner == RECT_GUIDE.TOP_RIGHT || corner == RECT_GUIDE.TOP_LEFT) {
+        if (corner == GUIDE.RECT_TOP_RIGHT || corner == GUIDE.RECT_TOP_LEFT) {
             yDiff = prevY - mouseY - prevFontSize;
             newFontSize = Math.max(this.minFontSize, prevFontSize + Math.round(yDiff * changeFactor));
-        } else if (corner == RECT_GUIDE.BOTTOM_RIGHT || corner == RECT_GUIDE.BOTTOM_LEFT) {
+        } else if (corner == GUIDE.RECT_BOTTOM_RIGHT || corner == GUIDE.RECT_BOTTOM_LEFT) {
             yDiff = mouseY - prevY;
             newFontSize = Math.max(this.minFontSize, prevFontSize + Math.round(yDiff * changeFactor));
             this.y = prevY + newFontSize - prevFontSize;
         }
-        if (corner == RECT_GUIDE.TOP_LEFT || corner == RECT_GUIDE.BOTTOM_LEFT) {
+        if (corner == GUIDE.RECT_TOP_LEFT || corner == GUIDE.RECT_BOTTOM_LEFT) {
             newWidth = this.measureTextWidth(newFontSize);
             this.x = this.prevX + Math.round(prevWidth - newWidth);
         }
@@ -202,9 +208,7 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
     }
 
     modifyState(event: MouseEvent): void {
-        let mx: number = this.mouse.x;
-        let my: number = this.mouse.y;
-        let contains: boolean = this.contains(mx, my);
+        let contains: boolean = this.contains();
         if (!event.ctrlKey && this.isSelected && contains) { //text editing
             this.isEditing = true;
             this.isDragging = false;
@@ -216,51 +220,35 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
             }
         }
 
-        let guideContains: number = this.guideContains(mx, my);
+        let guideContains: number = this.guideContains();
         this.corner = guideContains;
         this.justDragged = false;
         this.justResized = false;
-        let x: number = this.x;
-        let y: number = this.y;
+        this.prevX = this.x;
+        this.prevY = this.y;
 
         if (event.ctrlKey) { // prepares the object for dragging whether it is personally selected or not
             if (contains) {
                 this.isSelected = true;
             }
-            this.prevX = x;
-            this.prevY = y;
             this.isDragging = true;
 
-        } else if (guideContains != RECT_GUIDE.NONE || contains) {
-            for (let effect of this.scope.effects) {
-                if (effect.id == this.id) {
-                    continue;
-                }
-                if (effect.id > this.id && (effect.guideContains(this.mouse.x, this.mouse.y) != RECT_GUIDE.NONE ||
-                    effect.contains(this.mouse.x, this.mouse.y))) {
-                    this.isSelected = false;
-                    this.isDragging = false;
-                    return;
-                }
-            }
-
-            this.prevX = x;
-            this.prevY = y;
-            this.isSelected = true;
-            this.scope.eventLog.push(this.logClick());
-            if (guideContains != RECT_GUIDE.NONE) {
-                this.isResizing = true;
-                this.prevFontSize = this.fontSize; // saving old font size
-            } else if (contains) {
-                if (!this.isEditing) {
-                    this.isDragging = true;
-                }
-            }
-
-        } else {
+        } else if ((guideContains == GUIDE.NONE && !contains) || this.isOverlapped()) {
             this.isSelected = false;
             this.isDragging = false;
             this.isEditing = false;
+            return;
+        }
+
+        this.isSelected = true;
+        this.scope.eventLog.push(this.logClick());
+        if (guideContains != GUIDE.NONE) {
+            this.isResizing = true;
+            this.prevFontSize = this.fontSize; // saving old font size
+        } else if (contains) {
+            if (!this.isEditing) {
+                this.isDragging = true;
+            }
         }
     }
 

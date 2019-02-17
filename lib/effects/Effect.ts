@@ -3,6 +3,7 @@ import { Expression } from "../Expression";
 import { LogEvent } from "../logging/LogEvent";
 import { PrintNode } from "../structural/PrintNode";
 import { Scope } from "../structural/Scope";
+import GUIDE = EffectUtils.GUIDE;
 
 export abstract class Effect<T> {
 
@@ -36,7 +37,8 @@ export abstract class Effect<T> {
     private _isResizing: boolean = false;
     private _justDragged: boolean = false;
     private _justResized: boolean = false;
-    private _corner: number = 0;
+    private _corner: GUIDE = GUIDE.NONE;
+    private readonly _guideSize: number = 7;
 
     private _mouse: {
         x: number,
@@ -70,25 +72,39 @@ export abstract class Effect<T> {
     }
 
     /**
+     * Draws all guides
+     */
+    abstract drawGuides(): void;
+
+    /**
      * Updates the shape when drawn again or manipulated.
      */
     abstract update(): void;
 
     /**
-     * Returns a number > 0 if the mouse is inside one of the corner/side guides, returns 0 if not
-     * The corner guides are numbered 1-4 with 1 being the top left, 2 being the top right, and so on.
-     * The middle guides are numbered 5-8, with 5 being the top middle, 6 being the right middle, and so on.
-     * @param mx the mouse x coordinate
-     * @param my the mouse y coordinate
+     * Returns the guide containing the mouse
      */
-    abstract guideContains(mx: number, my: number): number;
+    abstract guideContains(): GUIDE;
 
     /**
      * Returns true if the mouse is inside of the object's boundary, false if otherwise
-     * @param mx the mouse x coordinate
-     * @param my the mouse y coordinate
      */
-    abstract contains(mx: number, my: number): boolean;
+    abstract contains(): boolean;
+
+    /**
+     * Check if there is another object above
+     */
+    protected isOverlapped(): boolean {
+        for (let effect of this.scope.effects) {
+            if (effect.id == this.id) {
+                continue;
+            }
+            if (effect.id > this.id && (effect.guideContains() != GUIDE.NONE || effect.contains())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /* Event listener functions */
 
@@ -102,11 +118,17 @@ export abstract class Effect<T> {
 
     /**
      * Called whenever the mouse moves within the canvas.
-     * Gets the mouse position, calls the modify methods if the booleans satisfy them.
+     * Updates mouse position and calls the modify methods.
      * @param event the mousemove event
      */
     private onMouseMove(event: MouseEvent): void {
-        this.getMousePosition(event);
+        // Update mouse pos
+        let rect = this.canvas.getBoundingClientRect();
+        this.mouse = {
+            x: event.clientX - rect.left,
+            y: event.clientY - rect.top,
+        };
+
         if (!this.isSelected) {
             return;
         }
@@ -142,23 +164,10 @@ export abstract class Effect<T> {
     abstract onKeyDown(event: KeyboardEvent): void;
 
     /**
-     * Gets the current x and y coordinates of the mouse
-     * NOTE: in Firefox, window.event is not global. Need to be passed in here as a paramater.
-     * @param event the mousedown event
-     */
-    getMousePosition(event: MouseEvent): void {
-        let mousePos: { x: number, y: number } = EffectUtils.getMouseCanvasPos(this.canvas, event);
-        this.mouse = {
-            x: mousePos.x,
-            y: mousePos.y,
-        };
-    }
-
-    /**
      * Sets isDragging, isResizing and isSelected to false if the mouse clicks outside of the canvas
      * @param event the mousedown event
      */
-    isMouseOutside(event: MouseEvent): void {
+    private isMouseOutside(event: MouseEvent): void {
         let mouseX = event.clientX;
         let mouseY = event.clientY;
         let rect = this.canvas.getBoundingClientRect();
@@ -166,29 +175,23 @@ export abstract class Effect<T> {
             this.isDragging = false;
             this.isResizing = false;
             this.isSelected = false;
-            this.corner = 0;
+            this.corner = GUIDE.NONE;
         }
     }
 
     /**
-     * Simple method that draws a rectangle
+     * Simple method that draws a single guide.
      * @param x x coordinate for the top left corner of the rectangle
      * @param y y coordinate for the top left corner of the rectangle
-     * @param w width of the rectangle
-     * @param h height of the rectangle
-     * @param color color of the rectangle's fill
+     * @param color Fill color for the rectangle
      */
-    drawSquare(x: number, y: number, w: number, h: number, color: string) {
+    drawSingleGuide(x: number, y: number, guide: GUIDE) {
         this.ctx.beginPath();
-        this.ctx.fillStyle = color;
-        this.ctx.fillRect(x, y, w, h);
-        this.ctx.rect(x, y, w, h);
-        this.ctx.strokeStyle = 'gray';
+        this.ctx.fillStyle = this.corner == guide ? "blue" : "white";
+        this.ctx.fillRect(x, y, this.guideSize, this.guideSize);
+        this.ctx.rect(x, y, this.guideSize, this.guideSize);
+        this.ctx.strokeStyle = "gray";
         this.ctx.stroke();
-    }
-
-    getGuideColor(guide: number) {
-        return this.corner == guide ? "blue" : "white";
     }
 
     /* Modification functions */
@@ -311,11 +314,11 @@ export abstract class Effect<T> {
         this._isResizing = val;
     }
 
-    get corner(): number {
+    get corner(): GUIDE {
         return this._corner;
     }
 
-    set corner(corner: number) {
+    set corner(corner: GUIDE) {
         this._corner = corner;
     }
 
@@ -349,5 +352,9 @@ export abstract class Effect<T> {
 
     set color(val: string) {
         this.aes.setColor(this.scope, val);
+    }
+
+    get guideSize(): number {
+        return this._guideSize;
     }
 }

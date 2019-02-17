@@ -3,7 +3,6 @@ import { AbstractShapeEffect } from "../effects/AbstractShapeEffect";
 import { Argument } from "../funhouse/Argument";
 import { Expression } from "../Expression";
 import { NumberNode } from "../prims/NumberNode";
-import { PrintNode } from "../structural/PrintNode";
 import { Scope } from "../structural/Scope";
 
 export abstract class AbstractShapeNode<T extends AbstractShapeNode<T, E>, E extends AbstractShapeEffect<T, E>> extends AbstractPrintableFunctionNode<T, E> {

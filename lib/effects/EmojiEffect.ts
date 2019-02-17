@@ -16,14 +16,10 @@ export class EmojiEffect extends AbstractShapeEffect<EmojiNode, EmojiEffect> {
     }
 
     update(): void {
-        let x = this.x;
-        let y = this.y;
-        let width = this.w;
-        let height = this.h;
         this.ctx.beginPath();
-        this.ctx.drawImage(this.image, this.x, this.y, width, height);
+        this.ctx.drawImage(this.image, this.x, this.y, this.w, this.h);
         if (this.isSelected) {
-            this.drawGuides(x, y, width, height, this.corner);
+            this.drawGuides();
         }
     }
 

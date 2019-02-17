@@ -9,7 +9,7 @@ import {
     VariableNode, DeclareOp, AssignOp,
     Return, FunDef, FunApp, Conditional,
     ForNode, RepeatNode, WhileNode,
-    EllipseNode, RectangleNode, EmojiNode,
+    EllipseNode, RectangleNode, EmojiNode, LineNode,
     RGBColorNode
 } from '../../index';
 import { Option, Some, None } from 'space-lift';
@@ -55,6 +55,19 @@ export namespace Parser {
             Primitives.ws()
         )(
             Primitives.many1(Primitives.letter())
+        );
+        let f = (xs: CharStream[]) => CharStream.concat(xs)
+        return Primitives.appfun<CharStream[], CharStream>(p)(f);
+    }
+
+    // String and digits
+    export function stringAndDigit(): Primitives.IParser<CharStream> {
+        let p: Primitives.IParser<CharStream[]> = Primitives.between<CharStream, CharStream, CharStream[]>(
+            Primitives.ws()
+        )(
+            Primitives.ws()
+        )(
+            Primitives.many1(Primitives.choice(Primitives.letter())(Primitives.digit()))
         );
         let f = (xs: CharStream[]) => CharStream.concat(xs)
         return Primitives.appfun<CharStream[], CharStream>(p)(f);
@@ -447,7 +460,7 @@ export namespace Parser {
     }
 
     export function funAppArgList2(): Primitives.IParser<Array<[string, Expression<any>]>> {
-        let argName = Primitives.right<CharStream, CharStream>(Primitives.ws())(string());
+        let argName = Primitives.right<CharStream, CharStream>(Primitives.ws())(stringAndDigit());
         let assignOp = Primitives.right<CharStream, CharStream>(Primitives.ws())(Primitives.char('='));
         let assignToArg = Primitives.left<CharStream, CharStream>(argName)(assignOp);
         let assignment = Primitives.choice<CharStream>(assignToArg)(Primitives.ws());
@@ -604,6 +617,8 @@ export namespace Parser {
                     return new RectangleNode(args, ws);
                 case "emoji":
                     return new EmojiNode(args, ws);
+                case "line":
+                    return new LineNode(args, ws);
                 case "rgb":
                     return new RGBColorNode(args, ws);
                 default:

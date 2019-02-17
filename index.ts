@@ -52,6 +52,7 @@ export {RGBColorNode} from './lib/aesthetics/RGBColorNode';
 export {EllipseNode} from './lib/shapes/EllipseNode';
 export {RectangleNode} from './lib/shapes/RectangleNode';
 export {EmojiNode} from './lib/shapes/EmojiNode';
+export {LineNode} from './lib/shapes/LineNode';
 export {PrintNode} from './lib/structural/PrintNode';
 export {Return} from './lib/structural/Return';
 export {ReturnError} from './lib/structural/ReturnError';
@@ -63,6 +64,7 @@ export {NumberEffect} from './lib/effects/NumberEffect';
 export {StringEffect} from './lib/effects/StringEffect';
 export {RectangleEffect} from './lib/effects/RectangleEffect';
 export {EmojiEffect} from './lib/effects/EmojiEffect';
+export {LineEffect} from './lib/effects/LineEffect';
 
 /* EVENTS */
 export {LogEvent} from './lib/logging/LogEvent';

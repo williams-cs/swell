@@ -15,7 +15,7 @@ export class EllipseEffect extends AbstractShapeEffect<EllipseNode, EllipseEffec
         this.ctx.fillStyle = this.color;
         this.ctx.fill();
         if (this.isSelected) {
-            this.drawGuides(x, y, w, h, this.corner);
+            this.drawGuides();
         }
     }
 }

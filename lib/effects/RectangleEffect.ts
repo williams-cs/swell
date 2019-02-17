@@ -15,7 +15,7 @@ export class RectangleEffect extends AbstractShapeEffect<RectangleNode, Rectangl
         this.ctx.fillStyle = this.color;
         this.ctx.fill();
         if (this.isSelected) {
-            this.drawGuides(x, y, width, height, this.corner);
+            this.drawGuides();
         }
     }
 }

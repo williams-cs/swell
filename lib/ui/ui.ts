@@ -322,7 +322,7 @@ import * as csvParse from 'csv-parse';
     /* Palette */
 
     let paletteButtons: string[] = [
-        "ellipse", "rect", "string", "number",
+        "ellipse", "rect", "line", "string", "number",
         "happy", "sad", "angry", "cool"
     ];
 
@@ -342,6 +342,9 @@ import * as csvParse from 'csv-parse';
                 break;
             case "rect":
                 newNode = "print(rect(100, 100));";
+                break;
+            case "line":
+                newNode = "print(line(x1 = 100, y1 = 100, x2 = 200, y2 = 100));";
                 break;
             case "string":
                 newNode = 'print("newWord");';
