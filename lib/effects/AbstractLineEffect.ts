@@ -43,7 +43,7 @@ export abstract class AbstractLineEffect<T extends AbstractLineNode<T, E>, E ext
         let xDiff = x2 - x1;
         let yDiff = y2 - y1;
         let dist: number = Math.abs(yDiff * mx - xDiff * my + x2 * y1 - y2 * x1)/Math.sqrt(xDiff*xDiff + yDiff*yDiff)
-        return (mx >= x1 && mx <= x2 && dist <= 10);
+        return ((Math.abs(xDiff) <= 10 || mx >= Math.min(x1, x2) && mx <= Math.max(x1, x2)) && dist <= 10);
     }
 
     // Event listener functions
