@@ -85,6 +85,18 @@ export namespace Parser {
                 "{", "}", "[", "]", "(", ")", "'", "_"]);
     }
 
+    // Choose from between a lot of choices. Start from the first element.
+    // Maybe move to Pants?
+    export function choices<T>(expressions: Prims.IParser<T>[]): Prims.IParser<T> {
+        if (expressions.length <= 1) {
+            throw("Error: Argument to choices must have at least two elements");
+        }
+        if (expressions.length == 2) {
+            return Prims.choice<T>(expressions[0])(expressions[1]);
+        }
+        return Prims.choice<T>(expressions[0])(choices<T>(expressions.slice(1)));
+    }
+
     let id = (x: any) => x
 
     /**
@@ -144,48 +156,24 @@ export namespace Parser {
      * @param i a nonsense parameter used to avoid bug of eager parsing
      */
     export let ExpressionParserNoSeq: Prims.IParser<Expression<{}>> = i => {
-        let p1 = Prims.choice(lNumber())(lstring2())
-        let p2 = Prims.choice(float())(p1);
-        let p3 = Prims.choice<Expression<any>>(varNameParse())(p2);
-        let p4 = Prims.choice<Expression<any>>(BoolParse())(p3);
-        let p5 = Prims.choice<Expression<any>>(varDecParse())(p4);
-        let p6 = Prims.choice<Expression<any>>(unOpsExpr)(p5);
-        let p7 = Prims.choice<Expression<any>>(Declare())(p6);
-        let p8 = Prims.choice<Expression<any>>(binOpExpr)(p7);
-        let p9 = Prims.choice<Expression<any>>(LogicExpr())(p8);
-        let p10 = Prims.choice<Expression<any>>(ListHead)(p9);
-        let p11 = Prims.choice<Expression<any>>(funApp)(p10);
-        let p12 = Prims.choice<Expression<any>>(returnParser)(p11);
-        let p13 = Prims.choice<Expression<any>>(condParse)(p12);
-        let p14 = Prims.choice<Expression<any>>(WhileLoop)(p13);
-        let p15 = Prims.choice<Expression<any>>(ForLoop)(p14);
-        let p16 = Prims.choice<Expression<any>>(funDef)(p15);
-        let p17 = Prims.choice<Expression<any>>(loopParse)(p16);
-        return p17(i);
+        return choices<Expression<any>>([
+            loopParse, funDef, ForLoop, WhileLoop, condParse, returnParser, funApp,
+            ListHead, LogicExpr(), binOpExpr, Declare(), unOpsExpr, varDecParse(),
+            BoolParse(), varNameParse(), float(), lNumber(), lstring2(),
+        ])(i);
     }
 
     /**
-     * Searches through all possible expressions except for binOp expressions
-     * used to avoid infinite looping in the binary expression parser
+     * Searches through all possible expressions except for binOp and LogicExpr expressions
+     * to avoid infinite looping in the binary expression parser
      * @param i a nonsense parameter used to avoid bug of eager parsing
      */
     export let ExpressionParserNoBinOp: Prims.IParser<Expression<{}>> = i => {
-        let p1 = Prims.choice(lNumber())(lstring2());
-        let p2 = Prims.choice(float())(p1);
-        let p3 = Prims.choice<Expression<any>>(varNameParse())(p2);
-        let p4 = Prims.choice<Expression<any>>(BoolParse())(p3);
-        let p5 = Prims.choice<Expression<any>>(varDecParse())(p4);
-        let p6 = Prims.choice<Expression<any>>(unOpsExpr)(p5);
-        let p7 = Prims.choice<Expression<any>>(Declare())(p6);
-        let p8 = Prims.choice<Expression<any>>(ListHead)(p7);
-        let p9 = Prims.choice<Expression<any>>(funApp)(p8);
-        let p10 = Prims.choice<Expression<any>>(returnParser)(p9);
-        let p11 = Prims.choice<Expression<any>>(condParse)(p10);
-        let p12 = Prims.choice<Expression<any>>(WhileLoop)(p11);
-        let p13 = Prims.choice<Expression<any>>(ForLoop)(p12);
-        let p14 = Prims.choice<Expression<any>>(funDef)(p13);
-        let p15 = Prims.choice<Expression<any>>(loopParse)(p14);
-        return p15(i);
+        return choices<Expression<any>>([
+            loopParse, funDef, ForLoop, WhileLoop, condParse, returnParser, funApp,
+            ListHead, Declare(), unOpsExpr, varDecParse(),
+            BoolParse(), varNameParse(), float(), lNumber(), lstring2(),
+        ])(i);
     }
 
     /**
@@ -194,23 +182,11 @@ export namespace Parser {
      * @param i a nonsense parameter used to avoid bug of eager parsing
      */
     export let ExpressionParserNoLogic: Prims.IParser<Expression<{}>> = i => {
-        let p1 = Prims.choice(lNumber())(lstring2());
-        let p2 = Prims.choice(float())(p1);
-        let p3 = Prims.choice<Expression<any>>(varNameParse())(p2)
-        let p4 = Prims.choice<Expression<any>>(BoolParse())(p3);
-        let p5 = Prims.choice<Expression<any>>(varDecParse())(p4);
-        let p6 = Prims.choice<Expression<any>>(unOpsExpr)(p5);
-        let p7 = Prims.choice<Expression<any>>(Declare())(p6)
-        let p8 = Prims.choice<Expression<any>>(binOpExpr)(p7);
-        let p9 = Prims.choice<Expression<any>>(ListHead)(p8);
-        let p10 = Prims.choice<Expression<any>>(funApp)(p9);
-        let p11 = Prims.choice<Expression<any>>(returnParser)(p10);
-        let p12 = Prims.choice<Expression<any>>(condParse)(p11);
-        let p13 = Prims.choice<Expression<any>>(WhileLoop)(p12);
-        let p14 = Prims.choice<Expression<any>>(ForLoop)(p13);
-        let p15 = Prims.choice<Expression<any>>(funDef)(p14);
-        let p16 = Prims.choice<Expression<any>>(loopParse)(p15);
-        return p16(i);
+        return choices<Expression<any>>([
+            loopParse, funDef, ForLoop, WhileLoop, condParse, returnParser, funApp,
+            ListHead, binOpExpr, Declare(), unOpsExpr, varDecParse(),
+            BoolParse(), varNameParse(), float(), lNumber(), lstring2(),
+        ])(i);
     }
 
     /**
@@ -283,7 +259,7 @@ export namespace Parser {
         let postPlus = Prims.seq<Expression<any>, CharStream, Increment>(Prims.right<string, Expression<any>>(precedingWS)(ExpressionParserNoBinOp))(Prims.str('++'))(tup => { return new Increment(tup[0], ws) });
         let postMinus = Prims.seq<Expression<any>, CharStream, Decrement>(Prims.right<string, Expression<any>>(precedingWS)(ExpressionParserNoBinOp))(Prims.str('--'))(tup => { return new Decrement(tup[0], ws) });
         let binOp = Prims.seq<Expression<any>, [CharStream, Expression<any>], BinaryOp<any>>(Prims.right<string, Expression<any>>(precedingWS)(p1))(p2)(f);
-        return Prims.choice<Expression<any>>(binOp)(Prims.choice<Expression<any>>(postPlus)(postMinus))(i);
+        return choices<Expression<any>>([binOp, postPlus, postMinus])(i);
     }
 
     /**
@@ -314,8 +290,7 @@ export namespace Parser {
      * a valid string is surrounded by quotations and consists of letters, numbers, punctuation, and/or whitespace
      */
     export function lstring() {
-        let p1 = Prims.choice(Prims.choice(Prims.letter())(Prims.ws1()))(Prims.digit());
-        //let p1 = Prims.choice(Prims.letter())(Prims.ws1());
+        let p1 = choices<CharStream>([Prims.letter(), Prims.ws1(), Prims.digit()]);
         let p: Prims.IParser<CharStream[]> = Prims.between<CharStream, CharStream, CharStream[]>(
             Prims.str("\"")
         )(
@@ -330,9 +305,8 @@ export namespace Parser {
     export let parens: Prims.IParser<Parens> = i => {
         let open = Prims.between<CharStream, CharStream, CharStream>(Prims.ws())(Prims.ws())(Prims.str("("));
         let close = Prims.between<CharStream, CharStream, CharStream>(Prims.ws())(Prims.ws())(Prims.str(")"));
-        let expr = Prims.choice<Expression<any>>(binOpExpr)(unOpsExpr);
-        let expr2 = Prims.choice<Expression<any>>(expr)(lNumber());
-        let parens = Prims.right<CharStream, Expression<any>>(open)(Prims.left<Expression<any>, CharStream>(expr2)(close));
+        let expr = choices<Expression<any>>([binOpExpr, unOpsExpr, lNumber()]);
+        let parens = Prims.right<CharStream, Expression<any>>(open)(Prims.left<Expression<any>, CharStream>(expr)(close));
         return Prims.appfun<Expression<any>, Parens>(parens)(x => new Parens(x))(i);
     }
 
