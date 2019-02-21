@@ -19,7 +19,7 @@ import { LessThan } from '../lib/logic/LessThan';
 import { WhileNode } from '../lib/loops/WhileNode';
 
 describe('A series of equalities', () => {
-    it('true==true should evaluate to true', () => {  
+    it('true==true should evaluate to true', () => {
         const bool1 = new BooleanNode(true);
         const bool2 = new BooleanNode(true);
         const left = new Equals(bool1, bool2);
@@ -74,8 +74,8 @@ describe('A series of equalities', () => {
         expect(output1).to.deep.equal(new BooleanNode(false));
     });
     it('two identical ellipses should evaluate to true', () => {
-        const ell1 = new EllipseNode(new NumberNode(30),new NumberNode(30));
-        const ell2 = new EllipseNode(new NumberNode(30),new NumberNode(30));
+        const ell1 = new EllipseNode([["width", new NumberNode(30)], ["height", new NumberNode(30)]]);
+        const ell2 = new EllipseNode([["width", new NumberNode(30)], ["height", new NumberNode(30)]]);
         const left = new Equals(ell1, ell2);
         const seq1 = new SequenceNode(left, new NOP());
         const output = seq1.eval(new Scope(null));
@@ -83,8 +83,8 @@ describe('A series of equalities', () => {
         expect(output1).to.deep.equal(new BooleanNode(true));
     });
     it('two nonidentical ellipses should evaluate to false', () => {
-        const ell1 = new EllipseNode(new NumberNode(30),new NumberNode(30));
-        const ell2 = new EllipseNode(new NumberNode(30),new NumberNode(40));
+        const ell1 = new EllipseNode([["width", new NumberNode(30)], ["height", new NumberNode(30)]]);
+        const ell2 = new EllipseNode([["width", new NumberNode(30)], ["height", new NumberNode(40)]]);
         const left = new Equals(ell1, ell2);
         const seq1 = new SequenceNode(left, new NOP());
         const output = seq1.eval(new Scope(null));
@@ -92,8 +92,8 @@ describe('A series of equalities', () => {
         expect(output1).to.deep.equal(new BooleanNode(false));
     });
     it('two identical rects should evaluate to true', () => {
-        const rect1 = new RectangleNode(new NumberNode(30),new NumberNode(30));
-        const rect2 = new RectangleNode(new NumberNode(30),new NumberNode(30));
+        const rect1 = new RectangleNode([["width", new NumberNode(30)], ["height", new NumberNode(30)]]);
+        const rect2 = new RectangleNode([["width", new NumberNode(30)], ["height", new NumberNode(30)]]);
         const left = new Equals(rect1, rect2);
         const seq1 = new SequenceNode(left, new NOP());
         const output = seq1.eval(new Scope(null));
@@ -101,8 +101,8 @@ describe('A series of equalities', () => {
         expect(output1).to.deep.equal(new BooleanNode(true));
     });
     it('two nonidentical rects should evaluate to false', () => {
-        const rect1 = new RectangleNode(new NumberNode(30),new NumberNode(30));
-        const rect2 = new RectangleNode(new NumberNode(30),new NumberNode(40));
+        const rect1 = new RectangleNode([["width", new NumberNode(30)], ["height", new NumberNode(30)]]);
+        const rect2 = new RectangleNode([["width", new NumberNode(30)], ["height", new NumberNode(40)]]);
         const left = new Equals(rect1, rect2);
         const seq1 = new SequenceNode(left, new NOP());
         const output = seq1.eval(new Scope(null));
@@ -110,8 +110,8 @@ describe('A series of equalities', () => {
         expect(output1).to.deep.equal(new BooleanNode(false));
     });
     it('an ellipse == a rect should evaluate to false', () => {
-        const rect1 = new RectangleNode(new NumberNode(30),new NumberNode(30));
-        const ell1 = new EllipseNode(new NumberNode(30),new NumberNode(40));
+        const rect1 = new RectangleNode([["width", new NumberNode(30)], ["height", new NumberNode(30)]]);
+        const ell1 = new EllipseNode([["width", new NumberNode(30)], ["height", new NumberNode(40)]]);
         const left = new Equals(rect1, ell1);
         const seq1 = new SequenceNode(left, new NOP());
         const output = seq1.eval(new Scope(null));
@@ -119,8 +119,8 @@ describe('A series of equalities', () => {
         expect(output1).to.deep.equal(new BooleanNode(false));
     });
     it('a rect == an ellipse should evaluate to false', () => {
-        const rect1 = new RectangleNode(new NumberNode(30),new NumberNode(30));
-        const ell1 = new EllipseNode(new NumberNode(30),new NumberNode(40));
+        const rect1 = new RectangleNode([["width", new NumberNode(30)], ["height", new NumberNode(30)]]);
+        const ell1 = new EllipseNode([["width", new NumberNode(30)], ["height", new NumberNode(40)]]);
         const left = new Equals(ell1, rect1);
         const seq1 = new SequenceNode(left, new NOP());
         const output = seq1.eval(new Scope(null));
@@ -164,7 +164,7 @@ describe('A series of equalities', () => {
         expect(output1).to.deep.equal(new BooleanNode(false));
     });
     // it('a for loop == a for loop should throw an error', () => {
-        
+
     //     const output = seq1.eval(new Scope(null));
     //     const output1 = seq1.rightVal;
     //     expect(output1).to.deep.equal(new BooleanNode(false));
