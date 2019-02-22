@@ -11,11 +11,11 @@ export class DeclareOp<T> extends BinaryOp<T> {
      * @param right The right side of the op (the value)
      * @param ws Preceding whitespace
      */
-    constructor(left: Expression<T>, right: Expression<T>, ws: string = "") {
+    constructor(left: Expression<T>, right: Expression<T>, lws: string = "", rws: string = "") {
         if (!(left instanceof VariableNode)) {
             throw("Left side is not a variable");
         }
-        super(left, right, ws);
+        super(left, right, lws, rws);
     }
 
     eval(context: Scope): T {
@@ -29,6 +29,6 @@ export class DeclareOp<T> extends BinaryOp<T> {
     }
 
     toString(): string {
-        return this.ws + "var " + this.left + " = " + this.right;
+        return this.lws + "var " + this.left + " = " + this.right + this.rws;
     }
 }

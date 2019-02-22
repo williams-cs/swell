@@ -8,9 +8,10 @@ export abstract class Expression<T> {
 
     /**
      * Constructor for an expression
-     * @param ws The whitespace preceding the expression
+     * @param lws The whitespace preceding the expression
+     * @param rws The whitespace after the expression
      */
-    constructor(private _ws: string = "", private _newLine: boolean = false) {}
+    constructor(private _lws: string = "", private _rws: string = "", private _newLine: boolean = false) {}
 
     /**
      * Interface evaluation method for Expressions
@@ -43,14 +44,28 @@ export abstract class Expression<T> {
     /**
      * Returns the whitespace preceding the expression
      */
-    get ws(): string {
-        return this._ws;
+    get rws(): string {
+        return this._rws;
+    }
+
+    /**
+     * Returns the left whitespace after the expression
+     */
+    get lws(): string {
+        return this._lws;
     }
 
     /**
      * Sets the whitespace preceding the expression
      */
-    set ws(ws: string) {
-        this._ws = ws;
+    set rws(ws: string) {
+        this._rws = ws;
+    }
+
+    /**
+     * Sets the whitespace preceding the expression
+     */
+    set lws(ws: string) {
+        this._lws = ws;
     }
 }

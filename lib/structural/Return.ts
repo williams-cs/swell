@@ -7,10 +7,11 @@ export class Return extends Expression<any> {
     /**
      * Constructor for a Return object, representing something to be returned in a function
      * @param expr The expression to be returned
-     * @param ws Preceding whitespace
+     * @param lws Preceding whitespace
+     * @param rws Post whitespace
      */
-    constructor(private _expr: Expression<any>, ws: string = "") {
-        super(ws);
+    constructor(private _expr: Expression<any>, lws: string = "", rws: string = "") {
+        super(rws);
     }
 
     /**
@@ -24,6 +25,6 @@ export class Return extends Expression<any> {
     }
 
     toString(): string {
-        return this.ws + "return " + this._expr.toString();
+        return this.lws + "return " + this._expr.toString() + this.rws;
     }
 }

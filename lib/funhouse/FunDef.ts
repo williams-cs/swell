@@ -7,8 +7,8 @@ export class FunDef<T> extends Expression<T> {
     private _args: string[];
     private _funScope: Scope;
 
-    constructor(name: string, body: Expression<T>, args?: string[], ws: string = "") {
-        super(ws);
+    constructor(name: string, body: Expression<T>, args?: string[], lws: string = "", rws: string = "") {
+        super(lws, rws);
         this._name = name;
         this._body = body;
         this._args = args;
@@ -41,7 +41,7 @@ export class FunDef<T> extends Expression<T> {
             }
             argsList += this._args[this._args.length - 1];
         }
-        return this.ws + "fun " + this._name + "(" + argsList + ')' + ' {\n ' + this._body.toString() + '}';
+        return this.lws + "fun " + this._name + this.rws + "(" + argsList + ')' + ' {\n ' + this._body.toString() + '}';
     }
 
     get name(): string {

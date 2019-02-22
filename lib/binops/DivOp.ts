@@ -11,6 +11,6 @@ export class DivOp extends BinaryOp<NumberNode | FloatNode> {
     }
 
     toString(): string {
-        return this.ws + this.left + " / " + this.right;
+        return this.lws + this.left + " / " + this.right + this.rws;
     }
 }

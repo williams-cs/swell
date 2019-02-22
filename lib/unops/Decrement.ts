@@ -11,8 +11,8 @@ export class Decrement extends UnaryOp<NumberNode | FloatNode> {
 
     private innerRep: Expression<NumberNode | FloatNode>;
 
-    constructor(node: Expression<any>, ws: string = "") {
-        super(node, ws);
+    constructor(node: Expression<any>, lws: string = "", rws: string = "") {
+        super(node, lws, rws);
         if (node instanceof VariableNode) {
             this.innerRep = new AssignOp(node, new MinusOp(node, new NumberNode(1)));
         } else {
@@ -25,6 +25,6 @@ export class Decrement extends UnaryOp<NumberNode | FloatNode> {
     }
 
     toString(): string {
-        return this.ws + this.expr + "--";
+        return this.lws + this.expr + "--" + this.rws;
     }
 }

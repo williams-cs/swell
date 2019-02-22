@@ -19,6 +19,6 @@ export class FloatNode extends AbstractTypeableNode<FloatNode, number, NumberEff
     }
 
     toString(): string {
-        return this.ws + this.val;
+        return this.lws + this.val + this.rws;
     }
 }

@@ -11,16 +11,18 @@ export class ForNode extends Expression<any> {
      * @param cond The condition (must evaluate to BooleanNode)
      * @param post The postevaluation condition
      * @param body The body of the loop
-     * @param ws Preceding whitespace
+     * @param lws Preceding whitespace
+     * @param rws post whitespace
      */
     constructor(
         private _init: Expression<any>,
         private _cond: Expression<BooleanNode>,
         private _post: Expression<any>,
         private _body: Expression<any>,
-        ws: string = ""
+        lws: string = "",
+        rws: string = ""
     ) {
-        super(ws, true);
+        super(lws, rws, true);
     }
 
     /**
@@ -54,6 +56,6 @@ export class ForNode extends Expression<any> {
     }
 
     toString(): string {
-        return this.ws + 'for(' + this._init + ", " + this._cond + ", " + this._post + ") {\n " + this._body + "}";
+        return this.lws + 'for(' + this._init + ", " + this._cond + ", " + this._post + ") {\n " + this._body + "}" + this.rws;
     }
 }

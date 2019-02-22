@@ -9,13 +9,14 @@ export class AssignOp<T> extends BinaryOp<T> {
      * Constructor for an assignment operation
      * @param left The left side of the assignment (the var)
      * @param right The right side of the assignment (the value)
-     * @param ws Preceding whitespace
+     * @param lws Preceding whitespace
+     * @param rws Post whitespace
      */
-    constructor(left: Expression<T>, right: Expression<T>, ws: string = "") {
+    constructor(left: Expression<T>, right: Expression<T>, lws: string = "", rws: string = "") {
         if (!(left instanceof VariableNode)) {
             throw("Left side is not a variable");
         }
-        super(left, right, ws);
+        super(left, right, lws, rws);
     }
 
     eval(context: Scope): T {
@@ -28,6 +29,6 @@ export class AssignOp<T> extends BinaryOp<T> {
     }
 
     toString(): string {
-        return this.ws + this.left + " = " + this.right;
+        return this.lws + this.left + "=" + this.right + this.rws;
     }
 }

@@ -6,10 +6,11 @@ export class BooleanNode extends Expression<BooleanNode>{
     /**
      * Constructor for BooleanNode, a node representing a boolean
      * @param val The boolean value of the BooleanNode
-     * @param ws Preceding white space
+     * @param lws Preceding white space
+     * @param rws Post white space
      */
-    constructor(private _val: boolean, ws: string = "") {
-        super(ws);
+    constructor(private _val: boolean, lws: string = "", rws: string = "") {
+        super(lws, rws);
     };
 
     /**
@@ -28,7 +29,7 @@ export class BooleanNode extends Expression<BooleanNode>{
     }
 
     toString(): string {
-        return this.ws + this.val;
+        return this.lws + this.val + this.rws;
     }
 
     get val(): boolean {

@@ -3,6 +3,7 @@ import { Expression } from '../Expression';
 import { Scope } from '../structural/Scope';
 import { NumberNode } from '../prims/NumberNode';
 import { FloatNode } from '../prims/FloatNode';
+import { threadId } from 'worker_threads';
 
 export class MulOp extends BinaryOp<NumberNode | FloatNode> {
 
@@ -16,6 +17,6 @@ export class MulOp extends BinaryOp<NumberNode | FloatNode> {
     }
 
     toString(): string {
-        return this.ws + this.left + " * " + this.right;
+        return this.lws + this.left + " * " + this.right + this.rws;
     }
 }

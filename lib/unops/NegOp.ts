@@ -16,6 +16,6 @@ export class NegOp extends UnaryOp<NumberNode | FloatNode>{
     }
 
     toString(): string {
-        return this.ws + "-" + this.expr;
+        return this.lws + "-" + this.expr + this.rws;
     }
 }

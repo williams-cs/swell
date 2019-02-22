@@ -6,10 +6,11 @@ export class ListNode extends Expression<ListNode> {
     /**
      * Constructor for an array-like list
      * @param list The list, stored in a TS array
-     * @param ws Preceding whitespace
+     * @param lws Preceding whitespace
+     * @param rws Post whitespace
      */
-    constructor(private _list: Expression<any>[], ws: string = "") {
-        super(ws);
+    constructor(private _list: Expression<any>[], lws: string = "", rws: string = "") {
+        super(lws, rws);
     }
 
     /**
@@ -30,7 +31,7 @@ export class ListNode extends Expression<ListNode> {
             list += this.list[i].toString() + ", ";
         }
         list += this.list[this.list.length - 1].toString();
-        return this.ws + '[' + list + ']';
+        return this.lws + '[' + list + ']' + this.rws;
     }
 
     equals(right: Expression<any>): boolean {

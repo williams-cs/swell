@@ -11,9 +11,11 @@ export class SequenceNode extends Expression<void>{
      * Constructor for a SequenceNode, the building block of the AST
      * @param left The left side of the Sequence
      * @param right The right side of the Sequence
+     * @param lws Preceding ws
+     * @param rws Post ws
      */
-    constructor(private _left: Expression<any>, private _right: Expression<any>) {
-        super("", true);
+    constructor(private _left: Expression<any>, private _right: Expression<any>, lws: string = "", rws: string = "") {
+        super(lws, rws, true);
     }
 
     /**
@@ -30,8 +32,8 @@ export class SequenceNode extends Expression<void>{
 
     toString(): string {
         return (
-            this.left + (this.left.newLine ? "" : ";") +
-            this.right + (this.right.newLine ? "" : ";")
+            this.lws + this.left + (this.left.newLine ? "" : ";") +
+            this.right + (this.right.newLine ? "" : ";") + this.rws
         );
     }
 

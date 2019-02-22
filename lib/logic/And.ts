@@ -10,6 +10,6 @@ export class And extends BinaryLogicOp<BooleanNode> {
     }
 
     toString(): string {
-        return this.ws + this.left + " and " + this.right;
+        return this.lws + this.left + " and " + this.right + this.rws;
     }
 }
