@@ -142,11 +142,13 @@ export namespace Parser {
                 Prims.right<CharStream, Expression<any>>(Prims.choice(
                     Prims.char(';'))(Prims.nl())
                 )(
-                    Prims.choice<Expression<any>>(Prims.between<CharStream, CharStream, Expression<any>>(Prims.ws())(Prims.ws())(ExpressionParser))(
+                    Prims.choice<Expression<any>>(
+                        ExpressionParser
+                    )(
                         Prims.appfun<CharStream, Expression<any>>(Prims.ws())(_ => new NOP())
                     )
                 )
-            )(f)
+            )(f);
         return p(i);
     }
 
@@ -194,10 +196,12 @@ export namespace Parser {
      */
     export function lNumber(): Prims.IParser<Expression<{}>> {
         return (istream: CharStream) => {
-            let o = number()(istream);
+            let ws = "";
+            let precedingWS = Prims.appfun(Prims.ws())(x => ws = x.toString());
+            let o = Prims.right(precedingWS)(number())(istream);
             switch (o.tag) {
                 case "success":
-                    return new Prims.Success(o.inputstream, new NumberNode(o.result));
+                    return new Prims.Success(o.inputstream, new NumberNode((<number> o.result), ws));
                 case "failure":
                     return o;
             }

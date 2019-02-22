@@ -217,7 +217,7 @@ describe('toString operations', () => {
     });
     it('sequence should evaluate to a string', () => {
         const num0 = new NumberNode(1);
-        const plus0 = new PlusOp(new NumberNode(2), new NumberNode(2));
+        const plus0 = new PlusOp(new NumberNode(2), new NumberNode(2), "\n");
         const node0 = new SequenceNode(num0, plus0);
 
         const output = node0.toString();

@@ -216,7 +216,7 @@ describe('binOpExpr parser test', () => {
     it("should parse an assignment expression", () => {
         const input = "var i = 0;\n i = 2;";
         let result = Parser.parse(input);
-        let test = new SequenceNode(new DeclareOp(new VariableNode('i'), new NumberNode(0)), new SequenceNode(new AssignOp(new VariableNode('i'), new NumberNode(2)), new NOP()));
+        let test = new SequenceNode(new DeclareOp(new VariableNode('i'), new NumberNode(0)), new SequenceNode(new AssignOp(new VariableNode('i'), new NumberNode(2), "\n "), new NOP()));
         if (result.isDefined()) {
             //console.log(result.get().toString());
             expect(result.get()).to.eql(test);
@@ -465,7 +465,7 @@ describe('Sequence Node Parser', () => {
         const input = '1;\n 2;'
         let result = Parser.parse(input);
         if (result.isDefined()) {
-            expect(result.get()).to.eql(new SequenceNode(new NumberNode(1), new SequenceNode(new NumberNode(2), new NOP())));
+            expect(result.get()).to.eql(new SequenceNode(new NumberNode(1), new SequenceNode(new NumberNode(2, "\n "), new NOP())));
         }
         else {
             assert.fail();
@@ -475,7 +475,7 @@ describe('Sequence Node Parser', () => {
         const input = "\"hello\";\n\"goodbye\";";
         let result = Parser.parse(input);
         if (result.isDefined()) {
-            expect(result.get()).to.eql(new SequenceNode(new StringNode('hello'), new SequenceNode(new StringNode('goodbye'), new NOP())));
+            expect(result.get()).to.eql(new SequenceNode(new StringNode('hello'), new SequenceNode(new StringNode('goodbye', "\n"), new NOP())));
         }
         else {
             assert.fail();
@@ -781,13 +781,13 @@ describe('For Loop Parser test', () => {
         }
     });
     it('should be able to parse a valid for loop construct (with new line)', () => {
-        let input = 'var x = 0;\nfor(var i = 0 , i < 10, i++) {\n x++; }';
+        let input = 'var x = 0;\nfor(var i = 0 , i < 10, i++) {x++; }';
         let result = Parser.parse(input);
-        let body = new SequenceNode(new Increment(new VariableNode('x')), new NOP());
+        let body = new SequenceNode(new Increment(new VariableNode('x'), ""), new NOP());
         let arg1 = new DeclareOp(new VariableNode('i'), new NumberNode(0));
         let arg2 = new LessThan(new VariableNode('i'), new NumberNode(10));
         let arg3 = new Increment(new VariableNode('i'));
-        let test = new SequenceNode(new DeclareOp(new VariableNode('x'), new NumberNode(0)), new SequenceNode(new ForNode(arg1, arg2, arg3, body), new NOP()));
+        let test = new SequenceNode(new DeclareOp(new VariableNode('x'), new NumberNode(0)), new SequenceNode(new ForNode(arg1, arg2, arg3, body, "\n"), new NOP()));
         if (result.isDefined()) {
             //console.log(result.get());
             //console.log(result.get().toString());
