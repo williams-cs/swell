@@ -70,7 +70,7 @@ export class FunApp<T> extends Expression<T> {
             }
             argsList += this._args[this._args.length - 1].toString();
         }
-        return this.lws + this.name + this.rws + '(' + argsList + ")" ;
+        return this.lws + this.name + this.rws + "(" + argsList + ")" ;
     }
 
     get name(): string {

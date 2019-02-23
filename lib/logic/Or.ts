@@ -10,6 +10,6 @@ export class Or extends BinaryLogicOp<BooleanNode> {
     }
 
     toString(): string {
-        return this.lws + this.left + " or " + this.right + this.rws;
+        return `${this.lws}${this.left}or${this.right}${this.rws}`;
     }
 }

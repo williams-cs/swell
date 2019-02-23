@@ -13,7 +13,10 @@ export class Conditional extends Expression<any> {
      * @param lws Preceding whitespace
      * @param rws post whitespace
      */
-    constructor(private _test: Expression<any>, private _trueBranch: Expression<any>, private _falseBranch?: Expression<any>, lws: string = "", rws: string = "") {
+    constructor(
+        private _test: Expression<any>, private _trueBranch: Expression<any>, private _falseBranch?: Expression<any>,
+        lws: string = "", rws: string = ""
+    ) {
         super(lws, rws, true);
     }
 
@@ -33,11 +36,11 @@ export class Conditional extends Expression<any> {
     }
 
     toString(): string {
-        let res = this.lws + 'if(' + this.test.toString() + ") {\n " + this.trueBranch.toString() + "}";
+        let res = `${this.lws}if${this.rws}(${this.test}) {\n\t${this.trueBranch}}`;
         if (this.falseBranch !== undefined) {
-            res += '\nelse {\n ' + this.falseBranch.toString() + '}'
+            res += `\nelse {\n ${this.falseBranch}}`;
         }
-        return res + this.rws;
+        return res;
     }
 
     /**

@@ -25,6 +25,6 @@ export class Return extends Expression<any> {
     }
 
     toString(): string {
-        return this.lws + "return " + this._expr.toString() + this.rws;
+        return this.lws + "return " + this._expr + this.rws;
     }
 }

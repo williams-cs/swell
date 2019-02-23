@@ -12,6 +12,6 @@ export class GreaterThan extends BinaryLogicOp<NumberNode | FloatNode> {
     }
 
     toString(): string {
-        return this.lws + this.left + " > " + this.right + this.rws;
+        return `${this.lws}${this.left}>${this.right}${this.rws}`;
     }
 }

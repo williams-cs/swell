@@ -10,6 +10,6 @@ export class NotEqual extends BinaryLogicOp<Expression<any>> {
     }
 
     toString(): string {
-        return this.lws + this.left + " not equals " + this.right + this.rws;
+        return `${this.lws}${this.left}not equals${this.right}${this.rws}`;
     }
 }
