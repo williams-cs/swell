@@ -191,17 +191,25 @@ export namespace Parser {
         ])(i);
     }
 
+
+    /**
+     * getWS is used to get the ws returned by the Pants ws parser and return it in a string
+     */
+    export function getWS(): (istream: CharUtil.CharStream) => Prims.Failure | Prims.Success<{}>{
+        let ws = "";
+        return Prims.appfun(Prims.ws())(x => ws = x.toString());
+    }
     /**
      * lNumber is used to wrap parsed numbers in NumberNodes for the AST
      */
     export function lNumber(): Prims.IParser<Expression<{}>> {
         return (istream: CharStream) => {
-            let ws = "";
-            let precedingWS = Prims.appfun(Prims.ws())(x => ws = x.toString());
+            let lws = "";
+            let precedingWS = Prims.appfun(Prims.ws())(x => lws = x.toString());
             let o = Prims.right(precedingWS)(number())(istream);
             switch (o.tag) {
                 case "success":
-                    return new Prims.Success(o.inputstream, new NumberNode((<number> o.result), ws));
+                    return new Prims.Success(o.inputstream, new NumberNode((<number> o.result), lws, rws));
                 case "failure":
                     return o;
             }
