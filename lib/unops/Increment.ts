@@ -25,6 +25,6 @@ export class Increment extends UnaryOp<NumberNode | FloatNode> {
     }
 
     toString(): string {
-        return this.lws + this.expr + "++" + this.rws;
+        return `${this.lws}${this.expr}++${this.rws}`;
     }
 }

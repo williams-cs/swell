@@ -31,7 +31,7 @@ export class ListNode extends Expression<ListNode> {
             list += this.list[i].toString() + ", ";
         }
         list += this.list[this.list.length - 1].toString();
-        return this.lws + '[' + list + ']' + this.rws;
+        return `${this.lws}[${list}]${this.rws}`;
     }
 
     equals(right: Expression<any>): boolean {

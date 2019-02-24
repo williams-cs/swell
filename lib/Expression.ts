@@ -44,13 +44,6 @@ export abstract class Expression<T> {
     /**
      * Returns the whitespace preceding the expression
      */
-    get rws(): string {
-        return this._rws;
-    }
-
-    /**
-     * Returns the left whitespace after the expression
-     */
     get lws(): string {
         return this._lws;
     }
@@ -58,14 +51,21 @@ export abstract class Expression<T> {
     /**
      * Sets the whitespace preceding the expression
      */
-    set rws(ws: string) {
-        this._rws = ws;
+    set lws(ws: string) {
+        this._lws = ws;
     }
 
     /**
-     * Sets the whitespace preceding the expression
+     * Returns the whitespace after the expression
      */
-    set lws(ws: string) {
-        this._lws = ws;
+    get rws(): string {
+        return this._rws;
+    }
+
+    /**
+     * Sets the whitespace after the expression
+     */
+    set rws(ws: string) {
+        this._rws = ws;
     }
 }

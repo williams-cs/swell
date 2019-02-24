@@ -29,6 +29,6 @@ export class DeclareOp<T> extends BinaryOp<T> {
     }
 
     toString(): string {
-        return this.lws + "var " + this.left + " = " + this.right + this.rws;
+        return `${this.lws}var${this.left}=${this.right}${this.rws}`;
     }
 }

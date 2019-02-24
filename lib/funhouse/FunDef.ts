@@ -41,7 +41,7 @@ export class FunDef<T> extends Expression<T> {
             }
             argsList += this._args[this._args.length - 1];
         }
-        return this.lws + "fun " + this._name + this.rws + "(" + argsList + ')' + ' {\n ' + this._body.toString() + '}';
+        return `${this.lws}fun${this.rws}${this.name}(${argsList}) {\n ${this.body}}`;
     }
 
     get name(): string {

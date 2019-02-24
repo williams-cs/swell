@@ -166,6 +166,6 @@ export abstract class AbstractFunctionNode<T extends Expression<any>> extends Ex
         if (this.argMap.size > 0) {
             argString = argString.slice(0, argString.length - 2);
         }
-        return `${this.lws}${this.name}(${argString})` + this.rws;
+        return `${this.lws}${this.name}${this.rws}(${argString})`;
     }
 }
