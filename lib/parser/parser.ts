@@ -157,7 +157,7 @@ export namespace Parser {
      */
     export let ExpressionParserNoSeq: Prims.IParser<Expression<{}>> = i => {
         return choices<Expression<any>>([
-            loopParse, funDef, ForLoop, WhileLoop, condParse, returnParser, funApp,
+            loopParse, funDef, ForLoop, WhileLoop, conditionalParse, returnParser, funApp,
             ListHead, binOpExpr, Declare(), unOpsExpr, varDecParse(),
             BoolParse(), varNameParse(), float(), lNumber(), lstring2(),
         ])(i);
@@ -169,7 +169,7 @@ export namespace Parser {
      */
     export let ExpressionParserNoBinOp: Prims.IParser<Expression<{}>> = i => {
         return choices<Expression<any>>([
-            loopParse, funDef, ForLoop, WhileLoop, condParse, returnParser, funApp,
+            loopParse, funDef, ForLoop, WhileLoop, conditionalParse, returnParser, funApp,
             ListHead, Declare(), unOpsExpr, varDecParse(),
             BoolParse(), varNameParse(), float(), lNumber(), lstring2(),
         ])(i);
@@ -182,7 +182,7 @@ export namespace Parser {
      */
     export let ExpressionParserNoLogic: Prims.IParser<Expression<{}>> = i => {
         return choices<Expression<any>>([
-            loopParse, funDef, ForLoop, WhileLoop, condParse, returnParser, funApp,
+            loopParse, funDef, ForLoop, WhileLoop, conditionalParse, returnParser, funApp,
             ListHead, binOpExpr, Declare(), unOpsExpr, varDecParse(),
             BoolParse(), varNameParse(), float(), lNumber(), lstring2(),
         ])(i);
@@ -369,13 +369,16 @@ export namespace Parser {
         let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
         return Prims.seq<CharStream, Expression<any>, UnaryOp<{}>>(Prims.right<string, CharStream>(preWS)(unOpsChar))(ExpressionParserNoSeq)(f)(i);
     }
-
     export let parens: Prims.IParser<Parens> = i => {
-        let open = Prims.between<CharStream, CharStream, CharStream>(Prims.ws())(Prims.ws())(Prims.str("("));
-        let close = Prims.between<CharStream, CharStream, CharStream>(Prims.ws())(Prims.ws())(Prims.str(")"));
+        let lws = "";
+        let rws = "";
+        let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => lws = x.toString());
+        let postWS = Prims.appfun<CharStream, string>(Prims.ws())(x => rws = x.toString());
+        let open = Prims.right<string, CharStream>(preWS)(Prims.str("("));
+        let close = Prims.left<CharStream, string>(Prims.str(")"))(postWS);
         let expr = choices<Expression<any>>([binOpExpr, unOpsExpr, lNumber()]);
-        let parens = Prims.right<CharStream, Expression<any>>(open)(Prims.left<Expression<any>, CharStream>(expr)(close));
-        return Prims.appfun<Expression<any>, Parens>(parens)(x => new Parens(x))(i);
+        let parens = Prims.between<CharStream, CharStream, Expression<any>>(open)(close)(expr);
+        return Prims.appfun<Expression<any>, Parens>(parens)(x => new Parens(x, lws, rws))(i);
     }
 
     /**
@@ -660,10 +663,13 @@ export namespace Parser {
      * returns an array where the first elem is the condition and the second is the body
      */
     export function IfParse(): Prims.IParser<Expression<any>[]> {
+        let lws = "";
+        let rws = "";
+        let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => lws = x.toString());
+        let postWS = Prims.appfun<CharStream, string>(Prims.ws())(x => rws = x.toString());
         let expr = Prims.between<CharStream, CharStream, Expression<{}>>(Prims.ws())(Prims.ws())(ExpressionParserNoSeq);
         let bodyParse = Prims.between<CharStream, CharStream, Expression<{}>>(Prims.ws())(Prims.ws())(ExpressionParser);
-        let ifWS = Prims.between<CharStream, CharStream, CharStream>(Prims.ws())(Prims.ws())(Prims.str('if'));
-        let ifStr = Prims.choice<CharStream>(ifWS)(Prims.str("if"));
+        let ifStr = Prims.between<string, string, CharStream>(preWS)(postWS)(Prims.str("if"));
         let p1 = Prims.seq<CharStream, CharStream, CharStream[]>(ifStr)(Prims.char('('))(x => x);
         let cond = Prims.between<CharStream[], CharStream, Expression<any>>(p1)(Prims.char(')'))(expr);
         let curly = Prims.between<CharStream, CharStream, CharStream>(Prims.ws())(Prims.ws())(Prims.char('{'));
@@ -694,13 +700,50 @@ export namespace Parser {
     export let condParse: Prims.IParser<Conditional> = i => {
         var f = (tup: Expression<any>[]) => {
             if (tup.length == 3) {
-                return new Conditional(tup[0], tup[1], tup[2]);
+                return new Conditional(tup[0], tup[1], "", "", tup[2]);
             }
             else {
                 return new Conditional(tup[0], tup[1]);
             }
         }
         return Prims.appfun<Expression<any>[], Conditional>(Prims.choice<Expression<any>[]>(IfElseParse())(IfParse()))(f)(i);
+    }
+
+    /**
+     * conditionalParse is a rewrite of condParse that includes and passes ws
+     */
+    export let conditionalParse: Prims.IParser<Conditional> = i => {
+        var f = (tup: Expression<any>[]) => {
+            if (tup.length == 3) {
+                return new Conditional(tup[0], tup[1], lws, rws, tup[2]);
+            }
+            else {
+                return new Conditional(tup[0], tup[1], lws, rws);
+            }
+        }
+        let lws = "";
+        let rws = "";
+        let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => lws = x.toString());
+        let postWS = Prims.appfun<CharStream, string>(Prims.ws())(x => rws = x.toString());
+        //if section
+        let expr = Prims.between<CharStream, CharStream, Expression<{}>>(Prims.ws())(Prims.ws())(ExpressionParserNoSeq);
+        let bodyParse = Prims.between<CharStream, CharStream, Expression<{}>>(Prims.ws())(Prims.ws())(ExpressionParser);
+        let ifStr = Prims.between<string, string, CharStream>(preWS)(postWS)(Prims.str("if"));
+        let p1 = Prims.seq<CharStream, CharStream, CharStream[]>(ifStr)(Prims.char('('))(x => x);
+        let cond = Prims.between<CharStream[], CharStream, Expression<any>>(p1)(Prims.char(')'))(expr);
+        let curly = Prims.between<CharStream, CharStream, CharStream>(Prims.ws())(Prims.ws())(Prims.char('{'));
+        let ifBody = Prims.between<CharStream, CharStream, Expression<any>>(curly)(Prims.char('}'))(bodyParse);
+        let ifParse = Prims.seq<Expression<any>, Expression<any>, Expression<any>[]>(cond)(ifBody)(x => x);
+        //else section
+        let e = Prims.between<CharStream, CharStream, CharStream>(Prims.ws())(Prims.ws())(Prims.str('else'));
+        let elseBody = Prims.between<CharStream, CharStream, Expression<any>>(Prims.ws())(Prims.ws())(ExpressionParser);
+        let elseBodyBrack = Prims.between<CharStream, CharStream, Expression<any>>(Prims.str('{'))(Prims.str('}'))(elseBody);
+        var g = (tup: [Expression<any>[], Expression<any>]) => {
+            tup[0].push(tup[1]);
+            return tup[0];
+        }
+        let elseParse = Prims.seq<Expression<any>[], Expression<any>, Expression<any>[]>(ifParse)(Prims.right<CharStream, Expression<any>>(e)(elseBodyBrack))(g);
+        return Prims.appfun<Expression<any>[], Conditional>(Prims.choice<Expression<any>[]>(elseParse)(ifParse))(f)(i);
     }
 
     /**
