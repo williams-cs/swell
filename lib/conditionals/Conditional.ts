@@ -24,9 +24,9 @@ export class Conditional extends Expression<any> {
         let childCtx = new Scope(context, context.effects, context.eventLog);
         childCtx.canvas = Some(context.canvas.get());
         let res = this.test.eval(childCtx);
-        if (!(res instanceof BooleanNode)) {
-            throw new Error("The condition must be a boolean expression.");
-        }
+        // if (!(res instanceof BooleanNode)) {
+        //     throw new Error("The condition must be a boolean expression.");
+        // }
         if (res.val) {
             return this.trueBranch.eval(childCtx);
         }

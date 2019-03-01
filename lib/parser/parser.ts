@@ -87,14 +87,14 @@ export namespace Parser {
 
     // Choose from between a lot of choices. Start from the first element.
     // Maybe move to Pants?
-    export function choices<T>(expressions: Prims.IParser<T>[]): Prims.IParser<T> {
-        if (expressions.length <= 1) {
-            throw("Error: Argument to choices must have at least two elements");
+    export function choices<T>(...expressions: Prims.IParser<T>[]): Prims.IParser<T> {
+        if (expressions.length == 0) {
+            throw("Error: choices must have a non-empty array.");
         }
-        if (expressions.length == 2) {
-            return Prims.choice<T>(expressions[0])(expressions[1]);
+        if (expressions.length == 1) {
+            return expressions[0];
         }
-        return Prims.choice<T>(expressions[0])(choices<T>(expressions.slice(1)));
+        return Prims.choice<T>(expressions[0])(choices<T>(...expressions.slice(1)));
     }
 
     let id = (x: any) => x;
@@ -156,38 +156,12 @@ export namespace Parser {
      * used to avoid infinite looping in upper level parse
      */
     export let ExpressionParserNoSeq: Prims.IParser<Expression<{}>> = i => {
-        return choices<Expression<any>>([
+        return choices<Expression<any>>(
             loopParse, funDef, ForLoop, WhileLoop, conditionalParse, returnParser, funApp,
-            ListHead, binOpExpr, Declare(), unOpsExpr, varDecParse(),
-            BoolParse(), varNameParse(), float(), lNumber(), lstring2(),
-        ])(i);
+            ListHead, binOpExpr(), Declare(), unOpsExpr, varDecParse(),
+            parens, notExpr, boolParse(), varNameParse(), float(), lNumber(), lstring2(),
+        )(i);
     }
-
-    /**
-     * Searches through all possible expressions except for binOp and LogicExpr expressions
-     * to avoid infinite looping in the binary expression parser
-     */
-    export let ExpressionParserNoBinOp: Prims.IParser<Expression<{}>> = i => {
-        return choices<Expression<any>>([
-            loopParse, funDef, ForLoop, WhileLoop, conditionalParse, returnParser, funApp,
-            ListHead, Declare(), unOpsExpr, varDecParse(),
-            BoolParse(), varNameParse(), float(), lNumber(), lstring2(),
-        ])(i);
-    }
-
-    /**
-     * Searches through all possible expressions except for logical expressions
-     * used to avoid infinite looping in the logical expression parser
-     * @param i a nonsense parameter used to avoid bug of eager parsing
-     */
-    export let ExpressionParserNoLogic: Prims.IParser<Expression<{}>> = i => {
-        return choices<Expression<any>>([
-            loopParse, funDef, ForLoop, WhileLoop, conditionalParse, returnParser, funApp,
-            ListHead, binOpExpr, Declare(), unOpsExpr, varDecParse(),
-            BoolParse(), varNameParse(), float(), lNumber(), lstring2(),
-        ])(i);
-    }
-
 
     /**
      * getWS is used to get the ws returned by the Pants ws parser and return it in a string
@@ -220,7 +194,7 @@ export namespace Parser {
      * a valid string is surrounded by quotations and consists of letters, numbers, punctuation, and/or whitespace
      */
     export function lstring() {
-        let p1 = choices<CharStream>([Prims.letter(), Prims.ws1(), Prims.digit()]);
+        let p1 = choices<CharStream>(Prims.letter(), Prims.ws1(), Prims.digit());
         let p: Prims.IParser<CharStream[]> = Prims.between<CharStream, CharStream, CharStream[]>(
             Prims.str("\"")
         )(
@@ -251,9 +225,9 @@ export namespace Parser {
     }
 
     /**
-     * BoolParse parses valid booleans, true and false, and returns a BooleanNode
+     * boolParse parses valid booleans, true and false, and returns a BooleanNode
      */
-    export function BoolParse(): Prims.IParser<BooleanNode> {
+    export function boolParse(): Prims.IParser<BooleanNode> {
         let lws = "";
         let rws = "";
         let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => lws = x.toString());
@@ -271,104 +245,142 @@ export namespace Parser {
         return Prims.choice<BooleanNode>(trueNode)(falseNode);
     }
 
-    export function binOpChar(): Prims.IParser<CharStream> {
+    const binOpPrecedenceMap: Map<string, number> = new Map([
+        ["=", 0],
+        ["||", 1],
+        ["&&", 2],
+        ["==", 3], ["!=", 3],
+        ["<", 4], ["<=", 4], [">", 4], [">=", 4],
+        ["+", 5], ["-", 5],
+        ["*", 6], ["/", 6],
+    ]);
+
+    function binOpChar(includePureLogic: boolean = true): Prims.IParser<CharStream> {
+        let logicChar = [">", "<"];
+        let logicChar2 = [">=", "<=", "==", "!="];
         let mathChar = ["+", "-", "/", "=", "*"];
-        let logicChar = ["equals", "==", "and", ">", "<", "not equals", "or"];
-        let logicChar2 = [">=", "<="];
-        return choices<CharStream>([Prims.strSat(mathChar), Prims.strSat(logicChar2), Prims.strSat(logicChar)]);
-    }
-
-    /**
-     * binOpExpr parses all possible binary operation expressions and returns the
-     * corresponding AST node construct (also parses postfix increments/decrements like i++)
-     */
-    export let binOpExpr: Prims.IParser<Expression<any>> = i => {
-        let p1 = Prims.choice(ExpressionParserNoBinOp)(varDecParse());
-        let p2 = Prims.seq<CharStream, Expression<{}>, [CharStream, Expression<{}>]>(
-            binOpChar()
-        )(
-            ExpressionParserNoSeq
-        )((x: [CharStream, Expression<{}>]) => x);
-
-        let f = (tup: [Expression<any>, [CharStream, Expression<any>]]) => {
-            let lhs: Expression<any> = tup[0];
-            let op: CharStream = tup[1][0];
-            let rhs: Expression<any> = tup[1][1];
-            switch (op.toString()) {
-                case "+":
-                    return new PlusOp(lhs, rhs);
-                case "-":
-                    return new MinusOp(lhs, rhs);
-                case "/":
-                    return new DivOp(lhs, rhs);
-                case "*":
-                    return new MulOp(lhs, rhs);
-                case "=":
-                    return new AssignOp(lhs, rhs);
-                case "equals":
-                    return new Equals(lhs, rhs);
-                case "==":
-                    return new Equals(lhs, rhs);
-                case "and":
-                    return new And(lhs, rhs);
-                case ">":
-                    return new GreaterThan(lhs, rhs);
-                case "<":
-                    return new LessThan(lhs, rhs);
-                case ">=":
-                    return new GreaterThanEq(lhs, rhs);
-                case "<=":
-                    return new LessThanEq(lhs, rhs);
-                case "or":
-                    return new Or(lhs, rhs);
-                case "not equals":
-                    return new NotEqual(lhs, rhs);
-                default:
-                    throw new Error("Binary Operation not supported");
-            }
+        if (includePureLogic) {
+            logicChar.concat("&&", "||");
         }
-
-        return Prims.seq<Expression<any>, [CharStream, Expression<any>], BinaryOp<any>>(p1)(p2)(f)(i);
+        return choices<CharStream>(Prims.strSat(logicChar2), Prims.strSat(logicChar), Prims.strSat(mathChar));
     }
 
-    /**
-     * unOpsChar parses all possible unary operators
-     * Only negations are supported, but more can be added as needed
-     */
-    export let unOpsChar: Prims.IParser<CharStream> = i => {
-        return Prims.between<CharStream, CharStream, CharStream>(Prims.ws())(Prims.ws())(Prims.char("-"))(i);
+    function isOpRightAssoc(op: string): boolean {
+        return op == "=";
+    }
+
+    function binOpExpr(includePureLogic: boolean = true): Prims.IParser<Expression<any>> {
+        return i => {
+            let singleTokenParser = choices<Expression<any>>(
+                notExpr, parens, unOpsExpr, boolParse(), varNameParse(), float(), lNumber(), lstring2()
+            );
+            let remainingTokensParser = Prims.many1<[CharStream, Expression<any>]>(
+                Prims.seq<CharStream, Expression<any>, [CharStream, Expression<any>]>(
+                    binOpChar(includePureLogic)
+                )(
+                    singleTokenParser
+                )(
+                    (tup: [CharStream, Expression<any>]) => tup
+                )
+            );
+
+            let buildBinOp = function(lhs: Expression<any>, tokens: Array<[CharStream, Expression<any>]>, min_precedence: number) {
+                if (tokens.length == 0) {
+                    return lhs;
+                }
+                let currentOp: string;
+                let curOpPrecedence: number;
+                while (tokens.length > 0 && min_precedence <= (curOpPrecedence = binOpPrecedenceMap.get(currentOp = tokens[0][0].toString()))) {
+                    let next_min_precedence = isOpRightAssoc(currentOp) ? curOpPrecedence : curOpPrecedence + 1;
+                    let rhs: Expression<any> = buildBinOp(tokens.shift()[1], tokens, next_min_precedence);
+                    lhs = createBinOp(currentOp, lhs, rhs);
+                }
+                return lhs;
+            }
+
+            return Prims.seq<
+                Expression<any>, Array<[CharStream, Expression<any>]>, Expression<any>
+            >(singleTokenParser)(remainingTokensParser)(
+                (tup: [Expression<any>, Array<[CharStream, Expression<any>]>]) => buildBinOp(tup[0], tup[1], 0)
+            )(i);
+        }
+    }
+
+    function createBinOp(op: string, lhs: Expression<any>, rhs: Expression<any>): BinaryOp<any> {
+        switch (op) {
+            case "=":
+                return new AssignOp(lhs, rhs);
+            case "||":
+                return new Or(lhs, rhs);
+            case "&&":
+                return new And(lhs, rhs);
+            case "==":
+                return new Equals(lhs, rhs);
+            case "!=":
+                return new NotEqual(lhs, rhs);
+            case ">":
+                return new GreaterThan(lhs, rhs);
+            case "<":
+                return new LessThan(lhs, rhs);
+            case ">=":
+                return new GreaterThanEq(lhs, rhs);
+            case "<=":
+                return new LessThanEq(lhs, rhs);
+            case "+":
+                return new PlusOp(lhs, rhs);
+            case "-":
+                return new MinusOp(lhs, rhs);
+            case "*":
+                return new MulOp(lhs, rhs);
+            case "/":
+                return new DivOp(lhs, rhs);
+            default:
+                throw new Error("Binary Operation not supported");
+        }
     }
 
     /**
      * unOpsExpr wraps a unary operation expression in the corresponding
      * AST node and returns it
      */
-    export let unOpsExpr: Prims.IParser<UnaryOp<{}>> = i => {
-        // let postPlus = Prims.seq<Expression<any>, CharStream, Increment>(
-        //     Prims.right<string, Expression<any>>(preWS)(ExpressionParserNoBinOp)
-        // )(
-        //     Prims.str('++')
-        // )(
-        //     tup => { return new Increment(tup[0], ws) }
-        // );
-        // let postMinus = Prims.seq<Expression<any>, CharStream, Increment>(
-        //     Prims.right<string, Expression<any>>(preWS)(ExpressionParserNoBinOp)
-        // )(
-        //     Prims.str('--')
-        // )(
-        //     tup => { return new Increment(tup[0], ws) }
-        // );
-        // let not = Prims.right<string, CharStream>(preWS)(Prims.str('not'));
-        // let p1 = Prims.right<CharStream, Expression<any>>(not)(ExpressionParserNoSeq);
-        // let notExpr = Prims.appfun<Expression<any>, Not>(p1)(x => new Not(x, ws));
+    export let unOpsExpr: Prims.IParser<UnaryOp<any>> = i => {
+        let operand: Prims.IParser<Expression<any>> = choices<Expression<any>>(
+            parens, varNameParse(), float(), lNumber()
+        );
 
-        var f = (tup: [CharStream, Expression<NumberNode | FloatNode>]) => {
-            return new NegOp(tup[1], ws);
+        let prefixOp: Prims.IParser<CharStream> = Prims.right<CharStream, CharStream>(Prims.ws())(Prims.strSat(["-"]));
+        let createPrefixOp = function(tup: [CharStream, Expression<any>]): UnaryOp<any> {
+            let op: string = tup[0].toString();
+            let expr: Expression<any> = tup[1];
+            switch (op) {
+                case "-":
+                    return new NegOp(expr);
+                default:
+                    throw new Error(`Unary operator ${op} is not supported.`);
+            }
         }
-        let ws = "";
-        let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
-        return Prims.seq<CharStream, Expression<any>, UnaryOp<{}>>(Prims.right<string, CharStream>(preWS)(unOpsChar))(ExpressionParserNoSeq)(f)(i);
+
+        let postfixOp: Prims.IParser<CharStream> = Prims.right<CharStream, CharStream>(Prims.ws())(Prims.strSat(["++", "--"]));
+        let createPostfixOp = function(tup: [Expression<any>, CharStream]): UnaryOp<any> {
+            let op: string = tup[1].toString();
+            let expr: Expression<any> = tup[0];
+            switch (op) {
+                case "++":
+                    return new Increment(expr);
+                case "--":
+                    return new Decrement(expr);
+                default:
+                    throw new Error(`Postfix operator ${op} is not supported.`);
+            }
+        }
+
+        return Prims.choice<UnaryOp<any>>(
+            Prims.seq<CharStream, Expression<any>, UnaryOp<any>>(prefixOp)(operand)(createPrefixOp)
+        )(
+            Prims.seq<Expression<any>, CharStream, UnaryOp<any>>(operand)(postfixOp)(createPostfixOp)
+        )(i);
     }
+
     export let parens: Prims.IParser<Parens> = i => {
         let lws = "";
         let rws = "";
@@ -376,9 +388,21 @@ export namespace Parser {
         let postWS = Prims.appfun<CharStream, string>(Prims.ws())(x => rws = x.toString());
         let open = Prims.right<string, CharStream>(preWS)(Prims.str("("));
         let close = Prims.left<CharStream, string>(Prims.str(")"))(postWS);
-        let expr = choices<Expression<any>>([binOpExpr, unOpsExpr, lNumber()]);
-        let parens = Prims.between<CharStream, CharStream, Expression<any>>(open)(close)(expr);
-        return Prims.appfun<Expression<any>, Parens>(parens)(x => new Parens(x, lws, rws))(i);
+        let expr = choices<Expression<any>>(
+            binOpExpr(), unOpsExpr, parens, notExpr,
+            boolParse(), varNameParse(), float(), lNumber(), lstring2()
+        );
+        let parentheses = Prims.between<CharStream, CharStream, Expression<any>>(open)(close)(expr);
+        return Prims.appfun<Expression<any>, Parens>(parentheses)(x => new Parens(x, lws, rws))(i);
+    }
+
+    export let notExpr: Prims.IParser<Not> = i => {
+        let notOp: Prims.IParser<CharStream> = Prims.right<CharStream, CharStream>(Prims.ws())(Prims.str("!"));
+        let operand: Prims.IParser<Expression<any>> = choices<Expression<any>>(
+            notExpr, binOpExpr(false), parens, boolParse(), varNameParse(), float(), lNumber(), lstring2()
+        );
+        let createNotOp = (tup: [CharStream, Expression<any>]) => new Not(tup[1]);
+        return Prims.seq<CharStream, Expression<any>, Not>(notOp)(operand)(createNotOp)(i);
     }
 
     /**
