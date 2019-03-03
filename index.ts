@@ -44,8 +44,7 @@ export {FunApp} from './lib/funhouse/FunApp';
 export {FunDef} from './lib/funhouse/FunDef'; 
 export {SequenceNode} from './lib/structural/SequenceNode';
 export {RepeatNode} from './lib/loops/RepeatNode';
-export {WhileNode} from './lib/loops/WhileNode';
-export {ForNode} from './lib/loops/ForNode';
+export {BodyNode} from './lib/conditionals/BodyNode';
 
 /* BUILTIN FUNCTIONS */
 export {RGBColorNode} from './lib/aesthetics/RGBColorNode';

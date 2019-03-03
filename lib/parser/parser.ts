@@ -8,8 +8,7 @@ import {
     BinaryOp, PlusOp, MulOp, DivOp, MinusOp,
     Equals, And, GreaterThan, LessThan, GreaterThanEq, LessThanEq, Or, NotEqual,
     VariableNode, DeclareOp, AssignOp,
-    Return, FunDef, FunApp, Conditional,
-    ForNode, RepeatNode, WhileNode,
+    Return, FunDef, FunApp, Conditional, RepeatNode, BodyNode,
     EllipseNode, RectangleNode, EmojiNode, LineNode,
     RGBColorNode
 } from '../../index';
@@ -474,10 +473,12 @@ export namespace Parser {
     /**
      * Body parses the body of a function, if, or repeat statement, aka expressions between {}
      */
-    export function body(): Prims.IParser<Expression<{}>> {
+    export let bodyParser: Prims.IParser<Expression<BodyNode>>  = i => {
         let ws = "";
         let preWS = Prims.appfun<CharStream, string>(Prims.left(Prims.ws())(Prims.char('{')))(x => ws = x.toString());
-        return Prims.between<string, CharStream, Expression<any>>(preWS)(Prims.char('}'))(ExpressionParser);
+        let p = Prims.between<string, CharStream, Expression<any>>(preWS)(Prims.char('}'))(ExpressionParser);
+        var f = (e: Expression<any>) => { return new BodyNode(e, ws); }
+        return Prims.appfun<Expression<any>, BodyNode>(p)(f)(i);
     }
 
     /**
@@ -599,25 +600,25 @@ export namespace Parser {
         return Prims.right<CharStream, FunDef<{}>>(
             Prims.right<string, CharStream>(preWS)(Prims.str('fun'))
         )(
-            Prims.seq<string, [string[], Expression<{}>], FunDef<{}>>(
+            Prims.seq<string, [string[], Expression<BodyNode>], FunDef<{}>>(
                 /* function name */
                 Prims.appfun<CharStream, string>(
                     string()
                 )(cs => cs.toString())
             )(
-                Prims.seq<string[], Expression<{}>, [string[], Expression<{}>]>(
+                Prims.seq<string[], Expression<BodyNode>, [string[], Expression<BodyNode>]>(
                     /* function arguments */
                     funDefArgList()
                 )(
                     /* function body */
-                    body()
+                    bodyParser
                 )(id)
             )(
                 // create the AST node
-                (tup: [string, [string[], Expression<{}>]]) => {
+                (tup: [string, [string[], Expression<BodyNode>]]) => {
                     let fname: string = tup[0];
                     let args: string[] = tup[1][0];
-                    let body: Expression<{}> = tup[1][1];
+                    let body: Expression<BodyNode> = tup[1][1];
                     return new FunDef(fname, body, args, ws);
                 }
             )

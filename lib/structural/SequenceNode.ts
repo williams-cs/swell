@@ -31,8 +31,8 @@ export class SequenceNode extends Expression<void>{
 
     toString(): string {
         return (
-            this.ws + this.left + (this.left.newLine ? "" : ";") +
-            this.right + (this.right.newLine ? "" : ";")
+            this.ws + this.left + (this.left.newLine ? "\n" : "") +
+            this.right + (this.right.newLine ? "\n" : "")
         );
     }
 

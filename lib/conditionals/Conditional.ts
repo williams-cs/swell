@@ -1,4 +1,5 @@
 import { Expression } from "../Expression";
+import { BodyNode } from "../conditionals/BodyNode"
 import { Scope } from '../structural/Scope';
 import { BooleanNode } from "../prims/BooleanNode";
 import { Some } from "space-lift";
@@ -8,13 +9,13 @@ export class Conditional extends Expression<any> {
     /**
      * The constructor for conditionals (if, else if, and else statements)
      * @param test The condition of the statement
-     * @param trueBranch The branch to follow if the condition evaluates to true
-     * @param falseBranch The branch to follow if the condition evaluates to false
+     * @param trueBranch The branch to follow if the condition evaluates to true, stored inside a BodyNode
+     * @param falseBranch The branch to follow if the condition evaluates to false, stored inside a BodyNode
      * @param ws Preceding whitespace
      */
     constructor(
-        private _test: Expression<any>, private _trueBranch: Expression<any>,
-        ws: string = "", private _falseBranch?: Expression<any>
+        private _test: Expression<any>, private _trueBranch: Expression<BodyNode>,
+        ws: string = "", private _falseBranch?: Expression<BodyNode>
     ) {
         super(ws, true);
     }

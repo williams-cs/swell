@@ -1,14 +1,15 @@
 import { Expression } from '../Expression';
+import { BodyNode } from '../conditionals/BodyNode';
 import { Scope } from '../structural/Scope';
 
 export class FunDef<T> extends Expression<T> {
     private _name: string;
-    private _body: Expression<T>;
+    private _body: Expression<BodyNode>;
     private _args: string[];
     private _funScope: Scope;
     private _rws: string;
 
-    constructor(name: string, body: Expression<T>, args?: string[], ws: string = "", rws: string = "") {
+    constructor(name: string, body: Expression<BodyNode>, args?: string[], ws: string = "", rws: string = "") {
         super(ws);
         this._name = name;
         this._body = body;
@@ -43,13 +44,13 @@ export class FunDef<T> extends Expression<T> {
             }
             argsList += this._args[this._args.length - 1];
         }
-        return `${this.ws}fun${this._rws}${this.name}(${argsList}) {\n ${this.body}}`;
+        return `${this.ws}fun${this._rws}${this.name}(${argsList})${this.body}`;
     }
 
     get name(): string {
         return this._name;
     }
-    get body(): Expression<T> {
+    get body(): Expression<BodyNode> {
         return this._body;
     }
     get args(): string[] {
