@@ -10,14 +10,13 @@ export class Conditional extends Expression<any> {
      * @param test The condition of the statement
      * @param trueBranch The branch to follow if the condition evaluates to true
      * @param falseBranch The branch to follow if the condition evaluates to false
-     * @param lws Preceding whitespace
-     * @param rws post whitespace
+     * @param ws Preceding whitespace
      */
     constructor(
         private _test: Expression<any>, private _trueBranch: Expression<any>,
-        lws: string = "", rws: string = "", private _falseBranch?: Expression<any>
+        ws: string = "", private _falseBranch?: Expression<any>
     ) {
-        super(lws, rws, true);
+        super(ws, true);
     }
 
     eval(context: Scope) {
@@ -36,7 +35,7 @@ export class Conditional extends Expression<any> {
     }
 
     toString(): string {
-        let res = `${this.lws}if${this.rws}(${this.test}) {\n\t${this.trueBranch}\n}`;
+        let res = `${this.ws}if$(${this.test}) {\n\t${this.trueBranch}\n}`;
         if (this.falseBranch !== undefined) {
             res += `\nelse {\n ${this.falseBranch}\n};`;
         }

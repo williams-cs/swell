@@ -19,6 +19,6 @@ export class NumberNode extends AbstractTypeableNode<NumberNode, number, NumberE
     }
 
     toString(): string {
-        return this.lws + this.val + this.rws;
+        return this.ws + this.val;
     }
 }

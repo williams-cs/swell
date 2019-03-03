@@ -9,11 +9,10 @@ export class RepeatNode extends Expression<any>{
      * The constructor for repeat(n){}
      * @param n The number of times to repeat the loop's scope
      * @param body The enclosed body of the loop
-     * @param lws Preceding whitespace
-     * @param rws Post whitespace
+     * @param ws Preceding whitespace
      */
-    constructor(private _n: Expression<any>, private _body: Expression<any>, lws: string = "", rws: string = "") {
-        super(lws, rws, true);
+    constructor(private _n: Expression<any>, private _body: Expression<any>, ws: string = "") {
+        super(ws, true);
     }
 
     /**
@@ -41,7 +40,7 @@ export class RepeatNode extends Expression<any>{
      * Returns a string representation of the repeat statement
      */
     toString(): string {
-        return this.lws + 'repeat(' + this.n + ") {\n " + this.body + "}" + this.rws;
+        return this.ws + 'repeat(' + this.n + ") {\n " + this.body + "}";
     }
 
     /**

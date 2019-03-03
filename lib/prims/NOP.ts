@@ -4,7 +4,7 @@ import {Scope} from '../structural/Scope';
 export class NOP extends Expression<NOP>{
 
     constructor() {
-        super("", "", true);
+        super("", true);
     }
 
     eval(context: Scope): NOP {

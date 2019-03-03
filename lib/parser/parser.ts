@@ -14,6 +14,7 @@ import {
     RGBColorNode
 } from '../../index';
 import { Option, Some, None } from 'space-lift';
+import { AbstractBinaryOp } from '../binops/AbstractBinaryOp';
 
 export namespace Parser {
 
@@ -139,7 +140,7 @@ export namespace Parser {
                 ExpressionParserNoSeq
             )(
                 Prims.right<CharStream, Expression<any>>(
-                    Prims.char(';')
+                    Prims.char('\n')
                 )(
                     Prims.choice<Expression<any>>(
                         ExpressionParser
@@ -157,32 +158,24 @@ export namespace Parser {
      */
     export let ExpressionParserNoSeq: Prims.IParser<Expression<{}>> = i => {
         return choices<Expression<any>>(
-            loopParse, funDef, ForLoop, WhileLoop, conditionalParse, returnParser, funApp,
+            loopParse, funDef, conditionalParse, returnParser, funApp,
             ListHead, binOpExpr(), Declare(), unOpsExpr, varDecParse(),
             parens, notExpr, boolParse(), varNameParse(), float(), lNumber(), lstring2(),
         )(i);
     }
 
-    /**
-     * getWS is used to get the ws returned by the Pants ws parser and return it in a string
-     */
-    export function getWS(): (istream: CharUtil.CharStream) => Prims.Failure | Prims.Success<{}>{
-        let ws = "";
-        return Prims.appfun(Prims.ws())(x => ws = x.toString());
-    }
+
     /**
      * lNumber is used to wrap parsed numbers in NumberNodes for the AST
      */
     export function lNumber(): Prims.IParser<Expression<{}>> {
         return (istream: CharStream) => {
             let lws = "";
-            let rws = "";
             let preWS = Prims.appfun(Prims.ws())(x => lws = x.toString());
-            let postWS = Prims.appfun(Prims.ws())(x => rws = x.toString());
-            let o = Prims.between(preWS)(postWS)(number())(istream);
+            let o = Prims.right(preWS)(number())(istream);
             switch (o.tag) {
                 case "success":
-                    return new Prims.Success(o.inputstream, new NumberNode((<number> o.result), lws, rws));
+                    return new Prims.Success(o.inputstream, new NumberNode((<number> o.result), lws));
                 case "failure":
                     return o;
             }
@@ -211,13 +204,11 @@ export namespace Parser {
     export function lstring2() {
         return (istream: CharStream) => {
             let lws = "";
-            let rws = "";
             let preWS = Prims.appfun(Prims.ws())(x => lws = x.toString());
-            let postWS = Prims.appfun(Prims.ws())(x => rws = x.toString());
-            let o = Prims.between(preWS)(postWS)(lstring())(istream);
+            let o = Prims.right(preWS)(lstring())(istream);
             switch (o.tag) {
                 case "success":
-                    return new Prims.Success(o.inputstream, new StringNode(o.result.toString(), lws, rws));
+                    return new Prims.Success(o.inputstream, new StringNode(o.result.toString(), lws));
                 case "failure":
                     return o;
             }
@@ -229,18 +220,16 @@ export namespace Parser {
      */
     export function boolParse(): Prims.IParser<BooleanNode> {
         let lws = "";
-        let rws = "";
         let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => lws = x.toString());
-        let postWS = Prims.appfun<CharStream, string>(Prims.ws())(x => rws = x.toString());
         let trueNode = Prims.appfun<CharStream, BooleanNode>(
-            Prims.between<string, string, CharStream>(preWS)(postWS)(Prims.str('true'))
+            Prims.right<string, CharStream>(preWS)(Prims.str('true'))
         )(
-            _ => new BooleanNode(true, lws, rws)
+            _ => new BooleanNode(true, lws)
         );
         let falseNode = Prims.appfun<CharStream, BooleanNode>(
-            Prims.between<string, string, CharStream>(preWS)(postWS)(Prims.str('false'))
+            Prims.right<string, CharStream>(preWS)(Prims.str('false'))
         )(
-            _ => new BooleanNode(false, lws, rws)
+            _ => new BooleanNode(false, lws)
         );
         return Prims.choice<BooleanNode>(trueNode)(falseNode);
     }
@@ -274,9 +263,14 @@ export namespace Parser {
             let singleTokenParser = choices<Expression<any>>(
                 notExpr, parens, unOpsExpr, boolParse(), varNameParse(), float(), lNumber(), lstring2()
             );
+            let ws: string[] = [];
+            let preWS = Prims.appfun<CharStream,string>(Prims.ws())(x => {
+                ws.push(x.toString())
+                return x.toString()
+            });
             let remainingTokensParser = Prims.many1<[CharStream, Expression<any>]>(
                 Prims.seq<CharStream, Expression<any>, [CharStream, Expression<any>]>(
-                    binOpChar(includePureLogic)
+                    Prims.right<string, CharStream>(preWS)(binOpChar(includePureLogic))
                 )(
                     singleTokenParser
                 )(
@@ -284,16 +278,18 @@ export namespace Parser {
                 )
             );
 
-            let buildBinOp = function(lhs: Expression<any>, tokens: Array<[CharStream, Expression<any>]>, min_precedence: number) {
+            let buildBinOp = function(lhs: Expression<any>, tokens: Array<[CharStream, Expression<any>]>, min_precedence: number, ws: string[]) {
                 if (tokens.length == 0) {
                     return lhs;
                 }
                 let currentOp: string;
                 let curOpPrecedence: number;
+                let curWS: string = "";
                 while (tokens.length > 0 && min_precedence <= (curOpPrecedence = binOpPrecedenceMap.get(currentOp = tokens[0][0].toString()))) {
                     let next_min_precedence = isOpRightAssoc(currentOp) ? curOpPrecedence : curOpPrecedence + 1;
-                    let rhs: Expression<any> = buildBinOp(tokens.shift()[1], tokens, next_min_precedence);
-                    lhs = createBinOp(currentOp, lhs, rhs);
+                    curWS = ws.shift();
+                    let rhs: Expression<any> = buildBinOp(tokens.shift()[1], tokens, next_min_precedence, ws);
+                    lhs = createBinOp(currentOp, lhs, rhs, curWS);
                 }
                 return lhs;
             }
@@ -301,39 +297,39 @@ export namespace Parser {
             return Prims.seq<
                 Expression<any>, Array<[CharStream, Expression<any>]>, Expression<any>
             >(singleTokenParser)(remainingTokensParser)(
-                (tup: [Expression<any>, Array<[CharStream, Expression<any>]>]) => buildBinOp(tup[0], tup[1], 0)
+                (tup: [Expression<any>, Array<[CharStream, Expression<any>]>]) => buildBinOp(tup[0], tup[1], 0, ws)
             )(i);
         }
     }
 
-    function createBinOp(op: string, lhs: Expression<any>, rhs: Expression<any>): BinaryOp<any> {
+    function createBinOp(op: string, lhs: Expression<any>, rhs: Expression<any>, ws: string): BinaryOp<any> {
         switch (op) {
             case "=":
-                return new AssignOp(lhs, rhs);
+                return new AssignOp(lhs, rhs, ws);
             case "||":
-                return new Or(lhs, rhs);
+                return new Or(lhs, rhs, ws);
             case "&&":
-                return new And(lhs, rhs);
+                return new And(lhs, rhs, ws);
             case "==":
-                return new Equals(lhs, rhs);
+                return new Equals(lhs, rhs, ws);
             case "!=":
-                return new NotEqual(lhs, rhs);
+                return new NotEqual(lhs, rhs, ws);
             case ">":
-                return new GreaterThan(lhs, rhs);
+                return new GreaterThan(lhs, rhs, ws);
             case "<":
-                return new LessThan(lhs, rhs);
+                return new LessThan(lhs, rhs, ws);
             case ">=":
-                return new GreaterThanEq(lhs, rhs);
+                return new GreaterThanEq(lhs, rhs, ws);
             case "<=":
-                return new LessThanEq(lhs, rhs);
+                return new LessThanEq(lhs, rhs, ws);
             case "+":
-                return new PlusOp(lhs, rhs);
+                return new PlusOp(lhs, rhs, ws);
             case "-":
-                return new MinusOp(lhs, rhs);
+                return new MinusOp(lhs, rhs, ws);
             case "*":
-                return new MulOp(lhs, rhs);
+                return new MulOp(lhs, rhs, ws);
             case "/":
-                return new DivOp(lhs, rhs);
+                return new DivOp(lhs, rhs, ws);
             default:
                 throw new Error("Binary Operation not supported");
         }
@@ -347,28 +343,29 @@ export namespace Parser {
         let operand: Prims.IParser<Expression<any>> = choices<Expression<any>>(
             parens, varNameParse(), float(), lNumber()
         );
-
-        let prefixOp: Prims.IParser<CharStream> = Prims.right<CharStream, CharStream>(Prims.ws())(Prims.strSat(["-"]));
+        let ws = "";
+        let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
+        let prefixOp: Prims.IParser<CharStream> = Prims.right<string, CharStream>(preWS)(Prims.strSat(["-"]));
         let createPrefixOp = function(tup: [CharStream, Expression<any>]): UnaryOp<any> {
             let op: string = tup[0].toString();
             let expr: Expression<any> = tup[1];
             switch (op) {
                 case "-":
-                    return new NegOp(expr);
+                    return new NegOp(expr, ws);
                 default:
                     throw new Error(`Unary operator ${op} is not supported.`);
             }
         }
 
-        let postfixOp: Prims.IParser<CharStream> = Prims.right<CharStream, CharStream>(Prims.ws())(Prims.strSat(["++", "--"]));
+        let postfixOp: Prims.IParser<CharStream> = Prims.right<string, CharStream>(preWS)(Prims.strSat(["++", "--"]));
         let createPostfixOp = function(tup: [Expression<any>, CharStream]): UnaryOp<any> {
             let op: string = tup[1].toString();
             let expr: Expression<any> = tup[0];
             switch (op) {
                 case "++":
-                    return new Increment(expr);
+                    return new Increment(expr, ws);
                 case "--":
-                    return new Decrement(expr);
+                    return new Decrement(expr, ws);
                 default:
                     throw new Error(`Postfix operator ${op} is not supported.`);
             }
@@ -383,25 +380,24 @@ export namespace Parser {
 
     export let parens: Prims.IParser<Parens> = i => {
         let lws = "";
-        let rws = "";
         let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => lws = x.toString());
-        let postWS = Prims.appfun<CharStream, string>(Prims.ws())(x => rws = x.toString());
         let open = Prims.right<string, CharStream>(preWS)(Prims.str("("));
-        let close = Prims.left<CharStream, string>(Prims.str(")"))(postWS);
         let expr = choices<Expression<any>>(
             binOpExpr(), unOpsExpr, parens, notExpr,
             boolParse(), varNameParse(), float(), lNumber(), lstring2()
         );
-        let parentheses = Prims.between<CharStream, CharStream, Expression<any>>(open)(close)(expr);
-        return Prims.appfun<Expression<any>, Parens>(parentheses)(x => new Parens(x, lws, rws))(i);
+        let parentheses = Prims.between<CharStream, CharStream, Expression<any>>(open)(Prims.str(")"))(expr);
+        return Prims.appfun<Expression<any>, Parens>(parentheses)(x => new Parens(x, lws))(i);
     }
 
     export let notExpr: Prims.IParser<Not> = i => {
-        let notOp: Prims.IParser<CharStream> = Prims.right<CharStream, CharStream>(Prims.ws())(Prims.str("!"));
+        let ws = "";
+        let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
+        let notOp: Prims.IParser<CharStream> = Prims.right<string, CharStream>(preWS)(Prims.str("!"));
         let operand: Prims.IParser<Expression<any>> = choices<Expression<any>>(
             notExpr, binOpExpr(false), parens, boolParse(), varNameParse(), float(), lNumber(), lstring2()
         );
-        let createNotOp = (tup: [CharStream, Expression<any>]) => new Not(tup[1]);
+        let createNotOp = (tup: [CharStream, Expression<any>]) => new Not(tup[1], ws);
         return Prims.seq<CharStream, Expression<any>, Not>(notOp)(operand)(createNotOp)(i);
     }
 
@@ -411,18 +407,12 @@ export namespace Parser {
      * by letters or digits
      */
     export function varNameParse(): Prims.IParser<VariableNode> {
-        let lws = "";
-        let rws = "";
-        let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => lws = x.toString());
-        let postWS = Prims.appfun<CharStream, string>(Prims.ws())(x => rws = x.toString());
+        let ws = "";
+        let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
         let firstChar = Prims.right<string, CharStream>(preWS)(Prims.letter());
-        let nextChars = Prims.left<CharStream[], string>(
-            Prims.many(Prims.choice(Prims.digit())(Prims.letter()))
-        )(
-            postWS
-        );
+        let nextChars = Prims.many(Prims.choice(Prims.digit())(Prims.letter()));
         let f = (tup: [CharStream, CharStream[]]) => {
-            return new VariableNode(tup[0].toString() + CharStream.concat(tup[1]).toString(), lws, rws);
+            return new VariableNode(tup[0].toString() + CharStream.concat(tup[1]).toString(), ws);
         }
         return Prims.seq<CharStream, CharStream[], VariableNode>(firstChar)(nextChars)(f);
     }
@@ -432,12 +422,7 @@ export namespace Parser {
      * the parser then wraps the parsed value in a variable node for the AST
      */
     export function varDecParse(): Prims.IParser<VariableNode> {
-        let ws = "";
-        let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
-        let p1 = Prims.right<string, CharStream>(preWS)(Prims.str("var"));
-        let varName = Prims.between<CharStream, CharStream, VariableNode>(Prims.ws1())(Prims.ws())(varNameParse());
-        let p = Prims.seq<CharStream, VariableNode, VariableNode>(p1)(varName)(tup => tup[1]);
-        return p;
+        return Prims.seq<CharStream, VariableNode, VariableNode>(Prims.str("var"))(varNameParse())(tup => tup[1]);
     }
 
     /**
@@ -445,9 +430,12 @@ export namespace Parser {
      * and returns a DeclareOp node
      */
     export function Declare(): Prims.IParser<DeclareOp<any>> {
-        let eq = Prims.between(Prims.ws())(Prims.ws())(Prims.char('='));
-        let p1 = Prims.left(varDecParse())(eq);
-        return Prims.seq<VariableNode, Expression<any>, DeclareOp<any>>(p1)(ExpressionParserNoSeq)(tup => { return new DeclareOp(tup[0], tup[1]) })
+        let ws1 = "";
+        let ws2 = "";
+        let preWS1 = Prims.appfun<CharStream, string>(Prims.ws())(x => ws1 = x.toString());
+        let preWS2 = Prims.appfun<CharStream, string>(Prims.left(Prims.ws())(Prims.char('=')))(x => ws2 = x.toString());
+        let p = Prims.between<string, string, VariableNode>(preWS1)(preWS2)(varDecParse());
+        return Prims.seq<VariableNode, Expression<any>, DeclareOp<any>>(p)(ExpressionParserNoSeq)(tup => { return new DeclareOp(tup[0], tup[1], ws1, ws2) })
     }
 
     /**
@@ -458,8 +446,7 @@ export namespace Parser {
     export let ListHead: Prims.IParser<ListNode> = i => {
         let ws = "";
         let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
-        let p0 = Prims.between<CharStream, CharStream, Expression<any>>(Prims.ws())(Prims.ws())(ExpressionParserNoSeq);
-        let p1 = Prims.right<CharStream, Expression<any>>(Prims.right<string, CharStream>(preWS)(Prims.char('[')))(p0);
+        let p1 = Prims.right<CharStream, Expression<any>>(Prims.right<string, CharStream>(preWS)(Prims.char('[')))(ExpressionParserNoSeq);
         var f = (tup: [Expression<any>, any]) => {
             let hd = tup[0];
             let res: [any] = [hd];
@@ -479,10 +466,18 @@ export namespace Parser {
      * returns an array of Expressions that will be accessed by ListHead
      */
     export function ListTail(): Prims.IParser<Expression<any>[]> {
-        let p0 = Prims.between<CharStream, CharStream, Expression<any>>(Prims.ws())(Prims.ws())(ExpressionParserNoSeq);
-        let p1 = Prims.right<CharStream, Expression<any>>(Prims.char(','))(p0);
+        let p1 = Prims.right<CharStream, Expression<any>>(Prims.char(','))(ExpressionParserNoSeq);
         let p2 = Prims.left(Prims.many<Expression<any>>(p1))(Prims.char(']'));
         return p2;
+    }
+
+    /**
+     * Body parses the body of a function, if, or repeat statement, aka expressions between {}
+     */
+    export function body(): Prims.IParser<Expression<{}>> {
+        let ws = "";
+        let preWS = Prims.appfun<CharStream, string>(Prims.left(Prims.ws())(Prims.char('{')))(x => ws = x.toString());
+        return Prims.between<string, CharStream, Expression<any>>(preWS)(Prims.char('}'))(ExpressionParser);
     }
 
     /**
@@ -614,28 +609,8 @@ export namespace Parser {
                     /* function arguments */
                     funDefArgList()
                 )(
-                    Prims.right<CharStream, Expression<{}>>(
-                        /* function body */
-                        Prims.between<CharStream, CharStream, CharStream>(
-                            Prims.ws()
-                        )(
-                            Prims.ws()
-                        )(
-                            Prims.char('{')
-                        )
-                    )(
-                        Prims.left<Expression<{}>, CharStream>(
-                            Prims.between<CharStream, CharStream, Expression<{}>>(
-                                Prims.ws()
-                            )(
-                                Prims.ws()
-                            )(
-                                ExpressionParser
-                            )
-                        )(
-                            Prims.char('}')
-                        )
-                    )
+                    /* function body */
+                    body()
                 )(id)
             )(
                 // create the AST node
@@ -724,7 +699,7 @@ export namespace Parser {
     export let condParse: Prims.IParser<Conditional> = i => {
         var f = (tup: Expression<any>[]) => {
             if (tup.length == 3) {
-                return new Conditional(tup[0], tup[1], "", "", tup[2]);
+                return new Conditional(tup[0], tup[1], "", tup[2]);
             }
             else {
                 return new Conditional(tup[0], tup[1]);
@@ -739,10 +714,10 @@ export namespace Parser {
     export let conditionalParse: Prims.IParser<Conditional> = i => {
         var f = (tup: Expression<any>[]) => {
             if (tup.length == 3) {
-                return new Conditional(tup[0], tup[1], lws, rws, tup[2]);
+                return new Conditional(tup[0], tup[1], lws, tup[2]);
             }
             else {
-                return new Conditional(tup[0], tup[1], lws, rws);
+                return new Conditional(tup[0], tup[1], lws);
             }
         }
         let lws = "";
@@ -797,43 +772,6 @@ export namespace Parser {
         return Prims.appfun<Expression<any>[], RepeatNode>(RepeatLoop())(f)(i);
     }
 
-    /**
-     * WhileLoop parses valid while loops in the form "while(condition) { body;}"
-     * returns a WhileNode for the AST
-     */
-    export let WhileLoop: Prims.IParser<WhileNode> = i => {
-        let expr = Prims.between<CharStream, CharStream, Expression<{}>>(Prims.ws())(Prims.ws())(ExpressionParserNoSeq);
-        let bodyParse = Prims.between<CharStream, CharStream, Expression<{}>>(Prims.ws())(Prims.ws())(ExpressionParser);
-        let ws = "";
-        let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
-        let p1 = Prims.seq<CharStream, CharStream, CharStream[]>(Prims.right<string, CharStream>(preWS)(Prims.str("while")))(Prims.char('('))(x => x);
-        let cond = Prims.between<CharStream[], CharStream, Expression<any>>(p1)(Prims.char(')'))(expr);
-        let curly = Prims.between<CharStream, CharStream, CharStream>(Prims.ws())(Prims.ws())(Prims.char('{'));
-        let body = Prims.between<CharStream, CharStream, Expression<any>>(curly)(Prims.char('}'))(bodyParse);
-        var f = (tup: [Expression<any>, Expression<any>]) => { return new WhileNode(tup[0], tup[1], ws); }
-        return Prims.seq<Expression<any>, Expression<any>, WhileNode>(cond)(body)(f)(i);
-    }
-
-    /**
-     * ForLoop parses valid for loops in the form "for(initial, condition, post) { body;}" and returns a ForNode
-     */
-    export let ForLoop: Prims.IParser<ForNode> = i => {
-        let args = Prims.between<CharStream, CharStream, Expression<any>[]>(Prims.ws())(Prims.ws())(funAppArgList());
-        let ws = "";
-        let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
-        let p1 = Prims.right<CharStream, Expression<any>[]>(Prims.right<string, CharStream>(preWS)(Prims.str('for')))(args);
-        let curly = Prims.between<CharStream, CharStream, CharStream>(Prims.ws())(Prims.ws())(Prims.char('{'));
-        let expr = Prims.between<CharStream, CharStream, Expression<any>>(Prims.choice(Prims.ws())(Prims.nl()))(Prims.ws())(ExpressionParser);
-        let body = Prims.between<CharStream, CharStream, Expression<any>>(curly)(Prims.char('}'))(expr);
-        var f = (tup: [Expression<any>[], Expression<any>]) => {
-            let init = tup[0][0];
-            let cond = tup[0][1];
-            let post = tup[0][2];
-            let body = tup[1];
-            return new ForNode(init, cond, post, body, ws);
-        }
-        return Prims.seq<Expression<any>[], Expression<any>, ForNode>(p1)(body)(f)(i);
-    }
 
     export function singleComment(): Prims.IParser<CharStream> {
         let p1 = Prims.many1<CharStream>(Prims.item())

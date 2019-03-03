@@ -6,11 +6,10 @@ export class VariableNode extends Expression<any> {
     /**
      * Constructor for a VariableNode, a node representing a variable
      * @param name The variable name
-     * @param lws Preceding whitespace
-     * @param rws Post whitespace
+     * @param ws Preceding whitespace
      */
-    constructor(private _name: string, lws: string = "", rws: string = "") {
-        super(lws, rws, false);
+    constructor(private _name: string, ws: string = "") {
+        super(ws, false);
     }
 
     /**
@@ -22,7 +21,7 @@ export class VariableNode extends Expression<any> {
     }
 
     toString(): string {
-        return this.lws + this.name + this.rws;
+        return this.ws + this.name;
     }
 
     get name(): string {

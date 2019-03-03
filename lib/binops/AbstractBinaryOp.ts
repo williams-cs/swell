@@ -3,8 +3,8 @@ import { Scope } from '../structural/Scope';
 
 export abstract class AbstractBinaryOp<L, R, T> extends Expression<T> {
 
-    constructor(private _left: Expression<L>, private _right: Expression<R>, lws: string = "", rws: string = "") {
-        super(lws, rws);
+    constructor(private _left: Expression<L>, private _right: Expression<R>, ws: string = "") {
+        super(ws);
     };
 
     get left(): Expression<L> {

@@ -14,12 +14,11 @@ export class FunApp<T> extends Expression<T> {
      * The constructor for a function application
      * @param name The name of the function
      * @param args Function arguments, if applicable
-     * @param lws Preceding whitespace
-     * @param rws Post whitespace
+     * @param ws Preceding whitespace
      * @param defaultValue The default return value of the function, if any
      */
-    constructor(name: string, args?: any[], lws: string = "", rws: string = "", defaultValue?: T) {
-        super(lws, rws);
+    constructor(name: string, args?: any[], ws: string = "", defaultValue?: T) {
+        super(ws);
         this._name = name;
         this._args = args;
         this._defaultValue = defaultValue;
@@ -70,7 +69,7 @@ export class FunApp<T> extends Expression<T> {
             }
             argsList += this._args[this._args.length - 1].toString();
         }
-        return this.lws + this.name + this.rws + "(" + argsList + ")" ;
+        return this.ws + this.name + "(" + argsList + ")" ;
     }
 
     get name(): string {

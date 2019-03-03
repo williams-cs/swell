@@ -10,6 +10,6 @@ export class Equals extends BinaryLogicOp<Expression<any>> {
     }
 
     toString(): string {
-        return `${this.lws}${this.left}equals${this.right}${this.rws}`;
+        return `${this.ws}${this.left}equals${this.right}`;
     }
 }

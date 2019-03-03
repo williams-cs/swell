@@ -6,12 +6,14 @@ export class FunDef<T> extends Expression<T> {
     private _body: Expression<T>;
     private _args: string[];
     private _funScope: Scope;
+    private _rws: string;
 
-    constructor(name: string, body: Expression<T>, args?: string[], lws: string = "", rws: string = "") {
-        super(lws, rws);
+    constructor(name: string, body: Expression<T>, args?: string[], ws: string = "", rws: string = "") {
+        super(ws);
         this._name = name;
         this._body = body;
         this._args = args;
+        this._rws = rws;
     };
 
     // Binds args in context of definition; no values
@@ -41,7 +43,7 @@ export class FunDef<T> extends Expression<T> {
             }
             argsList += this._args[this._args.length - 1];
         }
-        return `${this.lws}fun${this.rws}${this.name}(${argsList}) {\n ${this.body}}`;
+        return `${this.ws}fun${this._rws}${this.name}(${argsList}) {\n ${this.body}}`;
     }
 
     get name(): string {

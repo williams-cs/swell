@@ -9,6 +9,6 @@ export class Not extends UnaryOp<BooleanNode> {
     }
 
     toString(): string {
-        return this.lws + "not " + this.expr + this.rws;
+        return this.ws + "not " + this.expr;
     }
 }

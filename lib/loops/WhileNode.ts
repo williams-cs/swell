@@ -9,11 +9,10 @@ export class WhileNode extends Expression<any> {
      * Constructor for a While loop
      * @param cond The While loop condition
      * @param body The body of the loop
-     * @param lws Preceding whitespace
-     * @param rws Post whitespace
+     * @param ws Preceding whitespace
      */
-    constructor(private _cond: Expression<any>, private _body: Expression<any>, lws: string = "", rws: string = "") {
-        super(lws, rws, true);
+    constructor(private _cond: Expression<any>, private _body: Expression<any>, ws: string = "") {
+        super(ws, true);
     }
 
     /**
@@ -37,6 +36,6 @@ export class WhileNode extends Expression<any> {
     }
 
     toString(): string {
-        return this.lws + "while(" + this._cond.toString() + ") {\n " + this._body.toString() + "}" + this.rws;
+        return this.ws + "while(" + this._cond.toString() + ") {\n " + this._body.toString() + "}";
     }
 }

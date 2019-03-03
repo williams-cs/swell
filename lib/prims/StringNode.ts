@@ -19,6 +19,6 @@ export class StringNode extends AbstractTypeableNode<StringNode, string, StringE
     }
 
     toString(): string {
-        return this.lws + "\"" + this.val + "\"" + this.rws;
+        return this.ws + "\"" + this.val + "\"";
     }
 }

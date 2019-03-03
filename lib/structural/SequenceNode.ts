@@ -12,10 +12,9 @@ export class SequenceNode extends Expression<void>{
      * @param left The left side of the Sequence
      * @param right The right side of the Sequence
      * @param lws Preceding ws
-     * @param rws Post ws
      */
-    constructor(private _left: Expression<any>, private _right: Expression<any>, lws: string = "", rws: string = "") {
-        super(lws, rws, true);
+    constructor(private _left: Expression<any>, private _right: Expression<any>, ws: string = "") {
+        super(ws, true);
     }
 
     /**
@@ -32,8 +31,8 @@ export class SequenceNode extends Expression<void>{
 
     toString(): string {
         return (
-            this.lws + this.left + (this.left.newLine ? "" : ";") +
-            this.right + (this.right.newLine ? "" : ";") + this.rws
+            this.ws + this.left + (this.left.newLine ? "" : ";") +
+            this.right + (this.right.newLine ? "" : ";")
         );
     }
 

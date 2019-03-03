@@ -12,6 +12,6 @@ export class LessThanEq extends BinaryLogicOp<NumberNode | FloatNode> {
     }
 
     toString(): string {
-        return `${this.lws}${this.left}<=${this.right}${this.rws}`;
+        return `${this.ws}${this.left}<=${this.right}`;
     }
 }
