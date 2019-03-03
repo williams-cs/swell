@@ -42,191 +42,46 @@ describe('Parse function test', () => {
     });
 });
 
-// describe('binOps parser test', () =>{
-//     it('should succesfully parse a binary operator', () =>{
-//         const input= new CharUtil.CharStream('+2');
-//         let result=Parser.binOpsChar()(input);
-//         switch(result.tag){
-//             case "success":
-//                 expect(result.inputstream.toString()).to.equal('2');
-//                 break;
-//             case "failure":
-//                 assert.fail();
-//         }
-//     });
-//     it('should fail if no binOps are present',()=>{
-//         const input= new CharUtil.CharStream("hello");
-//         let result= Parser.binOpsChar()(input);
-//         switch(result.tag){
-//             case "failure":
-//                 assert(true);
-//                 break;
-//             case "success":
-//                 assert.fail();
-//         }
-//     });
-// });
+// Use this for simple binOp value tests
+function testBinOpValue(description: string, tests: string[]) {
+    describe(description, () => {
+        for (let test of tests) {
+            let expected: string = eval(test) + "";
+            it(`${test} should evaluate to ${expected}`, () => {
+                let result = Parser.binOpExpr()(new CharUtil.CharStream(test));
+                switch (result.tag) {
+                    case "success":
+                        expect(result.result.eval(null).toString()).to.eql(expected);
+                        break;
+                    case "failure":
+                        assert.fail();
+                }
+            });
+        }
+    });
+}
 
-// describe('binOpShort parser test', () => {
-//     it('should not parse a binary expression with invalid operands', () =>{
-//         const input= new CharUtil.CharStream('+ hello ');
-//         let result= Parser.binOpShort()(input);
-//         //console.log(result);
-//         switch(result.tag){
-//             case "failure":
-//                 assert(true);
-//                 break;
-//             case "success":
-//                 assert.fail();
-//         }
-//     });
-//     it('should parse the second half of a binary expression', () => {
-//         const input= new CharUtil.CharStream("+   2"); //extra whitespace included to make sure white space parser works right
-//         let result= Parser.binOpShort()(input);
-//         //const test= ["+", new NumberNode(2)];
-//         switch(result.tag){
-//             case "success":
-//             break;
-//             case "failure":
-//                 assert.fail();
-//         }
-//     });
-// });
-
-describe('binOpExpr parser test', () => {
-    it("should parse an entire binary expression", () => {
-        const input = "6 - 3;";
-        let result = Parser.parse(input);
-        if (result.isDefined()) {
-            //console.log(result.get().toString());
-        }
-    });
-
-    it("should parse an entire binary expression with floats", () => {
-        const input = "6.25 - 3.25;";
-        let result = Parser.binOpExpr(new CharUtil.CharStream(input));
-        switch (result.tag) {
-            case "success":
-                expect(result.result.eval(null)).to.eql(new NumberNode(3));
-                break;
-            case "failure":
-                assert.fail();
-        }
-    });
-
-    it("should parse an increment expression", () => {
-        const input = new CharUtil.CharStream("i++");
-        let result = Parser.binOpExpr(input);
-        switch (result.tag) {
-            case "success":
-                //console.log(result.result.toString());
-                expect(result.result).to.eql(new Increment(new VariableNode('i')));
-                break;
-            case "failure":
-                assert.fail();
-        }
-    });
-    it("should parse an increment expression", () => {
-        const input = new CharUtil.CharStream("  2++");
-        let result = Parser.binOpExpr(input);
-        switch (result.tag) {
-            case "success":
-                //console.log(result.result.toString());
-                expect(result.result).to.eql(new Increment(new NumberNode(2), "  "));
-                expect(result.result.eval(null)).to.eql(new NumberNode(3));
-                break;
-            case "failure":
-                assert.fail();
-        }
-    });
-    it("should parse an increment expression with floats", () => {
-        const input = new CharUtil.CharStream("  2.5++");
-        let result = Parser.binOpExpr(input);
-        switch (result.tag) {
-            case "success":
-                //console.log(result.result.toString());
-                expect(result.result).to.eql(new Increment(new FloatNode(2.5), "  "));
-                expect(result.result.eval(null)).to.eql(new NumberNode(3.5));
-                break;
-            case "failure":
-                assert.fail();
-        }
-    });
-    it("should parse an decrement expression", () => {
-        const input = new CharUtil.CharStream("i--");
-        let result = Parser.binOpExpr(input);
-        switch (result.tag) {
-            case "success":
-                //console.log(result.result.toString());
-                expect(result.result).to.eql(new Decrement(new VariableNode('i')));
-                break;
-            case "failure":
-                assert.fail();
-        }
-    });
-    it("should parse an decrement expression", () => {
-        const input = new CharUtil.CharStream("  2--");
-        let result = Parser.binOpExpr(input);
-        switch (result.tag) {
-            case "success":
-                //console.log(result.result.toString());
-                expect(result.result).to.eql(new Decrement(new NumberNode(2), "  "));
-                expect(result.result.eval(null)).to.eql(new NumberNode(1));
-                break;
-            case "failure":
-                assert.fail();
-        }
-    });
-    it("should parse an decrement expression with floats", () => {
-        const input = new CharUtil.CharStream("  2.5--");
-        let result = Parser.binOpExpr(input);
-        switch (result.tag) {
-            case "success":
-                //console.log(result.result.toString());
-                expect(result.result).to.eql(new Decrement(new FloatNode(2.5), "  "));
-                expect(result.result.eval(null)).to.eql(new NumberNode(1.5));
-                break;
-            case "failure":
-                assert.fail();
-        }
-    });
-    it("should parse an entire binary expression", () => {
-        const input = new CharUtil.CharStream("6 - 3 + 5 * 1");
-        let result = Parser.binOpExpr(input);
-        switch (result.tag) {
-            case "success":
-                console.log(result.result.toString());
-                //expect(result.result.eval(null)).to.deep.equal(new NumberNode(3));
-                break;
-            case "failure":
-                assert.fail();
-        }
-    });
-    it("should parse an assignment expression", () => {
-        const input = "var i = 0;";
-        let result = Parser.parse(input);
-        if (result.isDefined()) {
-            //console.log(result.get().toString());
-            expect(result.get()).to.eql(new SequenceNode(new AssignOp(new VariableNode('i'), new NumberNode(0)), new NOP()));
-        }
-        else {
-            assert.fail();
-        }
-    });
-    it("should parse an assignment expression", () => {
-        const input = "var i = 0;\n i = 2;";
-        let result = Parser.parse(input);
-        let test = new SequenceNode(new DeclareOp(new VariableNode('i'), new NumberNode(0)), new SequenceNode(new AssignOp(new VariableNode('i'), new NumberNode(2), "\n "), new NOP()));
-        if (result.isDefined()) {
-            //console.log(result.get().toString());
-            expect(result.get()).to.eql(test);
-        }
-        else {
-            assert.fail();
-        }
-    });
-});
-
+testBinOpValue("Binary Op expressions", [
+    "1 + 2", "3 - 1", "10 * 3", "25 / 5",
+    "-1 + 2", "3 + -1", "10 * -5", "-25 / 5",
+    "1.5+2", "2*1.5", "3/1.5", "4-2.5",
+    "1 + 2 * 3", "2 * 3 - 4", "2 + 4 / 2", "4 / 2 + 1",
+    "1 + 2 * 3 - 5", "2 + 6 / 3 - 2", "2 * 3 - 3 * 1",
+    "6 - 4 - 2", "10 / 2 / 5", "10 / 2 / 5 - 1",
+    "1 * (2 + 3)", "4 / (3 - 1)", "(-1 + 2) * 3", "(4 - -2) * 3",
+    "(1 + 2) * (3 - 1)", "(7 - 1) / (1 + 2)",
+    "2 * (3 + (1 - 2) / (-1))", "((((3 + 5) * 2) - 1) / 3) + 1",
+    "1 == 1", "1 != 1", "2 != 3", "2 == 3",
+    "1 + 2 == 2 + 1", "1 + 2 + 3 == 3 + 1 + 2", "4/2 != 2/4", "2*2 != 2*0",
+    "1 + (2 + 3) == (1 + 2) + 3", "1 + (2 * 3) != (1 + 2) * 3",
+    "1 < 2", "1 < 0", "2 > 1", "2 > 3",
+    "1 <= 1", "1 <= 2", "1 <= -1", "2 >= 1", "2 >= 2", "2 >= 3",
+    "1 + 2 < 3", "1 + 2 <= 3", "1 + 2 > 3", "1 + 2 >= 3",
+    "true && false", "true && true", "false || false", "false || true",
+    "!true && false", "true && !false", "!false || false", "false || !true",
+    "1 + 2 < 3 && 2 * 1 > 0", "2 - 1 > 1 || 1 - 2 < 0",
+    "!(1 + 2 > 3) || (2 + 1 < 3)", "(2 > 1) && !(1 > 2)"
+]);
 
 describe('unOpExpr parser test', () => {
     it('should successfully parse a unary expression (negation)', () => {
@@ -626,32 +481,32 @@ describe('If Statement Parser', () => {
                 assert.fail();
         }
     });
-    it('should be able to parse an if/else statement', () => {
-        const input = 'if( true ) {\n"goodbye"; }\n else {\n"hello"; }';
-        let result = Parser.parse(input);
-        var test =
-            new SequenceNode(
-                new Conditional(
-                    new BooleanNode(true),
-                    new SequenceNode(
-                        new StringNode('goodbye'),
-                        new NOP()
-                    ),
-                    new SequenceNode(
-                        new StringNode('hello'),
-                        new NOP()
-                    )
-                ),
-                new NOP()
-            );
-        if (result.isDefined()) {
-            //console.log(result.get().toString());
-            expect(result.get()).to.eql(test);
-        }
-        else {
-            assert.fail();
-        }
-    });
+    // it('should be able to parse an if/else statement', () => {
+    //     const input = 'if( true ) {\n"goodbye"; }\n else {\n"hello"; }';
+    //     let result = Parser.parse(input);
+    //     var test =
+    //         new SequenceNode(
+    //             new Conditional(
+    //                 new BooleanNode(true),
+    //                 new SequenceNode(
+    //                     new StringNode('goodbye'),
+    //                     new NOP()
+    //                 ),
+    //                 new SequenceNode(
+    //                     new StringNode('hello'),
+    //                     new NOP()
+    //                 )
+    //             ),
+    //             new NOP()
+    //         );
+    //     if (result.isDefined()) {
+    //         //console.log(result.get().toString());
+    //         expect(result.get()).to.eql(test);
+    //     }
+    //     else {
+    //         assert.fail();
+    //     }
+    // });
 });
 
 describe('Logical Expressions parser test', () => {

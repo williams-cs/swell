@@ -249,7 +249,7 @@ export namespace Parser {
         let logicChar2 = [">=", "<=", "==", "!="];
         let mathChar = ["+", "-", "/", "=", "*"];
         if (includePureLogic) {
-            logicChar.concat("&&", "||");
+            logicChar.push("&&", "||");
         }
         return choices<CharStream>(Prims.strSat(logicChar2), Prims.strSat(logicChar), Prims.strSat(mathChar));
     }
@@ -258,7 +258,7 @@ export namespace Parser {
         return op == "=";
     }
 
-    function binOpExpr(includePureLogic: boolean = true): Prims.IParser<Expression<any>> {
+    export function binOpExpr(includePureLogic: boolean = true): Prims.IParser<Expression<any>> {
         return i => {
             let singleTokenParser = choices<Expression<any>>(
                 notExpr, parens, unOpsExpr, boolParse(), varNameParse(), float(), lNumber(), lstring2()

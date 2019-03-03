@@ -2,17 +2,11 @@ import { BinaryOp } from './BinaryOp';
 import { Expression } from '../Expression';
 import { Scope } from '../structural/Scope';
 import { NumberNode } from '../prims/NumberNode';
-import { FloatNode } from '../prims/FloatNode';
 
-export class PlusOp extends BinaryOp<NumberNode | FloatNode> {
+export class PlusOp extends BinaryOp<NumberNode> {
 
-    eval(context: Scope): NumberNode | FloatNode {
-        let lhs = this.left.eval(context);
-        let rhs = this.right.eval(context);
-        if (lhs instanceof FloatNode || rhs instanceof FloatNode) {
-            return new FloatNode(lhs.val + rhs.val);
-        }
-        return new NumberNode(lhs.val + rhs.val);
+    eval(context: Scope): NumberNode {
+        return new NumberNode(this.left.eval(context).val + this.right.eval(context).val);
     }
 
     toString(): string {
