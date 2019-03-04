@@ -5,11 +5,9 @@ import { Scope } from "../structural/Scope";
 
 export class And extends BinaryLogicOp<BooleanNode> {
 
+    protected readonly op: string = "&&";
+
     eval(context: Scope): BooleanNode {
         return new BooleanNode(this.left.eval(context).val && this.right.eval(context).val);
-    }
-
-    toString(): string {
-        return `${this.ws}${this.left}and${this.right}`;
     }
 }

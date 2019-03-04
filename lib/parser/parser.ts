@@ -13,7 +13,6 @@ import {
     RGBColorNode
 } from '../../index';
 import { Option, Some, None } from 'space-lift';
-import { AbstractBinaryOp } from '../binops/AbstractBinaryOp';
 
 export namespace Parser {
 
@@ -294,7 +293,7 @@ export namespace Parser {
         }
     }
 
-    function createBinOp(op: string, lhs: Expression<any>, rhs: Expression<any>, ws: string): BinaryOp<any> {
+    function createBinOp(op: string, lhs: Expression<any>, rhs: Expression<any>, ws: string): Expression<any> {
         switch (op) {
             case "=":
                 return new AssignOp(lhs, rhs, ws);

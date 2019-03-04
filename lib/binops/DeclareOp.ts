@@ -5,7 +5,10 @@ import { VariableNode } from '../vars/VariableNode';
 
 export class DeclareOp<T> extends BinaryOp<T> {
 
-    private ws2: string;     //whitespace preceding "="
+    protected readonly op: string = "=";
+
+    private ws2: string; // whitespace preceding "="
+
     /**
      * Constructor for the declare operation, which declares a variable for the first time
      * @param left The left side of the declare op (the variable)
@@ -14,10 +17,10 @@ export class DeclareOp<T> extends BinaryOp<T> {
      * @param ws2 whitespace preceding "="
      */
     constructor(left: Expression<T>, right: Expression<T>, ws1: string = "", ws2: string = "") {
+        super(left, right, ws1);
         if (!(left instanceof VariableNode)) {
             throw("Left side is not a variable");
         }
-        super(left, right, ws1);
         this.ws2 = ws2;
     }
 

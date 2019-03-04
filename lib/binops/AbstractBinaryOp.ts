@@ -3,6 +3,8 @@ import { Scope } from '../structural/Scope';
 
 export abstract class AbstractBinaryOp<L, R, T> extends Expression<T> {
 
+    protected abstract op: string; // The binary operator
+
     constructor(private _left: Expression<L>, private _right: Expression<R>, ws: string = "") {
         super(ws);
     };
@@ -21,5 +23,9 @@ export abstract class AbstractBinaryOp<L, R, T> extends Expression<T> {
 
     set right(right: Expression<R>) {
         this._right = right;
+    }
+
+    toString(): string {
+        return `${this.left}${this.ws}${this.op}${this.right}`;
     }
 }

@@ -5,11 +5,9 @@ import { NumberNode } from '../prims/NumberNode';
 
 export class MinusOp extends BinaryOp<NumberNode> {
 
+    protected readonly op: string = "-";
+
     eval(context: Scope): NumberNode {
         return new NumberNode(this.left.eval(context).val - this.right.eval(context).val);
-    }
-
-    toString(): string {
-        return `${this.ws}${this.left}-${this.right}`;
     }
 }

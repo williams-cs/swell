@@ -5,6 +5,8 @@ import { VariableNode } from '../vars/VariableNode';
 
 export class AssignOp<T> extends BinaryOp<T> {
 
+    protected readonly op: string = "=";
+
     /**
      * Constructor for an assignment operation
      * @param left The left side of the assignment (the var)
@@ -12,10 +14,10 @@ export class AssignOp<T> extends BinaryOp<T> {
      * @param ws Preceding whitespace
      */
     constructor(left: Expression<T>, right: Expression<T>, ws: string = "") {
+        super(left, right, ws);
         if (!(left instanceof VariableNode)) {
             throw("Left side is not a variable");
         }
-        super(left, right, ws);
     }
 
     eval(context: Scope): T {
@@ -25,9 +27,5 @@ export class AssignOp<T> extends BinaryOp<T> {
         let r: T = this.right.eval(context);
         context.assign(this.left.name, r);
         return r;
-    }
-
-    toString(): string {
-        return this.ws + this.left + "=" + this.right;
     }
 }
