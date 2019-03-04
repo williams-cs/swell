@@ -338,22 +338,22 @@ import * as csvParse from 'csv-parse';
         let newNode: string = "";
         switch (buttonName) {
             case "ellipse":
-                newNode = "print(ellipse(100, 100));";
+                newNode = "print(ellipse(100, 100))";
                 break;
             case "rect":
-                newNode = "print(rect(100, 100));";
+                newNode = "print(rect(100, 100))";
                 break;
             case "line":
-                newNode = "print(line(x1 = 100, y1 = 100, x2 = 200, y2 = 100));";
+                newNode = "print(line(x1 = 100, y1 = 100, x2 = 200, y2 = 100))";
                 break;
             case "string":
-                newNode = 'print("newWord");';
+                newNode = 'print("newWord")';
                 break;
             case "number":
-                newNode = "print(10);";
+                newNode = "print(10)";
                 break;
             case "happy": case "sad": case "angry": case "cool":
-                newNode = 'print(emoji("' + buttonName + '", 100, 100));';
+                newNode = 'print(emoji("' + buttonName + '", 100, 100))';
                 break;
             default:
                 console.log("Problem with " + buttonName);
