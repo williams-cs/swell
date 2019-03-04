@@ -1,5 +1,5 @@
 import { Expression } from "../Expression";
-import { BodyNode } from "../conditionals/BodyNode"
+import { BodyNode } from "../structural/BodyNode"
 import { Scope } from '../structural/Scope';
 import { BooleanNode } from "../prims/BooleanNode";
 import { Some } from "space-lift";

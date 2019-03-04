@@ -3,7 +3,7 @@ import Prims = Primitives;
 import CharStream = CharUtil.CharStream;
 import {
     Expression, SequenceNode, PrintNode, ListNode,
-    NumberNode, StringNode, BooleanNode, FloatNode,
+    NumberNode, StringNode, BooleanNode,
     UnaryOp, Increment, NOP, Decrement, NegOp, Not, Parens,
     BinaryOp, PlusOp, MulOp, DivOp, MinusOp,
     Equals, And, GreaterThan, LessThan, GreaterThanEq, LessThanEq, Or, NotEqual,
@@ -35,13 +35,6 @@ export namespace Parser {
                     return o;
             }
         }
-    }
-
-    export function float(): Prims.IParser<Expression<{}>> {
-        let p1 = Prims.left<number, CharStream>(number())(Prims.str('.'));
-        let p2 = Prims.seq<number, number, number[]>(p1)(number())(x => x);
-        let float_val = Prims.appfun<string, number>(Prims.appfun<number[], string>(p2)(x => x[0] + "." + x[1]))(x => parseFloat(x));
-        return Prims.appfun<number, FloatNode>(float_val)(x => new FloatNode(x));
     }
 
     /**
@@ -159,7 +152,7 @@ export namespace Parser {
         return choices<Expression<any>>(
             loopParse, funDef, conditionalParse, returnParser, funApp,
             ListHead, binOpExpr(), Declare(), unOpsExpr, varDecParse(),
-            parens, notExpr, boolParse(), varNameParse(), float(), lNumber(), lstring2(),
+            parens, notExpr, boolParse(), varNameParse(), lNumber(), lstring2(),
         )(i);
     }
 
@@ -260,7 +253,7 @@ export namespace Parser {
     export function binOpExpr(includePureLogic: boolean = true): Prims.IParser<Expression<any>> {
         return i => {
             let singleTokenParser = choices<Expression<any>>(
-                notExpr, parens, unOpsExpr, boolParse(), varNameParse(), float(), lNumber(), lstring2()
+                notExpr, parens, unOpsExpr, boolParse(), varNameParse(), lNumber(), lstring2()
             );
             let ws: string[] = [];
             let preWS = Prims.appfun<CharStream,string>(Prims.ws())(x => {
@@ -340,7 +333,7 @@ export namespace Parser {
      */
     export let unOpsExpr: Prims.IParser<UnaryOp<any>> = i => {
         let operand: Prims.IParser<Expression<any>> = choices<Expression<any>>(
-            parens, varNameParse(), float(), lNumber()
+            parens, varNameParse(), lNumber()
         );
         let ws = "";
         let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
@@ -383,7 +376,7 @@ export namespace Parser {
         let open = Prims.right<string, CharStream>(preWS)(Prims.str("("));
         let expr = choices<Expression<any>>(
             binOpExpr(), unOpsExpr, parens, notExpr,
-            boolParse(), varNameParse(), float(), lNumber(), lstring2()
+            boolParse(), varNameParse(), lNumber(), lstring2()
         );
         let parentheses = Prims.between<CharStream, CharStream, Expression<any>>(open)(Prims.str(")"))(expr);
         return Prims.appfun<Expression<any>, Parens>(parentheses)(x => new Parens(x, lws))(i);
@@ -394,7 +387,7 @@ export namespace Parser {
         let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
         let notOp: Prims.IParser<CharStream> = Prims.right<string, CharStream>(preWS)(Prims.str("!"));
         let operand: Prims.IParser<Expression<any>> = choices<Expression<any>>(
-            notExpr, binOpExpr(false), parens, boolParse(), varNameParse(), float(), lNumber(), lstring2()
+            notExpr, binOpExpr(false), parens, boolParse(), varNameParse(), lNumber(), lstring2()
         );
         let createNotOp = (tup: [CharStream, Expression<any>]) => new Not(tup[1], ws);
         return Prims.seq<CharStream, Expression<any>, Not>(notOp)(operand)(createNotOp)(i);
@@ -474,10 +467,12 @@ export namespace Parser {
      * Body parses the body of a function, if, or repeat statement, aka expressions between {}
      */
     export let bodyParser: Prims.IParser<Expression<BodyNode>>  = i => {
-        let ws = "";
-        let preWS = Prims.appfun<CharStream, string>(Prims.left(Prims.ws())(Prims.char('{')))(x => ws = x.toString());
-        let p = Prims.between<string, CharStream, Expression<any>>(preWS)(Prims.char('}'))(ExpressionParser);
-        var f = (e: Expression<any>) => { return new BodyNode(e, ws); }
+        let ws1 = "";
+        let ws2 = "";
+        let preWS1 = Prims.appfun<CharStream, string>(Prims.left(Prims.ws())(Prims.char('{')))(x => ws1 = x.toString());
+        let preWS2 = Prims.appfun<CharStream, string>(Prims.left(Prims.ws())(Prims.char('}')))(x => ws2 = x.toString());
+        let p = Prims.between<string, string, Expression<any>>(preWS1)(preWS2)(ExpressionParser);
+        var f = (e: Expression<any>) => { return new BodyNode(e, ws1, ws2); }
         return Prims.appfun<Expression<any>, BodyNode>(p)(f)(i);
     }
 
