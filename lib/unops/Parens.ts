@@ -2,11 +2,10 @@ import { UnaryOp } from './UnaryOp';
 import { NumberNode } from '../prims/NumberNode';
 import { Scope } from '../structural/Scope';
 
-export class Parens extends UnaryOp<NumberNode> {
+export class Parens<T> extends UnaryOp<T> {
 
-    eval(context: Scope): NumberNode {
-        let v = this.expr.eval(context);
-        return new NumberNode(v.val, "");
+    eval(context: Scope): T {
+        return this.expr.eval(context)
     }
 
     toString(): string {

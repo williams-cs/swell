@@ -99,8 +99,6 @@ export namespace Parser {
         return Prims.choice<T>(expressions[0])(choices<T>(...expressions.slice(1)));
     }
 
-    let id = (x: any) => x;
-
     /**
      * parseWithOutcome is a function that wraps the input text in a CharStream
      * and passes it to the upper-level parse function. The function
@@ -378,7 +376,7 @@ export namespace Parser {
         )(i);
     }
 
-    export let parens: Prims.IParser<Parens> = i => {
+    export let parens: Prims.IParser<Parens<Expression<any>>> = i => {
         let lws = "";
         let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => lws = x.toString());
         let open = Prims.right<string, CharStream>(preWS)(Prims.str("("));
@@ -387,7 +385,11 @@ export namespace Parser {
             boolParse(), varNameParse(), lNumber(), lstring2()
         );
         let parentheses = Prims.between<CharStream, CharStream, Expression<any>>(open)(Prims.str(")"))(expr);
-        return Prims.appfun<Expression<any>, Parens>(parentheses)(x => new Parens(x, lws))(i);
+        return Prims.appfun<Expression<any>, Parens<Expression<any>>>(
+            parentheses
+        )(
+            x => new Parens<Expression<any>>(x, lws)
+        )(i);
     }
 
     export let notExpr: Prims.IParser<Not> = i => {
@@ -615,7 +617,7 @@ export namespace Parser {
                 )(
                     /* function body */
                     bodyParser
-                )(id)
+                )(x => x)
             )(
                 // create the AST node
                 (tup: [string, [string[], Expression<BodyNode>]]) => {
