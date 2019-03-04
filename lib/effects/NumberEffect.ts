@@ -1,8 +1,7 @@
 import { AbstractTextEffect } from "./AbstractTextEffect";
 import { NumberNode } from "../prims/NumberNode";
-import { FloatNode } from "../prims/FloatNode";
 
-export class NumberEffect extends AbstractTextEffect<NumberNode | FloatNode, number, NumberEffect> {
+export class NumberEffect extends AbstractTextEffect<NumberNode, number, NumberEffect> {
 
     readonly name: string = "number";
 

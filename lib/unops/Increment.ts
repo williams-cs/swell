@@ -1,15 +1,14 @@
 import { AssignOp } from '../binops/AssignOp';
 import { Expression } from '../Expression';
-import { FloatNode } from '../prims/FloatNode';
 import { NumberNode } from '../prims/NumberNode';
 import { PlusOp } from '../binops/PlusOp';
 import { Scope } from '../structural/Scope';
 import { UnaryOp } from './UnaryOp';
 import { VariableNode } from '../vars/VariableNode';
 
-export class Increment extends UnaryOp<NumberNode | FloatNode> {
+export class Increment extends UnaryOp<NumberNode> {
 
-    private innerRep: Expression<NumberNode | FloatNode>;
+    private innerRep: Expression<NumberNode>;
 
     constructor(node: Expression<any>, ws: string = "") {
         super(node, ws);
@@ -20,7 +19,7 @@ export class Increment extends UnaryOp<NumberNode | FloatNode> {
         }
     }
 
-    eval(context: Scope): NumberNode | FloatNode {
+    eval(context: Scope): NumberNode {
         return this.innerRep.eval(context);
     }
 

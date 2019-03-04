@@ -1,18 +1,12 @@
 import { UnaryOp } from './UnaryOp';
 import { NumberNode } from '../prims/NumberNode';
-import { FloatNode } from "../prims/FloatNode";
 import { Scope } from '../structural/Scope';
 
-export class NegOp extends UnaryOp<NumberNode | FloatNode>{
+export class NegOp extends UnaryOp<NumberNode>{
 
-    eval(context: Scope): NumberNode | FloatNode {
+    eval(context: Scope): NumberNode {
         let v = this.expr.eval(context);
-        if (v instanceof FloatNode) {
-            return new FloatNode(-v.val, "");
-        }
-        else {
-            return new NumberNode(-v.val, "");
-        }
+        return new NumberNode(-v.val, "");
     }
 
     toString(): string {

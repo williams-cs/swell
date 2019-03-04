@@ -3,34 +3,33 @@ export {Expression} from './lib/Expression';
 export {Scope} from './lib/structural/Scope';
 
 /* BINARY OPS */
-export {AssignOp} from './lib/binops/AssignOp'; 
+export {AssignOp} from './lib/binops/AssignOp';
 export {BinaryOp} from './lib/binops/BinaryOp';
 export {DivOp} from './lib/binops/DivOp';
 export {MinusOp} from './lib/binops/MinusOp';
-export {MulOp} from './lib/binops/MulOp'; 
-export {PlusOp} from './lib/binops/PlusOp'; 
+export {MulOp} from './lib/binops/MulOp';
+export {PlusOp} from './lib/binops/PlusOp';
 export {GreaterThan} from './lib/logic/GreaterThan';
-export {GreaterThanEq} from './lib/logic/GreaterThanEq'; 
-export {LessThan} from './lib/logic/LessThan'; 
+export {GreaterThanEq} from './lib/logic/GreaterThanEq';
+export {LessThan} from './lib/logic/LessThan';
 export {LessThanEq} from './lib/logic/LessThanEq';
-export {DeclareOp} from './lib/binops/DeclareOp'; 
+export {DeclareOp} from './lib/binops/DeclareOp';
 export {And} from './lib/logic/And';
 export {Or} from './lib/logic/Or';
 export {Equals} from './lib/logic/Equals';
 export {NotEqual} from './lib/logic/NotEqual';
-export {Increment} from './lib/unops/Increment'; 
+export {Increment} from './lib/unops/Increment';
 export {Decrement} from './lib/unops/Decrement';
 
-/* UNARY OPS */ 
+/* UNARY OPS */
 export {UnaryOp} from './lib/unops/UnaryOp';
 export {NegOp} from './lib/unops/NegOp';
 export {Not} from './lib/logic/Not';
 export {Parens} from './lib/unops/Parens';
 
 /* DATA TYPES */
-export {ListNode} from './lib/lists/ListNode'; 
+export {ListNode} from './lib/lists/ListNode';
 export {NumberNode} from './lib/prims/NumberNode';
-export {FloatNode} from './lib/prims/FloatNode';
 export {StringNode} from './lib/prims/StringNode';
 export {BooleanNode} from './lib/prims/BooleanNode';
 export {NOP} from './lib/prims/NOP';
@@ -39,9 +38,9 @@ export {NOP} from './lib/prims/NOP';
 export {VariableNode} from './lib/vars/VariableNode';
 
 /* CONTROL CONSTRUCTS */
-export {Conditional} from './lib/conditionals/Conditional'; 
+export {Conditional} from './lib/conditionals/Conditional';
 export {FunApp} from './lib/funhouse/FunApp';
-export {FunDef} from './lib/funhouse/FunDef'; 
+export {FunDef} from './lib/funhouse/FunDef';
 export {SequenceNode} from './lib/structural/SequenceNode';
 export {RepeatNode} from './lib/loops/RepeatNode';
 export {BodyNode} from './lib/structural/BodyNode';

@@ -36,7 +36,7 @@ export class Conditional extends Expression<any> {
     }
 
     toString(): string {
-        let res = `${this.ws}if$(${this.test}) {\n\t${this.trueBranch}\n}`;
+        let res = `${this.ws}if(${this.test}) {\n\t${this.trueBranch}\n}`;
         if (this.falseBranch !== undefined) {
             res += `\nelse {\n ${this.falseBranch}\n};`;
         }

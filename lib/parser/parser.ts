@@ -36,6 +36,16 @@ export namespace Parser {
         }
     }
 
+    export function float(): Prims.IParser<number> {
+        return (istream: CharStream) => {
+            let beforeDec: Prims.IParser<number> = Prims.left<number, CharStream>(number())(Prims.str('.'));
+            let f = (tup: [number, number]) => {
+                return parseFloat(tup[0] + "." + tup[1]);
+            }
+            return Prims.seq<number, number, number>(beforeDec)(number())(f)(istream);
+        }
+    }
+
     /**
      * to be moved to Pants
      * string is an arbitrary string parser that repeatedly applies the letter primitive
@@ -163,7 +173,7 @@ export namespace Parser {
         return (istream: CharStream) => {
             let lws = "";
             let preWS = Prims.appfun(Prims.ws())(x => lws = x.toString());
-            let o = Prims.right(preWS)(number())(istream);
+            let o = Prims.right(preWS)(choices<number>(float(), number()))(istream);
             switch (o.tag) {
                 case "success":
                     return new Prims.Success(o.inputstream, new NumberNode((<number> o.result), lws));
@@ -255,13 +265,12 @@ export namespace Parser {
                 notExpr, parens, unOpsExpr, boolParse(), varNameParse(), lNumber(), lstring2()
             );
             let ws: string[] = [];
-            let preWS = Prims.appfun<CharStream,string>(Prims.ws())(x => {
-                ws.push(x.toString())
-                return x.toString()
+            let preWS = Prims.appfun<CharStream, void>(Prims.ws())(x => {
+                ws.push(x.toString());
             });
             let remainingTokensParser = Prims.many1<[CharStream, Expression<any>]>(
                 Prims.seq<CharStream, Expression<any>, [CharStream, Expression<any>]>(
-                    Prims.right<string, CharStream>(preWS)(binOpChar(includePureLogic))
+                    Prims.right<void, CharStream>(preWS)(binOpChar(includePureLogic))
                 )(
                     singleTokenParser
                 )(
