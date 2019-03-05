@@ -5,12 +5,11 @@ import {
     Expression, SequenceNode, PrintNode, ListNode,
     NumberNode, StringNode, BooleanNode,
     UnaryOp, Increment, NOP, Decrement, NegOp, Not, Parens,
-    BinaryOp, PlusOp, MulOp, DivOp, MinusOp,
+    PlusOp, MulOp, DivOp, MinusOp,
     Equals, And, GreaterThan, LessThan, GreaterThanEq, LessThanEq, Or, NotEqual,
-    VariableNode, DeclareOp, AssignOp,
+    VariableNode, AssignOp,
     Return, FunDef, FunApp, Conditional, RepeatNode, BodyNode,
-    EllipseNode, RectangleNode, EmojiNode, LineNode,
-    RGBColorNode
+    EllipseNode, RectangleNode, EmojiNode, LineNode, RGBColorNode
 } from '../../index';
 import { Option, Some, None } from 'space-lift';
 
@@ -91,7 +90,7 @@ export namespace Parser {
     // Maybe move to Pants?
     export function choices<T>(...expressions: Prims.IParser<T>[]): Prims.IParser<T> {
         if (expressions.length == 0) {
-            throw("Error: choices must have a non-empty array.");
+            throw ("Error: choices must have a non-empty array.");
         }
         if (expressions.length == 1) {
             return expressions[0];
@@ -157,9 +156,9 @@ export namespace Parser {
      */
     export let ExpressionParserNoSeq: Prims.IParser<Expression<{}>> = i => {
         return choices<Expression<any>>(
-            loopParse, funDef, conditionalParse, returnParser, funApp,
-            ListHead, binOpExpr(), Declare(), unOpsExpr, varDecParse(),
-            parens, notExpr, boolParse(), varNameParse(), lNumber(), lstring2(),
+            loopParse, funDef, conditionalParse, returnParser, funApp, ListHead,
+            binOpExpr(), unOpsExpr, parens, notExpr,
+            boolParse(), varNameParse(), lNumber(), lstring2(),
         )(i);
     }
 
@@ -174,7 +173,7 @@ export namespace Parser {
             let o = Prims.right(preWS)(choices<number>(float(), number()))(istream);
             switch (o.tag) {
                 case "success":
-                    return new Prims.Success(o.inputstream, new NumberNode((<number> o.result), lws));
+                    return new Prims.Success(o.inputstream, new NumberNode((<number>o.result), lws));
                 case "failure":
                     return o;
             }
@@ -294,9 +293,9 @@ export namespace Parser {
 
             return Prims.seq<
                 Expression<any>, Array<[CharStream, Expression<any>]>, Expression<any>
-            >(singleTokenParser)(remainingTokensParser)(
-                (tup: [Expression<any>, Array<[CharStream, Expression<any>]>]) => buildBinOp(tup[0], tup[1], 0, ws)
-            )(i);
+                >(singleTokenParser)(remainingTokensParser)(
+                    (tup: [Expression<any>, Array<[CharStream, Expression<any>]>]) => buildBinOp(tup[0], tup[1], 0, ws)
+                )(i);
         }
     }
 
@@ -420,27 +419,6 @@ export namespace Parser {
     }
 
     /**
-     * varDecParse parses valid variable declarations in the form "var x"
-     * the parser then wraps the parsed value in a variable node for the AST
-     */
-    export function varDecParse(): Prims.IParser<VariableNode> {
-        return Prims.seq<CharStream, VariableNode, VariableNode>(Prims.str("var"))(varNameParse())(tup => tup[1]);
-    }
-
-    /**
-     * Declare parses variable declarations in the form "var x = 2"
-     * and returns a DeclareOp node
-     */
-    export function Declare(): Prims.IParser<DeclareOp<any>> {
-        let ws1 = "";
-        let ws2 = "";
-        let preWS1 = Prims.appfun<CharStream, string>(Prims.ws())(x => ws1 = x.toString());
-        let preWS2 = Prims.appfun<CharStream, string>(Prims.left(Prims.ws())(Prims.char('=')))(x => ws2 = x.toString());
-        let p = Prims.between<string, string, VariableNode>(preWS1)(preWS2)(varDecParse());
-        return Prims.seq<VariableNode, Expression<any>, DeclareOp<any>>(p)(ExpressionParserNoSeq)(tup => { return new DeclareOp(tup[0], tup[1], ws1, ws2) })
-    }
-
-    /**
      * ListHead parses all lists in the SWELL language, including empty lists
      * Lists are surrounded by square brackets and each element is separated by a comma
      * returns a listNode object
@@ -476,7 +454,7 @@ export namespace Parser {
     /**
      * Body parses the body of a function, if, or repeat statement, aka expressions between {}
      */
-    export let bodyParser: Prims.IParser<Expression<BodyNode>>  = i => {
+    export let bodyParser: Prims.IParser<Expression<BodyNode>> = i => {
         let ws1 = "";
         let ws2 = "";
         let preWS1 = Prims.appfun<CharStream, string>(Prims.left(Prims.ws())(Prims.char('{')))(x => ws1 = x.toString());
