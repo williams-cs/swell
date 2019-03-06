@@ -243,13 +243,14 @@ export namespace Parser {
     ]);
 
     function binOpChar(includePureLogic: boolean = true): Prims.IParser<CharStream> {
-        let logicChar = [">", "<"];
-        let logicChar2 = [">=", "<=", "==", "!="];
-        let mathChar = ["+", "-", "/", "=", "*"];
+        let char = [
+            ">", "<", ">=", "<=", "==", "!=",
+            "+", "-", "/", "=", "*"
+        ];
         if (includePureLogic) {
-            logicChar.push("&&", "||");
+            char.push("&&", "||");
         }
-        return choices<CharStream>(Prims.strSat(logicChar2), Prims.strSat(logicChar), Prims.strSat(mathChar));
+        return Prims.strSat(char);
     }
 
     function isOpRightAssoc(op: string): boolean {
