@@ -158,7 +158,7 @@ export namespace Parser {
         return choices<Expression<any>>(
             loopParse, funDef, conditionalParse, returnParser, funApp, ListHead,
             binOpExpr(), unOpsExpr, parens, notExpr,
-            boolParse(), varNameParse(), lNumber(), lstring2(),
+            boolParse(), varNameParse(), lNumber(), lstring,
         )(i);
     }
 
@@ -184,33 +184,21 @@ export namespace Parser {
      * lstring parses valid strings in the SWELL language
      * a valid string is surrounded by quotations and consists of letters, numbers, punctuation, and/or whitespace
      */
-    export function lstring() {
-        let p1 = choices<CharStream>(Prims.letter(), Prims.ws1(), Prims.digit());
-        let p: Prims.IParser<CharStream[]> = Prims.between<CharStream, CharStream, CharStream[]>(
+    export let lstring: Prims.IParser<StringNode> = i => {
+        let stringParser: Prims.IParser<CharStream[]> = Prims.between<CharStream, CharStream, CharStream[]>(
             Prims.str("\"")
         )(
             Prims.str("\"")
         )(
-            Prims.many<CharStream>(Prims.choice(p1)(punctuation())));
-        let f = (xs: CharStream[]) => CharStream.concat(xs)
-        return Prims.appfun<CharStream[], CharStream>(p)(f);
-    }
-
-    /**
-     * lstring2 wraps strings parsed by lstring in StringNode objects and returns them
-     */
-    export function lstring2() {
-        return (istream: CharStream) => {
-            let lws = "";
-            let preWS = Prims.appfun(Prims.ws())(x => lws = x.toString());
-            let o = Prims.right(preWS)(lstring())(istream);
-            switch (o.tag) {
-                case "success":
-                    return new Prims.Success(o.inputstream, new StringNode(o.result.toString(), lws));
-                case "failure":
-                    return o;
+            Prims.many<CharStream>(
+                choices<CharStream>(Prims.letter(), Prims.ws1(), Prims.digit(), binOpChar(), punctuation())
+            )
+        );
+        return Prims.seq<CharStream, CharStream[], StringNode>(Prims.ws())(stringParser)(
+            (tup: [CharStream, CharStream[]]) => {
+                return new StringNode(CharStream.concat(tup[1]).toString(), tup[0].toString());
             }
-        }
+        )(i);
     }
 
     /**
@@ -260,7 +248,7 @@ export namespace Parser {
     export function binOpExpr(includePureLogic: boolean = true): Prims.IParser<Expression<any>> {
         return i => {
             let singleTokenParser = choices<Expression<any>>(
-                notExpr, parens, unOpsExpr, boolParse(), varNameParse(), lNumber(), lstring2()
+                notExpr, parens, unOpsExpr, boolParse(), varNameParse(), lNumber(), lstring
             );
             let ws: string[] = [];
             let preWS = Prims.appfun<CharStream, void>(Prims.ws())(x => {
@@ -382,7 +370,7 @@ export namespace Parser {
         let open = Prims.right<string, CharStream>(preWS)(Prims.str("("));
         let expr = choices<Expression<any>>(
             binOpExpr(), unOpsExpr, parens, notExpr,
-            boolParse(), varNameParse(), lNumber(), lstring2()
+            boolParse(), varNameParse(), lNumber(), lstring
         );
         let parentheses = Prims.between<CharStream, CharStream, Expression<any>>(open)(Prims.str(")"))(expr);
         return Prims.appfun<Expression<any>, Parens<Expression<any>>>(
@@ -397,7 +385,7 @@ export namespace Parser {
         let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
         let notOp: Prims.IParser<CharStream> = Prims.right<string, CharStream>(preWS)(Prims.str("!"));
         let operand: Prims.IParser<Expression<any>> = choices<Expression<any>>(
-            notExpr, binOpExpr(false), parens, boolParse(), varNameParse(), lNumber(), lstring2()
+            notExpr, binOpExpr(false), parens, boolParse(), varNameParse(), lNumber(), lstring
         );
         let createNotOp = (tup: [CharStream, Expression<any>]) => new Not(tup[1], ws);
         return Prims.seq<CharStream, Expression<any>, Not>(notOp)(operand)(createNotOp)(i);
