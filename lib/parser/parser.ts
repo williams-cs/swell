@@ -508,38 +508,6 @@ export namespace Parser {
         return p2;
     }
 
-    /**
-     * funAppArgList parses argument lists for function applications, including empty args lists
-     * the parser returns an array of Expression objects that represent the arguments
-     */
-    export function funAppArgList(): Prims.IParser<Expression<any>[]> {
-        let expr = Prims.between<CharStream, CharStream, Expression<any>>(Prims.ws())(Prims.ws())(ExpressionParserNoSeq);
-        let p1 = Prims.right<CharStream, Expression<any>>(Prims.char('('))(expr);
-        var f = (tup: [Expression<any>, Expression<any>[]]) => {
-            let hd: Expression<{}> = tup[0];
-            let res = [hd];
-            let tail = tup[1];
-            for (let elem of tail) {
-                res.push(elem);
-            }
-            return res;
-        }
-        let p2 = Prims.seq<Expression<any>, Expression<any>[], Expression<any>[]>(p1)(funAppArgListTail())(f);
-        let p3 = Prims.appfun<CharStream, Expression<{}>[]>(Prims.str('()'))(_ => []);
-        return Prims.choice<Expression<any>[]>(p3)(p2);
-    }
-
-    /**
-     * funAppArgListTail parses the second through last elements of an argument list
-     * each element is separated by a comma
-     * returns an array of Expression objects, later accessed by funAppArgsList
-     */
-    function funAppArgListTail(): Prims.IParser<Expression<any>[]> {
-        let comma = Prims.between<CharStream, CharStream, CharStream>(Prims.ws())(Prims.ws())(Prims.char(','))
-        let p1 = Prims.right<CharStream, Expression<any>>(comma)(ExpressionParserNoSeq);
-        let p2 = Prims.left(Prims.many<Expression<any>>(p1))(Prims.right(Prims.ws())(Prims.char(')')));
-        return p2;
-    }
 
     export function funAppArgList2(): Prims.IParser<Array<[string, Expression<any>]>> {
         let argName = Prims.right<CharStream, CharStream>(Prims.ws())(stringAndDigit());
