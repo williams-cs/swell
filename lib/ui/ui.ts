@@ -46,6 +46,8 @@ import * as csvParse from 'csv-parse';
     let checkpointName = 'l0c0';
     let parses = false;
 
+    let message = document.getElementById('message');
+
     /* Logging, parsing & rendering */
 
     function logSuccessfulParse() {
@@ -80,35 +82,31 @@ import * as csvParse from 'csv-parse';
             case "success":
                 try {
                     parses = true;
-                    // get AST
-                    ast = outcome.result;
-
-                    // init context
+                    message.innerHTML = "";
+                    ast = outcome.result; // get AST
                     context = new Scope(null, effects, masterLog);
                     context.canvas = Some(canvas);
-
-                    // evaluate (this is where objects appear on screen)
-                    ast.eval(context);
+                    ast.eval(context); // evaluate (this is where objects appear on screen)
 
                 } catch (e) {
                     console.log(e);
                 }
-
                 break;
 
             case "failure":
                 parses = false;
                 ast = undefined;
-                let startpos = outcome.inputstream.furthestFailure;
-                let endpos = (startpos + 3) < outcome.inputstream.length()
-                    ? (startpos + 3) : outcome.inputstream.length();
+                let startPos = outcome.error_pos;
+                let endPos = Math.min(startPos + 3, outcome.inputstream.length());
+                let editorStartPos = editorDoc.posFromIndex(startPos);
                 // mark region
                 editorDoc.markText(
-                    editorDoc.posFromIndex(startpos),
-                    editorDoc.posFromIndex(endpos),
+                    editorStartPos,
+                    editorDoc.posFromIndex(endPos),
                     { className: "err" }
                 );
-
+                let msg = outcome.error_msg != "" ? outcome.error_msg : "unexpected error";
+                message.innerHTML = `Line ${editorStartPos.line}, col ${editorStartPos.ch}: ${msg}`;
                 break;
         }
 
@@ -462,7 +460,6 @@ import * as csvParse from 'csv-parse';
         logSuccessfulParse();
     };
 
-    let message = document.getElementById('message');
     let rewardBox = document.getElementById('reward-container');
     let rewardText = document.getElementById('reward-text');
     let rewardImg: HTMLImageElement = document.getElementById('reward-image') as HTMLImageElement;

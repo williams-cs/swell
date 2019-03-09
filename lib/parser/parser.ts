@@ -367,12 +367,17 @@ export namespace Parser {
     export let parens: Prims.IParser<Parens<Expression<any>>> = i => {
         let lws = "";
         let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => lws = x.toString());
-        let open = Prims.right<string, CharStream>(preWS)(Prims.str("("));
-        let expr = choices<Expression<any>>(
-            binOpExpr(), unOpsExpr, parens, notExpr,
-            boolParse(), varNameParse(), lNumber(), lstring
+        let openParen = Prims.right<string, CharStream>(preWS)(Prims.str("("));
+        let expr = Prims.expect<Expression<any>>(
+            choices<Expression<any>>(
+                binOpExpr(), unOpsExpr, parens, notExpr,
+                boolParse(), varNameParse(), lNumber(), lstring
+            )
+        )(
+            "invalid expression"
         );
-        let parentheses = Prims.between<CharStream, CharStream, Expression<any>>(open)(Prims.str(")"))(expr);
+        let closeParen = Prims.expect<CharStream>(Prims.str(")"))(") expected");
+        let parentheses = Prims.between<CharStream, CharStream, Expression<any>>(openParen)(closeParen)(expr);
         return Prims.appfun<Expression<any>, Parens<Expression<any>>>(
             parentheses
         )(
