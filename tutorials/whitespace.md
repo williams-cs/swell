@@ -10,3 +10,11 @@ In order to track the ws that comes after keywords and arguments, if parens or b
 
 **Arguments**
 Arguments in function definition and function application need to be wrapped in "argument" nodes. The argument itself stores an expression (which has the preceding ws) and the ws that comes before the comma or closing parens.
+
+**Main Todos**
+-rewrite fundec parser to implement argument node
+-change parens class to arithmetic parens
+-write parens class
+-wrtie parents parser
+-implement cond, fun, loop with parens and body
+-implement fun with arguments
