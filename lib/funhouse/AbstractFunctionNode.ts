@@ -19,8 +19,9 @@ export abstract class AbstractFunctionNode<T extends Expression<any>> extends Ex
      * Constructor for an abstract function
      * @param args array of arguments
      * @param ws The whitespace preceding the expression
+     * @param rws the ws after the fun name
      */
-    constructor(args: Array<[string, Expression<any>]>, ws: string = "") {
+    constructor(args: Array<[string, Expression<any>]>, ws: string = "", private _rws: string = "") {
         super(ws);
         this.initArg(args);
     }
@@ -165,6 +166,6 @@ export abstract class AbstractFunctionNode<T extends Expression<any>> extends Ex
         if (this.argMap.size > 0) {
             argString = argString.slice(0, argString.length - 2);
         }
-        return `${this.ws}${this.name}(${argString})`;
+        return `${this.ws}${this.name}${this._rws}(${argString})`;
     }
 }

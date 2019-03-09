@@ -12,10 +12,11 @@ export class Conditional extends Expression<any> {
      * @param trueBranch The branch to follow if the condition evaluates to true, stored inside a BodyNode
      * @param falseBranch The branch to follow if the condition evaluates to false, stored inside a BodyNode
      * @param ws Preceding whitespace
+     * @param rws ws after if keyword
      */
     constructor(
         private _test: Expression<any>, private _trueBranch: Expression<BodyNode>,
-        ws: string = "", private _falseBranch?: Expression<BodyNode>
+        ws: string = "", private _rws: string = "", private _falseBranch?: Expression<BodyNode>
     ) {
         super(ws, true);
     }
@@ -36,7 +37,7 @@ export class Conditional extends Expression<any> {
     }
 
     toString(): string {
-        let res = `${this.ws}if(${this.test}) {\n\t${this.trueBranch}\n}`;
+        let res = `${this.ws}if${this._rws}(${this.test}) {${this.trueBranch}\n}`;
         if (this.falseBranch !== undefined) {
             res += `\nelse {\n ${this.falseBranch}\n};`;
         }

@@ -523,8 +523,7 @@ export namespace Parser {
      * the parser returns an array of Expression objects that represent the arguments
      */
     export function funAppArgList(): Prims.IParser<Expression<any>[]> {
-        let expr = Prims.between<CharStream, CharStream, Expression<any>>(Prims.ws())(Prims.ws())(ExpressionParserNoSeq);
-        let p1 = Prims.right<CharStream, Expression<any>>(Prims.char('('))(expr);
+        let p1 = Prims.right<CharStream, Expression<any>>(Prims.char('('))(ExpressionParserNoSeq);
         var f = (tup: [Expression<any>, Expression<any>[]]) => {
             let hd: Expression<{}> = tup[0];
             let res = [hd];
@@ -560,11 +559,10 @@ export namespace Parser {
             let result: [string, Expression<any>] = [tup[0].toString().trim(), tup[1]];
             return result;
         };
-        let expr = Prims.right<CharStream, Expression<any>>(Prims.ws())(ExpressionParserNoSeq);
-        let firstArg = Prims.seq<CharStream, Expression<any>, [string, Expression<any>]>(assignment)(expr)(f);
+        let firstArg = Prims.seq<CharStream, Expression<any>, [string, Expression<any>]>(assignment)(ExpressionParserNoSeq)(f);
         let comma = Prims.right<CharStream, CharStream>(Prims.ws())(Prims.char(','));
         let remainingAssignment = Prims.between<CharStream, CharStream, CharStream>(comma)(Prims.ws())(assignment);
-        let remainingArg = Prims.seq<CharStream, Expression<any>, [string, Expression<any>]>(remainingAssignment)(expr)(f);
+        let remainingArg = Prims.seq<CharStream, Expression<any>, [string, Expression<any>]>(remainingAssignment)(ExpressionParserNoSeq)(f);
         let argTail = Prims.many<[string, Expression<any>]>(remainingArg);
         let args = Prims.choice<Array<[string, Expression<any>]>>(
             Prims.seq<[string, Expression<any>], Array<[string, Expression<any>]>, Array<[string, Expression<any>]>>(firstArg)(argTail)(
@@ -601,7 +599,9 @@ export namespace Parser {
      */
     export let funDef: Prims.IParser<FunDef<any>> = i => {
         let ws = "";
+        let rws = "";
         let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
+        let postWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
         return Prims.right<CharStream, FunDef<{}>>(
             Prims.right<string, CharStream>(preWS)(Prims.str('fun'))
         )(
@@ -624,7 +624,7 @@ export namespace Parser {
                     let fname: string = tup[0];
                     let args: string[] = tup[1][0];
                     let body: Expression<BodyNode> = tup[1][1];
-                    return new FunDef(fname, body, args, ws);
+                    return new FunDef(fname, body, args, ws, rws);
                 }
             )
         )(i)
@@ -636,7 +636,9 @@ export namespace Parser {
      */
     export let funApp: Prims.IParser<Expression<any>> = i => {
         let ws = "";
+        let rws = "";
         let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
+        let postWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
         return Prims.seq<CharStream, Array<[string, Expression<any>]>, any>(
             Prims.right<string, CharStream>(preWS)(string())
         )(
@@ -646,19 +648,19 @@ export namespace Parser {
             let args: Array<[string, Expression<any>]> = tup[1];
             switch (fname) {
                 case "print":
-                    return new PrintNode(args, ws);
+                    return new PrintNode(args, ws, rws);
                 case "ellipse":
-                    return new EllipseNode(args, ws);
+                    return new EllipseNode(args, ws, rws);
                 case "rect":
-                    return new RectangleNode(args, ws);
+                    return new RectangleNode(args, ws, rws);
                 case "emoji":
-                    return new EmojiNode(args, ws);
+                    return new EmojiNode(args, ws, rws);
                 case "line":
-                    return new LineNode(args, ws);
+                    return new LineNode(args, ws, rws);
                 case "rgb":
-                    return new RGBColorNode(args, ws);
+                    return new RGBColorNode(args, ws, rws);
                 default:
-                    return new FunApp(fname, args.map(([name, expr]) => expr), ws);
+                    return new FunApp(fname, args.map(([name, expr]) => expr), ws, rws);
             }
         })(i);
     }
@@ -705,7 +707,7 @@ export namespace Parser {
     export let condParse: Prims.IParser<Conditional> = i => {
         var f = (tup: Expression<any>[]) => {
             if (tup.length == 3) {
-                return new Conditional(tup[0], tup[1], "", tup[2]);
+                return new Conditional(tup[0], tup[1], "", "", tup[2]);
             }
             else {
                 return new Conditional(tup[0], tup[1]);
@@ -720,10 +722,10 @@ export namespace Parser {
     export let conditionalParse: Prims.IParser<Conditional> = i => {
         var f = (tup: Expression<any>[]) => {
             if (tup.length == 3) {
-                return new Conditional(tup[0], tup[1], lws, tup[2]);
+                return new Conditional(tup[0], tup[1], lws, rws, tup[2]);
             }
             else {
-                return new Conditional(tup[0], tup[1], lws);
+                return new Conditional(tup[0], tup[1], lws, rws);
             }
         }
         let lws = "";
