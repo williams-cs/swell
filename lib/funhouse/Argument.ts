@@ -1,5 +1,4 @@
 import { Expression } from "../Expression";
-
 export class Argument<T> {
 
     // Used for optional arg to check whether or not it has been modified or explicitly initialized

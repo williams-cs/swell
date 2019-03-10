@@ -1,10 +1,14 @@
 import { Expression } from "../Expression";
 import { BodyNode } from "../structural/BodyNode"
+import { ParensNode } from "../structural/ParensNode"
 import { Scope } from '../structural/Scope';
 import { BooleanNode } from "../prims/BooleanNode";
 import { Some } from "space-lift";
 
 export class Conditional extends Expression<any> {
+    private _test: ParensNode<any>;
+    private _trueBranch: BodyNode;
+    private _falseBranch: BodyNode;
 
     /**
      * The constructor for conditionals (if, else if, and else statements)
@@ -15,10 +19,15 @@ export class Conditional extends Expression<any> {
      * @param rws ws after if keyword
      */
     constructor(
-        private _test: Expression<any>, private _trueBranch: Expression<BodyNode>,
-        ws: string = "", private _rws: string = "", private _falseBranch?: Expression<BodyNode>
-    ) {
+        _test: ParensNode<any>,
+        _trueBranch: BodyNode,
+        ws: string = "",
+        _falseBranch?: BodyNode
+    ){
         super(ws, true);
+        this._test = _test;
+        this._trueBranch = _trueBranch;   
+        if(_falseBranch != null) this._falseBranch =  _falseBranch;
     }
 
     eval(context: Scope) {
@@ -37,7 +46,7 @@ export class Conditional extends Expression<any> {
     }
 
     toString(): string {
-        let res = `${this.ws}if${this._rws}(${this.test}) {${this.trueBranch}\n}`;
+        let res = `${this.ws}if${this._test} {${this.trueBranch}\n}`;
         if (this.falseBranch !== undefined) {
             res += `\nelse {\n ${this.falseBranch}\n};`;
         }
