@@ -12,11 +12,21 @@ In order to track the ws that comes after keywords and arguments, if parens or b
 Arguments in function definition and function application need to be wrapped in "argument" nodes. The argument itself stores an expression (which has the preceding ws) and the ws that comes before the comma or closing parens.
 
 **Main Todos**
--write parents parser
--implement fun with arguments
--rewrite fundec parser to implement argument node
--implement repeat with parens and body
+-rewrite fun app parser so it stores ws -- can we parse arguments early? instead of waiting til abstract function node
+	--also figure out which is being used -- abstract function node or funapp? 
+	--looks like maybe user-created functions can be parsed differently from given functions
+	--right now funapp does not have body or parens
+-rewrite conditional parser with parens and ws stored correctly
+-implement repeat (node class) with parens and body
+-rewrite repeat node parser
+-take out rws from funapp (but it should be in fun dec)
+-make sure that no tostring is hardcoded with ws
+-ALL WS PARSED IS STORED EXACTLY ONCE
+-clean up ParensNode<Argument<any>> bc ALL ParensNode are ParensNode<Argument> so doesn't need to be generic
 
 **Done List**
 -write parensnode class
 -implement cond, fun with parens and body
+-implement fun with arguments
+-write parents parser
+-rewrite fundec parser to implement argument node

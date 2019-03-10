@@ -10,16 +10,17 @@ export class Argument<T> {
      * @param isPositional Whether or not the argument is positional
      */
     constructor(
-        private _value: Expression<T> = undefined,
+        private _value: T = undefined,
         private _isPositional: boolean = true,
         private _alwaysVisible: boolean = false,
+        private _ws: string = "", //unlike most expressions, this stores POST ws
     ) {}
 
-    get value(): Expression<T> {
+    get value(): T {
         return this._value;
     }
 
-    set value(value: Expression<T>) {
+    set value(value: T) {
         this._value = value;
     }
 
@@ -45,5 +46,13 @@ export class Argument<T> {
 
     set alwaysVisible(val: boolean) {
         this._alwaysVisible = val;
+    }
+
+    get ws(): string{
+        return this._ws;
+    }
+
+    toString(): string{
+        return this._value.toString() + this._ws;
     }
 }
