@@ -146,8 +146,8 @@ export namespace Parser {
     export let ExpressionParserNoSeq: Prims.IParser<Expression<{}>> = i => {
         return choices<Expression<any>>(
             loopParse, funDef, conditionalParse, returnParser, funApp,
-            ListHead, binOpExpr(), Declare(), unOpsExpr, varDecParse(),
-            parens, notExpr, boolParse(), varNameParse(), lNumber(), lstring2(),
+            ListHead, binOpExpr(), Declare(), unOpsExpr, parens,
+            notExpr, boolParse(), varNameParse(), lNumber(), lstring2(),
         )(i);
     }
 
@@ -408,24 +408,14 @@ export namespace Parser {
     }
 
     /**
-     * varDecParse parses valid variable declarations in the form "var x"
-     * the parser then wraps the parsed value in a variable node for the AST
-     */
-    export function varDecParse(): Prims.IParser<VariableNode> {
-        return Prims.seq<CharStream, VariableNode, VariableNode>(Prims.str("var"))(varNameParse())(tup => tup[1]);
-    }
-
-    /**
      * Declare parses variable declarations in the form "var x = 2"
      * and returns a DeclareOp node
      */
     export function Declare(): Prims.IParser<DeclareOp<any>> {
-        let ws1 = "";
-        let ws2 = "";
-        let preWS1 = Prims.appfun<CharStream, string>(Prims.ws())(x => ws1 = x.toString());
-        let preWS2 = Prims.appfun<CharStream, string>(Prims.left(Prims.ws())(Prims.char('=')))(x => ws2 = x.toString());
-        let p = Prims.between<string, string, VariableNode>(preWS1)(preWS2)(varDecParse());
-        return Prims.seq<VariableNode, Expression<any>, DeclareOp<any>>(p)(ExpressionParserNoSeq)(tup => { return new DeclareOp(tup[0], tup[1], ws1, ws2) })
+        let ws = "";
+        let preWS = Prims.appfun<CharStream, string>(Prims.left(Prims.ws())(Prims.char('=')))(x => ws = x.toString());
+        let p = Prims.left<VariableNode, string>(varNameParse())(preWS);
+        return Prims.seq<VariableNode, Expression<any>, DeclareOp<any>>(p)(ExpressionParserNoSeq)(tup => { return new DeclareOp(tup[0], tup[1], ws) })
     }
 
     /**
@@ -489,8 +479,8 @@ export namespace Parser {
 
     /**
      * funDefArg parses and wraps a single argument from fun def in an Argument node
+     * helper for funDefArgList
      */
-
     export let funDefArg: Prims.IParser<Argument<VariableNode>> = i => {
         let ws = "";
         let postWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
@@ -499,9 +489,8 @@ export namespace Parser {
         return Prims.appfun<VariableNode, Argument<VariableNode>>(p)(f)(i);
     }
 
-
-    /** funDefArgList2 is a rewrite of funDefArgList that parses a list of arguments in function def and wraps in Argument nodes
-     * 
+    /**
+     * Parses a list of arguments in function declaration and wraps in a ParensNode of Arguments
      */
     export let funDefArgList: Prims.IParser<ParensNode<Argument<VariableNode>[]>> = i => {
         let ws = "";
@@ -520,39 +509,6 @@ export namespace Parser {
         }
         return Prims.appfun<any, ParensNode<Argument<VariableNode>[]>>(Prims.choice<any>(argList)(empty))(g)(i);
     }
-    
-
-    /**
-     * funDefArgList parses argument lists for function definitions,
-     * surrounded by parens and separated by commas
-     * returns an array of the parameters
-     * export function funDefArgList(): Prims.IParser<string[]> {
-        let p1 = Prims.right<CharStream, CharStream>(Prims.char('('))(string());
-        var f = (tup: [CharStream, CharStream[]]) => {
-            let hd = tup[0].toString();
-            let res: [any] = [hd];
-            let tail = tup[1];
-            for (let elem of tail) {
-                res.push(elem.toString());
-            }
-            return res;
-        }
-        let p2 = Prims.seq<CharStream, CharStream[], string[]>(p1)(funDefArgListTail())(f);
-        let p3 = Prims.appfun(Prims.str('()'))(_ => []);
-        return Prims.choice<any>(p3)(p2);
-    }
-     */
-    
-    /**
-     * funDefArgListTail parses the second through last elements of a function definition parameter list
-     * parameters are separated by commas and end with a closing parens
-     * returns an array of parameters, which is accessed by funDefArgList
-     *  function funDefArgListTail(): Prims.IParser<CharStream[]> {
-        let p1 = Prims.right<CharStream, CharStream>(Prims.char(','))(string());
-        let p2 = Prims.left(Prims.many<CharStream>(p1))(Prims.char(')'));
-        return p2;
-    }
-     */
 
     export function funAppArgList(): Prims.IParser<Array<[string, Expression<any>]>> {
         let argName = Prims.right<CharStream, CharStream>(Prims.ws())(stringAndDigit());
@@ -634,6 +590,7 @@ export namespace Parser {
         )(i)
     }
 
+    
     /**
      * funApp parses valid function applications in the form "functionName(argsList)" and returns a funApp node
      * parser checks for built-in functions, like print, ellipse, and rect; and returns the valid AST node
@@ -662,7 +619,7 @@ export namespace Parser {
                 case "rgb":
                     return new RGBColorNode(args, ws);
                 default:
-                    return new FunApp(fname, args.map(([name, expr]) => expr), ws);
+                    return new FunApp(fname, args.map(([_, expr]) => expr), ws);
             }
         })(i);
     }

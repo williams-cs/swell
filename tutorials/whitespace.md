@@ -21,6 +21,7 @@ Arguments in function definition and function application need to be wrapped in 
 -make sure that no tostring is hardcoded with ws
 -ALL WS PARSED IS STORED EXACTLY ONCE
 -clean up ParensNode<Argument<any>> bc ALL ParensNode are ParensNode<Argument> so doesn't need to be generic
+-fix that spot where the } bracket jumps (aka ws2 in bodyparse)
 
 **Done List**
 -write parensnode class

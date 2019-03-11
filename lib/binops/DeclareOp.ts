@@ -7,21 +7,17 @@ export class DeclareOp<T> extends BinaryOp<T> {
 
     protected readonly op: string = "=";
 
-    private ws2: string; // whitespace preceding "="
-
     /**
      * Constructor for the declare operation, which declares a variable for the first time
      * @param left The left side of the declare op (the variable)
      * @param right The right side of the op (the value)
-     * @param ws1 whitespace preceding "var" keyword
-     * @param ws2 whitespace preceding "="
+     * @param ws whitespace preceding "="
      */
-    constructor(left: Expression<T>, right: Expression<T>, ws1: string = "", ws2: string = "") {
-        super(left, right, ws1);
+    constructor(left: Expression<T>, right: Expression<T>, ws: string = "") {
+        super(left, right, ws);
         if (!(left instanceof VariableNode)) {
             throw("Left side is not a variable");
         }
-        this.ws2 = ws2;
     }
 
     eval(context: Scope): T {
@@ -35,6 +31,6 @@ export class DeclareOp<T> extends BinaryOp<T> {
     }
 
     toString(): string {
-        return `${this.ws}var${this.left}${this.ws2}=${this.right}`;
+        return `${this.left}${this.ws}=${this.right}`;
     }
 }
