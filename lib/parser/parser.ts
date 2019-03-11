@@ -605,8 +605,8 @@ export namespace Parser {
         let ws = "";
         let rws = "";
         let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
-        let postWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
-        return Prims.right<CharStream, FunDef<{}>>(
+        let postWS = Prims.appfun<CharStream, string>(Prims.ws())(s => rws = s.toString());
+        return Prims.right<CharStream, FunDef<any>>(
             Prims.between<string, string, CharStream>(preWS)(postWS)(Prims.str('fun'))
         )(
             Prims.seq<string, [ParensNode<Argument<VariableNode>[]>, BodyNode], FunDef<{}>>(
@@ -640,11 +640,9 @@ export namespace Parser {
      */
     export let funApp: Prims.IParser<FunApp<any>> = i => {
         let ws = "";
-        let rws = "";
         let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
-        let postWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
         return Prims.seq<CharStream, Array<[string, Expression<any>]>, any>(
-            Prims.between<string, string, CharStream>(preWS)(postWS)(string())
+            Prims.right<string, CharStream>(preWS)(string())
         )(
             funAppArgList()
         )(tup => {
@@ -652,19 +650,19 @@ export namespace Parser {
             let args: Array<[string, Expression<any>]> = tup[1];
             switch (fname) {
                 case "print":
-                    return new PrintNode(args, ws, rws);
+                    return new PrintNode(args, ws);
                 case "ellipse":
-                    return new EllipseNode(args, ws, rws);
+                    return new EllipseNode(args, ws);
                 case "rect":
-                    return new RectangleNode(args, ws, rws);
+                    return new RectangleNode(args, ws);
                 case "emoji":
-                    return new EmojiNode(args, ws, rws);
+                    return new EmojiNode(args, ws);
                 case "line":
-                    return new LineNode(args, ws, rws);
+                    return new LineNode(args, ws);
                 case "rgb":
-                    return new RGBColorNode(args, ws, rws);
+                    return new RGBColorNode(args, ws);
                 default:
-                    return new FunApp(fname, args.map(([name, expr]) => expr), ws, rws);
+                    return new FunApp(fname, args.map(([name, expr]) => expr), ws);
             }
         })(i);
     }
