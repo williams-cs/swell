@@ -145,7 +145,7 @@ export namespace Parser {
      */
     export let ExpressionParserNoSeq: Prims.IParser<Expression<{}>> = i => {
         return choices<Expression<any>>(
-            loopParse, funDef, conditionalParse, returnParser, funApp,
+            loopParse, funDef, condParse, returnParser, funApp,
             ListHead, binOpExpr(), Declare(), unOpsExpr, parens,
             notExpr, boolParse(), varNameParse(), lNumber(), lstring2(),
         )(i);
@@ -451,19 +451,6 @@ export namespace Parser {
         return p2;
     }
 
-     /**
-     * ParensNodeParse parses valid argument/conditional parens usage and wraps in a ParensNode
-     */
-    export let ParensNodeExpr: Prims.IParser<ParensNode<any>> = i =>{
-        let ws = "";
-        let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
-        let content = Prims.right<string, Expression<any>>(preWS)(Prims.between<CharStream, CharStream, Expression<any>>(Prims.char('('))(Prims.char(')'))(ExpressionParser));
-        let f = (e: Expression<any>) => {
-            return new ParensNode(e, ws);
-        }
-        return Prims.appfun<Expression<any>, ParensNode<any>>(content)(f)(i);
-    }
-
     /**
      * Body parses the body of a function, if, or repeat statement, aka expressions between {}
      */
@@ -477,6 +464,10 @@ export namespace Parser {
         return Prims.appfun<Expression<any>, BodyNode>(p)(f)(i);
     }
 
+    export let emptyVarNode: Prims.IParser<VariableNode> = i => {
+        return Prims.appfun<CharStream, VariableNode>(Prims.ws())(x => new VariableNode(x.toString()))(i);
+    }
+
     /**
      * funDefArg parses and wraps a single argument from fun def in an Argument node
      * helper for funDefArgList
@@ -484,7 +475,7 @@ export namespace Parser {
     export let funDefArg: Prims.IParser<Argument<VariableNode>> = i => {
         let ws = "";
         let postWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
-        let p = Prims.left<VariableNode, string>(varNameParse())(postWS);
+        let p = Prims.left<VariableNode, string>(Prims.choice<VariableNode>(varNameParse())(emptyVarNode))(postWS);
         var f = (e: VariableNode) => { return new Argument<VariableNode>(e, true, false, ws); }
         return Prims.appfun<VariableNode, Argument<VariableNode>>(p)(f)(i);
     }
@@ -492,10 +483,10 @@ export namespace Parser {
     /**
      * Parses a list of arguments in function declaration and wraps in a ParensNode of Arguments
      */
-    export let funDefArgList: Prims.IParser<ParensNode<Argument<VariableNode>[]>> = i => {
+    export let funDefArgList: Prims.IParser<ParensNode> = i => {
         let ws = "";
-        let preWS = Prims.appfun<CharStream, string>(Prims.left<CharStream, CharStream>(Prims.ws())(Prims.char('(')))(x => ws = x.toString());
-        let p1 = Prims.right<string, Argument<VariableNode>>(preWS)(funDefArg);
+        let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
+        let p1 = Prims.right<CharStream, Argument<VariableNode>>(Prims.char('('))(funDefArg);
         var f = (tup: [Argument<VariableNode>, Argument<VariableNode>[]]) => {
             tup[1].unshift(tup[0]);
             return tup[1];
@@ -503,14 +494,46 @@ export namespace Parser {
         let p2 = Prims.right<CharStream, Argument<VariableNode>>(Prims.char(','))(funDefArg);
         let prest = Prims.left(Prims.many<Argument<VariableNode>>(p2))(Prims.char(')'));
         let argList = Prims.seq<Argument<VariableNode>, Argument<VariableNode>[], Argument<VariableNode>[]>(p1)(prest)(f);
-        let empty = Prims.appfun(Prims.str('()'))(_ => []);
         let g = (x: []) => {
-            return new ParensNode<Argument<VariableNode>[]>(x, ws)
+            return new ParensNode(x, ws)
         }
-        return Prims.appfun<any, ParensNode<Argument<VariableNode>[]>>(Prims.choice<any>(argList)(empty))(g)(i);
+        return Prims.appfun<any, ParensNode>(Prims.right(preWS)(argList))(g)(i);
     }
 
-    export function funAppArgList(): Prims.IParser<Array<[string, Expression<any>]>> {
+    /**
+     * funAppArg parses and wraps a single argument from fun def in an Argument node
+     * helper for funAppArgList
+     */
+    export let funAppArg: Prims.IParser<Argument<any>> = i => {
+        let ws = "";
+        let postWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
+        let p = Prims.choice<Expression<any>>(Declare())(ExpressionParserNoSeq);
+        let arg = Prims.left<Expression<any>, string>(p)(postWS);
+        var f = (e: Expression<any>) => { return new Argument<any>(e, true, false, ws); }
+        return Prims.appfun<any, Argument<any>>(arg)(f)(i);
+    }
+
+    export let funAppArgList: Prims.IParser<ParensNode> = i => {
+        let ws = "";
+        let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
+        let p1 = Prims.right<CharStream, Argument<any>>(Prims.char('('))(funAppArg);
+        var f = (tup: [Argument<any>, Array<Argument<any>>]) => {
+            tup[1].unshift(tup[0]);
+            return tup[1];
+        }
+        let p2 = Prims.right<CharStream, Argument<any>>(Prims.char(','))(funDefArg);
+        let prest = Prims.left(Prims.many<Argument<any>>(p2))(Prims.char(')'));
+        let argList = Prims.seq<Argument<any>, Array<Argument<any>>, Array<Argument<any>>>(p1)(prest)(f);
+        let empty = Prims.appfun(Prims.str('()'))(_ => []);
+        let g = (x: Array<Argument<any>>) => {
+            return new ParensNode(x, ws)
+        }
+        let list = Prims.choice<any>(argList)(empty);
+        return Prims.appfun<any, ParensNode>(Prims.right(preWS)(list))(g)(i);
+    }
+
+
+    /* export function funAppArgList(): Prims.IParser<Array<[string, Expression<any>]>> {
         let argName = Prims.right<CharStream, CharStream>(Prims.ws())(stringAndDigit());
         let assignOp = Prims.right<CharStream, CharStream>(Prims.ws())(Prims.char('='));
         let assignToArg = Prims.left<CharStream, CharStream>(argName)(assignOp);
@@ -538,6 +561,7 @@ export namespace Parser {
         let closeParen = Prims.right<CharStream, CharStream>(Prims.ws())(Prims.char(')'));
         return Prims.between<CharStream, CharStream, Array<[string, Expression<any>]>>(openParen)(closeParen)(args);
     }
+*/
 
     /**
      * returnParser parses valid return statements in the form "return x"
@@ -565,13 +589,13 @@ export namespace Parser {
         return Prims.right<CharStream, FunDef<any>>(
             Prims.between<string, string, CharStream>(preWS)(postWS)(Prims.str('fun'))
         )(
-            Prims.seq<string, [ParensNode<Argument<VariableNode>[]>, BodyNode], FunDef<{}>>(
+            Prims.seq<string, [ParensNode, BodyNode], FunDef<{}>>(
                 /* function name */
                 Prims.appfun<CharStream, string>(
                     string()
                 )(cs => cs.toString())
             )(
-                Prims.seq<ParensNode<Argument<VariableNode>[]>, BodyNode, [ParensNode<Argument<VariableNode>[]>, BodyNode]>(
+                Prims.seq<ParensNode, BodyNode, [ParensNode, BodyNode]>(
                     /* function arguments */
                     funDefArgList
                 )(
@@ -580,9 +604,9 @@ export namespace Parser {
                 )(x => x)
             )(
                 // create the AST node
-                (tup: [string, [ParensNode<Argument<VariableNode>[]>, BodyNode]]) => {
+                (tup: [string, [ParensNode, BodyNode]]) => {
                     let fname: string = tup[0];
-                    let args: ParensNode<Argument<VariableNode>[]> = tup[1][0];
+                    let args: ParensNode = tup[1][0];
                     let body: BodyNode = tup[1][1];
                     return new FunDef(fname, body, args, ws, rws);
                 }
@@ -598,13 +622,13 @@ export namespace Parser {
     export let funApp: Prims.IParser<FunApp<any>> = i => {
         let ws = "";
         let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
-        return Prims.seq<CharStream, Array<[string, Expression<any>]>, any>(
+        return Prims.seq<CharStream, ParensNode, any>(
             Prims.right<string, CharStream>(preWS)(string())
         )(
-            funAppArgList()
+            funAppArgList
         )(tup => {
             let fname: string = tup[0].toString();
-            let args: Array<[string, Expression<any>]> = tup[1];
+            let args: ParensNode = tup[1];
             switch (fname) {
                 case "print":
                     return new PrintNode(args, ws);
@@ -619,16 +643,16 @@ export namespace Parser {
                 case "rgb":
                     return new RGBColorNode(args, ws);
                 default:
-                    return new FunApp(fname, args.map(([_, expr]) => expr), ws);
+                    return new FunApp(fname, args, ws);
             }
         })(i);
     }
 
     /**
-     * conditionalParse is a rewrite of condParse that includes and passes ws
+     * condParse is a rewrite of condParse that includes and passes ws
      */
-    export let conditionalParse: Prims.IParser<Conditional> = i => {
-        var f = (tup: [ParensNode<any>, BodyNode, BodyNode] | [ParensNode<any>, BodyNode]) => {
+    export let condParse: Prims.IParser<Conditional> = i => {
+        var f = (tup: [ParensNode, BodyNode, BodyNode] | [ParensNode, BodyNode]) => {
             if (tup.length == 3) {
                 return new Conditional(tup[0], tup[1], iws, ews, tup[2]);
             }
@@ -643,19 +667,19 @@ export namespace Parser {
         let aws = "";
         let argWS = Prims.appfun<CharStream, string>(Prims.ws())(x => aws = x.toString());
         let argParse = Prims.left<Expression<any>,string>(ExpressionParserNoSeq)(argWS);
-        var g = (e: Expression<any>) => { return new ParensNode<Argument<any>>(new Argument<any>(e, true, false, aws), pws); }
-        let content = Prims.appfun<Expression<any>, ParensNode<any>>(Prims.between<CharStream, CharStream, Expression<any>>(Prims.char('('))(Prims.char(')'))(argParse))(g);
-        let cond = Prims.right<string, ParensNode<any>>(parensWS)(content);
-        let ifParse = Prims.seq<ParensNode<any>, BodyNode, [ParensNode<any>, BodyNode]>(cond)(bodyParser)(x => x);
+        var g = (e: Expression<any>) => { return new ParensNode([new Argument<any>(e, true, false, aws)], pws); }
+        let content = Prims.appfun<Expression<any>, ParensNode>(Prims.between<CharStream, CharStream, Expression<any>>(Prims.char('('))(Prims.char(')'))(argParse))(g);
+        let cond = Prims.right<string, ParensNode>(parensWS)(content);
+        let ifParse = Prims.seq<ParensNode, BodyNode, [ParensNode, BodyNode]>(cond)(bodyParser)(x => x);
         let ews = "";
         let elseWS = Prims.appfun<CharStream, string>(Prims.left<CharStream, CharStream>(Prims.ws())(Prims.str('else')))(x => ews = x.toString());
-        var h = (tup: [[ParensNode<any>, BodyNode], BodyNode]) => {
-            let e: [ParensNode<any>, BodyNode, BodyNode]= [tup[0][0],tup[0][1], tup[1]];
+        var h = (tup: [[ParensNode, BodyNode], BodyNode]) => {
+            let e: [ParensNode, BodyNode, BodyNode]= [tup[0][0],tup[0][1], tup[1]];
             return e;
         }
-        let elseParse = Prims.seq<[ParensNode<any>, BodyNode], BodyNode, [ParensNode<any>, BodyNode, BodyNode]>(ifParse)(Prims.right<string, BodyNode>(elseWS)(bodyParser))(h);
-        let ifElse = Prims.choice<[ParensNode<any>, BodyNode, BodyNode] | [ParensNode<any>, BodyNode]>(elseParse)(ifParse);
-        return Prims.appfun<[ParensNode<any>, BodyNode, BodyNode] | [ParensNode<any>, BodyNode], Conditional>(ifElse)(f)(i);
+        let elseParse = Prims.seq<[ParensNode, BodyNode], BodyNode, [ParensNode, BodyNode, BodyNode]>(ifParse)(Prims.right<string, BodyNode>(elseWS)(bodyParser))(h);
+        let ifElse = Prims.choice<[ParensNode, BodyNode, BodyNode] | [ParensNode, BodyNode]>(elseParse)(ifParse);
+        return Prims.appfun<[ParensNode, BodyNode, BodyNode] | [ParensNode, BodyNode], Conditional>(ifElse)(f)(i);
     }
 
     /**

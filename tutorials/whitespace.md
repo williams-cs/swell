@@ -14,20 +14,19 @@ Arguments in function definition and function application need to be wrapped in 
 **Main Todos**
 -rewrite fun app parser so it stores ws -- can we parse arguments early? instead of waiting til abstract function node
 	--also figure out which is being used -- abstract function node or funapp? 
-	--looks like maybe user-created functions can be parsed differently from given functions
 	--right now funapp does not have body or parens
 -implement repeat (node class) with parens and body
+-if no args, parse the empty space between parens
 -rewrite repeat node parser
 -make sure that no tostring is hardcoded with ws
--ALL WS PARSED IS STORED EXACTLY ONCE
--clean up ParensNode<Argument<any>> bc ALL ParensNode are ParensNode<Argument> so doesn't need to be generic
+-make sure all ws is parsed once and only once
 -fix that spot where the } bracket jumps (aka ws2 in bodyparse)
 
 **Done List**
 -write parensnode class
--implement cond, fun with parens and body
--implement fun with arguments
--write parents parser
+-implement conditional and fundef with parens and body
+-implement fun def with arguments
+-write parens parser
 -rewrite fundec parser to implement argument node
 -rewrite conditional parser with parens and ws stored correctly
 -take out rws from funapp (but it should be in fun dec)

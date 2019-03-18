@@ -33,4 +33,12 @@ export class DeclareOp<T> extends BinaryOp<T> {
     toString(): string {
         return `${this.left}${this.ws}=${this.right}`;
     }
+
+    get left(): Expression<T> {
+        return this.left;
+    }
+
+    get right(): Expression<T> {
+        return this.right;
+    }
 }

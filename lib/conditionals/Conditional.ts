@@ -7,7 +7,7 @@ import { BooleanNode } from "../prims/BooleanNode";
 import { Some } from "space-lift";
 
 export class Conditional extends Expression<any> {
-    private _test: ParensNode<Argument<any>>;
+    private _test: ParensNode;
     private _trueBranch: BodyNode;
     private _falseBranch: BodyNode;
     private _ews: string;
@@ -21,7 +21,7 @@ export class Conditional extends Expression<any> {
      * @param ews Preceding else whitespace
      */
     constructor(
-        _test: ParensNode<Argument<any>>,
+        _test: ParensNode,
         _trueBranch: BodyNode,
         iws: string = "",
         ews: string = "",
@@ -37,7 +37,7 @@ export class Conditional extends Expression<any> {
     eval(context: Scope) {
         let childCtx = new Scope(context, context.effects, context.eventLog);
         childCtx.canvas = Some(context.canvas.get());
-        let res = this._test.expr.value.eval(childCtx);
+        let res = this._test.expr[0].value.eval(childCtx);
         // if (!(res instanceof BooleanNode)) {
         //     throw new Error("The condition must be a boolean expression.");
         // }
@@ -60,21 +60,21 @@ export class Conditional extends Expression<any> {
     /**
      * Returns the condition of the conditional
      */
-    get test(): Expression<any> {
+    get test(): ParensNode {
         return this._test;
     }
 
     /**
      * Returns the true branch of the conditional
      */
-    get trueBranch(): Expression<any> {
+    get trueBranch(): BodyNode {
         return this._trueBranch;
     }
 
     /**
      * Returns the false branch of the conditional
      */
-    get falseBranch(): Expression<any> {
+    get falseBranch(): BodyNode {
         return this._falseBranch;
     }
 }
