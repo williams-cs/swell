@@ -1,15 +1,13 @@
 import { Expression } from "../Expression";
 import { Scope } from "../structural/Scope";
 import { ReturnError } from "../structural/ReturnError";
-import { ParensNode } from '../structural/ParensNode';
-import { Argument } from '../funhouse/Argument';
 import { Some } from "space-lift";
 
 // Application of a function. Assumes arg values passed in same order as FunDef args
 export class FunApp<T> extends Expression<T> {
 
     private _name: string;
-    private _args: ParensNode;
+    private _args: Expression<{}>[];
     private _defaultValue: T = undefined;
 
     /**
@@ -19,7 +17,7 @@ export class FunApp<T> extends Expression<T> {
      * @param ws Preceding whitespace
      * @param defaultValue The default return value of the function, if any
      */
-    constructor(name: string, args?: ParensNode, ws: string = "", defaultValue?: T) {
+    constructor(name: string, args?: any[], ws: string = "", defaultValue?: T) {
         super(ws);
         this._name = name;
         this._args = args;
@@ -31,13 +29,11 @@ export class FunApp<T> extends Expression<T> {
         //let child = new Scope(fundef.scope); // avoiding overwrite; need to toss after returning
         let child = fundef.scope.copy(); // Copying definition scope
 
-        //unwrap arg list
-        let argList = this._args.expr;
         // Assigns arg values to definition arguments
-        if (argList != null) {
-            for (let i = 0; i < argList.length; i++) { //lookups?
+        if (this._args != null) {
+            for (let i = 0; i < this._args.length; i++) { //lookups?
                 //child.declare(this._funct.args[i]); // redeclare?
-                child.assign(fundef.args[i], argList[i].value);
+                child.assign(fundef.args[i], this._args[i]);
             }
         }
 
@@ -66,14 +62,21 @@ export class FunApp<T> extends Expression<T> {
     }
 
     toString(): string {
-        return this.ws + this.name + this._args.toString();
+        let argsList = '';
+        if (this._args.length > 0) {
+            for (let i = 0; i < this._args.length - 1; i++) {
+                argsList += this._args[i].toString() + ", ";
+            }
+            argsList += this._args[this._args.length - 1].toString();
+        }
+        return this.ws + this.name + "(" + argsList + ")" ;
     }
 
     get name(): string {
         return this._name;
     }
 
-    get args(): ParensNode {
+    get args(): Expression<{}>[] {
         return this._args;
     }
 }

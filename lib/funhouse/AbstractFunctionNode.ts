@@ -1,19 +1,14 @@
 import { Argument } from "./Argument";
 import { Expression } from "../Expression";
 import { Scope } from "../structural/Scope";
-import { ParensNode } from "../structural/ParensNode"
-import { DeclareOp } from "../binops/DeclareOp"
-import { VariableNode } from "../vars/VariableNode"
 
 export abstract class AbstractFunctionNode<T extends Expression<any>> extends Expression<T> {
 
     // Function's name
     protected abstract name: string;
 
-    // Wrapped argument list, passed as ParensNode from parser
-    protected _args: ParensNode;
     /**
-     * Argument map for functions, unwrapped from passed ParensNode. Begins with positional args first, then
+     * Argument map for functions. Begins with positional args first, then
      * follows with optional named args. Positionals don't have default value and
      * must be supplied, while optional named args MUST have default values.
      * Note: Map traversal is in order of insertion.
@@ -25,21 +20,9 @@ export abstract class AbstractFunctionNode<T extends Expression<any>> extends Ex
      * @param args array of arguments
      * @param ws The whitespace preceding the expression
      */
-    constructor(args: ParensNode, ws: string = "") {
+    constructor(args: Array<[string, Expression<any>]>, ws: string = "") {
         super(ws);
-        this._args = args;
-        this.initArg(this.unwrap(args));
-    }
-
-    private unwrap(args: ParensNode): Array<[string, Expression<any>]> {
-        let tempargs: Array<[string, Expression<any>]>;
-        for(let a of args.expr){
-            if(a.value instanceof DeclareOp){
-                if(a.value.left instanceof VariableNode) tempargs.push([a.value.left.name, a.value.right]);
-            }
-            tempargs.push(["", a.value]);
-        }
-        return tempargs;
+        this.initArg(args);
     }
 
     private initArg(args: Array<[string, Expression<any>]>) {
@@ -174,26 +157,14 @@ export abstract class AbstractFunctionNode<T extends Expression<any>> extends Ex
 
     toString(): string {
         let argString: string = "";
-        let argVals = this._args.expr;
-        let str: string = "";
-        let arg: Argument<any>;
-        for(let a of argVals){
-            if(a.value instanceof DeclareOp){
-                if(a.value.left instanceof VariableNode) str = a.value.left.name;
-            } 
-            arg = this.argMap.get(str);
-            if (arg.isPositional || arg.isModified) {
-                argString += `${a.toString()},`;
-            }
-        }
-        /*for (let [key, arg] of this.argMap) {
+        for (let [key, arg] of this.argMap) {
             if (arg.isPositional || arg.isModified) {
                 argString += (arg.isPositional && !arg.alwaysVisible) ? `${arg.value}, ` : `${key} = ${arg.value}, `;
             }
-        }*/
-        if (this.argMap.size > 0) {
-            argString = argString.slice(0, argString.length - 1);
         }
-        return `${this.ws}${this.name}${this._args.ws}(${argString})`;
+        if (this.argMap.size > 0) {
+            argString = argString.slice(0, argString.length - 2);
+        }
+        return `${this.ws}${this.name}(${argString})`;
     }
 }
