@@ -8,7 +8,7 @@ import {
     PlusOp, MulOp, DivOp, MinusOp, ParensNode, Argument,
     Equals, And, GreaterThan, LessThan, GreaterThanEq, LessThanEq, Or, NotEqual,
     VariableNode, AssignOp,
-    Return, FunDef, FunApp, Conditional, RepeatNode, BodyNode,
+    Return, FunDef, FunApp, Conditional, BodyNode,
     EllipseNode, RectangleNode, EmojiNode, LineNode, RGBColorNode
 } from '../../index';
 import { Option, Some, None } from 'space-lift';
@@ -132,7 +132,7 @@ export namespace Parser {
      */
     export let ExpressionParserNoSeq: Prims.IParser<Expression<{}>> = i => {
         return Prims.choices<Expression<any>>(
-            loopParse, funDef, conditionalParse, returnParser, funApp, ListHead,
+            funDef, conditionalParse, returnParser, funApp, ListHead,
             binOpExpr(), unOpsExpr, parens, notExpr,
             boolParse(), varNameParse(), lNumber(), lstring,
         )(i);
@@ -633,33 +633,6 @@ export namespace Parser {
         let elseParse = Prims.seq<[ParensNode<any>, BodyNode], BodyNode, [ParensNode<any>, BodyNode, BodyNode]>(ifParse)(Prims.right<string, BodyNode>(elseWS)(bodyParser))(h);
         let ifElse = Prims.choice<[ParensNode<any>, BodyNode, BodyNode] | [ParensNode<any>, BodyNode]>(elseParse)(ifParse);
         return Prims.appfun<[ParensNode<any>, BodyNode, BodyNode] | [ParensNode<any>, BodyNode], Conditional>(ifElse)(f)(i);
-    }
-
-    /**
-     * RepeatLoop parses valid repeat statement of the form "repeat(n){ body; }"
-     * returns an array where the first elem is number of repeats and the second is the body
-     */
-    export function RepeatLoop(): Prims.IParser<Expression<any>[]> {
-        let expr = Prims.between<CharStream, CharStream, Expression<{}>>(Prims.ws())(Prims.ws())(ExpressionParserNoSeq);
-        let bodyParse = Prims.between<CharStream, CharStream, Expression<{}>>(Prims.ws())(Prims.ws())(ExpressionParser);
-        let p1 = Prims.seq<CharStream, CharStream, CharStream[]>(Prims.str('repeat'))(Prims.char('('))(x => x);
-        let n = Prims.between<CharStream[], CharStream, Expression<any>>(p1)(Prims.char(')'))(expr);
-        let curly = Prims.between<CharStream, CharStream, CharStream>(Prims.ws())(Prims.ws())(Prims.char('{'));
-        let body = Prims.between<CharStream, CharStream, Expression<any>>(curly)(Prims.char('}'))(bodyParse);
-        return Prims.seq<Expression<any>, Expression<any>, Expression<any>[]>(n)(body)(x => x);
-    }
-
-    /**
-     * loopParse parses possible loop statements, is a helper for RepeatLoop
-     * returns a RepeatNode
-     */
-    export let loopParse: Prims.IParser<RepeatNode> = i => {
-        var f = (tup: Expression<any>[]) => {
-            if (tup.length == 2) {
-                return new RepeatNode(tup[0], tup[1]);
-            }
-        }
-        return Prims.appfun<Expression<any>[], RepeatNode>(RepeatLoop())(f)(i);
     }
 
 

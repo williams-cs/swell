@@ -339,7 +339,7 @@ export abstract class Effect<T> {
     }
 
     get canvas(): HTMLCanvasElement {
-        return this.scope.canvas.get();
+        return this.scope.canvas;
     }
 
     get ctx(): CanvasRenderingContext2D {

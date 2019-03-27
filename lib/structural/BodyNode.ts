@@ -1,6 +1,5 @@
 import { Expression } from "../Expression";
 import { Scope } from '../structural/Scope';
-import { Some } from "space-lift";
 
 export class BodyNode extends Expression<any> {
 
@@ -8,7 +7,7 @@ export class BodyNode extends Expression<any> {
     private ws2: string;
     /**
      * The constructor for body nodes that follow if, function def, or repeat node
-     * @param expr expression between curly braces 
+     * @param expr expression between curly braces
      * @param ws1 Preceding whitespace
      * @param ws2 ws before close brace
      */
@@ -22,8 +21,8 @@ export class BodyNode extends Expression<any> {
         this.ws2 = ws2;
     }
 
-    eval(context: Scope) {
-        return this.expr.eval(context);
+    eval(scope: Scope) {
+        return this.expr.eval(scope);
     }
 
     toString(): string {

@@ -4,9 +4,6 @@ import { Some } from "space-lift";
 
 export class SequenceNode extends Expression<void>{
 
-    private _leftVal: any;
-    private _rightVal: any;
-
     /**
      * Constructor for a SequenceNode, the building block of the AST
      * @param left The left side of the Sequence
@@ -18,15 +15,12 @@ export class SequenceNode extends Expression<void>{
     }
 
     /**
-     * Evaluates the children in postorder (left, right, parent)
-     * @param context The current program context
+     * Evaluates the children from left to right
+     * @param scope The current program scope
      */
-    eval(context: Scope): void {
-        let leftScope = new Scope(context, context.effects, context.eventLog);
-        leftScope.canvas = Some(context.canvas.get());
-        //throwing away after evaling
-        this.leftVal = this.left.eval(leftScope);
-        this.rightVal = this.right.eval(leftScope); // leftScope may be modified now
+    eval(scope: Scope): void {
+        this.left.eval(scope);
+        this.right.eval(scope);
     }
 
     toString(): string {
@@ -50,21 +44,5 @@ export class SequenceNode extends Expression<void>{
 
     set right(right: Expression<any>) {
         this._right = right;
-    }
-
-    get leftVal(): any {
-        return this._leftVal;
-    }
-
-    set leftVal(val: any) {
-        this._leftVal = val;
-    }
-
-    get rightVal(): any {
-        return this._rightVal;
-    }
-
-    set rightVal(val: any) {
-        this._rightVal = val;
     }
 }

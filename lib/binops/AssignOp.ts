@@ -20,12 +20,12 @@ export class AssignOp<T> extends BinaryOp<T> {
         }
     }
 
-    eval(context: Scope): T {
+    eval(scope: Scope): T {
         if (!(this.left instanceof VariableNode)) {
             throw("Left side is not a variable");
         }
-        let r: T = this.right.eval(context);
-        context.assign(this.left.name, r);
+        let r: T = this.right.eval(scope);
+        scope.assign(this.left.name, r);
         return r;
     }
 }

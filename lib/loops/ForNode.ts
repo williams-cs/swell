@@ -29,8 +29,7 @@ export class ForNode extends Expression<any> {
      */
     eval(context: Scope) {
         //create the block scope for the loop body
-        let childCtx = new Scope(context, context.effects, context.eventLog);
-        childCtx.canvas = Some(context.canvas.get());
+        let childCtx = context.copy(false);
 
         //Initialize loop variable
         this._init.eval(childCtx);

@@ -75,7 +75,7 @@ import * as csvParse from 'csv-parse';
         let outcome = Parser.parseWithOutcome(inputText);
 
         // clear effects array
-        effects.length = 0;
+        effects = [];
 
         // check for parser outcome
         switch (outcome.tag) {
@@ -84,12 +84,11 @@ import * as csvParse from 'csv-parse';
                     parses = true;
                     message.innerHTML = "Program parsed successfully";
                     ast = outcome.result; // get AST
-                    context = new Scope(null, effects, masterLog);
-                    context.canvas = Some(canvas);
+                    context = new Scope(null, canvas, effects, masterLog);
                     ast.eval(context); // evaluate (this is where objects appear on screen)
 
                 } catch (e) {
-                    console.log(e);
+                    message.innerHTML = e.toString();
                 }
                 break;
 
