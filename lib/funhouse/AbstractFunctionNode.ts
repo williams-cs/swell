@@ -20,12 +20,12 @@ export abstract class AbstractFunctionNode<T extends Expression<any>> extends Ex
      * @param args array of arguments
      * @param ws The whitespace preceding the expression
      */
-    constructor(args: Array<[string, Expression<any>]>, ws: string = "") {
+    constructor(args: Array<[string, Expression<any>, string]>, ws: string = "") {
         super(ws);
         this.initArg(args);
     }
 
-    private initArg(args: Array<[string, Expression<any>]>) {
+    private initArg(args: Array<[string, Expression<any>, string]>) {
         // Check values of arg maps
         let posArgMap: Map<string, Argument<any>> = this.getPositionalArgMap();
         for (let [key, arg] of posArgMap) {
@@ -51,7 +51,7 @@ export abstract class AbstractFunctionNode<T extends Expression<any>> extends Ex
         if ((new Set(argNames)).size != argNames.length) {
             throw(`Duplicate argument names in function definition`);
         }
-        argNames = args.map(([key, arg]) => key).filter(name => name != "");
+        argNames = args.map(([key, arg, ws]) => key).filter(name => name != "");
         if ((new Set(argNames)).size != argNames.length) {
             throw(`Duplicate input argument names`);
         }
@@ -68,12 +68,13 @@ export abstract class AbstractFunctionNode<T extends Expression<any>> extends Ex
         this.argMap = posArgMap;
         let count: number = 0;
         for (let [key, arg] of this.argMap) {
-            let inputArg: [string, Expression<any>] = args[count];
+            let inputArg: [string, Expression<any>, string] = args[count];
             let argName: string = inputArg[0];
             if (argName != "" && argName != key) {
                 throw(`Invalid positional argument name: Expected "${key}" in position ${count}, got "${argName}"`);
             }
             arg.value = inputArg[1];
+            arg.ws = inputArg[2];
             if (argName != "") {
                 arg.alwaysVisible = true;
             }
@@ -82,7 +83,7 @@ export abstract class AbstractFunctionNode<T extends Expression<any>> extends Ex
 
         // Set provided optional arguments - can be any order
         for (let i = count; i < args.length; i++) {
-            let arg: [string, Expression<any>] = args[i];
+            let arg: [string, Expression<any>, string] = args[i];
             let argName: string = arg[0];
             if (argName == "") {
                 throw("Missing argument name");
@@ -92,6 +93,7 @@ export abstract class AbstractFunctionNode<T extends Expression<any>> extends Ex
                 throw(`Invalid argument name: "${argName}"`);
             }
             optArg.value = arg[1];
+            optArg.ws = arg[2];
             optArg.isModified = true;
             this.argMap.set(argName, optArg);
         }
@@ -159,11 +161,11 @@ export abstract class AbstractFunctionNode<T extends Expression<any>> extends Ex
         let argString: string = "";
         for (let [key, arg] of this.argMap) {
             if (arg.isPositional || arg.isModified) {
-                argString += (arg.isPositional && !arg.alwaysVisible) ? `${arg.value}, ` : `${key} = ${arg.value}, `;
+                argString += (arg.isPositional && !arg.alwaysVisible) ? arg.toString() + `,` : `${key}=` + arg.toString() + `,`;
             }
         }
         if (this.argMap.size > 0) {
-            argString = argString.slice(0, argString.length - 2);
+            argString = argString.slice(0, argString.length - 1);
         }
         return `${this.ws}${this.name}(${argString})`;
     }

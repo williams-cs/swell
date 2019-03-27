@@ -12,10 +12,12 @@ In order to track the ws that comes after keywords and arguments, if parens or b
 Arguments in function definition and function application need to be wrapped in "argument" nodes. The argument itself stores an expression (which has the preceding ws) and the ws that comes before the comma or closing parens.
 
 **Main Todos**
--rewrite fun app parser so it stores ws -- can we parse arguments early? instead of waiting til abstract function node
-	--also figure out which is being used -- abstract function node or funapp? 
-	--looks like maybe user-created functions can be parsed differently from given functions
-	--right now funapp does not have body or parens
+-rewrite fun app parser so it stores ws
+	--in order to parse args, must be stored in abstract function node AND fun app differently
+	--parse as string(?), val, and ws, then pair them all in the AFN constructor
+	--for user defined functions, 
+-fun app/fun def with NO arguments should parse ws between parens
+-NAMED argument space/use declareop ?? to store both name and value
 -implement repeat (node class) with parens and body
 -rewrite repeat node parser
 -make sure that no tostring is hardcoded with ws

@@ -510,33 +510,34 @@ export namespace Parser {
         return Prims.appfun<any, ParensNode<Argument<VariableNode>[]>>(Prims.choice<any>(argList)(empty))(g)(i);
     }
 
-    export function funAppArgList(): Prims.IParser<Array<[string, Expression<any>]>> {
+    export function funAppArgList(): Prims.IParser<Array<[string, Expression<any>, string]>> {
         let argName = Prims.right<CharStream, CharStream>(Prims.ws())(stringAndDigit());
         let assignOp = Prims.right<CharStream, CharStream>(Prims.ws())(Prims.char('='));
         let assignToArg = Prims.left<CharStream, CharStream>(argName)(assignOp);
         let assignment = Prims.choice<CharStream>(assignToArg)(Prims.ws());
-        let f = (tup: [CharStream, Expression<any>]) => {
-            let result: [string, Expression<any>] = [tup[0].toString().trim(), tup[1]];
+        let f = (tup: [CharStream, [Expression<any>, CharStream]]) => {
+            let result: [string, Expression<any>, string] = [tup[0].toString(), tup[1][0], tup[1][1].toString()];
             return result;
         };
-        let firstArg = Prims.seq<CharStream, Expression<any>, [string, Expression<any>]>(assignment)(ExpressionParserNoSeq)(f);
+        let argVal = Prims.seq<Expression<any>, CharStream, [Expression<any>, CharStream]>(ExpressionParserNoSeq)(Prims.ws())(x => x);
+        let firstArg = Prims.seq<CharStream, [Expression<any>, CharStream], [string, Expression<any>, string]>(assignment)(argVal)(f);
         let comma = Prims.right<CharStream, CharStream>(Prims.ws())(Prims.char(','));
-        let remainingAssignment = Prims.between<CharStream, CharStream, CharStream>(comma)(Prims.ws())(assignment);
-        let remainingArg = Prims.seq<CharStream, Expression<any>, [string, Expression<any>]>(remainingAssignment)(ExpressionParserNoSeq)(f);
-        let argTail = Prims.many<[string, Expression<any>]>(remainingArg);
-        let args = Prims.choice<Array<[string, Expression<any>]>>(
-            Prims.seq<[string, Expression<any>], Array<[string, Expression<any>]>, Array<[string, Expression<any>]>>(firstArg)(argTail)(
-                (tup: [[string, Expression<any>], Array<[string, Expression<any>]>]) => {
+        let remainingAssignment = Prims.right<CharStream, CharStream>(comma)(assignment);
+        let remainingArg = Prims.seq<CharStream, [Expression<any>, CharStream], [string, Expression<any>, string]>(remainingAssignment)(argVal)(f);
+        let argTail = Prims.many<[string, Expression<any>, string]>(remainingArg);
+        let args = Prims.choice<Array<[string, Expression<any>, string]>>(
+            Prims.seq<[string, Expression<any>, string], Array<[string, Expression<any>, string]>, Array<[string, Expression<any>, string]>>(firstArg)(argTail)(
+                (tup: [[string, Expression<any>, string], Array<[string, Expression<any>, string]>]) => {
                     tup[1].unshift(tup[0]);
                     return tup[1];
                 }
             )
         )(
-            Prims.appfun<CharStream, Array<[string, Expression<any>]>>(Prims.ws())(_ => [])
+            Prims.appfun<CharStream, Array<[string, Expression<any>, string]>>(Prims.ws())(_ => [])
         );
         let openParen = Prims.right<CharStream, CharStream>(Prims.ws())(Prims.char('('));
         let closeParen = Prims.right<CharStream, CharStream>(Prims.ws())(Prims.char(')'));
-        return Prims.between<CharStream, CharStream, Array<[string, Expression<any>]>>(openParen)(closeParen)(args);
+        return Prims.between<CharStream, CharStream, Array<[string, Expression<any>, string]>>(openParen)(closeParen)(args);
     }
 
     /**
@@ -598,13 +599,13 @@ export namespace Parser {
     export let funApp: Prims.IParser<FunApp<any>> = i => {
         let ws = "";
         let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
-        return Prims.seq<CharStream, Array<[string, Expression<any>]>, any>(
+        return Prims.seq<CharStream, Array<[string, Expression<any>, string]>, any>(
             Prims.right<string, CharStream>(preWS)(string())
         )(
             funAppArgList()
         )(tup => {
             let fname: string = tup[0].toString();
-            let args: Array<[string, Expression<any>]> = tup[1];
+            let args: Array<[string, Expression<any>, string]> = tup[1];
             switch (fname) {
                 case "print":
                     return new PrintNode(args, ws);

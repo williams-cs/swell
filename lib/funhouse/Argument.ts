@@ -52,6 +52,10 @@ export class Argument<T> {
         return this._ws;
     }
 
+    set ws(white: string){
+        this._ws = white;
+    }
+
     toString(): string{
         return this._value.toString() + this._ws;
     }
