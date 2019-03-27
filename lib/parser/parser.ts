@@ -258,7 +258,7 @@ export namespace Parser {
                 Prims.seq<CharStream, Expression<any>, [CharStream, Expression<any>]>(
                     Prims.right<void, CharStream>(preWS)(binOpChar(includePureLogic))
                 )(
-                    singleTokenParser
+                    Prims.expect<Expression<any>>(singleTokenParser)("invalid expression")
                 )(
                     (tup: [CharStream, Expression<any>]) => tup
                 )
@@ -329,6 +329,7 @@ export namespace Parser {
         let operand: Prims.IParser<Expression<any>> = choices<Expression<any>>(
             parens, varNameParse(), lNumber()
         );
+        let prefixOperand: Prims.IParser<Expression<any>> = Prims.expect<Expression<any>>(operand)("invalid expression");
         let ws = "";
         let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
         let prefixOp: Prims.IParser<CharStream> = Prims.right<string, CharStream>(preWS)(Prims.strSat(["-"]));
@@ -358,7 +359,7 @@ export namespace Parser {
         }
 
         return Prims.choice<UnaryOp<any>>(
-            Prims.seq<CharStream, Expression<any>, UnaryOp<any>>(prefixOp)(operand)(createPrefixOp)
+            Prims.seq<CharStream, Expression<any>, UnaryOp<any>>(prefixOp)(prefixOperand)(createPrefixOp)
         )(
             Prims.seq<Expression<any>, CharStream, UnaryOp<any>>(operand)(postfixOp)(createPostfixOp)
         )(i);
@@ -377,7 +378,8 @@ export namespace Parser {
             "invalid expression"
         );
         let closeParen = Prims.expect<CharStream>(Prims.str(")"))(") expected");
-        let parentheses = Prims.between<CharStream, CharStream, Expression<any>>(openParen)(closeParen)(expr);
+        let closeParenWS = Prims.right<CharStream, CharStream>(Prims.ws())(closeParen);
+        let parentheses = Prims.between<CharStream, CharStream, Expression<any>>(openParen)(closeParenWS)(expr);
         return Prims.appfun<Expression<any>, Parens<Expression<any>>>(
             parentheses
         )(
@@ -389,9 +391,11 @@ export namespace Parser {
         let ws = "";
         let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
         let notOp: Prims.IParser<CharStream> = Prims.right<string, CharStream>(preWS)(Prims.str("!"));
-        let operand: Prims.IParser<Expression<any>> = choices<Expression<any>>(
-            notExpr, binOpExpr(false), parens, boolParse(), varNameParse(), lNumber(), lstring
-        );
+        let operand: Prims.IParser<Expression<any>> = Prims.expect<Expression<any>>(
+            choices<Expression<any>>(
+                notExpr, binOpExpr(false), parens, boolParse(), varNameParse(), lNumber(), lstring
+            )
+        )("invalid expression");
         let createNotOp = (tup: [CharStream, Expression<any>]) => new Not(tup[1], ws);
         return Prims.seq<CharStream, Expression<any>, Not>(notOp)(operand)(createNotOp)(i);
     }

@@ -82,7 +82,7 @@ import * as csvParse from 'csv-parse';
             case "success":
                 try {
                     parses = true;
-                    message.innerHTML = "";
+                    message.innerHTML = "Program parsed successfully";
                     ast = outcome.result; // get AST
                     context = new Scope(null, effects, masterLog);
                     context.canvas = Some(canvas);
@@ -106,7 +106,7 @@ import * as csvParse from 'csv-parse';
                     { className: "err" }
                 );
                 let msg = outcome.error_msg != "" ? outcome.error_msg : "unexpected error";
-                message.innerHTML = `Line ${editorStartPos.line}, col ${editorStartPos.ch}: ${msg}`;
+                message.innerHTML = `Line ${editorStartPos.line + 1}, col ${editorStartPos.ch}: ${msg}`;
                 break;
         }
 
