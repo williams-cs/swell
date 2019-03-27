@@ -5,7 +5,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "dependencies": {
-    "pants": "github:williams-cs/pants#1.0.1",
+    "pants": "github:williams-cs/pants#1.1",
     "space-lift": "^0.7.2",
     "uuid": "^3.3.2"
   },
