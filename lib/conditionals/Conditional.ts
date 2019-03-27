@@ -1,29 +1,43 @@
 import { Expression } from "../Expression";
 import { BodyNode } from "../structural/BodyNode"
+import { ParensNode } from "../structural/ParensNode"
+import { Argument } from "../funhouse/Argument"
 import { Scope } from '../structural/Scope';
 import { BooleanNode } from "../prims/BooleanNode";
 import { Some } from "space-lift";
 
 export class Conditional extends Expression<any> {
+    private _test: ParensNode<Argument<any>>;
+    private _trueBranch: BodyNode;
+    private _falseBranch: BodyNode;
+    private _ews: string;
 
     /**
      * The constructor for conditionals (if, else if, and else statements)
      * @param test The condition of the statement
      * @param trueBranch The branch to follow if the condition evaluates to true, stored inside a BodyNode
      * @param falseBranch The branch to follow if the condition evaluates to false, stored inside a BodyNode
-     * @param ws Preceding whitespace
+     * @param iws Preceding if whitespace
+     * @param ews Preceding else whitespace
      */
     constructor(
-        private _test: Expression<any>, private _trueBranch: Expression<BodyNode>,
-        ws: string = "", private _falseBranch?: Expression<BodyNode>
-    ) {
-        super(ws, true);
+        _test: ParensNode<Argument<any>>,
+        _trueBranch: BodyNode,
+        iws: string = "",
+        ews: string = "",
+        _falseBranch?: BodyNode
+    ){
+        super(iws, true);
+        this._ews = ews;
+        this._test = _test;
+        this._trueBranch = _trueBranch;   
+        if(_falseBranch != null) this._falseBranch =  _falseBranch;
     }
 
     eval(context: Scope) {
         let childCtx = new Scope(context, context.effects, context.eventLog);
         childCtx.canvas = Some(context.canvas.get());
-        let res = this.test.eval(childCtx);
+        let res = this._test.expr.value.eval(childCtx);
         // if (!(res instanceof BooleanNode)) {
         //     throw new Error("The condition must be a boolean expression.");
         // }
@@ -36,9 +50,9 @@ export class Conditional extends Expression<any> {
     }
 
     toString(): string {
-        let res = `${this.ws}if(${this.test}) {\n\t${this.trueBranch}\n}`;
+        let res = `${this.ws}if${this._test}${this.trueBranch}`;
         if (this.falseBranch !== undefined) {
-            res += `\nelse {\n ${this.falseBranch}\n};`;
+            res += `${this._ews}else${this.falseBranch}`;
         }
         return res;
     }

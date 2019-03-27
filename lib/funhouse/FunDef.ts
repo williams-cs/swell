@@ -1,15 +1,18 @@
 import { Expression } from '../Expression';
 import { BodyNode } from '../structural/BodyNode';
+import { ParensNode } from '../structural/ParensNode';
+import { Argument } from '../funhouse/Argument';
 import { Scope } from '../structural/Scope';
+import { VariableNode } from '../vars/VariableNode';
 
 export class FunDef<T> extends Expression<T> {
     private _name: string;
     private _body: Expression<BodyNode>;
-    private _args: string[];
+    private _args: ParensNode<Argument<VariableNode>[]>;
     private _funScope: Scope;
     private _rws: string;
 
-    constructor(name: string, body: Expression<BodyNode>, args?: string[], ws: string = "", rws: string = "") {
+    constructor(name: string, body: BodyNode, args?: ParensNode<Argument<VariableNode>[]>, ws: string = "", rws: string = "") {
         super(ws);
         this._name = name;
         this._body = body;
@@ -38,13 +41,14 @@ export class FunDef<T> extends Expression<T> {
 
     toString(): string {
         let argsList = ''
-        if (this._args.length > 0) {
-            for (let i = 0; i < this._args.length - 1; i++) {
-                argsList += this._args[i] + ", ";
+        let argsVal = this._args.expr;
+        if (argsVal.length > 0) {
+            for (let i = 0; i < argsVal.length - 1; i++) {
+                argsList += argsVal[i].value.name + ", ";
             }
-            argsList += this._args[this._args.length - 1];
+            argsList += argsVal[argsVal.length - 1].value.name;
         }
-        return `${this.ws}fun${this._rws}${this.name}(${argsList})${this.body}`;
+        return `${this.ws}fun${this._rws}${this.name}${this._args.ws}(${argsList})${this.body}`;
     }
 
     get name(): string {
@@ -53,8 +57,8 @@ export class FunDef<T> extends Expression<T> {
     get body(): Expression<BodyNode> {
         return this._body;
     }
-    get args(): string[] {
-        return this._args;
+    get args(): Argument<any>[] {
+        return this._args.expr;
     }
     get scope(): Scope {
         return this._funScope;

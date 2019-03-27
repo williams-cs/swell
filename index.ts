@@ -37,12 +37,14 @@ export { NOP } from './lib/prims/NOP';
 export { VariableNode } from './lib/vars/VariableNode';
 
 /* CONTROL CONSTRUCTS */
-export { Conditional } from './lib/conditionals/Conditional';
-export { FunApp } from './lib/funhouse/FunApp';
-export { FunDef } from './lib/funhouse/FunDef';
-export { SequenceNode } from './lib/structural/SequenceNode';
-export { RepeatNode } from './lib/loops/RepeatNode';
-export { BodyNode } from './lib/structural/BodyNode';
+export {Conditional} from './lib/conditionals/Conditional';
+export {FunApp} from './lib/funhouse/FunApp';
+export {FunDef} from './lib/funhouse/FunDef';
+export {Argument} from './lib/funhouse/Argument';
+export {SequenceNode} from './lib/structural/SequenceNode';
+export {RepeatNode} from './lib/loops/RepeatNode';
+export {BodyNode} from './lib/structural/BodyNode';
+export {ParensNode} from './lib/structural/ParensNode';
 
 /* BUILTIN FUNCTIONS */
 export { RGBColorNode } from './lib/aesthetics/RGBColorNode';
