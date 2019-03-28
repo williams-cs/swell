@@ -1,6 +1,5 @@
 import { Expression } from "../Expression";
-import { Scope } from './Scope';
-import { Some } from "space-lift";
+import { Scope } from "./Scope";
 
 export class SequenceNode extends Expression<void>{
 
@@ -15,21 +14,25 @@ export class SequenceNode extends Expression<void>{
     }
 
     /**
-     * Evaluates the children from left to right
+     * Evaluates the children in post-order
      * @param scope The current program scope
      */
     eval(scope: Scope): void {
         this.left.eval(scope);
         let right = this.right;
         if (!scope.isLooping) {
-            right.eval(scope);
+            let rightScope = scope.createChildScope();
+            right.eval(rightScope);
+            scope.varBindings = rightScope.varBindings;
             return;
         }
         let f = function() {
             if (scope.isLooping) {
                 setTimeout(f, 0);
             } else {
-                right.eval(scope);
+                let rightScope = scope.createChildScope();
+                right.eval(rightScope);
+                scope.varBindings = rightScope.varBindings;
             }
         }
         setTimeout(f, 0);

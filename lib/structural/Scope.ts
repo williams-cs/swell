@@ -56,7 +56,7 @@ export class Scope {
     }
 
     /**
-     * Returns a children scope with the current scope as parent.
+     * Returns a child scope with the current scope as parent.
      */
     createChildScope(): Scope {
         let s: Scope = new Scope(this, this.canvas, this.effects, this.eventLog);
@@ -85,7 +85,7 @@ export class Scope {
         if (!(this.parent == null)) {
             return this.parent.lookup(name);
         }
-        throw new Error("Variable could not be found.");
+        throw new Error(`Identifier ${name} could not be found.`);
     }
 
     /**

@@ -25,14 +25,17 @@ export class WhileNode extends Expression<any> {
         let body = this._body;
 
         let f = function() {
-            let test = cond.eval(scope);
+            let newScope = scope.createChildScope();
+            let test = cond.eval(newScope);
+            scope.varBindings = newScope.varBindings;
+
             if (!(test instanceof BooleanNode)) {
-                throw new Error("The condition must be a boolean expression.");
                 scope.isLooping = false;
+                throw new Error("The condition must be a boolean expression.");
             }
             if (test.val) {
-                let bodyScope = scope.copy(true);
-                body.eval(bodyScope);
+                body.eval(newScope);
+                scope.varBindings = newScope.varBindings;
                 setTimeout(f, 0);
             } else {
                 scope.isLooping = false;
