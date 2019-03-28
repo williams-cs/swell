@@ -25,44 +25,44 @@ export class PrintNode extends AbstractFunctionNode<any> {
         ]);
     }
 
-    eval(context: Scope): any {
-        let res = this.getArg("object").eval(context);
+    eval(scope: Scope): any {
+        let res = this.getArg("object").eval(scope);
         if (!res.draw) {
             throw("PrintNode has invalid object.");
         }
-        res.draw(context, this);
+        res.draw(scope, this);
         return res;
     }
 
-    getX(context: Scope): number {
-        return this.getArg("x").eval(context).val;
+    getX(scope: Scope): number {
+        return this.getArg("x").eval(scope).val;
     }
 
-    setX(context: Scope, val: number): void {
-        this.updateArgValue("x", context, val);
+    setX(scope: Scope, val: number): void {
+        this.updateArgValue("x", scope, val);
     }
 
-    getY(context: Scope): number {
-        return this.getArg("y").eval(context).val;
+    getY(scope: Scope): number {
+        return this.getArg("y").eval(scope).val;
     }
 
-    setY(context: Scope, val: number): void {
-        this.updateArgValue("y", context, val);
+    setY(scope: Scope, val: number): void {
+        this.updateArgValue("y", scope, val);
     }
 
-    getFontSize(context: Scope): number {
-        return this.getArg("fontSize").eval(context).val;
+    getFontSize(scope: Scope): number {
+        return this.getArg("fontSize").eval(scope).val;
     }
 
-    setFontSize(context: Scope, val: number): void {
-        this.updateArgValue("fontSize", context, val);
+    setFontSize(scope: Scope, val: number): void {
+        this.updateArgValue("fontSize", scope, val);
     }
 
-    getColor(context: Scope): string {
-        return this.getArg("color").eval(context).val;
+    getColor(scope: Scope): string {
+        return this.getArg("color").eval(scope).val;
     }
 
-    setColor(context: Scope, val: string): void {
-        this.updateArgValue("color", context, val);
+    setColor(scope: Scope, val: string): void {
+        this.updateArgValue("color", scope, val);
     }
 }

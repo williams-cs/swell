@@ -9,6 +9,7 @@ import {
     Equals, And, GreaterThan, LessThan, GreaterThanEq, LessThanEq, Or, NotEqual,
     VariableNode, AssignOp,
     Return, FunDef, FunApp, Conditional, BodyNode,
+    WhileNode,
     EllipseNode, RectangleNode, EmojiNode, LineNode, RGBColorNode
 } from '../../index';
 import { Option, Some, None } from 'space-lift';
@@ -132,7 +133,7 @@ export namespace Parser {
      */
     export let ExpressionParserNoSeq: Prims.IParser<Expression<{}>> = i => {
         return Prims.choices<Expression<any>>(
-            funDef, conditionalParse, returnParser, funApp, ListHead,
+            whileLoop, funDef, conditionalParse, returnParser, funApp, ListHead,
             binOpExpr(), unOpsExpr, parens, notExpr,
             boolParse(), varNameParse(), lNumber(), lstring,
         )(i);
@@ -635,6 +636,22 @@ export namespace Parser {
         return Prims.appfun<[ParensNode<any>, BodyNode, BodyNode] | [ParensNode<any>, BodyNode], Conditional>(ifElse)(f)(i);
     }
 
+    /**
+     * WhileLoop parses valid while loops in the form "while(condition) { body;}"
+     * returns a WhileNode for the AST
+     */
+    export let whileLoop: Prims.IParser<WhileNode> = i => {
+        let expr = Prims.between<CharStream, CharStream, Expression<{}>>(Prims.ws())(Prims.ws())(ExpressionParserNoSeq);
+        let bodyParse = Prims.between<CharStream, CharStream, Expression<{}>>(Prims.ws())(Prims.ws())(ExpressionParser);
+        let ws = "";
+        let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
+        let p1 = Prims.seq<CharStream, CharStream, CharStream[]>(Prims.right<string, CharStream>(preWS)(Prims.str("while")))(Prims.char('('))(x => x);
+        let cond = Prims.between<CharStream[], CharStream, Expression<any>>(p1)(Prims.char(')'))(expr);
+        let curly = Prims.between<CharStream, CharStream, CharStream>(Prims.ws())(Prims.ws())(Prims.char('{'));
+        let body = Prims.between<CharStream, CharStream, Expression<any>>(curly)(Prims.char('}'))(bodyParse);
+        var f = (tup: [Expression<any>, Expression<any>]) => { return new WhileNode(tup[0], tup[1], ws); }
+        return Prims.seq<Expression<any>, Expression<any>, WhileNode>(cond)(body)(f)(i);
+    }
 
     export function singleComment(): Prims.IParser<CharStream> {
         let p1 = Prims.many1<CharStream>(Prims.item())

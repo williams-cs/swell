@@ -20,7 +20,19 @@ export class SequenceNode extends Expression<void>{
      */
     eval(scope: Scope): void {
         this.left.eval(scope);
-        this.right.eval(scope);
+        let right = this.right;
+        if (!scope.isLooping) {
+            right.eval(scope);
+            return;
+        }
+        let f = function() {
+            if (scope.isLooping) {
+                setTimeout(f, 0);
+            } else {
+                right.eval(scope);
+            }
+        }
+        setTimeout(f, 0);
     }
 
     toString(): string {

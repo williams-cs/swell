@@ -17,21 +17,28 @@ export class WhileNode extends Expression<any> {
 
     /**
      * Evaluates the body of the loop while the condition is true
-     * @param context
+     * @param scope
      */
-    eval(context: Scope) {
-        let childCtx = context.copy(false);
-        let res = this._cond.eval(childCtx);
-        if (!(res instanceof BooleanNode)) {
-            throw new Error("The condition must be a boolean expression.");
-        }
+    eval(scope: Scope): void {
+        scope.isLooping = true;
+        let cond = this._cond;
+        let body = this._body;
 
-        let ret;
-        while (res.val) {
-            ret = this._body.eval(childCtx);
-            res = this._cond.eval(childCtx);
+        let f = function() {
+            let test = cond.eval(scope);
+            if (!(test instanceof BooleanNode)) {
+                throw new Error("The condition must be a boolean expression.");
+                scope.isLooping = false;
+            }
+            if (test.val) {
+                let bodyScope = scope.copy(true);
+                body.eval(bodyScope);
+                setTimeout(f, 0);
+            } else {
+                scope.isLooping = false;
+            }
         }
-        return ret;
+        setTimeout(f, 0);
     }
 
     toString(): string {

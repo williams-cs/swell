@@ -19,6 +19,8 @@ export class Scope {
 
     private _hadFunEval: boolean = false; // Was this created in a function?
 
+    private _isLooping: boolean = false;
+
     public globalFunID = 10000000; // The global ID for functions in this context
 
     /**
@@ -48,7 +50,7 @@ export class Scope {
     copy(inheritBindings: boolean): Scope {
         let s: Scope = new Scope(this.parent, this.canvas, this.effects, this.eventLog);
         if (inheritBindings) {
-            s.varBindings = new Map(this.varBindings);
+            s.varBindings = this.varBindings;
         }
         return s;
     }
@@ -99,85 +101,59 @@ export class Scope {
         throw new Error("Unknown caller.");
     }
 
-    /**
-     * Returns the Map of variable bindings
-     */
     get varBindings(): Map<string, Option<any>> {
         return this._varBindings;
     }
-    /**
-     * Sets the Map of variable bindings
-     */
+
     set varBindings(m: Map<string, Option<any>>) {
         this._varBindings = m;
     }
 
-    /**
-     * Returns the parent Scope
-     */
     get parent(): Scope {
         return this._parent;
     }
 
-    /**
-     * Returns the return value ID
-     */
     get retValID(): Option<string> {
         return this._retValID;
     }
-    /**
-     * Sets the return value ID
-     */
+
     set retValID(val: Option<string>) {
         this._retValID = val;
     }
 
-    /**
-     * Returns the HTML canvas
-     */
     get canvas(): HTMLCanvasElement {
         return this._canvas;
     }
 
-    /**
-     * Returns the effects array
-     */
     get effects(): Effect<any>[] {
         return this._effects;
     }
 
-    /**
-     * Returns the event log
-     */
     get eventLog(): LogEvent<any>[] {
         return this._eventLog;
     }
 
-    /**
-     * Sets the event log
-     */
     set eventLog(update: LogEvent<any>[]) {
         this._eventLog = update;
     }
 
-    /**
-     * Returns the array of effects
-     */
     get mulSelArray(): Effect<any>[] {
         return this._mulSelArray;
     }
 
-    /**
-     * Returns whether this Scope was created in a function
-     */
     get hadFunEval(): boolean {
         return this._hadFunEval;
     }
 
-    /**
-     * Sets whether this Scope was created in a function
-     */
     set hadFunEval(val: boolean) {
         this._hadFunEval = val;
+    }
+
+    get isLooping(): boolean {
+        return this._isLooping;
+    }
+
+    set isLooping(val: boolean) {
+        this._isLooping = val;
     }
 }
