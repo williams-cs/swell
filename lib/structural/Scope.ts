@@ -3,9 +3,12 @@ import { Effect } from '../effects/Effect';
 import { LogEvent } from '../logging/LogEvent';
 
 export class Scope {
+
     private _varBindings: Map<string, Option<any>>;
 
     private _parent: Scope;
+
+    private _latestScope: Scope = null;
 
     private _canvas: HTMLCanvasElement;
 
@@ -26,8 +29,8 @@ export class Scope {
     /**
      * Constructor for Scope, an object keeping track of objects within a particular context
      * @param parent The parent Scope
-     * @param effects Effects within this Scope
-     * @param myState The scope state
+     * @param canvas The canvas for the effects
+     * @param effects The array of effects
      * @param eventLog The log of events that occurred
      */
     constructor(
@@ -35,6 +38,7 @@ export class Scope {
         effects: Effect<any>[] = null, eventLog: LogEvent<any>[] = null
     ) {
         this._varBindings = new Map();
+        this._latestScope = this;
         this._parent = parent;
         this._canvas = canvas;
         this._effects = effects;
@@ -111,6 +115,14 @@ export class Scope {
 
     get parent(): Scope {
         return this._parent;
+    }
+
+    get latestScope(): Scope {
+        return this._latestScope;
+    }
+
+    set latestScope(scope: Scope) {
+        this._latestScope = scope;
     }
 
     get retValID(): Option<string> {

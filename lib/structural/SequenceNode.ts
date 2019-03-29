@@ -15,27 +15,21 @@ export class SequenceNode extends Expression<void>{
 
     /**
      * Evaluates the children in post-order
-     * @param scope The current program scope
+     * @param scope The latest program scope
      */
     eval(scope: Scope): void {
         this.left.eval(scope);
         let right = this.right;
-        if (!scope.isLooping) {
-            let rightScope = scope.createChildScope();
-            right.eval(rightScope);
-            scope.varBindings = rightScope.varBindings;
-            return;
-        }
         let f = function() {
             if (scope.isLooping) {
                 setTimeout(f, 0);
             } else {
-                let rightScope = scope.createChildScope();
+                let rightScope = scope.latestScope.createChildScope();
                 right.eval(rightScope);
-                scope.varBindings = rightScope.varBindings;
+                scope.latestScope = rightScope.latestScope;
             }
         }
-        setTimeout(f, 0);
+        f();
     }
 
     toString(): string {

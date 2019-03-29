@@ -17,7 +17,7 @@ export class WhileNode extends Expression<any> {
 
     /**
      * Evaluates the body of the loop while the condition is true
-     * @param scope
+     * @param scope The latest program scope
      */
     eval(scope: Scope): void {
         scope.isLooping = true;
@@ -25,17 +25,19 @@ export class WhileNode extends Expression<any> {
         let body = this._body;
 
         let f = function() {
-            let newScope = scope.createChildScope();
+            let newScope = scope.latestScope.createChildScope();
             let test = cond.eval(newScope);
-            scope.varBindings = newScope.varBindings;
+            let latestScope = newScope.latestScope;
+            scope.latestScope = latestScope;
 
             if (!(test instanceof BooleanNode)) {
                 scope.isLooping = false;
                 throw new Error("The condition must be a boolean expression.");
             }
             if (test.val) {
-                body.eval(newScope);
-                scope.varBindings = newScope.varBindings;
+                let bodyScope = latestScope.createChildScope();
+                body.eval(bodyScope);
+                scope.latestScope = bodyScope.latestScope;
                 setTimeout(f, 0);
             } else {
                 scope.isLooping = false;
