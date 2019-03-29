@@ -20,30 +20,44 @@ export class WhileNode extends Expression<any> {
      * @param scope The latest program scope
      */
     eval(scope: Scope): void {
-        scope.isLooping = true;
+        scope.isRunning = true;
         let cond = this._cond;
         let body = this._body;
 
-        let f = function() {
-            let newScope = scope.latestScope.createChildScope();
-            let test = cond.eval(newScope);
-            let latestScope = newScope.latestScope;
-            scope.latestScope = latestScope;
+        let asyncLoop = function() {
+            let condScope = scope.latestScope.createChildScope();
+            let condResult = cond.eval(condScope);
+            let asyncBody = function() {
+                if (condScope.isRunning) {
+                    setTimeout(asyncBody, 0);
+                    return;
+                }
 
-            if (!(test instanceof BooleanNode)) {
-                scope.isLooping = false;
-                throw new Error("The condition must be a boolean expression.");
+                if (!(condResult instanceof BooleanNode)) {
+                    throw new Error("The condition must be a boolean expression.");
+                }
+
+                if (condResult.val) {
+                    let bodyScope = condScope.latestScope.createChildScope();
+                    body.eval(bodyScope);
+                    let asyncPostBody = function() {
+                        if (bodyScope.isRunning) {
+                            setTimeout(asyncPostBody, 0);
+                        } else {
+                            scope.latestScope = bodyScope.latestScope;
+                            setTimeout(asyncLoop, 0);
+                        }
+                    }
+                    asyncPostBody();
+
+                } else {
+                    scope.isRunning = false;
+                    scope.latestScope = condScope.latestScope;
+                }
             }
-            if (test.val) {
-                let bodyScope = latestScope.createChildScope();
-                body.eval(bodyScope);
-                scope.latestScope = bodyScope.latestScope;
-                setTimeout(f, 0);
-            } else {
-                scope.isLooping = false;
-            }
+            asyncBody();
         }
-        setTimeout(f, 0);
+        asyncLoop();
     }
 
     toString(): string {

@@ -22,7 +22,7 @@ export class Scope {
 
     private _hadFunEval: boolean = false; // Was this created in a function?
 
-    private _isLooping: boolean = false;
+    private _isRunning: boolean = false;
 
     public globalFunID = 10000000; // The global ID for functions in this context
 
@@ -161,11 +161,11 @@ export class Scope {
         this._hadFunEval = val;
     }
 
-    get isLooping(): boolean {
-        return this._isLooping;
+    get isRunning(): boolean {
+        return this._isRunning;
     }
 
-    set isLooping(val: boolean) {
-        this._isLooping = val;
+    set isRunning(val: boolean) {
+        this._isRunning = val;
     }
 }

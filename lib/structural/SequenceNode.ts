@@ -18,18 +18,29 @@ export class SequenceNode extends Expression<void>{
      * @param scope The latest program scope
      */
     eval(scope: Scope): void {
-        this.left.eval(scope);
+        scope.isRunning = true;
+        let leftScope = scope.createChildScope();
+        this.left.eval(leftScope);
         let right = this.right;
-        let f = function() {
-            if (scope.isLooping) {
-                setTimeout(f, 0);
+        
+        let asyncEvalRight = function() {
+            if (leftScope.isRunning) {
+                setTimeout(asyncEvalRight, 0);
             } else {
-                let rightScope = scope.latestScope.createChildScope();
+                let rightScope = leftScope.latestScope.createChildScope();
                 right.eval(rightScope);
-                scope.latestScope = rightScope.latestScope;
+                let asyncFinishEval = function() {
+                    if (rightScope.isRunning) {
+                        setTimeout(asyncFinishEval, 0);
+                    } else {
+                        scope.latestScope = rightScope.latestScope;
+                        scope.isRunning = false;
+                    }
+                }
+                asyncFinishEval();
             }
         }
-        f();
+        asyncEvalRight();
     }
 
     toString(): string {
