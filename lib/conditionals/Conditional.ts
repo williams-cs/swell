@@ -35,16 +35,23 @@ export class Conditional extends Expression<any> {
     }
 
     eval(scope: Scope) {
+        scope.isRunning = true;
         let res = this.cond.expr.value.eval(scope);
         if (!(res instanceof BooleanNode)) {
             throw new Error("The condition must be a boolean expression.");
         }
-        if (res.val) {
-            return this.trueBranch.eval(scope);
+        let branch = res.val ? this.trueBranch : this.falseBranch;
+        let bodyScope = scope.createChildScope();
+        branch.eval(bodyScope);
+        let asyncPostBody = function() {
+            if (bodyScope.isRunning) {
+                setTimeout(asyncPostBody, 0);
+            } else {
+                scope.isRunning = false;
+                scope.latestScope = bodyScope.latestScope;
+            }
         }
-        if (this.falseBranch != null) { // check if else/else if is null or undefined
-            return this.falseBranch.eval(scope); // possibly a bad idea
-        }
+        asyncPostBody();
     }
 
     toString(): string {

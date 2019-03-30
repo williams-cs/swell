@@ -70,6 +70,10 @@ import * as csvParse from 'csv-parse';
 
         // get program
         let inputText = editor.getValue();
+        if (inputText == "") {
+            message.innerHTML = "";
+            return;
+        }
 
         // parse program text
         let outcome = Parser.parseWithOutcome(inputText);

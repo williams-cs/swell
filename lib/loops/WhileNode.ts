@@ -27,35 +27,27 @@ export class WhileNode extends Expression<any> {
         let asyncLoop = function() {
             let condScope = scope.latestScope.createChildScope();
             let condResult = cond.eval(condScope);
-            let asyncBody = function() {
-                if (condScope.isRunning) {
-                    setTimeout(asyncBody, 0);
-                    return;
-                }
-
-                if (!(condResult instanceof BooleanNode)) {
-                    throw new Error("The condition must be a boolean expression.");
-                }
-
-                if (condResult.val) {
-                    let bodyScope = condScope.latestScope.createChildScope();
-                    body.eval(bodyScope);
-                    let asyncPostBody = function() {
-                        if (bodyScope.isRunning) {
-                            setTimeout(asyncPostBody, 0);
-                        } else {
-                            scope.latestScope = bodyScope.latestScope;
-                            setTimeout(asyncLoop, 0);
-                        }
-                    }
-                    asyncPostBody();
-
-                } else {
-                    scope.isRunning = false;
-                    scope.latestScope = condScope.latestScope;
-                }
+            if (!(condResult instanceof BooleanNode)) {
+                throw new Error("The condition must be a boolean expression.");
             }
-            asyncBody();
+
+            if (condResult.val) {
+                let bodyScope = condScope.latestScope.createChildScope();
+                body.eval(bodyScope);
+                let asyncPostBody = function() {
+                    if (bodyScope.isRunning) {
+                        setTimeout(asyncPostBody, 0);
+                    } else {
+                        scope.latestScope = bodyScope.latestScope;
+                        setTimeout(asyncLoop, 0);
+                    }
+                }
+                asyncPostBody();
+
+            } else {
+                scope.isRunning = false;
+                scope.latestScope = condScope.latestScope;
+            }
         }
         asyncLoop();
     }
