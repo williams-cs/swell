@@ -50,7 +50,7 @@ export class Conditional extends Expression<any> {
     }
 
     toString(): string {
-        let res = `${this.ws}if${this._test}${this.trueBranch}`;
+        let res = `${this.ws}if${this._test.ws}(${this._test.expr.value}${this._test.expr.postWS})${this.trueBranch}`;
         if (this.falseBranch !== undefined) {
             res += `${this._ews}else${this.falseBranch}`;
         }

@@ -15,7 +15,9 @@ Arguments in function definition and function application need to be wrapped in 
 -rewrite fun app parser so it stores ws
 	--in order to parse args, must be stored in abstract function node AND fun app differently
 	--parse as string(?), val, and ws, then pair them all in the AFN constructor
-	--for user defined functions, 
+	--for user defined functions, ,..
+	--labeled arguments: pre-string ws stored in tuple with the string, post-string/pre-= ws stored in the 
+		string, pre expr ws stored in the expr val
 -fun app/fun def with NO arguments should parse ws between parens
 -NAMED argument space/use declareop ?? to store both name and value
 -implement repeat (node class) with parens and body
@@ -33,3 +35,4 @@ Arguments in function definition and function application need to be wrapped in 
 -rewrite fundec parser to implement argument node
 -rewrite conditional parser with parens and ws stored correctly
 -take out rws from funapp (but it should be in fun dec)
+-funapp args parse ws
