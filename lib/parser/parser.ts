@@ -119,7 +119,7 @@ export namespace Parser {
                     Prims.choice<Expression<any>>(
                         ExpressionParser
                     )(
-                        Prims.appfun<CharStream, Expression<any>>(Prims.ws())(_ => new NOP())
+                        Prims.appfun<string, Expression<any>>(Prims.result<string>(""))(_ => new NOP())
                     )
                 )
             )(f);
@@ -443,15 +443,14 @@ export namespace Parser {
      */
     export let bodyParser: Prims.IParser<BodyNode> = i => {
         let ws1 = "";
-        let ws2 = "";
         let openBrace = Prims.left(Prims.ws())(Prims.char('{'));
         let closeBrace = Prims.left(Prims.ws())(Prims.char('}'));
         let expectCloseBrace = Prims.expect(closeBrace)("} expected");
         let openBraceWS = Prims.appfun<CharStream, string>(openBrace)(x => ws1 = x.toString());
-        let expectCloseBraceWS = Prims.appfun<CharStream, string>(expectCloseBrace)(x => ws2 = x.toString());
-        let p = Prims.between<string, string, Expression<any>>(openBraceWS)(expectCloseBraceWS)(ExpressionParser);
-        var f = (e: Expression<any>) => new BodyNode(e, ws1, ws2);
-        return Prims.appfun<Expression<any>, BodyNode>(p)(f)(i);
+        let expr = Prims.right<string, Expression<any>>(openBraceWS)(ExpressionParser);
+        let p = Prims.seq<Expression<any>, CharStream, [Expression<any>, CharStream]>(expr)(expectCloseBrace)(x => x);
+        var f = (tup: [Expression<any>, CharStream]) => new BodyNode(tup[0], ws1, tup[1].toString());
+        return Prims.appfun<[Expression<any>, CharStream], BodyNode>(p)(f)(i);
     }
 
     /**
