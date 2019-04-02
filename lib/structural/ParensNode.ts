@@ -23,10 +23,14 @@ export class ParensNode<T> extends Expression<any>{
     }
 
     toString(): string {
-        return `${this.ws}(${this._content.toString()})`;
+        return `${this.ws}(${this._content})`;
     }
 
     get expr(): T {
         return this._content;
+    }
+
+    set expr(cont: T) {
+        this._content = cont;
     }
 }

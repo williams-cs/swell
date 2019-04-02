@@ -7,7 +7,7 @@ import { VariableNode } from '../vars/VariableNode';
 
 export class FunDef<T> extends Expression<T> {
     private _name: string;
-    private _body: Expression<BodyNode>;
+    private _body: BodyNode;
     private _args: ParensNode<Argument<VariableNode>[]>;
     private _funScope: Scope;
     private _rws: string;

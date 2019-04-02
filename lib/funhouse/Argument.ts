@@ -13,7 +13,8 @@ export class Argument<T> {
         private _value: T = undefined,
         private _isPositional: boolean = true,
         private _alwaysVisible: boolean = false,
-        private _ws: string = "", //unlike most expressions, this stores POST ws
+        private _preWS: string = " ",
+        private _postWS: string = ""
     ) {}
 
     get value(): T {
@@ -48,11 +49,19 @@ export class Argument<T> {
         this._alwaysVisible = val;
     }
 
-    get ws(): string{
-        return this._ws;
+    get preWS(): string{
+        return this._preWS;
     }
 
-    toString(): string{
-        return this._value.toString() + this._ws;
+    set preWS(white: string){
+        this._preWS = white;
+    }
+
+    get postWS(): string{
+        return this._postWS;
+    }
+
+    set postWS(white: string){
+        this._postWS = white;
     }
 }
