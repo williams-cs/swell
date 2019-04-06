@@ -26,8 +26,7 @@ export class FunApp<T> extends Expression<T> {
 
     eval(context: Scope): any {
         let fundef = context.lookup(this.name); // looking up function
-        //let child = new Scope(fundef.scope); // avoiding overwrite; need to toss after returning
-        let child = fundef.scope.copy(true); // Copying definition scope
+        let child = fundef.scope.copy(true); // Copying definition scope to avoid overwrite; need to toss after returning
 
         // Assigns arg values to definition arguments
         if (this._args != null) {

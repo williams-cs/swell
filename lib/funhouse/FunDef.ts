@@ -24,16 +24,7 @@ export class FunDef<T> extends Expression<T> {
     // Binds name to parent context (cur context is new context)
     eval(context: Scope): any {
         this._funScope = context.copy(false);
-        /*
-        if(this._args != null){
-            for(let entry of this._args){
-                this._funScope.declare(entry);
-            }
-        }
-        */
-
         context.assign(this._name, this); // parent or current?
-        return null;
     }
 
     toString(): string {

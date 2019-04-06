@@ -65,17 +65,21 @@ import * as csvParse from 'csv-parse';
     }
 
     function parse() {
+        // Clear existing program
         ctx.clearRect(0, 0, canvas.width, canvas.height); // clear the canvas
-        clearEditorMarkers();
+        effects = []; // clear effects array
+        clearEditorMarkers(); // Clear any markers on the editor
+        ast = undefined;
+        message.innerHTML = "";
 
         // get program
         let inputText = editor.getValue();
+        if (inputText == "") {
+            return;
+        }
 
         // parse program text
         let outcome = Parser.parseWithOutcome(inputText);
-
-        // clear effects array
-        effects = [];
 
         // check for parser outcome
         switch (outcome.tag) {

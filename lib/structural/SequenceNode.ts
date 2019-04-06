@@ -19,8 +19,11 @@ export class SequenceNode extends Expression<void>{
      * @param scope The current program scope
      */
     eval(scope: Scope): void {
-        this.left.eval(scope);
-        this.right.eval(scope);
+        let leftScope = scope.createChildScope();
+        this.left.eval(leftScope);
+        let rightScope = leftScope.latestScope.createChildScope();
+        this.right.eval(rightScope);
+        scope.latestScope = rightScope.latestScope;
     }
 
     toString(): string {

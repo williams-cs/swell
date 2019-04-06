@@ -34,17 +34,21 @@ export class Conditional extends Expression<any> {
         this._falseBranch = falseBranch;
     }
 
-    eval(scope: Scope) {
-        let res = this.cond.expr.value.eval(scope);
-        if (!(res instanceof BooleanNode)) {
+    eval(scope: Scope): any {
+        let cond = this.cond.expr.value.eval(scope);
+        if (!(cond instanceof BooleanNode)) {
             throw new Error("The condition must be a boolean expression.");
         }
-        if (res.val) {
-            return this.trueBranch.eval(scope);
+
+        let bodyScope = scope.createChildScope();
+        let branch = cond.val ? this.trueBranch : this.falseBranch;
+        if (branch === null || branch === undefined) {
+            return;
         }
-        if (this.falseBranch != null) { // check if else/else if is null or undefined
-            return this.falseBranch.eval(scope); // possibly a bad idea
-        }
+
+        let returnResult = branch.eval(bodyScope);
+        scope.latestScope = bodyScope.latestScope;
+        return returnResult;
     }
 
     toString(): string {
