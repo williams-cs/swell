@@ -1,0 +1,59 @@
+{
+  "name": "swell",
+  "version": "1.0.0",
+  "description": "swell williams entry-level language",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "dependencies": {
+    "pants": "github:williams-cs/pants#1.1",
+    "space-lift": "^0.7.2",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.1.3",
+    "@types/codemirror": "0.0.70",
+    "@types/diff": "^3.5.2",
+    "@types/mocha": "^5.2.2",
+    "chai": "^4.1.2",
+    "csv-parse": "^4.3.1",
+    "mocha": "^5.2.0",
+    "nyc": "^13.3.0",
+    "ts-node": "^6.1.1",
+    "typedoc": "^0.11.1",
+    "typescript": "^2.9.1"
+  },
+  "scripts": {
+    "test": "nyc --reporter=text mocha"
+  },
+  "nyc": {
+    "extension": [
+      ".ts",
+      ".tsx"
+    ],
+    "exclude": [
+      "**/*.d.ts",
+      "test/",
+      "coverage/",
+      "lib/Ignore for now/",
+      "lib/*.js",
+      "dist/"
+    ],
+    "reporter": [
+      "html"
+    ],
+    "all": true
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/williams-cs/swell.git"
+  },
+  "keywords": [
+    "dmlanguage"
+  ],
+  "author": "Dzung Pham, Emmie Hine, Quan Do, Kiersten Campbell and Dan Barowy",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/williams-cs/swell/issues"
+  },
+  "homepage": "https://github.com/williams-cs/swell#readme"
+}
