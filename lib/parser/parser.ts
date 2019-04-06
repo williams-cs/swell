@@ -132,7 +132,7 @@ export namespace Parser {
      */
     export let ExpressionParserNoSeq: Prims.IParser<Expression<{}>> = i => {
         return Prims.choices<Expression<any>>(
-            funDef, conditionalParse, returnParser, funApp, ListHead,
+            funDef, conditionalParser, returnParser, funApp, ListHead,
             binOpExpr(), unOpsExpr, parens, notExpr,
             boolParse(), varNameParse(), lNumber(), lstring,
         )(i);
@@ -438,15 +438,25 @@ export namespace Parser {
      * Body parses the body of a function, if, or loops statement, aka expressions between {}
      */
     export let bodyParser: Prims.IParser<BodyNode> = i => {
-        let ws1 = "";
-        let openBrace = Prims.left(Prims.ws())(Prims.char('{'));
-        let closeBrace = Prims.left(Prims.ws())(Prims.char('}'));
-        let expectCloseBrace = Prims.expect(closeBrace)("} expected");
-        let openBraceWS = Prims.appfun<CharStream, string>(openBrace)(x => ws1 = x.toString());
-        let expr = Prims.right<string, Expression<any>>(openBraceWS)(ExpressionParser);
-        let p = Prims.seq<Expression<any>, CharStream, [Expression<any>, CharStream]>(expr)(expectCloseBrace)(x => x);
-        var f = (tup: [Expression<any>, CharStream]) => new BodyNode(tup[0], ws1, tup[1].toString());
-        return Prims.appfun<[Expression<any>, CharStream], BodyNode>(p)(f)(i);
+        let preOpenCurlyWs = "";
+        let preCloseCurlyWs = "";
+        let preOpenCurlyWsParser = Prims.appfun<CharStream, string>(Prims.ws())(
+            x => preOpenCurlyWs = x.toString()
+        );
+        let preCloseCurlyWsParser = Prims.appfun<CharStream, string>(Prims.ws())(
+            x => preCloseCurlyWs = x.toString()
+        );
+
+        let openCurlyParser = Prims.right<string, CharStream>(preOpenCurlyWsParser)(Prims.str("{"));
+        let closeCurlyParser = Prims.right<string, CharStream>(preCloseCurlyWsParser)(Prims.str("}"));
+        let expectCloseCurly = Prims.expect(closeCurlyParser)("} expected");
+
+        let expr = Prims.expect<Expression<any>>(ExpressionParser)("invalid expression");
+        let body = Prims.between<CharStream, CharStream, Expression<any>>(openCurlyParser)(expectCloseCurly)(expr);
+
+        return Prims.appfun<Expression<any>, BodyNode>(body)(
+            x => new BodyNode(x, preOpenCurlyWs, preCloseCurlyWs)
+        )(i);
     }
 
     /**
@@ -606,39 +616,41 @@ export namespace Parser {
     }
 
     /**
-     * conditionalParse is a rewrite of condParse that includes and passes ws
+     * Parses if statement recursively
      */
-    export let conditionalParse: Prims.IParser<Conditional> = i => {
-        var f = (tup: [ParensNode<any>, BodyNode, BodyNode] | [ParensNode<any>, BodyNode]) => {
-            if (tup.length == 3) {
-                return new Conditional(tup[0], tup[1], iws, ews, tup[2]);
-            }
-            else {
-                return new Conditional(tup[0], tup[1], iws, ews);
-            }
-        }
-        let iws = "";
-        let preIWS = Prims.appfun<CharStream, string>(Prims.left<CharStream, CharStream>(Prims.ws())(Prims.str('if')))(x => iws = x.toString());
-        let pws = "";
-        let parensWS = Prims.appfun<CharStream, string>(Prims.right<string, CharStream>(preIWS)(Prims.ws()))(x => pws = x.toString());
-        let aws = "";
-        let argWS = Prims.appfun<CharStream, string>(Prims.ws())(x => aws = x.toString());
-        let argParse = Prims.left<Expression<any>,string>(ExpressionParserNoSeq)(argWS);
-        var g = (e: Expression<any>) => { return new ParensNode<Argument<any>>(new Argument<any>(e, true, false, "", aws), pws); }
-        let content = Prims.appfun<Expression<any>, ParensNode<any>>(Prims.between<CharStream, CharStream, Expression<any>>(Prims.char('('))(Prims.char(')'))(argParse))(g);
-        let cond = Prims.right<string, ParensNode<any>>(parensWS)(content);
-        let ifParse = Prims.seq<ParensNode<any>, BodyNode, [ParensNode<any>, BodyNode]>(cond)(bodyParser)(x => x);
-        let ews = "";
-        let elseWS = Prims.appfun<CharStream, string>(Prims.left<CharStream, CharStream>(Prims.ws())(Prims.str('else')))(x => ews = x.toString());
-        var h = (tup: [[ParensNode<any>, BodyNode], BodyNode]) => {
-            let e: [ParensNode<any>, BodyNode, BodyNode] = [tup[0][0], tup[0][1], tup[1]];
-            return e;
-        }
-        let elseParse = Prims.seq<[ParensNode<any>, BodyNode], BodyNode, [ParensNode<any>, BodyNode, BodyNode]>(ifParse)(Prims.right<string, BodyNode>(elseWS)(bodyParser))(h);
-        let ifElse = Prims.choice<[ParensNode<any>, BodyNode, BodyNode] | [ParensNode<any>, BodyNode]>(elseParse)(ifParse);
-        return Prims.appfun<[ParensNode<any>, BodyNode, BodyNode] | [ParensNode<any>, BodyNode], Conditional>(ifElse)(f)(i);
-    }
+    export let conditionalParser: Prims.IParser<Conditional> = i => {
+        let preIfWs = "";
+        let preIfWsParser = Prims.appfun<CharStream, string>(Prims.ws())(
+            x => preIfWs = x.toString()
+        );
+        let ifParser = Prims.right<string, CharStream>(preIfWsParser)(Prims.str("if"));
+        let condParser = Prims.expect<Parens<any>>(parens)("invalid condition expression");
+        let bodyParse = Prims.expect<BodyNode>(bodyParser)("invalid body for if statement");
+        let condBodyParser = Prims.seq<Parens<any>, BodyNode, [Parens<any>, BodyNode]>(condParser)(bodyParse)(tup => tup);
+        let ifStatementParser = Prims.right<CharStream, [Parens<any>, BodyNode]>(ifParser)(condBodyParser);
 
+        let preElseWs = "";
+        let preElseWsParser = Prims.appfun<CharStream, string>(Prims.ws())(
+            x => preElseWs = x.toString()
+        );
+        let elseParser = Prims.right<string, CharStream>(preElseWsParser)(Prims.str("else"));
+        let elseBodyParser = Prims.choices<BodyNode | Conditional>(conditionalParser, bodyParser);
+        let expectElseBodyParser = Prims.expect<BodyNode | Conditional>(elseBodyParser)("invalid else statement");
+        let elseStatementParser = Prims.right<CharStream, BodyNode | Conditional>(elseParser)(expectElseBodyParser);
+
+        let singleIfParser = Prims.appfun<[Parens<any>, BodyNode], Conditional>(ifStatementParser)(
+            (tup: [Parens<any>, BodyNode]) => new Conditional(tup[0], tup[1], preIfWs)
+        );
+
+        let ifElseParser = Prims.seq<[Parens<any>, BodyNode], BodyNode | Conditional, Conditional>(
+            ifStatementParser)(elseStatementParser)(
+            (tup: [[Parens<any>, BodyNode], BodyNode | Conditional]) => {
+                return new Conditional(tup[0][0], tup[0][1], preIfWs, tup[1], preElseWs);
+            }
+        );
+
+        return Prims.choices<Conditional>(ifElseParser, singleIfParser)(i);
+    }
 
     export function singleComment(): Prims.IParser<CharStream> {
         let p1 = Prims.many1<CharStream>(Prims.item())

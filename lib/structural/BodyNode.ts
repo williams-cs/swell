@@ -1,24 +1,20 @@
 import { Expression } from "../Expression";
-import { Scope } from '../structural/Scope';
+import { Scope } from "../structural/Scope";
 
 export class BodyNode extends Expression<any> {
 
-    private expr: Expression<any>;
-    private ws2: string;
     /**
-     * The constructor for body nodes that follow if, function def, or repeat node
+     * The constructor for body nodes that follow if, function def, or loops
      * @param expr expression between curly braces
-     * @param ws1 Preceding whitespace
-     * @param ws2 ws before close brace
+     * @param preOpenCurlyWS Whitespace preceding opening curly brace
+     * @param preCloseCurlyWS Whitespace preceding closing curly brace
      */
     constructor(
-        expr: Expression<any>,
-        ws1: string = "",
-        ws2: string = ""
+        private expr: Expression<any>,
+        private preOpenCurlyWS: string = "",
+        private preCloseCurlyWS: string = ""
     ) {
-        super(ws1);
-        this.expr = expr;
-        this.ws2 = ws2;
+        super();
     }
 
     eval(scope: Scope) {
@@ -26,7 +22,7 @@ export class BodyNode extends Expression<any> {
     }
 
     toString(): string {
-        return `${this.ws}{${this.expr.toString()}${this.ws2}}`;
+        return `${this.preOpenCurlyWS}{${this.expr}${this.preCloseCurlyWS}}`;
     }
 
 }
