@@ -67,10 +67,13 @@ import * as csvParse from 'csv-parse';
     function parse() {
         // Clear existing program
         ctx.clearRect(0, 0, canvas.width, canvas.height); // clear the canvas
-        effects = []; // clear effects array
         clearEditorMarkers(); // Clear any markers on the editor
         ast = undefined;
         message.innerHTML = "";
+        for (let effect of effects) {
+            effect.removeEventListeners();
+        }
+        effects = [];
 
         // get program
         let inputText = editor.getValue();

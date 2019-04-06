@@ -109,11 +109,19 @@ export abstract class Effect<T> {
     /* Event listener functions */
 
     private addEventListeners(): void {
-        this.canvas.addEventListener('mousemove', this.onMouseMove.bind(this));
-        this.canvas.addEventListener('mousedown', this.onMouseDown.bind(this));
-        this.canvas.addEventListener('mouseup', this.onMouseUp.bind(this));
-        window.addEventListener('keydown', this.onKeyDown.bind(this));
-        window.addEventListener('mouseup', this.isMouseOutside.bind(this));
+        this.canvas.addEventListener("mousemove", this.onMouseMove.bind(this));
+        this.canvas.addEventListener("mousedown", this.onMouseDown.bind(this));
+        this.canvas.addEventListener("mouseup", this.onMouseUp.bind(this));
+        window.addEventListener("keydown", this.onKeyDown.bind(this));
+        window.addEventListener("mouseup", this.isMouseOutside.bind(this));
+    }
+
+    public removeEventListeners(): void {
+        this.canvas.removeEventListener("mousemove", this.onMouseMove.bind(this));
+        this.canvas.removeEventListener("mousedown", this.onMouseDown.bind(this));
+        this.canvas.removeEventListener("mouseup", this.onMouseUp.bind(this));
+        window.removeEventListener("keydown", this.onKeyDown.bind(this));
+        window.removeEventListener("mouseup", this.isMouseOutside.bind(this));
     }
 
     /**
