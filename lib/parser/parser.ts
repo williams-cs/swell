@@ -342,9 +342,19 @@ export namespace Parser {
     }
 
     export let parens: Prims.IParser<Parens<Expression<any>>> = i => {
-        let lws = "";
-        let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => lws = x.toString());
-        let openParen = Prims.right<string, CharStream>(preWS)(Prims.str("("));
+        let preOpenParenWs = "";
+        let preCloseParenWs = "";
+        let preOpenParenWsParser = Prims.appfun<CharStream, string>(Prims.ws())(
+            x => preOpenParenWs = x.toString()
+        );
+        let preCloseParenWsParser = Prims.appfun<CharStream, string>(Prims.ws())(
+            x => preCloseParenWs = x.toString()
+        );
+
+        let openParenParser = Prims.right<string, CharStream>(preOpenParenWsParser)(Prims.str("("));
+        let closeParenParser = Prims.right<string, CharStream>(preCloseParenWsParser)(Prims.str(")"));
+        let expectCloseParen = Prims.expect(closeParenParser)(") expected");
+
         let expr = Prims.expect<Expression<any>>(
             Prims.choices<Expression<any>>(
                 binOpExpr(), unOpsExpr, parens, notExpr,
@@ -353,13 +363,12 @@ export namespace Parser {
         )(
             "invalid expression"
         );
-        let closeParen = Prims.right<CharStream, CharStream>(Prims.ws())(Prims.str(")"));
-        let expectCloseParen = Prims.expect(closeParen)(") expected");
-        let parentheses = Prims.between<CharStream, CharStream, Expression<any>>(openParen)(expectCloseParen)(expr);
+
+        let parentheses = Prims.between<CharStream, CharStream, Expression<any>>(openParenParser)(expectCloseParen)(expr);
         return Prims.appfun<Expression<any>, Parens<Expression<any>>>(
             parentheses
         )(
-            x => new Parens<Expression<any>>(x, lws)
+            x => new Parens<Expression<any>>(x, preOpenParenWs, preCloseParenWs)
         )(i);
     }
 
@@ -423,19 +432,6 @@ export namespace Parser {
         let p1 = Prims.right<CharStream, Expression<any>>(Prims.char(','))(ExpressionParserNoSeq);
         let p2 = Prims.left(Prims.many<Expression<any>>(p1))(Prims.char(']'));
         return p2;
-    }
-
-    /**
-    * ParensNodeParse parses valid argument/conditional parens usage and wraps in a ParensNode
-    */
-    export let ParensNodeExpr: Prims.IParser<ParensNode<any>> = i => {
-        let ws = "";
-        let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
-        let content = Prims.right<string, Expression<any>>(preWS)(Prims.between<CharStream, CharStream, Expression<any>>(Prims.char('('))(Prims.char(')'))(ExpressionParser));
-        let f = (e: Expression<any>) => {
-            return new ParensNode(e, ws);
-        }
-        return Prims.appfun<Expression<any>, ParensNode<any>>(content)(f)(i);
     }
 
     /**
@@ -538,7 +534,7 @@ export namespace Parser {
     }
 
 
-    /** funApp arg list, where the output is a parensnode with contents of an array that stores argument preWS, argName, argValue, and arg postWS 
+    /** funApp arg list, where the output is a parensnode with contents of an array that stores argument preWS, argName, argValue, and arg postWS
      * in a four element tuple
       */
     export let funAppArgList: Prims.IParser<ParensNode<Array<[string, string, Expression<any>, string]>>> = i => {
@@ -548,7 +544,7 @@ export namespace Parser {
         let assignOp = Prims.right<CharStream, CharStream>(Prims.ws())(Prims.char('='));
         let assignToArg = Prims.left<[CharStream, CharStream], CharStream>(argName)(assignOp);
         let noAssign = Prims.appfun<CharStream, CharStream[]>(Prims.ws())(x => [x]);
-        let assignment = Prims.choice<CharStream []>(assignToArg)(noAssign); 
+        let assignment = Prims.choice<CharStream []>(assignToArg)(noAssign);
         let f = (tup: [CharStream[], [Expression<any>, CharStream]]) => {
             let result: [string, string, Expression<any>, string];
             if(tup[0].length == 2){
@@ -575,7 +571,7 @@ export namespace Parser {
         let funAppArgList = Prims.between<string, CharStream, Array<[string, string, Expression<any>, string]>>(pWS)(Prims.char(")"))(args);
         return Prims.appfun<Array<[string, string, Expression<any>, string]>, ParensNode<Array<[string, string, Expression<any>, string]>>>(funAppArgList)(x => new ParensNode<Array<[string, string, Expression<any>, string]>>(x, parensWS))(i);
     }
-    
+
     /**
      * funApp parses valid function applications in the form "functionName(argsList)" and returns a funApp node
      * parser checks for built-in functions, like print, ellipse, and rect; and returns the valid AST node
