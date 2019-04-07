@@ -5,10 +5,10 @@ import {
     Expression, SequenceNode, PrintNode, ListNode,
     NumberNode, StringNode, BooleanNode,
     UnaryOp, Increment, NOP, Decrement, NegOp, Not, Parens,
-    PlusOp, MulOp, DivOp, MinusOp, ParensNode, Argument,
+    PlusOp, MulOp, DivOp, MinusOp,
     Equals, And, GreaterThan, LessThan, GreaterThanEq, LessThanEq, Or, NotEqual,
     VariableNode, AssignOp,
-    Return, FunDef, FunApp, Conditional, BodyNode,
+    Return, FunDef, FunApp, Argument, Conditional, BodyNode,
     EllipseNode, RectangleNode, EmojiNode, LineNode, RGBColorNode
 } from '../../index';
 import { Option, Some, None, tuple } from 'space-lift';
@@ -132,7 +132,7 @@ export namespace Parser {
      */
     export let ExpressionParserNoSeq: Prims.IParser<Expression<{}>> = i => {
         return Prims.choices<Expression<any>>(
-            funDef, conditionalParser, returnParser, funApp, ListHead,
+            conditionalParser, returnParser, funApp, ListHead,
             binOpExpr(), unOpsExpr, parens, notExpr,
             boolParse(), varNameParse(), lNumber(), lstring,
         )(i);
@@ -472,9 +472,9 @@ export namespace Parser {
     }
 
     /**
-     * Parses a list of arguments in function declaration and wraps in a ParensNode of Arguments
+     * Parses a list of arguments in function declaration and wraps in an array of Arguments
      */
-    export let funDefArgList: Prims.IParser<ParensNode<Argument<VariableNode>[]>> = i => {
+    export let funDefArgList: Prims.IParser<Argument<VariableNode>[]> = i => {
         let ws = "";
         let preWS = Prims.appfun<CharStream, string>(Prims.left<CharStream, CharStream>(Prims.ws())(Prims.char('(')))(x => ws = x.toString());
         let p1 = Prims.right<string, Argument<VariableNode>>(preWS)(funDefArg);
@@ -485,11 +485,8 @@ export namespace Parser {
         let p2 = Prims.right<CharStream, Argument<VariableNode>>(Prims.char(','))(funDefArg);
         let prest = Prims.left(Prims.many<Argument<VariableNode>>(p2))(Prims.char(')'));
         let argList = Prims.seq<Argument<VariableNode>, Argument<VariableNode>[], Argument<VariableNode>[]>(p1)(prest)(f);
-        let empty = Prims.appfun(Prims.str('()'))(_ => []);
-        let g = (x: []) => {
-            return new ParensNode<Argument<VariableNode>[]>(x, ws)
-        }
-        return Prims.appfun<any, ParensNode<Argument<VariableNode>[]>>(Prims.choice<any>(argList)(empty))(g)(i);
+        let empty = Prims.appfun<CharStream, Argument<VariableNode>[]>(Prims.str('()'))(_ => []);
+        return Prims.choice<Argument<VariableNode>[]>(argList)(empty)(i);
     }
 
     /**
@@ -518,13 +515,11 @@ export namespace Parser {
         return Prims.right<CharStream, FunDef<any>>(
             Prims.between<string, string, CharStream>(preWS)(postWS)(Prims.str('fun'))
         )(
-            Prims.seq<string, [ParensNode<Argument<VariableNode>[]>, BodyNode], FunDef<{}>>(
+            Prims.seq<string, [Argument<VariableNode>[], BodyNode], FunDef<{}>>(
                 /* function name */
-                Prims.appfun<CharStream, string>(
-                    string()
-                )(cs => cs.toString())
+                Prims.appfun<CharStream, string>(string())(cs => cs.toString())
             )(
-                Prims.seq<ParensNode<Argument<VariableNode>[]>, BodyNode, [ParensNode<Argument<VariableNode>[]>, BodyNode]>(
+                Prims.seq<Argument<VariableNode>[], BodyNode, [Argument<VariableNode>[], BodyNode]>(
                     /* function arguments */
                     funDefArgList
                 )(
@@ -533,9 +528,9 @@ export namespace Parser {
                 )(x => x)
             )(
                 // create the AST node
-                (tup: [string, [ParensNode<Argument<VariableNode>[]>, BodyNode]]) => {
+                (tup: [string, [Argument<VariableNode>[], BodyNode]]) => {
                     let fname: string = tup[0];
-                    let args: ParensNode<Argument<VariableNode>[]> = tup[1][0];
+                    let args: Argument<VariableNode>[] = tup[1][0];
                     let body: BodyNode = tup[1][1];
                     return new FunDef(fname, body, args, ws, rws);
                 }
@@ -544,71 +539,94 @@ export namespace Parser {
     }
 
 
-    /** funApp arg list, where the output is a parensnode with contents of an array that stores argument preWS, argName, argValue, and arg postWS
-     * in a four element tuple
-      */
-    export let funAppArgList: Prims.IParser<ParensNode<Array<[string, string, Expression<any>, string]>>> = i => {
-        let parensWS: string = "";
-        let pWS = Prims.appfun<CharStream, string>(Prims.left<CharStream, CharStream>(Prims.ws())(Prims.char('(')))(x => parensWS = x.toString());
+    /**
+     * Parses an argument list and returns an array that stores a tuple of preArgNameWS, argName, preEqualWS, argValue, and postExprWS
+     */
+    export let funAppArgList: Prims.IParser<[Array<[string, string, string, Expression<any>, string]>, string]> = i => {
         let argName = Prims.seq<CharStream, CharStream, [CharStream, CharStream]>(Prims.ws())(stringAndDigit())(x => x);
-        let assignOp = Prims.right<CharStream, CharStream>(Prims.ws())(Prims.char('='));
-        let assignToArg = Prims.left<[CharStream, CharStream], CharStream>(argName)(assignOp);
+        let assignOp = Prims.left<CharStream, CharStream>(Prims.ws())(Prims.char('='));
+        let assignToArg = Prims.seq<[CharStream, CharStream], CharStream, CharStream[]>(argName)(assignOp)(
+            x => x[0].concat(x[1])
+        );
+
         let noAssign = Prims.appfun<CharStream, CharStream[]>(Prims.ws())(x => [x]);
-        let assignment = Prims.choice<CharStream []>(assignToArg)(noAssign);
-        let f = (tup: [CharStream[], [Expression<any>, CharStream]]) => {
-            let result: [string, string, Expression<any>, string];
-            if(tup[0].length == 2){
-                result = [tup[0][0].toString(), tup[0][1].toString(), tup[1][0], tup[1][1].toString()];
-            }
-            else result = [tup[0][0].toString(), "", tup[1][0], tup[1][1].toString()];
-            return result;
+        let assignment = Prims.choice<CharStream[]>(assignToArg)(noAssign);
+
+        let f = (tup: [CharStream[], [Expression<any>, CharStream]]): [string, string, string, Expression<any>, string] => {
+            return (tup[0].length == 1) ?
+                [tup[0][0].toString(), "", "", tup[1][0], tup[1][1].toString()] :
+                [tup[0][0].toString(), tup[0][1].toString(), tup[0][2].toString(), tup[1][0], tup[1][1].toString()];
         };
+
         let argVal = Prims.seq<Expression<any>, CharStream, [Expression<any>, CharStream]>(ExpressionParserNoSeq)(Prims.ws())(x => x);
-        let firstArg = Prims.seq<CharStream[], [Expression<any>, CharStream], [string, string, Expression<any>, string]>(assignment)(argVal)(f);
+        let firstArg = Prims.seq<
+            CharStream[], [Expression<any>, CharStream], [string, string, string, Expression<any>, string]
+        >(assignment)(argVal)(f);
         let remainingAssignment = Prims.right<CharStream, CharStream[]>(Prims.char(','))(assignment);
-        let remainingArg = Prims.seq<CharStream[], [Expression<any>, CharStream], [string, string, Expression<any>, string]>(remainingAssignment)(argVal)(f);
-        let argTail = Prims.many<[string, string, Expression<any>, string]>(remainingArg);
-        let args = Prims.choice<Array<[string, string, Expression<any>, string]>>(
-            Prims.seq<[string, string, Expression<any>, string], Array<[string, string, Expression<any>, string]>, Array<[string, string, Expression<any>, string]>>(firstArg)(argTail)(
-                (tup: [[string, string, Expression<any>, string], Array<[string, string, Expression<any>, string]>]) => {
-                    tup[1].unshift(tup[0]);
-                    return tup[1];
+        let remainingArg = Prims.seq<
+            CharStream[], [Expression<any>, CharStream], [string, string, string, Expression<any>, string]
+        >(remainingAssignment)(argVal)(f);
+
+        let argTail = Prims.many<[string, string, string, Expression<any>, string]>(remainingArg);
+        let emptyArgWS: string = "";
+        let args = Prims.choice<Array<[string, string, string, Expression<any>, string]>>(
+            Prims.seq<
+                [string, string, string, Expression<any>, string],
+                Array<[string, string, string, Expression<any>, string]>,
+                Array<[string, string, string, Expression<any>, string]>
+            >(firstArg)(argTail)(
+                (tup: [[string, string, string, Expression<any>, string], Array<[string, string, string, Expression<any>, string]>]) => {
+                    return [tup[0]].concat(tup[1])
                 }
             )
         )(
-            Prims.appfun<CharStream, Array<[string, string, Expression<any>, string]>>(Prims.ws())(_ => [])
+            Prims.appfun<CharStream, Array<[string, string, string, Expression<any>, string]>>(Prims.ws())(x => {
+                emptyArgWS = x.toString();
+                return [];
+            })
         );
-        let funAppArgList = Prims.between<string, CharStream, Array<[string, string, Expression<any>, string]>>(pWS)(Prims.char(")"))(args);
-        return Prims.appfun<Array<[string, string, Expression<any>, string]>, ParensNode<Array<[string, string, Expression<any>, string]>>>(funAppArgList)(x => new ParensNode<Array<[string, string, Expression<any>, string]>>(x, parensWS))(i);
+
+        let argListParser = Prims.between<
+            CharStream, CharStream, Array<[string, string, string, Expression<any>, string]>
+        >(Prims.char("("))(Prims.char(")"))(args);
+
+        return Prims.appfun<
+            Array<[string, string, string, Expression<any>, string]>,
+            [Array<[string, string, string, Expression<any>, string]>, string]
+        >(argListParser)((x: Array<[string, string, string, Expression<any>, string]>) => [x, emptyArgWS])(i);
     }
 
     /**
-     * funApp parses valid function applications in the form "functionName(argsList)" and returns a funApp node
-     * parser checks for built-in functions, like print, ellipse, and rect; and returns the valid AST node
+     * funApp parses valid function applications in the form "functionName(argsList)"
+     * parser checks for built-in functions like print, ellipse, and rect, and user-defined functions
      */
-    export let funApp: Prims.IParser<FunApp<any>> = i => {
-        let ws = "";
-        let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
-        return Prims.seq<CharStream, ParensNode<Array<[string, string, Expression<any>, string]>>, any>(
-            Prims.right<string, CharStream>(preWS)(string())
+    export let funApp: Prims.IParser<Expression<any>> = i => {
+        let preFuncWs = "";
+        let preFuncWsParser = Prims.appfun<CharStream, string>(Prims.ws())(x => preFuncWs = x.toString());
+        let postFuncWs = "";
+        let postFuncWsParser = Prims.appfun<CharStream, string>(Prims.ws())(x => postFuncWs = x.toString());
+
+        return Prims.seq<CharStream, [Array<[string, string, string, Expression<any>, string]>, string], any>(
+            Prims.between<string, string, CharStream>(preFuncWsParser)(postFuncWsParser)(string())
         )(
             funAppArgList
         )(tup => {
             let fname: string = tup[0].toString();
-            let args: ParensNode<Array<[string, string, Expression<any>, string]>> = tup[1];
+            let args: Array<[string, string, string, Expression<any>, string]> = tup[1][0];
+            let emptyArgWS = tup[1][1];
             switch (fname) {
                 case "print":
-                    return new PrintNode(args, ws);
+                    return new PrintNode(args, preFuncWs, postFuncWs, emptyArgWS);
                 case "ellipse":
-                    return new EllipseNode(args, ws);
+                    return new EllipseNode(args, preFuncWs, postFuncWs, emptyArgWS);
                 case "rect":
-                    return new RectangleNode(args, ws);
+                    return new RectangleNode(args, preFuncWs, postFuncWs, emptyArgWS);
                 case "emoji":
-                    return new EmojiNode(args, ws);
+                    return new EmojiNode(args, preFuncWs, postFuncWs, emptyArgWS);
                 case "line":
-                    return new LineNode(args, ws);
+                    return new LineNode(args, preFuncWs, postFuncWs, emptyArgWS);
                 case "rgb":
-                    return new RGBColorNode(args, ws);
+                    return new RGBColorNode(args, preFuncWs, postFuncWs, emptyArgWS);
                 default:
                     throw new Error("Function name not recognized");
             }

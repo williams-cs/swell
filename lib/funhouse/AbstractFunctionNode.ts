@@ -1,7 +1,6 @@
 import { Argument } from "./Argument";
 import { Expression } from "../Expression";
 import { Scope } from "../structural/Scope";
-import { ParensNode } from "../structural/ParensNode";
 
 export abstract class AbstractFunctionNode<T extends Expression<any>> extends Expression<T> {
 
@@ -16,21 +15,20 @@ export abstract class AbstractFunctionNode<T extends Expression<any>> extends Ex
      */
     protected argMap: Map<string, Argument<any>>;
 
-
-    // ParensNode that stores an array of whitespace corresponding to pre-argument ws
-    protected argParens: ParensNode<Array<[string, string, Expression<any>, string]>>;
     /**
      * Constructor for an abstract function
      * @param args array of arguments
      * @param ws The whitespace preceding the expression
      */
-    constructor(args: ParensNode<Array<[string, string, Expression<any>, string]>>, ws: string = "") {
+    constructor(
+        args: Array<[string, string, string, Expression<any>, string]>,
+        ws: string = "", private postWS: string = "", private emptyArgWS: string = ""
+    ) {
         super(ws);
-        this.initArg(args.expr);
-        this.argParens = args;
+        this.initArg(args);
     }
 
-    private initArg(args: Array<[string, string, Expression<any>, string]>) {
+    private initArg(args: Array<[string, string, string, Expression<any>, string]>) {
         // Check values of arg maps
         let posArgMap: Map<string, Argument<any>> = this.getPositionalArgMap();
         for (let [key, arg] of posArgMap) {
@@ -73,14 +71,15 @@ export abstract class AbstractFunctionNode<T extends Expression<any>> extends Ex
         this.argMap = posArgMap;
         let count: number = 0;
         for (let [key, arg] of this.argMap) {
-            let inputArg: [string, string, Expression<any>, string] = args[count];
+            let inputArg: [string, string, string, Expression<any>, string] = args[count];
             let argName: string = inputArg[1];
             if (argName != "" && argName != key) {
                 throw(`Invalid positional argument name: Expected "${key}" in position ${count}, got "${argName}"`);
             }
-            arg.preWS = inputArg[0];
-            arg.value = inputArg[2];
-            arg.postWS = inputArg[3];
+            arg.preArgNameWS = inputArg[0];
+            arg.preEqualWS = inputArg[2];
+            arg.value = inputArg[3];
+            arg.postExprWS = inputArg[4];
             if (argName != "") {
                 arg.alwaysVisible = true;
             }
@@ -89,7 +88,7 @@ export abstract class AbstractFunctionNode<T extends Expression<any>> extends Ex
 
         // Set provided optional arguments - can be any order
         for (let i = count; i < args.length; i++) {
-            let arg: [string, string, Expression<any>, string] = args[i];
+            let arg: [string, string, string, Expression<any>, string] = args[i];
             let argName: string = arg[1];
             if (argName == "") {
                 throw("Missing argument name");
@@ -98,9 +97,10 @@ export abstract class AbstractFunctionNode<T extends Expression<any>> extends Ex
             if (!optArg) {
                 throw(`Invalid argument name: "${argName}"`);
             }
-            optArg.value = arg[2];
-            optArg.preWS = arg[0];
-            optArg.postWS = arg[3];
+            optArg.preArgNameWS = arg[0];
+            optArg.preEqualWS = arg[2];
+            optArg.value = arg[3];
+            optArg.postExprWS = arg[4];
             optArg.isModified = true;
             this.argMap.set(argName, optArg);
         }
@@ -165,15 +165,19 @@ export abstract class AbstractFunctionNode<T extends Expression<any>> extends Ex
     }
 
     toString(): string {
-        let argString: string = ``;
-        for (let [key, arg] of this.argMap) {
-            if (arg.isPositional || arg.isModified) {
-                argString += (arg.isPositional && !arg.alwaysVisible) ? arg.preWS + arg.value + arg.postWS + `,` : arg.preWS + `${key} =` + arg.value + arg.postWS + `,`;
-            }
-        }
+        let argString: string = "";
         if (this.argMap.size > 0) {
+            for (let [key, arg] of this.argMap) {
+                if (arg.isPositional || arg.isModified) {
+                    argString += (arg.isPositional && !arg.alwaysVisible) ?
+                        `${arg.preArgNameWS}${arg.value}${arg.postExprWS},` :
+                        `${arg.preArgNameWS}${key}${arg.preEqualWS}=${arg.value}${arg.postExprWS},`;
+                }
+            }
             argString = argString.slice(0, argString.length - 1);
+        } else {
+            argString = this.emptyArgWS;
         }
-        return `${this.ws}${this.name}${this.argParens.ws}(${argString})`;
+        return `${this.ws}${this.name}${this.postWS}(${argString})`;
     }
 }

@@ -1,6 +1,5 @@
 import { Expression } from '../Expression';
 import { BodyNode } from '../structural/BodyNode';
-import { ParensNode } from '../structural/ParensNode';
 import { Argument } from '../funhouse/Argument';
 import { Scope } from '../structural/Scope';
 import { VariableNode } from '../vars/VariableNode';
@@ -8,11 +7,11 @@ import { VariableNode } from '../vars/VariableNode';
 export class FunDef<T> extends Expression<T> {
     private _name: string;
     private _body: BodyNode;
-    private _args: ParensNode<Argument<VariableNode>[]>;
+    private _args: Argument<VariableNode>[];
     private _funScope: Scope;
     private _rws: string;
 
-    constructor(name: string, body: BodyNode, args?: ParensNode<Argument<VariableNode>[]>, ws: string = "", rws: string = "") {
+    constructor(name: string, body: BodyNode, args?: Argument<VariableNode>[], ws: string = "", rws: string = "") {
         super(ws);
         this._name = name;
         this._body = body;
@@ -29,14 +28,14 @@ export class FunDef<T> extends Expression<T> {
 
     toString(): string {
         let argsList = ''
-        let argsVal = this._args.expr;
+        let argsVal = this._args;
         if (argsVal.length > 0) {
             for (let i = 0; i < argsVal.length - 1; i++) {
                 argsList += argsVal[i].value.name + ", ";
             }
             argsList += argsVal[argsVal.length - 1].value.name;
         }
-        return `${this.ws}fun${this._rws}${this.name}${this._args.ws}(${argsList})${this.body}`;
+        return `${this.ws}fun${this._rws}${this.name}(${argsList})${this.body}`;
     }
 
     get name(): string {
@@ -46,7 +45,7 @@ export class FunDef<T> extends Expression<T> {
         return this._body;
     }
     get args(): Argument<any>[] {
-        return this._args.expr;
+        return this._args;
     }
     get scope(): Scope {
         return this._funScope;

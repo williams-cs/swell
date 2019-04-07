@@ -13,8 +13,9 @@ export class Argument<T> {
         private _value: T = undefined,
         private _isPositional: boolean = true,
         private _alwaysVisible: boolean = false,
-        private _preWS: string = " ",
-        private _postWS: string = ""
+        private _preArgNameWS: string = " ",
+        private _preEqualWS: string = " ",
+        private _postExprWS: string = "",
     ) {}
 
     get value(): T {
@@ -49,19 +50,27 @@ export class Argument<T> {
         this._alwaysVisible = val;
     }
 
-    get preWS(): string{
-        return this._preWS;
+    get preArgNameWS(): string{
+        return this._preArgNameWS;
     }
 
-    set preWS(white: string){
-        this._preWS = white;
+    set preArgNameWS(ws: string) {
+        this._preArgNameWS = ws;
     }
 
-    get postWS(): string{
-        return this._postWS;
+    get preEqualWS(): string {
+        return this._preEqualWS;
     }
 
-    set postWS(white: string){
-        this._postWS = white;
+    set preEqualWS(ws: string) {
+        this._preEqualWS = ws;
+    }
+
+    get postExprWS(): string {
+        return this._postExprWS;
+    }
+
+    set postExprWS(ws: string){
+        this._postExprWS = ws;
     }
 }
