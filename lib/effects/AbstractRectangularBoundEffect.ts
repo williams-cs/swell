@@ -1,5 +1,6 @@
 import { Effect } from "./Effect";
 import { EffectUtils } from "./EffectUtils";
+import KEYBOARD = EffectUtils.KEYBOARD;
 
 export abstract class AbstractRectangularBoundEffect<T> extends Effect<T> {
 
@@ -9,6 +10,14 @@ export abstract class AbstractRectangularBoundEffect<T> extends Effect<T> {
     modifyDrag(event: MouseEvent): void {
         this.x = this.prevX + this.mouse.x - this.prevMouse.x;
         this.y = this.prevY + this.mouse.y - this.prevMouse.y;
+    }
+
+    // Event listeners
+
+    onKeyDown(event: KeyboardEvent) {
+        if(event.keyCode == KEYBOARD.DELETE && this.isSelected) {
+            this.justDeleted = true;
+        }
     }
 
     get x(): number {

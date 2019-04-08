@@ -10,6 +10,8 @@ import { ClickEvent } from "../logging/ClickEvent";
 import { PrintNode } from "../structural/PrintNode";
 import { Scope } from "../structural/Scope";
 import GUIDE = EffectUtils.GUIDE;
+import KEYBOARD = EffectUtils.KEYBOARD;
+import { EventEmitter } from "events";
 
 export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E extends AbstractShapeEffect<T, E>> extends AbstractRectangularBoundEffect<T> {
 
@@ -101,9 +103,6 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
             (my > this.y) && (my < this.y + this.h);
     }
 
-    // Event listeners
-
-    onKeyDown(event: KeyboardEvent) {}
 
     // Modification functions
 

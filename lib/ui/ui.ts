@@ -149,6 +149,11 @@ import * as csvParse from 'csv-parse';
                 context.eventLog.push(new IDEvent(effects[i])); // Logs ID
                 globalID++;
             }
+            if (effects[i].justDeleted) { // Logs delete event
+                effects.splice(i, 1);
+
+                effects[i].justDeleted = true;
+            }
         }
         // at this point, have iterated through all effects and have complete list to log
         if (selected != numLogged) { // if selections have changed, should log again
@@ -262,7 +267,7 @@ import * as csvParse from 'csv-parse';
     }
 
     /* Event listeners */
-    editor.on("keyup", function() {
+    editor.on("", function() {
         // Check if editor has been modified, only parses if modified
         if (editorDoc.isClean()) {
             return;
@@ -327,7 +332,7 @@ import * as csvParse from 'csv-parse';
 
     let paletteButtons: string[] = [
         "ellipse", "rect", "line", "string", "number",
-        "happy", "sad", "angry", "cool"
+        "happy", "sad", "angry", "cool",
     ];
 
     for (let buttonName of paletteButtons) {

@@ -11,6 +11,9 @@ In order to track the ws that comes after keywords and arguments, if parens or b
 **Arguments**
 Arguments in function definition and function application need to be wrapped in "argument" nodes. The argument itself stores an expression (which has the preceding ws) and the ws that comes before the comma or closing parens.
 
+**Example**
+
+
 **Main Todos**
 -rewrite fun app parser so it stores ws
 	--in order to parse args, must be stored in abstract function node AND fun app differently
@@ -36,3 +39,4 @@ Arguments in function definition and function application need to be wrapped in 
 -rewrite conditional parser with parens and ws stored correctly
 -take out rws from funapp (but it should be in fun dec)
 -funapp args parse ws
+
