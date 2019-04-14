@@ -9,10 +9,10 @@ export abstract class AbstractLineNode<T extends AbstractLineNode<T, E>, E exten
 
     getPositionalArgMap(): Map<string, Argument<any>> {
         return new Map<string, Argument<any>>([
-            ["x1", new Argument<NumberNode>(undefined, true, true)],
-            ["y1", new Argument<NumberNode>(undefined, true, true)],
-            ["x2", new Argument<NumberNode>(undefined, true, true)],
-            ["y2", new Argument<NumberNode>(undefined, true, true)],
+            ["x1", new Argument<NumberNode>(null, true, true)],
+            ["y1", new Argument<NumberNode>(null, true, true)],
+            ["x2", new Argument<NumberNode>(null, true, true)],
+            ["y2", new Argument<NumberNode>(null, true, true)],
         ]);
     }
 

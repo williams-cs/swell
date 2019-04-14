@@ -1,6 +1,7 @@
 import { Argument } from "./Argument";
 import { Expression } from "../Expression";
 import { Scope } from "../structural/Scope";
+import clone = require("clone");
 
 export abstract class AbstractFunctionNode<T extends Expression<any>> extends Expression<T> {
 
@@ -18,30 +19,38 @@ export abstract class AbstractFunctionNode<T extends Expression<any>> extends Ex
     /**
      * Constructor for an abstract function
      * @param args array of arguments
-     * @param ws The whitespace preceding the expression
+     * @param preWS Whitespace preceding the function name
+     * @param postWS Whitespace between the function and the parentheses
+     * @param emptyArgWS Whitespace when there's no argument in the parantheses
      */
     constructor(
-        args: Array<[string, string, string, Expression<any>, string]>,
-        ws: string = "", private postWS: string = "", private emptyArgWS: string = ""
+        private args: Array<[string, string, string, Expression<any>, string]>,
+        preWS: string = "", private postWS: string = "", private emptyArgWS: string = ""
     ) {
-        super(ws);
-        this.initArg(args);
+        super(preWS);
     }
 
-    private initArg(args: Array<[string, string, string, Expression<any>, string]>) {
+    /**
+     * @param args Argument list
+     * @param posArgMap Positional arg map
+     * @param optArgMap Optional arg map
+     */
+    protected initArg(
+        posArgMap: Map<string, Argument<any>>,
+        optArgMap: Map<string, Argument<any>>,
+    ) {
         // Check values of arg maps
-        let posArgMap: Map<string, Argument<any>> = this.getPositionalArgMap();
         for (let [key, arg] of posArgMap) {
-            if (arg.value != undefined) {
+            if (arg.value !== undefined && arg.value !== null) {
                 throw(`Positional argument "${key}" must not have a default value`);
             }
             if (!arg.isPositional) {
                 throw(`Positional argument "${key}" must have isPositional equals true`);
             }
         }
-        let optArgMap: Map<string, Argument<any>> = this.getOptionalArgMap();
+
         for (let [key, arg] of optArgMap) {
-            if (arg.value == undefined) {
+            if (arg.value === undefined || arg.value === null) {
                 throw(`Optional argument "${key}" must have a default value`);
             }
             if (arg.isPositional) {
@@ -54,24 +63,24 @@ export abstract class AbstractFunctionNode<T extends Expression<any>> extends Ex
         if ((new Set(argNames)).size != argNames.length) {
             throw(`Duplicate argument names in function definition`);
         }
-        argNames = args.map(([preWS, key, arg, postWS]) => key).filter(name => name != "");
+        argNames = this.args.map(([preWS, key, arg, postWS]) => key).filter(name => name != "");
         if ((new Set(argNames)).size != argNames.length) {
             throw(`Duplicate input argument names`);
         }
 
         let posArgCount: number = posArgMap.size;
         let optArgCount: number = optArgMap.size;
-        let providedArgCount: number = args.length;
+        let providedArgCount: number = this.args.length;
         let totalArgCount: number = posArgCount + optArgCount;
         if (providedArgCount > totalArgCount || providedArgCount < posArgCount) {
             throw(`Expected ${optArgCount != 0 ? posArgCount + "-" : ""}${totalArgCount} argument(s), got ${providedArgCount}.`);
         }
 
         // Set positional arguments - MUST be in order
-        this.argMap = posArgMap;
+        this.argMap = clone(posArgMap, true);
         let count: number = 0;
         for (let [key, arg] of this.argMap) {
-            let inputArg: [string, string, string, Expression<any>, string] = args[count];
+            let inputArg: [string, string, string, Expression<any>, string] = this.args[count];
             let argName: string = inputArg[1];
             if (argName != "" && argName != key) {
                 throw(`Invalid positional argument name: Expected "${key}" in position ${count}, got "${argName}"`);
@@ -87,8 +96,8 @@ export abstract class AbstractFunctionNode<T extends Expression<any>> extends Ex
         }
 
         // Set provided optional arguments - can be any order
-        for (let i = count; i < args.length; i++) {
-            let arg: [string, string, string, Expression<any>, string] = args[i];
+        for (let i = count; i < providedArgCount; i++) {
+            let arg: [string, string, string, Expression<any>, string] = this.args[i];
             let argName: string = arg[1];
             if (argName == "") {
                 throw("Missing argument name");
@@ -111,57 +120,6 @@ export abstract class AbstractFunctionNode<T extends Expression<any>> extends Ex
                 this.argMap.set(key, arg);
             }
         }
-    }
-
-    /**
-     * Initialize positional argument map. Positional argument should not have
-     * default values
-     */
-    getPositionalArgMap(): Map<string, Argument<any>> {
-        return new Map<string, Argument<any>>();
-    };
-
-    /**
-     * Initialize optional argument map. Optional argument should have default values
-     */
-    getOptionalArgMap(): Map<string, Argument<any>> {
-        return new Map<string, Argument<any>>();
-    };
-
-    /**
-     * Get argument value from argument map given arg name
-     * @param argName Name of argument to get
-     */
-    getArg(argName: string): Expression<any> {
-        let arg: Argument<any> = this.argMap.get(argName);
-        if (arg === undefined) {
-            throw(`Invalid argument name "${argName}" to function "${this.name}"`);
-        }
-        return arg.value;
-    }
-
-    /**
-     * Set the argument's value
-     * @param argName Name of argument to set values
-     * @param value Value to set
-     */
-    setArg(argName: string, value: Expression<any>): void {
-        this.argMap.get(argName).value = value;
-    }
-
-    /**
-     * Update argument's value and mark as modified
-     * @param argName Name of argument to update
-     * @param context Program's current context
-     * @param value The value to give to the argument
-     */
-    updateArgValue(argName: string, context: Scope, value: any): void {
-        let arg: Argument<any> = this.argMap.get(argName);
-        if (arg === undefined) {
-            throw(`Invalid argument name "${argName}" to function "${this.name}"`);
-        }
-        arg.value.eval(context).val = value;
-        arg.isModified = true;
     }
 
     toString(): string {

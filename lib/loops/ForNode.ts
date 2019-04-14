@@ -29,7 +29,7 @@ export class ForNode extends Expression<any> {
      */
     eval(context: Scope) {
         //create the block scope for the loop body
-        let childCtx = context.copy(false);
+        let childCtx = context.copy();
 
         //Initialize loop variable
         this._init.eval(childCtx);

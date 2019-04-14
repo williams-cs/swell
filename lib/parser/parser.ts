@@ -8,7 +8,7 @@ import {
     PlusOp, MulOp, DivOp, MinusOp,
     Equals, And, GreaterThan, LessThan, GreaterThanEq, LessThanEq, Or, NotEqual,
     VariableNode, AssignOp,
-    Return, FunDef, FunApp, Argument, Conditional, BodyNode,
+    Return, FunDef, UserDefinedFunctionNode, Argument, Conditional, BodyNode,
     EllipseNode, RectangleNode, EmojiNode, LineNode, RGBColorNode
 } from '../../index';
 import { Option, Some, None, tuple } from 'space-lift';
@@ -132,7 +132,7 @@ export namespace Parser {
      */
     export let ExpressionParserNoSeq: Prims.IParser<Expression<{}>> = i => {
         return Prims.choices<Expression<any>>(
-            conditionalParser, returnParser, funApp, ListHead,
+            funDef, conditionalParser, returnParser, funApp, ListHead,
             binOpExpr(), unOpsExpr, parens, notExpr,
             boolParse(), varNameParse(), lNumber(), lstring,
         )(i);
@@ -472,21 +472,58 @@ export namespace Parser {
     }
 
     /**
-     * Parses a list of arguments in function declaration and wraps in an array of Arguments
+     * Parses a list of arguments in function declaration
      */
-    export let funDefArgList: Prims.IParser<Argument<VariableNode>[]> = i => {
-        let ws = "";
-        let preWS = Prims.appfun<CharStream, string>(Prims.left<CharStream, CharStream>(Prims.ws())(Prims.char('(')))(x => ws = x.toString());
-        let p1 = Prims.right<string, Argument<VariableNode>>(preWS)(funDefArg);
-        var f = (tup: [Argument<VariableNode>, Argument<VariableNode>[]]) => {
-            tup[1].unshift(tup[0]);
-            return tup[1];
+    export let funDefArgList: Prims.IParser<[Array<[string, string, string, Expression<any>, string]>, string]> = i => {
+        let argName = Prims.seq<CharStream, CharStream, [CharStream, CharStream]>(Prims.ws())(stringAndDigit())(x => x);
+        let assign = Prims.seq<CharStream, [Expression<any>, CharStream], [CharStream, Expression<any>, CharStream]>(
+            Prims.left<CharStream, CharStream>(Prims.ws())(Prims.char('='))
+        )(
+            Prims.seq<Expression<any>, CharStream, [Expression<any>, CharStream]>(ExpressionParserNoSeq)(Prims.ws())(tup => tup)
+        )(
+            (tup: [CharStream, [Expression<any>, CharStream]]) => [tup[0], tup[1][0], tup[1][1]]
+        );
+        let noAssign = Prims.appfun<CharStream, any[]>(Prims.ws())(x => [x]);
+        let assignment = Prims.choice<any[]>(assign)(noAssign);
+
+        let f = function(tup: [[CharStream, CharStream], any[]]): [string, string, string, Expression<any>, string] {
+            return (tup[1].length == 1)
+                ? [tup[0][0].toString(), tup[0][1].toString(), "", null, tup[1].toString()]
+                : [tup[0][0].toString(), tup[0][1].toString(), tup[1][0].toString(), (<Expression<any>> tup[1][1]), tup[1][2].toString()];
         }
-        let p2 = Prims.right<CharStream, Argument<VariableNode>>(Prims.char(','))(funDefArg);
-        let prest = Prims.left(Prims.many<Argument<VariableNode>>(p2))(Prims.char(')'));
-        let argList = Prims.seq<Argument<VariableNode>, Argument<VariableNode>[], Argument<VariableNode>[]>(p1)(prest)(f);
-        let empty = Prims.appfun<CharStream, Argument<VariableNode>[]>(Prims.str('()'))(_ => []);
-        return Prims.choice<Argument<VariableNode>[]>(argList)(empty)(i);
+
+        let firstArg = Prims.seq<
+            [CharStream, CharStream], any[], [string, string, string, Expression<any>, string]
+        >(argName)(assignment)(f);
+        let remainingArg = Prims.right<CharStream, [string, string, string, Expression<any>, string]>(Prims.char(','))(firstArg);
+        let argTail = Prims.many<[string, string, string, Expression<any>, string]>(remainingArg);
+
+        let emptyArgWS: string = "";
+        let args = Prims.choice<Array<[string, string, string, Expression<any>, string]>>(
+            Prims.seq<
+                [string, string, string, Expression<any>, string],
+                Array<[string, string, string, Expression<any>, string]>,
+                Array<[string, string, string, Expression<any>, string]>
+            >(firstArg)(argTail)(
+                (tup: [[string, string, string, Expression<any>, string], Array<[string, string, string, Expression<any>, string]>]) => {
+                    return [tup[0]].concat(tup[1])
+                }
+            )
+        )(
+            Prims.appfun<CharStream, Array<[string, string, string, Expression<any>, string]>>(Prims.ws())(x => {
+                emptyArgWS = x.toString();
+                return [];
+            })
+        );
+
+        let argListParser = Prims.between<
+            CharStream, CharStream, Array<[string, string, string, Expression<any>, string]>
+        >(Prims.char("("))(Prims.char(")"))(args);
+
+        return Prims.appfun<
+            Array<[string, string, string, Expression<any>, string]>,
+            [Array<[string, string, string, Expression<any>, string]>, string]
+        >(argListParser)((x: Array<[string, string, string, Expression<any>, string]>) => [x, emptyArgWS])(i);
     }
 
     /**
@@ -507,19 +544,22 @@ export namespace Parser {
      * funDef parses valid function definitions in the form "fun functionName(argList){ body;}"
      * the parser returns a funDef node for the AST
      */
-    export let funDef: Prims.IParser<FunDef<any>> = i => {
+    export let funDef: Prims.IParser<FunDef> = i => {
         let ws = "";
         let rws = "";
         let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
         let postWS = Prims.appfun<CharStream, string>(Prims.ws())(s => rws = s.toString());
-        return Prims.right<CharStream, FunDef<any>>(
+        return Prims.right<CharStream, FunDef>(
             Prims.between<string, string, CharStream>(preWS)(postWS)(Prims.str('fun'))
         )(
-            Prims.seq<string, [Argument<VariableNode>[], BodyNode], FunDef<{}>>(
+            Prims.seq<string, [[Array<[string, string, string, Expression<any>, string]>, string], BodyNode], FunDef>(
                 /* function name */
                 Prims.appfun<CharStream, string>(string())(cs => cs.toString())
             )(
-                Prims.seq<Argument<VariableNode>[], BodyNode, [Argument<VariableNode>[], BodyNode]>(
+                Prims.seq<
+                    [Array<[string, string, string, Expression<any>, string]>, string],
+                    BodyNode, [[Array<[string, string, string, Expression<any>, string]>, string], BodyNode]
+                >(
                     /* function arguments */
                     funDefArgList
                 )(
@@ -528,11 +568,12 @@ export namespace Parser {
                 )(x => x)
             )(
                 // create the AST node
-                (tup: [string, [Argument<VariableNode>[], BodyNode]]) => {
+                (tup: [string, [[Array<[string, string, string, Expression<any>, string]>, string], BodyNode]]) => {
                     let fname: string = tup[0];
-                    let args: Argument<VariableNode>[] = tup[1][0];
                     let body: BodyNode = tup[1][1];
-                    return new FunDef(fname, body, args, ws, rws);
+                    let args: Array<[string, string, string, Expression<any>, string]> = tup[1][0][0];
+                    let postExprWS: string = tup[1][0][1]
+                    return new FunDef(fname, body, args, ws, rws, postExprWS);
                 }
             )
         )(i)
@@ -548,7 +589,6 @@ export namespace Parser {
         let assignToArg = Prims.seq<[CharStream, CharStream], CharStream, CharStream[]>(argName)(assignOp)(
             x => x[0].concat(x[1])
         );
-
         let noAssign = Prims.appfun<CharStream, CharStream[]>(Prims.ws())(x => [x]);
         let assignment = Prims.choice<CharStream[]>(assignToArg)(noAssign);
 
@@ -628,7 +668,7 @@ export namespace Parser {
                 case "rgb":
                     return new RGBColorNode(args, preFuncWs, postFuncWs, emptyArgWS);
                 default:
-                    throw new Error("Function name not recognized");
+                    return new UserDefinedFunctionNode(fname, args, preFuncWs, postFuncWs, emptyArgWS);
             }
         })(i);
     }

@@ -10,7 +10,7 @@ export class Argument<T> {
      * @param isPositional Whether or not the argument is positional
      */
     constructor(
-        private _value: T = undefined,
+        private _value: T = null,
         private _isPositional: boolean = true,
         private _alwaysVisible: boolean = false,
         private _preArgNameWS: string = " ",

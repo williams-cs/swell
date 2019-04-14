@@ -20,7 +20,7 @@ export class WhileNode extends Expression<any> {
      * @param context
      */
     eval(context: Scope) {
-        let childCtx = context.copy(false);
+        let childCtx = context.copy();
         let res = this._cond.eval(childCtx);
         if (!(res instanceof BooleanNode)) {
             throw new Error("The condition must be a boolean expression.");

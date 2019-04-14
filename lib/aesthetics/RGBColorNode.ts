@@ -1,11 +1,11 @@
-import { AbstractFunctionNode } from "../funhouse/AbstractFunctionNode";
+import { AbstractBuiltinFunctionNode } from "../funhouse/AbstractBuiltinFunctionNode";
 import { Argument } from "../funhouse/Argument";
 import { Expression } from "../Expression";
 import { NumberNode } from "../prims/NumberNode";
 import { Scope } from "../structural/Scope";
 import { StringNode } from "../prims/StringNode";
 
-export class RGBColorNode extends AbstractFunctionNode<StringNode> {
+export class RGBColorNode extends AbstractBuiltinFunctionNode<StringNode> {
 
     protected name: string = "rgb";
 

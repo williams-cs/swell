@@ -1,6 +1,7 @@
 import { Option, Some, None } from 'space-lift';
 import { Effect } from '../effects/Effect';
 import { LogEvent } from '../logging/LogEvent';
+import clone = require("clone");
 
 export class Scope {
 
@@ -51,11 +52,9 @@ export class Scope {
     /**
      * Returns a copy of the current scope
      */
-    copy(inheritBindings: boolean): Scope {
+    copy(): Scope {
         let s: Scope = new Scope(this.parent, this.canvas, this.effects, this.eventLog);
-        if (inheritBindings) {
-            s.varBindings = this.varBindings;
-        }
+        s.varBindings = new Map(this.varBindings);
         return s;
     }
 
@@ -89,7 +88,7 @@ export class Scope {
         if (!(this.parent == null)) {
             return this.parent.lookup(name);
         }
-        throw new Error(`Identifier ${name} could not be found.`);
+        throw new Error(`Identifier "${name}" could not be found.`);
     }
 
     /**
