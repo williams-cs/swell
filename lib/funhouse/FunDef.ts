@@ -20,6 +20,7 @@ export class FunDef extends Expression<any> {
         args: Array<[string, string, string, Expression<any>, string]>,
         preFuncWS: string = "",
         private postFuncWS: string = "",
+        private postFuncNameWS: string = "",
         private emptyArgWS: string = "",
     ) {
         super(preFuncWS);
@@ -87,6 +88,6 @@ export class FunDef extends Expression<any> {
             }
             argString = argString.slice(0, argString.length - 1);
         }
-        return `${this.ws}fun${this.postFuncWS}${this.name}(${argString})${this.body}`;
+        return `${this.ws}fun${this.postFuncWS}${this.name}${this.postFuncNameWS}(${argString})${this.body}`;
     }
 }
