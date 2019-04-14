@@ -1,7 +1,9 @@
-import { Expression } from '../Expression';
-import { BodyNode } from '../structural/BodyNode';
-import { Argument } from '../funhouse/Argument';
-import { Scope } from '../structural/Scope';
+import { Expression } from "../Expression";
+import { BodyNode } from "../structural/BodyNode";
+import { Argument } from "../funhouse/Argument";
+import { OptionalArg } from "../funhouse/OptionalArg";
+import { PositionalArg } from "../funhouse/PositionalArg";
+import { Scope } from "../structural/Scope";
 import clone = require("clone");
 
 export class FunDef extends Expression<any> {
@@ -36,7 +38,7 @@ export class FunDef extends Expression<any> {
             if (arg_value !== null && arg_value !== undefined) {
                 break;
             }
-            this._posArgMap.set(arg[1], new Argument<Expression<any>>(null, true, false, arg[0], arg[2], arg[4]));
+            this._posArgMap.set(arg[1], new PositionalArg<Expression<any>>(null, false, arg[0], arg[2], arg[4]));
             arg_ind++;
         }
 
@@ -48,7 +50,7 @@ export class FunDef extends Expression<any> {
             if (arg_value === null || arg_value === undefined) {
                 throw new Error(`Argument ${arg_name} is optional but doesn't have a default value`);
             }
-            this._optArgMap.set(arg_name, new Argument<Expression<any>>(arg_value, false, false, arg[0], arg[2], arg[4]));
+            this._optArgMap.set(arg_name, new OptionalArg<Expression<any>>(arg_value, false, arg[0], arg[2], arg[4]));
             arg_ind++;
         }
     };

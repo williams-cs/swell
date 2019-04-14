@@ -147,7 +147,7 @@ export namespace Parser {
      */
     export let ExpressionParserNoStruct: Prims.IParser<Expression<any>> = i => {
         return Prims.choices<Expression<any>>(
-            notExpr, parens, unOpsExpr, funApp, boolParse(), varNameParse(), lNumber(), lstring
+            binOpExpr(), unOpsExpr, parens, notExpr, funApp, boolParse(), varNameParse(), lNumber(), lstring
         )(i);
     }
 
@@ -239,11 +239,14 @@ export namespace Parser {
             let preWS = Prims.appfun<CharStream, void>(Prims.ws())(x => {
                 ws.push(x.toString());
             });
+            let singleTokenParser = Prims.choices<Expression<any>>(
+                unOpsExpr, parens, notExpr, funApp, boolParse(), varNameParse(), lNumber(), lstring
+            );
             let remainingTokensParser = Prims.many1<[CharStream, Expression<any>]>(
                 Prims.seq<CharStream, Expression<any>, [CharStream, Expression<any>]>(
                     Prims.right<void, CharStream>(preWS)(binOpChar(includePureLogic))
                 )(
-                    Prims.expect<Expression<any>>(ExpressionParserNoStruct)("invalid expression")
+                    Prims.expect<Expression<any>>(singleTokenParser)("invalid expression")
                 )(
                     (tup: [CharStream, Expression<any>]) => tup
                 )
@@ -267,7 +270,7 @@ export namespace Parser {
 
             return Prims.seq<
                 Expression<any>, Array<[CharStream, Expression<any>]>, Expression<any>
-                >(ExpressionParserNoStruct)(remainingTokensParser)(
+                >(singleTokenParser)(remainingTokensParser)(
                     (tup: [Expression<any>, Array<[CharStream, Expression<any>]>]) => buildBinOp(tup[0], tup[1], 0, ws)
                 )(i);
         }
@@ -465,18 +468,6 @@ export namespace Parser {
         return Prims.appfun<Expression<any>, BodyNode>(body)(
             x => new BodyNode(x, preOpenCurlyWs, preCloseCurlyWs)
         )(i);
-    }
-
-    /**
-     * funDefArg parses and wraps a single argument from fun def in an Argument node
-     * helper for funDefArgList
-     */
-    export let funDefArg: Prims.IParser<Argument<VariableNode>> = i => {
-        let ws = "";
-        let postWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
-        let p = Prims.left<VariableNode, string>(varNameParse())(postWS);
-        var f = (e: VariableNode) => { return new Argument<VariableNode>(e, true, false, ws); }
-        return Prims.appfun<VariableNode, Argument<VariableNode>>(p)(f)(i);
     }
 
     /**

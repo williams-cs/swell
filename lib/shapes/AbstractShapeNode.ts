@@ -1,16 +1,16 @@
 import { AbstractPrintableFunctionNode } from "../structural/AbstractPrintableFunctionNode";
 import { AbstractShapeEffect } from "../effects/AbstractShapeEffect";
-import { Argument } from "../funhouse/Argument";
+import { PositionalArg } from "../funhouse/PositionalArg";
 import { Expression } from "../Expression";
 import { NumberNode } from "../prims/NumberNode";
 import { Scope } from "../structural/Scope";
 
 export abstract class AbstractShapeNode<T extends AbstractShapeNode<T, E>, E extends AbstractShapeEffect<T, E>> extends AbstractPrintableFunctionNode<T, E> {
 
-    getPositionalArgMap(): Map<string, Argument<any>> {
-        return new Map<string, Argument<any>>([
-            ["width", new Argument<NumberNode>()],
-            ["height", new Argument<NumberNode>()],
+    getPositionalArgMap(): Map<string, PositionalArg<any>> {
+        return new Map<string, PositionalArg<any>>([
+            ["width", new PositionalArg<NumberNode>()],
+            ["height", new PositionalArg<NumberNode>()],
         ]);
     }
 

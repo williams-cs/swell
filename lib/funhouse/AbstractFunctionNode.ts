@@ -1,4 +1,6 @@
 import { Argument } from "./Argument";
+import { OptionalArg } from "./OptionalArg";
+import { PositionalArg } from "./PositionalArg";
 import { Expression } from "../Expression";
 import { Scope } from "../structural/Scope";
 import clone = require("clone");
@@ -77,41 +79,42 @@ export abstract class AbstractFunctionNode<T extends Expression<any>> extends Ex
         }
 
         // Set positional arguments - MUST be in order
-        this.argMap = clone(posArgMap, true);
+        this.argMap = new Map();
         let count: number = 0;
-        for (let [key, arg] of this.argMap) {
-            let inputArg: [string, string, string, Expression<any>, string] = this.args[count];
-            let argName: string = inputArg[1];
+        for (let [key, _] of posArgMap) {
+            let arg: [string, string, string, Expression<any>, string] = this.args[count];
+            let argName: string = arg[1];
             if (argName != "" && argName != key) {
                 throw(`Invalid positional argument name: Expected "${key}" in position ${count}, got "${argName}"`);
             }
-            arg.preArgNameWS = inputArg[0];
-            arg.preEqualWS = inputArg[2];
-            arg.value = inputArg[3];
-            arg.postExprWS = inputArg[4];
-            if (argName != "") {
-                arg.alwaysVisible = true;
-            }
+            this.argMap.set(key, new PositionalArg(arg[3], argName != "", arg[0], arg[2], arg[4]));
             count++;
         }
 
-        // Set provided optional arguments - can be any order
+        // Set unnamed optional arguments - must be in order
+        for (let [key, _] of optArgMap) {
+            if (count >= providedArgCount) {
+                break;
+            }
+            let arg: [string, string, string, Expression<any>, string] = this.args[count];
+            if (arg[1] != "") {
+                break;
+            }
+            this.argMap.set(key, new OptionalArg(arg[3], false, arg[0], arg[2], arg[4]));
+            count++;
+        }
+
+        // Set named optional arguments - can be any order
         for (let i = count; i < providedArgCount; i++) {
             let arg: [string, string, string, Expression<any>, string] = this.args[i];
             let argName: string = arg[1];
             if (argName == "") {
-                throw("Missing argument name");
+                throw("Unnamed optional argument cannot follow named optional argument");
             }
-            let optArg: Argument<any> = optArgMap.get(argName);
-            if (!optArg) {
-                throw(`Invalid argument name: "${argName}"`);
+            if (!optArgMap.get(argName)) {
+                throw(`Invalid optional argument name: "${argName}"`);
             }
-            optArg.preArgNameWS = arg[0];
-            optArg.preEqualWS = arg[2];
-            optArg.value = arg[3];
-            optArg.postExprWS = arg[4];
-            optArg.isModified = true;
-            this.argMap.set(argName, optArg);
+            this.argMap.set(argName, new OptionalArg(arg[3], true, arg[0], arg[2], arg[4]));
         }
 
         // Set remaining optional arguments
@@ -126,11 +129,9 @@ export abstract class AbstractFunctionNode<T extends Expression<any>> extends Ex
         let argString: string = "";
         if (this.argMap.size > 0) {
             for (let [key, arg] of this.argMap) {
-                if (arg.isPositional || arg.isModified) {
-                    argString += (arg.isPositional && !arg.alwaysVisible) ?
-                        `${arg.preArgNameWS}${arg.value}${arg.postExprWS},` :
-                        `${arg.preArgNameWS}${key}${arg.preEqualWS}=${arg.value}${arg.postExprWS},`;
-                }
+                argString += (arg.alwaysVisible || (!arg.isPositional && arg.isModified))
+                    ? `${arg.preArgNameWS}${key}${arg.preEqualWS}=${arg.value}${arg.postExprWS},`
+                    : (arg.isPositional ? `${arg.preArgNameWS}${arg.value}${arg.postExprWS},` : "");
             }
             argString = argString.slice(0, argString.length - 1);
         } else {

@@ -1,5 +1,6 @@
 import { AbstractBuiltinFunctionNode } from "../funhouse/AbstractBuiltinFunctionNode";
 import { Argument } from "../funhouse/Argument";
+import { PositionalArg } from "../funhouse/PositionalArg";
 import { Expression } from "../Expression";
 import { NumberNode } from "../prims/NumberNode";
 import { Scope } from "../structural/Scope";
@@ -9,11 +10,11 @@ export class RGBColorNode extends AbstractBuiltinFunctionNode<StringNode> {
 
     protected name: string = "rgb";
 
-    getPositionalArgMap(): Map<string, Argument<any>> {
-        return new Map<string, Argument<any>>([
-            ["red", new Argument<NumberNode>()],
-            ["green", new Argument<NumberNode>()],
-            ["blue", new Argument<NumberNode>()],
+    getPositionalArgMap(): Map<string, PositionalArg<any>> {
+        return new Map<string, PositionalArg<any>>([
+            ["red", new PositionalArg<NumberNode>()],
+            ["green", new PositionalArg<NumberNode>()],
+            ["blue", new PositionalArg<NumberNode>()],
         ]);
     }
 

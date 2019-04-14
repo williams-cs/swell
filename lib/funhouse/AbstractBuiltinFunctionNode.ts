@@ -1,5 +1,7 @@
 import { AbstractFunctionNode } from "./AbstractFunctionNode";
 import { Argument } from "./Argument";
+import { OptionalArg } from "./OptionalArg";
+import { PositionalArg } from "./PositionalArg";
 import { Expression } from "../Expression";
 import { Scope } from "../structural/Scope";
 
@@ -17,14 +19,14 @@ export abstract class AbstractBuiltinFunctionNode<T extends Expression<any>> ext
      * Initialize positional argument map. Positional argument should not have
      * default values
      */
-    getPositionalArgMap(): Map<string, Argument<any>> {
+    getPositionalArgMap(): Map<string, PositionalArg<any>> {
         return new Map();
     };
 
     /**
      * Initialize optional argument map. Optional argument should have default values
      */
-    getOptionalArgMap(): Map<string, Argument<any>> {
+    getOptionalArgMap(): Map<string, OptionalArg<any>> {
         return new Map();
     };
 
@@ -52,15 +54,15 @@ export abstract class AbstractBuiltinFunctionNode<T extends Expression<any>> ext
     /**
      * Update argument's value and mark as modified
      * @param argName Name of argument to update
-     * @param context Program's current context
+     * @param scope Program's current context
      * @param value The value to give to the argument
      */
-    updateArgValue(argName: string, context: Scope, value: any): void {
+    updateArgValue(argName: string, scope: Scope, value: any): void {
         let arg: Argument<any> = this.argMap.get(argName);
         if (arg === undefined) {
             throw(`Invalid argument name "${argName}" to function "${this.name}"`);
         }
-        arg.value.eval(context).val = value;
+        arg.value.eval(scope).val = value;
         arg.isModified = true;
     }
 }

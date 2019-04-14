@@ -82,42 +82,48 @@ import * as csvParse from 'csv-parse';
         }
 
         // parse program text
-        let outcome = Parser.parseWithOutcome(inputText);
+        let outcome;
+        try {
+            outcome = Parser.parseWithOutcome(inputText);
 
-        // check for parser outcome
-        switch (outcome.tag) {
-            case "success":
-                try {
-                    parses = true;
-                    message.innerHTML = "Program parsed successfully";
-                    ast = outcome.result; // get AST
-                    context = new Scope(null, canvas, effects, masterLog);
-                    ast.eval(context); // evaluate (this is where objects appear on screen)
+            // check for parser outcome
+            switch (outcome.tag) {
+                case "success":
+                    try {
+                        parses = true;
+                        message.innerHTML = "Program parsed successfully";
+                        ast = outcome.result; // get AST
+                        context = new Scope(null, canvas, effects, masterLog);
+                        ast.eval(context); // evaluate (this is where objects appear on screen)
 
-                } catch (e) {
-                    message.innerHTML = e.toString();
-                }
-                break;
+                    } catch (e) {
+                        message.innerHTML = e.toString();
+                    }
+                    break;
 
-            case "failure":
-                parses = false;
-                ast = undefined;
-                let startPos = outcome.error_pos;
-                let endPos = Math.min(startPos + 3, outcome.inputstream.length());
-                let editorStartPos = editorDoc.posFromIndex(startPos);
-                // mark region
-                editorDoc.markText(
-                    editorStartPos,
-                    editorDoc.posFromIndex(endPos),
-                    { className: "err" }
-                );
-                let msg = outcome.error_msg != "" ? outcome.error_msg : "unexpected error";
-                message.innerHTML = `Line ${editorStartPos.line + 1}, col ${editorStartPos.ch}: ${msg}`;
-                break;
+                case "failure":
+                    parses = false;
+                    ast = undefined;
+                    let startPos = outcome.error_pos;
+                    let endPos = Math.min(startPos + 3, outcome.inputstream.length());
+                    let editorStartPos = editorDoc.posFromIndex(startPos);
+                    // mark region
+                    editorDoc.markText(
+                        editorStartPos,
+                        editorDoc.posFromIndex(endPos),
+                        { className: "err" }
+                    );
+                    let msg = outcome.error_msg != "" ? outcome.error_msg : "unexpected error";
+                    message.innerHTML = `Line ${editorStartPos.line + 1}, col ${editorStartPos.ch}: ${msg}`;
+                    break;
+            }
+
+            // log to console
+            logSuccessfulParse();
+            
+        } catch (e) {
+            message.innerHTML = e.toString();
         }
-
-        // log to console
-        logSuccessfulParse();
     }
 
     /**
