@@ -20,7 +20,7 @@ export class ForNode extends Expression<any> {
         private _body: Expression<any>,
         ws: string = "",
     ) {
-        super(ws, true);
+        super(ws);
     }
 
     /**

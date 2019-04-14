@@ -53,7 +53,7 @@ export class FunDef extends Expression<any> {
 
     // Binds args in scope of definition; no values
     // Binds name to parent scope (cur context is new scope)
-    eval(scope: Scope): any {
+    eval(scope: Scope): void {
         scope.assign(this.name, this);
         this.funScope = scope.copy();
     }

@@ -11,18 +11,18 @@ export class BodyNode extends Expression<any> {
      */
     constructor(
         private expr: Expression<any>,
-        private preOpenCurlyWS: string = "",
+        preOpenCurlyWS: string = "",
         private preCloseCurlyWS: string = ""
     ) {
-        super();
+        super(preOpenCurlyWS);
     }
 
-    eval(scope: Scope) {
+    eval(scope: Scope): any {
         return this.expr.eval(scope);
     }
 
     toString(): string {
-        return `${this.preOpenCurlyWS}{${this.expr}${this.preCloseCurlyWS}}`;
+        return `${this.ws}{${this.expr}${this.preCloseCurlyWS}}`;
     }
 
 }

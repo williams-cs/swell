@@ -224,7 +224,7 @@ export namespace Parser {
     export function binOpExpr(includePureLogic: boolean = true): Prims.IParser<Expression<any>> {
         return i => {
             let singleTokenParser = Prims.choices<Expression<any>>(
-                notExpr, parens, unOpsExpr, boolParse(), varNameParse(), lNumber(), lstring
+                notExpr, parens, unOpsExpr, funApp, boolParse(), varNameParse(), lNumber(), lstring
             );
             let ws: string[] = [];
             let preWS = Prims.appfun<CharStream, void>(Prims.ws())(x => {
@@ -303,7 +303,7 @@ export namespace Parser {
      */
     export let unOpsExpr: Prims.IParser<UnaryOp<any>> = i => {
         let operand: Prims.IParser<Expression<any>> = Prims.choices<Expression<any>>(
-            parens, varNameParse(), lNumber()
+            parens, funApp, varNameParse(), lNumber()
         );
         let prefixOperand: Prims.IParser<Expression<any>> = Prims.expect<Expression<any>>(operand)("invalid expression");
         let ws = "";
@@ -531,13 +531,17 @@ export namespace Parser {
      * wraps the parsed value in a Return node for the AST
      */
     export let returnParser: Prims.IParser<Return> = i => {
-        let expr = Prims.between<CharStream, CharStream, Expression<any>>(Prims.ws())(Prims.ws())(ExpressionParserNoSeq);
-        let ws = "";
-        let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
-        let p = Prims.right<CharStream, Expression<any>>(Prims.right<string, CharStream>(preWS)(Prims.str('return')))(expr);
-        var f = (e: Expression<any>) => { return new Return(e, ws); }
+        let preWS = "";
+        let postWS = "";
+        let preWsParser = Prims.appfun<CharStream, string>(Prims.ws())(x => preWS = x.toString());
+        let postWsParser = Prims.appfun<CharStream, string>(Prims.ws1())(x => postWS = x.toString());
+        let p = Prims.right<CharStream, Expression<any>>(
+            Prims.between<string, string, CharStream>(preWsParser)(postWsParser)(Prims.str("return"))
+        )(
+            ExpressionParserNoSeq
+        );
+        let f = (e: Expression<any>) => new Return(e, preWS, postWS);
         return Prims.appfun<Expression<any>, Return>(p)(f)(i);
-
     }
 
     /**

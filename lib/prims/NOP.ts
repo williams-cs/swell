@@ -1,13 +1,13 @@
 import { Expression } from "../Expression";
-import {Scope} from '../structural/Scope';
+import { Scope } from '../structural/Scope';
 
 export class NOP extends Expression<NOP>{
 
     constructor() {
-        super("", true);
+        super("");
     }
 
-    eval(context: Scope): NOP {
+    eval(scope: Scope): NOP {
         return this;
     }
 

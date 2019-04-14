@@ -17,15 +17,7 @@ export class Scope {
 
     private _eventLog: LogEvent<any>[] = []; // The event log
 
-    private _retValID: Option<string> = None;
-
     private _mulSelArray: Effect<any>[]; // The array of selected objects
-
-    private _hadFunEval: boolean = false; // Was this created in a function?
-
-    private _isRunning: boolean = false;
-
-    public globalFunID = 10000000; // The global ID for functions in this context
 
     /**
      * Constructor for Scope, an object keeping track of objects within a particular context
@@ -44,9 +36,6 @@ export class Scope {
         this._canvas = canvas;
         this._effects = effects;
         this._eventLog = eventLog;
-        if (this._parent != null && this._parent.hadFunEval) {
-            this._hadFunEval = true; // copy function eval flag from parent
-        }
     }
 
     /**
@@ -91,19 +80,6 @@ export class Scope {
         throw new Error(`Identifier "${name}" could not be found.`);
     }
 
-    /**
-     * Looks up and returns the return ID value
-     */
-    retIDLookup(): any {
-        if (this.retValID.isDefined()) {
-            return this.retValID.get();
-        }
-        if (this.parent) {
-            return this.parent.retIDLookup();
-        }
-        throw new Error("Unknown caller.");
-    }
-
     get varBindings(): Map<string, Option<any>> {
         return this._varBindings;
     }
@@ -124,14 +100,6 @@ export class Scope {
         this._latestScope = scope;
     }
 
-    get retValID(): Option<string> {
-        return this._retValID;
-    }
-
-    set retValID(val: Option<string>) {
-        this._retValID = val;
-    }
-
     get canvas(): HTMLCanvasElement {
         return this._canvas;
     }
@@ -150,13 +118,5 @@ export class Scope {
 
     get mulSelArray(): Effect<any>[] {
         return this._mulSelArray;
-    }
-
-    get hadFunEval(): boolean {
-        return this._hadFunEval;
-    }
-
-    set hadFunEval(val: boolean) {
-        this._hadFunEval = val;
     }
 }

@@ -1,5 +1,7 @@
 import { Expression } from "../Expression";
-import { Scope } from './Scope';
+import { NOP } from "../prims/NOP";
+import { Return } from "./Return";
+import { Scope } from "./Scope";
 import { Some } from "space-lift";
 
 export class SequenceNode extends Expression<void>{
@@ -11,26 +13,27 @@ export class SequenceNode extends Expression<void>{
      * @param lws Preceding ws
      */
     constructor(private _left: Expression<any>, private _right: Expression<any>, ws: string = "") {
-        super(ws, true);
+        super(ws);
     }
 
     /**
      * Evaluates the children from left to right
      * @param scope The current program scope
      */
-    eval(scope: Scope): void {
+    eval(scope: Scope): any {
         let leftScope = scope.createChildScope();
-        this.left.eval(leftScope);
+        let result = this.left.eval(leftScope);
+        if (this.left instanceof Return || this.right instanceof NOP) {
+            return result;
+        }
         let rightScope = leftScope.latestScope.createChildScope();
-        this.right.eval(rightScope);
+        result = this.right.eval(rightScope);
         scope.latestScope = rightScope.latestScope;
+        return result;
     }
 
     toString(): string {
-        return (
-            this.ws + this.left + (this.left.newLine ? "" : "\n") +
-            this.right + (this.right.newLine ? "" : "\n")
-        );
+        return `${this.ws}${this.left}\n${this.right}`;
     }
 
     get left(): Expression<any> {

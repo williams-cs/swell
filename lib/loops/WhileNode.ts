@@ -12,7 +12,7 @@ export class WhileNode extends Expression<any> {
      * @param ws Preceding whitespace
      */
     constructor(private _cond: Expression<any>, private _body: Expression<any>, ws: string = "") {
-        super(ws, true);
+        super(ws);
     }
 
     /**

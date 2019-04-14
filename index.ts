@@ -41,10 +41,11 @@ export { Conditional } from "./lib/conditionals/Conditional";
 export { FunDef } from "./lib/funhouse/FunDef";
 export { UserDefinedFunctionNode } from "./lib/funhouse/UserDefinedFunctionNode";
 export { Argument } from "./lib/funhouse/Argument";
+export { Return } from "./lib/structural/Return"
 export { SequenceNode } from "./lib/structural/SequenceNode";
+export { BodyNode } from "./lib/structural/BodyNode";
 export { ForNode } from "./lib/loops/ForNode";
 export { WhileNode } from "./lib/loops/WhileNode";
-export { BodyNode } from "./lib/structural/BodyNode";
 
 /* BUILTIN FUNCTIONS */
 export { RGBColorNode } from "./lib/aesthetics/RGBColorNode";
@@ -53,8 +54,6 @@ export { RectangleNode } from "./lib/shapes/RectangleNode";
 export { EmojiNode } from "./lib/shapes/EmojiNode";
 export { LineNode } from "./lib/shapes/LineNode";
 export { PrintNode } from "./lib/structural/PrintNode";
-export { Return } from "./lib/structural/Return";
-export { ReturnError } from "./lib/structural/ReturnError";
 
 /* EFFECTS */
 export { Effect } from "./lib/effects/Effect";
