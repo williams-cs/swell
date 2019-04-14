@@ -672,11 +672,11 @@ export namespace Parser {
 
     export function singleComment(): Prims.IParser<SingleComment> {
         let ws = "";
-        let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
-        let p1 = Prims.many1<CharStream>(Prims.item())
-        let p2 = Prims.appfun<CharStream[], CharStream>(p1)(xs => CharStream.concat(xs));
-        let p3 = Prims.between<CharStream, CharStream, CharStream>(Prims.str('//'))(Prims.nl())(p2);
-        return Prims.appfun<CharStream, SingleComment>(p3)(x => new SingleComment(x.toString(), ws));
+        let preWS = Prims.appfun<CharStream, string>(Prims.left<CharStream, CharStream>(Prims.ws())(Prims.str("//")))(x => ws = x.toString());
+        let str = Prims.many1<CharStream>(Prims.choices<CharStream>(Prims.letter(), Prims.digit(), Prims.char(" "), Prims.char('\t'), Prims.char("\""), punctuation(), binOpChar()));
+        let comm = Prims.appfun<CharStream[], CharStream>(str)(x => CharStream.concat(x));
+        let p = Prims.right<string, CharStream>(preWS)(comm);
+        return Prims.appfun<CharStream, SingleComment>(p)(x => new SingleComment(x.toString(), ws));
     }
 
     export function multiLineComment() {

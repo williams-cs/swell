@@ -267,7 +267,7 @@ import * as csvParse from 'csv-parse';
     }
 
     /* Event listeners */
-    editor.on("", function() {
+    editor.on("keyup", function() {
         // Check if editor has been modified, only parses if modified
         if (editorDoc.isClean()) {
             return;
@@ -332,7 +332,7 @@ import * as csvParse from 'csv-parse';
 
     let paletteButtons: string[] = [
         "ellipse", "rect", "line", "string", "number",
-        "happy", "sad", "angry", "cool",
+        "happy", "sad", "angry", "cool"
     ];
 
     for (let buttonName of paletteButtons) {
