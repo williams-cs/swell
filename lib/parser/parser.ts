@@ -7,7 +7,7 @@ import {
     UnaryOp, Increment, NOP, Decrement, NegOp, Not, Parens,
     PlusOp, MulOp, DivOp, MinusOp,
     Equals, And, GreaterThan, LessThan, GreaterThanEq, LessThanEq, Or, NotEqual,
-    VariableNode, AssignOp,
+    VariableNode, AssignOp, SingleComment, 
     Return, FunDef, FunApp, Argument, Conditional, BodyNode,
     EllipseNode, RectangleNode, EmojiNode, LineNode, RGBColorNode
 } from '../../index';
@@ -134,7 +134,7 @@ export namespace Parser {
         return Prims.choices<Expression<any>>(
             conditionalParser, returnParser, funApp, ListHead,
             binOpExpr(), unOpsExpr, parens, notExpr,
-            boolParse(), varNameParse(), lNumber(), lstring,
+            boolParse(), varNameParse(), lNumber(), lstring, singleComment()
         )(i);
     }
 
@@ -670,10 +670,13 @@ export namespace Parser {
         return Prims.choices<Conditional>(ifElseParser, singleIfParser)(i);
     }
 
-    export function singleComment(): Prims.IParser<CharStream> {
+    export function singleComment(): Prims.IParser<SingleComment> {
+        let ws = "";
+        let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
         let p1 = Prims.many1<CharStream>(Prims.item())
         let p2 = Prims.appfun<CharStream[], CharStream>(p1)(xs => CharStream.concat(xs));
-        return Prims.between<CharStream, CharStream, CharStream>(Prims.str('//'))(Prims.nl())(p2);
+        let p3 = Prims.between<CharStream, CharStream, CharStream>(Prims.str('//'))(Prims.nl())(p2);
+        return Prims.appfun<CharStream, SingleComment>(p3)(x => new SingleComment(x.toString(), ws));
     }
 
     export function multiLineComment() {

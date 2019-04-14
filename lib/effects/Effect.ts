@@ -249,6 +249,10 @@ export abstract class Effect<T> {
      */
     abstract toIDString(): string;
 
+    delete() {
+        this.aes.commentOut();
+    }
+
     /* Getters & Setters */
 
     get node(): T {

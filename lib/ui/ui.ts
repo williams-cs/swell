@@ -388,6 +388,17 @@ import * as csvParse from 'csv-parse';
         parse();
     }
 
+    let deleteButton = document.getElementById("delete");
+    deleteButton.onclick = () => deleteNode();
+
+    function deleteNode() {
+        let elem: Effect<any>;
+        for(elem of selectedElems){
+            elem.delete();
+        }
+        parse();
+    }
+
     /* Modules */
 
     /* Maps to help initialize the Checkpoint sidebar.

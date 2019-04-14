@@ -15,6 +15,8 @@ export abstract class AbstractFunctionNode<T extends Expression<any>> extends Ex
      */
     protected argMap: Map<string, Argument<any>>;
 
+    protected _commentOut: boolean = false;
+
     /**
      * Constructor for an abstract function
      * @param args array of arguments
@@ -165,6 +167,8 @@ export abstract class AbstractFunctionNode<T extends Expression<any>> extends Ex
     }
 
     toString(): string {
+        let com: string = "";
+        if (this._commentOut) com = "\\";
         let argString: string = "";
         if (this.argMap.size > 0) {
             for (let [key, arg] of this.argMap) {
@@ -178,6 +182,10 @@ export abstract class AbstractFunctionNode<T extends Expression<any>> extends Ex
         } else {
             argString = this.emptyArgWS;
         }
-        return `${this.ws}${this.name}${this.postWS}(${argString})`;
+        return `${com}${this.ws}${this.name}${this.postWS}(${argString})`;
+    }
+
+    commentOut() {
+        this._commentOut = true;
     }
 }
