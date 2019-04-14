@@ -2,6 +2,7 @@ import { Expression } from '../Expression';
 import { BodyNode } from '../structural/BodyNode';
 import { Argument } from '../funhouse/Argument';
 import { Scope } from '../structural/Scope';
+import clone = require("clone");
 
 export class FunDef extends Expression<any> {
 
@@ -68,11 +69,11 @@ export class FunDef extends Expression<any> {
     }
 
     get posArgMap(): Map<string, Argument<any>> {
-        return new Map(this._posArgMap);
+        return clone(this._posArgMap);
     }
 
     get optArgMap(): Map<string, Argument<any>> {
-        return new Map(this._optArgMap);
+        return clone(this._optArgMap);
     }
 
     toString(): string {
