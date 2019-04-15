@@ -8,6 +8,8 @@ import { Option, Some, None } from 'space-lift';
 import { diffChars, IDiffResult } from 'diff';
 import CodeMirror from 'codemirror';
 import * as csvParse from 'csv-parse';
+import { EffectUtils } from "../../lib/effects/EffectUtils";
+import KEYBOARD = EffectUtils.KEYBOARD;
 
 (function() {
     let editor: CodeMirror.Editor = ((e: any) => { return e.CodeMirror })(document.getElementById("input"));
@@ -308,6 +310,7 @@ import * as csvParse from 'csv-parse';
     window.addEventListener("keydown", function(event: any) {
         if (!editor.hasFocus()) {
             isDoingDM = true;
+            if(event.keyCode == KEYBOARD.BACKSPACE) deleteNode();
         }
     });
     window.addEventListener("keyup", function(event: any) {
@@ -321,7 +324,7 @@ import * as csvParse from 'csv-parse';
     });
     canvas.addEventListener("mouseup", function() {
         isCanvasSelected = false;
-    });
+    });2
 
     /* Palette */
 
@@ -379,7 +382,6 @@ import * as csvParse from 'csv-parse';
         editor.focus();
         editorDoc.setCursor(lastCursorPos);
 
-        // parse
         parse();
     }
 
