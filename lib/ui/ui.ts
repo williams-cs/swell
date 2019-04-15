@@ -149,11 +149,6 @@ import * as csvParse from 'csv-parse';
                 context.eventLog.push(new IDEvent(effects[i])); // Logs ID
                 globalID++;
             }
-            if (effects[i].justDeleted) { // Logs delete event
-                effects.splice(i, 1);
-
-                effects[i].justDeleted = true;
-            }
         }
         // at this point, have iterated through all effects and have complete list to log
         if (selected != numLogged) { // if selections have changed, should log again
@@ -165,7 +160,7 @@ import * as csvParse from 'csv-parse';
             masterLog.push(context.eventLog[context.eventLog.length - 1]);
             alreadyLogged = true;
         }
-        selectedElems = [];
+        //selectedElems = [];
 
         updateProgramText(); // ProDirect Manipulation
 
@@ -396,6 +391,9 @@ import * as csvParse from 'csv-parse';
         for(elem of selectedElems){
             elem.delete();
         }
+        let newProgram: string = ast.toString();
+        editor.setValue(newProgram);
+        lastProgram = newProgram;
         parse();
     }
 

@@ -14,11 +14,7 @@ export abstract class AbstractRectangularBoundEffect<T> extends Effect<T> {
 
     // Event listeners
 
-    onKeyDown(event: KeyboardEvent) {
-        if(event.keyCode == KEYBOARD.DELETE && this.isSelected) {
-            this.justDeleted = true;
-        }
-    }
+    onKeyDown(event: KeyboardEvent) {}
 
     get x(): number {
         return this.aes.getX(this.scope);

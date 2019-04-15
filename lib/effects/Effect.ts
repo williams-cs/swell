@@ -37,7 +37,6 @@ export abstract class Effect<T> {
     private _isResizing: boolean = false;
     private _justDragged: boolean = false;
     private _justResized: boolean = false;
-    private _justDeleted: boolean = false;
     private _corner: GUIDE = GUIDE.NONE;
     private readonly _guideSize: number = 7;
 
@@ -309,14 +308,6 @@ export abstract class Effect<T> {
 
     set justResized(val: boolean) {
         this._justResized = val;
-    }
-
-    get justDeleted(): boolean {
-        return this._justDeleted;
-    }
-
-    set justDeleted(val: boolean) {
-        this._justDeleted = val;
     }
 
     get isDragging(): boolean {

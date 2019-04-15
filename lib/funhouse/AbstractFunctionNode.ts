@@ -168,7 +168,7 @@ export abstract class AbstractFunctionNode<T extends Expression<any>> extends Ex
 
     toString(): string {
         let com: string = "";
-        if (this._commentOut) com = "\\";
+        if (this._commentOut) com = "//";
         let argString: string = "";
         if (this.argMap.size > 0) {
             for (let [key, arg] of this.argMap) {
