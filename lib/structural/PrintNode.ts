@@ -1,27 +1,28 @@
-import { AbstractFunctionNode } from "../funhouse/AbstractFunctionNode";
-import { Argument } from "../funhouse/Argument";
+import { AbstractBuiltinFunctionNode } from "../funhouse/AbstractBuiltinFunctionNode";
+import { OptionalArg } from "../funhouse/OptionalArg";
+import { PositionalArg } from "../funhouse/PositionalArg";
 import { Expression } from "../Expression";
 import { NumberNode } from "../prims/NumberNode";
 import { RGBColorNode } from "../aesthetics/RGBColorNode";
 import { Scope } from "./Scope";
 import { StringNode } from "../prims/StringNode";
 
-export class PrintNode extends AbstractFunctionNode<any> {
+export class PrintNode extends AbstractBuiltinFunctionNode<any> {
 
     protected readonly name: string = "print";
 
-    getPositionalArgMap(): Map<string, Argument<any>> {
-        return new Map<string, Argument<any>>([
-            ["object", new Argument<any>()],
+    getPositionalArgMap(): Map<string, PositionalArg<any>> {
+        return new Map<string, PositionalArg<any>>([
+            ["object", new PositionalArg<any>()],
         ]);
     }
 
-    getOptionalArgMap(): Map<string, Argument<any>> {
-        return new Map<string, Argument<any>>([
-            ["x", new Argument<NumberNode>(new NumberNode(100), false)],
-            ["y", new Argument<NumberNode>(new NumberNode(100), false)],
-            ["fontSize", new Argument<NumberNode>(new NumberNode(20), false)],
-            ["color", new Argument<StringNode | RGBColorNode>(new StringNode("#673AB7"), false)],
+    getOptionalArgMap(): Map<string, OptionalArg<any>> {
+        return new Map<string, OptionalArg<any>>([
+            ["x", new OptionalArg<NumberNode>(new NumberNode(100))],
+            ["y", new OptionalArg<NumberNode>(new NumberNode(100))],
+            ["fontSize", new OptionalArg<NumberNode>(new NumberNode(20))],
+            ["color", new OptionalArg<StringNode | RGBColorNode>(new StringNode("#673AB7"))],
         ]);
     }
 

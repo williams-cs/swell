@@ -10,7 +10,7 @@ export abstract class Expression<T> {
      * Constructor for an expression
      * @param ws The whitespace preceding the expression
      */
-    constructor(private _lws: string = "", private _newLine: boolean = false) {}
+    constructor(private _lws: string = "") {}
 
     /**
      * Interface evaluation method for Expressions
@@ -32,13 +32,6 @@ export abstract class Expression<T> {
     };
 
     /* Getters and Setters */
-
-    /**
-     * Returns whether or not this expression is terminated by a newline or semicolon
-     */
-    get newLine(): boolean {
-        return this._newLine;
-    }
 
     /**
      * Returns the whitespace preceding the expression

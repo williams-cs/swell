@@ -9,7 +9,7 @@ export class VariableNode extends Expression<any> {
      * @param ws Preceding whitespace
      */
     constructor(private _name: string, ws: string = "") {
-        super(ws, false);
+        super(ws);
     }
 
     /**

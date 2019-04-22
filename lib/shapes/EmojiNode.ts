@@ -1,5 +1,5 @@
 import { AbstractShapeNode } from "./AbstractShapeNode";
-import { Argument } from "../funhouse/Argument";
+import { PositionalArg } from "../funhouse/PositionalArg";
 import { Expression } from '../Expression';
 import { Scope } from '../structural/Scope';
 import { NumberNode } from '../prims/NumberNode';
@@ -11,11 +11,11 @@ export class EmojiNode extends AbstractShapeNode<EmojiNode, EmojiEffect> {
 
     protected readonly name: string = "emoji";
 
-    getPositionalArgMap(): Map<string, Argument<any>> {
-        return new Map<string, Argument<any>>([
-            ["type", new Argument<StringNode>()],
-            ["width", new Argument<NumberNode>()],
-            ["height", new Argument<NumberNode>()],
+    getPositionalArgMap(): Map<string, PositionalArg<any>> {
+        return new Map<string, PositionalArg<any>>([
+            ["type", new PositionalArg<StringNode>()],
+            ["width", new PositionalArg<NumberNode>()],
+            ["height", new PositionalArg<NumberNode>()],
         ]);
     }
 

@@ -1,53 +1,96 @@
-import { Expression } from '../Expression';
-import { BodyNode } from '../structural/BodyNode';
-import { Argument } from '../funhouse/Argument';
-import { Scope } from '../structural/Scope';
-import { VariableNode } from '../vars/VariableNode';
+import { Expression } from "../Expression";
+import { BodyNode } from "../structural/BodyNode";
+import { Argument } from "../funhouse/Argument";
+import { OptionalArg } from "../funhouse/OptionalArg";
+import { PositionalArg } from "../funhouse/PositionalArg";
+import { Scope } from "../structural/Scope";
+import clone = require("clone");
 
-export class FunDef<T> extends Expression<T> {
-    private _name: string;
-    private _body: BodyNode;
-    private _args: Argument<VariableNode>[];
-    private _funScope: Scope;
-    private _rws: string;
+export class FunDef extends Expression<any> {
 
-    constructor(name: string, body: BodyNode, args?: Argument<VariableNode>[], ws: string = "", rws: string = "") {
-        super(ws);
-        this._name = name;
-        this._body = body;
-        this._args = args;
-        this._rws = rws;
+    // The scope in which this function is evaluated
+    private funScope: Scope;
+
+    // Positional argument map
+    private _posArgMap: Map<string, Argument<any>>;
+
+    // Optional argument map
+    private _optArgMap: Map<string, Argument<any>>
+
+    constructor(
+        private name: string,
+        private _body: BodyNode,
+        args: Array<[string, string, string, Expression<any>, string]>,
+        preFuncWS: string = "",
+        private postFuncWS: string = "",
+        private postFuncNameWS: string = "",
+        private emptyArgWS: string = "",
+    ) {
+        super(preFuncWS);
+        this._posArgMap = new Map();
+        this._optArgMap = new Map();
+
+        // Set positional arguments
+        let arg_ind = 0;
+        while (arg_ind < args.length) {
+            let arg: [string, string, string, Expression<any>, string] = args[arg_ind];
+            let arg_value: Expression<any> = arg[3];
+            if (arg_value !== null && arg_value !== undefined) {
+                break;
+            }
+            this._posArgMap.set(arg[1], new PositionalArg<Expression<any>>(null, false, arg[0], arg[2], arg[4]));
+            arg_ind++;
+        }
+
+        // Set optional arguments
+        while (arg_ind < args.length) {
+            let arg: [string, string, string, Expression<any>, string] = args[arg_ind];
+            let arg_value: Expression<any> = arg[3];
+            let arg_name: string = arg[1];
+            if (arg_value === null || arg_value === undefined) {
+                throw new Error(`Argument ${arg_name} is optional but doesn't have a default value`);
+            }
+            this._optArgMap.set(arg_name, new OptionalArg<Expression<any>>(arg_value, false, arg[0], arg[2], arg[4]));
+            arg_ind++;
+        }
     };
 
-    // Binds args in context of definition; no values
-    // Binds name to parent context (cur context is new context)
-    eval(context: Scope): any {
-        this._funScope = context.copy(false);
-        context.assign(this._name, this); // parent or current?
+    // Binds args in scope of definition; no values
+    // Binds name to parent scope (cur context is new scope)
+    eval(scope: Scope): void {
+        scope.assign(this.name, this);
+        this.funScope = scope.copy();
+    }
+
+    get body(): BodyNode {
+        return this._body;
+    }
+
+    get scope(): Scope {
+        return this.funScope.copy();
+    }
+
+    get posArgMap(): Map<string, Argument<any>> {
+        return clone(this._posArgMap);
+    }
+
+    get optArgMap(): Map<string, Argument<any>> {
+        return clone(this._optArgMap);
     }
 
     toString(): string {
-        let argsList = ''
-        let argsVal = this._args;
-        if (argsVal.length > 0) {
-            for (let i = 0; i < argsVal.length - 1; i++) {
-                argsList += argsVal[i].value.name + ", ";
+        let argString = "";
+        if (this._posArgMap.size == 0 && this._optArgMap.size == 0) {
+            argString = this.emptyArgWS;
+        } else {
+            for (let [key, arg] of this._posArgMap) {
+                argString += `${arg.preArgNameWS}${key}${arg.postExprWS},`;
             }
-            argsList += argsVal[argsVal.length - 1].value.name;
+            for (let [key, arg] of this._optArgMap) {
+                argString += `${arg.preArgNameWS}${key}${arg.preEqualWS}=${arg.value}${arg.postExprWS},`;
+            }
+            argString = argString.slice(0, argString.length - 1);
         }
-        return `${this.ws}fun${this._rws}${this.name}(${argsList})${this.body}`;
-    }
-
-    get name(): string {
-        return this._name;
-    }
-    get body(): Expression<BodyNode> {
-        return this._body;
-    }
-    get args(): Argument<any>[] {
-        return this._args;
-    }
-    get scope(): Scope {
-        return this._funScope;
+        return `${this.ws}fun${this.postFuncWS}${this.name}${this.postFuncNameWS}(${argString})${this.body}`;
     }
 }

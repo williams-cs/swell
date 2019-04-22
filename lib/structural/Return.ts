@@ -1,5 +1,4 @@
 import { Expression } from "../Expression";
-import { ReturnError } from "./ReturnError";
 import { Scope } from "./Scope";
 
 export class Return extends Expression<any> {
@@ -7,23 +6,22 @@ export class Return extends Expression<any> {
     /**
      * Constructor for a Return object, representing something to be returned in a function
      * @param expr The expression to be returned
-     * @param lws Preceding whitespace
+     * @param preWS Whitespace preceding the keyword 'return'
+     * @param postWS Whitespace succeeding the keyword 'return'
      */
-    constructor(private _expr: Expression<any>, ws: string = "") {
-        super(ws);
+    constructor(private expr: Expression<any>, preWS: string = "", private postWS: string = "") {
+        super(preWS);
     }
 
     /**
      * Evaluates the expression to be returned and returns via a ReturnErro
      * @param context The current program context
      */
-    eval(context: Scope) {
-        // If return val is a var, returns that var's value
-        let result = this._expr.eval(context);
-        throw new ReturnError(result, context.retIDLookup());
+    eval(scope: Scope): any {
+        return this.expr.eval(scope);
     }
 
     toString(): string {
-        return this.ws + "return " + this._expr;
+        return `${this.ws}return${this.postWS}${this.expr}`;
     }
 }

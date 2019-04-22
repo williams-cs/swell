@@ -8,7 +8,7 @@ export abstract class UnaryOp<T> extends Expression<T> {
      * @param _expr The expression to be operated on
      */
     constructor(private _expr: Expression<T>, ws: string = "") {
-        super(ws, false);
+        super(ws);
     };
 
     get expr(): Expression<T> {

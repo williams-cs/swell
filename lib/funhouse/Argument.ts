@@ -1,5 +1,6 @@
 import { Expression } from "../Expression";
-export class Argument<T> {
+
+export abstract class Argument<T> {
 
     // Used for optional arg to check whether or not it has been modified or explicitly initialized
     private _isModified: boolean = false;
@@ -10,7 +11,7 @@ export class Argument<T> {
      * @param isPositional Whether or not the argument is positional
      */
     constructor(
-        private _value: T = undefined,
+        private _value: T = null,
         private _isPositional: boolean = true,
         private _alwaysVisible: boolean = false,
         private _preArgNameWS: string = " ",

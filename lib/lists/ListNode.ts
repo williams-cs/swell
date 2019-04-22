@@ -16,10 +16,10 @@ export class ListNode extends Expression<ListNode> {
      * Evaluates each element of the list and pushes it onto the internal representation
      * @param context
      */
-    eval(context: Scope): ListNode {
+    eval(scope: Scope): ListNode {
         let evalList: Expression<any>[] = [];
         for (let expr of this.list) {
-            evalList.push(expr.eval(context));
+            evalList.push(expr.eval(scope));
         }
         return new ListNode(evalList);
     }
