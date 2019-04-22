@@ -2,13 +2,13 @@ import { assert, expect } from 'chai';
 import 'mocha';
 import {
     Expression, SequenceNode, PrintNode, ListNode,
-    NumberNode, StringNode, BooleanNode, FloatNode,
+    NumberNode, StringNode, BooleanNode,
     UnaryOp, Increment, NOP, Decrement, NegOp, Not, Parens,
     BinaryOp, PlusOp, MulOp, DivOp, MinusOp,
     Equals, And, GreaterThan, LessThan, GreaterThanEq, LessThanEq, Or, NotEqual,
-    VariableNode, DeclareOp, AssignOp,
-    Return, FunDef, FunApp, Conditional,
-    ForNode, RepeatNode, WhileNode,
+    VariableNode, AssignOp, BodyNode, 
+    Return, FunDef, UserDefinedFunctionNode, Conditional,
+    ForNode, WhileNode,
     EllipseNode, RectangleNode, EmojiNode, LineNode,
     RGBColorNode
 } from '../index';
@@ -17,17 +17,17 @@ describe('toString operations', () => {
         // var i = 1
         // i = 2;
         const v = new VariableNode("i");
-        const left = new DeclareOp(v, new NumberNode(1));
+        const left = new AssignOp(v, new NumberNode(1));
         const right = new AssignOp(v, new NumberNode(2));
         //const seq = new SequenceNode(left, right);
         const output = right.toString();
         expect(output).to.deep.equal("i = 2");
     });
-    it('DeclareOp should evaluate to a string', () => {
+    it('AssignOp should evaluate to a string', () => {
         // var i = 1
         // i = 2;
         const v = new VariableNode("i");
-        const left = new DeclareOp(v, new NumberNode(1));
+        const left = new AssignOp(v, new NumberNode(1));
         //const right = new AssignOp(v,new NumberNode(2));
         //const seq = new SequenceNode(left, right);
         const output = left.toString();
@@ -37,7 +37,7 @@ describe('toString operations', () => {
         // var i = 1
         // i--;
         const v = new VariableNode("i");
-        const left = new DeclareOp(v, new NumberNode(1));
+        const left = new AssignOp(v, new NumberNode(1));
         const decr = new Decrement(v);
 
         //const right = new AssignOp(v,new NumberNode(2));
@@ -49,7 +49,7 @@ describe('toString operations', () => {
         // var i = 1
         // i--;
         const v = new VariableNode("i");
-        const left = new DeclareOp(v, new NumberNode(1));
+        const left = new AssignOp(v, new NumberNode(1));
         const decr = new Increment(v);
 
         //const right = new AssignOp(v,new NumberNode(2));
@@ -83,7 +83,7 @@ describe('toString operations', () => {
         const xnum = new NumberNode(2);
         const decl1 = new AssignOp(x, xnum);
         const log1 = new LessThan(x, new NumberNode(3));
-        const cond1 = new Conditional(log1, body1);
+        const cond1 = new Conditional(new Parens(log1), body1);
         const output = cond1.toString();
         // const seq1 = new SequenceNode(decl1,cond1);
         // const output = seq1.eval(new Scope(null));
@@ -91,14 +91,14 @@ describe('toString operations', () => {
         expect(output).to.eql("if(x < 3) {\n 1}"); // this should be return, no?
     });
     it('fundef should evaluate to a string', () => {
-        const fundef = new FunDef("identity", new Return(new VariableNode("x")), ["x"]);
+        const fundef = new FunDef("identity", new BodyNode(new Return(new VariableNode("x"))), [["", "", "", new VariableNode("x"), ""]]);
         //const funapp = new FunApp("identity",[1]);
         const output = fundef.toString();
         expect(output).to.equal("fun identity(x) {\n return x}"); // should there be a semicolon?
     });
     it('funapp should evaluate to a string', () => {
         //const fundef = new FunDef("identity",new Return(new VariableNode("x")),["x"]);
-        const funapp = new FunApp("identity", [1]);
+        const funapp = new UserDefinedFunctionNode("identity", [["", "", "", new NumberNode(1), ""]]);
         const output = funapp.toString();
         expect(output).to.equal("identity(1)"); // should there be a semicolon?
     });
@@ -154,11 +154,11 @@ describe('toString operations', () => {
     });
     it('for loop should evaluate to a string', () => {
         const x = new VariableNode("x");
-        const xvar = new DeclareOp(x, new NumberNode(0));
+        const xvar = new AssignOp(x, new NumberNode(0));
         const body1 = new AssignOp(x, new PlusOp(x, new NumberNode(1)));
 
         const i = new VariableNode("i");
-        const decl1 = new DeclareOp(i, new NumberNode(0));
+        const decl1 = new AssignOp(i, new NumberNode(0));
         const adj1 = new AssignOp(i, new PlusOp(i, new NumberNode(1)));
         const cond1 = new LessThan(i, new NumberNode(10));
 
@@ -170,7 +170,7 @@ describe('toString operations', () => {
     });
     it('while should evaluate to a string', () => {
         const x = new VariableNode("x");
-        const xvar = new DeclareOp(x, new NumberNode(0));
+        const xvar = new AssignOp(x, new NumberNode(0));
         const body1 = new AssignOp(x, new PlusOp(x, new NumberNode(1)));
         //const cond1 = new Conditional(new LessThan(x,new NumberNode(10)), add1);
         const cond1 = new LessThan(x, new NumberNode(10));
@@ -200,20 +200,20 @@ describe('toString operations', () => {
         expect(output).to.equal("");
     });
     it('ellipse should evaluate to a string', () => {
-        const ell = new EllipseNode([["width", new NumberNode(30)], ["height", new NumberNode(30)]]);
+        const ell = new EllipseNode([["", "width", "", new NumberNode(30), ""], ["", "height", "", new NumberNode(30), ""]]);
         const output = ell.toString();
         expect(output).to.equal("ellipse(width = 30, height = 30)");
     });
     it('rect should evaluate to a string', () => {
-        const ell = new RectangleNode([["width", new NumberNode(30)], ["height", new NumberNode(30)]]);
+        const ell = new RectangleNode([["", "width", "", new NumberNode(30), ""], ["", "height", "", new NumberNode(30), ""]]);
         const output = ell.toString();
         expect(output).to.equal("rect(width = 30, height = 30)");
     });
     it('return should evaluate to a string', () => {
-        const ell = new RectangleNode([["width", new NumberNode(30)], ["height", new NumberNode(30)]]);
+        const ell = new RectangleNode([["  ", "width", " ", new NumberNode(30), "   "], ["", "height", "", new NumberNode(30), ""]]);
         const ret = new Return(ell);
         const output = ret.toString();
-        expect(output).to.equal("return rect(width = 30, height = 30)");
+        expect(output).to.equal("return rect(  width = 30   , height = 30)");
     });
     it('sequence should evaluate to a string', () => {
         const num0 = new NumberNode(1);

@@ -28,7 +28,7 @@ describe('A list', () => {
         const seq1 = new SequenceNode(assign2,comp1);
         const seq2 = new SequenceNode(assign1,seq1);
         const output = seq1.eval(new Scope(null));
-        const output1 = seq1.rightVal;
+        const output1 = seq1.right;
         expect(output1).to.deep.equal(new BooleanNode(true));
     });
     

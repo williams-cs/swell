@@ -124,7 +124,7 @@ describe('Logic operations', () => {
         const var10 = new LessThan(x10,new NumberNode(4));
         const seq10 = new SequenceNode(decl10,var10);
         const output = seq10.eval(new Scope(null));
-        const output1 = seq10.rightVal;
+        const output1 = seq10.right;
         expect(output1).to.eql(new BooleanNode(true));
     });
 

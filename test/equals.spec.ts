@@ -12,7 +12,6 @@ import { EllipseNode } from '../lib/shapes/EllipseNode';
 import { RectangleNode } from '../lib/shapes/RectangleNode';
 import { ForNode } from '../lib/loops/ForNode';
 import { VariableNode } from '../lib/vars/VariableNode';
-import { DeclareOp } from '../lib/binops/DeclareOp';
 import { AssignOp } from '../lib/binops/AssignOp';
 import { PlusOp } from '../lib/binops/PlusOp';
 import { LessThan } from '../lib/logic/LessThan';
@@ -25,7 +24,7 @@ describe('A series of equalities', () => {
         const left = new Equals(bool1, bool2);
         const seq1 = new SequenceNode(left, new NOP());
         const output = seq1.eval(new Scope(null));
-        const output1 = seq1.leftVal;
+        const output1 = seq1.left;
         expect(output1).to.deep.equal(new BooleanNode(true));
     });
     it('true==false should evaluate to false', () => {
@@ -34,7 +33,7 @@ describe('A series of equalities', () => {
         const left = new Equals(bool1, bool2);
         const seq1 = new SequenceNode(left, new NOP());
         const output = seq1.eval(new Scope(null));
-        const output1 = seq1.leftVal;
+        const output1 = seq1.left;
         expect(output1).to.deep.equal(new BooleanNode(false));
     });
     it('1==1 should evaluate to true', () => {
@@ -43,7 +42,7 @@ describe('A series of equalities', () => {
         const left = new Equals(num1, num2);
         const seq1 = new SequenceNode(left, new NOP());
         const output = seq1.eval(new Scope(null));
-        const output1 = seq1.leftVal;
+        const output1 = seq1.left;
         expect(output1).to.deep.equal(new BooleanNode(true));
     });
     it('1==2 should evaluate to false', () => {
@@ -52,7 +51,7 @@ describe('A series of equalities', () => {
         const left = new Equals(num1, num2);
         const seq1 = new SequenceNode(left, new NOP());
         const output = seq1.eval(new Scope(null));
-        const output1 = seq1.leftVal;
+        const output1 = seq1.left;
         expect(output1).to.deep.equal(new BooleanNode(false));
     });
     it('two identical strings should evaluate to true', () => {
@@ -61,7 +60,7 @@ describe('A series of equalities', () => {
         const left = new Equals(str1, str2);
         const seq1 = new SequenceNode(left, new NOP());
         const output = seq1.eval(new Scope(null));
-        const output1 = seq1.leftVal;
+        const output1 = seq1.left;
         expect(output1).to.deep.equal(new BooleanNode(true));
     });
     it('two different strings should evaluate to false', () => {
@@ -70,61 +69,61 @@ describe('A series of equalities', () => {
         const left = new Equals(str1, str2);
         const seq1 = new SequenceNode(left, new NOP());
         const output = seq1.eval(new Scope(null));
-        const output1 = seq1.leftVal;
+        const output1 = seq1.left;
         expect(output1).to.deep.equal(new BooleanNode(false));
     });
     it('two identical ellipses should evaluate to true', () => {
-        const ell1 = new EllipseNode([["width", new NumberNode(30)], ["height", new NumberNode(30)]]);
-        const ell2 = new EllipseNode([["width", new NumberNode(30)], ["height", new NumberNode(30)]]);
+        const ell1 = new EllipseNode([["", "width", "", new NumberNode(30), ""], ["", "height", "", new NumberNode(30), ""]]);
+        const ell2 = new EllipseNode([["", "width", "", new NumberNode(30), ""], ["", "height", "", new NumberNode(30), ""]]);
         const left = new Equals(ell1, ell2);
         const seq1 = new SequenceNode(left, new NOP());
         const output = seq1.eval(new Scope(null));
-        const output1 = seq1.leftVal;
+        const output1 = seq1.left;
         expect(output1).to.deep.equal(new BooleanNode(true));
     });
     it('two nonidentical ellipses should evaluate to false', () => {
-        const ell1 = new EllipseNode([["width", new NumberNode(30)], ["height", new NumberNode(30)]]);
-        const ell2 = new EllipseNode([["width", new NumberNode(30)], ["height", new NumberNode(40)]]);
+        const ell1 = new EllipseNode([["", "width", "", new NumberNode(30), ""], ["", "height", "", new NumberNode(30), ""]]);
+        const ell2 = new EllipseNode([["", "width", "", new NumberNode(30), ""], ["", "height", "", new NumberNode(40), ""]]);
         const left = new Equals(ell1, ell2);
         const seq1 = new SequenceNode(left, new NOP());
         const output = seq1.eval(new Scope(null));
-        const output1 = seq1.leftVal;
+        const output1 = seq1.left;
         expect(output1).to.deep.equal(new BooleanNode(false));
     });
     it('two identical rects should evaluate to true', () => {
-        const rect1 = new RectangleNode([["width", new NumberNode(30)], ["height", new NumberNode(30)]]);
-        const rect2 = new RectangleNode([["width", new NumberNode(30)], ["height", new NumberNode(30)]]);
+        const rect1 = new RectangleNode([["", "width", "", new NumberNode(30), ""], ["", "height", "", new NumberNode(30), ""]]);
+        const rect2 = new RectangleNode([["", "width", "", new NumberNode(30), ""], ["", "height", "", new NumberNode(30), ""]]);
         const left = new Equals(rect1, rect2);
         const seq1 = new SequenceNode(left, new NOP());
         const output = seq1.eval(new Scope(null));
-        const output1 = seq1.leftVal;
+        const output1 = seq1.left;
         expect(output1).to.deep.equal(new BooleanNode(true));
     });
     it('two nonidentical rects should evaluate to false', () => {
-        const rect1 = new RectangleNode([["width", new NumberNode(30)], ["height", new NumberNode(30)]]);
-        const rect2 = new RectangleNode([["width", new NumberNode(30)], ["height", new NumberNode(40)]]);
+        const rect1 = new RectangleNode([["", "width", "", new NumberNode(30), ""], ["", "height", "", new NumberNode(30), ""]]);
+        const rect2 = new RectangleNode([["", "width", "", new NumberNode(30), ""], ["", "height", "", new NumberNode(30), ""]]);
         const left = new Equals(rect1, rect2);
         const seq1 = new SequenceNode(left, new NOP());
         const output = seq1.eval(new Scope(null));
-        const output1 = seq1.leftVal;
+        const output1 = seq1.left;
         expect(output1).to.deep.equal(new BooleanNode(false));
     });
     it('an ellipse == a rect should evaluate to false', () => {
-        const rect1 = new RectangleNode([["width", new NumberNode(30)], ["height", new NumberNode(30)]]);
-        const ell1 = new EllipseNode([["width", new NumberNode(30)], ["height", new NumberNode(40)]]);
+        const rect1 = new RectangleNode([["", "width", "", new NumberNode(30), ""], ["", "height", "", new NumberNode(30), ""]]);
+        const ell1 = new EllipseNode([["", "width", "", new NumberNode(30), ""], ["", "height", "", new NumberNode(40), ""]]);
         const left = new Equals(rect1, ell1);
         const seq1 = new SequenceNode(left, new NOP());
         const output = seq1.eval(new Scope(null));
-        const output1 = seq1.leftVal;
+        const output1 = seq1.left;
         expect(output1).to.deep.equal(new BooleanNode(false));
     });
     it('a rect == an ellipse should evaluate to false', () => {
-        const rect1 = new RectangleNode([["width", new NumberNode(30)], ["height", new NumberNode(30)]]);
-        const ell1 = new EllipseNode([["width", new NumberNode(30)], ["height", new NumberNode(40)]]);
+        const rect1 = new RectangleNode([["", "width", "", new NumberNode(30), ""], ["", "height", "", new NumberNode(30), ""]]);
+        const ell1 = new EllipseNode([["", "width", "", new NumberNode(30), ""], ["", "height", "", new NumberNode(40), ""]]);
         const left = new Equals(ell1, rect1);
         const seq1 = new SequenceNode(left, new NOP());
         const output = seq1.eval(new Scope(null));
-        const output1 = seq1.leftVal;
+        const output1 = seq1.left;
         expect(output1).to.deep.equal(new BooleanNode(false));
     });
     it('true==1 should evaluate to false', () => {
@@ -133,7 +132,7 @@ describe('A series of equalities', () => {
         const left = new Equals(bool1, num1);
         const seq1 = new SequenceNode(left, new NOP());
         const output = seq1.eval(new Scope(null));
-        const output1 = seq1.leftVal;
+        const output1 = seq1.left;
         expect(output1).to.deep.equal(new BooleanNode(false));
     });
     it('1===true should evaluate to false', () => {
@@ -142,7 +141,7 @@ describe('A series of equalities', () => {
         const left = new Equals(num1, bool1);
         const seq1 = new SequenceNode(left, new NOP());
         const output = seq1.eval(new Scope(null));
-        const output1 = seq1.leftVal;
+        const output1 = seq1.left;
         expect(output1).to.deep.equal(new BooleanNode(false));
     });
     it('a string == a number should evaluate to false', () => {
@@ -151,7 +150,7 @@ describe('A series of equalities', () => {
         const left = new Equals(str1, num1);
         const seq1 = new SequenceNode(left, new NOP());
         const output = seq1.eval(new Scope(null));
-        const output1 = seq1.leftVal;
+        const output1 = seq1.left;
         expect(output1).to.deep.equal(new BooleanNode(false));
     });
     it('a string == a NOP should evaluate to false', () => {
@@ -160,7 +159,7 @@ describe('A series of equalities', () => {
         const left = new Equals(nop1, str1);
         const seq1 = new SequenceNode(left, new NOP());
         const output = seq1.eval(new Scope(null));
-        const output1 = seq1.leftVal;
+        const output1 = seq1.left;
         expect(output1).to.deep.equal(new BooleanNode(false));
     });
     // it('a for loop == a for loop should throw an error', () => {

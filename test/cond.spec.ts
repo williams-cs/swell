@@ -6,7 +6,8 @@ import {BooleanNode} from '../lib/prims/BooleanNode';
 import {VariableNode} from '../lib/vars/VariableNode';
 import {Conditional} from '../lib/conditionals/Conditional';
 import {SequenceNode} from '../lib/structural/SequenceNode';
-
+import { Parens } from '../lib/unops/Parens';
+import {BodyNode} from '../lib/structural/BodyNode';
 import { assert,expect } from 'chai';
 import 'mocha';
 
@@ -32,11 +33,11 @@ describe('A conditional statement', () => {
         const x = new VariableNode("x");
         const xnum = new NumberNode(2);
         const decl1 = new AssignOp(x, xnum);
-        const log1 = new LessThan(x,new NumberNode(3));
+        const log1 = new Parens(new LessThan(x,new NumberNode(3)));
         const cond1 = new Conditional(log1,body1);
         const seq1 = new SequenceNode(decl1,cond1);
         const output = seq1.eval(new Scope(null));
-        const output1 = seq1.rightVal;
+        const output1 = seq1.right;
         expect(output1).to.eql(new NumberNode(1));
     });
 
@@ -47,7 +48,7 @@ describe('A conditional statement', () => {
         const xbool = new BooleanNode(true);
         const decl2 = new AssignOp(x, xbool);
         //const log1 = new Equals(x,new NumberNode(3));
-        const cond2 = new Conditional(decl2,body2);
+        const cond2 = new Conditional(new Parens(decl2),body2);
         //const seq1 = new SequenceNode(decl1,cond1);
         const output = cond2.eval(new Scope(null));
         //const output1 = seq1.rightVal;
@@ -62,10 +63,10 @@ describe('A conditional statement', () => {
         const xbool = new BooleanNode(true);
         const decl3 = new AssignOp(x, xbool);
         //const log1 = new LessThan(x,new NumberNode(3));
-        const cond3 = new Conditional(x,body3);
+        const cond3 = new Conditional(new Parens(x),body3);
         const seq3 = new SequenceNode(decl3,cond3);
         const output = seq3.eval(new Scope(null));
-        const output1 = seq3.rightVal;
+        const output1 = seq3.right;
         expect(output1).to.eql(new NumberNode(1));
     });
 
@@ -79,10 +80,10 @@ describe('A conditional statement', () => {
         const xnum = new NumberNode(2);
         const decl4 = new AssignOp(x, xnum);
         const log4 = new LessThan(x,new NumberNode(3));
-        const cond4 = new Conditional(log4,body4,else4);
+        const cond4 = new Conditional(new Parens(log4, " "),body4, "", new BodyNode(else4));
         const seq4 = new SequenceNode(decl4,cond4);
         const output = seq4.eval(new Scope(null));
-        const output1 = seq4.rightVal;
+        const output1 = seq4.right;
         expect(output1).to.eql(new NumberNode(1));
     });
 
@@ -96,10 +97,10 @@ describe('A conditional statement', () => {
         const xnum = new NumberNode(5);
         const decl4 = new AssignOp(x, xnum);
         const log4 = new LessThan(x,new NumberNode(3));
-        const cond4 = new Conditional(log4,body4,else4);
+        const cond4 = new Conditional(new Parens(log4),body4,"", new BodyNode(else4));
         const seq4 = new SequenceNode(decl4,cond4);
         const output = seq4.eval(new Scope(null));
-        const output1 = seq4.rightVal;
+        const output1 = seq4.right;
         expect(output1).to.eql(new NumberNode(2));
     });
 
@@ -116,11 +117,11 @@ describe('A conditional statement', () => {
         const decl5 = new AssignOp(x, xnum);
         const iflog5 = new LessThan(x,new NumberNode(3));
         const elselog5 = new LessThan(x,new NumberNode(5));
-        const cond52 = new Conditional(elselog5,elseif5,else5)
-        const cond51 = new Conditional(iflog5,body5,cond52);
+        const cond52 = new Conditional(new Parens(elselog5),elseif5, " ", new BodyNode(else5));
+        const cond51 = new Conditional(new Parens(iflog5),body5, "", new BodyNode(cond52));
         const seq5 = new SequenceNode(decl5,cond51);
         const output = seq5.eval(new Scope(null));
-        const output1 = seq5.rightVal;
+        const output1 = seq5.right;
         expect(output1).to.eql(new NumberNode(1));
     });
 
@@ -137,11 +138,11 @@ describe('A conditional statement', () => {
         const decl5 = new AssignOp(x, xnum);
         const iflog5 = new LessThan(x,new NumberNode(3));
         const elselog5 = new LessThan(x,new NumberNode(5));
-        const cond52 = new Conditional(elselog5,elseif5,else5)
-        const cond51 = new Conditional(iflog5,body5,cond52);
+        const cond52 = new Conditional(new Parens(elselog5),elseif5, "", new BodyNode(else5));
+        const cond51 = new Conditional(new Parens(iflog5),body5, "", cond52);
         const seq5 = new SequenceNode(decl5,cond51);
         const output = seq5.eval(new Scope(null));
-        const output1 = seq5.rightVal;
+        const output1 = seq5.right;
         expect(output1).to.eql(new NumberNode(2));
     });
 
@@ -158,11 +159,11 @@ describe('A conditional statement', () => {
         const decl5 = new AssignOp(x, xnum);
         const iflog5 = new LessThan(x,new NumberNode(3));
         const elselog5 = new LessThan(x,new NumberNode(5));
-        const cond52 = new Conditional(elselog5,elseif5,else5)
-        const cond51 = new Conditional(iflog5,body5,cond52);
+        const cond52 = new Conditional(new Parens(elselog5),elseif5,"", new BodyNode(else5));
+        const cond51 = new Conditional(new Parens(iflog5),body5,"", cond52);
         const seq5 = new SequenceNode(decl5,cond51);
         const output = seq5.eval(new Scope(null));
-        const output1 = seq5.rightVal;
+        const output1 = seq5.right;
         expect(output1).to.eql(new NumberNode(3));
     });
 

@@ -18,7 +18,7 @@ export class Conditional extends Expression<any> {
         private cond: Parens<any>,
         private trueBranch: Expression<any>,
         private preIfWS: string = "",
-        private falseBranch: BodyNode | Conditional = null,
+        private falseBranch_: BodyNode | Conditional = null,
         private preElseWS: string = "",
     ) {
         super();
@@ -47,5 +47,9 @@ export class Conditional extends Expression<any> {
             res += `${this.preElseWS}else${this.falseBranch}`;
         }
         return res;
+    }
+
+    get falseBranch(): Conditional | BodyNode {
+        return this.falseBranch_;
     }
 }

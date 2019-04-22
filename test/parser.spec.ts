@@ -4,16 +4,17 @@ import 'mocha';
 import { CharUtil, Primitives } from 'pants/lib';
 import {
     Expression, SequenceNode, PrintNode, ListNode,
-    NumberNode, StringNode, BooleanNode, FloatNode,
+    NumberNode, StringNode, BooleanNode,
     UnaryOp, Increment, NOP, Decrement, NegOp, Not, Parens,
     BinaryOp, PlusOp, MulOp, DivOp, MinusOp,
     Equals, And, GreaterThan, LessThan, GreaterThanEq, LessThanEq, Or, NotEqual,
-    VariableNode, DeclareOp, AssignOp,
-    Return, FunDef, FunApp, Conditional,
-    ForNode, RepeatNode, WhileNode,
+    VariableNode, AssignOp, BodyNode, 
+    Return, FunDef, Conditional,
+    ForNode, WhileNode,
     EllipseNode, RectangleNode, EmojiNode, LineNode,
     RGBColorNode
 } from '../index';
+import { UserDefinedFunctionNode } from '../lib/funhouse/UserDefinedFunctionNode';
 
 describe('Number Parser test', () => {
     it('should return a node with digit value', () => {
@@ -102,7 +103,7 @@ describe('unOpExpr parser test', () => {
         switch (result.tag) {
             case "success":
                 console.log(result.result.toString());
-                expect(result.result).to.eql(new SequenceNode(new NegOp(new FloatNode(2.5)), new NOP()));
+                expect(result.result).to.eql(new SequenceNode(new NegOp(new NumberNode(2.5)), new NOP()));
                 break;
             case "failure":
                 assert.fail();
@@ -266,7 +267,7 @@ describe('List Parser Test', () => {
 describe('Function declaration arg list parser', () => {
     it('should parse an empty argument list', () => {
         const input = new CharUtil.CharStream("()");
-        let result = Parser.funDefArgList()(input);
+        let result = Parser.funDefArgList(input);
         switch (result.tag) {
             case "success":
                 expect(result.result).to.eql([]);
@@ -278,7 +279,7 @@ describe('Function declaration arg list parser', () => {
     });
     it('should parse an argument list of multiple elements', () => {
         const input = new CharUtil.CharStream('(name, date, year)');
-        let result = Parser.funDefArgList()(input);
+        let result = Parser.funDefArgList(input);
         switch (result.tag) {
             case "success":
                 expect(result.result).to.eql(["name", "date", "year"]);
@@ -292,7 +293,7 @@ describe('Function declaration arg list parser', () => {
 describe('Function application arg list parser', () => {
     it('should parse an empty argument list', () => {
         const input = new CharUtil.CharStream("()");
-        let result = Parser.funAppArgList()(input);
+        let result = Parser.funAppArgList(input);
         switch (result.tag) {
             case "success":
                 expect(result.result).to.eql([]);
@@ -304,7 +305,7 @@ describe('Function application arg list parser', () => {
     });
     it('should parse an argument list of multiple elements', () => {
         const input = new CharUtil.CharStream('(1, 2, 3)');
-        let result = Parser.funAppArgList()(input);
+        let result = Parser.funAppArgList(input);
         switch (result.tag) {
             case "success":
                 expect(result.result).to.eql([new NumberNode(1), new NumberNode(2), new NumberNode(3)]);
@@ -367,7 +368,7 @@ describe('Function Definition parser', () => {
     it('should be able to parse and return a function definition', () => {
         const input = 'fun foo (name, date, age){ return 1; }\n';
         const result = Parser.parse(input);
-        var test = new SequenceNode(new FunDef("foo", (new SequenceNode(new Return(new NumberNode(1)), new NOP())), ['name', 'date', 'age']), new NOP());
+        var test = new SequenceNode(new FunDef("foo", new BodyNode(new SequenceNode(new Return(new NumberNode(1)), new NOP())), [["", "", "", new VariableNode('name'), ""], ["", "", "", new VariableNode('date'), ""], ["", "", "", new VariableNode('age'), ""]]), new NOP());
         if (result.isDefined()) {
             //console.log(result.get().toString());
             expect(result.get()).to.eql(test);
@@ -382,7 +383,7 @@ describe('Function Application parser', () => {
     it('should be able to parse and return a function application', () => {
         const input = '  foo(1,2,3);';
         const result = Parser.parse(input);
-        var test = new SequenceNode(new FunApp('foo', [new NumberNode(1), new NumberNode(2), new NumberNode(3)], "  "), new NOP());
+        var test = new SequenceNode(new UserDefinedFunctionNode('foo', [["", "", "", new NumberNode(1), ""], ["", "", "", new NumberNode(2), ""], ["", "", "", new NumberNode(3), ""]], "  "), new NOP());
         if (result.isDefined()) {
             //console.log(result.get().toString());
             expect(result.get()).to.eql(test);
@@ -435,7 +436,7 @@ describe('If Statement Parser', () => {
     it('should be able to parse a simple if statement', () => {
         const input = 'if( true ) {\n"goodbye"; }';
         let result = Parser.parse(input);
-        var test = new SequenceNode(new Conditional(new BooleanNode(true), new SequenceNode(new StringNode('goodbye'), new NOP())), new NOP());
+        var test = new SequenceNode(new Conditional(new Parens(new BooleanNode(true)), new SequenceNode(new StringNode('goodbye'), new NOP())), new NOP());
         if (result.isDefined()) {
             //console.log(result.get().toString());
             expect(result.get()).to.eql(test);
@@ -447,7 +448,7 @@ describe('If Statement Parser', () => {
     it('should be able to parse a simple if statement', () => {
         const input = 'if    ( true ) {\n"goodbye"; }';
         let result = Parser.parse(input);
-        var test = new SequenceNode(new Conditional(new BooleanNode(true), new SequenceNode(new StringNode('goodbye'), new NOP())), new NOP());
+        var test = new SequenceNode(new Conditional(new Parens(new BooleanNode(true)), new SequenceNode(new StringNode('goodbye'), new NOP())), new NOP());
         if (result.isDefined()) {
             //console.log(result.get().toString());
             expect(result.get()).to.eql(test);
@@ -459,7 +460,7 @@ describe('If Statement Parser', () => {
     it('should be able to parse a simple if statement', () => {
         const input = 'if ( true ) {\n"goodbye"; }';
         let result = Parser.parse(input);
-        var test = new SequenceNode(new Conditional(new BooleanNode(true), new SequenceNode(new StringNode('goodbye'), new NOP())), new NOP());
+        var test = new SequenceNode(new Conditional(new Parens(new BooleanNode(true)), new SequenceNode(new StringNode('goodbye'), new NOP())), new NOP());
         if (result.isDefined()) {
             //console.log(result.get().toString());
             expect(result.get()).to.eql(test);
@@ -470,11 +471,12 @@ describe('If Statement Parser', () => {
     });
     it('should be able to parse a simple if statement', () => {
         const input = 'if( true ) {\n"goodbye"; }\n if ( false ) {\n "hello"; }';
-        let result = Parser.condParse(new CharUtil.CharStream(input));
+        let result = Parser.conditionalParser(new CharUtil.CharStream(input));
         switch (result.tag) {
             case "success":
-                console.log(result.result.toString());
-                console.log(result.result.falseBranch);
+                let x = result.result;
+                console.log(x.toString());
+                console.log(x.falseBranch);
                 break;
             //expect(result.get()).to.eql(test);
             case "failure":
@@ -636,13 +638,13 @@ describe('For Loop Parser test', () => {
         }
     });
     it('should be able to parse a valid for loop construct (with new line)', () => {
-        let input = 'var x = 0;\nfor(var i = 0 , i < 10, i++) {x++; }';
+        let input = 'x = 0;\nfor(var i = 0 , i < 10, i++) {x++; }';
         let result = Parser.parse(input);
         let body = new SequenceNode(new Increment(new VariableNode('x'), ""), new NOP());
-        let arg1 = new DeclareOp(new VariableNode('i'), new NumberNode(0));
+        let arg1 = new AssignOp(new VariableNode('i'), new NumberNode(0));
         let arg2 = new LessThan(new VariableNode('i'), new NumberNode(10));
         let arg3 = new Increment(new VariableNode('i'));
-        let test = new SequenceNode(new DeclareOp(new VariableNode('x'), new NumberNode(0)), new SequenceNode(new ForNode(arg1, arg2, arg3, body, "\n"), new NOP()));
+        let test = new SequenceNode(new AssignOp(new VariableNode('x'), new NumberNode(0)), new SequenceNode(new ForNode(arg1, arg2, arg3, body, "\n"), new NOP()));
         if (result.isDefined()) {
             //console.log(result.get());
             //console.log(result.get().toString());
@@ -669,7 +671,7 @@ describe('Ellipse parser', () => {
     it('should parse an ellipse function application with proper syntax', () => {
         let input = '  ellipse(5,5);'
         let result = Parser.parse(input);
-        var test = new SequenceNode(new EllipseNode([["", new NumberNode(5, "")], ["", new NumberNode(5, "")]], "  "), new NOP());
+        var test = new SequenceNode(new EllipseNode([["", "", "", new NumberNode(5, ""), ""], ["", "", "", new NumberNode(5, ""), ""]], "  "), new NOP());
         if (result.isDefined()) {
             //console.log(result.get().toString());
             expect(result.get()).to.eql(test);
@@ -698,7 +700,7 @@ describe('Rectangle parser', () => {
     it('should parse a rectangle function application with proper syntax', () => {
         let input = '  rect(5,5);'
         let result = Parser.parse(input);
-        var test = new SequenceNode(new RectangleNode([["", new NumberNode(5, "")], ["", new NumberNode(5, "")]], "  "), new NOP());
+        var test = new SequenceNode(new RectangleNode([["", "", "", new NumberNode(5, ""), ""], ["", "", "", new NumberNode(5, ""), ""]], "  "), new NOP());
         if (result.isDefined()) {
             //console.log(result.get().toString());
             expect(result.get()).to.eql(test);
@@ -752,7 +754,7 @@ describe("Variable Name Parser", () => {
 describe('Float parser', () => {
     it('should correctly parse a float with proper syntax', () => {
         const input = '14.25';
-        let test = new SequenceNode(new FloatNode(14.25), new NOP());
+        let test = new SequenceNode(new NumberNode(14.25), new NOP());
         let result = Parser.parse(input);
         if (result.isDefined()) {
             console.log(result.get().toString());
@@ -786,8 +788,8 @@ describe('Float parser', () => {
     it('should parse a print statement with floats', () => {
         let input = 'print(12.5);'
         let result = Parser.parse(input);
-        let float = new FloatNode(12.5);
-        var test = new SequenceNode(new PrintNode([["object", float]]), new NOP());
+        let float = new NumberNode(12.5);
+        var test = new SequenceNode(new PrintNode([["", "object", "", float, ""]]), new NOP());
         if (result.isDefined()) {
             console.log(result.get().toString());
             //expect(result.get()).to.eql(test);
