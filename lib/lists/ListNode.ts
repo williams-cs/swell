@@ -21,10 +21,9 @@ export class ListNode extends Expression<ListNode> {
      * @param context
      */
     eval(scope: Scope): ListNode {
-        let evalList: Array<[Expression<any>, string]> = [];
-        for (let tup of this.list) {
-            evalList.push([tup[0].eval(scope), tup[1]]);
-        }
+        let evalList: Array<[Expression<any>, string]> = this.list.map<[Expression<any>, string]>(
+            (tup: [Expression<any>, string]) => [tup[0].eval(scope), tup[1]]
+        );
         return new ListNode(evalList);
     }
 
@@ -52,5 +51,9 @@ export class ListNode extends Expression<ListNode> {
             }
         }
         return true;
+    }
+
+    get val(): Expression<any>[] {
+        return this.list.map(tup => tup[0]);
     }
 }

@@ -2,7 +2,7 @@ import { Primitives, CharUtil } from 'pants';
 import Prims = Primitives;
 import CharStream = CharUtil.CharStream;
 import {
-    Expression, SequenceNode, PrintNode, ListNode,
+    Expression, SequenceNode, PrintNode, ListNode, ListAccessOp,
     NumberNode, StringNode, BooleanNode,
     UnaryOp, Increment, NOP, Decrement, NegOp, Not, Parens,
     PlusOp, MulOp, DivOp, MinusOp,
@@ -136,7 +136,7 @@ export namespace Parser {
      */
     export let ExpressionParserNoSeq: Prims.IParser<Expression<any>> = i => {
         return Prims.choices<Expression<any>>(
-            funDef, conditionalParser, returnParser, funApp, listParser,
+            funDef, conditionalParser, returnParser, funApp, listAccessOpParser, listParser,
             binOpExpr(), unOpsExpr, parens, notExpr,
             boolParse(), varNameParse(), lNumber(), lstring,
         )(i);
@@ -147,7 +147,18 @@ export namespace Parser {
      */
     export let ExpressionParserNoStruct: Prims.IParser<Expression<any>> = i => {
         return Prims.choices<Expression<any>>(
-            listParser, binOpExpr(), unOpsExpr, parens, notExpr, funApp, boolParse(), varNameParse(), lNumber(), lstring
+            listAccessOpParser, listParser, binOpExpr(), unOpsExpr, parens, notExpr, funApp,
+            boolParse(), varNameParse(), lNumber(), lstring
+        )(i);
+    }
+
+    /**
+     * Tries all possible choices for expressions, excluding sequences, control structures and bin op
+     */
+    export let ExpressionParserNoStructBin: Prims.IParser<Expression<any>> = i => {
+        return Prims.choices<Expression<any>>(
+            listAccessOpParser, listParser, unOpsExpr, parens, notExpr, funApp,
+            boolParse(), varNameParse(), lNumber(), lstring
         )(i);
     }
 
@@ -239,9 +250,7 @@ export namespace Parser {
             let preWS = Prims.appfun<CharStream, void>(Prims.ws())(x => {
                 ws.push(x.toString());
             });
-            let singleTokenParser = Prims.choices<Expression<any>>(
-                unOpsExpr, parens, notExpr, funApp, listParser, boolParse(), varNameParse(), lNumber(), lstring
-            );
+            let singleTokenParser = ExpressionParserNoStructBin;
             let remainingTokensParser = Prims.many1<[CharStream, Expression<any>]>(
                 Prims.seq<CharStream, Expression<any>, [CharStream, Expression<any>]>(
                     Prims.right<void, CharStream>(preWS)(binOpChar(includePureLogic))
@@ -314,13 +323,13 @@ export namespace Parser {
      * AST node and returns it
      */
     export let unOpsExpr: Prims.IParser<UnaryOp<any>> = i => {
-        let operand: Prims.IParser<Expression<any>> = Prims.choices<Expression<any>>(
-            parens, funApp, varNameParse(), lNumber()
+        let operand = Prims.choices<Expression<any>>(
+            listAccessOpParser, parens, funApp, varNameParse(), lNumber()
         );
-        let prefixOperand: Prims.IParser<Expression<any>> = Prims.expect<Expression<any>>(operand)("invalid expression");
+        let prefixOperand = Prims.expect<Expression<any>>(operand)("invalid expression");
         let ws = "";
         let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
-        let prefixOp: Prims.IParser<CharStream> = Prims.right<string, CharStream>(preWS)(Prims.strSat(["-"]));
+        let prefixOp = Prims.right<string, CharStream>(preWS)(Prims.strSat(["-"]));
         let createPrefixOp = function(tup: [CharStream, Expression<any>]): UnaryOp<any> {
             let op: string = tup[0].toString();
             let expr: Expression<any> = tup[1];
@@ -332,7 +341,7 @@ export namespace Parser {
             }
         }
 
-        let postfixOp: Prims.IParser<CharStream> = Prims.right<string, CharStream>(preWS)(Prims.strSat(["++", "--"]));
+        let postfixOp = Prims.right<string, CharStream>(preWS)(Prims.strSat(["++", "--"]));
         let createPostfixOp = function(tup: [Expression<any>, CharStream]): UnaryOp<any> {
             let op: string = tup[1].toString();
             let expr: Expression<any> = tup[0];
@@ -367,15 +376,7 @@ export namespace Parser {
         let closeParenParser = Prims.right<string, CharStream>(preCloseParenWsParser)(Prims.str(")"));
         let expectCloseParen = Prims.expect(closeParenParser)(") expected");
 
-        let expr = Prims.expect<Expression<any>>(
-            Prims.choices<Expression<any>>(
-                binOpExpr(), unOpsExpr, parens, notExpr,
-                boolParse(), varNameParse(), lNumber(), lstring
-            )
-        )(
-            "invalid expression"
-        );
-
+        let expr = Prims.expect<Expression<any>>(ExpressionParserNoStruct)("invalid expression");
         let parentheses = Prims.between<CharStream, CharStream, Expression<any>>(openParenParser)(expectCloseParen)(expr);
         return Prims.appfun<Expression<any>, Parens<Expression<any>>>(
             parentheses
@@ -449,6 +450,39 @@ export namespace Parser {
                 return new ListNode(newList, preOpenBracketWs, emptyListWs);
             }
         )(i);
+    }
+
+    export let listAccessOpParser: Prims.IParser<ListAccessOp> = i => {
+        let operandParser = Prims.choices<Expression<any>>(listParser, funApp, varNameParse(), parens);
+        let openBracket = Prims.left(Prims.ws())(Prims.char("["));
+        let closeBracket = Prims.left(Prims.ws())(Prims.expect(Prims.char("]"))("] expected"));
+        let idxExprParser = Prims.expect(ExpressionParserNoStruct)("invalid index expression");
+        let idxAndCloseBracketParser = Prims.seq<
+            Expression<any>, CharStream, [Expression<any>, CharStream]
+        >(idxExprParser)(closeBracket)(x => x);
+
+        let accessOpParser = Prims.seq<
+            CharStream, [Expression<any>, CharStream], [CharStream, Expression<any>, CharStream]
+        >(openBracket)(idxAndCloseBracketParser)(tup => [tup[0], tup[1][0], tup[1][1]]);
+        let manyAccessOpParser = Prims.many1<[CharStream, Expression<any>, CharStream]>(accessOpParser);
+
+        let listAccessOp = Prims.seq<
+            Expression<any>, Array<[CharStream, Expression<any>, CharStream]>, ListAccessOp
+        >(operandParser)(manyAccessOpParser)(
+            (tup: [Expression<any>, Array<[CharStream, Expression<any>, CharStream]>]) => {
+                let firstAccessOp = tup[1][0];
+                let operand: ListAccessOp = new ListAccessOp(
+                    tup[0], firstAccessOp[1],
+                    firstAccessOp[0].toString(), firstAccessOp[2].toString()
+                );
+                for (let i = 1; i < tup[1].length; i++) {
+                    let accessOp: [CharStream, Expression<any>, CharStream] = tup[1][i];
+                    operand = new ListAccessOp(operand, accessOp[1], accessOp[0].toString(), accessOp[2].toString());
+                }
+                return operand;
+            }
+        )
+        return listAccessOp(i);
     }
 
     /**
@@ -602,7 +636,7 @@ export namespace Parser {
         };
 
         let argVal = Prims.seq<Expression<any>, CharStream, [Expression<any>, CharStream]>(
-            Prims.expect(ExpressionParserNoStruct)("invalid expression")
+            ExpressionParserNoStruct
         )(
             Prims.ws()
         )(
