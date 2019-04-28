@@ -136,7 +136,7 @@ export namespace Parser {
      */
     export let ExpressionParserNoSeq: Prims.IParser<Expression<any>> = i => {
         return Prims.choices<Expression<any>>(
-            funDef, conditionalParser, returnParser, funApp, ListHead,
+            funDef, conditionalParser, returnParser, funApp, listParser,
             binOpExpr(), unOpsExpr, parens, notExpr,
             boolParse(), varNameParse(), lNumber(), lstring,
         )(i);
@@ -147,7 +147,7 @@ export namespace Parser {
      */
     export let ExpressionParserNoStruct: Prims.IParser<Expression<any>> = i => {
         return Prims.choices<Expression<any>>(
-            binOpExpr(), unOpsExpr, parens, notExpr, funApp, boolParse(), varNameParse(), lNumber(), lstring
+            listParser, binOpExpr(), unOpsExpr, parens, notExpr, funApp, boolParse(), varNameParse(), lNumber(), lstring
         )(i);
     }
 
@@ -240,7 +240,7 @@ export namespace Parser {
                 ws.push(x.toString());
             });
             let singleTokenParser = Prims.choices<Expression<any>>(
-                unOpsExpr, parens, notExpr, funApp, boolParse(), varNameParse(), lNumber(), lstring
+                unOpsExpr, parens, notExpr, funApp, listParser, boolParse(), varNameParse(), lNumber(), lstring
             );
             let remainingTokensParser = Prims.many1<[CharStream, Expression<any>]>(
                 Prims.seq<CharStream, Expression<any>, [CharStream, Expression<any>]>(
@@ -412,37 +412,43 @@ export namespace Parser {
         );
     }
 
-    /**
-     * ListHead parses all lists in the SWELL language, including empty lists
-     * Lists are surrounded by square brackets and each element is separated by a comma
-     * returns a listNode object
-     */
-    export let ListHead: Prims.IParser<ListNode> = i => {
-        let ws = "";
-        let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
-        let p1 = Prims.right<CharStream, Expression<any>>(Prims.right<string, CharStream>(preWS)(Prims.char('[')))(ExpressionParserNoStruct);
-        var f = (tup: [Expression<any>, any]) => {
-            let hd = tup[0];
-            let res: [any] = [hd];
-            let tail = tup[1];
-            for (let elem of tail) {
-                res.push(elem);
-            }
-            return new ListNode(res, ws);
-        }
-        let p2 = Prims.seq<Expression<any>, {}, {}>(p1)(ListTail())(f);
-        let p3 = Prims.appfun(Prims.right<string, CharStream>(preWS)(Prims.str('[]')))(_ => new ListNode([], ws));
-        return Prims.choice<any>(p3)(p2)(i);
-    }
+    export let listParser: Prims.IParser<ListNode> = i => {
+        let preOpenBracketWs = "";
+        let emptyListWs = "";
+        let preOpenBracketWsParser = Prims.appfun<CharStream, string>(Prims.ws())(x => preOpenBracketWs = x.toString());
+        let emptyListWsParser = Prims.appfun<CharStream, Array<[Expression<any>, CharStream]>>(Prims.ws())(x => {
+            emptyListWs = x.toString();
+            return [];
+        });
 
-    /**
-     * List Tail parses second through last elements of a list, each separated by a comma
-     * returns an array of Expressions that will be accessed by ListHead
-     */
-    export function ListTail(): Prims.IParser<Expression<any>[]> {
-        let p1 = Prims.right<CharStream, Expression<any>>(Prims.char(','))(ExpressionParserNoStruct);
-        let p2 = Prims.left(Prims.many<Expression<any>>(p1))(Prims.char(']'));
-        return p2;
+        let openBracket = Prims.left<string, CharStream>(preOpenBracketWsParser)(Prims.char("["));
+        let elemParser = Prims.seq<Expression<any>, CharStream, [Expression<any>, CharStream]>(ExpressionParserNoStruct)(Prims.ws())(x => x);
+        let remainingElemParser = Prims.many<[Expression<any>, CharStream]>(
+            Prims.right<CharStream, [Expression<any>, CharStream]>(Prims.char(","))(elemParser)
+        );
+        let closeBracket = Prims.expect(Prims.char("]"))("] expected");
+        let nonEmptyListParser = Prims.seq<
+            [Expression<any>, CharStream],
+            Array<[Expression<any>, CharStream]>,
+            Array<[Expression<any>, CharStream]>
+        >(elemParser)(remainingElemParser)(tup => [tup[0]].concat(tup[1]));
+
+        let entireListParser = Prims.between<string, CharStream, Array<[Expression<any>, CharStream]>>(
+            openBracket
+        )(
+            closeBracket
+        )(
+            Prims.choice(nonEmptyListParser)(emptyListWsParser)
+        );
+
+        return Prims.appfun<Array<[Expression<any>, CharStream]>, ListNode>(entireListParser)(
+            (list: Array<[Expression<any>, CharStream]>) => {
+                let newList: Array<[Expression<any>, string]> = list.map<[Expression<any>, string]>(
+                    (tup: [Expression<any>, CharStream]) => [tup[0], tup[1].toString()]
+                );
+                return new ListNode(newList, preOpenBracketWs, emptyListWs);
+            }
+        )(i);
     }
 
     /**
