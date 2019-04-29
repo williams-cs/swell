@@ -20,17 +20,15 @@ import 'mocha';
 describe('A closure function', () => {
     it('should evaluate to 3', () => {
         const i1 = new AssignOp(new VariableNode("i"),new NumberNode(1));
-        // i1?
         const xvar = new VariableNode("x");
         const ivar = new VariableNode("i");
-        const fundef = new FunDef("closure", new BodyNode(new Return(new PlusOp(xvar,ivar))),[["", "", "", new VariableNode("x"), ""]]);
+        const fundef = new FunDef("closure", new BodyNode(new Return(new PlusOp(xvar,ivar))),[["", "x", "", null, ""]]);
         const funapp = new UserDefinedFunctionNode("closure",[["", "", "", new NumberNode(2), ""]]);
         let context = new Scope(null);
         const seq1 = new SequenceNode(fundef,funapp);
         const seq2 = new SequenceNode(i1,seq1);
         const output = seq2.eval(context);
         //console.log(output);
-        const output1 = seq1.right;
-        expect(output1).to.equal(3);
+        expect(output.val).to.equal(3);
     });
 });

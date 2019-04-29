@@ -14,11 +14,11 @@ import {
 } from '../index';
 describe('toString operations', () => {
     it('AssignOp should evaluate to a string', () => {
-        // var i = 1
+        // i = 1
         // i = 2;
         const v = new VariableNode("i");
-        const left = new AssignOp(v, new NumberNode(1));
-        const right = new AssignOp(v, new NumberNode(2));
+        const left = new AssignOp(v, new NumberNode(1), " ");
+        const right = new AssignOp(v, new NumberNode(2, " "));
         //const seq = new SequenceNode(left, right);
         const output = right.toString();
         expect(output).to.deep.equal("i = 2");

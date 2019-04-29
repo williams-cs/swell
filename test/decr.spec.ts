@@ -21,7 +21,6 @@ describe('A decrement test', () => {
         const right = new Decrement(v);
         const seq = new SequenceNode(left, right);
         const output = seq.eval(context);
-        const output1 = seq.right;
-        expect(output1).to.deep.equal(new NumberNode(0));
+        expect(output).to.deep.equal(new NumberNode(0));
     });
 });

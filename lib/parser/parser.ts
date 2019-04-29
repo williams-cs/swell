@@ -440,6 +440,7 @@ export namespace Parser {
      * returns an array of Expressions that will be accessed by ListHead
      */
     export function ListTail(): Prims.IParser<Expression<any>[]> {
+        
         let p1 = Prims.right<CharStream, Expression<any>>(Prims.char(','))(ExpressionParserNoStruct);
         let p2 = Prims.left(Prims.many<Expression<any>>(p1))(Prims.char(']'));
         return p2;
@@ -490,7 +491,6 @@ export namespace Parser {
         );
         let noAssign = Prims.appfun<CharStream, any[]>(Prims.ws())(x => [x]);
         let assignment = Prims.choice<any[]>(assign)(noAssign);
-
         let f = function(tup: [[CharStream, CharStream], any[]]): [string, string, string, Expression<any>, string] {
             return (tup[1].length == 1)
                 ? [tup[0][0].toString(), tup[0][1].toString(), "", null, tup[1].toString()]

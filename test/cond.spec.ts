@@ -29,7 +29,7 @@ import 'mocha';
 
 describe('A conditional statement', () => {
     it('basic if should evaluate to 1', () => {
-        const body1 = new NumberNode(1); // works with this, not with return
+        const body1 = new BodyNode(new NumberNode(1)); // works with this, not with return
         const x = new VariableNode("x");
         const xnum = new NumberNode(2);
         const decl1 = new AssignOp(x, xnum);
@@ -37,8 +37,7 @@ describe('A conditional statement', () => {
         const cond1 = new Conditional(log1,body1);
         const seq1 = new SequenceNode(decl1,cond1);
         const output = seq1.eval(new Scope(null));
-        const output1 = seq1.right;
-        expect(output1).to.eql(new NumberNode(1));
+        expect(output).to.eql(new NumberNode(1));
     });
 
     it('declaring a boolean in if statement should evaluate to 1', () => {
@@ -66,8 +65,7 @@ describe('A conditional statement', () => {
         const cond3 = new Conditional(new Parens(x),body3);
         const seq3 = new SequenceNode(decl3,cond3);
         const output = seq3.eval(new Scope(null));
-        const output1 = seq3.right;
-        expect(output1).to.eql(new NumberNode(1));
+        expect(output).to.eql(new NumberNode(1));
     });
 
     it('if/else should evaluate to 1', () => {
@@ -83,8 +81,8 @@ describe('A conditional statement', () => {
         const cond4 = new Conditional(new Parens(log4, " "),body4, "", new BodyNode(else4));
         const seq4 = new SequenceNode(decl4,cond4);
         const output = seq4.eval(new Scope(null));
-        const output1 = seq4.right;
-        expect(output1).to.eql(new NumberNode(1));
+        //const output1 = seq4.right;
+        expect(output).to.eql(new NumberNode(1));
     });
 
     it('if/else should evaluate to 2', () => {
@@ -100,8 +98,8 @@ describe('A conditional statement', () => {
         const cond4 = new Conditional(new Parens(log4),body4,"", new BodyNode(else4));
         const seq4 = new SequenceNode(decl4,cond4);
         const output = seq4.eval(new Scope(null));
-        const output1 = seq4.right;
-        expect(output1).to.eql(new NumberNode(2));
+        //const output1 = seq4.right;
+        expect(output).to.eql(new NumberNode(2));
     });
 
     it('if/else if/else should evaluate to 1', () => {
@@ -121,8 +119,8 @@ describe('A conditional statement', () => {
         const cond51 = new Conditional(new Parens(iflog5),body5, "", new BodyNode(cond52));
         const seq5 = new SequenceNode(decl5,cond51);
         const output = seq5.eval(new Scope(null));
-        const output1 = seq5.right;
-        expect(output1).to.eql(new NumberNode(1));
+        //const output1 = seq5.right;
+        expect(output).to.eql(new NumberNode(1));
     });
 
     it('if/else if/else should evaluate to 2', () => {
@@ -142,8 +140,8 @@ describe('A conditional statement', () => {
         const cond51 = new Conditional(new Parens(iflog5),body5, "", cond52);
         const seq5 = new SequenceNode(decl5,cond51);
         const output = seq5.eval(new Scope(null));
-        const output1 = seq5.right;
-        expect(output1).to.eql(new NumberNode(2));
+        //const output1 = seq5.right;
+        expect(output).to.eql(new NumberNode(2));
     });
 
     it('if/else if/else should evaluate to 3', () => {
@@ -163,8 +161,8 @@ describe('A conditional statement', () => {
         const cond51 = new Conditional(new Parens(iflog5),body5,"", cond52);
         const seq5 = new SequenceNode(decl5,cond51);
         const output = seq5.eval(new Scope(null));
-        const output1 = seq5.right;
-        expect(output1).to.eql(new NumberNode(3));
+        //const output1 = seq5.right;
+        expect(output).to.eql(new NumberNode(3));
     });
 
 });

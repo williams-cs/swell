@@ -17,12 +17,11 @@ import { StringNode } from '../lib/prims/StringNode';
 // is this one typechecked?
 describe('An identity function', () => {
     it('should evaluate to its parameters', () => {
-        const fundef = new FunDef("identity", new BodyNode(new Return(new VariableNode("x"))),[["", "", "", new VariableNode("x"), ""]]);
+        const fundef = new FunDef("identity", new BodyNode(new Return(new VariableNode("x"))),[["", "x", "", null, ""]]);
         const funapp = new UserDefinedFunctionNode("identity",[["", "", "", new StringNode("hi"), ""]]);
         let context = new Scope(null);
         const seq = new SequenceNode(fundef,funapp);
         const output = seq.eval(context);
-        const output1 = seq.right;
-        expect(output1).to.equal("hi");
+        expect(output.val).to.equal("hi");
     });
 });

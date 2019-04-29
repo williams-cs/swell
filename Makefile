@@ -17,3 +17,4 @@ node_modules:
 
 test: build
 	npm test
+

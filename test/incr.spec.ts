@@ -21,7 +21,6 @@ describe('An increment test', () => {
         const right = new Increment(v);
         const seq = new SequenceNode(left, right);
         const output = seq.eval(context);
-        const output1 = seq.right;
-        expect(output1).to.deep.equal(new NumberNode(2));
+        expect(output).to.deep.equal(new NumberNode(2));
     });
 });

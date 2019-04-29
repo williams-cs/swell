@@ -5,7 +5,7 @@ import { Scope } from '../structural/Scope';
 
 export abstract class AbstractTypeableNode<T extends AbstractTypeableNode<T, V, E>, V, E extends AbstractTextEffect<T, V, E>> extends AbstractPrintableNode<T, E> {
 
-    constructor(private _val: V, ws: string = " ") {
+    constructor(private _val: V, ws: string = "") {
         super(ws);
     }
 

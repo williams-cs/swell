@@ -6,7 +6,7 @@ export class NegOp extends UnaryOp<NumberNode>{
 
     eval(context: Scope): NumberNode {
         let v = this.expr.eval(context);
-        return new NumberNode(-v.val, "");
+        return new NumberNode(-v.val, this.expr.ws);
     }
 
     toString(): string {
