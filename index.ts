@@ -28,6 +28,7 @@ export { Parens } from "./lib/unops/Parens";
 
 /* DATA TYPES */
 export { ListNode } from "./lib/lists/ListNode";
+export { ListAccessOp } from "./lib/lists/ListAccessOp";
 export { NumberNode } from "./lib/prims/NumberNode";
 export { StringNode } from "./lib/prims/StringNode";
 export { BooleanNode } from "./lib/prims/BooleanNode";

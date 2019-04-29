@@ -6,10 +6,14 @@ export class ListNode extends Expression<ListNode> {
     /**
      * Constructor for an array-like list
      * @param list The list, stored in a TS array
-     * @param lws Preceding whitespace
+     * @param preOpenBracketWs Preceding whitespace
+     * @param emptyListWs Whitespace when list is empty
      */
-    constructor(private _list: Expression<any>[], lws: string = "") {
-        super(lws);
+    constructor(
+        private list: Array<[Expression<any>, string]>,
+        preOpenBracketWs: string = "",
+        private emptyListWs: string = "") {
+        super(preOpenBracketWs);
     }
 
     /**
@@ -17,20 +21,24 @@ export class ListNode extends Expression<ListNode> {
      * @param context
      */
     eval(scope: Scope): ListNode {
-        let evalList: Expression<any>[] = [];
-        for (let expr of this.list) {
-            evalList.push(expr.eval(scope));
-        }
+        let evalList: Array<[Expression<any>, string]> = this.list.map<[Expression<any>, string]>(
+            (tup: [Expression<any>, string]) => [tup[0].eval(scope), tup[1]]
+        );
         return new ListNode(evalList);
     }
 
     toString(): string {
-        let list = '';
-        for (let i = 0; i < this.list.length - 1; i++) {
-            list += this.list[i].toString() + ",";
+        let str = "";
+        if (this.list.length == 0) {
+            str = this.emptyListWs;
+        } else {
+            str = this.list[0][0] + this.list[0][1];
+            for (let i = 1; i < this.list.length; i++) {
+                str += `,${this.list[i][0]}${this.list[i][1]}`;
+            }
         }
-        list += this.list[this.list.length - 1].toString();
-        return `${this.ws}[${list}]`;
+
+        return `${this.ws}[${str}]`;
     }
 
     equals(right: Expression<any>): boolean {
@@ -38,17 +46,14 @@ export class ListNode extends Expression<ListNode> {
             return false;
         }
         for (let i = 0; i < this.list.length; i++) {
-            if (!(this.list[i].equals(right.list[i]))) {
+            if (!(this.list[i][0].equals(right.list[i][0]))) {
                 return false;
             }
         }
         return true;
     }
 
-    /**
-     * Returns the internal representation of the list
-     */
-    get list(): Expression<any>[] {
-        return this._list;
+    get val(): Expression<any>[] {
+        return this.list.map(tup => tup[0]);
     }
 }
