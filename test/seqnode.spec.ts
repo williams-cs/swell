@@ -15,6 +15,6 @@ describe('A SeqNode', () => {
         const output = node0.eval(new Scope(null));
         //deep or strict equal?
         //expect(output).to.deep.equal([num0.eval(null),plus0.eval(null)])
-        expect(output.val).to.eql(new NumberNode(4));
+        expect(output.val).to.eql((new NumberNode(4)).val);
     });
 });

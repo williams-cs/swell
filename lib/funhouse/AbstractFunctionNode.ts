@@ -131,7 +131,7 @@ export abstract class AbstractFunctionNode<T extends Expression<any>> extends Ex
         let com: string = "";
         if (this._commentOut) com = "//";
         let argString: string = "";
-        if (this.argMap.size > 0) {
+        if (this.argMap != undefined) {
             for (let [key, arg] of this.argMap) {
                 argString += (arg.alwaysVisible || (!arg.isPositional && arg.isModified))
                     ? `${arg.preArgNameWS}${key}${arg.preEqualWS}=${arg.value}${arg.postExprWS},`
