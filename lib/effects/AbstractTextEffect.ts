@@ -297,6 +297,16 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
         return `${this.id} to ${this.name} ${this.node.toString()} at ${this.x}, ${this.y}`;
     }
 
+    delete(){
+        if(!this._isEditing) this.aes.commentOut();
+        else {
+            let firstHalf: string = this.text.substring(0, this.cursorPos);
+            let secondHalf: string = this.text.substring(this.cursorPos);
+            secondHalf = secondHalf.substring(1, secondHalf.length);
+            this.node.val = this.convertStrToNodeVal(firstHalf + secondHalf);
+            this.updateCursorPos(0);
+        }
+    }
     /* Getters and Setters */
 
     get font(): string {

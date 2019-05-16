@@ -10,6 +10,7 @@ import CodeMirror from 'codemirror';
 import * as csvParse from 'csv-parse';
 import { EffectUtils } from "../../lib/effects/EffectUtils";
 import KEYBOARD = EffectUtils.KEYBOARD;
+import { AbstractTextEffect } from '../effects/AbstractTextEffect';
 
 (function() {
     let editor: CodeMirror.Editor = ((e: any) => { return e.CodeMirror })(document.getElementById("input"));
@@ -316,7 +317,7 @@ import KEYBOARD = EffectUtils.KEYBOARD;
     window.addEventListener("keydown", function(event: any) {
         if (!editor.hasFocus()) {
             isDoingDM = true;
-            if(event.keyCode == KEYBOARD.BACKSPACE) deleteNode();
+            if(event.keyCode == KEYBOARD.BACKSPACE) deleteNode(); 
         }
     });
     window.addEventListener("keyup", function(event: any) {
@@ -398,6 +399,7 @@ import KEYBOARD = EffectUtils.KEYBOARD;
         let elem: Effect<any>;
         for(elem of selectedElems){
             elem.delete();
+            if(elem instanceof AbstractTextEffect) return;
         }
         let newProgram: string = ast.toString();
         editor.setValue(newProgram);
