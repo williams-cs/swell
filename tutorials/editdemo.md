@@ -1,6 +1,6 @@
- ***Editing the Codebase**
+## Editing the Codebase
 
-A document demonstrating how to make changes to the swell codebase.
+_A document describing how to make changes to the swell codebase._
 
 1. Pull changes
     
