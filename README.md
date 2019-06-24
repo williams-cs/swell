@@ -1,6 +1,7 @@
 [Link to documentation](https://williams-cs.github.io/swell/)
 ## About
-This is an evaluator for SWELL. It is responsible for managing the program AST and provides a link between the parser and UI that helps manage ProDirect Manipulation. 
+
+This repository hosts both the language components for the SWELL language as well as the SWELL integrated development environment with prodirect manipulation features.
 
 ## Building
 Type `make` in the terminal and hit enter. `make` will, if necessary, install the npm modules, remove the compiled files, recompile, and generate documentation.
