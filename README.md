@@ -18,6 +18,10 @@ If you're still having issues, Google.
 
 Note that module and UI tests must be written in the UI test folder. The UI can be tested manually or with Selenium Webdriver. To use the debugger, Webdriver is best... if you can get it to work.
 
+## Contributing to SWELL
+
+Please [read the following instructions](https://github.com/williams-cs/swell/blob/master/tutorials/editdemo.md) for submitting changes to SWELL.  It is _very important_ that you not commit breaking changes to the `master` branch!
+
 ## Modules
 **How to Build a Module**
 1. Come up with a goal: draw a circle, write text, make a scene, etc, and a clever name for the module.
