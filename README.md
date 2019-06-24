@@ -8,6 +8,8 @@ Type `make` in the terminal and hit enter. `make` will, if necessary, install th
 
 `make clean` will remove all the compiled files, documentation, and npm modules. If you're having any sort of issues, run this and then `make`. 
 
+After building, you can open `index.html` in your web browser.
+
 If you're still having issues and you're using VSC, close VSC, `make clean`, then `make`. 
 If you're still having issues, Google.
 
