@@ -22,6 +22,10 @@ Note that module and UI tests must be written in the UI test folder. The UI can 
 
 Please [read the following instructions](https://github.com/williams-cs/swell/blob/master/tutorials/editdemo.md) for submitting changes to SWELL.  It is _very important_ that you not commit breaking changes to the `master` branch!
 
+## SWELL syntax
+
+We have an [informal syntax specification here](https://github.com/williams-cs/swell/blob/master/tutorials/swell-cheatsheet.md).  Please update this document if you add or modify syntax.
+
 ## Modules
 **How to Build a Module**
 1. Come up with a goal: draw a circle, write text, make a scene, etc, and a clever name for the module.
