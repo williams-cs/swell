@@ -1,7 +1,7 @@
 build: node_modules
 	rm -rf dist
 	tsc
-	browserify --debug dist/lib/ui/ui.js -o browserui.js
+	node_modules/.bin/browserify --debug dist/lib/ui/ui.js -o browserui.js
 
 docs: build
 	typedoc --out docs --excludeExternals --readme README.md
