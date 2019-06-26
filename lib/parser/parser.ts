@@ -769,19 +769,6 @@ export namespace Parser {
 
         return Prims.choices<Conditional>(ifElseParser, singleIfParser)(i);
     }
-    export let whileLoop: Prims.IParser<WhileNode> = i => {
-        let expr = Prims.between<CharStream, CharStream, Expression<{}>>(Prims.ws())(Prims.ws())(ExpressionParserNoSeq);
-        let bodyParse = Prims.between<CharStream, CharStream, Expression<{}>>(Prims.ws())(Prims.ws())(ExpressionParser);
-        let ws = "";
-        let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
-        let p1 = Prims.seq<CharStream, CharStream, CharStream[]>(Prims.right<string, CharStream>(preWS)(Prims.str("while")))(Prims.char('('))(x => x);
-        let cond = Prims.between<CharStream[], CharStream, Expression<any>>(p1)(Prims.char(')'))(expr);
-        let curly = Prims.between<CharStream, CharStream, CharStream>(Prims.ws())(Prims.ws())(Prims.char('{'));
-        let body = Prims.between<CharStream, CharStream, Expression<any>>(curly)(Prims.char('}'))(bodyParse);
-        var f = (tup: [Expression<any>, Expression<any>]) => { return new WhileNode(tup[0], tup[1], ws); }
-        return Prims.seq<Expression<any>, Expression<any>, WhileNode>(cond)(body)(f)(i);
-    }
-
 
     export function singleComment(): Prims.IParser<SingleComment> {
         let ws = "";
