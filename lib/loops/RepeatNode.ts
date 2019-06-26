@@ -6,7 +6,7 @@ export class RepeatNode extends Expression<any> {
 
     /**
      * Constructor for a Repeat loop
-     * @param cond The While loop condition
+     * @param cond The Repeat loop iteration number
      * @param body The body of the loop
      * @param ws Preceding whitespace
      */
@@ -22,13 +22,13 @@ export class RepeatNode extends Expression<any> {
         let childCtx = context.copy();
         let res = this._cond.eval(childCtx);
         if (!(res instanceof NumberNode)) {
-            throw new Error("The condition must be a boolean expression.");
+            throw new Error("The condition must be a number.");
         }
 
         let ret;
-        while (res.val) {
+        while (res.val > 0) {
             ret = this._body.eval(childCtx);
-            res = this._cond.eval(childCtx);
+            res = this._cond.eval(childCtx.set(childCtx.val - 1));
         }
         return ret;
     }
