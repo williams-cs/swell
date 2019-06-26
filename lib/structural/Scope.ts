@@ -19,6 +19,15 @@ export class Scope {
 
     private _mulSelArray: Effect<any>[]; // The array of selected objects
 
+<<<<<<< HEAD
+=======
+    private _hadFunEval: boolean = false; // Was this created in a function?
+
+    private _isRunning: boolean = false;
+
+    public globalFunID = 10000000; // The global ID for functions in this context
+
+>>>>>>> 025ee89eb3070cd0d0825f0565afdebd7d129261
     /**
      * Constructor for Scope, an object keeping track of objects within a particular context
      * @param parent The parent Scope
@@ -43,7 +52,13 @@ export class Scope {
      */
     copy(): Scope {
         let s: Scope = new Scope(this.parent, this.canvas, this.effects, this.eventLog);
+<<<<<<< HEAD
         s.varBindings = new Map(this.varBindings);
+=======
+        if (inheritBindings) {
+            s.varBindings = this.varBindings;
+        }
+>>>>>>> 025ee89eb3070cd0d0825f0565afdebd7d129261
         return s;
     }
 
@@ -77,7 +92,24 @@ export class Scope {
         if (!(this.parent == null)) {
             return this.parent.lookup(name);
         }
+<<<<<<< HEAD
         throw new Error(`Identifier "${name}" could not be found.`);
+=======
+        throw new Error(`Identifier ${name} could not be found.`);
+    }
+
+    /**
+     * Looks up and returns the return ID value
+     */
+    retIDLookup(): any {
+        if (this.retValID.isDefined()) {
+            return this.retValID.get();
+        }
+        if (this.parent) {
+            return this.parent.retIDLookup();
+        }
+        throw new Error("Unknown caller.");
+>>>>>>> 025ee89eb3070cd0d0825f0565afdebd7d129261
     }
 
     get varBindings(): Map<string, Option<any>> {
@@ -94,10 +126,25 @@ export class Scope {
 
     get latestScope(): Scope {
         return this._latestScope;
+<<<<<<< HEAD
     }
 
     set latestScope(scope: Scope) {
         this._latestScope = scope;
+=======
+    }
+
+    set latestScope(scope: Scope) {
+        this._latestScope = scope;
+    }
+
+    get retValID(): Option<string> {
+        return this._retValID;
+    }
+
+    set retValID(val: Option<string>) {
+        this._retValID = val;
+>>>>>>> 025ee89eb3070cd0d0825f0565afdebd7d129261
     }
 
     get canvas(): HTMLCanvasElement {
@@ -119,4 +166,23 @@ export class Scope {
     get mulSelArray(): Effect<any>[] {
         return this._mulSelArray;
     }
+<<<<<<< HEAD
+=======
+
+    get hadFunEval(): boolean {
+        return this._hadFunEval;
+    }
+
+    set hadFunEval(val: boolean) {
+        this._hadFunEval = val;
+    }
+
+    get isRunning(): boolean {
+        return this._isRunning;
+    }
+
+    set isRunning(val: boolean) {
+        this._isRunning = val;
+    }
+>>>>>>> 025ee89eb3070cd0d0825f0565afdebd7d129261
 }

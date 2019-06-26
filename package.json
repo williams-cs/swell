@@ -8,7 +8,7 @@
     "pants": "github:williams-cs/pants#1.2",
     "space-lift": "^0.8.7",
     "uuid": "^3.3.2",
-    "browserify": "^16.2.3"  
+    "browserify": "^16.2.3"
   },
   "devDependencies": {
     "@types/chai": "^4.1.7",

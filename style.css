@@ -29,6 +29,7 @@ body {
 .main-container {
     background-color: var(--light-gray);
     height: 100vh;
+    z-index: 1;
 }
 
 #logo {
@@ -99,6 +100,82 @@ button:hover {
 
 #code-canvas-container {
     height: 54vh;
+}
+
+.color {
+    border-radius: 6px;
+}
+
+.color:hover {
+    border: solid 1px skyblue;
+}
+
+#color {
+    display: grid;
+    grid-template: repeat(6, 1fr) / repeat(2, 1fr);
+    grid-gap: 2px 2px;
+    width: 50px;
+    height: 154px;
+    margin: 10px auto;
+}
+
+.color-wheel {
+    display: none;
+    position: absolute;
+    height: 150px;
+    width: 150px;
+    background-color: white;
+    bottom: 200px;
+    right: 50px;
+    border-radius: 10px;
+}
+
+.orange {
+    background-color: orange;
+}
+
+.red {
+    background-color: red;
+}
+
+.yellow {
+    background-color: yellow;
+}
+
+.lime {
+    background-color: lime;
+}
+
+.mediumaquamarine {
+    background-color: mediumaquamarine;
+}
+
+.green {
+    background-color: green;
+}
+
+.blue {
+    background-color: blue;
+}
+
+.pink {
+    background-color: fuchsia;
+}
+
+.brown {
+    background-color: saddlebrown;
+}
+
+.purple {
+    background-color: purple;
+}
+
+.blackandwhite {
+    background: linear-gradient( #000,#fff);
+}
+
+.rainbow {
+    background: conic-gradient( yellow, lime, aqua, blue, magenta, red, yellow );
 }
 
 #terminal-reward-container {
