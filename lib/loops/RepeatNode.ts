@@ -34,8 +34,8 @@ export class RepeatNode extends Expression<any> {
             //evaluate loop body
             ret = this._body.eval(childCtx);
 
-            //evaluate loop condition
-            res.val = res.val - 1;
+            //decrement
+            res.val--
         }
         return ret;
     }
