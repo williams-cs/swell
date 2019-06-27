@@ -6,7 +6,7 @@ import { Scope } from '../structural/Scope';
 
 export class NumberNode extends AbstractTypeableNode<NumberNode, number, NumberEffect> {
 
-    eval(scope: Scope): NumberNode {
+    eval(context: Scope): NumberNode {
         return this;
     }
 

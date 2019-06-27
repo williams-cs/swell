@@ -26,44 +26,44 @@ export class PrintNode extends AbstractBuiltinFunctionNode<any> {
         ]);
     }
 
-    eval(scope: Scope): any {
-        let res = this.getArg("object").eval(scope);
+    eval(context: Scope): any {
+        let res = this.getArg("object").eval(context);
         if (!res.draw) {
             throw("PrintNode has invalid object.");
         }
-        res.draw(scope, this);
+        res.draw(context, this);
         return res;
     }
 
-    getX(scope: Scope): number {
-        return this.getArg("x").eval(scope).val;
+    getX(context: Scope): number {
+        return this.getArg("x").eval(context).val;
     }
 
-    setX(scope: Scope, val: number): void {
-        this.updateArgValue("x", scope, val);
+    setX(context: Scope, val: number): void {
+        this.updateArgValue("x", context, val);
     }
 
-    getY(scope: Scope): number {
-        return this.getArg("y").eval(scope).val;
+    getY(context: Scope): number {
+        return this.getArg("y").eval(context).val;
     }
 
-    setY(scope: Scope, val: number): void {
-        this.updateArgValue("y", scope, val);
+    setY(context: Scope, val: number): void {
+        this.updateArgValue("y", context, val);
     }
 
-    getFontSize(scope: Scope): number {
-        return this.getArg("fontSize").eval(scope).val;
+    getFontSize(context: Scope): number {
+        return this.getArg("fontSize").eval(context).val;
     }
 
-    setFontSize(scope: Scope, val: number): void {
-        this.updateArgValue("fontSize", scope, val);
+    setFontSize(context: Scope, val: number): void {
+        this.updateArgValue("fontSize", context, val);
     }
 
-    getColor(scope: Scope): string {
-        return this.getArg("color").eval(scope).val;
+    getColor(context: Scope): string {
+        return this.getArg("color").eval(context).val;
     }
 
-    setColor(scope: Scope, val: string): void {
-        this.updateArgValue("color", scope, val);
+    setColor(context: Scope, val: string): void {
+        this.updateArgValue("color", context, val);
     }
 }

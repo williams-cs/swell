@@ -7,14 +7,8 @@ import {
     UnaryOp, Increment, NOP, Decrement, NegOp, Not, Parens,
     PlusOp, MulOp, DivOp, MinusOp,
     Equals, And, GreaterThan, LessThan, GreaterThanEq, LessThanEq, Or, NotEqual,
-<<<<<<< HEAD
     VariableNode, AssignOp, SingleComment,
     Return, FunDef, UserDefinedFunctionNode, Argument, Conditional, BodyNode,
-=======
-    VariableNode, AssignOp,
-    Return, FunDef, FunApp, Conditional, BodyNode,
-    WhileNode,
->>>>>>> 025ee89eb3070cd0d0825f0565afdebd7d129261
     EllipseNode, RectangleNode, EmojiNode, LineNode, RGBColorNode
 } from '../../index';
 import { Option, Some, None, tuple } from 'space-lift';
@@ -142,11 +136,7 @@ export namespace Parser {
      */
     export let ExpressionParserNoSeq: Prims.IParser<Expression<any>> = i => {
         return Prims.choices<Expression<any>>(
-<<<<<<< HEAD
             funDef, conditionalParser, returnParser, funApp, listAccessOpParser, listParser,
-=======
-            whileLoop, funDef, conditionalParse, returnParser, funApp, ListHead,
->>>>>>> 025ee89eb3070cd0d0825f0565afdebd7d129261
             binOpExpr(), unOpsExpr, parens, notExpr,
             boolParse(), varNameParse(), lNumber(), lstring, singleComment()
         )(i);
@@ -744,7 +734,6 @@ export namespace Parser {
     }
 
     /**
-<<<<<<< HEAD
      * Parses if statement recursively
      */
     export let conditionalParser: Prims.IParser<Conditional> = i => {
@@ -766,23 +755,6 @@ export namespace Parser {
         let elseBodyParser = Prims.choices<BodyNode | Conditional>(conditionalParser, bodyParser);
         let expectElseBodyParser = Prims.expect<BodyNode | Conditional>(elseBodyParser)("invalid else statement");
         let elseStatementParser = Prims.right<CharStream, BodyNode | Conditional>(elseParser)(expectElseBodyParser);
-=======
-     * WhileLoop parses valid while loops in the form "while(condition) { body;}"
-     * returns a WhileNode for the AST
-     */
-    export let whileLoop: Prims.IParser<WhileNode> = i => {
-        let expr = Prims.between<CharStream, CharStream, Expression<{}>>(Prims.ws())(Prims.ws())(ExpressionParserNoSeq);
-        let bodyParse = Prims.between<CharStream, CharStream, Expression<{}>>(Prims.ws())(Prims.ws())(ExpressionParser);
-        let ws = "";
-        let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
-        let p1 = Prims.seq<CharStream, CharStream, CharStream[]>(Prims.right<string, CharStream>(preWS)(Prims.str("while")))(Prims.char('('))(x => x);
-        let cond = Prims.between<CharStream[], CharStream, Expression<any>>(p1)(Prims.char(')'))(expr);
-        let curly = Prims.between<CharStream, CharStream, CharStream>(Prims.ws())(Prims.ws())(Prims.char('{'));
-        let body = Prims.between<CharStream, CharStream, Expression<any>>(curly)(Prims.char('}'))(bodyParse);
-        var f = (tup: [Expression<any>, Expression<any>]) => { return new WhileNode(tup[0], tup[1], ws); }
-        return Prims.seq<Expression<any>, Expression<any>, WhileNode>(cond)(body)(f)(i);
-    }
->>>>>>> 025ee89eb3070cd0d0825f0565afdebd7d129261
 
         let singleIfParser = Prims.appfun<[Parens<any>, BodyNode], Conditional>(ifStatementParser)(
             (tup: [Parens<any>, BodyNode]) => new Conditional(tup[0], tup[1], preIfWs)

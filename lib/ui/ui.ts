@@ -81,10 +81,6 @@ import { AbstractTextEffect } from '../effects/AbstractTextEffect';
         // get program
         let inputText = editor.getValue();
         if (inputText == "") {
-<<<<<<< HEAD
-=======
-            message.innerHTML = "";
->>>>>>> 025ee89eb3070cd0d0825f0565afdebd7d129261
             return;
         }
 

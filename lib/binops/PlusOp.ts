@@ -7,7 +7,7 @@ export class PlusOp extends BinaryOp<NumberNode> {
 
     protected readonly op: string = "+";
 
-    eval(scope: Scope): NumberNode {
-        return new NumberNode(this.left.eval(scope).val + this.right.eval(scope).val);
+    eval(context: Scope): NumberNode {
+        return new NumberNode(this.left.eval(context).val + this.right.eval(context).val);
     }
 }

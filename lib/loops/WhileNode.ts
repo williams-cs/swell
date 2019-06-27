@@ -17,48 +17,21 @@ export class WhileNode extends Expression<any> {
 
     /**
      * Evaluates the body of the loop while the condition is true
-     * @param scope The latest program scope
+     * @param context
      */
-<<<<<<< HEAD
     eval(context: Scope) {
         let childCtx = context.copy();
         let res = this._cond.eval(childCtx);
         if (!(res instanceof BooleanNode)) {
             throw new Error("The condition must be a boolean expression.");
         }
-=======
-    eval(scope: Scope): void {
-        scope.isRunning = true;
-        let cond = this._cond;
-        let body = this._body;
 
-        let asyncLoop = function() {
-            let condScope = scope.latestScope.createChildScope();
-            let condResult = cond.eval(condScope);
-            if (!(condResult instanceof BooleanNode)) {
-                throw new Error("The condition must be a boolean expression.");
-            }
-
-            if (condResult.val) {
-                let bodyScope = condScope.latestScope.createChildScope();
-                body.eval(bodyScope);
-                let asyncPostBody = function() {
-                    if (bodyScope.isRunning) {
-                        setTimeout(asyncPostBody, 0);
-                    } else {
-                        scope.latestScope = bodyScope.latestScope;
-                        setTimeout(asyncLoop, 0);
-                    }
-                }
-                asyncPostBody();
->>>>>>> 025ee89eb3070cd0d0825f0565afdebd7d129261
-
-            } else {
-                scope.isRunning = false;
-                scope.latestScope = condScope.latestScope;
-            }
+        let ret;
+        while (res.val) {
+            ret = this._body.eval(childCtx);
+            res = this._cond.eval(childCtx);
         }
-        asyncLoop();
+        return ret;
     }
 
     toString(): string {

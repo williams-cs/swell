@@ -24,7 +24,6 @@ export class Conditional extends Expression<any> {
         super();
     }
 
-<<<<<<< HEAD
     eval(scope: Scope): any {
         let cond = this.cond.eval(scope);
         if (!(cond instanceof BooleanNode)) {
@@ -40,26 +39,6 @@ export class Conditional extends Expression<any> {
         let returnResult = branch.eval(bodyScope);
         scope.latestScope = bodyScope.latestScope;
         return returnResult;
-=======
-    eval(scope: Scope) {
-        scope.isRunning = true;
-        let res = this.cond.expr.value.eval(scope);
-        if (!(res instanceof BooleanNode)) {
-            throw new Error("The condition must be a boolean expression.");
-        }
-        let branch = res.val ? this.trueBranch : this.falseBranch;
-        let bodyScope = scope.createChildScope();
-        branch.eval(bodyScope);
-        let asyncPostBody = function() {
-            if (bodyScope.isRunning) {
-                setTimeout(asyncPostBody, 0);
-            } else {
-                scope.isRunning = false;
-                scope.latestScope = bodyScope.latestScope;
-            }
-        }
-        asyncPostBody();
->>>>>>> 025ee89eb3070cd0d0825f0565afdebd7d129261
     }
 
     toString(): string {
