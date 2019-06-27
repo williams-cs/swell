@@ -93,21 +93,19 @@
 
         <div class="sidenav col-md-auto">
           <div id="toolbox-container">
-            <button type="button" class="btn btn-block btn-sm" data-toggle="collapse" data-target="#color">
-                    Colors</button>
-            <div id="color" class="collapse">
-                <div class="color orange"></div>
-                <div class="color red"></div>
-                <div class="color yellow"></div>
-                <div class="color lime"></div>
-                <div class="color mediumaquamarine"></div>
-                <div class="color green"></div>
-                <div class="color blue"></div>
-                <div class="color pink"></div>
-                <div class="color brown"></div>
-                <div class="color purple"></div>
-                <div class="color blackandwhite"></div>
-                <div class="color rainbow"></div>
+            <div id="color">
+                <div class="color" id="orange"></div>
+                <div class="color" id="red"></div>
+                <div class="color" id="yellow"></div>
+                <div class="color" id="lime"></div>
+                <div class="color" id="aqua"></div>
+                <div class="color" id="green"></div>
+                <div class="color" id="blue"></div>
+                <div class="color" id="pink"></div>
+                <div class="color" id="brown"></div>
+                <div class="color" id="purple"></div>
+                <div class="color" id="blackandwhite"></div>
+                <div class="color" id="rainbow"></div>
             </div>
             <button type="button" class="btn btn-block btn-sm" id='string'>Word</button>
             <button type="button" class="btn btn-block btn-sm" id='number'>Number</button>
@@ -123,6 +121,10 @@
               <button id="sad" class="btn btn-block checkpoint">sad</button>
               <button id="angry" class="btn btn-block checkpoint">angry</button>
               <button id="cool" class="btn btn-block checkpoint">cool</button>
+            </div>
+            <div id='color-wheel-container'>
+	            <div class="wheel" id='rainbow-wheel'></div>
+	            <div class="wheel" id='black-white-wheel'></div>
             </div>
           </div>
           <div class="end">

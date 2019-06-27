@@ -392,6 +392,51 @@ import { AbstractTextEffect } from '../effects/AbstractTextEffect';
         parse();
     }
 
+    let colorButtons : string[] = [
+        "orange", "red", "yellow","lime","aqua","green",
+        "blue", "pink", "brown", "purple", "blackandwhite", "rainbow"
+    ];
+
+    for (let colorName of colorButtons) {
+        let colorButton = document.getElementById(colorName);
+        colorButton.onclick = () => changeColor(colorName); 
+    }
+
+    function changeColor(colorName : string) : void {
+        let elem : Effect<any>;
+        for (elem of selectedElems) {
+            elem.aes.setColor(elem.scope, colorName);
+        }
+        let newProgram: string = ast.toString();
+        editor.setValue(newProgram);
+        lastProgram = newProgram;
+        parse();
+    }
+;
+    //color pop-up wheel
+    let wheelcontain = document.getElementById("color-wheel-container");
+    let BWwheel = document.getElementById("black-white-wheel");
+    let RBwheel = document.getElementById("rainbow-wheel");
+    let BWbutton = document.getElementById("blackandwhite");
+    let RBbutton = document.getElementById("rainbow");
+
+    RBbutton.onclick = function() {
+        wheelcontain.style.display = "block";
+        if (RBwheel.style.display === "block") {
+            BWwheel.style.display = "none";
+        }
+        RBwheel.style.display = "block";
+    };
+
+    BWbutton.onclick = function() {
+        wheelcontain.style.display = "block";
+        if (RBwheel.style.display === "block") {
+            RBwheel.style.display = "none";
+        }
+        BWwheel.style.display = "block";
+    };
+
+
     let deleteButton = document.getElementById("delete");
     deleteButton.onclick = () => deleteNode();
 

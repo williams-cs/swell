@@ -29,6 +29,7 @@ body {
 .main-container {
     background-color: var(--light-gray);
     height: 100vh;
+    z-index: 1;
 }
 
 #logo {
@@ -106,7 +107,7 @@ button:hover {
 }
 
 .color:hover {
-    border: solid 1px skyblue;
+    border: solid 1px gold;
 }
 
 #color {
@@ -118,62 +119,88 @@ button:hover {
     margin: 10px auto;
 }
 
-.color-wheel {
+#color-wheel-container {
     display: none;
-    position: absolute;
+    position: fixed;
     height: 150px;
     width: 150px;
     background-color: white;
-    bottom: 200px;
-    right: 50px;
+    border: 1px lightgrey solid;
+    right: 95px;
+    bottom: 562px;
     border-radius: 10px;
+    z-index: 10;
 }
 
-.orange {
+.wheel {
+    position: fixed;
+    z-index: 20;
+    width: 130px;
+    height: 130px;
+    border-radius: 100%;
+    right: 105px;
+    bottom: 572px;
+}
+
+.wheel:hover {
+    cursor: crosshair;
+}
+
+#black-white-wheel {
+    background: linear-gradient(black, white);
+    display: none;
+}
+
+#rainbow-wheel {
+    background: conic-gradient( yellow, lime, aqua, blue, magenta, red, yellow );
+    display: none;
+}
+
+#orange {
     background-color: orange;
 }
 
-.red {
+#red {
     background-color: red;
 }
 
-.yellow {
+#yellow {
     background-color: yellow;
 }
 
-.lime {
+#lime {
     background-color: lime;
 }
 
-.mediumaquamarine {
-    background-color: mediumaquamarine;
+#aqua {
+    background-color: aqua;
 }
 
-.green {
+#green {
     background-color: green;
 }
 
-.blue {
+#blue {
     background-color: blue;
 }
 
-.pink {
-    background-color: fuchsia;
+#pink {
+    background-color: magenta;
 }
 
-.brown {
+#brown {
     background-color: saddlebrown;
 }
 
-.purple {
+#purple {
     background-color: purple;
 }
 
-.blackandwhite {
+#blackandwhite {
     background: linear-gradient( #000,#fff);
 }
 
-.rainbow {
+#rainbow {
     background: conic-gradient( yellow, lime, aqua, blue, magenta, red, yellow );
 }
 
