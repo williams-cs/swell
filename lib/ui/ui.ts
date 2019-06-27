@@ -394,7 +394,7 @@ import { AbstractTextEffect } from '../effects/AbstractTextEffect';
 
     let colorButtons : string[] = [
         "orange", "red", "yellow","lime","aqua","green",
-        "blue", "pink", "brown", "purple", "blackandwhite", "rainbow"
+        "blue", "fuchsia", "saddlebrown", "purple"
     ];
 
     for (let colorName of colorButtons) {
@@ -421,19 +421,29 @@ import { AbstractTextEffect } from '../effects/AbstractTextEffect';
     let RBbutton = document.getElementById("rainbow");
 
     RBbutton.onclick = function() {
-        wheelcontain.style.display = "block";
-        if (RBwheel.style.display === "block") {
-            BWwheel.style.display = "none";
+        if (RBwheel.style.display === "none") {
+            wheelcontain.style.display = "block";
+            if (BWwheel.style.display === "block") {
+                BWwheel.style.display = "none";
+            }
+            RBwheel.style.display = "block";
+        } else {
+            RBwheel.style.display = "none";
+            wheelcontain.style.display = "none";
         }
-        RBwheel.style.display = "block";
     };
 
     BWbutton.onclick = function() {
-        wheelcontain.style.display = "block";
-        if (RBwheel.style.display === "block") {
-            RBwheel.style.display = "none";
+        if (BWwheel.style.display === "none") {
+            wheelcontain.style.display = "block";
+            if (RBwheel.style.display === "block") {
+                RBwheel.style.display = "none";
+            }
+            BWwheel.style.display = "block";
+        } else {
+            BWwheel.style.display = "none";
+            wheelcontain.style.display = "none";
         }
-        BWwheel.style.display = "block";
     };
 
 
