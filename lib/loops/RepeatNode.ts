@@ -7,12 +7,11 @@ export class RepeatNode extends Expression<any> {
 
     /**
      * Constructor for a Repeat loop
-     * @param init Initializes the variable used in the condition
      * @param cond The iteration condition (evaluates to NumberNode)
      * @param body The body of the loop
      * @param ws Preceding whitespace
      */
-    constructor(private _init: Expression<any>,private _cond: Expression<NumberNode>, private _body: Expression<any>, ws: string = "") {
+    constructor(private cond: Expression<NumberNode>, private body: Expression<any>, ws: string = "") {
         super(ws);
     }
 
@@ -21,26 +20,25 @@ export class RepeatNode extends Expression<any> {
      * @param context
      */
     eval(context: Scope) {
-        let childCtx = context.copy();
-        this._init.eval(childCtx)
-
-        let res = this._cond.eval(childCtx);
+        let res = this.cond.eval(context);
         if (!(res instanceof NumberNode)) {
-            throw new Error("The condition must be a number.");
+            throw new Error("Repeat count must be a number.");
         }
 
-        let ret;
+        let ret = null;
         while (res.val > 0) {
             //evaluate loop body
-            ret = this._body.eval(childCtx);
-
+            let childCtx = new Scope(context);
+            ret = this.body.eval(childCtx);
+            
             //decrement
-            res.val--
+            res.val--;
+            
         }
         return ret;
     }
 
     toString(): string {
-        return this.ws + "repeat(" + this._cond.toString() + ") {\n " + this._body.toString() + "}";
+        return this.ws + "repeat(" + this.cond.toString() + ") {\n " + this.body.toString() + "}";
     }
 }
