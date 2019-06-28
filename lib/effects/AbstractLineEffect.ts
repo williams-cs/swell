@@ -92,8 +92,11 @@ export abstract class AbstractLineEffect<T extends AbstractLineNode<T, E>, E ext
             this.isDragging = true;
 
         } else if ((guideContains == GUIDE.NONE && !contains) || this.isOverlapped()) {
-            this.isSelected = false;
-            this.isDragging = false;
+            if (!event.shiftKey) {
+                this.isSelected = false;
+                this.isDragging = false;
+            }
+            this.isDragging = true;
             return;
         }
 

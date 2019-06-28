@@ -142,7 +142,9 @@ import { AbstractTextEffect } from '../effects/AbstractTextEffect';
             if (effects[i].isSelected) {
                 selectedElems.push(effects[i]);
                 selected++;
+                selectedElems = selectedElems.filter((elem) => elem.isSelected);
             }
+
             if (effects[i].justDragged) { // Logs drag event
                 context.eventLog.push(new DragEvent(effects[i]));
                 masterLog.push(context.eventLog[context.eventLog.length - 1]);
