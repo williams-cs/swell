@@ -260,18 +260,17 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
         this.prevX = this.x;
         this.prevY = this.y;
 
-        if (event.ctrlKey) { //prepares the object for dragging whether it is actually selected or not
+        if (event.shiftKey) { //prepares the object for dragging whether it is actually selected or not
             if (contains) {
                 this.isSelected = true;
             }
             this.isDragging = true;
+            
+            return;
 
         } else if ((guideContains == GUIDE.NONE && !contains) || this.isOverlapped()) {
-            if (!event.shiftKey) {
-                this.isSelected = false;
-                this.isDragging = false;
-            }
-            this.isDragging = true;
+            this.isSelected = false;
+            this.isDragging = false;
 
             return;
         }

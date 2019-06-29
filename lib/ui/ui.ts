@@ -396,7 +396,7 @@ import { AbstractTextEffect } from '../effects/AbstractTextEffect';
 
     let colorButtons : string[] = [
         "orange", "red", "yellow","lime","aqua","green",
-        "blue", "fuchsia", "saddlebrown", "purple"
+        "blue", "fuchsia", "saddlebrown", "purple", "black", "gray"
     ];
 
     for (let colorName of colorButtons) {
@@ -415,39 +415,6 @@ import { AbstractTextEffect } from '../effects/AbstractTextEffect';
         parse();
     }
 ;
-    //color pop-up wheel
-    let wheelcontain = document.getElementById("color-wheel-container");
-    let BWwheel = document.getElementById("black-white-wheel");
-    let RBwheel = document.getElementById("rainbow-wheel");
-    let BWbutton = document.getElementById("blackandwhite");
-    let RBbutton = document.getElementById("rainbow");
-
-    RBbutton.onclick = function() {
-        if (RBwheel.style.display === "none") {
-            wheelcontain.style.display = "block";
-            if (BWwheel.style.display === "block") {
-                BWwheel.style.display = "none";
-            }
-            RBwheel.style.display = "block";
-        } else {
-            RBwheel.style.display = "none";
-            wheelcontain.style.display = "none";
-        }
-    };
-
-    BWbutton.onclick = function() {
-        if (BWwheel.style.display === "none") {
-            wheelcontain.style.display = "block";
-            if (RBwheel.style.display === "block") {
-                RBwheel.style.display = "none";
-            }
-            BWwheel.style.display = "block";
-        } else {
-            BWwheel.style.display = "none";
-            wheelcontain.style.display = "none";
-        }
-    };
-
 
     let deleteButton = document.getElementById("delete");
     deleteButton.onclick = () => deleteNode();
