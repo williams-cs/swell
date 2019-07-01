@@ -113,6 +113,7 @@ export abstract class Effect<T> {
         this.canvas.addEventListener("mousedown", this.onMouseDown.bind(this));
         this.canvas.addEventListener("mouseup", this.onMouseUp.bind(this));
         window.addEventListener("changingcolor", this.onChangingObjectColor.bind(this));
+        window.addEventListener("deleting", this.onDeletingObject.bind(this));
         window.addEventListener("keydown", this.onKeyDown.bind(this));
         window.addEventListener("mouseup", this.isMouseOutside.bind(this));
     }
@@ -122,6 +123,7 @@ export abstract class Effect<T> {
         this.canvas.removeEventListener("mousedown", this.onMouseDown.bind(this));
         this.canvas.removeEventListener("mouseup", this.onMouseUp.bind(this));
         window.removeEventListener("changingcolor", this.onChangingObjectColor.bind(this));
+        window.removeEventListener("deleting", this.onDeletingObject.bind(this));
         window.removeEventListener("keydown", this.onKeyDown.bind(this));
         window.removeEventListener("mouseup", this.isMouseOutside.bind(this));
     }
@@ -135,6 +137,12 @@ export abstract class Effect<T> {
         if (this.isSelected) {
             let colorName = (event as CustomEvent).detail.color;
             this.aes.setColor(this.scope, colorName);
+        }
+    }
+
+    private onDeletingObject(event : Event) : void {
+        if (this.isSelected) {
+            this.delete();
         }
     }
 

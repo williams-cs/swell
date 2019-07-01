@@ -209,13 +209,13 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
 
     modifyState(event: MouseEvent): void {
         let contains: boolean = this.contains();
-        if (!event.ctrlKey && this.isSelected && contains) { //text editing
+        if (!event.shiftKey && this.isSelected && contains) { //text editing
             this.isEditing = true;
             this.isDragging = false;
             this.updateCursorPosFromMouse();
         } else {
             this.isEditing = false;
-            if (!event.ctrlKey) {
+            if (!event.shiftKey) {
                 this.isSelected = false;
             }
         }

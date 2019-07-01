@@ -318,7 +318,13 @@ import { AbstractTextEffect } from '../effects/AbstractTextEffect';
     window.addEventListener("keydown", function(event: any) {
         if (!editor.hasFocus()) {
             isDoingDM = true;
-            if(event.keyCode == KEYBOARD.BACKSPACE) deleteNode(); 
+            if(event.keyCode == KEYBOARD.BACKSPACE) {
+                window.dispatchEvent(deleteObject);
+                let newProgram: string = ast.toString();
+                editor.setValue(newProgram);
+                lastProgram = newProgram;
+                parse();
+            }
         }
     });
     window.addEventListener("keyup", function(event: any) {
@@ -393,7 +399,7 @@ import { AbstractTextEffect } from '../effects/AbstractTextEffect';
         parse();
     }
 
-    // /** Colors */
+    /** -- Colors -- */
 
     let colorButtons : string[] = [
         "orange", "red", "yellow","lime","aqua","green",
@@ -504,20 +510,30 @@ import { AbstractTextEffect } from '../effects/AbstractTextEffect';
         wheelContainer.style.display = "none";
     }
 
-    let deleteButton = document.getElementById("delete");
-    deleteButton.onclick = () => deleteNode();
+    /** -- Delete button -- */
 
-    function deleteNode() {
-        let elem: Effect<any>;
-        for(elem of selectedElems){
-            elem.delete();
-            if(elem instanceof AbstractTextEffect) return;
-        }
+    let deleteObject = new CustomEvent("deleting");
+    let deleteButton = document.getElementById("delete");
+    deleteButton.onmousedown = function() {
+        window.dispatchEvent(deleteObject);
         let newProgram: string = ast.toString();
         editor.setValue(newProgram);
         lastProgram = newProgram;
         parse();
     }
+    
+
+    // function deleteNode() {
+    //     let elem: Effect<any>;
+    //     for(elem of selectedElems){
+    //         elem.delete();
+    //         if(elem instanceof AbstractTextEffect) return;
+    //     }
+    //     let newProgram: string = ast.toString();
+    //     editor.setValue(newProgram);
+    //     lastProgram = newProgram;
+    //     parse();
+    // }
 
     /* Modules */
 
