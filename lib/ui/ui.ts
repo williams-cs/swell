@@ -142,6 +142,17 @@ import { AbstractTextEffect } from '../effects/AbstractTextEffect';
             if (effects[i].isSelected) {
                 selectedElems.push(effects[i]);
                 selected++;
+                //remove items that are no longer selected
+                let newSelectedElems: Effect<any>[] = [];
+                let newSelected: number = 0;
+                for (let elem of selectedElems){
+                    if (elem.isSelected){
+                        newSelectedElems.push(elem);
+                        newSelected++;
+                    }
+                selectedElems = newSelectedElems;
+                selected = newSelected;
+                }
             }
 
             if (effects[i].justDragged) { // Logs drag event
