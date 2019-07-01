@@ -102,15 +102,15 @@ button:hover {
     height: 54vh;
 }
 
-.color {
+.color-btn {
     border-radius: 6px;
 }
 
-.color:hover {
+.color-btn:hover {
     border: solid 1px gold;
 }
 
-#color {
+#color-btn {
     display: grid;
     grid-template: repeat(6, 1fr) / repeat(2, 1fr);
     grid-gap: 2px 2px;
@@ -120,76 +120,82 @@ button:hover {
 }
 
 #color-wheel-container {
-    display: block;
+    display: none;
     position: fixed;
     height: 150px;
     width: 150px;
     background-color: white;
     border: 1px lightgrey solid;
     right: 95px;
-    bottom: 562px;
+    top: 10px;
     border-radius: 10px;
-    z-index: 10;
+    z-index: 1;
 }
 
-.wheel {
-    display : block;
+@media (max-width : 767px) {
+    #color-wheel-container {
+        visibility: hidden;
+    }
+}
+
+#wheel {
+    display : none;
     position: fixed;
-    z-index: 20;
+    border-radius: 10px;
+    z-index: 2;
     right: 105px;
-    bottom: 572px;
 }
 
-.wheel:hover {
+#wheel:hover {
     cursor: crosshair;
 }
 
-#orange {
+#orange-color-btn {
     background-color: orange;
 }
 
-#red {
+#red-color-btn {
     background-color: red;
 }
 
-#yellow {
+#yellow-color-btn {
     background-color: yellow;
 }
 
-#lime {
+#lime-color-btn {
     background-color: lime;
 }
 
-#aqua {
+#aqua-color-btn {
     background-color: aqua;
 }
 
-#green {
+#green-color-btn {
     background-color: green;
 }
 
-#blue {
+#blue-color-btn {
     background-color: blue;
 }
 
-#fuchsia {
+#fuchsia-color-btn {
     background-color: fuchsia;
 }
 
-#saddlebrown {
+#saddlebrown-color-btn {
     background-color: saddlebrown;
 }
 
-#purple {
+#purple-color-btn {
     background-color: purple;
 }
 
-#black {
-    background: black;
+#blackandwhite-color-btn {
+    background: linear-gradient(black,white);
 }
 
-#gray {
-    background: gray;
+#rainbow-color-btn {
+    background: conic-gradient( yellow, lime, aqua, blue, magenta, red, yellow );
 }
 
 

@@ -142,7 +142,6 @@ import { AbstractTextEffect } from '../effects/AbstractTextEffect';
             if (effects[i].isSelected) {
                 selectedElems.push(effects[i]);
                 selected++;
-                selectedElems = selectedElems.filter((elem) => elem.isSelected);
             }
 
             if (effects[i].justDragged) { // Logs drag event
@@ -394,27 +393,116 @@ import { AbstractTextEffect } from '../effects/AbstractTextEffect';
         parse();
     }
 
+    // /** Colors */
+
     let colorButtons : string[] = [
         "orange", "red", "yellow","lime","aqua","green",
-        "blue", "fuchsia", "saddlebrown", "purple", "black", "gray"
+        "blue", "fuchsia", "saddlebrown", "purple"
     ];
 
     for (let colorName of colorButtons) {
-        let colorButton = document.getElementById(colorName);
-        colorButton.onclick = () => changeColor(colorName); 
+        let colorButton = document.getElementById(colorName + "-color-btn");
+        //creating custom event with colorName as part of event detail
+        let changeObjectColor = new CustomEvent("changingcolor", {
+            detail : {color : colorName}
+            }
+        );
+
+        //dispatch customEvent onmousedown
+        colorButton.onmousedown = function(event : MouseEvent) {
+            isDoingDM = true; //modifying text
+            window.dispatchEvent(changeObjectColor);
+            //stop other objects from listening to the same event
+            event.stopPropagation();
+        }
+
+        colorButton.onmouseup = (event : MouseEvent) => event.stopPropagation();
     }
 
-    function changeColor(colorName : string) : void {
-        let elem : Effect<any>;
-        for (elem of selectedElems) {
-            elem.aes.setColor(elem.scope, colorName);
-        }
-        let newProgram: string = ast.toString();
-        editor.setValue(newProgram);
-        lastProgram = newProgram;
-        parse();
+    /** Multi-Color palette*/
+
+    let wheelContainer = document.getElementById("color-wheel-container");
+    let RBButton = document.getElementById("rainbow-color-btn");
+    let BWButton = document.getElementById("blackandwhite-color-btn");
+    let colorWheel = document.getElementById("wheel") as HTMLCanvasElement;
+    let picker = colorWheel.getContext("2d");
+
+    // draw black and white wheel
+    function drawBWWheel() : void {
+        picker.clearRect(0, 0, colorWheel.width, colorWheel.height);
+        let grd = picker.createLinearGradient(0, 0, 0, 130);
+        grd.addColorStop(0, "black");
+        grd.addColorStop(1, "white");
+        picker.fillStyle = grd;
+        picker.fillRect(0, 0, colorWheel.width, colorWheel.height);
     }
-;
+
+    // draw rainbow wheel
+    function drawRBWheel() : void {
+        picker.clearRect(0, 0, colorWheel.width, colorWheel.height);
+        let grd = picker.createLinearGradient(0, 0, 130, 130);
+        grd.addColorStop(0, "red");
+        grd.addColorStop(1/7, "orange");
+        grd.addColorStop(2/7, "yellow");
+        grd.addColorStop(3/7, "lime");
+        grd.addColorStop(4/7, "aqua");
+        grd.addColorStop(5/7, "blue");
+        grd.addColorStop(6/7, "magenta");
+        grd.addColorStop(1, "red");
+        picker.fillStyle = grd;
+        picker.fillRect(0, 0, colorWheel.width, colorWheel.height);
+    }
+    
+    // toggle opening/closing color picker
+    function popUpWheel() {
+        if (colorWheel.style.display === "none") {
+            wheelContainer.style.display = "block";
+            colorWheel.style.display = "block";
+        } else {
+            colorWheel.style.display = "none";
+            wheelContainer.style.display = "none";
+        }
+    }
+
+    // opening/closing colorwheel onmousedown
+    BWButton.onmousedown = function(event : MouseEvent) {
+        popUpWheel();
+        drawBWWheel();
+    }
+
+    RBButton.onmousedown = function(event : MouseEvent) {
+        popUpWheel();
+        drawRBWheel();
+    }
+
+    // prevent default onmouseup modifyReset 
+    BWButton.onmouseup = (event : MouseEvent) => event.stopPropagation();
+    RBButton.onmouseup = (event : MouseEvent) => event.stopPropagation();
+
+    //represent the colors on picker in HEX form instead
+    function rgbToHex(r : number, g : number, b : number) : string {
+        return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase();
+    }
+
+    // Custom Event and Dispatch event for color picker
+    colorWheel.onmousemove = function(event : MouseEvent) {
+        let rect = colorWheel.getBoundingClientRect();
+        let canvasX = event.clientX - rect.left;
+        let canvasY = event.clientY - rect.top;
+        let pixel = picker.getImageData(canvasX, canvasY, 1, 1).data;
+        let colorName = rgbToHex(pixel[0], pixel[1], pixel[2]);
+        let changeObjectColor = new CustomEvent("changingcolor", {
+            detail : {color : colorName}
+            }
+        );
+        isDoingDM = true; //modifying text
+        window.dispatchEvent(changeObjectColor);
+    }
+    
+    colorWheel.onclick = function() {
+        colorWheel.style.display = "none";
+        wheelContainer.style.display = "none";
+    }
 
     let deleteButton = document.getElementById("delete");
     deleteButton.onclick = () => deleteNode();
