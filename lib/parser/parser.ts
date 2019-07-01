@@ -9,7 +9,7 @@ import {
     Equals, And, GreaterThan, LessThan, GreaterThanEq, LessThanEq, Or, NotEqual,
     VariableNode, AssignOp, SingleComment,
     Return, FunDef, UserDefinedFunctionNode, Argument, Conditional, BodyNode,
-    EllipseNode, RectangleNode, EmojiNode, LineNode, RGBColorNode
+    EllipseNode, RectangleNode, EmojiNode, LineNode, RGBColorNode,
 } from '../../index';
 import { Option, Some, None, tuple } from 'space-lift';
 
