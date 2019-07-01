@@ -62,7 +62,12 @@ export class Scope {
      * @param val The value of the variable
      */
     assign(name: string, val: any): void {
-        this.varBindings.set(name, Some(val)); //Some(val)?
+        let scopeOpt = this.exists(name);
+        if(scopeOpt.isDefined()){
+            scopeOpt.get().varBindings.set(name, Some(val));
+        } else {
+            this.varBindings.set(name, Some(val));
+        }
     }
 
     /**
@@ -74,10 +79,25 @@ export class Scope {
         if (this.varBindings.has(name) && this.varBindings.get(name).isDefined()) {
             return (this.varBindings.get(name).get()); //extra get to manage Some()
         }
-        if (!(this.parent == null)) {
+        if (this.parent != null) {
             return this.parent.lookup(name);
         }
         throw new Error(`Identifier "${name}" could not be found.`);
+    }
+    
+    /**
+     * Returns the scope of the variable if the variable exists 
+     * including parent scopes
+     * @param name
+     */
+    exists(name: string): Option<Scope> { 
+        if (this.varBindings.has(name)){
+            return Some(this);
+        } else if (this.parent == null) {
+            return None;
+        } else {
+            return this.parent.exists(name);
+        }
     }
 
     get varBindings(): Map<string, Option<any>> {
@@ -118,5 +138,13 @@ export class Scope {
 
     get mulSelArray(): Effect<any>[] {
         return this._mulSelArray;
+    }
+    toString() : string {
+        let s : string = "{ ";
+        this._varBindings.forEach((value: Option<any>, key: string) => {
+            s += key + " -> " + value;
+        })
+        s += " }"
+        return s;
     }
 }

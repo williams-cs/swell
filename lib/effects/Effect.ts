@@ -112,6 +112,7 @@ export abstract class Effect<T> {
         this.canvas.addEventListener("mousemove", this.onMouseMove.bind(this));
         this.canvas.addEventListener("mousedown", this.onMouseDown.bind(this));
         this.canvas.addEventListener("mouseup", this.onMouseUp.bind(this));
+        window.addEventListener("changingcolor", this.onChangingObjectColor.bind(this));
         window.addEventListener("keydown", this.onKeyDown.bind(this));
         window.addEventListener("mouseup", this.isMouseOutside.bind(this));
     }
@@ -120,8 +121,21 @@ export abstract class Effect<T> {
         this.canvas.removeEventListener("mousemove", this.onMouseMove.bind(this));
         this.canvas.removeEventListener("mousedown", this.onMouseDown.bind(this));
         this.canvas.removeEventListener("mouseup", this.onMouseUp.bind(this));
+        window.removeEventListener("changingcolor", this.onChangingObjectColor.bind(this));
         window.removeEventListener("keydown", this.onKeyDown.bind(this));
         window.removeEventListener("mouseup", this.isMouseOutside.bind(this));
+    }
+
+    /** 
+     * <Custom Event> Synthetic Event "changeingcolor" in ui.ts
+     * Dispatched only when color buttons are clicked.
+     * Color of object changed depending on the val of event.detail.color 
+    */
+    protected onChangingObjectColor(event : Event) : void {
+        if (this.isSelected) {
+            let colorName = (event as CustomEvent).detail.color;
+            this.aes.setColor(this.scope, colorName);
+        }
     }
 
     /**
