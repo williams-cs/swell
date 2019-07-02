@@ -23,6 +23,11 @@ export class EmojiEffect extends AbstractShapeEffect<EmojiNode, EmojiEffect> {
         }
     }
 
+    // prevent EmojiEffect from reponding to "onchangingcolor"
+    onChangingObjectColor() : void {
+        return;
+    }
+
     get image(): HTMLImageElement {
         return this._image;
     }

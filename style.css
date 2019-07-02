@@ -29,6 +29,7 @@ body {
 .main-container {
     background-color: var(--light-gray);
     height: 100vh;
+    z-index: 1;
 }
 
 #logo {
@@ -100,6 +101,103 @@ button:hover {
 #code-canvas-container {
     height: 54vh;
 }
+
+.color-btn {
+    border-radius: 6px;
+}
+
+.color-btn:hover {
+    border: solid 1px gold;
+}
+
+#color-btn {
+    display: grid;
+    grid-template: repeat(6, 1fr) / repeat(2, 1fr);
+    grid-gap: 2px 2px;
+    width: 50px;
+    height: 154px;
+    margin: 10px auto;
+}
+
+#color-wheel-container {
+    display: none;
+    position: fixed;
+    height: 150px;
+    width: 150px;
+    background-color: white;
+    border: 1px lightgrey solid;
+    right: 95px;
+    top: 10px;
+    border-radius: 10px;
+    z-index: 1;
+}
+
+@media (max-width : 767px) {
+    #color-wheel-container {
+        visibility: hidden;
+    }
+}
+
+#wheel {
+    display : none;
+    position: fixed;
+    border-radius: 10px;
+    z-index: 2;
+    right: 105px;
+}
+
+#wheel:hover {
+    cursor: crosshair;
+}
+
+#orange-color-btn {
+    background-color: orange;
+}
+
+#red-color-btn {
+    background-color: red;
+}
+
+#yellow-color-btn {
+    background-color: yellow;
+}
+
+#lime-color-btn {
+    background-color: lime;
+}
+
+#aqua-color-btn {
+    background-color: aqua;
+}
+
+#green-color-btn {
+    background-color: green;
+}
+
+#blue-color-btn {
+    background-color: blue;
+}
+
+#fuchsia-color-btn {
+    background-color: fuchsia;
+}
+
+#saddlebrown-color-btn {
+    background-color: saddlebrown;
+}
+
+#purple-color-btn {
+    background-color: purple;
+}
+
+#blackandwhite-color-btn {
+    background: linear-gradient(black,white);
+}
+
+#rainbow-color-btn {
+    background: conic-gradient( yellow, lime, aqua, blue, magenta, red, yellow );
+}
+
 
 #terminal-reward-container {
     height: 34vh;

@@ -85,15 +85,18 @@ export abstract class AbstractLineEffect<T extends AbstractLineNode<T, E>, E ext
         this.prevX2 = this.x2;
         this.prevY2 = this.y2;
 
-        if (event.ctrlKey) { //prepares the object for dragging whether it is actually selected or not
+        if (event.shiftKey) { //prepares the object for dragging whether it is actually selected or not
             if (contains) {
                 this.isSelected = true;
             }
             this.isDragging = true;
+            
+            return;
 
         } else if ((guideContains == GUIDE.NONE && !contains) || this.isOverlapped()) {
             this.isSelected = false;
             this.isDragging = false;
+
             return;
         }
 

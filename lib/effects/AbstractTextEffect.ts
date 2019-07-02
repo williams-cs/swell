@@ -209,13 +209,13 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
 
     modifyState(event: MouseEvent): void {
         let contains: boolean = this.contains();
-        if (!event.ctrlKey && this.isSelected && contains) { //text editing
+        if (!event.shiftKey && this.isSelected && contains) { //text editing
             this.isEditing = true;
             this.isDragging = false;
             this.updateCursorPosFromMouse();
         } else {
             this.isEditing = false;
-            if (!event.ctrlKey) {
+            if (!event.shiftKey) {
                 this.isSelected = false;
             }
         }
@@ -227,16 +227,19 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
         this.prevX = this.x;
         this.prevY = this.y;
 
-        if (event.ctrlKey) { // prepares the object for dragging whether it is personally selected or not
+        if (event.shiftKey) { // prepares the object for dragging whether it is personally selected or not
             if (contains) {
                 this.isSelected = true;
             }
             this.isDragging = true;
 
+            return;
+
         } else if ((guideContains == GUIDE.NONE && !contains) || this.isOverlapped()) {
             this.isSelected = false;
             this.isDragging = false;
             this.isEditing = false;
+
             return;
         }
 
