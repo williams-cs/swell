@@ -40,13 +40,13 @@ export class LessonThreeCpSix extends Module {
         let circ_yB = this.yB + 10;
 
         this._starterCode =
-            `a = ${this.a_size};
-print(a, ${this.xA}, ${this.yA - 2 * this.font_size});
-print(emoji("angel", a, a), ${circ_xA}, ${circ_yA});
-b = ${this.b_size};
-print(b, ${this.xB}, ${this.yA - 2 * this.font_size});
-print(emoji("devil", b, b), ${circ_xB}, ${circ_yB});
-print("The angel is smaller than the devil.", ${this.xA}, ${this.yA + this.square_size + this.font_size});`
+            `a = ${this.a_size}
+print(a, ${this.xA}, ${this.yA - 2 * this.font_size})
+print(emoji("angel", a, a), ${circ_xA}, ${circ_yA})
+b = ${this.b_size}
+print(b, ${this.xB}, ${this.yA - 2 * this.font_size})
+print(emoji("devil", b, b), ${circ_xB}, ${circ_yB})
+print("The angel is smaller than the devil.", ${this.xA}, ${this.yA + this.square_size + this.font_size})`
 
         //setting up the Instructions
         let content = `Now that you know how to use <span class="inline-code">if/else</span> statements, let's put them all together!`;

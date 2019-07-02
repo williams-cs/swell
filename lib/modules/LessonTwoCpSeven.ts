@@ -26,8 +26,8 @@ export class LessonTwoCpSeven extends Module {
         this.y = ctx.canvas.height - this.square_size - 10;
 
         this._starterCode =
-            `a = 50;
-print(emoji("mustache", 100, 100), ${this.x + 10}, ${this.y + 10});`;
+            `a = 50
+print(emoji("mustache", 100, 100), ${this.x + 10}, ${this.y + 10})`;
 
         //retrieve survey choice for dm or non-dm
         this.dm = 1;

@@ -13,9 +13,9 @@ export class LessonTwoCpFive extends Module {
         then write 2 print statements to print c.</p>`;
 
     readonly _starterCode =
-    `a = emoji("angry", 100, 100);
-b = emoji("cool", 100, 100);
-print(b, 100, 100);`;
+    `a = emoji("angry", 100, 100)
+b = emoji("cool", 100, 100)
+print(b, 100, 100)`;
 
     _latestInstrIndex: number = 0;
 

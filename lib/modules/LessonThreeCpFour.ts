@@ -12,9 +12,9 @@ export class LessonThreeCpFour extends Module {
         `<p>GOAL: Allow only happy emojis to be printed on the CANVAS.</p>`;
 
     readonly _starterCode: string =
-        `c = "devil";
+        `c = "devil"
 if(c == "devil") {
-\tprint(emoji(c, 100, 100), 25, 25);
+\tprint(emoji(c, 100, 100), 25, 25)
 }`;
 
     _latestInstrIndex: number = 2;

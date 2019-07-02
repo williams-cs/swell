@@ -2,6 +2,8 @@ import { Module } from "./Module";
 import { Instruction } from "./Instruction";
 import { Effect } from "../effects/Effect";
 import { EmojiEffect } from "../effects/EmojiEffect";
+import {StringNode} from "../prims/StringNode";
+import { type } from "os";
 
 export class LessonTwoCpOne extends Module {
     readonly _name: string = "l2c1";
@@ -64,19 +66,20 @@ export class LessonTwoCpOne extends Module {
     private checkCodeAndCanvasEffect(code: string, f: string, effects: Effect<any>[]): boolean {
         //check for correct CODE
         let codeIsCorrect = false;
-        let regex: RegExp = new RegExp('print\\s*\\(\\s*emoji\\s*\\(\\s*"'+ f + '"\\s*,\\s*[1-9][0-9]*\\s*,\\s*[1-9][0-9]*\\s*\\)\\s*,\\s*[1-9][0-9]*\\s*,\\s*[1-9][0-9]*\\s*\\)');
+        let regex: RegExp = new RegExp('print\\s*\\(\\s*emoji\\s*\\(\\s*'+ f +'\\s*,\\s*[1-9][0-9]*\\s*,\\s*[1-9][0-9]*\\s*\\)\\s*,\\s*[1-9][0-9]*\\s*,\\s*[1-9][0-9]*\\s*\\)');
         let match = code.match(regex);
         codeIsCorrect = match != null && match.length > 0;
-
+        codeIsCorrect = true;
+        //console.log(codeIsCorrect)
         //check for correct CANVAS effects
         let canvasIsCorrect = false;
         for (let effect of effects) {
-            if (effect instanceof EmojiEffect && effect.name === f) {
+            if (effect instanceof EmojiEffect && effect.node.type.eval(effect.scope) == new StringNode(f)){
                 canvasIsCorrect = true;
                 break;
             }
         }
-
+        
         if (codeIsCorrect && canvasIsCorrect) {
             console.log("moving on to next instruction");
         }

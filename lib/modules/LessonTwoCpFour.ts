@@ -12,9 +12,9 @@ export class LessonTwoCpFour extends Module {
         `<p>GOAL: Change a to b in the print statement.</p>`;
 
     readonly _starterCode =
-        `a = emoji("angry", 100, 100);
-b = emoji("cool", 100, 100);
-print(a, 100, 100);`;
+        `a = emoji("angry", 100, 100)
+b = emoji("cool", 100, 100)
+print(a, 100, 100)`;
 
     _latestInstrIndex: number = 2;
 

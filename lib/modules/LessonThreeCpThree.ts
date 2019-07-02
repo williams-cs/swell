@@ -13,10 +13,10 @@ export class LessonThreeCpThree extends Module {
         on the CANVAS when the pirate emoji is actually bigger than the box.</p>`;
 
     readonly _starterCode: string =
-        `b = 50;
-print(emoji("pirate", b, b), 25, 25);
+        `b = 50
+print(emoji("pirate", b, b), 25, 25)
 if(b < 75) {
-\tprint("The pirate is bigger than the box.", 25, 250);
+\tprint("The pirate is bigger than the box.", 25, 250)
 }`;
 
     _latestInstrIndex: number = 1;

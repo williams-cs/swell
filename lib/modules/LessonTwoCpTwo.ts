@@ -11,7 +11,7 @@ export class LessonTwoCpTwo extends Module {
         `<p>Lesson 2 - Checkpoint 2</p>` +
         `<p>GOAL: Fit the emoji inside the given box.</p>`;
 
-    readonly _starterCode: string = `print(emoji("angry", 100, 100), 120, 150);`;
+    readonly _starterCode: string = `print(emoji("angry", 100, 100), 120, 150)`;
 
     _latestInstrIndex: number = 0;
 
