@@ -9,7 +9,7 @@ import {
     Equals, And, GreaterThan, LessThan, GreaterThanEq, LessThanEq, Or, NotEqual,
     VariableNode, AssignOp, SingleComment,
     Return, FunDef, UserDefinedFunctionNode, Argument, Conditional, BodyNode,
-    EllipseNode, RectangleNode, EmojiNode, LineNode, RGBColorNode,
+    EllipseNode, RectangleNode, EmojiNode, LineNode, RGBColorNode, RepeatNode,
 } from '../../index';
 import { Option, Some, None, tuple } from 'space-lift';
 
@@ -136,7 +136,7 @@ export namespace Parser {
      */
     export let ExpressionParserNoSeq: Prims.IParser<Expression<any>> = i => {
         return Prims.choices<Expression<any>>(
-            funDef, conditionalParser, returnParser, funApp, listAccessOpParser, listParser,
+            funDef, conditionalParser, loopParser, returnParser, funApp, listAccessOpParser, listParser,
             binOpExpr(), unOpsExpr, parens, notExpr,
             boolParse(), varNameParse(), lNumber(), lstring, singleComment()
         )(i);
@@ -768,6 +768,23 @@ export namespace Parser {
         );
 
         return Prims.choices<Conditional>(ifElseParser, singleIfParser)(i);
+    }
+
+    //Parses all loop constructs, including repeat
+    export let loopParser : Prims.IParser<RepeatNode> = i => {
+        let preRepeatWs = "";
+        let preRepeatWsParser = Prims.appfun<CharStream, string>(Prims.ws())(
+            x => preRepeatWs = x.toString()
+        );
+        let repeatParser = Prims.right<string, CharStream>(preRepeatWsParser)(Prims.str("repeat"));
+        let condParser = Prims.expect<Parens<NumberNode>>(<Prims.IParser<Parens<NumberNode>>>parens)("invalid repeat expression");
+        let bodyParse = Prims.expect<BodyNode>(bodyParser)("invalid body for repeat statement");
+        let condBodyParser = Prims.seq<Parens<NumberNode>, BodyNode, [Parens<NumberNode>, BodyNode]>(condParser)(bodyParse)(tup => tup);
+        let RepeatStatementParser = Prims.right<CharStream, [Parens<NumberNode>, BodyNode]>(repeatParser)(condBodyParser);
+        let RepeatParser = Prims.appfun<[Parens<NumberNode>, BodyNode], RepeatNode>(RepeatStatementParser)(
+            (tup: [Parens<NumberNode>, BodyNode]) => new RepeatNode(tup[0], tup[1], preRepeatWs)
+        );
+        return RepeatParser(i);
     }
 
     export function singleComment(): Prims.IParser<SingleComment> {

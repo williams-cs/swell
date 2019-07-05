@@ -4,7 +4,7 @@ import { NumberNode } from "../prims/NumberNode";
 import { BooleanNode } from "../prims/BooleanNode";
 
 export class RepeatNode extends Expression<any> {
-
+    private originVal : string;
     /**
      * Constructor for a Repeat loop
      * @param cond The iteration condition (evaluates to NumberNode)
@@ -13,6 +13,7 @@ export class RepeatNode extends Expression<any> {
      */
     constructor(private cond: Expression<NumberNode>, private body: Expression<any>, ws: string = "") {
         super(ws);
+        this.originVal = this.cond.toString();
     }
 
     /**
@@ -24,11 +25,10 @@ export class RepeatNode extends Expression<any> {
         if (!(res instanceof NumberNode)) {
             throw new Error("Repeat count must be a number.");
         }
-
         let ret = null;
         while (res.val > 0) {
             //evaluate loop body
-            let childCtx = new Scope(context);
+            let childCtx = context.createChildScope();
             ret = this.body.eval(childCtx);
             
             //decrement
@@ -39,6 +39,6 @@ export class RepeatNode extends Expression<any> {
     }
 
     toString(): string {
-        return this.ws + "repeat(" + this.cond.toString() + ") {\n " + this.body.toString() + "}";
+        return this.ws + "repeat" + this.originVal + this.body.toString();
     }
 }

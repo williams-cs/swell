@@ -52,7 +52,8 @@ export class Scope {
      */
     createChildScope(): Scope {
         let s: Scope = new Scope(this, this.canvas, this.effects, this.eventLog);
-        s.varBindings = new Map(this.varBindings);
+        //s.varBindings = new Map(this.varBindings);
+        s.varBindings = new Map();
         return s;
     }
 

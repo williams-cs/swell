@@ -48,6 +48,7 @@ export { BodyNode } from "./lib/structural/BodyNode";
 export { ForNode } from "./lib/loops/ForNode";
 export { WhileNode } from "./lib/loops/WhileNode";
 export { SingleComment } from "./lib/structural/SingleComment";
+export { RepeatNode } from "./lib/loops/RepeatNode";
 
 /* BUILTIN FUNCTIONS */
 export { RGBColorNode } from "./lib/aesthetics/RGBColorNode";
