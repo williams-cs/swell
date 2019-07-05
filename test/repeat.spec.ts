@@ -9,8 +9,14 @@ import {PlusOp} from '../lib/binops/PlusOp';
 import { assert,expect } from 'chai';
 import 'mocha';
 
+//y = 1
+//x = 3
+//repeat(x){
+//  y = y+1
+//}
+
 describe('A repeat', () => {
-    it('should create multiple instances', () => {
+    it('should add a variable 3 times', () => {
         const x3 = new VariableNode("x");
         const x4 = new NumberNode(3);
         const x1 = new AssignOp(x3,x4);
