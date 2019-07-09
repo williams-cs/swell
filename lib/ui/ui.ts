@@ -436,27 +436,26 @@ import { AbstractTextEffect } from '../effects/AbstractTextEffect';
     // draw black and white wheel
     function drawBWWheel() : void {
         picker.clearRect(0, 0, colorWheel.width, colorWheel.height);
-        let grd = picker.createLinearGradient(0, 0, 0, 130);
+        let grd = picker.createLinearGradient(0, 0, 130, 0);
         grd.addColorStop(0, "black");
         grd.addColorStop(1, "white");
         picker.fillStyle = grd;
-        picker.fillRect(0, 0, colorWheel.width, colorWheel.height);
+        picker.fillRect(0, 0, colorWheel.width, colorWheel.height - 40);
     }
 
     // draw rainbow wheel
     function drawRBWheel() : void {
         picker.clearRect(0, 0, colorWheel.width, colorWheel.height);
-        let grd = picker.createLinearGradient(0, 0, 130, 130);
+        let grd = picker.createLinearGradient(0, 0, 130, 0);
         grd.addColorStop(0, "red");
-        grd.addColorStop(1/7, "orange");
-        grd.addColorStop(2/7, "yellow");
-        grd.addColorStop(3/7, "lime");
-        grd.addColorStop(4/7, "aqua");
-        grd.addColorStop(5/7, "blue");
-        grd.addColorStop(6/7, "magenta");
-        grd.addColorStop(1, "red");
+        grd.addColorStop(1/6, "orange");
+        grd.addColorStop(2/6, "yellow");
+        grd.addColorStop(3/6, "lime");
+        grd.addColorStop(4/6, "aqua");
+        grd.addColorStop(5/6, "blue");
+        grd.addColorStop(1, "magenta");
         picker.fillStyle = grd;
-        picker.fillRect(0, 0, colorWheel.width, colorWheel.height);
+        picker.fillRect(0, 0, colorWheel.width, colorWheel.height - 40);
     }
     
     // toggle opening/closing color picker
@@ -485,29 +484,41 @@ import { AbstractTextEffect } from '../effects/AbstractTextEffect';
     BWButton.onmouseup = (event : MouseEvent) => event.stopPropagation();
     RBButton.onmouseup = (event : MouseEvent) => event.stopPropagation();
 
+    // hide colorWheel when click outside
+    document.onmouseup = function(event : Event) {
+        if (colorWheel.style.display === "block" && !(event.target === colorWheel)) {
+            colorWheel.style.display = "none";
+            wheelContainer.style.display = "none";
+        }
+    }
+
     //represent the colors on picker in HEX form instead
     function rgbToHex(r : number, g : number, b : number) : string {
         return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase();
     }
 
+    let colorName : string;
     // Custom Event and Dispatch event for color picker
     colorWheel.onmousemove = function(event : MouseEvent) {
         let rect = colorWheel.getBoundingClientRect();
         let canvasX = event.clientX - rect.left;
         let canvasY = event.clientY - rect.top;
         let pixel = picker.getImageData(canvasX, canvasY, 1, 1).data;
-        let colorName = rgbToHex(pixel[0], pixel[1], pixel[2]);
+        colorName = rgbToHex(pixel[0], pixel[1], pixel[2]);
+        picker.fillStyle = colorName;
+        picker.fillRect(0, colorWheel.height - 40, colorWheel.width, 50);
+    }
+
+    colorWheel.onmouseup = function(event : MouseEvent) {
         let changeObjectColor = new CustomEvent("changingcolor", {
             detail : {color : colorName}
             }
         );
         isDoingDM = true; //modifying text
         window.dispatchEvent(changeObjectColor);
-    }
-    
-    colorWheel.onclick = function() {
         colorWheel.style.display = "none";
         wheelContainer.style.display = "none";
+        event.stopPropagation();
     }
 
     /** -- Delete button -- */
@@ -521,19 +532,6 @@ import { AbstractTextEffect } from '../effects/AbstractTextEffect';
         lastProgram = newProgram;
         parse();
     }
-    
-
-    // function deleteNode() {
-    //     let elem: Effect<any>;
-    //     for(elem of selectedElems){
-    //         elem.delete();
-    //         if(elem instanceof AbstractTextEffect) return;
-    //     }
-    //     let newProgram: string = ast.toString();
-    //     editor.setValue(newProgram);
-    //     lastProgram = newProgram;
-    //     parse();
-    // }
 
     /* Modules */
 
