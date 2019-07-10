@@ -18,3 +18,27 @@
  keywords = {Automated Feedback Generation, Computer-Aided Education},
 }
 
+@article{Price2019,
+  doi = {10.1007/s40593-019-00177-z},
+  url = {https://doi.org/10.1007/s40593-019-00177-z},
+  year = {2019},
+  month = may,
+  publisher = {Springer Science and Business Media {LLC}},
+  author = {Thomas W. Price and Yihuan Dong and Rui Zhi and Benjamin Paa{\ss}en and Nicholas Lytle and Veronica Catet{\'{e}} and Tiffany Barnes},
+  title = {A Comparison of the Quality of Data-Driven Programming Hint Generation Algorithms},
+  journal = {International Journal of Artificial Intelligence in Education}
+}
+
+@article{SongwenXu2003,
+  doi = {10.1109/tse.2003.1191799},
+  url = {https://doi.org/10.1109/tse.2003.1191799},
+  year = {2003},
+  month = apr,
+  publisher = {Institute of Electrical and Electronics Engineers ({IEEE})},
+  volume = {29},
+  number = {4},
+  pages = {360--384},
+  author = {Songwen Xu and  Yam San Chee},
+  title = {Transformation-based diagnosis of student programs for programming tutoring systems},
+  journal = {{IEEE} Transactions on Software Engineering}
+}
