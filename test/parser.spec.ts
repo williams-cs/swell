@@ -561,7 +561,7 @@ describe('Rectangle parser', () => {
 describe("Variable Name Parser", () => {
     it("should parse a valid variable name", () => {
         let input = new CharUtil.CharStream('paRser123');
-        let result = Parser.varNameParse()(input);
+        let result = Parser.varNameParse(input);
         switch (result.tag) {
             case "success":
                 //console.log(result.result.toString())
@@ -573,7 +573,7 @@ describe("Variable Name Parser", () => {
     });
     it("should not parse an invalid variable name", () => {
         let input = new CharUtil.CharStream('1try');
-        let result = Parser.varNameParse()(input);
+        let result = Parser.varNameParse(input);
         switch (result.tag) {
             case "success":
                 assert.fail();

@@ -19,64 +19,55 @@ export namespace Parser {
      * to be moved to Pants
      * number parses numbers by repeatedly applying the digit parser
      */
-    export function number(): Prims.IParser<number> {
-        return (istream: CharStream) => {
-            const o = Prims.many1(Prims.digit())(istream)
-            switch (o.tag) {
-                case "success":
-                    let s = "";
-                    for (let digit of o.result) {
-                        s += digit.toString();
-                    }
-                    return new Prims.Success<number>(o.inputstream, parseFloat(s));
-                case "failure":
-                    return o;
-            }
-        }
-    }
 
-    export function float(): Prims.IParser<number> {
-        return (istream: CharStream) => {
-            let beforeDec: Prims.IParser<number> = Prims.left<number, CharStream>(number())(Prims.str('.'));
-            let f = (tup: [number, number]) => {
-                return parseFloat(tup[0] + "." + tup[1]);
-            }
-            return Prims.seq<number, number, number>(beforeDec)(number())(f)(istream);
-        }
-    }
+    export let number : Prims.IParser<number> =
+        Prims.appfun<CharStream[], number>(
+            Prims.many1(Prims.digit())
+        )(
+            (digitArray : CharStream[]) => parseFloat(digitArray.join(""))
+        );
+
+    export let float : Prims.IParser<number> =
+        Prims.seq<number, number, number>(
+            Prims.left<number, CharStream>(number)(Prims.str('.'))
+        )(
+            number
+        )(
+            (tup: [number, number]) => parseFloat(tup[0] + "." + tup[1])
+        );
 
     /**
      * to be moved to Pants
      * string is an arbitrary string parser that repeatedly applies the letter primitive
      * returns a CharStream representing the entire parsed string
      */
-    export function string(): Prims.IParser<CharStream> {
-        let p: Prims.IParser<CharStream[]> = Prims.many1(Prims.letter());
-        let f = (xs: CharStream[]) => CharStream.concat(xs)
-        return Prims.appfun<CharStream[], CharStream>(p)(f);
-    }
+    export let string : Prims.IParser<CharStream> =
+        Prims.appfun<CharStream[], CharStream>(
+            Prims.many1(Prims.letter())
+        )(
+            (xs: CharStream[]) => CharStream.concat(xs)
+        );
 
     // Valid identifier name parser
-    export let identifierParser: Prims.IParser<CharStream> = i => {
-        return Prims.seq<CharStream, CharStream[], CharStream>(
+    export let identifierParser: Prims.IParser<CharStream> =
+        Prims.seq<CharStream, CharStream[], CharStream>(
             Prims.letter()
         )(
             Prims.many(Prims.choice(Prims.letter())(Prims.digit()))
         )(
-            (tup: [CharStream, CharStream[]]) => CharStream.concat([tup[0], CharStream.concat(tup[1])])
-        )(i);
-    }
+            (tup: [CharStream, CharStream[]]) => CharStream.concat([tup[0]].concat(tup[1]))
+        );
 
     /**
      * to be moved to Pants
      * punctuation parses all possible punctuation characters
      */
-    export function punctuation() {
-        return Prims.strSat(
+    export let punctuation : Prims.IParser<CharStream> = 
+        Prims.strSat(
             ["!", ".", ",", ";", "?", "-", "&", "$", ":",
                 "/", "|", "%", "#", "@", "~", "`", "*", "^",
-                "{", "}", "[", "]", "(", ")", "'", "_"]);
-    }
+                "{", "}", "[", "]", "(", ")", "'", "_"]
+        );
 
     /**
      * parseWithOutcome is a function that wraps the input text in a CharStream
@@ -138,7 +129,7 @@ export namespace Parser {
         return Prims.choices<Expression<any>>(
             funDef, conditionalParser, returnParser, funApp, listAccessOpParser, listParser,
             binOpExpr(), unOpsExpr, parens, notExpr,
-            boolParse(), varNameParse(), lNumber(), lstring, singleComment()
+            boolParse, varNameParse, lNumber, lstring, singleComment
         )(i);
     }
 
@@ -148,7 +139,7 @@ export namespace Parser {
     export let ExpressionParserNoStruct: Prims.IParser<Expression<any>> = i => {
         return Prims.choices<Expression<any>>(
             listAccessOpParser, listParser, binOpExpr(), unOpsExpr, parens, notExpr, funApp,
-            boolParse(), varNameParse(), lNumber(), lstring
+            boolParse, varNameParse, lNumber, lstring
         )(i);
     }
 
@@ -158,26 +149,22 @@ export namespace Parser {
     export let ExpressionParserNoStructBin: Prims.IParser<Expression<any>> = i => {
         return Prims.choices<Expression<any>>(
             listAccessOpParser, listParser, unOpsExpr, parens, notExpr, funApp,
-            boolParse(), varNameParse(), lNumber(), lstring
+            boolParse, varNameParse, lNumber, lstring
         )(i);
     }
 
     /**
      * lNumber is used to wrap parsed numbers in NumberNodes for the AST
      */
-    export function lNumber(): Prims.IParser<Expression<{}>> {
-        return (istream: CharStream) => {
-            let lws = "";
-            let preWS = Prims.appfun(Prims.ws())(x => lws = x.toString());
-            let o = Prims.right(preWS)(Prims.choices<number>(float(), number()))(istream);
-            switch (o.tag) {
-                case "success":
-                    return new Prims.Success(o.inputstream, new NumberNode((<number>o.result), lws));
-                case "failure":
-                    return o;
-            }
-        }
-    }
+    export let lNumber : Prims.IParser<NumberNode> = i => {
+        let lws = "";
+        let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => lws = x.toString());
+        return Prims.appfun<number, NumberNode>(
+            Prims.right<string, number>(preWS)(Prims.choices<number>(float, number))
+        )(
+            (number : number) => new NumberNode(number, lws)
+        )(i)
+    };
 
     /**
      * lstring parses valid strings in the SWELL language
@@ -190,7 +177,7 @@ export namespace Parser {
             Prims.str("\"")
         )(
             Prims.many<CharStream>(
-                Prims.choices<CharStream>(Prims.letter(), Prims.ws1(), Prims.digit(), binOpChar(), punctuation())
+                Prims.choices<CharStream>(Prims.letter(), Prims.ws1(), Prims.digit(), binOpChar(), punctuation)
             )
         );
         return Prims.seq<CharStream, CharStream[], StringNode>(Prims.ws())(stringParser)(
@@ -203,7 +190,7 @@ export namespace Parser {
     /**
      * boolParse parses valid booleans, true and false, and returns a BooleanNode
      */
-    export function boolParse(): Prims.IParser<BooleanNode> {
+    export let boolParse : Prims.IParser<BooleanNode> = i => {
         let lws = "";
         let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => lws = x.toString());
         let trueNode = Prims.appfun<CharStream, BooleanNode>(
@@ -216,7 +203,7 @@ export namespace Parser {
         )(
             _ => new BooleanNode(false, lws)
         );
-        return Prims.choice<BooleanNode>(trueNode)(falseNode);
+        return Prims.choice<BooleanNode>(trueNode)(falseNode)(i);
     }
 
     const binOpPrecedenceMap: Map<string, number> = new Map([
@@ -247,9 +234,7 @@ export namespace Parser {
     export function binOpExpr(includePureLogic: boolean = true): Prims.IParser<Expression<any>> {
         return i => {
             let ws: string[] = [];
-            let preWS = Prims.appfun<CharStream, void>(Prims.ws())(x => {
-                ws.push(x.toString());
-            });
+            let preWS = Prims.appfun<CharStream, void>(Prims.ws())(x => ws.push(x.toString()));
             let singleTokenParser = ExpressionParserNoStructBin;
             let remainingTokensParser = Prims.many1<[CharStream, Expression<any>]>(
                 Prims.seq<CharStream, Expression<any>, [CharStream, Expression<any>]>(
@@ -324,7 +309,7 @@ export namespace Parser {
      */
     export let unOpsExpr: Prims.IParser<UnaryOp<any>> = i => {
         let operand = Prims.choices<Expression<any>>(
-            listAccessOpParser, parens, funApp, varNameParse(), lNumber()
+            listAccessOpParser, parens, funApp, varNameParse, lNumber
         );
         let prefixOperand = Prims.expect<Expression<any>>(operand)("invalid expression");
         let ws = "";
@@ -391,7 +376,7 @@ export namespace Parser {
         let notOp: Prims.IParser<CharStream> = Prims.right<string, CharStream>(preWS)(Prims.str("!"));
         let operand: Prims.IParser<Expression<any>> = Prims.expect<Expression<any>>(
             Prims.choices<Expression<any>>(
-                notExpr, binOpExpr(false), parens, boolParse(), varNameParse(), lNumber(), lstring
+                notExpr, binOpExpr(false), parens, boolParse, varNameParse, lNumber, lstring
             )
         )("invalid expression");
         let createNotOp = (tup: [CharStream, Expression<any>]) => new Not(tup[1], ws);
@@ -403,15 +388,14 @@ export namespace Parser {
      * variable names in SWELL begin with a letter and are followed
      * by letters or digits
      */
-    export function varNameParse(): Prims.IParser<VariableNode> {
-        return Prims.seq<CharStream, CharStream, VariableNode>(
+    export let varNameParse : Prims.IParser<VariableNode> =
+        Prims.seq<CharStream, CharStream, VariableNode>(
             Prims.ws()
         )(
             identifierParser
         )(
             tup => new VariableNode(tup[1].toString(), tup[0].toString())
         );
-    }
 
     export let listParser: Prims.IParser<ListNode> = i => {
         let preOpenBracketWs = "";
@@ -453,7 +437,7 @@ export namespace Parser {
     }
 
     export let listAccessOpParser: Prims.IParser<ListAccessOp> = i => {
-        let operandParser = Prims.choices<Expression<any>>(listParser, funApp, varNameParse(), parens);
+        let operandParser = Prims.choices<Expression<any>>(listParser, funApp, varNameParse, parens);
         let openBracket = Prims.left(Prims.ws())(Prims.char("["));
         let closeBracket = Prims.left(Prims.ws())(Prims.expect(Prims.char("]"))("] expected"));
         let idxExprParser = Prims.expect(ExpressionParserNoStruct)("invalid index expression");
@@ -770,18 +754,31 @@ export namespace Parser {
         return Prims.choices<Conditional>(ifElseParser, singleIfParser)(i);
     }
 
-    export function singleComment(): Prims.IParser<SingleComment> {
+    export let singleComment : Prims.IParser<SingleComment> = i => {
         let ws = "";
-        let preWS = Prims.appfun<CharStream, string>(Prims.left<CharStream, CharStream>(Prims.ws())(Prims.str("//")))(x => ws = x.toString());
-        let str = Prims.many1<CharStream>(Prims.choices<CharStream>(Prims.letter(), Prims.digit(), Prims.char(" "), Prims.char('\t'), Prims.char("\""), punctuation(), binOpChar()));
+        let preWS = Prims.appfun<CharStream, string>(
+            Prims.left<CharStream, CharStream>(
+                Prims.ws()
+            )(
+                Prims.str("//"))
+            )(
+                x => ws = x.toString()
+            );
+
+        let str = Prims.many1<CharStream>(
+            Prims.choices<CharStream>(
+                Prims.letter(), Prims.digit(), Prims.char(" "), 
+                Prims.char('\t'), Prims.char("\""), punctuation, binOpChar())
+            );
+
         let comm = Prims.appfun<CharStream[], CharStream>(str)(x => CharStream.concat(x));
         let p = Prims.right<string, CharStream>(preWS)(comm);
-        return Prims.appfun<CharStream, SingleComment>(p)(x => new SingleComment(x.toString(), ws));
+        return Prims.appfun<CharStream, SingleComment>(p)(x => new SingleComment(x.toString(), ws))(i);
     }
 
-    export function multiLineComment() {
+    export let multiLineComment = (i : CharStream) => {
         let p1 = Prims.many1<CharStream>(Prims.item())
         let p2 = Prims.appfun<CharStream[], CharStream>(p1)(xs => CharStream.concat(xs));
-        return Prims.between(Prims.str('\/**'))(Prims.str('*\/'))(p2);
+        return Prims.between(Prims.str('\/**'))(Prims.str('*\/'))(p2)(i);
     }
 }
