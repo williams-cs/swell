@@ -2,6 +2,7 @@ import { Option, Some, None } from 'space-lift';
 import { Effect } from '../effects/Effect';
 import { LogEvent } from '../logging/LogEvent';
 import clone = require("clone");
+import { CanvasState } from "../effects/CanvasState";
 
 export class Scope {
 
@@ -12,6 +13,8 @@ export class Scope {
     private _latestScope: Scope = null;
 
     private _canvas: HTMLCanvasElement;
+
+    private _canvasState : CanvasState
 
     private _effects: Effect<any>[];
 
@@ -27,7 +30,7 @@ export class Scope {
      * @param eventLog The log of events that occurred
      */
     constructor(
-        parent: Scope, canvas: HTMLCanvasElement = null,
+        parent: Scope, canvas: HTMLCanvasElement = null, canvasState : CanvasState = null,
         effects: Effect<any>[] = null, eventLog: LogEvent<any>[] = null
     ) {
         this._varBindings = new Map();
@@ -36,13 +39,14 @@ export class Scope {
         this._canvas = canvas;
         this._effects = effects;
         this._eventLog = eventLog;
+        this._canvasState = canvasState;
     }
 
     /**
      * Returns a copy of the current scope
      */
     copy(): Scope {
-        let s: Scope = new Scope(this.parent, this.canvas, this.effects, this.eventLog);
+        let s: Scope = new Scope(this.parent, this.canvas, this._canvasState, this.effects, this.eventLog);
         s.varBindings = new Map(this.varBindings);
         return s;
     }
@@ -51,7 +55,7 @@ export class Scope {
      * Returns a child scope with the current scope as parent.
      */
     createChildScope(): Scope {
-        let s: Scope = new Scope(this, this.canvas, this.effects, this.eventLog);
+        let s: Scope = new Scope(this, this.canvas, this._canvasState, this.effects, this.eventLog);
         s.varBindings = new Map(this.varBindings);
         return s;
     }
@@ -139,6 +143,11 @@ export class Scope {
     get mulSelArray(): Effect<any>[] {
         return this._mulSelArray;
     }
+
+    get canvasState() : CanvasState {
+        return this._canvasState;
+    }
+
     toString() : string {
         let s : string = "{ ";
         this._varBindings.forEach((value: Option<any>, key: string) => {

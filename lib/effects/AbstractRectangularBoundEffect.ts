@@ -1,6 +1,7 @@
 import { Effect } from "./Effect";
 import { EffectUtils } from "./EffectUtils";
 import KEYBOARD = EffectUtils.KEYBOARD;
+import GUIDE = EffectUtils.GUIDE;
 
 export abstract class AbstractRectangularBoundEffect<T> extends Effect<T> {
 
@@ -10,6 +11,39 @@ export abstract class AbstractRectangularBoundEffect<T> extends Effect<T> {
     modifyDrag(event: MouseEvent): void {
         this.x = this.prevX + this.mouse.x - this.prevMouse.x;
         this.y = this.prevY + this.mouse.y - this.prevMouse.y;
+    }
+
+    changeCursor(corner : GUIDE) : void {
+        if (this.cursorOwnerID == undefined || this.cursorOwnerID === this.id) {
+            switch (corner) {
+                case GUIDE.RECT_TOP_LEFT:
+                case GUIDE.RECT_BOTTOM_RIGHT:
+                    this.canvas.style.cursor = "nwse-resize";
+                    this.cursorOwnerID = this.id;
+                    break;
+                case GUIDE.RECT_TOP_RIGHT:
+                case GUIDE.RECT_BOTTOM_LEFT:
+                    this.canvas.style.cursor = "nesw-resize";
+                    this.cursorOwnerID = this.id;
+                    break;
+                case GUIDE.RECT_TOP_MID:
+                case GUIDE.RECT_BOTTOM_MID:
+                    this.canvas.style.cursor = "ns-resize";
+                    this.cursorOwnerID = this.id;
+                    break;
+                case GUIDE.RECT_MID_LEFT:
+                case GUIDE.RECT_MID_RIGHT:
+                    this.canvas.style.cursor = "ew-resize";
+                    this.cursorOwnerID = this.id;
+                    break;
+                default:
+                    if (!this.isResizing) {
+                        this.canvas.style.cursor = "auto";
+                        this.cursorOwnerID = undefined;
+                    }
+                    break;
+            }
+        }
     }
 
     // Event listeners

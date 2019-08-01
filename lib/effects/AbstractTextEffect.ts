@@ -31,6 +31,7 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
         this.ctx.fillText(this.text, this.x, this.y); // Text starts from bottom left
         if (this.isSelected) {
             this.drawGuides();
+            this.changeCursor(this.guideContains());
             if (this.isEditing) {
                 this.drawCursor();
             }
