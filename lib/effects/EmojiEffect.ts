@@ -20,6 +20,7 @@ export class EmojiEffect extends AbstractShapeEffect<EmojiNode, EmojiEffect> {
         this.ctx.drawImage(this.image, this.x, this.y, this.w, this.h);
         if (this.isSelected) {
             this.drawGuides();
+            this.changeCursor(this.guideContains());
         }
     }
 

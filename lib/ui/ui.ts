@@ -11,12 +11,16 @@ import * as csvParse from 'csv-parse';
 import { EffectUtils } from "../../lib/effects/EffectUtils";
 import KEYBOARD = EffectUtils.KEYBOARD;
 import { AbstractTextEffect } from '../effects/AbstractTextEffect';
+import { CanvasState } from "../effects/CanvasState";
+import { cursorTo } from 'readline';
 
 (function() {
     let editor: CodeMirror.Editor = ((e: any) => { return e.CodeMirror })(document.getElementById("input"));
     let editorDoc: CodeMirror.Doc = editor.getDoc();
     let editorWrapper = editor.getWrapperElement();
     let canvas = document.querySelector("canvas");
+    let cursor = new CanvasState();
+
     let popUp = document.getElementById("popup");
     let ctx = canvas.getContext("2d");
     let lastCursorPos: any = editorDoc.getCursor();
@@ -96,9 +100,8 @@ import { AbstractTextEffect } from '../effects/AbstractTextEffect';
                         parses = true;
                         message.innerHTML = "Program parsed successfully";
                         ast = outcome.result; // get AST
-                        context = new Scope(null, canvas, effects, masterLog);
+                        context = new Scope(null, canvas, cursor, effects, masterLog);
                         ast.eval(context); // evaluate (this is where objects appear on screen)
-
                     } catch (e) {
                         message.innerHTML = e.toString();
                     }
@@ -170,6 +173,7 @@ import { AbstractTextEffect } from '../effects/AbstractTextEffect';
             masterLog.push(context.eventLog[context.eventLog.length - 1]);
             alreadyLogged = true;
         }
+
         //selectedElems = [];
 
         updateProgramText(); // ProDirect Manipulation

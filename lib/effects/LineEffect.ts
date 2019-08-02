@@ -13,6 +13,7 @@ export class LineEffect extends AbstractLineEffect<LineNode, LineEffect> {
         this.ctx.stroke();
         if (this.isSelected) {
             this.drawGuides();
+            this.changeCursor(this.guideContains());
         }
     }
 }

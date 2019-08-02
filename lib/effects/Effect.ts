@@ -4,6 +4,7 @@ import { LogEvent } from "../logging/LogEvent";
 import { PrintNode } from "../structural/PrintNode";
 import { Scope } from "../structural/Scope";
 import GUIDE = EffectUtils.GUIDE;
+import { CanvasState } from "./CanvasState";
 
 export abstract class Effect<T> {
 
@@ -390,5 +391,17 @@ export abstract class Effect<T> {
 
     get guideSize(): number {
         return this._guideSize;
+    }
+
+    get canvasState() : CanvasState {
+        return this.scope.canvasState;
+    }
+
+    get cursorOwnerID() {
+        return this.canvasState.cursorOwnerID;
+    }
+
+    set cursorOwnerID(newID : number) {
+        this.canvasState.cursorOwnerID = newID;
     }
 }

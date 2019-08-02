@@ -118,6 +118,46 @@ export abstract class AbstractLineEffect<T extends AbstractLineNode<T, E>, E ext
         this.corner = GUIDE.NONE;
     }
 
+    private angle() : string {
+        let dy = this.y2 - this.y1;
+        let dx = this.x2 - this.x1;
+        let theta = Math.atan2(dy, dx); // range (-PI, PI]
+        theta *= 180 / Math.PI; // rads to degs, range (-180, 180]
+        if ((theta >= -25 && theta <= 0) || (theta > 0 && theta <= 25) || theta >= 155 || theta <= -155) { 
+            return "ew"; // case east-west line
+        } else if ((theta > 25 && theta < 65) || (theta <= -115 && theta >= -155)) {
+            return "nwse"; // case northeast-southwest line
+        } else if ((theta >= 65 && theta <= 115) || (theta >= -115 && theta <= -65)) {
+            return "ns"; // case north-south line
+        } else {
+            return "nesw"; // case northwest-southeast line
+        }
+    }
+
+    changeCursor(corner : GUIDE) : void {
+        if (this.cursorOwnerID == undefined || this.cursorOwnerID == this.id) {
+            if (corner == GUIDE.LINE_START || corner == GUIDE.LINE_END) {
+                this.cursorOwnerID = this.id;
+                switch (this.angle()) {
+                    case "ew":
+                        this.canvas.style.cursor = "ew-resize";
+                        break;
+                    case "nesw" :
+                        this.canvas.style.cursor = "nesw-resize";
+                        break;
+                    case "ns" :
+                        this.canvas.style.cursor = "ns-resize";
+                        break;
+                    default :
+                        this.canvas.style.cursor = "nwse-resize";
+                }
+            } else {
+                this.canvas.style.cursor = "auto";
+                this.cursorOwnerID = undefined;
+            }
+        }
+    }
+
     // Logging functions - Need updating
 
     logPaint(): LogEvent<any> {
