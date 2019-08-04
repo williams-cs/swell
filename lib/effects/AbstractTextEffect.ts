@@ -30,12 +30,14 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
         this.ctx.fillStyle = this.color;
         this.ctx.fillText(this.text, this.x, this.y); // Text starts from bottom left
         if (this.isSelected) {
+            //this.changeResizeCursor(this.guideContains());
             this.drawGuides();
-            this.changeCursor(this.guideContains());
             if (this.isEditing) {
                 this.drawCursor();
             }
         }
+
+        this.changeCursor();
     }
 
     guideContains(): number {
@@ -115,6 +117,37 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
 
     onKeyDown(event: KeyboardEvent) {
         this.modifyText(event);
+    }
+
+    /* Cursor modifying functions */
+
+    changeCursor() : void {
+        if (this.cursorOwnerID == undefined || this.cursorOwnerID === this.id) {
+            this.changeResizeCursor(this.guideContains());
+
+
+            if (!this.isEditing) {
+                this.changeDragCursor(this.guideContains());
+            }
+
+            this.changeEditCursor();
+        }
+    }
+
+    changeEditCursor() : void {
+        if (this.guideContains() === GUIDE.NONE) {
+            if (this.contains()) {
+                if (this.isEditing) {
+                    this.canvasState.cursorOwnerID = this.id;
+                    this.canvas.style.cursor = "text";
+                } 
+            } else {
+                if (!this.isResizing) {
+                    this.canvasState.cursorOwnerID = undefined;
+                    this.canvas.style.cursor = "auto";
+                }
+            }
+        }
     }
 
     /* Modification funcions */
@@ -301,9 +334,10 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
         return `${this.id} to ${this.name} ${this.node.toString()} at ${this.x}, ${this.y}`;
     }
 
-    delete(){
-        if(!this._isEditing) this.aes.commentOut();
-        else {
+    delete() {
+        if(!this._isEditing) {
+            this.aes.commentOut();
+        } else {
             let firstHalf: string = this.text.substring(0, this.cursorPos);
             let secondHalf: string = this.text.substring(this.cursorPos);
             secondHalf = secondHalf.substring(1, secondHalf.length);

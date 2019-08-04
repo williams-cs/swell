@@ -13,8 +13,10 @@ export abstract class AbstractRectangularBoundEffect<T> extends Effect<T> {
         this.y = this.prevY + this.mouse.y - this.prevMouse.y;
     }
 
-    changeCursor(corner : GUIDE) : void {
-        if (this.cursorOwnerID == undefined || this.cursorOwnerID === this.id) {
+    // Modifying cursors function
+
+    changeResizeCursor(corner : GUIDE) : void {
+        if (this.isSelected) {
             switch (corner) {
                 case GUIDE.RECT_TOP_LEFT:
                 case GUIDE.RECT_BOTTOM_RIGHT:
