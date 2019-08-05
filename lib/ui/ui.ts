@@ -319,18 +319,16 @@ import { cursorTo } from 'readline';
             popUp.style.display = 'none';
         }
     });
+    
     window.addEventListener("keydown", function(event: any) {
         if (!editor.hasFocus()) {
             isDoingDM = true;
             if(event.keyCode == KEYBOARD.BACKSPACE) {
                 window.dispatchEvent(deleteObject);
-                let newProgram: string = ast.toString();
-                editor.setValue(newProgram);
-                lastProgram = newProgram;
-                parse();
             }
         }
     });
+
     window.addEventListener("keyup", function(event: any) {
         isDoingDM = isCanvasSelected || false;
     });
@@ -340,9 +338,10 @@ import { cursorTo } from 'readline';
         isCanvasSelected = true;
         isDoingDM = true;
     });
+
     canvas.addEventListener("mouseup", function() {
         isCanvasSelected = false;
-    });2
+    });
 
     /* Palette */
 

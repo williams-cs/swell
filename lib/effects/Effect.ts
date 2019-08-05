@@ -148,6 +148,36 @@ export abstract class Effect<T> {
     }
 
     /**
+     * Modifying cursor upon dragging, resizing
+     */
+
+    changeCursor() : void {
+        if (this.cursorOwnerID == undefined || this.cursorOwnerID === this.id) {
+            this.changeResizeCursor(this.guideContains());
+
+            this.changeDragCursor(this.guideContains());
+
+        }
+    }
+
+    abstract changeResizeCursor(corner : GUIDE) : void;
+
+    changeDragCursor(corner : GUIDE) : void {
+        if (!this.isResizing && corner === GUIDE.NONE) {
+            if (this.contains()) {
+                this.canvas.style.cursor = "grab";
+                this.cursorOwnerID = this.id;
+                if (this.isDragging) {
+                    this.canvas.style.cursor = "grabbing";
+                } 
+            } else {
+                this.canvas.style.cursor = "auto";
+                this.cursorOwnerID = undefined;
+            }
+        }
+    }
+
+    /**
      * Called whenever the mouse moves within the canvas.
      * Updates mouse position and calls the modify methods.
      * @param event the mousemove event

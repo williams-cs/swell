@@ -118,6 +118,8 @@ export abstract class AbstractLineEffect<T extends AbstractLineNode<T, E>, E ext
         this.corner = GUIDE.NONE;
     }
 
+    /* Modifying cursor */
+
     private angle() : string {
         let dy = this.y2 - this.y1;
         let dx = this.x2 - this.x1;
@@ -134,8 +136,8 @@ export abstract class AbstractLineEffect<T extends AbstractLineNode<T, E>, E ext
         }
     }
 
-    changeCursor(corner : GUIDE) : void {
-        if (this.cursorOwnerID == undefined || this.cursorOwnerID == this.id) {
+    changeResizeCursor(corner : GUIDE) : void {
+        if (this.isSelected) {
             if (corner == GUIDE.LINE_START || corner == GUIDE.LINE_END) {
                 this.cursorOwnerID = this.id;
                 switch (this.angle()) {
