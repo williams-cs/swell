@@ -40,6 +40,7 @@ export abstract class Effect<T> {
     private _justResized: boolean = false;
     private _corner: GUIDE = GUIDE.NONE;
     private readonly _guideSize: number = 7;
+    private readonly _rotGuideSize: number = 12;
 
     private _mouse: {
         x: number,
@@ -182,7 +183,7 @@ export abstract class Effect<T> {
      * Updates mouse position and calls the modify methods.
      * @param event the mousemove event
      */
-    private onMouseMove(event: MouseEvent): void {
+    protected onMouseMove(event: MouseEvent): void {
         // Update mouse pos
         let rect = this.canvas.getBoundingClientRect();
         this.mouse = {
@@ -252,6 +253,30 @@ export abstract class Effect<T> {
         this.ctx.fillRect(x, y, this.guideSize, this.guideSize);
         this.ctx.rect(x, y, this.guideSize, this.guideSize);
         this.ctx.strokeStyle = "gray";
+        this.ctx.stroke();
+    }
+
+    drawRotationGuide(x : number, y : number) {
+        this.ctx.beginPath();
+        this.ctx.moveTo(x, y);
+        this.ctx.lineTo(x, y - 10);
+        this.ctx.stroke();
+
+        this.ctx.beginPath();
+        this.ctx.arc(x, y - 16, 6, 0, 2 * Math.PI);
+        this.ctx.fillStyle = this.corner == GUIDE.ROTATE ? "blue" : "white";
+        this.ctx.stroke();
+
+        this.ctx.beginPath();
+        this.ctx.arc(x, y - 16, 3, 0.5* Math.PI, 2 * Math.PI);
+        this.ctx.stroke();
+
+        let headlen = 2; // length of arrow head in pixels
+        let angle = 3*Math.PI/2; //angle of arrow
+        this.ctx.beginPath();
+        this.ctx.moveTo(x + 3 + headlen * Math.cos(angle + Math.PI / 6), y - 16 + headlen * Math.sin(angle + Math.PI / 6));
+        this.ctx.lineTo(x + 3, y - 16);
+        this.ctx.lineTo(x + 3 + headlen * Math.cos(angle - Math.PI / 6), y - 16 + headlen * Math.sin(angle - Math.PI / 6));
         this.ctx.stroke();
     }
 
@@ -419,8 +444,20 @@ export abstract class Effect<T> {
         this.aes.setColor(this.scope, val);
     }
 
+    get rotate(): number {
+        return this.aes.getRotate(this.scope);
+    }
+
+    set rotate(val: number) {
+        this.aes.setRotate(this.scope, val);
+    }
+
     get guideSize(): number {
         return this._guideSize;
+    }
+
+    get rotGuideSize() : number {
+        return this._rotGuideSize;
     }
 
     get canvasState() : CanvasState {

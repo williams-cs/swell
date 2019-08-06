@@ -38,6 +38,10 @@ export abstract class AbstractRectangularBoundEffect<T> extends Effect<T> {
                     this.canvas.style.cursor = "ew-resize";
                     this.cursorOwnerID = this.id;
                     break;
+                // case GUIDE.ROTATE:
+                //     this.canvas.style.cursor = "zoom-in";
+                //     this.cursorOwnerID = this.id;
+                //     break;
                 default:
                     if (!this.isResizing) {
                         this.canvas.style.cursor = "auto";

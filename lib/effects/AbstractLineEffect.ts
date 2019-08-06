@@ -120,7 +120,7 @@ export abstract class AbstractLineEffect<T extends AbstractLineNode<T, E>, E ext
 
     /* Modifying cursor */
 
-    private angle() : string {
+    private getLineAngle() : string {
         let dy = this.y2 - this.y1;
         let dx = this.x2 - this.x1;
         let theta = Math.atan2(dy, dx); // range (-PI, PI]
@@ -140,7 +140,7 @@ export abstract class AbstractLineEffect<T extends AbstractLineNode<T, E>, E ext
         if (this.isSelected) {
             if (corner == GUIDE.LINE_START || corner == GUIDE.LINE_END) {
                 this.cursorOwnerID = this.id;
-                switch (this.angle()) {
+                switch (this.getLineAngle()) {
                     case "ew":
                         this.canvas.style.cursor = "ew-resize";
                         break;

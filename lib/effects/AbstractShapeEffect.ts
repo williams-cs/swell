@@ -12,6 +12,7 @@ import { Scope } from "../structural/Scope";
 import GUIDE = EffectUtils.GUIDE;
 import KEYBOARD = EffectUtils.KEYBOARD;
 import { EventEmitter } from "events";
+import { Z_ASCII } from "zlib";
 
 export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E extends AbstractShapeEffect<T, E>> extends AbstractRectangularBoundEffect<T> {
 
@@ -19,56 +20,78 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
     private _prevHeight: number;
 
     guideContains(): GUIDE {
-        let mx: number = this.mouse.x;
-        let my: number = this.mouse.y;
-        let x: number = this.x;
-        let y: number = this.y;
         let w: number = this.w;
         let h: number = this.h;
+        let x: number = this.x;
+        let y: number = this.y;
+        let mx: number = this.mouse.x;
+        let my: number = this.mouse.y; 
+        
+        let newMousePos = this.prepareMouse(0, 0, mx - x - w/2, my - y - h/2, this.rotate);
+        mx = newMousePos[0];
+        my = newMousePos[1];
 
         /* Corner Guides */
-        let xdif: number = mx - x;
-        let ydif: number = my - y;
+        let xdif: number = mx + w/2;
+        let ydif: number = my + h/2;
         let halfSize: number = this.guideSize/2;
+        let rotSize = this.rotGuideSize;
+
         if (Math.abs(xdif) <= halfSize && Math.abs(ydif) <= halfSize) {
             return GUIDE.RECT_TOP_LEFT;
         }
-        xdif = mx - (x + w);
+        xdif = mx - w/2;
         if (Math.abs(xdif) <= halfSize && Math.abs(ydif) <= halfSize) {
             return GUIDE.RECT_TOP_RIGHT;
         }
-        xdif = mx - (x + w);
-        ydif = my - (y + h);
+        xdif = mx - w/2;
+        ydif = my - h/2;
         if (Math.abs(xdif) <= halfSize && Math.abs(ydif) <= halfSize) {
             return GUIDE.RECT_BOTTOM_RIGHT;
         }
-        xdif = mx - x;
+        xdif = mx + w/2;
         if (Math.abs(xdif) <= halfSize && Math.abs(ydif) <= halfSize) {
             return GUIDE.RECT_BOTTOM_LEFT;
         }
 
         /* Middle Guides */
-        xdif = mx - (x + w/2);
-        ydif = my - y;
+        xdif = mx;
+        ydif = my + h/2;
         if (Math.abs(xdif) <= halfSize && Math.abs(ydif) <= halfSize) {
             return GUIDE.RECT_TOP_MID;
         }
-        xdif = mx - (x + w);
-        ydif = my - (y + h/2);
+        xdif = mx - w/2;
+        ydif = my;
         if (Math.abs(xdif) <= halfSize && Math.abs(ydif) <= halfSize) {
             return GUIDE.RECT_MID_RIGHT;
         }
-        xdif = mx - (x + w/2);
-        ydif = my - (y + h);
+        xdif = mx;
+        ydif = my - h/2;
         if (Math.abs(xdif) <= halfSize && Math.abs(ydif) <= halfSize) {
             return GUIDE.RECT_BOTTOM_MID;
         }
-        xdif = mx - x;
-        ydif = my - (y + h/2);
+        xdif = mx + w/2;
+        ydif = my;
         if (Math.abs(xdif) <= halfSize && Math.abs(ydif) <= halfSize) { //middle left
             return GUIDE.RECT_MID_LEFT;
         }
+
+        /* Rotation Guide*/
+        xdif = mx;
+        ydif = my + h/2 + 10 + rotSize/2;
+        if (Math.abs(xdif) <= rotSize/2 && Math.abs(ydif) <= rotSize/2) {
+            return GUIDE.ROTATE;
+        }
+
         return GUIDE.NONE;
+    }
+
+    private prepareMouse(x : number, y : number, mx : number, my : number, angle : number) : [number, number] {
+        let cos = Math.cos((Math.PI / 180) * angle);
+        let sin = Math.sin((Math.PI / 180) * angle);
+        let nx = x + (cos * (mx - x)) + (sin * (my - y));
+        let ny = y + (cos * (my - y)) - (sin * (mx - x));
+        return [nx, ny];
     }
 
     drawGuides() {
@@ -76,19 +99,27 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
         let y: number = this.y;
         let w: number = this.w;
         let h: number = this.h;
+
+        this.ctx.save();
+        this.ctx.translate(x + w/2, y + h/2);
+        this.ctx.rotate(this.rotate * Math.PI / 180);
+
         this.ctx.beginPath();
-        this.ctx.rect(x, y, w, h);
+        this.ctx.rect(-w/2, -h/2, w, h);
         this.ctx.strokeStyle = 'gray';
         this.ctx.stroke();
         let halfSize: number = this.guideSize/2;
-        this.drawSingleGuide(x - halfSize, y - halfSize, GUIDE.RECT_TOP_LEFT);
-        this.drawSingleGuide((x + w/2) - halfSize, y - halfSize, GUIDE.RECT_TOP_MID);
-        this.drawSingleGuide(x + w - halfSize, y - halfSize, GUIDE.RECT_TOP_RIGHT);
-        this.drawSingleGuide(x - halfSize, (y + h/2) - halfSize, GUIDE.RECT_MID_LEFT);
-        this.drawSingleGuide(x + w - halfSize, (y + h/2) - halfSize, GUIDE.RECT_MID_RIGHT);
-        this.drawSingleGuide(x + w - halfSize, y + h - halfSize, GUIDE.RECT_BOTTOM_RIGHT);
-        this.drawSingleGuide((x + w/2) - halfSize, y + h - halfSize, GUIDE.RECT_BOTTOM_MID);
-        this.drawSingleGuide(x - halfSize, y + h - halfSize, GUIDE.RECT_BOTTOM_LEFT);
+
+        this.drawRotationGuide(0, -h/2);
+        this.drawSingleGuide(-w/2 - halfSize, -h/2 - halfSize, GUIDE.RECT_TOP_LEFT);
+        this.drawSingleGuide(- halfSize, -h/2 - halfSize, GUIDE.RECT_TOP_MID);
+        this.drawSingleGuide(w/2 - halfSize, -h/2 - halfSize, GUIDE.RECT_TOP_RIGHT);
+        this.drawSingleGuide(-w/2 - halfSize, -halfSize, GUIDE.RECT_MID_LEFT);
+        this.drawSingleGuide(w/2 - halfSize, -halfSize, GUIDE.RECT_MID_RIGHT);
+        this.drawSingleGuide(w/2 - halfSize, h/2 - halfSize, GUIDE.RECT_BOTTOM_RIGHT);
+        this.drawSingleGuide(- halfSize, h/2 - halfSize, GUIDE.RECT_BOTTOM_MID);
+        this.drawSingleGuide(-w/2 - halfSize, h/2 - halfSize, GUIDE.RECT_BOTTOM_LEFT);
+        this.ctx.restore();
     }
 
     /**
