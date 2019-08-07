@@ -47,9 +47,26 @@ export abstract class AbstractRectangularBoundEffect<T> extends Effect<T> {
                         this.canvas.style.cursor = "auto";
                         this.cursorOwnerID = undefined;
                     }
-                    break;
             }
         }
+    }
+
+    protected prepareCanvas(cx : number, cy : number) {
+        this.ctx.save();
+        this.ctx.translate(cx, cy);
+        this.ctx.rotate(this.rotate * Math.PI / 180);
+    }
+
+    protected restoreCanvas() {
+        this.ctx.restore();
+    }
+
+    protected prepareMouse(x : number, y : number, mx : number, my : number, angle : number) : [number, number] {
+        let cos = Math.cos((Math.PI / 180) * angle);
+        let sin = Math.sin((Math.PI / 180) * angle);
+        let nx = x + (cos * (mx - x)) + (sin * (my - y));
+        let ny = y + (cos * (my - y)) - (sin * (mx - x));
+        return [nx, ny];
     }
 
     // Event listeners

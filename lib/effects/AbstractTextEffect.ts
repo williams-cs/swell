@@ -26,9 +26,11 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
     private _isCursorDisplayed: boolean = true;
 
     update(): void {
+        this.prepareCanvas(this.x + this.width/2, this.y - this.fontSize/2);
         this.ctx.font = this.fontSize + this.font;
         this.ctx.fillStyle = this.color;
-        this.ctx.fillText(this.text, this.x, this.y); // Text starts from bottom left
+        this.ctx.fillText(this.text, -this.width/2, this.fontSize/2); // Text starts from bottom left
+        this.restoreCanvas();
         if (this.isSelected) {
             //this.changeResizeCursor(this.guideContains());
             this.drawGuides();
@@ -43,41 +45,58 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
     guideContains(): number {
         let mx: number = this.mouse.x;
         let my: number = this.mouse.y;
+        let x: number = this.x;
+        let y: number = this.y - this.fontSize;
+        let w: number = this.width;
+        let h: number = this.fontSize;
         let halfSize: number = this.guideSize/2;
-        let xDiff: number = mx - (this.x + this.width);
-        let yDiff: number = my - (this.y - this.fontSize);
+        let rotSize: number = this.rotGuideSize
+
+        let newMousePos = this.prepareMouse(0, 0, mx - (x + w/2), my - (y + h/2), this.rotate);
+        mx = newMousePos[0];
+        my = newMousePos[1];
+
+        let xDiff: number = mx - w/2;
+        let yDiff: number = my + h/2;
         if (Math.abs(xDiff) <= halfSize && Math.abs(yDiff) <= halfSize) {
             this.isEditing = false;
             return GUIDE.RECT_TOP_RIGHT;
         }
 
-        xDiff = mx - this.x;
+        xDiff = mx + w/2;
         if (Math.abs(xDiff) <= halfSize && Math.abs(yDiff) <= halfSize) {
             this.isEditing = false;
             return GUIDE.RECT_TOP_LEFT;
         }
 
-        xDiff = mx - (this.x + this.width);
-        yDiff = my - this.y;
+        xDiff = mx - w/2;
+        yDiff = my - h/2;
         if (Math.abs(xDiff) <= halfSize && Math.abs(yDiff) <= halfSize) {
             this.isEditing = false;
             return GUIDE.RECT_BOTTOM_RIGHT;
         }
 
-        xDiff = mx - this.x;
-        yDiff = my - this.y;
+        xDiff = mx + w/2;
         if (Math.abs(xDiff) <= halfSize && Math.abs(yDiff) <= halfSize) {
             this.isEditing = false;
             return GUIDE.RECT_BOTTOM_LEFT;
         }
+
+        xDiff = mx;
+        yDiff = my + h/2 + 10 + rotSize/2;
+        if (Math.abs(xDiff) <= rotSize/2 && Math.abs(yDiff) <= rotSize/2) {
+            return GUIDE.ROTATE;
+        }
+
         return GUIDE.NONE;
     }
 
     contains(): boolean {
-        let mx: number = this.mouse.x;
-        let my: number = this.mouse.y;
-        return (mx >= this.x) && (mx <= this.x + this.width) &&
-            (my >= this.y - this.fontSize) && (my <= this.y);
+        let newMousePos = this.prepareMouse(0, 0, this.mouse.x - (this.x + this.width/2),
+            this.mouse.y - (this.y - this.fontSize/2), this.rotate);
+        let mx: number = newMousePos[0];
+        let my: number = newMousePos[1];
+        return (Math.abs(mx) < this.width/2) && (Math.abs(my) < this.fontSize/2);
     }
 
     drawGuides() {
@@ -85,15 +104,18 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
         let x: number = this.x;
         let y: number = this.y - fontSize;
         let w: number = this.width;
+        this.prepareCanvas(x + w/2, y + fontSize/2);
         this.ctx.beginPath();
-        this.ctx.rect(x, y, w, fontSize);
+        this.ctx.rect(-w/2, -fontSize/2, w, fontSize);
         this.ctx.strokeStyle = 'gray';
         this.ctx.stroke();
         let halfSize: number = this.guideSize/2;
-        this.drawSingleGuide(x - halfSize, y - halfSize, GUIDE.RECT_TOP_LEFT);
-        this.drawSingleGuide(x + w - halfSize, y - halfSize, GUIDE.RECT_TOP_RIGHT);
-        this.drawSingleGuide(x + w - halfSize, y + fontSize - halfSize, GUIDE.RECT_BOTTOM_RIGHT);
-        this.drawSingleGuide(x - halfSize, y + fontSize - halfSize, GUIDE.RECT_BOTTOM_LEFT);
+        this.drawRotationGuide(0, -fontSize/2);
+        this.drawSingleGuide(-w/2 - halfSize, -fontSize/2 - halfSize, GUIDE.RECT_TOP_LEFT);
+        this.drawSingleGuide(w/2 - halfSize, -fontSize/2 - halfSize, GUIDE.RECT_TOP_RIGHT);
+        this.drawSingleGuide(w/2 - halfSize, fontSize/2 - halfSize, GUIDE.RECT_BOTTOM_RIGHT);
+        this.drawSingleGuide(-w/2 - halfSize, fontSize/2 - halfSize, GUIDE.RECT_BOTTOM_LEFT);
+        this.restoreCanvas();
     }
 
     drawCursor(): void {
@@ -106,11 +128,13 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
         if (!this.isCursorDisplayed) {
             return;
         }
-        let cursorX: number = this.x + this.cursorPos * this.interval;
-        this.ctx.moveTo(cursorX, this.y - this.fontSize);
-        this.ctx.lineTo(cursorX, this.y);
+        this.prepareCanvas(this.x + this.width/2, this.y - this.fontSize/2);
+        let cursorX: number = this.cursorPos * this.interval - this.width/2;
+        this.ctx.moveTo(cursorX, -this.fontSize/2);
+        this.ctx.lineTo(cursorX, this.fontSize/2);
         this.ctx.strokeStyle = "grey";
         this.ctx.stroke();
+        this.restoreCanvas();
     }
 
     /* Event listener functions */

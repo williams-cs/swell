@@ -280,6 +280,22 @@ export abstract class Effect<T> {
         this.ctx.stroke();
     }
 
+    protected angle(x1 : number, x2 : number, y1 : number, y2 : number) : string {
+        let dy = y2 - y1;
+        let dx = x2 - x1;
+        let theta = Math.atan2(dy, dx); // range (-PI, PI]
+        theta *= 180 / Math.PI; // rads to degs, range (-180, 180]
+        if ((theta >= -25 && theta <= 0) || (theta > 0 && theta <= 25) || theta >= 155 || theta <= -155) { 
+            return "ew"; // case east-west line
+        } else if ((theta > 25 && theta < 65) || (theta <= -115 && theta >= -155)) {
+            return "nwse"; // case northeast-southwest line
+        } else if ((theta >= 65 && theta <= 115) || (theta >= -115 && theta <= -65)) {
+            return "ns"; // case north-south line
+        } else {
+            return "nesw"; // case northwest-southeast line
+        }
+    }
+
     /* Modification functions */
 
     /**

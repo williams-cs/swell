@@ -86,23 +86,13 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
         return GUIDE.NONE;
     }
 
-    private prepareMouse(x : number, y : number, mx : number, my : number, angle : number) : [number, number] {
-        let cos = Math.cos((Math.PI / 180) * angle);
-        let sin = Math.sin((Math.PI / 180) * angle);
-        let nx = x + (cos * (mx - x)) + (sin * (my - y));
-        let ny = y + (cos * (my - y)) - (sin * (mx - x));
-        return [nx, ny];
-    }
-
     drawGuides() {
         let x: number = this.x;
         let y: number = this.y;
         let w: number = this.w;
         let h: number = this.h;
 
-        this.ctx.save();
-        this.ctx.translate(x + w/2, y + h/2);
-        this.ctx.rotate(this.rotate * Math.PI / 180);
+        this.prepareCanvas(x + w/2, y + h/2);
 
         this.ctx.beginPath();
         this.ctx.rect(-w/2, -h/2, w, h);
@@ -119,7 +109,7 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
         this.drawSingleGuide(w/2 - halfSize, h/2 - halfSize, GUIDE.RECT_BOTTOM_RIGHT);
         this.drawSingleGuide(- halfSize, h/2 - halfSize, GUIDE.RECT_BOTTOM_MID);
         this.drawSingleGuide(-w/2 - halfSize, h/2 - halfSize, GUIDE.RECT_BOTTOM_LEFT);
-        this.ctx.restore();
+        this.restoreCanvas();
     }
 
     /**
@@ -128,10 +118,11 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
      * @param my the mouse y coordinate
      */
     contains(): boolean {
-        let mx: number = this.mouse.x;
-        let my: number = this.mouse.y;
-        return (mx > this.x) && (mx < this.x + this.w) &&
-            (my > this.y) && (my < this.y + this.h);
+        let newMousePos = this.prepareMouse(0, 0, this.mouse.x - (this.x + this.w/2),
+            this.mouse.y - (this.y + this.h/2), this.rotate);
+        let mx: number = newMousePos[0];
+        let my: number = newMousePos[1];
+        return (Math.abs(mx) < this.w/2) && (Math.abs(my) < this.h/2);
     }
 
 

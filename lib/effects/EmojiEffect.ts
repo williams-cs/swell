@@ -16,8 +16,10 @@ export class EmojiEffect extends AbstractShapeEffect<EmojiNode, EmojiEffect> {
     }
 
     update(): void {
+        this.prepareCanvas(this.x + this.w/2, this.y + this.h/2);
         this.ctx.beginPath();
-        this.ctx.drawImage(this.image, this.x, this.y, this.w, this.h);
+        this.ctx.drawImage(this.image, -this.w/2, -this.h/2, this.w, this.h);
+        this.restoreCanvas();
         if (this.isSelected) {
             this.drawGuides();
         }
