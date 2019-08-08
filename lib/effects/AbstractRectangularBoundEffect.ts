@@ -13,6 +13,8 @@ export abstract class AbstractRectangularBoundEffect<T> extends Effect<T> {
         this.y = this.prevY + this.mouse.y - this.prevMouse.y;
     }
 
+    abstract modifyRotate() : void;
+
     /**
      * 
      * @param cx x coordinate to translate canvas to

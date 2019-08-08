@@ -109,6 +109,8 @@ export abstract class AbstractLineEffect<T extends AbstractLineNode<T, E>, E ext
         }
     }
 
+    modifyRotate() {}
+
     modifyReset(): void {
         if (!this.isSelected) {
             return;

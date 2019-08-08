@@ -304,14 +304,25 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
 
         this.isSelected = true;
         this.scope.eventLog.push(this.logClick());
-        if (guideContains != GUIDE.NONE) {
+        if (guideContains != GUIDE.NONE && guideContains != GUIDE.ROTATE) {
             this.isResizing = true;
             this.prevFontSize = this.fontSize; // saving old font size
+        } else if (guideContains == GUIDE.ROTATE) {
+            this.isRotating = true;
         } else if (contains) {
             if (!this.isEditing) {
                 this.isDragging = true;
             }
         }
+    }
+
+    modifyRotate() : void {
+        let dy = this.mouse.y - (this.y - this.fontSize/2);
+        let dx = this.mouse.x - (this.x + this.width/2);
+        let theta = Math.atan2(dy, dx); // range (-PI, PI]
+        theta = theta * (180 / Math.PI) + 90; // range (0, 360), starting at rotate = 0;
+        if (theta < 0) theta += 360;
+        this.rotate = Math.round(theta);
     }
 
     modifyReset(): void {
@@ -326,6 +337,7 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
                 this.justResized = true;
             }
         }
+        this.isRotating = false;
         this.isDragging = false;
         this.isResizing = false;
         this.corner = 0;

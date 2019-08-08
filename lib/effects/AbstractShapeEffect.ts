@@ -27,7 +27,7 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
         let mx: number = this.mouse.x;
         let my: number = this.mouse.y; 
         
-        let newMousePos = this.prepareMouse(0, 0, mx - x - w/2, my - y - h/2, this.rotate);
+        let newMousePos = this.prepareMouse(0, 0, mx - (x + w/2), my - (y + h/2), this.rotate);
         mx = newMousePos[0];
         my = newMousePos[1];
 
@@ -129,6 +129,9 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
     // Modification functions
 
     modifyResize(event: MouseEvent): void {
+        // let newMouse = this.prepareMouse(0, 0, this.mouse.x - this.x, this.mouse.y - this.y, this.rotate);
+        // let newPrevMouse = this.prepareMouse(0, 0, this.prevMouse.x - this.x, this.prevMouse.y - this.y, this.rotate);
+        // let theta = this.rotate * Math.PI/180
         let corner: GUIDE = this.corner;
         if (corner == GUIDE.NONE) {
             return;
@@ -273,16 +276,6 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
         }
     }
 
-    changeCursor() : void {
-        let cx: number = this.x + this.w/2;
-        let cy: number = this.y + this.h/2;
-        if (this.cursorOwnerID == undefined || this.cursorOwnerID === this.id) {
-            this.changeResizeCursor(this.mouse.x, cx, this.mouse.y, cy);
-
-            this.changeDragCursor(this.guideContains());
-        }
-    }
-
     modifyState(event: MouseEvent): void {
         let guideContains: GUIDE = this.guideContains();
         let contains: boolean = this.contains();
@@ -309,13 +302,24 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
 
         this.isSelected = true;
         this.scope.eventLog.push(this.logClick());
-        if (guideContains != GUIDE.NONE) { //resizing
+        if (guideContains != GUIDE.NONE && guideContains != GUIDE.ROTATE) { //resizing
             this.isResizing = true;
             this.prevHeight = this.h;
             this.prevWidth = this.w;
+        } else if (guideContains === GUIDE.ROTATE) { //rotating
+            this.isRotating = true;
         } else if (contains) { // dragging
             this.isDragging = true;
         }
+    }
+
+    modifyRotate() : void {
+        let dy = this.mouse.y - (this.y + this.h/2);
+        let dx = this.mouse.x - (this.x + this.w/2);
+        let theta = Math.atan2(dy, dx); // range (-PI, PI]
+        theta = theta * (180 / Math.PI) + 90; // range (0, 360), starting at rotate = 0;
+        if (theta < 0) theta += 360;
+        this.rotate = Math.round(theta);
     }
 
     modifyReset(): void {
@@ -331,9 +335,20 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
                 this.justResized = true;
             }
         }
+        this.isRotating = false;
         this.isDragging = false;
         this.isResizing = false;
         this.corner = GUIDE.NONE;
+    }
+
+    changeCursor() : void {
+        let cx: number = this.x;
+        let cy: number = this.y;
+        if (this.cursorOwnerID == undefined || this.cursorOwnerID === this.id) {
+            this.changeResizeCursor(this.mouse.x, cx, this.mouse.y, cy);
+
+            this.changeDragCursor(this.guideContains());
+        }
     }
 
     // Logging functions
