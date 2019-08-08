@@ -152,16 +152,34 @@ export abstract class Effect<T> {
      * Modifying cursor upon dragging, resizing
      */
 
-    changeCursor() : void {
-        if (this.cursorOwnerID == undefined || this.cursorOwnerID === this.id) {
-            this.changeResizeCursor(this.guideContains());
+    abstract changeCursor() : void;
 
-            this.changeDragCursor(this.guideContains());
-
+    protected changeResizeCursor(x1 : number, x2: number, y1: number, y2: number) : void {
+        if (this.isSelected) {
+            if (this.guideContains() !== GUIDE.NONE && this.guideContains() !== GUIDE.ROTATE) {
+                console.log("change cursor");
+                this.cursorOwnerID = this.id;
+                switch (this.angle(x1, x2, y1, y2)) {
+                    case "ew":
+                        this.canvas.style.cursor = "ew-resize";
+                        break;
+                    case "nesw" :
+                        this.canvas.style.cursor = "nesw-resize";
+                        break;
+                    case "ns" :
+                        this.canvas.style.cursor = "ns-resize";
+                        break;
+                    default :
+                        this.canvas.style.cursor = "nwse-resize";
+                }
+            } else {
+                if (!this.isResizing) {
+                    this.canvas.style.cursor = "auto";
+                    this.cursorOwnerID = undefined;
+                }
+            }
         }
     }
-
-    abstract changeResizeCursor(corner : GUIDE) : void;
 
     changeDragCursor(corner : GUIDE) : void {
         if (!this.isResizing && corner === GUIDE.NONE) {

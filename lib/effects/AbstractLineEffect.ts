@@ -120,27 +120,11 @@ export abstract class AbstractLineEffect<T extends AbstractLineNode<T, E>, E ext
 
     /* Modifying cursor */
 
-    changeResizeCursor(corner : GUIDE) : void {
-        if (this.isSelected) {
-            if (corner == GUIDE.LINE_START || corner == GUIDE.LINE_END) {
-                this.cursorOwnerID = this.id;
-                switch (this.angle(this.x1, this.x2, this.y1, this.y2)) {
-                    case "ew":
-                        this.canvas.style.cursor = "ew-resize";
-                        break;
-                    case "nesw" :
-                        this.canvas.style.cursor = "nesw-resize";
-                        break;
-                    case "ns" :
-                        this.canvas.style.cursor = "ns-resize";
-                        break;
-                    default :
-                        this.canvas.style.cursor = "nwse-resize";
-                }
-            } else {
-                this.canvas.style.cursor = "auto";
-                this.cursorOwnerID = undefined;
-            }
+    changeCursor() : void {
+        if (this.cursorOwnerID == undefined || this.cursorOwnerID === this.id) {
+            this.changeResizeCursor(this.x1, this.x2, this.y1, this.y2);
+
+            this.changeDragCursor(this.guideContains());
         }
     }
 

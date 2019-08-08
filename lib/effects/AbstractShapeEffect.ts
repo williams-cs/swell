@@ -273,6 +273,16 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
         }
     }
 
+    changeCursor() : void {
+        let cx: number = this.x + this.w/2;
+        let cy: number = this.y + this.h/2;
+        if (this.cursorOwnerID == undefined || this.cursorOwnerID === this.id) {
+            this.changeResizeCursor(this.mouse.x, cx, this.mouse.y, cy);
+
+            this.changeDragCursor(this.guideContains());
+        }
+    }
+
     modifyState(event: MouseEvent): void {
         let guideContains: GUIDE = this.guideContains();
         let contains: boolean = this.contains();

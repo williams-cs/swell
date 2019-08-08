@@ -146,9 +146,10 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
     /* Cursor modifying functions */
 
     changeCursor() : void {
+        let cx: number = this.x + this.width/2;
+        let cy: number = this.y - this.fontSize/2;
         if (this.cursorOwnerID == undefined || this.cursorOwnerID === this.id) {
-            this.changeResizeCursor(this.guideContains());
-
+            this.changeResizeCursor(this.mouse.x, cx, this.mouse.y, cy);
 
             if (!this.isEditing) {
                 this.changeDragCursor(this.guideContains());

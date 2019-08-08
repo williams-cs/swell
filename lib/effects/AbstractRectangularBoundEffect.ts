@@ -13,44 +13,11 @@ export abstract class AbstractRectangularBoundEffect<T> extends Effect<T> {
         this.y = this.prevY + this.mouse.y - this.prevMouse.y;
     }
 
-    // Modifying cursors function
-
-    changeResizeCursor(corner : GUIDE) : void {
-        if (this.isSelected) {
-            switch (corner) {
-                case GUIDE.RECT_TOP_LEFT:
-                case GUIDE.RECT_BOTTOM_RIGHT:
-                    this.canvas.style.cursor = "nwse-resize";
-                    this.cursorOwnerID = this.id;
-                    break;
-                case GUIDE.RECT_TOP_RIGHT:
-                case GUIDE.RECT_BOTTOM_LEFT:
-                    this.canvas.style.cursor = "nesw-resize";
-                    this.cursorOwnerID = this.id;
-                    break;
-                case GUIDE.RECT_TOP_MID:
-                case GUIDE.RECT_BOTTOM_MID:
-                    this.canvas.style.cursor = "ns-resize";
-                    this.cursorOwnerID = this.id;
-                    break;
-                case GUIDE.RECT_MID_LEFT:
-                case GUIDE.RECT_MID_RIGHT:
-                    this.canvas.style.cursor = "ew-resize";
-                    this.cursorOwnerID = this.id;
-                    break;
-                // case GUIDE.ROTATE:
-                //     this.canvas.style.cursor = "zoom-in";
-                //     this.cursorOwnerID = this.id;
-                //     break;
-                default:
-                    if (!this.isResizing) {
-                        this.canvas.style.cursor = "auto";
-                        this.cursorOwnerID = undefined;
-                    }
-            }
-        }
-    }
-
+    /**
+     * 
+     * @param cx x coordinate to translate canvas to
+     * @param cy y coordinate to translate canvas to
+     */
     protected prepareCanvas(cx : number, cy : number) {
         this.ctx.save();
         this.ctx.translate(cx, cy);
@@ -61,6 +28,14 @@ export abstract class AbstractRectangularBoundEffect<T> extends Effect<T> {
         this.ctx.restore();
     }
 
+    /**
+     * 
+     * @param x x-coordinate of center point
+     * @param y y-coordinate of center point
+     * @param mx x-coodinate of mouse pos
+     * @param my y-coordinate of mouse pos
+     * @param angle the angle to rotate mouse pos to (clockwise)
+     */
     protected prepareMouse(x : number, y : number, mx : number, my : number, angle : number) : [number, number] {
         let cos = Math.cos((Math.PI / 180) * angle);
         let sin = Math.sin((Math.PI / 180) * angle);
