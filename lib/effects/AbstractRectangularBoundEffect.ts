@@ -31,18 +31,16 @@ export abstract class AbstractRectangularBoundEffect<T> extends Effect<T> {
     }
 
     /**
-     * 
-     * @param x x-coordinate of center point
-     * @param y y-coordinate of center point
-     * @param mx x-coodinate of mouse pos
-     * @param my y-coordinate of mouse pos
-     * @param angle the angle to rotate mouse pos to (counter-clockwise)
+     * Linear transformation that rotates a vector about the origin (0,0) by angle theta
+     * @param x x-coodinate of point to be rotated
+     * @param y y-coordinate of point to be rotated
+     * @param theta the angle to rotate coordinate to (in degree) (counter-clockwise)
      */
-    protected prepareMouse(x : number, y : number, mx : number, my : number, angle : number) : [number, number] {
-        let cos = Math.cos((Math.PI / 180) * angle);
-        let sin = Math.sin((Math.PI / 180) * angle);
-        let nx = x + (cos * (mx - x)) + (sin * (my - y));
-        let ny = y + (cos * (my - y)) - (sin * (mx - x));
+    protected changeCoordinate(x : number, y : number, theta : number) : [number, number] {
+        let cos = Math.cos((Math.PI / 180) * theta);
+        let sin = Math.sin((Math.PI / 180) * theta);
+        let nx = cos * x + sin * y;
+        let ny = cos * y - sin * x;
         return [nx, ny];
     }
 

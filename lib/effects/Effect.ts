@@ -158,7 +158,6 @@ export abstract class Effect<T> {
     protected changeResizeCursor(x1 : number, x2: number, y1: number, y2: number) : void {
         if (this.isSelected) {
             if (this.guideContains() !== GUIDE.NONE && this.guideContains() !== GUIDE.ROTATE) {
-                console.log("change cursor");
                 this.cursorOwnerID = this.id;
                 switch (this.angle(x1, x2, y1, y2)) {
                     case "ew":

@@ -51,7 +51,7 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
         let halfSize: number = this.guideSize/2;
         let rotSize: number = this.rotGuideSize
 
-        let newMousePos = this.prepareMouse(0, 0, mx - x, my - y, this.rotate);
+        let newMousePos = this.changeCoordinate(mx - x, my - y, this.rotate);
         mx = newMousePos[0];
         my = newMousePos[1];
 
@@ -91,7 +91,7 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
     }
 
     contains(): boolean {
-        let newMousePos = this.prepareMouse(0, 0, this.mouse.x - this.x,
+        let newMousePos = this.changeCoordinate(this.mouse.x - this.x,
             this.mouse.y - this.y, this.rotate);
         let mx: number = newMousePos[0];
         let my: number = newMousePos[1];
