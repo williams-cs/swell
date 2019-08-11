@@ -10,7 +10,7 @@ export class RectangleEffect extends AbstractShapeEffect<RectangleNode, Rectangl
         let y = this.y;
         let width = this.w;
         let height = this.h;
-        this.prepareCanvas(x + width/2, y + height/2);
+        this.prepareCanvas(x, y);
         this.ctx.beginPath();
         this.ctx.rect(-width/2, -height/2, width, height);
         this.ctx.fillStyle = this.color;

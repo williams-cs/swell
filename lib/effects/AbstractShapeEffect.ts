@@ -12,7 +12,6 @@ import { Scope } from "../structural/Scope";
 import GUIDE = EffectUtils.GUIDE;
 import KEYBOARD = EffectUtils.KEYBOARD;
 import { EventEmitter } from "events";
-import { Z_ASCII } from "zlib";
 
 export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E extends AbstractShapeEffect<T, E>> extends AbstractRectangularBoundEffect<T> {
 
@@ -27,7 +26,7 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
         let mx: number = this.mouse.x;
         let my: number = this.mouse.y; 
         
-        let newMousePos = this.prepareMouse(0, 0, mx - (x + w/2), my - (y + h/2), this.rotate);
+        let newMousePos = this.prepareMouse(0, 0, mx - x, my - y, this.rotate);
         mx = newMousePos[0];
         my = newMousePos[1];
 
@@ -92,7 +91,7 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
         let w: number = this.w;
         let h: number = this.h;
 
-        this.prepareCanvas(x + w/2, y + h/2);
+        this.prepareCanvas(x, y);
 
         this.ctx.beginPath();
         this.ctx.rect(-w/2, -h/2, w, h);
@@ -118,8 +117,8 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
      * @param my the mouse y coordinate
      */
     contains(): boolean {
-        let newMousePos = this.prepareMouse(0, 0, this.mouse.x - (this.x + this.w/2),
-            this.mouse.y - (this.y + this.h/2), this.rotate);
+        let newMousePos = this.prepareMouse(0, 0, this.mouse.x - this.x,
+            this.mouse.y - this.y, this.rotate);
         let mx: number = newMousePos[0];
         let my: number = newMousePos[1];
         return (Math.abs(mx) < this.w/2) && (Math.abs(my) < this.h/2);
@@ -150,17 +149,19 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
             switch (corner) {
                 case GUIDE.RECT_TOP_MID:
                     this.h = prevHeight - Math.min(yDiff, prevHeight - minSize);
-                    this.y = prevY + prevHeight - this.h;
+                    this.y = prevY + Math.round((prevHeight - this.h)/2);
                     break;
                 case GUIDE.RECT_MID_LEFT:
                     this.w = prevWidth - Math.min(xDiff, prevWidth - minSize);
-                    this.x = prevX + prevWidth - this.w;
+                    this.x = prevX + Math.round((prevWidth - this.w)/2);
                     break;
                 case GUIDE.RECT_MID_RIGHT:
                     this.w = prevWidth + Math.max(xDiff, minSize - prevWidth);
+                    this.x = prevX - Math.round((prevWidth - this.w)/2);
                     break;
                 case GUIDE.RECT_BOTTOM_MID:
                     this.h = prevHeight + Math.max(yDiff, minSize - prevHeight);
+                    this.y = prevY - Math.round((prevHeight - this.h)/2);
                     break;
             }
         } else if (!event.shiftKey) {
@@ -168,22 +169,26 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
                 case GUIDE.RECT_TOP_LEFT:
                     this.w = prevWidth - Math.min(xDiff, prevWidth - minSize);
                     this.h = prevHeight - Math.min(yDiff, prevHeight - minSize);
-                    this.x = prevX + prevWidth - this.w;
-                    this.y = prevY + prevHeight - this.h;
+                    this.x = prevX + Math.round((prevWidth - this.w)/2);
+                    this.y = prevY + Math.round((prevHeight - this.h)/2);
                     break;
                 case GUIDE.RECT_TOP_RIGHT:
                     this.w = prevWidth + Math.max(xDiff, minSize - prevWidth);
                     this.h = prevHeight - Math.min(yDiff, prevHeight - minSize);
-                    this.y = prevY + prevHeight - this.h;
+                    this.x = prevX - Math.round((prevWidth - this.w)/2);
+                    this.y = prevY + Math.round((prevHeight - this.h)/2);
                     break;
                 case GUIDE.RECT_BOTTOM_LEFT:
                     this.w = prevWidth - Math.min(xDiff, prevWidth - minSize);
                     this.h = prevHeight + Math.max(yDiff, minSize - prevHeight);
-                    this.x = prevX + prevWidth - this.w;
+                    this.x = prevX + Math.round((prevWidth - this.w)/2);
+                    this.y = prevY - Math.round((prevHeight - this.h)/2);
                     break;
                 case GUIDE.RECT_BOTTOM_RIGHT:
                     this.w = prevWidth + Math.max(xDiff, minSize - prevWidth);
                     this.h = prevHeight + Math.max(yDiff, minSize - prevHeight);
+                    this.x = prevX - Math.round((prevWidth - this.w)/2);
+                    this.y = prevY - Math.round((prevHeight - this.h)/2);
                     break;
             }
         } else {
@@ -194,12 +199,12 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
                 case GUIDE.RECT_TOP_LEFT:
                     newW = prevWidth - Math.min(xDiff, prevWidth - minSize);
                     newH = Math.round(newW / ratio);
-                    if (prevY + prevHeight - newH <= my) {
+                    if (prevY + prevHeight/2 - newH <= my) {
                         break;
                     }
                     newH = prevHeight - Math.min(yDiff, prevHeight - minSize);
                     newW = Math.round(newH * ratio);
-                    if (prevX + prevWidth - newW <= mx) {
+                    if (prevX + prevWidth/2 - newW <= mx) {
                         break;
                     }
                     newW = this.w;
@@ -208,12 +213,12 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
                 case GUIDE.RECT_TOP_RIGHT:
                     newW = prevWidth + Math.max(xDiff, minSize - prevWidth);
                     newH = Math.round(newW / ratio);
-                    if (prevY + prevHeight - newH <= my) {
+                    if (prevY + prevHeight/2 - newH <= my) {
                         break;
                     }
                     newH = prevHeight - Math.min(yDiff, prevHeight - minSize);
                     newW = Math.round(newH * ratio);
-                    if ((newW + this.x) >= mx) {
+                    if ((newW/2 + this.x) >= mx) {
                         break;
                     }
                     newW = this.w;
@@ -222,12 +227,12 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
                 case GUIDE.RECT_BOTTOM_LEFT:
                     newW = prevWidth - Math.min(xDiff, prevWidth - minSize);
                     newH = Math.round(newW / ratio);
-                    if ((newH + this.y) >= my) {
+                    if ((newH/2 + this.y) >= my) {
                         break;
                     }
                     newH = prevHeight + Math.max(yDiff, minSize - prevHeight);
                     newW = Math.round(newH * ratio);
-                    if (prevX + prevWidth - newW <= mx) {
+                    if (prevX + prevWidth/2 - newW <= mx) {
                         break;
                     }
                     newW = this.w;
@@ -236,12 +241,12 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
                 case GUIDE.RECT_BOTTOM_RIGHT:
                     newW = prevWidth + xDiff;
                     newH = Math.round(newW / ratio);
-                    if ((newH + this.y) >= my) {
+                    if ((newH/2 + this.y) >= my) {
                         break;
                     }
                     newH = prevHeight + yDiff;
                     newW = Math.round(newH * ratio);
-                    if ((newW + this.x) >= mx) {
+                    if ((newW/2 + this.x) >= mx) {
                         break;
                     }
                     newW = this.w;
@@ -263,14 +268,20 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
             this.h = newH;
             switch (corner) {
                 case GUIDE.RECT_TOP_LEFT:
-                    this.x = prevX + prevWidth - this.w;
-                    this.y = prevY + prevHeight - this.h;
+                    this.x = prevX + Math.round((prevWidth - this.w)/2);
+                    this.y = prevY + Math.round((prevHeight - this.h)/2);
                     break;
                 case GUIDE.RECT_TOP_RIGHT:
-                    this.y = prevY + prevHeight - this.h;
+                    this.x = prevX - Math.round((prevWidth - this.w)/2);
+                    this.y = prevY + Math.round((prevHeight - this.h)/2);
                     break;
                 case GUIDE.RECT_BOTTOM_LEFT:
-                    this.x = prevX + prevWidth - this.w;
+                    this.x = prevX + Math.round((prevWidth - this.w)/2);
+                    this.y = prevY - Math.round((prevHeight - this.h)/2);
+                    break;
+                case GUIDE.RECT_BOTTOM_RIGHT:
+                    this.x = prevX - Math.round((prevWidth - this.w)/2);
+                    this.y = prevY - Math.round((prevHeight - this.h)/2);
                     break;
             }
         }
@@ -314,8 +325,8 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
     }
 
     modifyRotate() : void {
-        let dy = this.mouse.y - (this.y + this.h/2);
-        let dx = this.mouse.x - (this.x + this.w/2);
+        let dy = this.mouse.y - this.y;
+        let dx = this.mouse.x - this.x;
         let theta = Math.atan2(dy, dx); // range (-PI, PI]
         theta = theta * (180 / Math.PI) + 90; // range (0, 360), starting at rotate = 0;
         if (theta < 0) theta += 360;

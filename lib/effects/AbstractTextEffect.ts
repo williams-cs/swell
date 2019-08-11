@@ -26,13 +26,12 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
     private _isCursorDisplayed: boolean = true;
 
     update(): void {
-        this.prepareCanvas(this.x + this.width/2, this.y - this.fontSize/2);
+        this.prepareCanvas(this.x, this.y);
         this.ctx.font = this.fontSize + this.font;
         this.ctx.fillStyle = this.color;
         this.ctx.fillText(this.text, -this.width/2, this.fontSize/2); // Text starts from bottom left
         this.restoreCanvas();
         if (this.isSelected) {
-            //this.changeResizeCursor(this.guideContains());
             this.drawGuides();
             if (this.isEditing) {
                 this.drawCursor();
@@ -46,13 +45,13 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
         let mx: number = this.mouse.x;
         let my: number = this.mouse.y;
         let x: number = this.x;
-        let y: number = this.y - this.fontSize;
+        let y: number = this.y;
         let w: number = this.width;
         let h: number = this.fontSize;
         let halfSize: number = this.guideSize/2;
         let rotSize: number = this.rotGuideSize
 
-        let newMousePos = this.prepareMouse(0, 0, mx - (x + w/2), my - (y + h/2), this.rotate);
+        let newMousePos = this.prepareMouse(0, 0, mx - x, my - y, this.rotate);
         mx = newMousePos[0];
         my = newMousePos[1];
 
@@ -92,8 +91,8 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
     }
 
     contains(): boolean {
-        let newMousePos = this.prepareMouse(0, 0, this.mouse.x - (this.x + this.width/2),
-            this.mouse.y - (this.y - this.fontSize/2), this.rotate);
+        let newMousePos = this.prepareMouse(0, 0, this.mouse.x - this.x,
+            this.mouse.y - this.y, this.rotate);
         let mx: number = newMousePos[0];
         let my: number = newMousePos[1];
         return (Math.abs(mx) < this.width/2) && (Math.abs(my) < this.fontSize/2);
@@ -102,9 +101,9 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
     drawGuides() {
         let fontSize: number = this.fontSize;
         let x: number = this.x;
-        let y: number = this.y - fontSize;
+        let y: number = this.y;
         let w: number = this.width;
-        this.prepareCanvas(x + w/2, y + fontSize/2);
+        this.prepareCanvas(x, y);
         this.ctx.beginPath();
         this.ctx.rect(-w/2, -fontSize/2, w, fontSize);
         this.ctx.strokeStyle = 'gray';
@@ -128,7 +127,7 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
         if (!this.isCursorDisplayed) {
             return;
         }
-        this.prepareCanvas(this.x + this.width/2, this.y - this.fontSize/2);
+        this.prepareCanvas(this.x, this.y);
         let cursorX: number = this.cursorPos * this.interval - this.width/2;
         this.ctx.moveTo(cursorX, -this.fontSize/2);
         this.ctx.lineTo(cursorX, this.fontSize/2);
@@ -146,8 +145,8 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
     /* Cursor modifying functions */
 
     changeCursor() : void {
-        let cx: number = this.x + this.width/2;
-        let cy: number = this.y - this.fontSize/2;
+        let cx: number = this.x;
+        let cy: number = this.y;
         if (this.cursorOwnerID == undefined || this.cursorOwnerID === this.id) {
             this.changeResizeCursor(this.mouse.x, cx, this.mouse.y, cy);
 
@@ -317,8 +316,8 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
     }
 
     modifyRotate() : void {
-        let dy = this.mouse.y - (this.y - this.fontSize/2);
-        let dx = this.mouse.x - (this.x + this.width/2);
+        let dy = this.mouse.y - this.y;
+        let dx = this.mouse.x - this.x;
         let theta = Math.atan2(dy, dx); // range (-PI, PI]
         theta = theta * (180 / Math.PI) + 90; // range (0, 360), starting at rotate = 0;
         if (theta < 0) theta += 360;

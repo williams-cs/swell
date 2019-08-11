@@ -36,7 +36,7 @@ export abstract class AbstractRectangularBoundEffect<T> extends Effect<T> {
      * @param y y-coordinate of center point
      * @param mx x-coodinate of mouse pos
      * @param my y-coordinate of mouse pos
-     * @param angle the angle to rotate mouse pos to (clockwise)
+     * @param angle the angle to rotate mouse pos to (counter-clockwise)
      */
     protected prepareMouse(x : number, y : number, mx : number, my : number, angle : number) : [number, number] {
         let cos = Math.cos((Math.PI / 180) * angle);

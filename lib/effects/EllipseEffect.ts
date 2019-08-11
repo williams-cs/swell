@@ -10,7 +10,7 @@ export class EllipseEffect extends AbstractShapeEffect<EllipseNode, EllipseEffec
         let y: number = this.y;
         let w: number = this.w;
         let h: number = this.h;
-        this.prepareCanvas(x + w/2, y + h/2);
+        this.prepareCanvas(x, y);
         this.ctx.beginPath();
         this.ctx.ellipse(0,0, w/2, h/2, 0, 0, Math.PI * 2, false);
         this.ctx.fillStyle = this.color;

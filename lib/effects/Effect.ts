@@ -202,7 +202,7 @@ export abstract class Effect<T> {
      * Updates mouse position and calls the modify methods.
      * @param event the mousemove event
      */
-    protected onMouseMove(event: MouseEvent): void {
+    private onMouseMove(event: MouseEvent): void {
         // Update mouse pos
         let rect = this.canvas.getBoundingClientRect();
         this.mouse = {
