@@ -13,10 +13,38 @@ export abstract class AbstractRectangularBoundEffect<T> extends Effect<T> {
         this.y = this.prevY + this.mouse.y - this.prevMouse.y;
     }
 
-    abstract modifyRotate() : void;
+     /**
+     * Method that draws the rotation guide for rectangular bound objects
+     * @param x x-coordinate for the top-mid guide of object
+     * @param y y-coordinate for the top-mid guide of object
+     */
+    drawRotationGuide(x : number, y : number) {
+        // line from top-mid guide to rotation guide
+        this.ctx.beginPath();
+        this.ctx.moveTo(x, y);
+        this.ctx.lineTo(x, y - 10);
+        this.ctx.stroke();
+        // rotation guide circles
+        this.ctx.fillStyle = this.corner == GUIDE.ROTATE ? "blue" : "white";
+        this.ctx.beginPath();
+        this.ctx.arc(x, y - 16, 6, 0, 2 * Math.PI);
+        this.ctx.fill();
+        this.ctx.stroke();
+        this.ctx.beginPath();
+        this.ctx.arc(x, y - 16, 3, 0.5* Math.PI, 2 * Math.PI);
+        this.ctx.stroke();
+        // rotation guide arrows
+        let headlen = 2; // length of arrow head in pixels
+        let angle = 5 * Math.PI / 4; //angle of arrow
+        this.ctx.beginPath();
+        this.ctx.moveTo(x + 3 + headlen * Math.cos(angle + Math.PI / 6), y - 16 + headlen * Math.sin(angle + Math.PI / 6));
+        this.ctx.lineTo(x + 3, y - 16);
+        this.ctx.lineTo(x + 3 + headlen * Math.cos(angle - Math.PI / 6), y - 16 + headlen * Math.sin(angle - Math.PI / 6));
+        this.ctx.stroke();
+    }
 
     /**
-     * 
+     * Translate and rotate canvas 
      * @param cx x coordinate to translate canvas to
      * @param cy y coordinate to translate canvas to
      */

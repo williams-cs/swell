@@ -13,6 +13,7 @@ import { PrintNode } from "../structural/PrintNode";
 import { Scope } from "../structural/Scope";
 import GUIDE = EffectUtils.GUIDE;
 import KEYBOARD = EffectUtils.KEYBOARD;
+import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from "constants";
 
 export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>, V, E extends AbstractTextEffect<T, V, E>> extends AbstractRectangularBoundEffect<T> {
 
@@ -240,29 +241,46 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
     }
 
     modifyResize(event: MouseEvent): void {
+        let curMousePos = this.changeCoordinate(this.mouse.x - this.x, this.mouse.y - this.y, this.rotate);
         let prevFontSize: number = this.prevFontSize;
         let newFontSize: number = prevFontSize;
-        let prevY: number = this.prevY;
-        let mouseY: number = this.mouse.y;
+        let mouseY: number = curMousePos[1];
         let prevWidth: number = this.measureTextWidth(prevFontSize);
         let newWidth: number;
         let yDiff: number;
+        let newXY: [number, number];
+        let deltaX: number;
+        let deltaY: number;
         let corner: GUIDE = this.corner;
         let changeFactor: number = 0.75;
-
+        
         if (corner == GUIDE.RECT_TOP_RIGHT || corner == GUIDE.RECT_TOP_LEFT) {
-            yDiff = prevY - mouseY - prevFontSize;
+            yDiff = - mouseY - prevFontSize/2;
             newFontSize = Math.max(this.minFontSize, prevFontSize + Math.round(yDiff * changeFactor));
-        } else if (corner == GUIDE.RECT_BOTTOM_RIGHT || corner == GUIDE.RECT_BOTTOM_LEFT) {
-            yDiff = mouseY - prevY;
-            newFontSize = Math.max(this.minFontSize, prevFontSize + Math.round(yDiff * changeFactor));
-            this.y = prevY + newFontSize - prevFontSize;
-        }
-        if (corner == GUIDE.RECT_TOP_LEFT || corner == GUIDE.RECT_BOTTOM_LEFT) {
             newWidth = this.measureTextWidth(newFontSize);
-            this.x = this.prevX + Math.round(prevWidth - newWidth);
+            if (corner == GUIDE.RECT_TOP_LEFT) {
+                deltaX = (prevWidth - newWidth)/2;
+                deltaY = (prevFontSize - newFontSize)/2
+            } else {
+                deltaX = - (prevWidth - newWidth)/2;
+                deltaY = (prevFontSize - newFontSize)/2
+            }
+        } else if (corner == GUIDE.RECT_BOTTOM_RIGHT || corner == GUIDE.RECT_BOTTOM_LEFT) {
+            yDiff = mouseY - prevFontSize/2;
+            newFontSize = Math.max(this.minFontSize, prevFontSize + Math.round(yDiff * changeFactor));
+            newWidth = this.measureTextWidth(newFontSize);
+            if (corner == GUIDE.RECT_BOTTOM_LEFT) {
+                deltaX = (prevWidth - newWidth)/2;
+                deltaY = - (prevFontSize - newFontSize)/2
+            } else {
+                deltaX = - (prevWidth - newWidth)/2;
+                deltaY = - (prevFontSize - newFontSize)/2
+            }
         }
         this.fontSize = newFontSize;
+        newXY = this.changeCoordinate(deltaX, deltaY, -this.rotate);
+        this.x = this.prevX + Math.floor(newXY[0]);
+        this.y = this.prevY + Math.floor(newXY[1]);
     }
 
     modifyState(event: MouseEvent): void {
@@ -304,8 +322,8 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
         this.isSelected = true;
         this.scope.eventLog.push(this.logClick());
         if (guideContains != GUIDE.NONE && guideContains != GUIDE.ROTATE) {
-            this.isResizing = true;
             this.prevFontSize = this.fontSize; // saving old font size
+            this.isResizing = true;
         } else if (guideContains == GUIDE.ROTATE) {
             this.isRotating = true;
         } else if (contains) {
@@ -321,6 +339,7 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
         let theta = Math.atan2(dy, dx); // range (-PI, PI]
         theta = theta * (180 / Math.PI) + 90; // range (0, 360), starting at rotate = 0;
         if (theta < 0) theta += 360;
+        if (theta == 360) theta = 0;
         this.rotate = Math.round(theta);
     }
 
