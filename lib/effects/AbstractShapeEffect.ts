@@ -113,8 +113,8 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
 
     /**
      * Returns true if the mouse is inside of the object's bounding rectangle, false if otherwise
-     * @param mx the mouse x coordinate
-     * @param my the mouse y coordinate
+     * @param mx the mouse x coordinate with respect to the translated and rotated canvas
+     * @param my the mouse y coordinate with respect to the translated and rotated canvas
      */
     contains(): boolean {
         let newMousePos = this.changeCoordinate(this.mouse.x - this.x,
