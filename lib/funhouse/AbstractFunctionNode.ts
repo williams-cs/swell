@@ -4,6 +4,7 @@ import { PositionalArg } from "./PositionalArg";
 import { Expression } from "../Expression";
 import { Scope } from "../structural/Scope";
 import clone = require("clone");
+import { NumberNode } from "../prims/NumberNode";
 
 export abstract class AbstractFunctionNode<T extends Expression<any>> extends Expression<T> {
 
@@ -135,6 +136,7 @@ export abstract class AbstractFunctionNode<T extends Expression<any>> extends Ex
         let argString: string = "";
         if (this.argMap != undefined) {
             for (let [key, arg] of this.argMap) {
+                if (arg.value instanceof NumberNode) arg.value = new NumberNode(Math.round(arg.value.val), arg.value.ws);
                 argString += (arg.alwaysVisible || (!arg.isPositional && arg.isModified))
                     ? `${arg.preArgNameWS}${key}${arg.preEqualWS}=${arg.value}${arg.postExprWS},`
                     : (arg.isPositional ? `${arg.preArgNameWS}${arg.value}${arg.postExprWS},` : "");

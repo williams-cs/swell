@@ -279,8 +279,8 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
         }
         this.fontSize = newFontSize;
         newXY = this.changeCoordinate(deltaX, deltaY, -this.rotate);
-        this.x = this.prevX + Math.floor(newXY[0]);
-        this.y = this.prevY + Math.floor(newXY[1]);
+        this.x = this.prevX + newXY[0];
+        this.y = this.prevY + newXY[1];
     }
 
     modifyState(event: MouseEvent): void {
