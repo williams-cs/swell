@@ -186,7 +186,8 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
     }
 
     updateCursorPosFromMouse(): void {
-        let xDiff: number = this.mouse.x - this.x;
+        let newMousePos = this.changeCoordinate(this.mouse.x - this.x, this.mouse.y - this.y, this.rotate);
+        let xDiff: number = newMousePos[0] + this.width/2;
         let interval: number = this.interval;
         let newPos: number = Math.round(interval != 0 ? xDiff/interval : 0);
         newPos = Math.max(newPos, 0);
