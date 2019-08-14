@@ -341,7 +341,7 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
         let theta = Math.atan2(dy, dx); // range (-PI, PI]
         theta = theta * (180 / Math.PI) + 90; // range (0, 360), starting at rotate = 0;
         if (theta < 0) theta += 360;
-        if (theta == 360) theta = 0;
+        if (Math.round(theta) == 360) theta = 0;
         this.rotate = Math.round(theta);
     }
 
