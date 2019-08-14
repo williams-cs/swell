@@ -288,14 +288,14 @@ export abstract class Effect<T> {
         let dx = x2 - x1;
         let theta = Math.atan2(dy, dx); // range (-PI, PI]
         theta *= 180 / Math.PI; // rads to degs, range (-180, 180]
-        if ((theta >= -25 && theta <= 0) || (theta > 0 && theta <= 25) || theta >= 155 || theta <= -155) { 
+        if ((theta >= -10 && theta <= 0) || (theta > 0 && theta <= 10) || theta >= 170 || theta <= -170) { 
             return "ew"; // case east-west line
-        } else if ((theta > 25 && theta < 65) || (theta <= -115 && theta >= -155)) {
-            return "nwse"; // case northeast-southwest line
-        } else if ((theta >= 65 && theta <= 115) || (theta >= -115 && theta <= -65)) {
+        } else if ((theta > 10 && theta < 80) || (theta <= -100 && theta >= -170)) {
+            return "nwse"; // case northwest-southeast line
+        } else if ((theta >= 80 && theta <= 100) || (theta >= -100 && theta <= -80)) {
             return "ns"; // case north-south line
         } else {
-            return "nesw"; // case northwest-southeast line
+            return "nesw"; // case northeast-southwest line 
         }
     }
 

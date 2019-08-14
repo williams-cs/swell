@@ -13,7 +13,6 @@ import { PrintNode } from "../structural/PrintNode";
 import { Scope } from "../structural/Scope";
 import GUIDE = EffectUtils.GUIDE;
 import KEYBOARD = EffectUtils.KEYBOARD;
-import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from "constants";
 
 export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>, V, E extends AbstractTextEffect<T, V, E>> extends AbstractRectangularBoundEffect<T> {
 
@@ -242,6 +241,7 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
     }
 
     modifyResize(event: MouseEvent): void {
+        //"unrotate" mousepos, resize as if rotate = 0
         let curMousePos = this.changeCoordinate(this.mouse.x - this.x, this.mouse.y - this.y, this.rotate);
         let prevFontSize: number = this.prevFontSize;
         let newFontSize: number = prevFontSize;
@@ -257,7 +257,7 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
         
         if (corner == GUIDE.RECT_TOP_RIGHT || corner == GUIDE.RECT_TOP_LEFT) {
             yDiff = - mouseY - prevFontSize/2;
-            newFontSize = Math.max(this.minFontSize, prevFontSize + Math.round(yDiff * changeFactor));
+            newFontSize = Math.max(this.minFontSize, prevFontSize + yDiff * changeFactor);
             newWidth = this.measureTextWidth(newFontSize);
             if (corner == GUIDE.RECT_TOP_LEFT) {
                 deltaX = (prevWidth - newWidth)/2;
@@ -268,7 +268,7 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
             }
         } else if (corner == GUIDE.RECT_BOTTOM_RIGHT || corner == GUIDE.RECT_BOTTOM_LEFT) {
             yDiff = mouseY - prevFontSize/2;
-            newFontSize = Math.max(this.minFontSize, prevFontSize + Math.round(yDiff * changeFactor));
+            newFontSize = Math.max(this.minFontSize, prevFontSize + yDiff * changeFactor);
             newWidth = this.measureTextWidth(newFontSize);
             if (corner == GUIDE.RECT_BOTTOM_LEFT) {
                 deltaX = (prevWidth - newWidth)/2;
@@ -279,6 +279,7 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
             }
         }
         this.fontSize = newFontSize;
+        //rotate back to get updated x,y coordinates
         newXY = this.changeCoordinate(deltaX, deltaY, -this.rotate);
         this.x = this.prevX + newXY[0];
         this.y = this.prevY + newXY[1];

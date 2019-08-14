@@ -11,7 +11,6 @@ import { PrintNode } from "../structural/PrintNode";
 import { Scope } from "../structural/Scope";
 import GUIDE = EffectUtils.GUIDE;
 import KEYBOARD = EffectUtils.KEYBOARD;
-import { EventEmitter } from "events";
 
 export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E extends AbstractShapeEffect<T, E>> extends AbstractRectangularBoundEffect<T> {
 
@@ -132,6 +131,7 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
         if (corner == GUIDE.NONE) {
             return;
         }
+        //"unrotate" mousepos, resize as if rotate = 0
         let prevMousePos = this.changeCoordinate(this.prevMouse.x - this.x, this.prevMouse.y - this.y, this.rotate);
         let curMousePos = this.changeCoordinate(this.mouse.x - this.x, this.mouse.y - this.y, this.rotate);
         let newXY : [number, number];
@@ -152,6 +152,7 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
                 case GUIDE.RECT_TOP_MID:
                     this.h = prevHeight - Math.min(yDiff, prevHeight - minSize);
                     deltaY = (prevHeight - this.h)/2;
+                    //rotate back to get new coordinates
                     newXY = this.changeCoordinate(0, deltaY, -this.rotate);
                     this.x = prevX + newXY[0];
                     this.y = prevY + newXY[1];
