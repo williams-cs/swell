@@ -23,6 +23,7 @@ export namespace EffectUtils {
         RECT_BOTTOM_RIGHT = 8,
         LINE_START = 9,
         LINE_END = 10,
+        ROTATE = 11,
     }
 
     export function isRectGuideCorner(corner: GUIDE): boolean {

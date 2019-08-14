@@ -36,10 +36,12 @@ export abstract class Effect<T> {
     private _isSelected: boolean = false;
     private _isDragging: boolean = false;
     private _isResizing: boolean = false;
+    private _isRotating : boolean = false;
     private _justDragged: boolean = false;
     private _justResized: boolean = false;
     private _corner: GUIDE = GUIDE.NONE;
     private readonly _guideSize: number = 7;
+    private readonly _rotGuideSize: number = 12;
 
     private _mouse: {
         x: number,
@@ -151,16 +153,33 @@ export abstract class Effect<T> {
      * Modifying cursor upon dragging, resizing
      */
 
-    changeCursor() : void {
-        if (this.cursorOwnerID == undefined || this.cursorOwnerID === this.id) {
-            this.changeResizeCursor(this.guideContains());
+    abstract changeCursor() : void;
 
-            this.changeDragCursor(this.guideContains());
-
+    protected changeResizeCursor(x1 : number, x2: number, y1: number, y2: number) : void {
+        if (this.isSelected) {
+            if (this.guideContains() !== GUIDE.NONE && this.guideContains() !== GUIDE.ROTATE) {
+                this.cursorOwnerID = this.id;
+                switch (this.angle(x1, x2, y1, y2)) {
+                    case "ew":
+                        this.canvas.style.cursor = "ew-resize";
+                        break;
+                    case "nesw" :
+                        this.canvas.style.cursor = "nesw-resize";
+                        break;
+                    case "ns" :
+                        this.canvas.style.cursor = "ns-resize";
+                        break;
+                    default :
+                        this.canvas.style.cursor = "nwse-resize";
+                }
+            } else {
+                if (!this.isResizing) {
+                    this.canvas.style.cursor = "auto";
+                    this.cursorOwnerID = undefined;
+                }
+            }
         }
     }
-
-    abstract changeResizeCursor(corner : GUIDE) : void;
 
     changeDragCursor(corner : GUIDE) : void {
         if (!this.isResizing && corner === GUIDE.NONE) {
@@ -197,6 +216,8 @@ export abstract class Effect<T> {
             this.modifyDrag(event);
         } else if (this.isResizing) {
             this.modifyResize(event);
+        } else if (this.isRotating) {
+            this.modifyRotate();
         }
     }
 
@@ -255,6 +276,29 @@ export abstract class Effect<T> {
         this.ctx.stroke();
     }
 
+    /**
+     * Method to determine resize-cursor choice, depending on mouse position and center of object
+     * @param x1 x-coordinate of first point 
+     * @param x2 x-coordinate of second point 
+     * @param y1 y-coordinate of first point 
+     * @param y2 y-coordinate of second point 
+     */
+    protected angle(x1 : number, x2 : number, y1 : number, y2 : number) : string {
+        let dy = y2 - y1;
+        let dx = x2 - x1;
+        let theta = Math.atan2(dy, dx); // range (-PI, PI]
+        theta *= 180 / Math.PI; // rads to degs, range (-180, 180]
+        if ((theta >= -10 && theta <= 0) || (theta > 0 && theta <= 10) || theta >= 170 || theta <= -170) { 
+            return "ew"; // case east-west line
+        } else if ((theta > 10 && theta < 80) || (theta <= -100 && theta >= -170)) {
+            return "nwse"; // case northwest-southeast line
+        } else if ((theta >= 80 && theta <= 100) || (theta >= -100 && theta <= -80)) {
+            return "ns"; // case north-south line
+        } else {
+            return "nesw"; // case northeast-southwest line 
+        }
+    }
+
     /* Modification functions */
 
     /**
@@ -272,6 +316,8 @@ export abstract class Effect<T> {
      * e.g. if the mouse is within the bounding rectangle when this is called, isSelected = true
      */
     abstract modifyState(event: MouseEvent): void;
+
+    abstract modifyRotate() : void;
 
     /**
      * Resets all of the private booleans to false (like dragging, resizing, etc) when the mouse is released
@@ -379,6 +425,14 @@ export abstract class Effect<T> {
         this._isResizing = val;
     }
 
+    get isRotating() : boolean {
+        return this._isRotating;
+    }
+
+    set isRotating(bool : boolean) {
+        this._isRotating = bool;
+    }
+
     get corner(): GUIDE {
         return this._corner;
     }
@@ -419,8 +473,20 @@ export abstract class Effect<T> {
         this.aes.setColor(this.scope, val);
     }
 
+    get rotate(): number {
+        return this.aes.getRotate(this.scope);
+    }
+
+    set rotate(val: number) {
+        this.aes.setRotate(this.scope, val);
+    }
+
     get guideSize(): number {
         return this._guideSize;
+    }
+
+    get rotGuideSize() : number {
+        return this._rotGuideSize;
     }
 
     get canvasState() : CanvasState {

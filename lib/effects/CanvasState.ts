@@ -1,13 +1,9 @@
-import { EffectUtils } from "./EffectUtils";
-import { Effect } from "./Effect";
-import { Expression } from "../Expression";
-import { LogEvent } from "../logging/LogEvent";
-import { PrintNode } from "../structural/PrintNode";
-import { Scope } from "../structural/Scope";
-import GUIDE = EffectUtils.GUIDE;
-
 export class CanvasState {
 
+    /**
+     * Property of CanvasState, a class that manages which 
+     * effect is currently controlling the cursor
+     */
     private _cursorOwnerID : number | undefined;
 
     constructor() {

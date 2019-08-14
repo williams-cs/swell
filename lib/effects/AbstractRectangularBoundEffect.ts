@@ -13,39 +13,63 @@ export abstract class AbstractRectangularBoundEffect<T> extends Effect<T> {
         this.y = this.prevY + this.mouse.y - this.prevMouse.y;
     }
 
-    // Modifying cursors function
+     /**
+     * Method that draws the rotation guide for rectangular bound objects
+     * @param x x-coordinate for the top-mid guide of object
+     * @param y y-coordinate for the top-mid guide of object
+     */
+    drawRotationGuide(x : number, y : number) {
+        // line from top-mid guide to rotation guide
+        this.ctx.beginPath();
+        this.ctx.moveTo(x, y);
+        this.ctx.lineTo(x, y - 10);
+        this.ctx.stroke();
+        // rotation guide circles
+        this.ctx.fillStyle = this.corner == GUIDE.ROTATE ? "blue" : "white";
+        this.ctx.beginPath();
+        this.ctx.arc(x, y - 16, 6, 0, 2 * Math.PI);
+        this.ctx.fill();
+        this.ctx.stroke();
+        this.ctx.beginPath();
+        this.ctx.arc(x, y - 16, 3, 0.5* Math.PI, 2 * Math.PI);
+        this.ctx.stroke();
+        // rotation guide arrows
+        let headlen = 2; // length of arrow head in pixels
+        let angle = 5 * Math.PI / 4; //angle of arrow
+        this.ctx.beginPath();
+        this.ctx.moveTo(x + 3 + headlen * Math.cos(angle + Math.PI / 6), y - 16 + headlen * Math.sin(angle + Math.PI / 6));
+        this.ctx.lineTo(x + 3, y - 16);
+        this.ctx.lineTo(x + 3 + headlen * Math.cos(angle - Math.PI / 6), y - 16 + headlen * Math.sin(angle - Math.PI / 6));
+        this.ctx.stroke();
+    }
 
-    changeResizeCursor(corner : GUIDE) : void {
-        if (this.isSelected) {
-            switch (corner) {
-                case GUIDE.RECT_TOP_LEFT:
-                case GUIDE.RECT_BOTTOM_RIGHT:
-                    this.canvas.style.cursor = "nwse-resize";
-                    this.cursorOwnerID = this.id;
-                    break;
-                case GUIDE.RECT_TOP_RIGHT:
-                case GUIDE.RECT_BOTTOM_LEFT:
-                    this.canvas.style.cursor = "nesw-resize";
-                    this.cursorOwnerID = this.id;
-                    break;
-                case GUIDE.RECT_TOP_MID:
-                case GUIDE.RECT_BOTTOM_MID:
-                    this.canvas.style.cursor = "ns-resize";
-                    this.cursorOwnerID = this.id;
-                    break;
-                case GUIDE.RECT_MID_LEFT:
-                case GUIDE.RECT_MID_RIGHT:
-                    this.canvas.style.cursor = "ew-resize";
-                    this.cursorOwnerID = this.id;
-                    break;
-                default:
-                    if (!this.isResizing) {
-                        this.canvas.style.cursor = "auto";
-                        this.cursorOwnerID = undefined;
-                    }
-                    break;
-            }
-        }
+    /**
+     * Translate and rotate canvas 
+     * @param cx x coordinate to translate canvas to
+     * @param cy y coordinate to translate canvas to
+     */
+    protected prepareCanvas(cx : number, cy : number) {
+        this.ctx.save();
+        this.ctx.translate(cx, cy);
+        this.ctx.rotate(this.rotate * Math.PI / 180);
+    }
+
+    protected restoreCanvas() {
+        this.ctx.restore();
+    }
+
+    /**
+     * Linear transformation that rotates a vector about the origin (0,0) by angle theta
+     * @param x x-coodinate of point to be rotated
+     * @param y y-coordinate of point to be rotated
+     * @param theta the angle to rotate coordinate to (in degree) (counter-clockwise)
+     */
+    protected changeCoordinate(x : number, y : number, theta : number) : [number, number] {
+        let cos = Math.cos((Math.PI / 180) * theta);
+        let sin = Math.sin((Math.PI / 180) * theta);
+        let nx = cos * x + sin * y;
+        let ny = cos * y - sin * x;
+        return [nx, ny];
     }
 
     // Event listeners

@@ -15,7 +15,7 @@ export abstract class Argument<T> {
         private _isPositional: boolean = true,
         private _alwaysVisible: boolean = false,
         private _preArgNameWS: string = " ",
-        private _preEqualWS: string = " ",
+        private _preEqualWS: string = "",
         private _postExprWS: string = "",
     ) {}
 

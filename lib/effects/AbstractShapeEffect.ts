@@ -11,7 +11,6 @@ import { PrintNode } from "../structural/PrintNode";
 import { Scope } from "../structural/Scope";
 import GUIDE = EffectUtils.GUIDE;
 import KEYBOARD = EffectUtils.KEYBOARD;
-import { EventEmitter } from "events";
 
 export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E extends AbstractShapeEffect<T, E>> extends AbstractRectangularBoundEffect<T> {
 
@@ -19,55 +18,69 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
     private _prevHeight: number;
 
     guideContains(): GUIDE {
-        let mx: number = this.mouse.x;
-        let my: number = this.mouse.y;
-        let x: number = this.x;
-        let y: number = this.y;
         let w: number = this.w;
         let h: number = this.h;
+        let x: number = this.x;
+        let y: number = this.y;
+        let mx: number = this.mouse.x;
+        let my: number = this.mouse.y; 
+        
+        let newMousePos = this.changeCoordinate(mx - x, my - y, this.rotate);
+        mx = newMousePos[0];
+        my = newMousePos[1];
 
         /* Corner Guides */
-        let xdif: number = mx - x;
-        let ydif: number = my - y;
+        let xdif: number = mx + w/2;
+        let ydif: number = my + h/2;
         let halfSize: number = this.guideSize/2;
+        let rotSize = this.rotGuideSize;
+
         if (Math.abs(xdif) <= halfSize && Math.abs(ydif) <= halfSize) {
             return GUIDE.RECT_TOP_LEFT;
         }
-        xdif = mx - (x + w);
+        xdif = mx - w/2;
         if (Math.abs(xdif) <= halfSize && Math.abs(ydif) <= halfSize) {
             return GUIDE.RECT_TOP_RIGHT;
         }
-        xdif = mx - (x + w);
-        ydif = my - (y + h);
+        xdif = mx - w/2;
+        ydif = my - h/2;
         if (Math.abs(xdif) <= halfSize && Math.abs(ydif) <= halfSize) {
             return GUIDE.RECT_BOTTOM_RIGHT;
         }
-        xdif = mx - x;
+        xdif = mx + w/2;
         if (Math.abs(xdif) <= halfSize && Math.abs(ydif) <= halfSize) {
             return GUIDE.RECT_BOTTOM_LEFT;
         }
 
         /* Middle Guides */
-        xdif = mx - (x + w/2);
-        ydif = my - y;
+        xdif = mx;
+        ydif = my + h/2;
         if (Math.abs(xdif) <= halfSize && Math.abs(ydif) <= halfSize) {
             return GUIDE.RECT_TOP_MID;
         }
-        xdif = mx - (x + w);
-        ydif = my - (y + h/2);
+        xdif = mx - w/2;
+        ydif = my;
         if (Math.abs(xdif) <= halfSize && Math.abs(ydif) <= halfSize) {
             return GUIDE.RECT_MID_RIGHT;
         }
-        xdif = mx - (x + w/2);
-        ydif = my - (y + h);
+        xdif = mx;
+        ydif = my - h/2;
         if (Math.abs(xdif) <= halfSize && Math.abs(ydif) <= halfSize) {
             return GUIDE.RECT_BOTTOM_MID;
         }
-        xdif = mx - x;
-        ydif = my - (y + h/2);
+        xdif = mx + w/2;
+        ydif = my;
         if (Math.abs(xdif) <= halfSize && Math.abs(ydif) <= halfSize) { //middle left
             return GUIDE.RECT_MID_LEFT;
         }
+
+        /* Rotation Guide*/
+        xdif = mx;
+        ydif = my + h/2 + 10 + rotSize/2;
+        if (Math.abs(xdif) <= rotSize/2 && Math.abs(ydif) <= rotSize/2) {
+            return GUIDE.ROTATE;
+        }
+
         return GUIDE.NONE;
     }
 
@@ -76,31 +89,38 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
         let y: number = this.y;
         let w: number = this.w;
         let h: number = this.h;
+
+        this.prepareCanvas(x, y);
+
         this.ctx.beginPath();
-        this.ctx.rect(x, y, w, h);
+        this.ctx.rect(-w/2, -h/2, w, h);
         this.ctx.strokeStyle = 'gray';
         this.ctx.stroke();
         let halfSize: number = this.guideSize/2;
-        this.drawSingleGuide(x - halfSize, y - halfSize, GUIDE.RECT_TOP_LEFT);
-        this.drawSingleGuide((x + w/2) - halfSize, y - halfSize, GUIDE.RECT_TOP_MID);
-        this.drawSingleGuide(x + w - halfSize, y - halfSize, GUIDE.RECT_TOP_RIGHT);
-        this.drawSingleGuide(x - halfSize, (y + h/2) - halfSize, GUIDE.RECT_MID_LEFT);
-        this.drawSingleGuide(x + w - halfSize, (y + h/2) - halfSize, GUIDE.RECT_MID_RIGHT);
-        this.drawSingleGuide(x + w - halfSize, y + h - halfSize, GUIDE.RECT_BOTTOM_RIGHT);
-        this.drawSingleGuide((x + w/2) - halfSize, y + h - halfSize, GUIDE.RECT_BOTTOM_MID);
-        this.drawSingleGuide(x - halfSize, y + h - halfSize, GUIDE.RECT_BOTTOM_LEFT);
+
+        this.drawRotationGuide(0, -h/2);
+        this.drawSingleGuide(-w/2 - halfSize, -h/2 - halfSize, GUIDE.RECT_TOP_LEFT);
+        this.drawSingleGuide(- halfSize, -h/2 - halfSize, GUIDE.RECT_TOP_MID);
+        this.drawSingleGuide(w/2 - halfSize, -h/2 - halfSize, GUIDE.RECT_TOP_RIGHT);
+        this.drawSingleGuide(-w/2 - halfSize, -halfSize, GUIDE.RECT_MID_LEFT);
+        this.drawSingleGuide(w/2 - halfSize, -halfSize, GUIDE.RECT_MID_RIGHT);
+        this.drawSingleGuide(w/2 - halfSize, h/2 - halfSize, GUIDE.RECT_BOTTOM_RIGHT);
+        this.drawSingleGuide(- halfSize, h/2 - halfSize, GUIDE.RECT_BOTTOM_MID);
+        this.drawSingleGuide(-w/2 - halfSize, h/2 - halfSize, GUIDE.RECT_BOTTOM_LEFT);
+        this.restoreCanvas();
     }
 
     /**
      * Returns true if the mouse is inside of the object's bounding rectangle, false if otherwise
-     * @param mx the mouse x coordinate
-     * @param my the mouse y coordinate
+     * @param mx the mouse x coordinate with respect to the translated and rotated canvas
+     * @param my the mouse y coordinate with respect to the translated and rotated canvas
      */
     contains(): boolean {
-        let mx: number = this.mouse.x;
-        let my: number = this.mouse.y;
-        return (mx > this.x) && (mx < this.x + this.w) &&
-            (my > this.y) && (my < this.y + this.h);
+        let newMousePos = this.changeCoordinate(this.mouse.x - this.x,
+            this.mouse.y - this.y, this.rotate);
+        let mx: number = newMousePos[0];
+        let my: number = newMousePos[1];
+        return (Math.abs(mx) < this.w/2) && (Math.abs(my) < this.h/2);
     }
 
 
@@ -111,31 +131,52 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
         if (corner == GUIDE.NONE) {
             return;
         }
-        let mx: number = this.mouse.x;
-        let my: number = this.mouse.y;
+        //"unrotate" mousepos, resize as if rotate = 0
+        let prevMousePos = this.changeCoordinate(this.prevMouse.x - this.x, this.prevMouse.y - this.y, this.rotate);
+        let curMousePos = this.changeCoordinate(this.mouse.x - this.x, this.mouse.y - this.y, this.rotate);
+        let newXY : [number, number];
+        let deltaX: number;
+        let deltaY: number;
+        let mx: number = curMousePos[0];
+        let my: number = curMousePos[1];
         let prevX: number = this.prevX;
         let prevY: number = this.prevY;
         let prevWidth: number = this.prevWidth;
         let prevHeight: number = this.prevHeight;
-        let xDiff: number = mx - this.prevMouse.x;
-        let yDiff: number = my - this.prevMouse.y;
+        let xDiff: number = Math.floor(mx - prevMousePos[0]);
+        let yDiff: number = Math.floor(my - prevMousePos[1]);
         let minSize: number = this.guideSize * 2;
 
         if (EffectUtils.isRectGuideSide(corner)) {
             switch (corner) {
                 case GUIDE.RECT_TOP_MID:
                     this.h = prevHeight - Math.min(yDiff, prevHeight - minSize);
-                    this.y = prevY + prevHeight - this.h;
+                    deltaY = (prevHeight - this.h)/2;
+                    //rotate back to get new coordinates
+                    newXY = this.changeCoordinate(0, deltaY, -this.rotate);
+                    this.x = prevX + newXY[0];
+                    this.y = prevY + newXY[1];
                     break;
                 case GUIDE.RECT_MID_LEFT:
                     this.w = prevWidth - Math.min(xDiff, prevWidth - minSize);
-                    this.x = prevX + prevWidth - this.w;
+                    deltaX = (prevWidth - this.w)/2;
+                    newXY = this.changeCoordinate(deltaX, 0, -this.rotate);
+                    this.x = prevX + newXY[0];
+                    this.y = prevY + newXY[1];
                     break;
                 case GUIDE.RECT_MID_RIGHT:
                     this.w = prevWidth + Math.max(xDiff, minSize - prevWidth);
+                    deltaX = - (prevWidth - this.w)/2;
+                    newXY = this.changeCoordinate(deltaX, 0, -this.rotate);
+                    this.x = prevX + newXY[0];
+                    this.y = prevY + newXY[1];
                     break;
                 case GUIDE.RECT_BOTTOM_MID:
                     this.h = prevHeight + Math.max(yDiff, minSize - prevHeight);
+                    deltaY = - (prevHeight - this.h)/2;
+                    newXY = this.changeCoordinate(0, deltaY, -this.rotate);
+                    this.x = prevX + newXY[0];
+                    this.y = prevY + newXY[1];
                     break;
             }
         } else if (!event.shiftKey) {
@@ -143,25 +184,41 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
                 case GUIDE.RECT_TOP_LEFT:
                     this.w = prevWidth - Math.min(xDiff, prevWidth - minSize);
                     this.h = prevHeight - Math.min(yDiff, prevHeight - minSize);
-                    this.x = prevX + prevWidth - this.w;
-                    this.y = prevY + prevHeight - this.h;
+                    deltaX = (prevWidth - this.w)/2;
+                    deltaY = (prevHeight - this.h)/2;
+                    newXY = this.changeCoordinate(deltaX, deltaY, -this.rotate);
+                    this.x = prevX + newXY[0];
+                    this.y = prevY + newXY[1];
                     break;
                 case GUIDE.RECT_TOP_RIGHT:
                     this.w = prevWidth + Math.max(xDiff, minSize - prevWidth);
                     this.h = prevHeight - Math.min(yDiff, prevHeight - minSize);
-                    this.y = prevY + prevHeight - this.h;
+                    deltaX = - (prevWidth - this.w)/2;
+                    deltaY = (prevHeight - this.h)/2;
+                    newXY = this.changeCoordinate(deltaX, deltaY, -this.rotate);
+                    this.x = prevX + newXY[0];
+                    this.y = prevY + newXY[1];
                     break;
                 case GUIDE.RECT_BOTTOM_LEFT:
                     this.w = prevWidth - Math.min(xDiff, prevWidth - minSize);
                     this.h = prevHeight + Math.max(yDiff, minSize - prevHeight);
-                    this.x = prevX + prevWidth - this.w;
+                    deltaX = (prevWidth - this.w)/2;
+                    deltaY = - (prevHeight - this.h)/2;
+                    newXY = this.changeCoordinate(deltaX, deltaY, -this.rotate);
+                    this.x = prevX + newXY[0];
+                    this.y = prevY + newXY[1];
                     break;
                 case GUIDE.RECT_BOTTOM_RIGHT:
                     this.w = prevWidth + Math.max(xDiff, minSize - prevWidth);
                     this.h = prevHeight + Math.max(yDiff, minSize - prevHeight);
+                    deltaX = - (prevWidth - this.w)/2;
+                    deltaY = - (prevHeight - this.h)/2;
+                    newXY = this.changeCoordinate(deltaX, deltaY, -this.rotate);
+                    this.x = prevX + newXY[0];
+                    this.y = prevY + newXY[1];
                     break;
             }
-        } else {
+        } else { 
             let ratio: number = prevWidth / prevHeight;
             let newW: number;
             let newH: number;
@@ -169,12 +226,12 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
                 case GUIDE.RECT_TOP_LEFT:
                     newW = prevWidth - Math.min(xDiff, prevWidth - minSize);
                     newH = Math.round(newW / ratio);
-                    if (prevY + prevHeight - newH <= my) {
+                    if (prevY + prevHeight/2 - newH <= my) {
                         break;
                     }
                     newH = prevHeight - Math.min(yDiff, prevHeight - minSize);
                     newW = Math.round(newH * ratio);
-                    if (prevX + prevWidth - newW <= mx) {
+                    if (prevX + prevWidth/2 - newW <= mx) {
                         break;
                     }
                     newW = this.w;
@@ -183,12 +240,12 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
                 case GUIDE.RECT_TOP_RIGHT:
                     newW = prevWidth + Math.max(xDiff, minSize - prevWidth);
                     newH = Math.round(newW / ratio);
-                    if (prevY + prevHeight - newH <= my) {
+                    if (prevY + prevHeight/2 - newH <= my) {
                         break;
                     }
                     newH = prevHeight - Math.min(yDiff, prevHeight - minSize);
                     newW = Math.round(newH * ratio);
-                    if ((newW + this.x) >= mx) {
+                    if ((newW/2 + this.x) >= mx) {
                         break;
                     }
                     newW = this.w;
@@ -197,12 +254,12 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
                 case GUIDE.RECT_BOTTOM_LEFT:
                     newW = prevWidth - Math.min(xDiff, prevWidth - minSize);
                     newH = Math.round(newW / ratio);
-                    if ((newH + this.y) >= my) {
+                    if ((newH/2 + this.y) >= my) {
                         break;
                     }
                     newH = prevHeight + Math.max(yDiff, minSize - prevHeight);
                     newW = Math.round(newH * ratio);
-                    if (prevX + prevWidth - newW <= mx) {
+                    if (prevX + prevWidth/2 - newW <= mx) {
                         break;
                     }
                     newW = this.w;
@@ -211,12 +268,12 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
                 case GUIDE.RECT_BOTTOM_RIGHT:
                     newW = prevWidth + xDiff;
                     newH = Math.round(newW / ratio);
-                    if ((newH + this.y) >= my) {
+                    if ((newH/2 + this.y) >= my) {
                         break;
                     }
                     newH = prevHeight + yDiff;
                     newW = Math.round(newH * ratio);
-                    if ((newW + this.x) >= mx) {
+                    if ((newW/2 + this.x) >= mx) {
                         break;
                     }
                     newW = this.w;
@@ -238,14 +295,32 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
             this.h = newH;
             switch (corner) {
                 case GUIDE.RECT_TOP_LEFT:
-                    this.x = prevX + prevWidth - this.w;
-                    this.y = prevY + prevHeight - this.h;
+                    deltaX = (prevWidth - this.w)/2;
+                    deltaY = (prevHeight - this.h)/2;
+                    newXY = this.changeCoordinate(deltaX, deltaY, -this.rotate);
+                    this.x = prevX + newXY[0];
+                    this.y = prevY + newXY[1];
                     break;
                 case GUIDE.RECT_TOP_RIGHT:
-                    this.y = prevY + prevHeight - this.h;
+                    deltaX = - (prevWidth - this.w)/2;
+                    deltaY = (prevHeight - this.h)/2;
+                    newXY = this.changeCoordinate(deltaX, deltaY, -this.rotate);
+                    this.x = prevX + newXY[0];
+                    this.y = prevY + newXY[1];
                     break;
                 case GUIDE.RECT_BOTTOM_LEFT:
-                    this.x = prevX + prevWidth - this.w;
+                    deltaX = (prevWidth - this.w)/2;
+                    deltaY = - (prevHeight - this.h)/2;
+                    newXY = this.changeCoordinate(deltaX, deltaY, -this.rotate);
+                    this.x = prevX + newXY[0];
+                    this.y = prevY + newXY[1];
+                    break;
+                case GUIDE.RECT_BOTTOM_RIGHT:
+                    deltaX = - (prevWidth - this.w)/2;
+                    deltaY = - (prevHeight - this.h)/2;
+                    newXY = this.changeCoordinate(deltaX, deltaY, -this.rotate);
+                    this.x = prevX + newXY[0];
+                    this.y = prevY + newXY[1];
                     break;
             }
         }
@@ -277,13 +352,25 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
 
         this.isSelected = true;
         this.scope.eventLog.push(this.logClick());
-        if (guideContains != GUIDE.NONE) { //resizing
+        if (guideContains != GUIDE.NONE && guideContains != GUIDE.ROTATE) { //resizing
             this.isResizing = true;
             this.prevHeight = this.h;
             this.prevWidth = this.w;
+        } else if (guideContains === GUIDE.ROTATE) { //rotating
+            this.isRotating = true;
         } else if (contains) { // dragging
             this.isDragging = true;
         }
+    }
+
+    modifyRotate() : void {
+        let dy = this.mouse.y - this.y;
+        let dx = this.mouse.x - this.x;
+        let theta = Math.atan2(dy, dx); // range (-PI, PI]
+        theta = theta * (180 / Math.PI) + 90; // range (0, 360), starting at rotate = 0;
+        if (theta < 0) theta += 360;
+        if (Math.round(theta) == 360) theta = 0;
+        this.rotate = Math.round(theta);
     }
 
     modifyReset(): void {
@@ -299,9 +386,20 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
                 this.justResized = true;
             }
         }
+        this.isRotating = false;
         this.isDragging = false;
         this.isResizing = false;
         this.corner = GUIDE.NONE;
+    }
+
+    changeCursor() : void {
+        let cx: number = this.x;
+        let cy: number = this.y;
+        if (this.cursorOwnerID == undefined || this.cursorOwnerID === this.id) {
+            this.changeResizeCursor(this.mouse.x, cx, this.mouse.y, cy);
+
+            this.changeDragCursor(this.guideContains());
+        }
     }
 
     // Logging functions

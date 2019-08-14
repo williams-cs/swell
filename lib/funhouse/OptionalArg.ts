@@ -5,7 +5,7 @@ export class OptionalArg<T> extends Argument<T> {
         value: T = null,
         alwaysVisible: boolean = false,
         preArgNameWS: string = " ",
-        preEqualWS: string = " ",
+        preEqualWS: string = "",
         postExprWS: string = ""
     ) {
         super(value, false, alwaysVisible, preArgNameWS, preEqualWS, postExprWS);

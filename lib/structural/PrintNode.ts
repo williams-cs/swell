@@ -19,10 +19,11 @@ export class PrintNode extends AbstractBuiltinFunctionNode<any> {
 
     getOptionalArgMap(): Map<string, OptionalArg<any>> {
         return new Map<string, OptionalArg<any>>([
-            ["x", new OptionalArg<NumberNode>(new NumberNode(100, " "))],
-            ["y", new OptionalArg<NumberNode>(new NumberNode(100, " "))],
-            ["fontSize", new OptionalArg<NumberNode>(new NumberNode(20, " "))],
-            ["color", new OptionalArg<StringNode | RGBColorNode>(new StringNode("#673AB7", " "))],
+            ["x", new OptionalArg<NumberNode>(new NumberNode(150))],
+            ["y", new OptionalArg<NumberNode>(new NumberNode(150))],
+            ["fontSize", new OptionalArg<NumberNode>(new NumberNode(20))],
+            ["color", new OptionalArg<StringNode | RGBColorNode>(new StringNode("#673AB7"))],
+            ["rotate", new OptionalArg<NumberNode>(new NumberNode(0))],
         ]);
     }
 
@@ -65,5 +66,13 @@ export class PrintNode extends AbstractBuiltinFunctionNode<any> {
 
     setColor(context: Scope, val: string): void {
         this.updateArgValue("color", context, val);
+    }
+
+    getRotate(context: Scope) : number {
+        return this.getArg("rotate").eval(context).val;
+    }
+
+    setRotate(context: Scope, val : number) : void {
+        this.updateArgValue("rotate", context, val);
     }
 }

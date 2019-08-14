@@ -5,7 +5,7 @@ export class PositionalArg<T> extends Argument<T> {
         value: T = null,
         alwaysVisible: boolean = false,
         preArgNameWS: string = " ",
-        preEqualWS: string = " ",
+        preEqualWS: string = "",
         postExprWS: string = ""
     ) {
         super(value, true, alwaysVisible, preArgNameWS, preEqualWS, postExprWS);
