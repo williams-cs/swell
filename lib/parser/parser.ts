@@ -240,7 +240,7 @@ export namespace Parser {
                 Prims.seq<CharStream, Expression<any>, [CharStream, Expression<any>]>(
                     Prims.right<void, CharStream>(preWS)(binOpChar(includePureLogic))
                 )(
-                    Prims.expect<Expression<any>>(singleTokenParser)("invalid expression")
+                    singleTokenParser
                 )(
                     (tup: [CharStream, Expression<any>]) => tup
                 )
@@ -311,7 +311,7 @@ export namespace Parser {
         let operand = Prims.choices<Expression<any>>(
             listAccessOpParser, parens, funApp, varNameParse, lNumber
         );
-        let prefixOperand = Prims.expect<Expression<any>>(operand)("invalid expression");
+        let prefixOperand = operand;
         let ws = "";
         let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
         let prefixOp = Prims.right<string, CharStream>(preWS)(Prims.strSat(["-"]));
@@ -359,9 +359,9 @@ export namespace Parser {
 
         let openParenParser = Prims.right<string, CharStream>(preOpenParenWsParser)(Prims.str("("));
         let closeParenParser = Prims.right<string, CharStream>(preCloseParenWsParser)(Prims.str(")"));
-        let expectCloseParen = Prims.expect(closeParenParser)(") expected");
+        let expectCloseParen = closeParenParser;
 
-        let expr = Prims.expect<Expression<any>>(ExpressionParserNoStruct)("invalid expression");
+        let expr = ExpressionParserNoStruct;
         let parentheses = Prims.between<CharStream, CharStream, Expression<any>>(openParenParser)(expectCloseParen)(expr);
         return Prims.appfun<Expression<any>, Parens<Expression<any>>>(
             parentheses
@@ -374,11 +374,10 @@ export namespace Parser {
         let ws = "";
         let preWS = Prims.appfun<CharStream, string>(Prims.ws())(x => ws = x.toString());
         let notOp: Prims.IParser<CharStream> = Prims.right<string, CharStream>(preWS)(Prims.str("!"));
-        let operand: Prims.IParser<Expression<any>> = Prims.expect<Expression<any>>(
+        let operand: Prims.IParser<Expression<any>> = 
             Prims.choices<Expression<any>>(
                 notExpr, binOpExpr(false), parens, boolParse, varNameParse, lNumber, lstring
-            )
-        )("invalid expression");
+            );
         let createNotOp = (tup: [CharStream, Expression<any>]) => new Not(tup[1], ws);
         return Prims.seq<CharStream, Expression<any>, Not>(notOp)(operand)(createNotOp)(i);
     }
@@ -411,7 +410,7 @@ export namespace Parser {
         let remainingElemParser = Prims.many<[Expression<any>, CharStream]>(
             Prims.right<CharStream, [Expression<any>, CharStream]>(Prims.char(","))(elemParser)
         );
-        let closeBracket = Prims.expect(Prims.char("]"))("] expected");
+        let closeBracket = Prims.char("]");
         let nonEmptyListParser = Prims.seq<
             [Expression<any>, CharStream],
             Array<[Expression<any>, CharStream]>,
@@ -439,8 +438,8 @@ export namespace Parser {
     export let listAccessOpParser: Prims.IParser<ListAccessOp> = i => {
         let operandParser = Prims.choices<Expression<any>>(listParser, funApp, varNameParse, parens);
         let openBracket = Prims.left(Prims.ws())(Prims.char("["));
-        let closeBracket = Prims.left(Prims.ws())(Prims.expect(Prims.char("]"))("] expected"));
-        let idxExprParser = Prims.expect(ExpressionParserNoStruct)("invalid index expression");
+        let closeBracket = Prims.left(Prims.ws())(Prims.char("]"));
+        let idxExprParser = ExpressionParserNoStruct;
         let idxAndCloseBracketParser = Prims.seq<
             Expression<any>, CharStream, [Expression<any>, CharStream]
         >(idxExprParser)(closeBracket)(x => x);
@@ -484,9 +483,9 @@ export namespace Parser {
 
         let openCurlyParser = Prims.right<string, CharStream>(preOpenCurlyWsParser)(Prims.str("{"));
         let closeCurlyParser = Prims.right<string, CharStream>(preCloseCurlyWsParser)(Prims.str("}"));
-        let expectCloseCurly = Prims.expect(closeCurlyParser)("} expected");
+        let expectCloseCurly = closeCurlyParser;
 
-        let expr = Prims.expect<Expression<any>>(ExpressionParser)("invalid expression");
+        let expr = ExpressionParser;
         let body = Prims.between<CharStream, CharStream, Expression<any>>(openCurlyParser)(expectCloseCurly)(expr);
 
         return Prims.appfun<Expression<any>, BodyNode>(body)(
@@ -503,7 +502,7 @@ export namespace Parser {
             Prims.left<CharStream, CharStream>(Prims.ws())(Prims.char('='))
         )(
             Prims.seq<Expression<any>, CharStream, [Expression<any>, CharStream]>(
-                Prims.expect(ExpressionParserNoStruct)("invalid expression")
+                ExpressionParserNoStruct
             )(
                 Prims.ws()
             )(
@@ -546,7 +545,7 @@ export namespace Parser {
 
         let argListParser = Prims.between<
             CharStream, CharStream, Array<[string, string, string, Expression<any>, string]>
-        >(Prims.char("("))(Prims.expect(Prims.char(")"))(") expected"))(args);
+        >(Prims.char("("))(Prims.char(")"))(args);
 
         return Prims.appfun<
             Array<[string, string, string, Expression<any>, string]>,
@@ -570,21 +569,21 @@ export namespace Parser {
         )(
             Prims.seq<CharStream, [[Array<[string, string, string, Expression<any>, string]>, string], BodyNode], FunDef>(
                 /* function name */
-                Prims.expect(identifierParser)("function name expected")
+                identifierParser
             )(
                 Prims.seq<
                     [Array<[string, string, string, Expression<any>, string]>, string],
                     BodyNode, [[Array<[string, string, string, Expression<any>, string]>, string], BodyNode]
                 >(
                     /* function arguments */
-                    Prims.expect(Prims.right<string, [Array<[string, string, string, Expression<any>, string]>, string]>(
+                    Prims.right<string, [Array<[string, string, string, Expression<any>, string]>, string]>(
                         postFuncNameWsParser
                     )(
-                        funDefArgList)
-                    )("argument list expected")
+                        funDefArgList
+                    )
                 )(
                     /* function body */
-                    Prims.expect(bodyParser)("function body expected")
+                    bodyParser
                 )(x => x)
             )(
                 // create the AST node
@@ -654,7 +653,7 @@ export namespace Parser {
 
         let argListParser = Prims.between<
             CharStream, CharStream, Array<[string, string, string, Expression<any>, string]>
-        >(Prims.char("("))(Prims.expect(Prims.char(")"))(") expected"))(args);
+        >(Prims.char("("))(Prims.char(")"))(args);
 
         return Prims.appfun<
             Array<[string, string, string, Expression<any>, string]>,
@@ -726,8 +725,8 @@ export namespace Parser {
             x => preIfWs = x.toString()
         );
         let ifParser = Prims.right<string, CharStream>(preIfWsParser)(Prims.str("if"));
-        let condParser = Prims.expect<Parens<any>>(parens)("invalid condition expression");
-        let bodyParse = Prims.expect<BodyNode>(bodyParser)("invalid body for if statement");
+        let condParser = parens;
+        let bodyParse = bodyParser;
         let condBodyParser = Prims.seq<Parens<any>, BodyNode, [Parens<any>, BodyNode]>(condParser)(bodyParse)(tup => tup);
         let ifStatementParser = Prims.right<CharStream, [Parens<any>, BodyNode]>(ifParser)(condBodyParser);
 
@@ -737,7 +736,7 @@ export namespace Parser {
         );
         let elseParser = Prims.right<string, CharStream>(preElseWsParser)(Prims.str("else"));
         let elseBodyParser = Prims.choices<BodyNode | Conditional>(conditionalParser, bodyParser);
-        let expectElseBodyParser = Prims.expect<BodyNode | Conditional>(elseBodyParser)("invalid else statement");
+        let expectElseBodyParser = elseBodyParser;
         let elseStatementParser = Prims.right<CharStream, BodyNode | Conditional>(elseParser)(expectElseBodyParser);
 
         let singleIfParser = Prims.appfun<[Parens<any>, BodyNode], Conditional>(ifStatementParser)(

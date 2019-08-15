@@ -108,7 +108,7 @@ import { AbstractTextEffect } from '../effects/AbstractTextEffect';
                     parses = false;
                     ast = undefined;
                     let startPos = outcome.error_pos;
-                    let endPos = Math.min(startPos + 3, outcome.inputstream.length());
+                    let endPos = Math.min(startPos + 3, outcome.errors[0].modStream.length());
                     let editorStartPos = editorDoc.posFromIndex(startPos);
                     // mark region
                     editorDoc.markText(
@@ -116,8 +116,9 @@ import { AbstractTextEffect } from '../effects/AbstractTextEffect';
                         editorDoc.posFromIndex(endPos),
                         { className: "err" }
                     );
-                    let msg = outcome.error_msg != "" ? outcome.error_msg : "unexpected error";
-                    message.innerHTML = `Line ${editorStartPos.line + 1}, col ${editorStartPos.ch}: ${msg}`;
+                    //let msg = outcome.error_msg != "" ? outcome.error_msg : "unexpected error";
+                    message.innerHTML = <string>outcome.errors[0].modStream.input
+                    //`Line ${editorStartPos.line + 1}, col ${editorStartPos.ch}: ${msg}`;
                     break;
             }
 
