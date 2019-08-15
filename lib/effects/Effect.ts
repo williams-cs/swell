@@ -29,6 +29,12 @@ export abstract class Effect<T> {
     private _id: number;
 
     /**
+     * Delta accumalated during modifyKeyDrag
+     * Reset to 0 on key up
+     */
+    private _delta : number = 0;
+
+    /**
      * The name of the effect, used for logging
      */
     abstract name: string;
@@ -118,6 +124,7 @@ export abstract class Effect<T> {
         window.addEventListener("changingcolor", this.onChangingObjectColor.bind(this));
         window.addEventListener("deleting", this.onDeletingObject.bind(this));
         window.addEventListener("keydown", this.onKeyDown.bind(this));
+        window.addEventListener("keyup", this.onKeyUp.bind(this));
         window.addEventListener("mouseup", this.isMouseOutside.bind(this));
     }
 
@@ -128,6 +135,7 @@ export abstract class Effect<T> {
         window.removeEventListener("changingcolor", this.onChangingObjectColor.bind(this));
         window.removeEventListener("deleting", this.onDeletingObject.bind(this));
         window.removeEventListener("keydown", this.onKeyDown.bind(this));
+        window.removeEventListener("keyup", this.onKeyUp.bind(this));
         window.removeEventListener("mouseup", this.isMouseOutside.bind(this));
     }
 
@@ -244,6 +252,10 @@ export abstract class Effect<T> {
      * Triggered when key is pressed down
      */
     abstract onKeyDown(event: KeyboardEvent): void;
+
+    onKeyUp(event : KeyboardEvent) {
+        this.delta = 0
+    }
 
     /**
      * Sets isDragging, isResizing and isSelected to false if the mouse clicks outside of the canvas
@@ -499,5 +511,13 @@ export abstract class Effect<T> {
 
     set cursorOwnerID(newID : number) {
         this.canvasState.cursorOwnerID = newID;
+    }
+
+    get delta() {
+        return this._delta;
+    }
+
+    set delta(val : number) {
+        this._delta = val;
     }
 }

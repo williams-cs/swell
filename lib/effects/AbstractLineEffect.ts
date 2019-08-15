@@ -5,7 +5,9 @@ import { LogEvent } from "../logging/LogEvent";
 import { PaintEvent } from "../logging/PaintEvent";
 import { ResizeEvent } from "../logging/ResizeEvent";
 import { ClickEvent } from "../logging/ClickEvent";
+import KEYBOARD = EffectUtils.KEYBOARD;
 import GUIDE = EffectUtils.GUIDE;
+
 
 export abstract class AbstractLineEffect<T extends AbstractLineNode<T, E>, E extends AbstractLineEffect<T, E>> extends Effect<T> {
 
@@ -46,8 +48,52 @@ export abstract class AbstractLineEffect<T extends AbstractLineNode<T, E>, E ext
         return ((Math.abs(xDiff) <= 10 || mx >= Math.min(x1, x2) && mx <= Math.max(x1, x2)) && dist <= 10);
     }
 
+    modifyKeyDrag(event : KeyboardEvent) : void {
+        if (!this.isSelected) return;
+        switch (event.keyCode) {
+            case KEYBOARD.ARROW_LEFT:
+                if (this.delta < 5) {
+                    --this.x1;
+                    --this.x2;
+                } else {
+                    this.x1 -= 3;
+                    this.x2 -= 3;
+                }
+                break;
+            case KEYBOARD.ARROW_RIGHT:
+                if (this.delta < 5) {
+                    ++this.x1;
+                    ++this.x2;
+                } else {
+                    this.x1 += 3;
+                    this.x2 += 3;
+                }
+                break;
+            case KEYBOARD.ARROW_UP:
+                if (this.delta < 10) {
+                    --this.y1;
+                    --this.y2;
+                } else {
+                    this.y1 -= 3;
+                    this.y2 -= 3;
+                }
+                break;
+            case KEYBOARD.ARROW_DOWN:
+                if (this.delta < 5) {
+                    ++this.y1;
+                    ++this.y2;
+                } else {
+                    this.y1 += 3;
+                    this.y2 += 3;
+                }
+                break;
+        }
+    }
+
     // Event listener functions
-    onKeyDown(event: KeyboardEvent): void { }
+    onKeyDown(event: KeyboardEvent): void {
+        this.modifyKeyDrag(event);
+    }
 
     // Modification functions
 

@@ -13,6 +13,44 @@ export abstract class AbstractRectangularBoundEffect<T> extends Effect<T> {
         this.y = this.prevY + this.mouse.y - this.prevMouse.y;
     }
 
+    modifyKeyDrag(event : KeyboardEvent) : void {
+        if (!this.isSelected) return;
+        switch (event.keyCode) {
+            case KEYBOARD.ARROW_LEFT:
+                if (this.delta < 5) {
+                    --this.x;
+                    this.delta++;
+                } else {
+                    this.x -= 3;
+                }
+                break;
+            case KEYBOARD.ARROW_RIGHT:
+                if (this.delta < 5) {
+                    ++this.x;
+                    this.delta++;
+                } else {
+                    this.x += 3;
+                }
+                break;
+            case KEYBOARD.ARROW_UP:
+                if (this.delta < 5) {
+                    --this.y;
+                    this.delta++;
+                } else {
+                    this.y -= 3;
+                }
+                break;
+            case KEYBOARD.ARROW_DOWN:
+                if (this.delta < 5) {
+                    ++this.y;
+                    this.delta++;
+                } else {
+                    this.y += 3;
+                }
+                break;
+        }
+    }
+
      /**
      * Method that draws the rotation guide for rectangular bound objects
      * @param x x-coordinate for the top-mid guide of object
@@ -74,7 +112,9 @@ export abstract class AbstractRectangularBoundEffect<T> extends Effect<T> {
 
     // Event listeners
 
-    onKeyDown(event: KeyboardEvent) {}
+    onKeyDown(event: KeyboardEvent) {
+        this.modifyKeyDrag(event);
+    }
 
     get x(): number {
         return this.aes.getX(this.scope);

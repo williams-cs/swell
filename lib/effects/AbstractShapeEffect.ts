@@ -135,8 +135,8 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
         let prevMousePos = this.changeCoordinate(this.prevMouse.x - this.x, this.prevMouse.y - this.y, this.rotate);
         let curMousePos = this.changeCoordinate(this.mouse.x - this.x, this.mouse.y - this.y, this.rotate);
         let newXY : [number, number];
-        let deltaX: number;
-        let deltaY: number;
+        let deltaX: number = 0;
+        let deltaY: number = 0;
         let mx: number = curMousePos[0];
         let my: number = curMousePos[1];
         let prevX: number = this.prevX;
@@ -152,33 +152,24 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
                 case GUIDE.RECT_TOP_MID:
                     this.h = prevHeight - Math.min(yDiff, prevHeight - minSize);
                     deltaY = (prevHeight - this.h)/2;
-                    //rotate back to get new coordinates
-                    newXY = this.changeCoordinate(0, deltaY, -this.rotate);
-                    this.x = prevX + newXY[0];
-                    this.y = prevY + newXY[1];
                     break;
                 case GUIDE.RECT_MID_LEFT:
                     this.w = prevWidth - Math.min(xDiff, prevWidth - minSize);
                     deltaX = (prevWidth - this.w)/2;
-                    newXY = this.changeCoordinate(deltaX, 0, -this.rotate);
-                    this.x = prevX + newXY[0];
-                    this.y = prevY + newXY[1];
                     break;
                 case GUIDE.RECT_MID_RIGHT:
                     this.w = prevWidth + Math.max(xDiff, minSize - prevWidth);
                     deltaX = - (prevWidth - this.w)/2;
-                    newXY = this.changeCoordinate(deltaX, 0, -this.rotate);
-                    this.x = prevX + newXY[0];
-                    this.y = prevY + newXY[1];
                     break;
                 case GUIDE.RECT_BOTTOM_MID:
                     this.h = prevHeight + Math.max(yDiff, minSize - prevHeight);
                     deltaY = - (prevHeight - this.h)/2;
-                    newXY = this.changeCoordinate(0, deltaY, -this.rotate);
-                    this.x = prevX + newXY[0];
-                    this.y = prevY + newXY[1];
                     break;
             }
+            //rotate back to get new coordinates
+            newXY = this.changeCoordinate(deltaX, deltaY, -this.rotate);
+            this.x = prevX + newXY[0];
+            this.y = prevY + newXY[1];
         } else if (!event.shiftKey) {
             switch (corner) {
                 case GUIDE.RECT_TOP_LEFT:
@@ -186,38 +177,29 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
                     this.h = prevHeight - Math.min(yDiff, prevHeight - minSize);
                     deltaX = (prevWidth - this.w)/2;
                     deltaY = (prevHeight - this.h)/2;
-                    newXY = this.changeCoordinate(deltaX, deltaY, -this.rotate);
-                    this.x = prevX + newXY[0];
-                    this.y = prevY + newXY[1];
                     break;
                 case GUIDE.RECT_TOP_RIGHT:
                     this.w = prevWidth + Math.max(xDiff, minSize - prevWidth);
                     this.h = prevHeight - Math.min(yDiff, prevHeight - minSize);
                     deltaX = - (prevWidth - this.w)/2;
                     deltaY = (prevHeight - this.h)/2;
-                    newXY = this.changeCoordinate(deltaX, deltaY, -this.rotate);
-                    this.x = prevX + newXY[0];
-                    this.y = prevY + newXY[1];
                     break;
                 case GUIDE.RECT_BOTTOM_LEFT:
                     this.w = prevWidth - Math.min(xDiff, prevWidth - minSize);
                     this.h = prevHeight + Math.max(yDiff, minSize - prevHeight);
                     deltaX = (prevWidth - this.w)/2;
                     deltaY = - (prevHeight - this.h)/2;
-                    newXY = this.changeCoordinate(deltaX, deltaY, -this.rotate);
-                    this.x = prevX + newXY[0];
-                    this.y = prevY + newXY[1];
                     break;
                 case GUIDE.RECT_BOTTOM_RIGHT:
                     this.w = prevWidth + Math.max(xDiff, minSize - prevWidth);
                     this.h = prevHeight + Math.max(yDiff, minSize - prevHeight);
                     deltaX = - (prevWidth - this.w)/2;
                     deltaY = - (prevHeight - this.h)/2;
-                    newXY = this.changeCoordinate(deltaX, deltaY, -this.rotate);
-                    this.x = prevX + newXY[0];
-                    this.y = prevY + newXY[1];
                     break;
             }
+            newXY = this.changeCoordinate(deltaX, deltaY, -this.rotate);
+            this.x = prevX + newXY[0];
+            this.y = prevY + newXY[1];
         } else { 
             let ratio: number = prevWidth / prevHeight;
             let newW: number;
@@ -297,32 +279,23 @@ export abstract class AbstractShapeEffect<T extends AbstractShapeNode<T, E>, E e
                 case GUIDE.RECT_TOP_LEFT:
                     deltaX = (prevWidth - this.w)/2;
                     deltaY = (prevHeight - this.h)/2;
-                    newXY = this.changeCoordinate(deltaX, deltaY, -this.rotate);
-                    this.x = prevX + newXY[0];
-                    this.y = prevY + newXY[1];
                     break;
                 case GUIDE.RECT_TOP_RIGHT:
                     deltaX = - (prevWidth - this.w)/2;
                     deltaY = (prevHeight - this.h)/2;
-                    newXY = this.changeCoordinate(deltaX, deltaY, -this.rotate);
-                    this.x = prevX + newXY[0];
-                    this.y = prevY + newXY[1];
                     break;
                 case GUIDE.RECT_BOTTOM_LEFT:
                     deltaX = (prevWidth - this.w)/2;
                     deltaY = - (prevHeight - this.h)/2;
-                    newXY = this.changeCoordinate(deltaX, deltaY, -this.rotate);
-                    this.x = prevX + newXY[0];
-                    this.y = prevY + newXY[1];
                     break;
                 case GUIDE.RECT_BOTTOM_RIGHT:
                     deltaX = - (prevWidth - this.w)/2;
                     deltaY = - (prevHeight - this.h)/2;
-                    newXY = this.changeCoordinate(deltaX, deltaY, -this.rotate);
-                    this.x = prevX + newXY[0];
-                    this.y = prevY + newXY[1];
                     break;
             }
+            newXY = this.changeCoordinate(deltaX, deltaY, -this.rotate);
+            this.x = prevX + newXY[0];
+            this.y = prevY + newXY[1];
         }
     }
 
