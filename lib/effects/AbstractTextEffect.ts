@@ -140,6 +140,7 @@ export abstract class AbstractTextEffect<T extends AbstractTypeableNode<T, V, E>
 
     onKeyDown(event: KeyboardEvent) {
         this.modifyText(event);
+        if (!this.isEditing) this.modifyKeyDrag(event);
     }
 
     /* Cursor modifying functions */

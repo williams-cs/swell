@@ -55,6 +55,7 @@ export abstract class AbstractLineEffect<T extends AbstractLineNode<T, E>, E ext
                 if (this.delta < 5) {
                     --this.x1;
                     --this.x2;
+                    this.delta++;
                 } else {
                     this.x1 -= 3;
                     this.x2 -= 3;
@@ -64,15 +65,17 @@ export abstract class AbstractLineEffect<T extends AbstractLineNode<T, E>, E ext
                 if (this.delta < 5) {
                     ++this.x1;
                     ++this.x2;
+                    this.delta++;
                 } else {
                     this.x1 += 3;
                     this.x2 += 3;
                 }
                 break;
             case KEYBOARD.ARROW_UP:
-                if (this.delta < 10) {
+                if (this.delta < 5) {
                     --this.y1;
                     --this.y2;
+                    this.delta++;
                 } else {
                     this.y1 -= 3;
                     this.y2 -= 3;
@@ -82,6 +85,7 @@ export abstract class AbstractLineEffect<T extends AbstractLineNode<T, E>, E ext
                 if (this.delta < 5) {
                     ++this.y1;
                     ++this.y2;
+                    this.delta++;
                 } else {
                     this.y1 += 3;
                     this.y2 += 3;
