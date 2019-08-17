@@ -7,6 +7,11 @@ export class EmojiEffect extends AbstractShapeEffect<EmojiNode, EmojiEffect> {
 
     private _image: HTMLImageElement;
 
+    /**
+     * Boolean flag to check if image is onload before updating
+     */
+    private _imageOnError: boolean = false;
+
     readonly name: string = "emoji";
 
     constructor(node: EmojiNode, scope: Scope, aes: PrintNode) {
@@ -16,6 +21,9 @@ export class EmojiEffect extends AbstractShapeEffect<EmojiNode, EmojiEffect> {
     }
 
     update(): void {
+        this.image.onerror = () => this._imageOnError = true;
+        if (this._imageOnError) return;
+
         this.prepareCanvas(this.x, this.y);
         this.ctx.beginPath();
         this.ctx.drawImage(this.image, -this.w/2, -this.h/2, this.w, this.h);
