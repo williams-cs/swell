@@ -1,0 +1,1 @@
+convert in.png -crop 350x360+340+260 out.png
