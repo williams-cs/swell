@@ -26,7 +26,7 @@ export abstract class AbstractFunctionNode<T extends Expression<any>> extends Ex
      * @param args array of arguments
      * @param preWS Whitespace preceding the function name
      * @param postWS Whitespace between the function and the parentheses
-     * @param emptyArgWS Whitespace when there's no argument in the parantheses
+     * @param emptyArgWS Whitespace when there's no argument in the parentheses
      */
     constructor(
         private args: Array<[string, string, string, Expression<any>, string]>,
