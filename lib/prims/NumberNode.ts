@@ -9,7 +9,7 @@ export class NumberNode extends AbstractTypeableNode<NumberNode, number, NumberE
     eval(context: Scope): NumberNode {
         return this;
     }
-
+    
     getEffect(context: Scope, aes: PrintNode): NumberEffect {
         return new NumberEffect(this, context, aes);
     }
