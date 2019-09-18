@@ -6,13 +6,13 @@ import 'mocha';
 
 describe('A negop', () => {
     it('should evaluate to the negation', () => {
-        const testval = new NegOp(new NumberNode(1));
+        const testval = new NegOp(new NumberNode(1, null));
         const output = testval.eval(null);
-        expect(output).to.eql(new NumberNode(-1));
+        expect(output).to.eql(new NumberNode(-1, null));
     });
     it('should evaluate to another negation', () => {
-        const testval = new NegOp(new NumberNode(-1));
+        const testval = new NegOp(new NumberNode(-1, null));
         const output = testval.eval(null);
-        expect(output).to.eql(new NumberNode(1));
+        expect(output).to.eql(new NumberNode(1, null));
     });
 });
