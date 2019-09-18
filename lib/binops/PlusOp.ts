@@ -8,8 +8,6 @@ export class PlusOp extends BinaryOp<NumberNode> {
     protected readonly op: string = "+";
 
     eval(context: Scope): NumberNode {
-        let res: NumberNode = new NumberNode(this.left.eval(context).val + this.right.eval(context).val);
-        res.origin = new PlusOp(this.left,this.right);
-        return res;
+        return new NumberNode(this.left.eval(context).val + this.right.eval(context).val,this);
     }
 }

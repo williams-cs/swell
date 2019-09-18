@@ -22,7 +22,7 @@ export class RGBColorNode extends AbstractBuiltinFunctionNode<StringNode> {
         let red = this.intToHex(this.getRed(context));
         let green = this.intToHex(this.getGreen(context));
         let blue = this.intToHex(this.getBlue(context));
-        return new StringNode("#" + red + green + blue);
+        return new StringNode("#" + red + green + blue, this);
     }
 
     intToHex(num: number): string {

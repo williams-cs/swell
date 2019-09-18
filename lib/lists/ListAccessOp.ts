@@ -30,7 +30,7 @@ export class ListAccessOp extends Expression<any> {
             throw new Error("Index out of range");
         }
         let returnVal = list[listIdx];
-        return (returnVal instanceof Expression) ? returnVal : new StringNode(returnVal);
+        return (returnVal instanceof Expression) ? returnVal : new StringNode(returnVal, this);
     }
 
     toString(): string {

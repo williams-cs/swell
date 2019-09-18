@@ -172,7 +172,7 @@ export namespace Parser {
             let o = Prims.right(preWS)(Prims.choices<number>(float(), number()))(istream);
             switch (o.tag) {
                 case "success":
-                    return new Prims.Success(o.inputstream, new NumberNode((<number>o.result), lws));
+                    return new Prims.Success(o.inputstream, new NumberNode((<number>o.result), null, lws));
                 case "failure":
                     return o;
             }
@@ -195,7 +195,7 @@ export namespace Parser {
         );
         return Prims.seq<CharStream, CharStream[], StringNode>(Prims.ws())(stringParser)(
             (tup: [CharStream, CharStream[]]) => {
-                return new StringNode(CharStream.concat(tup[1]).toString(), tup[0].toString());
+                return new StringNode(CharStream.concat(tup[1]).toString(), null, tup[0].toString());
             }
         )(i);
     }
@@ -209,12 +209,12 @@ export namespace Parser {
         let trueNode = Prims.appfun<CharStream, BooleanNode>(
             Prims.right<string, CharStream>(preWS)(Prims.str('true'))
         )(
-            _ => new BooleanNode(true, lws)
+            _ => new BooleanNode(true, null,lws)
         );
         let falseNode = Prims.appfun<CharStream, BooleanNode>(
             Prims.right<string, CharStream>(preWS)(Prims.str('false'))
         )(
-            _ => new BooleanNode(false, lws)
+            _ => new BooleanNode(false, null,lws)
         );
         return Prims.choice<BooleanNode>(trueNode)(falseNode);
     }

@@ -19,11 +19,11 @@ export class PrintNode extends AbstractBuiltinFunctionNode<any> {
 
     getOptionalArgMap(): Map<string, OptionalArg<any>> {
         return new Map<string, OptionalArg<any>>([
-            ["x", new OptionalArg<NumberNode>(new NumberNode(150))],
-            ["y", new OptionalArg<NumberNode>(new NumberNode(150))],
-            ["fontSize", new OptionalArg<NumberNode>(new NumberNode(20))],
-            ["color", new OptionalArg<StringNode | RGBColorNode>(new StringNode("#673AB7"))],
-            ["rotate", new OptionalArg<NumberNode>(new NumberNode(0))],
+            ["x", new OptionalArg<NumberNode>(new NumberNode(150,this))],
+            ["y", new OptionalArg<NumberNode>(new NumberNode(150,this))],
+            ["fontSize", new OptionalArg<NumberNode>(new NumberNode(20,this))],
+            ["color", new OptionalArg<StringNode | RGBColorNode>(new StringNode("#673AB7",this))],
+            ["rotate", new OptionalArg<NumberNode>(new NumberNode(0,this))],
         ]);
     }
 
