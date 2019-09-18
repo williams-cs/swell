@@ -21,13 +21,13 @@ import 'mocha';
 describe('A bar function to test static/dynamic scoping', () => {
     it('should evaluate to 2 if lexically scoped', () => {
         const i1 = new VariableNode("i");
-        const i1def = new AssignOp(i1,new NumberNode(1));
+        const i1def = new AssignOp(i1,new NumberNode(1,null));
         const fundef = new FunDef("bar",new BodyNode(new Return(new PlusOp(new VariableNode("x"), new VariableNode("i")))),[["", "x", "", null, ""]]);
         
         const i2 = new VariableNode("i");
-        const i2def = new AssignOp(i2,new NumberNode(2));
+        const i2def = new AssignOp(i2,new NumberNode(2,null));
 
-        const funapp = new UserDefinedFunctionNode("bar",[["", "", "", new NumberNode(1), ""]]);
+        const funapp = new UserDefinedFunctionNode("bar",[["", "", "", new NumberNode(1,null), ""]]);
         let context = new Scope(null);
 
         const seq3 = new SequenceNode(i2def,funapp);
@@ -36,6 +36,6 @@ describe('A bar function to test static/dynamic scoping', () => {
 
         //const i2def = new AssignOp(new VariableNode("i"), new NumberNode(2));
         const output = seq1.eval(context);
-        expect(output).to.deep.equal(new NumberNode(2));
+        expect(output).to.deep.equal(new NumberNode(2,null));
     });
 });

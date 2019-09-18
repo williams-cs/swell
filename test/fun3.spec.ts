@@ -19,11 +19,11 @@ import 'mocha';
 
 describe('A closure function', () => {
     it('should evaluate to 3', () => {
-        const i1 = new AssignOp(new VariableNode("i"),new NumberNode(1));
+        const i1 = new AssignOp(new VariableNode("i"),new NumberNode(1,null));
         const xvar = new VariableNode("x");
         const ivar = new VariableNode("i");
         const fundef = new FunDef("closure", new BodyNode(new Return(new PlusOp(xvar,ivar))),[["", "x", "", null, ""]]);
-        const funapp = new UserDefinedFunctionNode("closure",[["", "", "", new NumberNode(2), ""]]);
+        const funapp = new UserDefinedFunctionNode("closure",[["", "", "", new NumberNode(2,null), ""]]);
         let context = new Scope(null);
         const seq1 = new SequenceNode(fundef,funapp);
         const seq2 = new SequenceNode(i1,seq1);

@@ -15,8 +15,8 @@ import 'mocha';
 
 describe('An constant function', () => {
     it('should evaluate to 1', () => {
-        const fundef = new FunDef("c",new BodyNode(new Return(new NumberNode(1))),[["", "x", "", null, ""]]);
-        const funapp = new UserDefinedFunctionNode("c",[["", "", "", new NumberNode(2), ""]]);
+        const fundef = new FunDef("c",new BodyNode(new Return(new NumberNode(1,null))),[["", "x", "", null, ""]]);
+        const funapp = new UserDefinedFunctionNode("c",[["", "", "", new NumberNode(2,null), ""]]);
         let context = new Scope(null);
         const seq = new SequenceNode(fundef,funapp);
         const output = seq.eval(context);

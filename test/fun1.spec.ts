@@ -16,7 +16,7 @@ import 'mocha';
 describe('An identity function', () => {
     it('should evaluate to its parameters', () => {
         const fundef = new FunDef("identity", new BodyNode(new Return(new VariableNode("x"))), [["", "x", "", null, ""]]);
-        const funapp = new UserDefinedFunctionNode("identity",[["", "x", "", new NumberNode(1), ""]]);
+        const funapp = new UserDefinedFunctionNode("identity",[["", "x", "", new NumberNode(1,null), ""]]);
         let context = new Scope(null);
         const seq = new SequenceNode(fundef,funapp);
         const output = seq.eval(context);

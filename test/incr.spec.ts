@@ -17,10 +17,10 @@ describe('An increment test', () => {
         let context = new Scope(null);
         //context.doc = null;
         const v = new VariableNode("i");
-        const left = new AssignOp(v, new NumberNode(1));
+        const left = new AssignOp(v, new NumberNode(1,null));
         const right = new Increment(v);
         const seq = new SequenceNode(left, right);
         const output = seq.eval(context);
-        expect(output).to.deep.equal(new NumberNode(2));
+        expect(output).to.deep.equal(new NumberNode(2,right));
     });
 });
