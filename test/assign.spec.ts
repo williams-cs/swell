@@ -22,6 +22,6 @@ describe('A minusop', () => {
         const output = op.eval(scope);
         expect(output).to.eql(new NumberNode(3, plusop));
         expect(scope.lookup("x")).to.eql(new NumberNode(3, plusop));
-        //expect(scope.lookup("x").origin).to.eql(new PlusOp(new NumberNode(2), new NumberNode(1),));
+        expect(scope.lookup("x").origin).to.eql(null);
     });
 });

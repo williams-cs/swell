@@ -44,7 +44,7 @@ describe('A conditional statement', () => {
         // if(var x = true) return 1
         const body2 = new NumberNode(1,null); // works with this, not with return
         const x = new VariableNode("x");
-        const xbool = new BooleanNode(true);
+        const xbool = new BooleanNode(true,null);
         const decl2 = new AssignOp(x, xbool);
         //const log1 = new Equals(x,new NumberNode(3));
         const cond2 = new Conditional(new Parens(decl2),body2);
@@ -59,7 +59,7 @@ describe('A conditional statement', () => {
         // if(x) return 1
         const body3 = new NumberNode(1,null); // works with this, not with return
         const x = new VariableNode("x");
-        const xbool = new BooleanNode(true);
+        const xbool = new BooleanNode(true,null);
         const decl3 = new AssignOp(x, xbool);
         //const log1 = new LessThan(x,new NumberNode(3));
         const cond3 = new Conditional(new Parens(x),body3);
