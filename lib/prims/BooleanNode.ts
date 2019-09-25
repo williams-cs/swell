@@ -6,6 +6,7 @@ export class BooleanNode extends Expression<BooleanNode>{
     /**
      * Constructor for BooleanNode, a node representing a boolean
      * @param val The boolean value of the BooleanNode
+     * @param origin The origin of the BooleanNode
      * @param ws Preceding white space
      *
      */
