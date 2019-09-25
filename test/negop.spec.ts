@@ -8,11 +8,11 @@ describe('A negop', () => {
     it('should evaluate to the negation', () => {
         const testval = new NegOp(new NumberNode(1, null));
         const output = testval.eval(null);
-        expect(output).to.eql(new NumberNode(-1, null));
+        expect(output).to.eql(new NumberNode(-1, testval));
     });
     it('should evaluate to another negation', () => {
         const testval = new NegOp(new NumberNode(-1, null));
         const output = testval.eval(null);
-        expect(output).to.eql(new NumberNode(1, null));
+        expect(output).to.eql(new NumberNode(1, testval));
     });
 });

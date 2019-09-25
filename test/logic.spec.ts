@@ -130,87 +130,87 @@ describe('Logic operations', () => {
     it('equals right should evaluate to 1', () => {
         const var1 = new Equals(new NumberNode(2,null),new NumberNode(1,null));
         const output = var1.right;
-        expect(output).to.eql(new NumberNode(1,var1));
+        expect(output).to.eql(new NumberNode(1,null));
     });
     it('equals left should evaluate to 2', () => {
         const var1 = new Equals(new NumberNode(2,null),new NumberNode(1,null));
         const output = var1.left;
-        expect(output).to.eql(new NumberNode(2,var1));
+        expect(output).to.eql(new NumberNode(2,null));
     });
     it('and right should equal false',() => {
         const true2 = new BooleanNode(true,null);
         const false2 = new BooleanNode(false,null);
         const var2 = new And(true2,false2);
         const output = var2.right;
-        expect(output).to.eql(new BooleanNode(false,var2));
+        expect(output).to.eql(new BooleanNode(false,null));
     });
     it('and left should equal true',() => {
         const true2 = new BooleanNode(true,null);
         const false2 = new BooleanNode(false,null);
         const var2 = new And(true2,false2);
         const output = var2.left;
-        expect(output).to.eql(new BooleanNode(true,var2));
+        expect(output).to.eql(new BooleanNode(true,null));
     });
     it('or right should equal false',() => {
         const true2 = new BooleanNode(true,null);
         const false2 = new BooleanNode(false,null);
         const var2 = new Or(true2,false2);
         const output = var2.right;
-        expect(output).to.eql(new BooleanNode(false,var2));
+        expect(output).to.eql(new BooleanNode(false,null));
     });
     it('or left should equal true',() => {
         const true2 = new BooleanNode(true,null);
         const false2 = new BooleanNode(false,null);
         const var2 = new Or(true2,false2);
         const output = var2.left;
-        expect(output).to.eql(new BooleanNode(true,var2));
+        expect(output).to.eql(new BooleanNode(true,null));
     });
     it('not expr should evaluate to true',() => {
         // const false4 = new Equals(new NumberNode(65),new NumberNode(1));
         // const false3 = new Equals(new NumberNode(1),new NumberNode(2));
         const var4 = new Not(new BooleanNode(true,null));
         const output = var4.expr;
-        expect(output).to.eql(new BooleanNode(true,var4));
+        expect(output).to.eql(new BooleanNode(true,null));
     });
     it('less than left should evaluate to 1', () => {
         const var5 = new LessThan(new NumberNode(1,null),new NumberNode(2,null));
         const output = var5.left;
-        expect(output).to.eql(new NumberNode(1,var5));
+        expect(output).to.eql(new NumberNode(1,null));
     });
     it('less than right should evaluate to 1', () => {
         const var5 = new LessThan(new NumberNode(2,null),new NumberNode(1,null));
         const output = var5.right;
-        expect(output).to.eql(new NumberNode(1,var5));
+        expect(output).to.eql(new NumberNode(1,null));
     });
     it('less than eq left should evaluate to 1', () => {
         const var5 = new LessThanEq(new NumberNode(1,null),new NumberNode(2,null));
         const output = var5.left;
-        expect(output).to.eql(new NumberNode(1,var5));
+        expect(output).to.eql(new NumberNode(1,null));
     });
     it('less than right should evaluate to 1', () => {
         const var5 = new LessThanEq(new NumberNode(2,null),new NumberNode(1,null));
         const output = var5.right;
-        expect(output).to.eql(new NumberNode(1,var5));
+        expect(output).to.eql(new NumberNode(1,null));
     });
     it('greater than left should evaluate to 1', () => {
         const var5 = new GreaterThan(new NumberNode(1,null),new NumberNode(2,null));
         const output = var5.left;
-        expect(output).to.eql(new NumberNode(1,var5));
+        expect(output).to.eql(new NumberNode(1,null));
     });
     it('greater than right should evaluate to 1', () => {
         const var5 = new GreaterThan(new NumberNode(2,null),new NumberNode(1,null));
         const output = var5.right;
-        expect(output).to.eql(new NumberNode(1,var5));
+        expect(output).to.eql(new NumberNode(1,null));
     });
     it('greater than eq left should evaluate to 1', () => {
         const var5 = new GreaterThanEq(new NumberNode(1,null),new NumberNode(2,null));
         const output = var5.left;
-        expect(output).to.eql(new NumberNode(1,var5));
+        expect(output).to.eql(new NumberNode(1,null));
     });
     it('greater than eq right should evaluate to 1', () => {
         const var5 = new GreaterThanEq(new NumberNode(2,null),new NumberNode(1,null));
         const output = var5.right;
-        expect(output).to.eql(new NumberNode(1,var5));
+        expect(output).to.eql(new NumberNode(1,null));
     });
 
 });

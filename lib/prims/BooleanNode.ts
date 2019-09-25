@@ -9,7 +9,7 @@ export class BooleanNode extends Expression<BooleanNode>{
      * @param ws Preceding white space
      *
      */
-    constructor(private _val: boolean, _origin: Expression<any>, ws: string = "") {
+    constructor(private _val: boolean, private _origin: Expression<any>, ws: string = "") {
         super(ws);
     };
 
@@ -22,7 +22,7 @@ export class BooleanNode extends Expression<BooleanNode>{
     }
     
     get origin(): Expression<any> {
-        return this.origin;
+        return this._origin;
     };
 
     equals(right: Expression<any>): boolean {

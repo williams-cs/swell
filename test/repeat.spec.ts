@@ -30,6 +30,6 @@ describe('A repeat', () => {
         const output = ast.eval(scope);
         //const yval = x7.eval(scope);
         // vvv this is probably wrong vvv
-        expect(output).to.eql(new NumberNode(4, null));
+        expect(output).to.eql(new NumberNode(4, x12));
     });
 });
