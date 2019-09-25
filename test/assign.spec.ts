@@ -7,7 +7,7 @@ import { assert,expect } from 'chai';
 import 'mocha';
 
 
-describe('A minusop', () => {
+describe('An assignop', () => {
     it('should assign x to 2', () => {
         const op: AssignOp<NumberNode> = new AssignOp(new VariableNode("x"),new NumberNode(2,null));
         const scope = new Scope(null);
@@ -22,6 +22,5 @@ describe('A minusop', () => {
         const output = op.eval(scope);
         expect(output).to.eql(new NumberNode(3, plusop));
         expect(scope.lookup("x")).to.eql(new NumberNode(3, plusop));
-        expect(scope.lookup("x").origin).to.eql(null);
     });
 });
