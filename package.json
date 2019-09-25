@@ -28,7 +28,8 @@
     "typescript": "^3.5.1"
   },
   "scripts": {
-    "test": "nyc --reporter=text mocha"
+    "test": "mocha",
+    "test-coverage": "nyc --reporter=text mocha"
   },
   "nyc": {
     "extension": [
