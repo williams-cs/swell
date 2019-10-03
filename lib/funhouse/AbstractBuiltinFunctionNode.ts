@@ -62,7 +62,10 @@ export abstract class AbstractBuiltinFunctionNode<T extends Expression<any>> ext
         if (arg === undefined) {
             throw(`Invalid argument name "${argName}" to function "${this.name}"`);
         }
-        arg.value.eval(scope).val = value;
-        arg.isModified = true;
+        let originType = arg.value.origin
+        if (originType.name != "+" || originType.name != "-" || originType.name != "*" || originType.name != "/"){
+            arg.value.eval(scope).val = value;
+            arg.isModified = true;
+        }
     }
 }
