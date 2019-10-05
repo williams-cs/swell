@@ -4,6 +4,8 @@ import { OptionalArg } from "./OptionalArg";
 import { PositionalArg } from "./PositionalArg";
 import { Expression } from "../Expression";
 import { Scope } from "../structural/Scope";
+import { BinaryLogicOp } from "../logic/BinaryLogicOp";
+import { BinaryOp } from "../binops/BinaryOp";
 
 export abstract class AbstractBuiltinFunctionNode<T extends Expression<any>> extends AbstractFunctionNode<T> {
 
@@ -62,10 +64,13 @@ export abstract class AbstractBuiltinFunctionNode<T extends Expression<any>> ext
         if (arg === undefined) {
             throw(`Invalid argument name "${argName}" to function "${this.name}"`);
         }
-        let originType = arg.value.origin
-        if (originType.name != "+" || originType.name != "-" || originType.name != "*" || originType.name != "/"){
+        let originType = arg.value.eval(scope).origin
+        let objName = ["print", "ellipse", "line", "string", "emoji", "number", "rectangle"]
+        if (originType == null || objName.indexOf(originType.name) != -1){
             arg.value.eval(scope).val = value;
             arg.isModified = true;
+        } else {
+            arg.isModified = false;
         }
     }
 }
