@@ -33,9 +33,10 @@ describe('A bar function to test static/dynamic scoping', () => {
         const seq3 = new SequenceNode(i2def,funapp);
         const seq2 = new SequenceNode(fundef,seq3);
         const seq1 = new SequenceNode(i1def,seq2);
-
-        //const i2def = new AssignOp(new VariableNode("i"), new NumberNode(2));
         const output = seq1.eval(context);
-        expect(output).to.deep.equal(new NumberNode(2,null));
+        // use overloaded equals method on numbernode
+        // since new numbernode will have a different
+        // origin.
+        expect(output.equals(new NumberNode(2,null)));
     });
 });

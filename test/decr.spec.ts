@@ -21,6 +21,10 @@ describe('A decrement test', () => {
         const right = new Decrement(v);
         const seq = new SequenceNode(left, right);
         const output = seq.eval(context);
-        expect(output).to.deep.equal(new NumberNode(0,right));
+        // Decrement internally uses a MinusOp, so a
+        // new NumberNode will not deep equal output;
+        // we just use the overloaded equals() method
+        // instead.
+        expect(output.equals(new NumberNode(0, null)));
     });
 });

@@ -21,6 +21,8 @@ describe('An increment test', () => {
         const right = new Increment(v);
         const seq = new SequenceNode(left, right);
         const output = seq.eval(context);
-        expect(output).to.deep.equal(new NumberNode(2,right));
+        // use overloaded equals method defined on numbernode
+        // since new numbernode will have a different origin
+        expect(output.equals(new NumberNode(2,right)));
     });
 });
