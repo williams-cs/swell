@@ -22,5 +22,4 @@ export class RectangleEffect extends AbstractShapeEffect<RectangleNode, Rectangl
         
         this.changeCursor();
     }
-
 }

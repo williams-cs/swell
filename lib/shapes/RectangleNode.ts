@@ -6,7 +6,7 @@ import { PrintNode } from "../structural/PrintNode";
 
 export class RectangleNode extends AbstractShapeNode<RectangleNode, RectangleEffect> {
 
-    protected readonly name: string = "rectangle";
+    protected readonly name: string = "rect";
 
     eval(context: Scope): RectangleNode {
         return this;
