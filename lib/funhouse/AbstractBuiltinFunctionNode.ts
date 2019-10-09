@@ -65,7 +65,7 @@ export abstract class AbstractBuiltinFunctionNode<T extends Expression<any>> ext
             throw(`Invalid argument name "${argName}" to function "${this.name}"`);
         }
         let originType = arg.value.eval(scope).origin
-        let objName = ["print", "ellipse", "line", "string", "emoji", "number", "rectangle"]
+        let objName = ["print", "ellipse", "line", "string", "emoji", "rectangle", "number"]
         if (originType == null || objName.indexOf(originType.name) != -1){
             arg.value.eval(scope).val = value;
             arg.isModified = true;
