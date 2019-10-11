@@ -11,7 +11,7 @@ export class LessonOneCpFour extends Module {
         `<p>Lesson 1 - Checkpoint 4</p>` +
         `<p>GOAL: Print the word "cool" on the CANVAS, and put it inside the box at the center of the CANVAS.</p>`;
 
-    readonly _starterCode: string = `print("happy", 100, 100)`;
+    readonly _starterCode: string = `print("happy", x=100, y=100)`;
 
     _latestInstrIndex: number = 1;
 

@@ -11,7 +11,7 @@ export class LessonOneCpTwo extends Module {
         `<p>Lesson 1 - Checkpoint 2</p>` +
         `<p>GOAL: Move the words you just created to explore how it affects your code.</p>`;
 
-    readonly _starterCode: string = `print("happy", 100, 100)`;
+    readonly _starterCode: string = `print("happy", x=100, y=100)`;
 
     _latestInstrIndex: number = 1;
 
@@ -23,7 +23,7 @@ export class LessonOneCpTwo extends Module {
     constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) {
         super(ctx, editor);
         this.x = ctx.canvas.width - this.square_size - this.y;
-        let content = `Do you see the numbers inside the brackets <span class="inline-code">()</span> of the <span class="inline-code">print</span> statement? They tell your computer <u>where</u> it should print the word on the CANVAS.`;
+        let content = `Do you see the numbers inside the parens <span class="inline-code">()</span> of the <span class="inline-code">print</span> statement? They tell your computer <u>where</u> it should print the word on the CANVAS.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "30%", "10%", true));
         content = `To understand what those numbers do, click on the word <span class="inline-code">happy</span> in the CANVAS and drag it around.`;
         this._instrBoxes.push(new Instruction('canvas-container', content, "70%", "10%", true));

@@ -11,7 +11,7 @@ export class LessonOneCpThree extends Module {
         `<p>Lesson 1 - Checkpoint 3</p>` +
         `<p>GOAL: Move the word around the CANVAS solely by changing your CODE.</p>`;
 
-    readonly _starterCode: string = `print("happy", 100, 100)`;
+    readonly _starterCode: string = `print("happy", x=100, y=100)`;
 
     _latestInstrIndex: number = 0;
 
@@ -23,7 +23,7 @@ export class LessonOneCpThree extends Module {
     constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) {
         super(ctx, editor);
         this.x = ctx.canvas.width - this.square_size - this.y;
-        let content = `We can also use the CODE to tell the computer where to print on the CANVAS. In the <span class="inline-code">print</span> statement above, change the first <span class="inline-code">100</span> to <span class="inline-code">200</span>. Observe what happens.`;
+        let content = `We can also use the CODE to tell the computer where to print on the CANVAS. In the <span class="inline-code">print</span> statement above, change <span class="inline-code">x=100</span> to <span class="inline-code">x=200</span>. Observe what happens.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "30%", "10%"));
         content = "Changing those numbers in the CODE moves the word on CANVAS! Try changing the number to move the word inside the box.";
         this._instrBoxes.push(new Instruction('canvas-container', content, "70%", "10%"));
@@ -51,7 +51,7 @@ export class LessonOneCpThree extends Module {
     checkGoal(document: Document, effects: Effect<any>[]): boolean {
         switch (this._latestInstrIndex) {
             case 0:
-                let regex: RegExp = /print\s*\(\s*\".*\"\s*,\s*200\s*,\s*[1-9][0-9]*\s*\)/;
+                let regex: RegExp = /print\s*\(\s*\".*\"\s*,\s*(x\s*=\s*)?200\s*,\s*(y\s*=\s*)?[1-9][0-9]*\s*\)/;
                 let match = this.editor.getValue().match(regex);
                 if (match != null && match.length > 0) {
                     this._latestInstrIndex++;
