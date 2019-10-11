@@ -12,11 +12,11 @@ export class LessonTwoCpSix extends Module {
         `<p>GOAL: Enlarge one of the circles referred to by c on the CANVAS.</p>`;
 
     readonly _starterCode =
-    `a = emoji("angry", 100, 100);
-b = emoji("cool", 100, 100);
-c = emoji("pirate", 75, 75);
-print(c, 100, 100);
-print(c, 300, 100)`;
+    `a = emoji("angry", 100, 100)
+b = emoji("cool", 100, 100)
+c = emoji("pirate", 75, 75)
+print(c, x=100, y=100)
+print(c, x=300, y=100)`;
 
     _latestInstrIndex: number = 1;
 

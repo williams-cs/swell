@@ -26,8 +26,8 @@ export class LessonTwoCpSeven extends Module {
         this.y = ctx.canvas.height - this.square_size - 10;
 
         this._starterCode =
-            `a = 50;
-print(emoji("mustache", 100, 100), ${this.x + 10}, ${this.y + 10});`;
+            `a = 50
+print(emoji("mustache", 100, 100), x=${this.x + 10}, y=${this.y + 10})`;
 
         //retrieve survey choice for dm or non-dm
         this.dm = 1;
@@ -38,7 +38,7 @@ print(emoji("mustache", 100, 100), ${this.x + 10}, ${this.y + 10});`;
 
         let content = `Let's learn one last thing about variables. In the code above, we connected the variable <span class="inline-code">a</span> to the number <span class="inline-code">50</span>, and we also have a <span class="inline-code">print</span> statement to print a mustache emoji.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%", true));
-        content = `Replace the two numbers <span class="inline-code">100</span> inside the <span class="inline-code">print</span> statement with the variable <span class="inline-code">a</span>. Watch what happens.`;
+        content = `Replace the two numbers <span class="inline-code">100</span> inside the <span class="inline-code">emoji</span> statement with the variable <span class="inline-code">a</span>. Watch what happens.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
         content = `Did you see that the emoji got smaller? The variable <span class="inline-code">a</span> is tied to the number <span class="inline-code">50</span>, so now the emoji has size <span class="inline-code">a</span>!`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%", true));
@@ -79,7 +79,7 @@ print(emoji("mustache", 100, 100), ${this.x + 10}, ${this.y + 10});`;
         switch (this._latestInstrIndex) {
             case 1:
                 //check for correct CODE
-                let regex: RegExp = /print\s*\(\s*emoji\s*\(\s*"mustache"\s*,\s*a\s*,\s*a\s*\)\s*,\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\)/g;
+                let regex: RegExp = /print\s*\(\s*emoji\s*\(\s*"mustache"\s*,\s*a\s*,\s*a\s*\)\s*,\s*(x\s*=\s*)?[1-9][0-9]*\s*,\s*(y\s*=\s*)?[1-9][0-9]*\s*\)/g;
                 let match = code.match(regex);
                 codeIsCorrect = match != null && match.length > 0;
 

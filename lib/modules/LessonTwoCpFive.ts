@@ -13,9 +13,9 @@ export class LessonTwoCpFive extends Module {
         then write 2 print statements to print c.</p>`;
 
     readonly _starterCode =
-    `a = emoji("angry", 100, 100);
-b = emoji("cool", 100, 100);
-print(b, 100, 100);`;
+    `a = emoji("angry", 100, 100)
+b = emoji("cool", 100, 100)
+print(b, x=100, y=100)`;
 
     _latestInstrIndex: number = 0;
 
@@ -25,7 +25,7 @@ print(b, 100, 100);`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
         content = `Now change the <span class="inline-code">print</span> statement to print <span class="inline-code">c</span> instead of <span class="inline-code">b</span>.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
-        content = `Finally, write <span class="inline-code">print(c, 300, 100);</span> underneath the existing <span class="inline-code">print</span> statement.`;
+        content = `Finally, write <span class="inline-code">print(c, 300, 100)</span> underneath the existing <span class="inline-code">print</span> statement.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
         content = 'Awesome, you are getting good at using variables! You just drew 2 pirate emojis, both named <span class="inline-code">c</span>!';
         this._instrBoxes.push(new Instruction('code-editor', content, "70%", "10%"));
@@ -42,8 +42,8 @@ print(b, 100, 100);`;
         let code: string = this.editor.getValue();
         let assignment: RegExp = /c\s*=\s*emoji\s*\(\s*"pirate"\s*,\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\)\s*/g;
         let matchAssign: string[];
-        let print: RegExp = /print\s*\(\s*c\s*,\s*100\s*,\s*100\s*\)/g;
-        let print2: RegExp = /print\s*\(\s*c\s*,\s*300\s*,\s*100\s*\)/g;
+        let print: RegExp = /print\s*\(\s*c\s*,\s*(x\s*=\s*)?100\s*,\s*(y\s*=\s*)?100\s*\)/g;
+        let print2: RegExp = /print\s*\(\s*c\s*,\s*(x\s*=\s*)?300\s*,\s*(y\s*=\s*)?100\s*\)/g;
         let matchPrint: string[];
         let matchPrint2: string[];
 

@@ -11,17 +11,17 @@ export class LessonTwoCpThree extends Module {
         `<p>Lesson 2 - Checkpoint 3</p>` +
         `<p>GOAL: Draw 2 emojis on the CANVAS.</p>`;
 
-    readonly _starterCode: string = `print(emoji("wink", 100, 100), 120, 150);\n`;
+    readonly _starterCode: string = `print(emoji("wink", 100, 100), x=120, y=150)\n`;
 
     _latestInstrIndex: number = 1;
 
     constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) {
         super(ctx, editor);
-        let content = "What if we want to draw more than 1 emoji?";
+        let content = "What if we want to draw more than one emoji?";
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%", true));
         content = `First copy the <span class="inline-code">print</span> statement on the first line and paste it into the second line in the CODE above.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "40%", "10%"));
-        content = `Hmm... that should have created a second emoji, right? What happens if we change the number <span class="inline-code">120</span> in the second line of CODE to <span class="inline-code">300</span>? Give it a try.`;
+        content = `Hmm... that should have created a second emoji, right? What happens if we change <span class="inline-code">x=120</span> in the second line of CODE to <span class="inline-code">x=300</span>? Give it a try.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%"));
         content = "Hey! An emoji was hiding behind the other emoji! In the future, watch out.  Any shape can hide behind any other shape.";
         this._instrBoxes.push(new Instruction('code-editor', content, "50%", "10%", true));
@@ -72,11 +72,11 @@ export class LessonTwoCpThree extends Module {
                 let happyExists = false;
                 for (let effect of effects) {
                   if (effect instanceof EmojiEffect) {
-                        if (effect.name === "happy") {
+                        if (effect.type === "happy") {
                             happyExists = true;
                         }
 
-                        if (effect.name === "sad") {
+                        if (effect.type === "sad") {
                             sadExists = true;
                         }
 

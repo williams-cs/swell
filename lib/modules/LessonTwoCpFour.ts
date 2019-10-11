@@ -12,9 +12,9 @@ export class LessonTwoCpFour extends Module {
         `<p>GOAL: Change a to b in the print statement.</p>`;
 
     readonly _starterCode =
-        `a = emoji("angry", 100, 100);
-b = emoji("cool", 100, 100);
-print(a, 100, 100);`;
+        `a = emoji("angry", 100, 100)
+b = emoji("cool", 100, 100)
+print(a, x=100, y=100)`;
 
     _latestInstrIndex: number = 2;
 
@@ -43,14 +43,14 @@ print(a, 100, 100);`;
                 //check for correct CODE
                 let codeIsCorrect = false;
                 let code: string = this.editor.getValue();
-                let regex: RegExp = /print\s*\(\s*b\s*,\s*[1-9][0-9]*\s*,\s*[1-9][0-9]*\s*\);/;
+                let regex: RegExp = /print\s*\(\s*b\s*,\s*(x\s*=\s*)?[1-9][0-9]*\s*,\s*(y\s*=\s*)?[1-9][0-9]*\s*\)/;
                 let match = code.match(regex);
                 codeIsCorrect = match != null && match.length > 0;
 
                 //check for correct CANVAS effects
                 let canvasIsCorrect = false;
                 for (let effect of effects) {
-                    if (effect instanceof EmojiEffect && effect.name === "cool") {
+                    if (effect instanceof EmojiEffect && effect.type === "cool") {
                         canvasIsCorrect = true;
                         break;
                     }
