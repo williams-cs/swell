@@ -11,7 +11,7 @@ export class LessonTwoCpOne extends Module {
         `<p>Lesson 2 - Checkpoint 1</p>` +
         `<p>GOAL: replace "happy" in the print statement to draw emojis!</p>`;
 
-    readonly _starterCode: string = `print("happy", 100, 100)`;
+    readonly _starterCode: string = `print("happy", x=100, y=100)`;
 
     _latestInstrIndex: number = 0;
 
@@ -64,14 +64,15 @@ export class LessonTwoCpOne extends Module {
     private checkCodeAndCanvasEffect(code: string, f: string, effects: Effect<any>[]): boolean {
         //check for correct CODE
         let codeIsCorrect = false;
-        let regex: RegExp = new RegExp('print\\s*\\(\\s*emoji\\s*\\(\\s*"'+ f + '"\\s*,\\s*[1-9][0-9]*\\s*,\\s*[1-9][0-9]*\\s*\\)\\s*,\\s*[1-9][0-9]*\\s*,\\s*[1-9][0-9]*\\s*\\)');
+        let s: string = 'print\\s*\\(\\s*emoji\\s*\\(\\s*"'+ f + '"\\s*,\\s*[1-9][0-9]*\\s*,\\s*[1-9][0-9]*\\s*\\)\\s*,\\s*(x\\s*=\\s*)?[1-9][0-9]*\\s*,\\s*(y\\s*=\\s*)?[1-9][0-9]*\\s*\\)'
+        let regex: RegExp = new RegExp(s);
         let match = code.match(regex);
         codeIsCorrect = match != null && match.length > 0;
 
         //check for correct CANVAS effects
         let canvasIsCorrect = false;
         for (let effect of effects) {
-            if (effect instanceof EmojiEffect && effect.name === f) {
+            if (effect instanceof EmojiEffect && effect.type === f) {
                 canvasIsCorrect = true;
                 break;
             }

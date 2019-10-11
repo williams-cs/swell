@@ -17,7 +17,7 @@ export class EmojiEffect extends AbstractShapeEffect<EmojiNode, EmojiEffect> {
     constructor(node: EmojiNode, scope: Scope, aes: PrintNode) {
         super(node, scope, aes);
         this.image = new Image();
-        this.image.src = `./pics/${this.node.type.eval(this.scope).val}.svg`;
+        this.image.src = `./pics/${this.type}.svg`;
     }
 
     update(): void {
@@ -58,5 +58,9 @@ export class EmojiEffect extends AbstractShapeEffect<EmojiNode, EmojiEffect> {
 
     set image(image: HTMLImageElement) {
         this._image = image;
+    }
+
+    get type(): string {
+        return this.node.type.eval(this.scope).val;
     }
 }
