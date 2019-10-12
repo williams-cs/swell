@@ -12,9 +12,9 @@ export class LessonThreeCpOne extends Module {
         `<p>GOAL: Change the value of a to 150.</p>`;
 
     readonly _starterCode: string =
-    `a = 75;
-print(emoji("skull", a, a), 25, 25);
-print("The skull is smaller than the box.", 25, 220)`;
+    `a = 75
+print(emoji("skull", a, a), x=60, y=60)
+print("The skull is smaller than the box.", x=220, y=220)`;
 
     _latestInstrIndex: number = 3;
 

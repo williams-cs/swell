@@ -12,10 +12,10 @@ export class LessonThreeCpTwo extends Module {
         `<p>GOAL: Change the value of a and observe what happens.</p>`;
 
     readonly _starterCode: string =
-        `a = 150;
-print(emoji("skull", a, a), 25, 25);
+        `a = 150
+print(emoji("skull", a, a), x=60, y=60)
 if(a < 100) {
-\tprint("The skull is smaller than the box.", 25, 220);
+  print("The skull is smaller than the box.", x=220, y=220)
 }`;
 
     _latestInstrIndex: number = 2;

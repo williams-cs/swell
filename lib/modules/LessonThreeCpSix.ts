@@ -33,20 +33,19 @@ export class LessonThreeCpSix extends Module {
         this.yB = this.yA;
         this.xA = Math.round(ctx.canvas.width / 2) - this.square_size - 10;
         this.xB = this.xA + this.square_size + 10;
-        //let square_mid = Math.round(this.square_size / 2);
-        let circ_xA = this.xA + 10;
-        let circ_yA = this.yA + 10;
-        let circ_xB = this.xB + 10;
-        let circ_yB = this.yB + 10;
+        let circ_xA = this.xA + 90;
+        let circ_yA = this.yA + 90;
+        let circ_xB = this.xB + 90;
+        let circ_yB = this.yB + 90;
 
         this._starterCode =
             `a = ${this.a_size}
-print(a, x=${this.xA}, y=${this.yA - 2 * this.font_size})
-print(emoji("angel", x=a, y=a), ${circ_xA}, ${circ_yA})
+print(a, x=${this.xA + 160}, y=${this.yA - 2 * this.font_size + 15})
+print(emoji("angel", a, a), x=${circ_xA}, y=${circ_yA})
 b = ${this.b_size}
-print(b, x=${this.xB}, y=${this.yA - 2 * this.font_size})
-print(emoji("devil", x=b, y=b), ${circ_xB}, ${circ_yB})
-print("The angel is smaller than the devil.", x=${this.xA}, y=${this.yA + this.square_size + this.font_size})`
+print(b, x=${this.xB + 160}, y=${this.yA - 2 * this.font_size + 15})
+print(emoji("devil", b, b), x=${circ_xB}, y=${circ_yB})
+print("The angel is smaller than the devil.", x=${this.xA + 180}, y=${this.yA + this.square_size + this.font_size})`
 
         //setting up the Instructions
         let content = `Now that you know how to use <span class="inline-code">if/else</span> statements, let's put them all together!`;

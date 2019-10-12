@@ -12,9 +12,9 @@ export class LessonThreeCpFour extends Module {
         `<p>GOAL: Allow only happy emojis to be printed on the CANVAS.</p>`;
 
     readonly _starterCode: string =
-        `c = "devil";
+        `c = "devil"
 if(c == "devil") {
-\tprint(emoji(c, 100, 100), 25, 25);
+  print(emoji(c, 100, 100), x=80, y=80)
 }`;
 
     _latestInstrIndex: number = 2;
@@ -82,7 +82,7 @@ if(c == "devil") {
                 //check for correct CANVAS effects
                 let canvasIsCorrect = false;
                 for (let effect of effects) {
-                    if (effect instanceof EmojiEffect && effect.name === "happy") {
+                    if (effect instanceof EmojiEffect && effect.type === "happy") {
                         canvasIsCorrect = true;
                         break;
                     }

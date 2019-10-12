@@ -12,12 +12,12 @@ export class LessonThreeCpFive extends Module {
         `<p>GOAL: Change the value of c around to see what is printed on the canvas.</p>`;
 
     readonly _starterCode: string =
-        `c = 75;
-print(emoji("heart-eyes", c, c), 25, 25);
+        `c = 75
+print(emoji("heart-eyes", c, c), x=60, y=60)
 if(c < 100) {
-\tprint("The emoji is smaller than the box.", 25, 220);
+  print("The emoji is smaller than the box.", x=220, y=220)
 } else {
-\tprint("The emoji is bigger than the box.", 25, 220);
+  print("The emoji is bigger than the box.", x=220, y=220)
 }`;
 
     _latestInstrIndex: number = 3;
