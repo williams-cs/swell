@@ -37,6 +37,8 @@ import { cursorTo } from 'readline';
 
     let isCanvasSelected: boolean = false; // Check if mouse is clicked on canvas
     let isDoingDM: boolean = false; // Check if direct manipulating effects
+    let isConditional: boolean = false; //Check if there are conditionals in the code
+    let isParsed: boolean = false;
     let checkpoint: Module = null;
     let modGen = new ModuleGenerator();
     let checkpointIsActive: boolean = false;
@@ -87,6 +89,8 @@ import { cursorTo } from 'readline';
         if (inputText == "") {
             return;
         }
+
+        isConditional = inputText.includes("if");
 
         // parse program text
         let outcome;
@@ -173,10 +177,11 @@ import { cursorTo } from 'readline';
             masterLog.push(context.eventLog[context.eventLog.length - 1]);
             alreadyLogged = true;
         }
-
-        //selectedElems = [];
-
         updateProgramText(); // ProDirect Manipulation
+        if (!isDoingDM && !isParsed && isConditional){
+            parse();
+            isParsed = true;
+        }
 
         // Draw check points
         if (checkpointIsActive) {
@@ -199,6 +204,7 @@ import { cursorTo } from 'readline';
             editor.setValue(newProgram);
             highlightDiff(newProgram);
             lastProgram = newProgram;
+            isParsed = false;
         } else if (!isCanvasSelected) {
             isDoingDM = false;
         }
