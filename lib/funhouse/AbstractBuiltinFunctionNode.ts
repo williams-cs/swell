@@ -70,7 +70,8 @@ export abstract class AbstractBuiltinFunctionNode<T extends Expression<any>> ext
             arg.value.eval(scope).val = value;
             arg.isModified = true;
         } else {
-            arg.isModified = false;
+            arg.value.eval(scope).val = value;
+            arg.isModified = true;
         }
     }
 }

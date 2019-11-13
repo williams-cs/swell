@@ -136,6 +136,68 @@ import { cursorTo } from 'readline';
         }
     }
 
+    function metaParse() {
+        // Clear existing program
+        ctx.clearRect(0, 0, canvas.width, canvas.height); // clear the canvas
+        clearEditorMarkers(); // Clear any markers on the editor
+        ast = undefined;
+        message.innerHTML = "";
+        for (let effect of effects) {
+            effect.removeEventListeners();
+        }
+        effects = [];
+
+        // get program
+        let inputText = editor.getValue();
+        if (inputText == "") {
+            return;
+        }
+
+        isConditional = inputText.includes("if");
+
+        // parse program text
+        let outcome;
+        try {
+            outcome = Parser.parseWithOutcome(inputText);
+
+            // check for parser outcome
+            switch (outcome.tag) {
+                case "success":
+                    try {
+                        parses = true;
+                        message.innerHTML = "Program parsed successfully";
+                        ast = outcome.result; // get AST
+                        context = new Scope(null, canvas, cursor, effects, masterLog);
+                        ast.eval(context); // evaluate (this is where objects appear on screen)
+                    } catch (e) {
+                        message.innerHTML = e.toString();
+                    }
+                    break;
+
+                case "failure":
+                    parses = false;
+                    ast = undefined;
+                    let startPos = outcome.error_pos;
+                    let endPos = Math.min(startPos + 3, outcome.inputstream.length());
+                    let editorStartPos = editorDoc.posFromIndex(startPos);
+                    // mark region
+                    editorDoc.markText(
+                        editorStartPos,
+                        editorDoc.posFromIndex(endPos),
+                        { className: "err" }
+                    );
+                    let msg = outcome.error_msg != "" ? outcome.error_msg : "unexpected error";
+                    message.innerHTML = `Line ${editorStartPos.line + 1}, col ${editorStartPos.ch}: ${msg}`;
+                    break;
+            }
+
+            // log to console
+            logSuccessfulParse();
+            
+        } catch (e) {
+            message.innerHTML = e.toString();
+        }
+    }
     /**
      * The animation function that basically recursively calls itself, clearing and
      * redrawing to the canvas at 60fps.
@@ -178,10 +240,7 @@ import { cursorTo } from 'readline';
             alreadyLogged = true;
         }
         updateProgramText(); // ProDirect Manipulation
-        if (!isDoingDM && !isParsed && isConditional){
-            parse();
-            isParsed = true;
-        }
+        
 
         // Draw check points
         if (checkpointIsActive) {
@@ -197,7 +256,12 @@ import { cursorTo } from 'readline';
     **/
     function updateProgramText() {
         if (!ast || !isDoingDM) {
+            if (!isParsed && isConditional){
+                metaParse();
+                isParsed = true;
+            }
             return;
+        
         }
         let newProgram: string = ast.toString();
         if (lastProgram != newProgram) {
