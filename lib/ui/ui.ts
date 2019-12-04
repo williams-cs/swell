@@ -56,6 +56,9 @@ import { cursorTo } from 'readline';
     let parses = false;
 
     let message = document.getElementById('message');
+    //Generates lessons given list of lesson names and urls
+    //TODO Refactor so that there is an input field in view
+    modGen.generateConstructors(ctx, editor, modGen.lessons, modGen.urls, modGen.curConstructors);
 
     /* Logging, parsing & rendering */
 
@@ -720,8 +723,6 @@ import { cursorTo } from 'readline';
         }
 
         console.log("Initiating checkpoint " + cp);
-        modGen.generateConstructors(ctx, editor, modGen.lessons, modGen.urls, modGen.curConstructors);
-        console.log(modGen.lessons);
         console.log(modGen.curConstructors);
         checkpoint = modGen.createModule(cp, ctx, editor);
         message.innerHTML = checkpoint._instructions;
