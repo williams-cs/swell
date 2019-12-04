@@ -1,7 +1,6 @@
 import { Module } from "./Module";
 import { Instruction } from "./Instruction";
 import { Effect } from "../effects/Effect";
-import * as fs from 'fs';
 
 //let lesson = require("./test.json");
 // console.log(lesson.name);

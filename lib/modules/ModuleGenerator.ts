@@ -23,32 +23,31 @@ export class ModuleGenerator {
       return
   };
 
-  urls: string[] = ["/module_json/test.json"];
+  urls: string[] = ["https://api.myjson.com/bins/hwcsk"];
   lessons: string[] = ['l1c1'];
-  curConstructors: Map<string, (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => Module> = new Map();
+  //curConstructors: Map<string, (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => Module> = new Map([]);
 
-    // curConstructors: Map<string, (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => Module> = new Map([
-    //   ['l1c1', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => ModuleGenerator.createLesson(ctx, editor, "/module_json/test.json").then(r => {return r})],
-    //   ['l1c1', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonOneCpOne(ctx, editor)],
-    //   ['l1c2', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonOneCpTwo(ctx, editor)],
-    //   ['l1c3', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonOneCpThree(ctx, editor)],
-    //   ['l1c4', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonOneCpFour(ctx, editor)],
-    //   ['l2c1', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonTwoCpOne(ctx, editor)],
-    //   ['l2c2', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonTwoCpTwo(ctx, editor)],
-    //   ['l2c3', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonTwoCpThree(ctx, editor)],
-    //   ['l2c4', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonTwoCpFour(ctx, editor)],
-    //   ['l2c5', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonTwoCpFive(ctx, editor)],
-    //   ['l2c6', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonTwoCpSix(ctx, editor)],
-    //   ['l2c7', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonTwoCpSeven(ctx, editor)],
-    //   ['l3c1', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonThreeCpOne(ctx, editor)],
-    //   ['l3c2', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonThreeCpTwo(ctx, editor)],
-    //   ['l3c3', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonThreeCpThree(ctx, editor)],
-    //   ['l3c4', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonThreeCpFour(ctx, editor)],
-    //   ['l3c5', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonThreeCpFive(ctx, editor)],
-    //   ['l3c6', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonThreeCpSix(ctx, editor)],
-    //   ['l4c1', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonFourCpOne(ctx, editor)],
-    //   ['l4c2', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonFourCpTwo(ctx, editor)]
-    // ]);
+    curConstructors: Map<string, (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => Module> = new Map([
+      //['l1c1', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonOneCpOne(ctx, editor)],
+      ['l1c2', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonOneCpTwo(ctx, editor)],
+      ['l1c3', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonOneCpThree(ctx, editor)],
+      ['l1c4', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonOneCpFour(ctx, editor)],
+      ['l2c1', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonTwoCpOne(ctx, editor)],
+      ['l2c2', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonTwoCpTwo(ctx, editor)],
+      ['l2c3', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonTwoCpThree(ctx, editor)],
+      ['l2c4', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonTwoCpFour(ctx, editor)],
+      ['l2c5', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonTwoCpFive(ctx, editor)],
+      ['l2c6', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonTwoCpSix(ctx, editor)],
+      ['l2c7', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonTwoCpSeven(ctx, editor)],
+      ['l3c1', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonThreeCpOne(ctx, editor)],
+      ['l3c2', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonThreeCpTwo(ctx, editor)],
+      ['l3c3', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonThreeCpThree(ctx, editor)],
+      ['l3c4', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonThreeCpFour(ctx, editor)],
+      ['l3c5', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonThreeCpFive(ctx, editor)],
+      ['l3c6', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonThreeCpSix(ctx, editor)],
+      ['l4c1', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonFourCpOne(ctx, editor)],
+      ['l4c2', (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => new LessonFourCpTwo(ctx, editor)]
+    ]);
 
   checkpoints: Map<string, Module> = new Map([
     ['l1c1', null],
