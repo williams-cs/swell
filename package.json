@@ -5,10 +5,12 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "dependencies": {
+    "@types/readline-sync": "^1.4.3",
     "browserify": "^16.2.3",
     "codemirror": "^5.48.0",
     "diff": "^4.0.1",
     "pants": "github:williams-cs/pants#1.2",
+    "readline-sync": "^1.4.10",
     "space-lift": "^0.8.7",
     "uuid": "^3.3.2"
   },

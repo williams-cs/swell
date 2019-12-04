@@ -77,7 +77,8 @@ export { IDEvent } from "./lib/logging/IDEvent";
 export { CodeEvent } from "./lib/logging/CodeEvent";
 
 /* MODULES */
-export { Module } from "./lib/modules/Module"
+export { Module } from "./lib/modules/Module";
+export { LessonMaker } from "./lib/modules/LessonMaker";
 export { ModuleGenerator } from "./lib/modules/ModuleGenerator";
 export { LessonOneCpOne } from "./lib/modules/LessonOneCpOne";
 export { LessonOneCpTwo } from "./lib/modules/LessonOneCpTwo";

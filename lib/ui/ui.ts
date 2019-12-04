@@ -720,6 +720,7 @@ import { cursorTo } from 'readline';
         }
 
         console.log("Initiating checkpoint " + cp);
+        modGen.generateConstructors(ctx, editor, modGen.lessons, modGen.urls, modGen.curConstructors);
         checkpoint = modGen.createModule(cp, ctx, editor);
         message.innerHTML = checkpoint._instructions;
 

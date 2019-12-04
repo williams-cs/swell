@@ -1,0 +1,28 @@
+{
+    "name": "l1c1",
+    "goal": null,
+    "constraint": "none",
+    "instructions": ["Lesson 1 - Checkpoint 1", "GOAL: Write 'happy' on the CANVAS."],
+    "starterCode": "",
+    "latestInstructionIndex": 0,
+    "lessonInstructions": [
+                        {
+                            "location": "code-editor", 
+                            "content": "First, let's tell the computer to print something on the CANVAS. Click on the CODE box.", 
+                            "top": "70%", 
+                            "left": "10%", 
+                            "skippable?": true},
+                        {
+                            "location": "code-editor", 
+                            "content": "Great! Now type <span class='inline-code'>print('happy');</span> in this CODE box.", 
+                            "top": "40%", 
+                            "left": "10%", 
+                            "skippable?": null},
+                        {
+                            "location": "canvas-container", 
+                            "content": "Notice that what you typed causes the computer to print the word 'happy' on the CANVAS here. Congratulations! You just wrote your first line of code!", 
+                            "top": "65%", 
+                            "left": "10%", 
+                            "skippable?": null}],
+    "": "yeet"
+}

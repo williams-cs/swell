@@ -4,12 +4,10 @@ import { Effect } from "../effects/Effect";
 import { StringEffect } from "../effects/StringEffect";
 
 export class LessonOneCpTwo extends Module {
-    readonly _name: string = "l1c2";
+    readonly _name: string;
     readonly _goal: any;
-    readonly _constraint: string = 'code';
-    readonly _instructions: string =
-        `<p>Lesson 1 - Checkpoint 2</p>` +
-        `<p>GOAL: Move the words you just created to explore how it affects your code.</p>`;
+    readonly _constraint: string;
+    readonly _instructions: string;
 
     readonly _starterCode: string = `print("happy", 100, 100)`;
 
@@ -22,6 +20,10 @@ export class LessonOneCpTwo extends Module {
 
     constructor(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) {
         super(ctx, editor);
+        this._name = "l1c2";
+        this._constraint = 'code';
+        this._instructions = `<p>Lesson 1 - Checkpoint 2</p>` +
+                             `<p>GOAL: Move the words you just created to explore how it affects your code.</p>`;
         this.x = ctx.canvas.width - this.square_size - this.y;
         let content = `Do you see the numbers inside the brackets <span class="inline-code">()</span> of the <span class="inline-code">print</span> statement? They tell your computer <u>where</u> it should print the word on the CANVAS.`;
         this._instrBoxes.push(new Instruction('code-editor', content, "30%", "10%", true));
