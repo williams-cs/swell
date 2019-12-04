@@ -26,7 +26,7 @@ export class ModuleGenerator {
       return
   };
 
-  urls: string[] = ["https://api.myjson.com/bins/hwcsk"];
+  urls: string[] = ["https://api.myjson.com/bins/91x24"];
   lessons: string[] = ['l1c1'];
 
   curConstructors: Map<string, (ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor) => Module> = new Map([

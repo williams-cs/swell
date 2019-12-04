@@ -15,6 +15,7 @@ export class LessonMaker extends Module{
     readonly _instructions: string;
     readonly _starterCode: string;
     _latestInstrIndex: number;
+    _checks: string[];
 
     static async generateFromJSON(ctx: CanvasRenderingContext2D, editor: CodeMirror.Editor, url: string): Promise<LessonMaker>{
         let response = await fetch(url);
@@ -30,6 +31,7 @@ export class LessonMaker extends Module{
         this._instructions = lesson.instructions.map(function(text: string){return "'<p>"+text+"</p>'"}).join("+");
         this._starterCode = lesson.starterCode;
         this._latestInstrIndex = lesson.latestInstructionIndex;
+        this._checks = lesson.checks;
         let instructionsList = lesson.lessonInstructions;
         for (let i=0; i < instructionsList.length; i++){
             this._instrBoxes.push(new Instruction(instructionsList[i].location,
@@ -45,25 +47,48 @@ export class LessonMaker extends Module{
      * @param effects the list of effects currently on the CANVAS
      */
     checkGoal(document: Document, effects: Effect<any>[]): boolean {
-        switch (this._latestInstrIndex) {
-            case 0:
-                if (document.activeElement === this.editor.getInputField() && this._latestInstrIndex == 0) {
-                    this._latestInstrIndex++;
-                    this.renderLatestInstruction(document);
-                }
-                return false;
+        while (this._latestInstrIndex < this._checks.length){
+            let curGoal = this._checks[this._latestInstrIndex];
+            switch(curGoal){
+                case "canvasSelected":
+                    if (document.activeElement === this.editor.getInputField() && this._latestInstrIndex == 0) {
+                        this._latestInstrIndex++;
+                        this.renderLatestInstruction(document);
+                    }
+                    return false;
 
-            case 1:
-                let regex: RegExp = /print\s*\(\s*\"happy\"\s*\)/;
-                let match = this.editor.getValue().match(regex);
-                if (match != null && match.length > 0) {
-                    this._latestInstrIndex++;
-                    this.renderLatestInstruction(document);
+                case "Regex":
+                    let regex: RegExp = /print\s*\(\s*\"happy\"\s*\)/;
+                    let match = this.editor.getValue().match(regex);
+                    if (match != null && match.length > 0) {
+                        this._latestInstrIndex++;
+                        this.renderLatestInstruction(document);
+                    }
+                    return false;
+                
+                default:
+                    return true;
                 }
-                return false;
+            }
+        // switch (this._latestInstrIndex) {
+        //     case 0:
+        //         if (document.activeElement === this.editor.getInputField() && this._latestInstrIndex == 0) {
+        //             this._latestInstrIndex++;
+        //             this.renderLatestInstruction(document);
+        //         }
+        //         return false;
 
-            default:
-                return true;
-        }
+        //     case 1:
+        //         let regex: RegExp = /print\s*\(\s*\"happy\"\s*\)/;
+        //         let match = this.editor.getValue().match(regex);
+        //         if (match != null && match.length > 0) {
+        //             this._latestInstrIndex++;
+        //             this.renderLatestInstruction(document);
+        //         }
+        //         return false;
+
+        //     default:
+        //         return true;
+        // }
     }
 }
